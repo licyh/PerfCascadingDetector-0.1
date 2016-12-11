@@ -1,0 +1,3 @@
+CLI options:
+1. -l: log file path/dir
+2. -s: search scope. (All jar files under the path)

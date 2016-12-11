@@ -1,0 +1,6 @@
+1. The class that implements Runnable interface does not create a independent thread.
+   In current implementation, we only monitor subclass of Thread and its start function as a thread creation.
+   Threadpool is a kind of Runnable interface? Consider this case?
+
+
+2. While figure out thread.start, I only consider invokevirtual case. It seems that invokeinterface is impossible to start a new thread.
