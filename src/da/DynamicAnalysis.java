@@ -7,9 +7,9 @@ package da;
 public class DynamicAnalysis {
 	
     public static void main (String [] argv) {
-
+        System.out.println("hi");
     	//Added by JX
-    	GraphBuilder graphBuilder = new GraphBuilder("input/JX-MR-xml"); //Test-HB-4729-v6-3-xml");  //"input/JX-MR-xml" "Test-HB-4729-v6-3-xml"
+    	GraphBuilder graphBuilder = new GraphBuilder("input/MR-4813-xml"); //"input/JX-MR-xml" //Test-HB-4729-v6-3-xml");   "Test-HB-4729-v6-3-xml"
     	graphBuilder.buildsyncgraph();
     	//graphBuilder.buildmemref();
     	graphBuilder.buildlockmemref(); 

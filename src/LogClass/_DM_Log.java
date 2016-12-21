@@ -36,9 +36,6 @@ public class _DM_Log {
     String tid = Long.toString(java.lang.Thread.currentThread().getId());
     String strProc = java.lang.management.ManagementFactory.getRuntimeMXBean().getName();
     String pid = Long.toString(Long.parseLong(strProc.split("@")[0]));
-    //String ltime = Long.toString(new java.sql.Timestamp(new java.util.Date().getTime()).getTime());
-    //String ltime = Long.toString(System.currentTimeMillis());
-    //String ntime = Long.toString(System.nanoTime());
 
     String logDir = System.getProperty("_DM_Log_DIR");
     String logFile = logDir + "/" + pid +"-" + tid;
@@ -48,18 +45,18 @@ public class _DM_Log {
         file.createNewFile();
       }
       //FileWriter writer = new FileWriter(file, true);
-      DataOutputStream writer = new DataOutputStream(new FileOutputStream(file, true));
-      //writer.write(tid + " " + pid + " " + opType + " " + opValue + " " + ltime + " " + ntime + "\n");
-      //writer.writeBytes(tid + " " + pid + " " + opType + " " + opValue + " " + ltime + " " + ntime + "\n");
-      //writer.write(tid + " " + pid + " " + opType + " " + opValue + " " + "\n");
-      writer.writeBytes(tid + " " + pid + " " + opType + " " + opValue + " " + "\n");
+      BufferedWriter writer = new BufferedWriter( new FileWriter(file, true) );
+      writer.write(tid + " " + pid + " " + opType + " " + opValue + " " + "\n");
+      
+      //DataOutputStream writer = new DataOutputStream(new FileOutputStream(file, true));
+      //writer.writeBytes(tid + " " + pid + " " + opType + " " + opValue + " " + "\n");
 
       if (logCallStackFlag != 0) { //log call stack
         java.lang.StackTraceElement[] ST = java.lang.Thread.currentThread().getStackTrace();
         int i = logCallStackFlag == 1 ? 3 : ST.length-1;
         for (; i < ST.length; i++) {
-          //writer.write(ST[i].getClassName() + " " + ST[i].getMethodName() + " " + ST[i].getLineNumber() + "\n");
-          writer.writeBytes(ST[i].getClassName() + " " + ST[i].getMethodName() + " " + ST[i].getLineNumber() + "\n");
+          writer.write(ST[i].getClassName() + " " + ST[i].getMethodName() + " " + ST[i].getLineNumber() + "\n");
+          //writer.writeBytes(ST[i].getClassName() + " " + ST[i].getMethodName() + " " + ST[i].getLineNumber() + "\n");
         }
       }
 

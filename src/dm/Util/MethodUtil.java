@@ -134,7 +134,11 @@ public class MethodUtil {
   }
 
   public void insertSyncMethod(String logClassEnter, String logMethodEnter, String logClassExit, String logMethodExit) {
-    if (Modifier.toString(method.getModifiers()).contains("synchronized")) {
+	if (Modifier.toString(method.getModifiers()).contains("static")) {
+      //TODO -
+	  return;
+	}
+	if (Modifier.toString(method.getModifiers()).contains("synchronized")) {
       String str = "String opValue = Integer.toString(System.identityHashCode($0)) + \"_2\";";
       str += logClassEnter + "." + logMethodEnter + "(opValue);";
       try { method.insertBefore(str); } catch (Exception e) { e.printStackTrace(); }
@@ -162,7 +166,7 @@ public class MethodUtil {
           InvokeInst invokeI = new InvokeInst(i);
           String calledCC = invokeI.calledClass();
           String calledM = invokeI.calledMethod();
-          if (calledCC.equals("java.util.concurrent.locks")) {
+          if (calledCC.equals("java.util.concurrent.locks.Lock")) {
             if (calledM.equals("lock") || calledM.equals("tryLock")) { isLock = true; }
             else if (calledM.equals("unlock")) { isUnlock = true; }
           }

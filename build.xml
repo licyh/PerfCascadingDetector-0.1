@@ -107,7 +107,7 @@
                         <fileset dir="${build.class}" includes="com/*.class" />
                         <manifest>
                                 <attribute name="Boot-Class-Path" value="javassist.jar"/>
-                                <attribute name="Premain-Class" value="com.dm.MapReduceDM" />
+                                <attribute name="Premain-Class" value="dm.MapReduceDM" />
                         </manifest>
                         <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
                         <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
