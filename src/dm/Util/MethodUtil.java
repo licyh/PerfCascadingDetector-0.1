@@ -226,6 +226,94 @@ public class MethodUtil {
     }
   }
 
+  
+  //Added by JX
+  public void insertRWLock(String logClass, String logMethod) {
+    codeIter = codeAttr.iterator();
+    Instruction i = new Instruction();
+    i.setMethod(method);
+    int cur;
+    try {
+      // get 1st instruction
+      if (codeIter.hasNext()) { 
+        cur = codeIter.next();
+        i.setPos(cur);
+      }
+      else {
+    	System.out.println("JX - method's first bytecode instruction doesn't exist!!");
+    	throw new Exception("JX - method's first bytecode instruction doesn't exist!!");
+      }
+      
+      // scan original bytecode
+      boolean isRWLock = false;
+      while (codeIter.hasNext()) {
+        cur = codeIter.next();
+
+        if (i.isInvokespecial()) {
+          InvokeInst invokeI = new InvokeInst(i);
+          String calledCC = invokeI.calledClass();
+          String calledM = invokeI.calledMethod();
+          if (calledCC.equals("java.util.concurrent.locks.ReentrantReadWriteLock") && calledM.equals("<init>"))
+        	  isRWLock = true;
+        }
+
+        if ( isRWLock ) {
+          Bytecode code = new Bytecode(constPool);
+          
+          allocStack(10);
+          int objIndex = allocLocal(1);
+          code.addAstore(objIndex);
+          code.addAload(objIndex);
+          
+          code.addNew("java/lang/StringBuilder");
+          code.addOpcode(Opcode.DUP);
+          code.addInvokespecial("java/lang/StringBuilder", "<init>", "()V");
+
+          code.addAload(objIndex);
+          code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
+          code.addInvokevirtual("java/lang/StringBuilder", "append", "(I)Ljava/lang/StringBuilder;");
+
+          // '|'
+          code.addIconst( 124 );
+          code.addInvokevirtual("java/lang/StringBuilder", "append", "(C)Ljava/lang/StringBuilder;");
+          
+          code.addAload(objIndex);
+          code.addInvokeinterface("java/util/concurrent/locks/ReadWriteLock", "readLock", "()Ljava/util/concurrent/locks/Lock", 1);
+          code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
+          code.addInvokevirtual("java/lang/StringBuilder", "append", "(I)Ljava/lang/StringBuilder;");
+
+          // '|'
+          code.addIconst( 124 );
+          code.addInvokevirtual("java/lang/StringBuilder", "append", "(C)Ljava/lang/StringBuilder;");
+          
+          code.addAload(objIndex);
+          code.addInvokeinterface("java/util/concurrent/locks/ReadWriteLock", "writeLock", "()Ljava/util/concurrent/locks/Lock", 1);
+          code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
+          code.addInvokevirtual("java/lang/StringBuilder", "append", "(I)Ljava/lang/StringBuilder;");
+         
+          // log
+          code.addInvokevirtual("java/lang/StringBuilder", "toString", "()Ljava/lang/String;");
+          code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
+          try {
+            int loc = codeIter.insertExAt(cur, code.get());
+            codeIter.insert(code.getExceptionTable(), loc);
+            methodInfo.rebuildStackMapIf6(method.getDeclaringClass().getClassPool(),
+                            method.getDeclaringClass().getClassFile2());
+          } catch (BadBytecode e) {
+            System.out.print("Badcode when insert monitor instruction.");
+            e.printStackTrace();
+          }
+        }
+        
+        i.setPos(cur);
+      }//end-while
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+  //End-Added
+  
 
   public void insertGetPutInst(String logClassRead, String logMethodRead, String logClassWrite, String logMethodWrite) {
     codeIter = codeAttr.iterator();

@@ -151,6 +151,9 @@ class MapReduceTransformer extends Transformer {
     String eventCreateLog     = logFuncPre + "_" + "EventCreate";
     String lockEnterLog       = logFuncPre + "_" + "LockRequire";
     String lockExitLog        = logFuncPre + "_" + "LockRelease";
+    //Added by JX
+    String rwlockCreateLog    = logFuncPre + "_" + "RWLockCreate";
+    //end-Added
 
     boolean injectFlag = false;
     /* main function:
@@ -288,6 +291,7 @@ class MapReduceTransformer extends Transformer {
     /* lock */
     methodUtil.insertSyncMethod(logClass, lockEnterLog, logClass, lockExitLog);
     methodUtil.insertMonitorInst(logClass, lockEnterLog, logClass, lockExitLog);
+    methodUtil.insertRWLock(logClass, rwlockCreateLog);
 
     /*Instruction i = new Instruction();
     i.setMethod(method);

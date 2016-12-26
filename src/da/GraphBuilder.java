@@ -590,6 +590,8 @@ public class GraphBuilder {
     }
     
     public void buildsyncgraph() {
+    	System.out.println("JX - buildsyncgraph - Adding edges to build Happen-Before graph");
+    	
     	//eventremovethreadorder();
         eventcaller = new ArrayList<Integer>(nList.size());
         for (int i = 0 ; i < nList.size(); i++)
@@ -613,7 +615,9 @@ public class GraphBuilder {
 		    hashsum++;
 	       }
             }
-            System.out.println("TOTAL = " + hashsum);
+            //Commented by JX
+            //System.out.println("TOTAL = " + hashsum);
+            //end-Commented
         }
         if (typeref.get("MsgProcEnter") != null){
             ArrayList<Integer> list = typeref.get("MsgProcEnter");
@@ -662,7 +666,7 @@ public class GraphBuilder {
                 }
             } //end-inner-for
         } //end-outer-for
-        System.out.println(threadcreaterel + "thread creation->enter relation added ,expect " + typeref.get("ThdCreate").size());
+        System.out.println(threadcreaterel + " thread creation->enter relation added, expect " + typeref.get("ThdCreate").size());
        
         /* plug no creator thread to its direct parent */     //JX - for no-source threads like those in ThreadPool
         for ( int i : typeref.get("ThdEnter") ) {
@@ -703,7 +707,7 @@ public class GraphBuilder {
             else
                 System.out.println("Cannot find "+pid+"-"+tid +"'s ThdExit");
         }
-        System.out.println(threadjoinrel + "thread join relation added ,expect " +typeref.get("ThdJoin").size());
+        System.out.println(threadjoinrel + " thread join relation added, expect " +typeref.get("ThdJoin").size());
 
 
         /***** JX - 2. find out EventCreate->EventProcEnter,ie, Event process call and callee relation *****/
@@ -1137,7 +1141,8 @@ public class GraphBuilder {
                 }
 		    }
         }
-        System.out.println("Number of Roots is " + root.size() + " Edge num is "+ esum);
+        System.out.println("Number of Roots is " + root.size());
+        System.out.println("Total added Edge num is " + esum + "\n");
         //Collections.sort(root);
         //System.out.println("Roots is " + root);
     } //End-buildsyncgraph
@@ -1612,7 +1617,9 @@ public class GraphBuilder {
         int callersum = 0;
         for (int i = 0; i < nList.size(); i++)
             if (eventcaller.get(i) > -1 ) callersum++;
-        System.out.println("Caller sum is " + callersum);
+        //Commented by JX
+        //System.out.println("Caller sum is " + callersum);
+        //end-Commented
         for (int i : typeref.get("EventProcEnter")) {
             Node node = nList.get(i);
             Element e = (Element) node;
@@ -1642,17 +1649,18 @@ public class GraphBuilder {
         }
         
         // JX - compute reachability matrix
+        System.out.println("\nJX - compute reachability matrix");
         reachbitset = new ArrayList<BitSet>(nList.size());
         for (int i =0 ; i< nList.size(); i++) {
             reachbitset.add(new BitSet(nList.size()));
         }
         int loop =0;
         do {
-            System.out.println(loop + " time iteration for event atomic edges. esum = "+esum);
+            System.out.println(loop + " time iteration for event atomic edges. esum = " + esum);
             computereachbitset();
             loop++;
             System.out.println("compute bit set finished");
-        }while (addeventatomicedge()&&(loop<20));
+        } while (addeventatomicedge()&&(loop<20));
 
         //JX - ??
         initfile();
@@ -1686,10 +1694,11 @@ public class GraphBuilder {
         
         //Added by JX
         System.out.println("\nJX - Results of Fliped Locks");
-
         //find mutual effect by the same lock
+        System.out.println("#lockmemaddr = " + lockmemref.size());
         for (String memaddr : lockmemref.keySet()) {
             ArrayList<Integer> list = lockmemref.get(memaddr);
+            System.out.println("#this addr = " + list.size());
             int lsum = 0;
             for (int i = 0; i < list.size(); i++)
                 for (int j = i + 1; j < list.size(); j++) {
