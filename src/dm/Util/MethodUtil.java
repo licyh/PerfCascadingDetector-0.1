@@ -264,12 +264,17 @@ public class MethodUtil {
           int objIndex = allocLocal(1);
           code.addAstore(objIndex);
           code.addAload(objIndex);
+          code.addAload(objIndex);
+          //added: jx: the variable name is just for inserting 'source code'; Here, this is useless.
+          method.addLocalVariable("rwlock", ClassPool.getDefault().get("java.util.concurrent.locks.ReadWriteLock"));
+          int rwlockindex = codeAttr.getMaxLocals()-1;
+          code.addAstore( rwlockindex );
           
           code.addNew("java/lang/StringBuilder");
           code.addOpcode(Opcode.DUP);
           code.addInvokespecial("java/lang/StringBuilder", "<init>", "()V");
 
-          code.addAload(objIndex);
+          code.addAload(rwlockindex);
           code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
           code.addInvokevirtual("java/lang/StringBuilder", "append", "(I)Ljava/lang/StringBuilder;");
 
@@ -277,8 +282,8 @@ public class MethodUtil {
           code.addIconst( 124 );
           code.addInvokevirtual("java/lang/StringBuilder", "append", "(C)Ljava/lang/StringBuilder;");
           
-          code.addAload(objIndex);
-          code.addInvokeinterface("java/util/concurrent/locks/ReadWriteLock", "readLock", "()Ljava/util/concurrent/locks/Lock", 1);
+          code.addAload(rwlockindex);
+          code.addInvokeinterface("java/util/concurrent/locks/ReadWriteLock", "readLock", "()Ljava/util/concurrent/locks/Lock", 1);          
           code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
           code.addInvokevirtual("java/lang/StringBuilder", "append", "(I)Ljava/lang/StringBuilder;");
 
@@ -286,7 +291,7 @@ public class MethodUtil {
           code.addIconst( 124 );
           code.addInvokevirtual("java/lang/StringBuilder", "append", "(C)Ljava/lang/StringBuilder;");
           
-          code.addAload(objIndex);
+          code.addAload(rwlockindex);
           code.addInvokeinterface("java/util/concurrent/locks/ReadWriteLock", "writeLock", "()Ljava/util/concurrent/locks/Lock", 1);
           code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
           code.addInvokevirtual("java/lang/StringBuilder", "append", "(I)Ljava/lang/StringBuilder;");
