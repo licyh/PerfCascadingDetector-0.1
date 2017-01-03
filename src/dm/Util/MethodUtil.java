@@ -245,10 +245,11 @@ public class MethodUtil {
       }
       
       // scan original bytecode
-      boolean isRWLock = false;
       while (codeIter.hasNext()) {
         cur = codeIter.next();
 
+        boolean isRWLock = false;
+        
         if (i.isInvokespecial()) {
           InvokeInst invokeI = new InvokeInst(i);
           String calledCC = invokeI.calledClass();
@@ -259,43 +260,47 @@ public class MethodUtil {
 
         if ( isRWLock ) {
           Bytecode code = new Bytecode(constPool);
-          
+          // prepare stack and local variables
           allocStack(10);
           int objIndex = allocLocal(1);
           code.addAstore(objIndex);
           code.addAload(objIndex);
+      System.out.println("JX - objindex - " + objIndex);
+      LocalVariableAttribute table = (LocalVariableAttribute) codeAttr.getAttribute(LocalVariableAttribute.tag); 
+      String variableName = table.variableName( objIndex );
+      int frameAtConstantPool = table.nameIndex( objIndex ); 
+      String variableName2 = methodInfo.getConstPool().getUtf8Info(frameAtConstantPool);
+      System.out.println("JX - variableName - " + variableName + " : " + variableName2);
+          // add ReadWriteLock rwlock = $topOfStack;
           code.addAload(objIndex);
-          //added: jx: the variable name is just for inserting 'source code'; Here, this is useless.
-          method.addLocalVariable("rwlock", ClassPool.getDefault().get("java.util.concurrent.locks.ReadWriteLock"));
+          method.addLocalVariable("rwlock", ClassPool.getDefault().get("java.util.concurrent.locks.ReadWriteLock")); // added: jx: the variable name "rwlock" is just for inserting 'source code'; Here, this is useless.
           int rwlockindex = codeAttr.getMaxLocals()-1;
+      System.out.println("JX - rwlockindex - " + rwlockindex);
           code.addAstore( rwlockindex );
-          
+          // prepare StringBuilder
           code.addNew("java/lang/StringBuilder");
           code.addOpcode(Opcode.DUP);
           code.addInvokespecial("java/lang/StringBuilder", "<init>", "()V");
-
+          // add System.identityHashCode( rwlock )
           code.addAload(rwlockindex);
           code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
           code.addInvokevirtual("java/lang/StringBuilder", "append", "(I)Ljava/lang/StringBuilder;");
-
-          // '|'
+          // add '|'
           code.addIconst( 124 );
           code.addInvokevirtual("java/lang/StringBuilder", "append", "(C)Ljava/lang/StringBuilder;");
-          
+          // add System.identityHashCode( rwlock.readLock() )
           code.addAload(rwlockindex);
           code.addInvokeinterface("java/util/concurrent/locks/ReadWriteLock", "readLock", "()Ljava/util/concurrent/locks/Lock", 1);          
           code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
           code.addInvokevirtual("java/lang/StringBuilder", "append", "(I)Ljava/lang/StringBuilder;");
-
-          // '|'
+          // add '|'
           code.addIconst( 124 );
           code.addInvokevirtual("java/lang/StringBuilder", "append", "(C)Ljava/lang/StringBuilder;");
-          
+          // add System.identityHashCode( rwlock.writeLock() )
           code.addAload(rwlockindex);
           code.addInvokeinterface("java/util/concurrent/locks/ReadWriteLock", "writeLock", "()Ljava/util/concurrent/locks/Lock", 1);
           code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
           code.addInvokevirtual("java/lang/StringBuilder", "append", "(I)Ljava/lang/StringBuilder;");
-         
           // log
           code.addInvokevirtual("java/lang/StringBuilder", "toString", "()Ljava/lang/String;");
           code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
