@@ -259,6 +259,12 @@ public class MethodUtil {
         }
 
         if ( isRWLock ) {
+      CodeIterator tmpiter = codeAttr.iterator();
+      while (tmpiter.hasNext()) {
+    	  int pos = tmpiter.next();
+    	  int opindex = tmpiter.byteAt(pos);
+    	  System.out.println("\t" + Mnemonic.OPCODE[opindex]);
+      }
           Bytecode code = new Bytecode(constPool);
           // prepare stack and local variables
           allocStack(10);

@@ -31,7 +31,7 @@ public class Transformer implements ClassFileTransformer {
       cl = pool.makeClass(new java.io.ByteArrayInputStream(b));
       CtBehavior[] methods = cl.getDeclaredBehaviors();
       //Added by JX
-      System.out.println( cl.getName() );
+      System.out.println("JX - CLASS - " + cl.getName() );
       //end-Added
       for (CtBehavior method : methods) {
         if (method.isEmpty() == false) {
