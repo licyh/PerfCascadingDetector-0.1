@@ -243,12 +243,13 @@ public class MethodUtil {
     	System.out.println("JX - method's first bytecode instruction doesn't exist!!");
     	throw new Exception("JX - method's first bytecode instruction doesn't exist!!");
       }
-      
+
+      boolean isRWLock = false;
       // scan original bytecode
       while (codeIter.hasNext()) {
         cur = codeIter.next();
 
-        boolean isRWLock = false;
+
         
         if (i.isInvokespecial()) {
           InvokeInst invokeI = new InvokeInst(i);
@@ -266,10 +267,10 @@ public class MethodUtil {
           code.addAstore(objIndex);
           code.addAload(objIndex);
       System.out.println("JX - objindex - " + objIndex);
+      /*
       LocalVariableAttribute table = (LocalVariableAttribute) codeAttr.getAttribute(LocalVariableAttribute.tag); 
       String variableName = table.variableName( objIndex );
       System.out.println("JX - variableName - " + variableName);
-      /*
       int frameAtConstantPool = table.nameIndex( objIndex ); 
       String variableName2 = methodInfo.getConstPool().getUtf8Info(frameAtConstantPool);
       System.out.println("JX - variableName - " + variableName + " : " + variableName2);
