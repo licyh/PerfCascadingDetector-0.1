@@ -261,19 +261,20 @@ public class MethodUtil {
         if ( isRWLock ) {
       CodeIterator tmpiter = codeAttr.iterator();
       Instruction j = new Instruction();
+      Instruction k;
       j.setMethod(method);
       while (tmpiter.hasNext()) {
     	  int pos = tmpiter.next();
     	  j.setPos( pos );
     	  if (j.isInvoke()) 
-    		  j = new InvokeInst( j );
+    		  k = new InvokeInst( j );
     	  else if (j.isField())
-    		  j = new FieldInst( j );
+    		  k = new FieldInst( j );
     	  else if (j.isLoad())
-    		  j = new LoadInst( j );
-    	  else {
-    	  }
-    	  System.out.println("\t" + j.toString());
+    		  k = new LoadInst( j );
+    	  else 
+    		  k = j;
+    	  System.out.println("\t" + k.toString());
     	  //int opindex = tmpiter.byteAt(pos);
     	  //System.out.println("\t" + Mnemonic.OPCODE[opindex]);
       }
