@@ -268,9 +268,12 @@ public class MethodUtil {
       System.out.println("JX - objindex - " + objIndex);
       LocalVariableAttribute table = (LocalVariableAttribute) codeAttr.getAttribute(LocalVariableAttribute.tag); 
       String variableName = table.variableName( objIndex );
+      System.out.println("JX - variableName - " + variableName);
+      /*
       int frameAtConstantPool = table.nameIndex( objIndex ); 
       String variableName2 = methodInfo.getConstPool().getUtf8Info(frameAtConstantPool);
       System.out.println("JX - variableName - " + variableName + " : " + variableName2);
+      */
           // add ReadWriteLock rwlock = $topOfStack;
           code.addAload(objIndex);
           method.addLocalVariable("rwlock", ClassPool.getDefault().get("java.util.concurrent.locks.ReadWriteLock")); // added: jx: the variable name "rwlock" is just for inserting 'source code'; Here, this is useless.
