@@ -44,7 +44,7 @@ public class LoadInst extends Instruction {
     String op = opcode();
     String str = op.substring(op.length()-1);
     int index = Integer.parseInt(str);
-    System.out.println("debug: " + index);
+    //System.out.println("debug: " + index);
 
     if (opcode().endsWith("load")) {
       //Modified by JX

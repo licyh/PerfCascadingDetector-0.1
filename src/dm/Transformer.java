@@ -38,7 +38,8 @@ public class Transformer implements ClassFileTransformer {
           //Added by JX
           if ( cl.getName().contains("BaseContainerTokenSecretManager")
         		  || cl.getName().contains("ContainerExecutor") ) {
-        	  System.out.println( method.getName() + " @ " + method.getSignature() );
+        	  System.out.println( method.getName() + " @ " + method.getSignature() 
+        	  	+ " - constr?" + method.getMethodInfo().isConstructor() + " - cl?" + method.getMethodInfo().isStaticInitializer() + " - meth?" + method.getMethodInfo().isMethod());
           }
           //end-Added
           transformMethod(cl, method);
