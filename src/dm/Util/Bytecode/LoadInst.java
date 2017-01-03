@@ -56,7 +56,7 @@ public class LoadInst extends Instruction {
       //Modified by JX
       //return opcode() + " " + constPool.getNameAndTypeName(index);
       LocalVariableAttribute table = (LocalVariableAttribute) codeAttr.getAttribute(LocalVariableAttribute.tag); 
-      String variableName = table.variableName( index );  //??
+      String variableName = table.variableName( index );  //!!
       return opcode() + " " + variableName;
       //end-Modified
     }

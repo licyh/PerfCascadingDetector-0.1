@@ -265,8 +265,8 @@ public class MethodUtil {
       j.setMethod(method);
       while (tmpiter.hasNext()) {
     	  int pos = tmpiter.next();
-    	  int opindex = tmpiter.byteAt(pos);
-    	  System.out.println("\t" + Mnemonic.OPCODE[opindex]);
+    	  //int opindex = tmpiter.byteAt(pos);
+    	  //System.out.println("\t" + Mnemonic.OPCODE[opindex]);
     	  j.setPos( pos );
     	  if (j.isInvoke()) 
     		  k = new InvokeInst( j );
@@ -328,9 +328,11 @@ public class MethodUtil {
           code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
           try {
             int loc = codeIter.insertExAt(cur, code.get());
+            /*
             codeIter.insert(code.getExceptionTable(), loc);
             methodInfo.rebuildStackMapIf6(method.getDeclaringClass().getClassPool(),
                             method.getDeclaringClass().getClassFile2());
+            */
           } catch (BadBytecode e) {
             System.out.print("Badcode when insert monitor instruction.");
             e.printStackTrace();
