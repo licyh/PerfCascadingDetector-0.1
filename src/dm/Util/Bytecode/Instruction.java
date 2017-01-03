@@ -73,5 +73,11 @@ public class Instruction {
     return opcode().matches("(get|put)(field|static)($|_[\\d+])");
   }
 
+  //Added by JX
+  public String toString() {
+	return opcode();
+  }
+  //end-Added
+  
 }
 

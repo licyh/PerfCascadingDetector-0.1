@@ -260,10 +260,22 @@ public class MethodUtil {
 
         if ( isRWLock ) {
       CodeIterator tmpiter = codeAttr.iterator();
+      Instruction j = new Instruction();
+      j.setMethod(method);
       while (tmpiter.hasNext()) {
     	  int pos = tmpiter.next();
-    	  int opindex = tmpiter.byteAt(pos);
-    	  System.out.println("\t" + Mnemonic.OPCODE[opindex]);
+    	  j.setPos( pos );
+    	  if (j.isInvoke()) 
+    		  j = new InvokeInst( j );
+    	  else if (j.isField())
+    		  j = new FieldInst( j );
+    	  else if (j.isLoad())
+    		  j = new LoadInst( j );
+    	  else {
+    	  }
+    	  System.out.println("\t" + j.toString());
+    	  //int opindex = tmpiter.byteAt(pos);
+    	  //System.out.println("\t" + Mnemonic.OPCODE[opindex]);
       }
           Bytecode code = new Bytecode(constPool);
           // prepare stack and local variables
