@@ -244,12 +244,11 @@ public class MethodUtil {
     	throw new Exception("JX - method's first bytecode instruction doesn't exist!!");
       }
 
-      boolean isRWLock = false;
       // scan original bytecode
       while (codeIter.hasNext()) {
         cur = codeIter.next();
 
-
+        boolean isRWLock = false;
         
         if (i.isInvokespecial()) {
           InvokeInst invokeI = new InvokeInst(i);
