@@ -277,7 +277,6 @@ public class MethodUtil {
     	  else 
     		  k = j;
     	  System.out.println("\t" + k.toString());
-
       }
           Bytecode code = new Bytecode(constPool);
           // prepare stack and local variables

@@ -46,10 +46,20 @@ public class LoadInst extends Instruction {
     int index = Integer.parseInt(str);
     System.out.println("debug: " + index);
 
-    if (opcode().endsWith("load"))
-      return opcode() + " " + codeIter.byteAt(pos + 1);
-    else
-      return opcode() + " " + constPool.getNameAndTypeName(index);
+    if (opcode().endsWith("load")) {
+      //Modified by JX
+      //return opcode() + " " + codeIter.byteAt(pos + 1);
+      return opcode() + " " + constPool.getNameAndTypeName( codeIter.byteAt(pos + 1) );
+      //end-Modified
+    }
+    else {
+      //Modified by JX
+      //return opcode() + " " + constPool.getNameAndTypeName(index);
+      LocalVariableAttribute table = (LocalVariableAttribute) codeAttr.getAttribute(LocalVariableAttribute.tag); 
+      String variableName = table.variableName( index );  //??
+      return opcode() + " " + variableName;
+      //end-Modified
+    }
   }
 
 
