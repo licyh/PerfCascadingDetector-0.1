@@ -265,6 +265,8 @@ public class MethodUtil {
       j.setMethod(method);
       while (tmpiter.hasNext()) {
     	  int pos = tmpiter.next();
+    	  int opindex = tmpiter.byteAt(pos);
+    	  System.out.println("\t" + Mnemonic.OPCODE[opindex]);
     	  j.setPos( pos );
     	  if (j.isInvoke()) 
     		  k = new InvokeInst( j );
@@ -275,8 +277,7 @@ public class MethodUtil {
     	  else 
     		  k = j;
     	  System.out.println("\t" + k.toString());
-    	  //int opindex = tmpiter.byteAt(pos);
-    	  //System.out.println("\t" + Mnemonic.OPCODE[opindex]);
+
       }
           Bytecode code = new Bytecode(constPool);
           // prepare stack and local variables
