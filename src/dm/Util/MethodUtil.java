@@ -281,6 +281,7 @@ public class MethodUtil {
           Bytecode code = new Bytecode(constPool);
           // prepare stack and local variables
           allocStack(10);
+          allocLocal(5);
       LocalVariableAttribute table = (LocalVariableAttribute)codeAttr.getAttribute(LocalVariableAttribute.tag);
       System.out.println( "JX - numberOfLocalVariables - " + table.tableLength() );
       for (int ii = 0; ii < table.tableLength(); ii++) {
@@ -297,7 +298,6 @@ public class MethodUtil {
     	  	+ " index=" + table.index(ii) + " nameIndex=" + table.nameIndex(ii) + " descriptorIndex=" + table.descriptorIndex(ii) );
       }
       System.out.println("JX - maxLocals - " + codeAttr.getMaxLocals());
-          allocLocal(1);
           int objIndex = rwlockindex + 1;
       System.out.println("JX - maxLocals - " + codeAttr.getMaxLocals());
           code.addAstore(objIndex);
