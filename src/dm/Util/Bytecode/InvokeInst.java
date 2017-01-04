@@ -119,10 +119,12 @@ public class InvokeInst extends Instruction {
 
 
   public String toString() {
-    return opcode() + " " + "#" + calledIndex() + " = Field " +
+	// Modified by JX - this may be still not formal
+    return opcode() + " " + "#" + calledIndex() + " = (..)Method " +
             calledClass() + "." +
-            calledMethod() + "(" +
-            calledMethodType() + ")";
+            calledMethod() + ":" +
+            calledMethodType();
+    // end-Modified
   }
 
 }
