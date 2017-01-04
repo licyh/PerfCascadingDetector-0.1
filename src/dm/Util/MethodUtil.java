@@ -287,7 +287,10 @@ public class MethodUtil {
     	  System.out.println( "JX - " + ii + " : " + table.variableName(ii) + " : " + table.descriptor(ii) 
     	  	+ " index=" + table.index(ii) + " nameIndex=" + table.nameIndex(ii) + " descriptorIndex=" + table.descriptorIndex(ii) );
       }
-          int objIndex = allocLocal(3);
+      	  method.addLocalVariable("rwlock", ClassPool.getDefault().get("java.util.concurrent.locks.ReadWriteLock")); // added: jx: the variable name "rwlock" is just for inserting 'source code'; Here, this is useless.
+      	  int rwlockindex = codeAttr.getMaxLocals()-1;
+      System.out.println("JX - rwlockindex - " + rwlockindex);
+          int objIndex = allocLocal(1);
           code.addAstore(objIndex);
           code.addAload(objIndex);
       System.out.println("JX - objindex - " + objIndex);
@@ -306,9 +309,7 @@ public class MethodUtil {
       */
           // add ReadWriteLock rwlock = $topOfStack;
           code.addAload(objIndex);
-          method.addLocalVariable("rwlock", ClassPool.getDefault().get("java.util.concurrent.locks.ReadWriteLock")); // added: jx: the variable name "rwlock" is just for inserting 'source code'; Here, this is useless.
-          int rwlockindex = codeAttr.getMaxLocals()-1;
-      System.out.println("JX - rwlockindex - " + rwlockindex);
+         
       System.out.println( "JX - numberOfLocalVariables - " + table.tableLength() );
       for (int ii = 0; ii < table.tableLength(); ii++) {
     	  System.out.println( "JX - " + ii + " : " + table.variableName(ii) + " : " + table.descriptor(ii) 
@@ -356,11 +357,9 @@ public class MethodUtil {
           code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
           try {
             int loc = codeIter.insertExAt(cur, code.get());
-            /*
             codeIter.insert(code.getExceptionTable(), loc);
             methodInfo.rebuildStackMapIf6(method.getDeclaringClass().getClassPool(),
                             method.getDeclaringClass().getClassFile2());
-            */
           } catch (BadBytecode e) {
             System.out.print("Badcode when insert monitor instruction.");
             e.printStackTrace();
