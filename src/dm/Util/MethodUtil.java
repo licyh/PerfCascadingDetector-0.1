@@ -287,6 +287,7 @@ public class MethodUtil {
     	  System.out.println( "JX - " + ii + " : " + table.variableName(ii) + " : " + table.descriptor(ii) 
     	  	+ " index=" + table.index(ii) + " nameIndex=" + table.nameIndex(ii) + " descriptorIndex=" + table.descriptorIndex(ii) );
       }
+      System.out.println("JX - maxLocals - " + codeAttr.getMaxLocals());
       	  method.addLocalVariable("rwlock", ClassPool.getDefault().get("java.util.concurrent.locks.ReadWriteLock")); // added: jx: the variable name "rwlock" is just for inserting 'source code'; Here, this is useless.
       	  int rwlockindex = codeAttr.getMaxLocals()-1;
       System.out.println("JX - rwlockindex - " + rwlockindex);
@@ -296,7 +297,8 @@ public class MethodUtil {
     	  	+ " index=" + table.index(ii) + " nameIndex=" + table.nameIndex(ii) + " descriptorIndex=" + table.descriptorIndex(ii) );
       }
       System.out.println("JX - maxLocals - " + codeAttr.getMaxLocals());
-          int objIndex = allocLocal(1);
+          allocLocal(1);
+          int objIndex = rwlockindex + 1;
       System.out.println("JX - maxLocals - " + codeAttr.getMaxLocals());
           code.addAstore(objIndex);
           code.addAload(objIndex);
@@ -311,12 +313,7 @@ public class MethodUtil {
     	  System.out.println( "JX - " + ii + " : " + table.variableName(ii) + " : " + table.descriptor(ii) 
     	  	+ " index=" + table.index(ii) + " nameIndex=" + table.nameIndex(ii) + " descriptorIndex=" + table.descriptorIndex(ii) );
       }
-      System.out.println( "JX - " + table.variableName( rwlockindex ));
-      System.out.println( "JX - " + table.variableName( table.index(rwlockindex) ));
-      System.out.println( "JX - " + table.variableName( table.nameIndex(rwlockindex) ));
-      System.out.println( "JX - " + table.descriptor( table.descriptorIndex(rwlockindex) ));
-      System.out.println( "JX - " + table.descriptor( table.index(rwlockindex) ));
-      System.out.println( "JX - " + table.descriptor( rwlockindex ));
+
           // prepare StringBuilder
           code.addNew("java/lang/StringBuilder");
           code.addOpcode(Opcode.DUP);
