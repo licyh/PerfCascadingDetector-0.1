@@ -299,7 +299,10 @@ public class MethodUtil {
           int rwlockindex = codeAttr.getMaxLocals()-1;
       System.out.println("JX - rwlockindex - " + rwlockindex);
           code.addAstore( rwlockindex );
-      LocalVariableAttribute table = (LocalVariableAttribute) codeAttr.getAttribute(LocalVariableAttribute.tag); 
+      LocalVariableAttribute table = (LocalVariableAttribute) codeAttr.getAttribute(LocalVariableAttribute.tag);
+      int numberOfLocalVariables = table.tableLength();
+      System.out.println( "JX - " + numberOfLocalVariables );
+      System.out.println( "JX - " + table.variableName( rwlockindex ));
       System.out.println( "JX - " + table.variableName( table.index(rwlockindex) ));
       System.out.println( "JX - " + table.variableName( table.nameIndex(rwlockindex) ));
       System.out.println( "JX - " + table.descriptor( table.descriptorIndex(rwlockindex) ));
