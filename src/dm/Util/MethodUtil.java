@@ -281,7 +281,6 @@ public class MethodUtil {
           Bytecode code = new Bytecode(constPool);
           // prepare stack and local variables
           allocStack(10);
-          allocLocal(5);
       LocalVariableAttribute table = (LocalVariableAttribute)codeAttr.getAttribute(LocalVariableAttribute.tag);
       System.out.println( "JX - numberOfLocalVariables - " + table.tableLength() );
       for (int ii = 0; ii < table.tableLength(); ii++) {
@@ -290,7 +289,7 @@ public class MethodUtil {
       }
       System.out.println("JX - maxLocals - " + codeAttr.getMaxLocals());
       	  method.addLocalVariable("rwlock", ClassPool.getDefault().get("java.util.concurrent.locks.ReadWriteLock")); // added: jx: the variable name "rwlock" is just for inserting 'source code'; Here, this is useless.
-      	  int rwlockindex = codeAttr.getMaxLocals()-1;
+      	  int rwlockindex = codeAttr.getMaxLocals() - 1;
       System.out.println("JX - rwlockindex - " + rwlockindex);
       System.out.println( "JX - numberOfLocalVariables - " + table.tableLength() );
       for (int ii = 0; ii < table.tableLength(); ii++) {
@@ -298,6 +297,7 @@ public class MethodUtil {
     	  	+ " index=" + table.index(ii) + " nameIndex=" + table.nameIndex(ii) + " descriptorIndex=" + table.descriptorIndex(ii) );
       }
       System.out.println("JX - maxLocals - " + codeAttr.getMaxLocals());
+          allocLocal(5);
           int objIndex = rwlockindex + 1;
       System.out.println("JX - maxLocals - " + codeAttr.getMaxLocals());
           code.addAstore(objIndex);
