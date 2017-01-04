@@ -300,7 +300,11 @@ public class MethodUtil {
       System.out.println("JX - rwlockindex - " + rwlockindex);
           code.addAstore( rwlockindex );
       LocalVariableAttribute table = (LocalVariableAttribute) codeAttr.getAttribute(LocalVariableAttribute.tag); 
-      System.out.println( "JX - " + table.variableName( rwlockindex ) + " " + table.descriptor( rwlockindex ));
+      System.out.println( "JX - " + table.variableName( table.index(rwlockindex) ));
+      System.out.println( "JX - " + table.variableName( table.nameIndex(rwlockindex) ));
+      System.out.println( "JX - " + table.descriptor( table.descriptorIndex(rwlockindex) ));
+      System.out.println( "JX - " + table.descriptor( table.index(rwlockindex) ));
+      System.out.println( "JX - " + table.descriptor( rwlockindex ));
           // prepare StringBuilder
           code.addNew("java/lang/StringBuilder");
           code.addOpcode(Opcode.DUP);
