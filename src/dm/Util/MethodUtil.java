@@ -281,10 +281,19 @@ public class MethodUtil {
           Bytecode code = new Bytecode(constPool);
           // prepare stack and local variables
           allocStack(10);
-          int objIndex = allocLocal(1);
+      LocalVariableAttribute table = (LocalVariableAttribute)codeAttr.getAttribute(LocalVariableAttribute.tag);
+      System.out.println( "JX - numberOfLocalVariables" + table.tableLength() );
+      for (int ii = 0; ii < table.tableLength(); ii++) {
+          System.out.println( "JX - " + i + " : " + table.index(ii) + " : " + table.variableName(ii) + " : " + table.descriptor(ii) );  	  
+      }
+          int objIndex = allocLocal(3);
           code.addAstore(objIndex);
           code.addAload(objIndex);
       System.out.println("JX - objindex - " + objIndex);
+      System.out.println( "JX - numberOfLocalVariables" + table.tableLength() );
+      for (int ii = 0; ii < table.tableLength(); ii++) {
+          System.out.println( "JX - " + i + " : " + table.index(ii) + " : " + table.variableName(ii) + " : " + table.descriptor(ii) );  	  
+      }
       /*
       LocalVariableAttribute table = (LocalVariableAttribute) codeAttr.getAttribute(LocalVariableAttribute.tag); 
       String variableName = table.variableName( objIndex );
@@ -298,10 +307,16 @@ public class MethodUtil {
           method.addLocalVariable("rwlock", ClassPool.getDefault().get("java.util.concurrent.locks.ReadWriteLock")); // added: jx: the variable name "rwlock" is just for inserting 'source code'; Here, this is useless.
           int rwlockindex = codeAttr.getMaxLocals()-1;
       System.out.println("JX - rwlockindex - " + rwlockindex);
+      System.out.println( "JX - numberOfLocalVariables" + table.tableLength() );
+      for (int ii = 0; ii < table.tableLength(); ii++) {
+          System.out.println( "JX - " + i + " : " + table.index(ii) + " : " + table.variableName(ii) + " : " + table.descriptor(ii) );  	  
+      }
           code.addAstore( rwlockindex );
-      LocalVariableAttribute table = (LocalVariableAttribute) codeAttr.getAttribute(LocalVariableAttribute.tag);
-      int numberOfLocalVariables = table.tableLength();
-      System.out.println( "JX - " + numberOfLocalVariables );
+
+      System.out.println( "JX - numberOfLocalVariables" + table.tableLength() );
+      for (int ii = 0; ii < table.tableLength(); ii++) {
+          System.out.println( "JX - " + i + " : " + table.index(ii) + " : " + table.variableName(ii) + " : " + table.descriptor(ii) );  	  
+      }
       System.out.println( "JX - " + table.variableName( rwlockindex ));
       System.out.println( "JX - " + table.variableName( table.index(rwlockindex) ));
       System.out.println( "JX - " + table.variableName( table.nameIndex(rwlockindex) ));
