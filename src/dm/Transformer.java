@@ -32,6 +32,9 @@ public class Transformer implements ClassFileTransformer {
       CtBehavior[] methods = cl.getDeclaredBehaviors();
       //Added by JX
       System.out.println("JX - CLASS - " + cl.getName() );
+      for (CtBehavior method : methods) 
+    	  System.out.println( method.getName() + " @ " + method.getSignature() 
+  	  		+ " - constr?" + method.getMethodInfo().isConstructor() + " - cl?" + method.getMethodInfo().isStaticInitializer() + " - meth?" + method.getMethodInfo().isMethod());
       //end-Added
       for (CtBehavior method : methods) {
         if (method.isEmpty() == false) {
