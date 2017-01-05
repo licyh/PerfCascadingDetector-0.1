@@ -259,6 +259,8 @@ public class MethodUtil {
         }
 
         if ( isRWLock ) {
+      /* 
+      // JX - testcode
       CodeIterator tmpiter = codeAttr.iterator();
       Instruction j = new Instruction();
       Instruction k;
@@ -278,41 +280,32 @@ public class MethodUtil {
     		  k = j;
     	  System.out.println("\t" + k.toString());
       }
+      */
           Bytecode code = new Bytecode(constPool);
           // prepare stack and local variables
           allocStack(10);
+      /*
       LocalVariableAttribute table = (LocalVariableAttribute)codeAttr.getAttribute(LocalVariableAttribute.tag);
       System.out.println( "JX - numberOfLocalVariables - " + table.tableLength() );
       for (int ii = 0; ii < table.tableLength(); ii++) {
     	  System.out.println( "JX - " + ii + " : " + table.variableName(ii) + " : " + table.descriptor(ii) 
     	  	+ " index=" + table.index(ii) + " nameIndex=" + table.nameIndex(ii) + " descriptorIndex=" + table.descriptorIndex(ii) );
       }
-      System.out.println("JX - maxLocals - " + codeAttr.getMaxLocals());
+      */
+      //System.out.println("JX - maxLocals - " + codeAttr.getMaxLocals());
       	  method.addLocalVariable("rwlock", ClassPool.getDefault().get("java.util.concurrent.locks.ReadWriteLock")); // added: jx: the variable name "rwlock" is just for inserting 'source code'; Here, this is useless.
       	  int rwlockindex = codeAttr.getMaxLocals() - 1;
-      System.out.println("JX - rwlockindex - " + rwlockindex);
-      System.out.println( "JX - numberOfLocalVariables - " + table.tableLength() );
-      for (int ii = 0; ii < table.tableLength(); ii++) {
-    	  System.out.println( "JX - " + ii + " : " + table.variableName(ii) + " : " + table.descriptor(ii) 
-    	  	+ " index=" + table.index(ii) + " nameIndex=" + table.nameIndex(ii) + " descriptorIndex=" + table.descriptorIndex(ii) );
-      }
-      System.out.println("JX - maxLocals - " + codeAttr.getMaxLocals());
-          allocLocal(5);
+      //System.out.println("JX - rwlockindex - " + rwlockindex);
+          allocLocal(5);      //jx - will change codeAttr.getMaxLocals(), then affect 'rwlockindex', so cannot move up.
           int objIndex = rwlockindex + 1;
-      System.out.println("JX - maxLocals - " + codeAttr.getMaxLocals());
+      //System.out.println("JX - objindex - " + objIndex);
+      //System.out.println("JX - maxLocals - " + codeAttr.getMaxLocals());
           code.addAstore(objIndex);
           code.addAload(objIndex);
-      System.out.println("JX - objindex - " + objIndex);
-      
+          
           // add ReadWriteLock rwlock = $topOfStack;
           code.addAload(objIndex);
           code.addAstore( rwlockindex );
-
-      System.out.println( "JX - numberOfLocalVariables - " + table.tableLength() );
-      for (int ii = 0; ii < table.tableLength(); ii++) {
-    	  System.out.println( "JX - " + ii + " : " + table.variableName(ii) + " : " + table.descriptor(ii) 
-    	  	+ " index=" + table.index(ii) + " nameIndex=" + table.nameIndex(ii) + " descriptorIndex=" + table.descriptorIndex(ii) );
-      }
 
           // prepare StringBuilder
           code.addNew("java/lang/StringBuilder");
@@ -341,6 +334,7 @@ public class MethodUtil {
           // log
           code.addInvokevirtual("java/lang/StringBuilder", "toString", "()Ljava/lang/String;");
           code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
+          
           try {
             int loc = codeIter.insertExAt(cur, code.get());
             codeIter.insert(code.getExceptionTable(), loc);
@@ -350,8 +344,9 @@ public class MethodUtil {
             System.out.print("Badcode when insert monitor instruction.");
             e.printStackTrace();
           }
+          
         }
-        
+        // JX - then set instruction
         i.setPos(cur);
       }//end-while
 
