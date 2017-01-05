@@ -13,18 +13,29 @@ public class DynamicAnalysis {
             System.out.println( "Please specify a correct xml file dir!! (argv.lenth=" + argv.length + ")" );
             return;
         }
+		
+		System.out.println("JX - da begin ...");
+		long start_time = System.currentTimeMillis();         
+		
 		//init and get 'base' file
 		GraphBuilder graphBuilder = new GraphBuilder( argv[0] );
     	//GraphBuilder graphBuilder = new GraphBuilder("input/MR-4813-xml"); //"input/JX-MR-xml" //Test-HB-4729-v6-3-xml");   "Test-HB-4729-v6-3-xml"
     	
+		System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
+		
     	graphBuilder.buildsyncgraph();
     	//graphBuilder.buildmemref();
+    	
+    	System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
     	
     	graphBuilder.buildlockmemref(); 
 		if (argv.length > 1 ){                         //what's this for??
             graphBuilder.addspecialedges(argv[1]);
             System.out.println("---------S S S S S S S S S S S---------------");
 		} 
+		
+		System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
+		
 		// find out 1.flipped order 2.lock relationship graph by the same locks
 		graphBuilder.findflippedorder();  
 		// build lock relationship between different locks

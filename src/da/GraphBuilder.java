@@ -24,9 +24,9 @@ import org.w3c.dom.*;
 /*
 // JX - this is form class '_DM_Log'
 public enum OPTYPE {
-    RWLockCreate,
     LockRequire, 		//require lock    //JX:
     LockRelease, 		//release lock    //JX:
+    RWLockCreate,                         //JX:
     
     ThdCreate,  		//create thread        //JX: including "(servers') handler threads" for processing requests/events. NO need including listeners, they are already hidden by RPC-MsgSending/MsgProcEnter/MsgProcExit
     ThdEnter,           //enter thread
@@ -391,7 +391,9 @@ public class GraphBuilder {
         		typeref.put("LockRequire", new ArrayList<Integer>());
         	if (typeref.get("LockRelease") == null)
         		typeref.put("LockRelease", new ArrayList<Integer>());
-            if (typeref.get("MsgSending") == null)                                             
+        	if (typeref.get("RWLockCreate") == null)
+        		typeref.put("RWLockCreate", new ArrayList<Integer>());
+        	if (typeref.get("MsgSending") == null)                                             
 	            typeref.put("MsgSending",new ArrayList<Integer>());
 	        if (typeref.get("MsgProcEnter") == null)
 	            typeref.put("MsgProcEnter",new ArrayList<Integer>());
@@ -418,8 +420,9 @@ public class GraphBuilder {
 	        System.out.println("#totalNodes = " + nList.size() + ", including the following");  //JX: verified, equal to $index
 	        System.out.println("LockRequire: " + typeref.get("LockRequire").size());
 	        System.out.println("LockRelease: " + typeref.get("LockRelease").size());
+	        System.out.println("RWLockCreate: " + typeref.get("RWLockCreate").size());
 		    for (String type : typeref.keySet())    
-		    	if ( !type.equals("LockRequire") && !type.equals("LockRelease"))
+		    	if ( !type.equals("LockRequire") && !type.equals("LockRelease") && !type.equals("RWLockCreate"))
                 	System.out.println(type + " : " + typeref.get(type).size());
 	        System.out.println( esum + " basic edges are added in the initialization.\n");
 		    
@@ -1327,10 +1330,11 @@ public class GraphBuilder {
     				ArrayList<Integer> list = new ArrayList<Integer>(nList.size());
     				lockmemref.put(memaddr, list);
     				ArrayList<Integer> typelist = new ArrayList<Integer>(3);  // [_1sync(ojb), _2sync method, _3lock];   the number of every kind of lock
+    				typelist.add(new Integer(0));typelist.add(new Integer(0));typelist.add(new Integer(0));
     				lockmemrefType.put(memaddr, typelist);
     			} 
     			lockmemref.get(memaddr).add( i );
-    			lockmemrefType.get(memaddr).set( locktype, new Integer(lockmemrefType.get(memaddr).get(locktype) + 1) );
+    			lockmemrefType.get(memaddr).set( locktype, new Integer(lockmemrefType.get(memaddr).get(locktype).intValue() + 1) );
     		}
     	}
     	
