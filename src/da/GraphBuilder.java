@@ -1365,7 +1365,7 @@ public class GraphBuilder {
     		// get all rwlock matches
     		if ( e.getElementsByTagName("OPTY").item(0).getTextContent().equals("RWLockCreate") ) {
     			totalRWLockCreates ++;
-    			String [] opval = e.getElementsByTagName("OPVAL").item(0).getTextContent().split("|");
+    			String [] opval = e.getElementsByTagName("OPVAL").item(0).getTextContent().split("\\|");  //JX - "|" needs to be written as "\\|"
     	        String pid = e.getElementsByTagName("PID").item(0).getTextContent();
     	        //String tid = e.getElementsByTagName("TID").item(0).getTextContent();
     	        String pidhashcode;
@@ -1378,7 +1378,6 @@ public class GraphBuilder {
     	        	rwlockmatch.put(pidhashcode, strs);    // "pid"+"hashcode" -> "R/W", "pid"+"superobjhashcode"
     	        } else {
     	        	System.out.println("JX - ERROR - " + "NOT rwlockmemref.get(str) == null - R");
-    	        	System.out.println("JX --------- " + pidhashcode + ":" + rwlockmatch.get(pidhashcode));
     	        }
     	        // WriteLock
     	        pidhashcode = pid + opval[2]; 
@@ -1389,7 +1388,6 @@ public class GraphBuilder {
     	        	rwlockmatch.put(pidhashcode, strs);    // "pid"+"hashcode" -> "R/W", "pid"+"superobjhashcode"
     	        } else { 
     	        	System.out.println("JX - ERROR - " + "NOT rwlockmemref.get(str) == null - W");
-    	        	System.out.println("JX --------- " + pidhashcode + ":" + rwlockmatch.get(pidhashcode));
     	        }
     			
     		}
@@ -1424,7 +1422,7 @@ public class GraphBuilder {
     			lockmemrefType.get(memaddr).set( locktype, new Integer(lockmemrefType.get(memaddr).get(locktype).intValue() + 1) );
     		}
     	}
-    	System.out.println("#totalRWLockCreates" + totalRWLockCreates);
+    	System.out.println("#totalRWLockCreates = " + totalRWLockCreates);
     	System.out.println("#totalLockRequires = " + totalLockRequires);
     	System.out.println("#_1sync(obj):"+typesOfTotalLockRequires[1] + "  #_2syncMethod:"+typesOfTotalLockRequires[2] + "  #_3lock:"+typesOfTotalLockRequires[3] );
     	
@@ -1853,7 +1851,7 @@ public class GraphBuilder {
         	for (int i = 0; i < list1.size(); i++) {
         		int index1 = list1.get(i);
         		if ( isReadOrWriteLock(index1).equals("null") )
-        			System.out.println("JX - ERROR? - " + lastCallstack(index1) );
+        			System.out.println("JX - ERROR?????????? - " + lastCallstack(index1) );
         		if (isReadOrWriteLock(index1).equals("R")) {
         			for (String memaddr2: dotlockmemref.keySet()) {
         				ArrayList<Integer> list2 = dotlockmemref.get(memaddr2);
