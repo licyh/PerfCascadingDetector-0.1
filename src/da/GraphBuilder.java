@@ -163,6 +163,7 @@ public class GraphBuilder {
         memref = new HashMap<String , ArrayList<Integer>>(nList.size());
         //Added by JX
         lockmemref = new HashMap<String , ArrayList<Integer>>(nList.size());
+        lockmemrefType = new HashMap<String , ArrayList<Integer>>(nList.size());
         lockrelationedge  = new ArrayList<ArrayList<Pair>>();
         lockrelationbackedge  = new ArrayList<ArrayList<Pair>>();
         //End-Added
@@ -1309,6 +1310,10 @@ public class GraphBuilder {
     public void buildlockmemref() {
     	System.out.println("\nJX - lock memory address analysis");
     	
+    	
+    	int totalLockRequires = 0;
+    	int typesOfTotalLockRequires[] = {0, 0, 0, 0};
+    	
     	for ( int i = 0; i < nList.size(); i++) {
     		Node node = nList.get(i);
     		Element e = (Element) node;
@@ -1323,35 +1328,48 @@ public class GraphBuilder {
     		if (e.getElementsByTagName("OPTY").item(0).getTextContent().equals("LockRequire") 
     				//|| e.getElementsByTagName("OPTY").item(0).getTextContent().equals("LockRelease") 
     				) {
+    			totalLockRequires ++;
     			String [] opval = e.getElementsByTagName("OPVAL").item(0).getTextContent().split("_");  // _1 _2 _3
     			String memaddr = opval[0];
     			int locktype = Integer.valueOf( opval[1] );
+    			typesOfTotalLockRequires[ locktype ] ++;
     			if (lockmemref.get(memaddr) == null) {
     				ArrayList<Integer> list = new ArrayList<Integer>(nList.size());
     				lockmemref.put(memaddr, list);
-    				ArrayList<Integer> typelist = new ArrayList<Integer>(3);  // [_1sync(ojb), _2sync method, _3lock];   the number of every kind of lock
-    				typelist.add(new Integer(0));typelist.add(new Integer(0));typelist.add(new Integer(0));
+    				ArrayList<Integer> typelist = new ArrayList<Integer>(4);  // [0, _1sync(ojb), _2sync method, _3lock];   the number of every kind of lock
+    				typelist.add(new Integer(0));typelist.add(new Integer(0));typelist.add(new Integer(0)); typelist.add(new Integer(0));
     				lockmemrefType.put(memaddr, typelist);
     			} 
     			lockmemref.get(memaddr).add( i );
     			lockmemrefType.get(memaddr).set( locktype, new Integer(lockmemrefType.get(memaddr).get(locktype).intValue() + 1) );
     		}
     	}
+    	System.out.println("#total LockRequires = " + totalLockRequires);
+    	System.out.println("#_1sync(obj):"+typesOfTotalLockRequires[1] + " #_2syncMethod:"+typesOfTotalLockRequires[1] + " #_3lock:"+typesOfTotalLockRequires[1] );
     	
     	//for Debug
-        System.out.println("#lockmemaddr = " + lockmemref.size());
+        System.out.println("#total lockmemaddr = " + lockmemref.size());
+        int tmp[] = {0, 0, 0, 0};
         for (String memaddr : lockmemref.keySet()) {
             ArrayList<Integer> list = lockmemref.get(memaddr);
-            System.out.println("addr " + memaddr + " has " + list.size() + " locks");
             ArrayList<Integer> typelist = lockmemrefType.get( memaddr );
-        	System.out.println( "_1sync(obj)="+typelist.get(0) + "_2syncMethod="+typelist.get(1) + "_3lock="+typelist.get(2) );
-        	
+            System.out.println("addr " + memaddr + " has " + list.size() + " locks" 
+            		+ "\t_1sync(obj)="+typelist.get(1) + "\t_2syncMethod="+typelist.get(2) + "\t_3lock="+typelist.get(3));
+
+        	int numTypes = 0;
+        	if ( typelist.get(1) > 0 ) numTypes ++;
+        	if ( typelist.get(2) > 0 ) numTypes ++;
+        	if ( typelist.get(3) > 0 ) numTypes ++;
+        	tmp[ numTypes ] ++;
+        	if ( numTypes > 1 )
+        		System.out.println("--------------------------------------------" + lastCallstack( list.get(0) ) );
         	/*
             for (int i = 0; i < list.size(); i++) {
      
             }
             */
         }
+        System.out.println("#Crossing1/2/3LockTypes: " + "1-" + tmp[1] + " 2-" + tmp[2] + " 3-" + tmp[3] );
     }
     
     //end-Added
