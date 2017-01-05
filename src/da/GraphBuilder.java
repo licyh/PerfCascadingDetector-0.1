@@ -1357,12 +1357,14 @@ public class GraphBuilder {
     	
     	int totalLockRequires = 0;
     	int typesOfTotalLockRequires[] = {0, 0, 0, 0};
+    	int totalRWLockCreates = 0;
     	
     	for ( int i = 0; i < nList.size(); i++) {
     		Node node = nList.get(i);
     		Element e = (Element) node;
     		// get all rwlock matches
     		if ( e.getElementsByTagName("OPTY").item(0).getTextContent().equals("RWLockCreate") ) {
+    			totalRWLockCreates ++;
     			String [] opval = e.getElementsByTagName("OPVAL").item(0).getTextContent().split("|");
     	        String pid = e.getElementsByTagName("PID").item(0).getTextContent();
     	        //String tid = e.getElementsByTagName("TID").item(0).getTextContent();
@@ -1374,8 +1376,10 @@ public class GraphBuilder {
     	        	strs[0] = "R";
     	        	strs[1] = pid + opval[0];
     	        	rwlockmatch.put(pidhashcode, strs);    // "pid"+"hashcode" -> "R/W", "pid"+"superobjhashcode"
-    	        } else 
+    	        } else {
     	        	System.out.println("JX - ERROR - " + "NOT rwlockmemref.get(str) == null - R");
+    	        	System.out.println("JX --------- " + pidhashcode + ":" + rwlockmatch.get(pidhashcode));
+    	        }
     	        // WriteLock
     	        pidhashcode = pid + opval[2]; 
     	        if (rwlockmatch.get(pidhashcode) == null) {
@@ -1383,8 +1387,10 @@ public class GraphBuilder {
     	        	strs[0] = "W";
     	        	strs[1] = pid + opval[0];
     	        	rwlockmatch.put(pidhashcode, strs);    // "pid"+"hashcode" -> "R/W", "pid"+"superobjhashcode"
-    	        } else 
+    	        } else { 
     	        	System.out.println("JX - ERROR - " + "NOT rwlockmemref.get(str) == null - W");
+    	        	System.out.println("JX --------- " + pidhashcode + ":" + rwlockmatch.get(pidhashcode));
+    	        }
     			
     		}
     		// get all lock memory addresses
@@ -1418,8 +1424,9 @@ public class GraphBuilder {
     			lockmemrefType.get(memaddr).set( locktype, new Integer(lockmemrefType.get(memaddr).get(locktype).intValue() + 1) );
     		}
     	}
-    	System.out.println("#total LockRequires = " + totalLockRequires);
-    	System.out.println("#_1sync(obj):"+typesOfTotalLockRequires[1] + " #_2syncMethod:"+typesOfTotalLockRequires[2] + " #_3lock:"+typesOfTotalLockRequires[3] );
+    	System.out.println("#totalRWLockCreates" + totalRWLockCreates);
+    	System.out.println("#totalLockRequires = " + totalLockRequires);
+    	System.out.println("#_1sync(obj):"+typesOfTotalLockRequires[1] + "  #_2syncMethod:"+typesOfTotalLockRequires[2] + "  #_3lock:"+typesOfTotalLockRequires[3] );
     	
     	//for Debug
         System.out.println("#total lockmemaddr = " + lockmemref.size());
