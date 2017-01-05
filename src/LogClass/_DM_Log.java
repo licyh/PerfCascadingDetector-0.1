@@ -22,6 +22,9 @@ public class _DM_Log {
     ProcessCreate, //process create
     LockRequire, //require lock
     LockRelease, //release lock
+    //Added by JX
+    RWLockCreate,  //jx - for creating ReentrantReadWriteLock
+    //end-Added
   };
 
   public static void log_Base(String opType, String opValue) {
@@ -122,6 +125,7 @@ public class _DM_Log {
     String opType = _DM_Log.OPTYPE.ProcessCreate.name();
     _DM_Log.log_Base(opType, opValue);
   }
+  
   public static void log_LockRequire(String opValue) {
     String opType = _DM_Log.OPTYPE.LockRequire.name();
     _DM_Log.log_Base(opType, opValue);
@@ -130,5 +134,10 @@ public class _DM_Log {
     String opType = _DM_Log.OPTYPE.LockRelease.name();
     _DM_Log.log_Base(opType, opValue);
   }
-
+  //Added by JX
+  public static void log_RWLockCreate(String opValue) {
+	String opType = _DM_Log.OPTYPE.RWLockCreate.name();
+	_DM_Log.log_Base(opType, opValue);
+  }
+  //end-Added
 }
