@@ -1345,7 +1345,7 @@ public class GraphBuilder {
     		}
     	}
     	System.out.println("#total LockRequires = " + totalLockRequires);
-    	System.out.println("#_1sync(obj):"+typesOfTotalLockRequires[1] + " #_2syncMethod:"+typesOfTotalLockRequires[1] + " #_3lock:"+typesOfTotalLockRequires[1] );
+    	System.out.println("#_1sync(obj):"+typesOfTotalLockRequires[1] + " #_2syncMethod:"+typesOfTotalLockRequires[2] + " #_3lock:"+typesOfTotalLockRequires[3] );
     	
     	//for Debug
         System.out.println("#total lockmemaddr = " + lockmemref.size());
@@ -1361,7 +1361,8 @@ public class GraphBuilder {
         	if ( typelist.get(2) > 0 ) numTypes ++;
         	if ( typelist.get(3) > 0 ) numTypes ++;
         	tmp[ numTypes ] ++;
-        	if ( numTypes > 1 )
+        	//if ( numTypes > 1 )
+        	if ( typelist.get(2) > 0 && typelist.get(3) > 0 )
         		System.out.println("--------------------------------------------" + lastCallstack( list.get(0) ) );
         	/*
             for (int i = 0; i < list.size(); i++) {
@@ -2216,7 +2217,7 @@ public String lastCallstack(int i){
             ind++;
             continue;
         }
-        sti = i +"&"
+        sti = "@" + i + " "
             + si.getElementsByTagName("Class").item(0).getTextContent()  + " "
             + si.getElementsByTagName("Method").item(0).getTextContent() + " "
             + si.getElementsByTagName("Line").item(0).getTextContent();
