@@ -31,7 +31,7 @@ public class Transformer implements ClassFileTransformer {
       cl = pool.makeClass(new java.io.ByteArrayInputStream(b));
       CtBehavior[] methods = cl.getDeclaredBehaviors();
       //Added by JX
-      System.out.println("JX - CLASS - " + cl.getName() );
+      //System.out.println("JX - CLASS - " + cl.getName() );
       /*
       for (CtBehavior method : methods) 
     	System.out.println( method.getName() + " @ " + method.getSignature() 
@@ -41,11 +41,13 @@ public class Transformer implements ClassFileTransformer {
       for (CtBehavior method : methods) {
         if (method.isEmpty() == false) {
           //Added by JX
+          /*
           if ( cl.getName().contains("BaseContainerTokenSecretManager")
         		  || cl.getName().contains("ContainerExecutor") ) {
         	  System.out.println( method.getName() + " @ " + method.getSignature() 
         	  	+ " - constr?" + method.getMethodInfo().isConstructor() + " - cl?" + method.getMethodInfo().isStaticInitializer() + " - meth?" + method.getMethodInfo().isMethod());
           }
+          */
           //end-Added
           transformMethod(cl, method);
         }

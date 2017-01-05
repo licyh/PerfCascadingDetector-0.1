@@ -331,7 +331,7 @@ public class MethodUtil {
           code.addInvokeinterface("java/util/concurrent/locks/ReadWriteLock", "writeLock", "()Ljava/util/concurrent/locks/Lock;", 1);
           code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
           code.addInvokevirtual("java/lang/StringBuilder", "append", "(I)Ljava/lang/StringBuilder;");
-          // log
+          // log "System.identityHashCode(rwlock) +'|'+ System.identityHashCode(rwlock.readLock()) +'|'+ System.identityHashCode(rwlock.writeLock())"
           code.addInvokevirtual("java/lang/StringBuilder", "toString", "()Ljava/lang/String;");
           code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
           
