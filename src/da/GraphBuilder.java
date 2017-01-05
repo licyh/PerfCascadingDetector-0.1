@@ -24,8 +24,10 @@ import org.w3c.dom.*;
 /*
 // JX - this is form class '_DM_Log'
 public enum OPTYPE {
+    RWLockCreate,
     LockRequire, 		//require lock    //JX:
     LockRelease, 		//release lock    //JX:
+    
     ThdCreate,  		//create thread        //JX: including "(servers') handler threads" for processing requests/events. NO need including listeners, they are already hidden by RPC-MsgSending/MsgProcEnter/MsgProcExit
     ThdEnter,           //enter thread
     ThdExit,    		//exit thread
@@ -81,11 +83,15 @@ public class GraphBuilder {
     ArrayList<ArrayList<Pair>> edge;                  //adjcent list of edges of the happen before graph
     ArrayList<ArrayList<Pair>> backedge;              //adjcent list of backward edges for tracing back
     ArrayList<HashSet<Integer>> reach;                //reach[i] = set of reachable node form Node I
-    HashMap <String, ArrayList<Integer> >memref;      //JX: record HeapRead/HeapWrite. ie, memref[madd] = set of nodes which read or write memory location madd
+    HashMap <String, ArrayList<Integer> >memref;      //JX: record HeapRead/HeapWrite. ie, memref[addr] = set of nodes which read or write memory location addr
     //Added by JX
-    HashMap <String, ArrayList<Integer> > lockmemref; //JX: record LockRequire/LockRelease. 
+    HashMap <String, ArrayList<Integer> > lockmemref;      //JX: record LockRequire/LockRelease. 
+    HashMap <String, ArrayList<Integer> > lockmemrefType;  // lock mem addr -> [_1sync(ojb), _2sync method, _3lock];   the number of every kind of lock
+    
     ArrayList<ArrayList<Pair>> lockrelationedge;      //adjcent list of edges for lock relationship graph
     ArrayList<ArrayList<Pair>> lockrelationbackedge;  //adjcent list of backward edges for tracing back
+    
+    
     //End-Added
     ArrayList<IdPair> idplist;                        //JX: pid/tid for all nodes. ie, idplist[i] includes the pid and tid of node i
     HashMap <IdPair, ArrayList<Integer>> ptidref;     //ptidref(idpair) includes the node in ptid from the beginning to end
@@ -208,6 +214,7 @@ public class GraphBuilder {
         IdPair idPair;
         if (xmlfiles != null)
         	
+        	// JX - traverse all thread files
             for (File xml : xmlfiles) {
             	Stack<Integer> stack = new Stack<Integer>();
             	Stack<Integer> lockstack = new Stack<Integer>();
@@ -237,6 +244,7 @@ public class GraphBuilder {
                 int mflag   = 1;
                 int curmsg = -1;
                 
+                // JX - deal with a single thread file's operations
                 for (int i = 0; i < NList.getLength(); i++) {
                     Node nNode = NList.item(i);        //get a node/operation
                     //System.out.println("\nCurrent Element :" + nNode.getNodeName());
@@ -1296,23 +1304,53 @@ public class GraphBuilder {
     
     //Added by JX
     public void buildlockmemref() {
+    	System.out.println("\nJX - lock memory address analysis");
+    	
     	for ( int i = 0; i < nList.size(); i++) {
     		Node node = nList.get(i);
     		Element e = (Element) node;
+    		// get all rwlock matches
+    		if ( e.getElementsByTagName("OPTY").item(0).getTextContent().equals("RWLockCreate") ) {
+    			String [] opval = e.getElementsByTagName("OPVAL").item(0).getTextContent().split("|");
+    			//opval[0];
+    			//opval[1];
+    			//opval[2];
+    		}
+    		// get all lock memory addresses
     		if (e.getElementsByTagName("OPTY").item(0).getTextContent().equals("LockRequire") 
     				//|| e.getElementsByTagName("OPTY").item(0).getTextContent().equals("LockRelease") 
     				) {
-    			String [] opval = e.getElementsByTagName("OPVAL").item(0).getTextContent().split("_");
+    			String [] opval = e.getElementsByTagName("OPVAL").item(0).getTextContent().split("_");  // _1 _2 _3
     			String memaddr = opval[0];
+    			int locktype = Integer.valueOf( opval[1] );
     			if (lockmemref.get(memaddr) == null) {
     				ArrayList<Integer> list = new ArrayList<Integer>(nList.size());
     				lockmemref.put(memaddr, list);
-    			} else {
-    				lockmemref.get(memaddr).add(i);
-    			}
+    				ArrayList<Integer> typelist = new ArrayList<Integer>(3);  // [_1sync(ojb), _2sync method, _3lock];   the number of every kind of lock
+    				lockmemrefType.put(memaddr, typelist);
+    			} 
+    			lockmemref.get(memaddr).add( i );
+    			lockmemrefType.get(memaddr).set( locktype, new Integer(lockmemrefType.get(memaddr).get(locktype) + 1) );
     		}
     	}
+    	
+    	//for Debug
+        System.out.println("#lockmemaddr = " + lockmemref.size());
+        for (String memaddr : lockmemref.keySet()) {
+            ArrayList<Integer> list = lockmemref.get(memaddr);
+            System.out.println("addr " + memaddr + " has " + list.size() + " locks");
+            ArrayList<Integer> typelist = lockmemrefType.get( memaddr );
+        	System.out.println( "_1sync(obj)="+typelist.get(0) + "_2syncMethod="+typelist.get(1) + "_3lock="+typelist.get(2) );
+        	
+        	/*
+            for (int i = 0; i < list.size(); i++) {
+     
+            }
+            */
+        }
     }
+    
+    //end-Added
     
     public void buildmemref(){
     	

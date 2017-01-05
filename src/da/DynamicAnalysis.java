@@ -7,11 +7,19 @@ package da;
 public class DynamicAnalysis {
 	
     public static void main (String [] argv) {
-        System.out.println("hi");
+        
     	//Added by JX
-    	GraphBuilder graphBuilder = new GraphBuilder("input/MR-4813-xml"); //"input/JX-MR-xml" //Test-HB-4729-v6-3-xml");   "Test-HB-4729-v6-3-xml"
+		if (argv.length != 1){
+            System.out.println( "Please specify a correct xml file dir!! (argv.lenth=" + argv.length + ")" );
+            return;
+        }
+		//init and get 'base' file
+		GraphBuilder graphBuilder = new GraphBuilder( argv[0] );
+    	//GraphBuilder graphBuilder = new GraphBuilder("input/MR-4813-xml"); //"input/JX-MR-xml" //Test-HB-4729-v6-3-xml");   "Test-HB-4729-v6-3-xml"
+    	
     	graphBuilder.buildsyncgraph();
     	//graphBuilder.buildmemref();
+    	
     	graphBuilder.buildlockmemref(); 
 		if (argv.length > 1 ){                         //what's this for??
             graphBuilder.addspecialedges(argv[1]);
@@ -21,7 +29,7 @@ public class DynamicAnalysis {
 		graphBuilder.findflippedorder();  
 		// build lock relationship between different locks
 		// TODO
-    	//End-Added
+    	//end-Added
 		
 		/*
 		if (argv.length == 0){

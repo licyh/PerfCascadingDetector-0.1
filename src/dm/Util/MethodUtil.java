@@ -181,7 +181,7 @@ public class MethodUtil {
             logClass = logClassExit;
             logMethod = logMethodExit;
           }
-          int mlFlag = 51; //monitor or lock flag: 1(49): monitor; 3(51): lock;
+          int mlFlag = 51; //flag: 1(49):monitor,ie,sync(obj);  2:sync method;  3(51):lock;
           if (i.isMonitor()) { mlFlag = 49; }
 
           Bytecode code = new Bytecode(constPool);
@@ -244,6 +244,8 @@ public class MethodUtil {
     	throw new Exception("JX - method's first bytecode instruction doesn't exist!!");
       }
 
+      int numOfRWLocksInOneMethod = 0;    //basically, it is only 1
+      
       // scan original bytecode
       while (codeIter.hasNext()) {
         cur = codeIter.next();
@@ -259,6 +261,10 @@ public class MethodUtil {
         }
 
         if ( isRWLock ) {
+          if (++numOfRWLocksInOneMethod > 1) {
+            System.out.println( "JX - WARNING - Now the program perhaps cannot deal with multipule RWLokcs in a method!!!" );
+            throw new Exception("JX - WARNING - Now the program perhaps cannot deal with multipule RWLokcs in a method!!!");
+          }
       /* 
       // JX - testcode
       CodeIterator tmpiter = codeAttr.iterator();
@@ -294,7 +300,7 @@ public class MethodUtil {
       */
       //System.out.println("JX - maxLocals - " + codeAttr.getMaxLocals());
       	  method.addLocalVariable("rwlock", ClassPool.getDefault().get("java.util.concurrent.locks.ReadWriteLock")); // added: jx: the variable name "rwlock" is just for inserting 'source code'; Here, this is useless.
-      	  int rwlockindex = codeAttr.getMaxLocals() - 1;
+      	  int rwlockindex = codeAttr.getMaxLocals() - 1;    //jx: if one method has the second RWLock, this will be wrong, because 'MaxLocals' has been changed
       //System.out.println("JX - rwlockindex - " + rwlockindex);
           allocLocal(5);      //jx - will change codeAttr.getMaxLocals(), then affect 'rwlockindex', so cannot move up.
           int objIndex = rwlockindex + 1;
