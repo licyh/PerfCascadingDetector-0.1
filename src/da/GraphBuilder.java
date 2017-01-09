@@ -1477,12 +1477,26 @@ public class GraphBuilder {
 		
         //for Debug
         int tmp[] = {0, 0, 0, 0};
+        int N12 = 0;
         int N13 = 0; 
         int N23 = 0;
         for (String memaddr : accurateLockmemref.keySet()) {
             ArrayList<Integer> list = accurateLockmemref.get(memaddr);
-            ArrayList<Integer> typelist = accurateLockmemref.get( memaddr );
+            ArrayList<Integer> typelist = lockmemrefType.get( memaddr );
             
+            System.out.println("addr " + memaddr + " has " + list.size() + " locks" 
+            		+ "\t_1sync(obj)="+typelist.get(1) + "\t_2syncMethod="+typelist.get(2) + "\t_3lock="+typelist.get(3));
+     
+        	int numTypes = 0;
+        	if ( typelist.get(1) > 0 ) numTypes ++;
+        	if ( typelist.get(2) > 0 ) numTypes ++;
+        	if ( typelist.get(3) > 0 ) numTypes ++;
+        	tmp[ numTypes ] ++;
+
+        	if ( typelist.get(1) > 0 && typelist.get(2) > 0 ) {
+        		N12++;
+        	}
+        	
         	if ( typelist.get(1) > 0 && typelist.get(3) > 0 ) {
         		N13++;
         	}
@@ -1495,22 +1509,12 @@ public class GraphBuilder {
         	}
             
             /*
-            System.out.println("addr " + memaddr + " has " + list.size() + " locks" 
-            		+ "\t_1sync(obj)="+typelist.get(1) + "\t_2syncMethod="+typelist.get(2) + "\t_3lock="+typelist.get(3));
 
-        	int numTypes = 0;
-        	if ( typelist.get(1) > 0 ) numTypes ++;
-        	if ( typelist.get(2) > 0 ) numTypes ++;
-        	if ( typelist.get(3) > 0 ) numTypes ++;
-        	tmp[ numTypes ] ++;
-
-        	if ( numTypes > 1 ) {
-        	}
         		
             */
         }
         System.out.println("#Crossing1/2/3LockTypes: " + "1-" + tmp[1] + " 2-" + tmp[2] + " 3-" + tmp[3] );
-        System.out.println("N13 = " + N13 + "  N23 = " + N23);
+        System.out.println("N12 = " + N12 + " N13 = " + N13 + "  N23 = " + N23);
     }
     
     //end-Added
