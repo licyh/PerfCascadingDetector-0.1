@@ -1391,19 +1391,19 @@ public class GraphBuilder {
     			if (accurateLockmemref.get(pidopval0) == null) {
     				ArrayList<Integer> list = new ArrayList<Integer>();
     				accurateLockmemref.put(pidopval0, list);
+    				ArrayList<Integer> typelist = new ArrayList<Integer>(4);  // [0, _1sync(ojb), _2sync method, _3lock];   the number of every kind of lock
+    				typelist.add(new Integer(0));typelist.add(new Integer(0));typelist.add(new Integer(0)); typelist.add(new Integer(0));
+    				lockmemrefType.put(pidopval0, typelist);
     			} 
     			accurateLockmemref.get(pidopval0).add( i );
+    			lockmemrefType.get(pidopval0).set( locktype, new Integer(lockmemrefType.get(pidopval0).get(locktype).intValue() + 1) );
     			
     			// build lockmemref: all locks, including 3 types
     			if (lockmemref.get(memaddr) == null) {
     				ArrayList<Integer> list = new ArrayList<Integer>(nList.size());
     				lockmemref.put(memaddr, list);
-    				ArrayList<Integer> typelist = new ArrayList<Integer>(4);  // [0, _1sync(ojb), _2sync method, _3lock];   the number of every kind of lock
-    				typelist.add(new Integer(0));typelist.add(new Integer(0));typelist.add(new Integer(0)); typelist.add(new Integer(0));
-    				lockmemrefType.put(memaddr, typelist);
     			} 
     			lockmemref.get(memaddr).add( i );
-    			lockmemrefType.get(memaddr).set( locktype, new Integer(lockmemrefType.get(memaddr).get(locktype).intValue() + 1) );
     			
     			// build dotlockmemref: only get type "_3" ie xxx.lock
     			if (locktype == 3) {
@@ -1479,18 +1479,10 @@ public class GraphBuilder {
         int tmp[] = {0, 0, 0, 0};
         int N13 = 0; 
         int N23 = 0;
-        for (String memaddr : lockmemref.keySet()) {
-            ArrayList<Integer> list = lockmemref.get(memaddr);
-            ArrayList<Integer> typelist = lockmemrefType.get( memaddr );
-            /*
-            System.out.println("addr " + memaddr + " has " + list.size() + " locks" 
-            		+ "\t_1sync(obj)="+typelist.get(1) + "\t_2syncMethod="+typelist.get(2) + "\t_3lock="+typelist.get(3));
-
-        	int numTypes = 0;
-        	if ( typelist.get(1) > 0 ) numTypes ++;
-        	if ( typelist.get(2) > 0 ) numTypes ++;
-        	if ( typelist.get(3) > 0 ) numTypes ++;
-        	tmp[ numTypes ] ++;
+        for (String memaddr : accurateLockmemref.keySet()) {
+            ArrayList<Integer> list = accurateLockmemref.get(memaddr);
+            ArrayList<Integer> typelist = accurateLockmemref.get( memaddr );
+            
         	if ( typelist.get(1) > 0 && typelist.get(3) > 0 ) {
         		N13++;
         	}
@@ -1501,6 +1493,17 @@ public class GraphBuilder {
         			System.out.println( lastCallstack( list.get(i) ) );
         		}
         	}
+            
+            /*
+            System.out.println("addr " + memaddr + " has " + list.size() + " locks" 
+            		+ "\t_1sync(obj)="+typelist.get(1) + "\t_2syncMethod="+typelist.get(2) + "\t_3lock="+typelist.get(3));
+
+        	int numTypes = 0;
+        	if ( typelist.get(1) > 0 ) numTypes ++;
+        	if ( typelist.get(2) > 0 ) numTypes ++;
+        	if ( typelist.get(3) > 0 ) numTypes ++;
+        	tmp[ numTypes ] ++;
+
         	if ( numTypes > 1 ) {
         	}
         		
