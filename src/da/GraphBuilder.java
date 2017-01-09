@@ -1407,11 +1407,11 @@ public class GraphBuilder {
     			
     			// build dotlockmemref: only get type "_3" ie xxx.lock
     			if (locktype == 3) {
-        			if (dotlockmemref.get(memaddr) == null) {
+        			if (dotlockmemref.get(pidopval0) == null) {
         				ArrayList<Integer> list = new ArrayList<Integer>();
-        				dotlockmemref.put(memaddr, list);
+        				dotlockmemref.put(pidopval0, list);
         			} 
-    				dotlockmemref.get(memaddr).add( i );
+    				dotlockmemref.get(pidopval0).add( i );
     			}
     		}
     		    		
