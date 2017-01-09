@@ -1458,13 +1458,20 @@ public class GraphBuilder {
 			}
 		});
 		Map<String, ArrayList<Integer>> newAccurateLockmemref = new LinkedHashMap<String, ArrayList<Integer>>();
+		int tmpi = 0;
 		for (Map.Entry<String, ArrayList<Integer>> entry: tmplist) {
 			newAccurateLockmemref.put(entry.getKey(), entry.getValue());
+			if (++tmpi <= 10)
 			System.out.println("JX - freq - " + entry.getKey() + " : " + entry.getValue().size() + " - " + lastCallstack(entry.getValue().get(0)));
 		}
 		// traverse newAccurateLockmemref
 		//for (String memaddr: newAccurateLockmemref.keySet()) {
         //}
+		
+		for (String memaddr: dotlockmemref.keySet()) { 
+			ArrayList<Integer> list = dotlockmemref.get(memaddr);
+			System.out.println("JX - dotlock - " + memaddr + " : " + list.size() + " : " + lastCallstack(list.get(0)) );
+		}
         
 		
 		
