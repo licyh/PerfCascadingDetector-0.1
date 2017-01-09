@@ -85,10 +85,12 @@ public class GraphBuilder {
     ArrayList<HashSet<Integer>> reach;                //reach[i] = set of reachable node form Node I
     HashMap <String, ArrayList<Integer> >memref;      //JX: record HeapRead/HeapWrite. ie, memref[addr] = set of nodes which read or write memory location addr
     //Added by JX
-    HashMap<String, ArrayList<Integer> > lockmemref;      //JX: record LockRequire/LockRelease. 
-    HashMap<String, ArrayList<Integer> > lockmemrefType;  // lock mem addr -> [_1sync(ojb), _2sync method, _3lock];   the number of every kind of lock
+    HashMap<String, ArrayList<Integer> > accurateLockmemref;  //New: pid+opval0 -> set of nodes
+    
+    HashMap<String, ArrayList<Integer> > lockmemref;      //JX: record all LockRequire/LockRelease. 
+    HashMap<String, ArrayList<Integer> > lockmemrefType;  //for test: lock mem addr -> [_1sync(ojb), _2sync method, _3lock];   the number of every kind of lock
     HashMap<String, ArrayList<Integer> > dotlockmemref;   // same as above, but only type "_3" ie, xxx.lock
-    HashMap<String, String[]> rwlockmatch;               // "pid-hashcode" -> "R/W", "pid-superobjhashcode"
+    HashMap<String, String[]> rwlockmatch;               // "pid"+"hashcode" -> "R/W", "pid"+"superobjhashcode"
     
     ArrayList<ArrayList<Pair>> lockrelationedge;      //adjcent list of edges for lock relationship graph
     ArrayList<ArrayList<Pair>> lockrelationbackedge;  //adjcent list of backward edges for tracing back
@@ -163,6 +165,8 @@ public class GraphBuilder {
         typeref = new HashMap<String,ArrayList<Integer>>();
         memref = new HashMap<String , ArrayList<Integer>>(nList.size());
         //Added by JX
+        accurateLockmemref = new HashMap<String, ArrayList<Integer> >();
+        
         lockmemref = new HashMap<String , ArrayList<Integer>>(nList.size());
         lockmemrefType = new HashMap<String , ArrayList<Integer>>(nList.size());
         dotlockmemref = new HashMap<String, ArrayList<Integer> >();  
@@ -428,7 +432,7 @@ public class GraphBuilder {
 		    for (String type : typeref.keySet())    
 		    	if ( !type.equals("LockRequire") && !type.equals("LockRelease") && !type.equals("RWLockCreate"))
                 	System.out.println(type + " : " + typeref.get(type).size());
-	        System.out.println( esum + " basic edges are added in the initialization.\n");
+	        System.out.println( esum + " basic edges are added in the initialization.");
 		    
 		    //System.out.print("zkcreate = ");
 		    //System.out.println(zkcreatelist);
@@ -605,7 +609,7 @@ public class GraphBuilder {
     }
     
     public void buildsyncgraph() {
-    	System.out.println("JX - buildsyncgraph - Adding edges to build Happen-Before graph");
+    	System.out.println("\nJX - buildsyncgraph - Adding edges to build Happen-Before graph");
     	
     	//eventremovethreadorder();
         eventcaller = new ArrayList<Integer>(nList.size());
@@ -1310,6 +1314,13 @@ public class GraphBuilder {
     
     
     //Added by JX
+    public String getNodeOPTY(int index) {
+    	Node node = nList.get( index );
+    	Element e = (Element) node;
+    	String opty = e.getElementsByTagName("OPTY").item(0).getTextContent();
+    	return opty;
+    }
+    
     public String getNodePID(int index) {
     	Node node = nList.get( index );
     	Element e = (Element) node;
@@ -1324,7 +1335,7 @@ public class GraphBuilder {
     	return opval;
     }
 
-    // return "PID"+"OPVAL0" for locks, especially for r/w locks
+    // return "PID"+"OPVAL0" for 'lock' nodes, especially for r/w locks
     public String getNodePIDOPVAL0(int index) {   
     	Node node = nList.get( index );
     	Element e = (Element) node;
@@ -1350,67 +1361,40 @@ public class GraphBuilder {
     }
     //end-Added
     
-    //Added by JX
+    //Added by JX - analyze all locks
     public void buildlockmemref() {
     	System.out.println("\nJX - lock memory address analysis");
-    	
     	
     	int totalLockRequires = 0;
     	int typesOfTotalLockRequires[] = {0, 0, 0, 0};
     	int totalRWLockCreates = 0;
     	
-    	for ( int i = 0; i < nList.size(); i++) {
-    		Node node = nList.get(i);
-    		Element e = (Element) node;
-    		// get all rwlock matches
-    		if ( e.getElementsByTagName("OPTY").item(0).getTextContent().equals("RWLockCreate") ) {
-    			totalRWLockCreates ++;
-    			String [] opval = e.getElementsByTagName("OPVAL").item(0).getTextContent().split("\\|");  //JX - "|" needs to be written as "\\|"
-    	        String pid = e.getElementsByTagName("PID").item(0).getTextContent();
-    	        //String tid = e.getElementsByTagName("TID").item(0).getTextContent();
-    	        String pidhashcode;
-    	        // ReadLock
-    	        pidhashcode = pid + opval[1]; 
-    	        if (rwlockmatch.get(pidhashcode) == null) {
-    	        	String[] strs = new String[2];
-    	        	strs[0] = "R";
-    	        	strs[1] = pid + opval[0];
-    	        	rwlockmatch.put(pidhashcode, strs);    // "pid"+"hashcode" -> "R/W", "pid"+"superobjhashcode"
-    	        } else {
-    	        	System.out.println("JX - ERROR - " + "NOT rwlockmemref.get(str) == null - R");
-    	        }
-    	        // WriteLock
-    	        pidhashcode = pid + opval[2]; 
-    	        if (rwlockmatch.get(pidhashcode) == null) {
-    	        	String[] strs = new String[2];
-    	        	strs[0] = "W";
-    	        	strs[1] = pid + opval[0];
-    	        	rwlockmatch.put(pidhashcode, strs);    // "pid"+"hashcode" -> "R/W", "pid"+"superobjhashcode"
-    	        } else { 
-    	        	System.out.println("JX - ERROR - " + "NOT rwlockmemref.get(str) == null - W");
-    	        }
-    			
-    		}
+    	// traverse all nodes to find 'lock-related' nodes
+    	for ( int i = 0; i < nList.size(); i++) { 		
+    		String opty = getNodeOPTY( i );
+    		String opval = getNodeOPVAL( i );
+    		String pid = getNodePID( i );
+
     		// get all lock memory addresses
-    		if (e.getElementsByTagName("OPTY").item(0).getTextContent().equals("LockRequire") 
-    				//|| e.getElementsByTagName("OPTY").item(0).getTextContent().equals("LockRelease") 
+    		if ( opty.equals("LockRequire") 
+    				//|| opty.equals("LockRelease") 
     				) {
     			totalLockRequires ++;
-    			String [] opval = e.getElementsByTagName("OPVAL").item(0).getTextContent().split("_");  // _1 _2 _3
-    			String memaddr = opval[0];
-    			int locktype = Integer.valueOf( opval[1] );
+    			
+    			String [] opvalarray = opval.split("_");  // _1 _2 _3
+    			String memaddr = opvalarray[0];
+    			int locktype = Integer.valueOf( opvalarray[1] );
     			typesOfTotalLockRequires[ locktype ] ++;
     			
-    			//only get type "_3" ie xxx.lock
-    			if (locktype == 3) {
-        			if (dotlockmemref.get(memaddr) == null) {
-        				ArrayList<Integer> list = new ArrayList<Integer>();
-        				dotlockmemref.put(memaddr, list);
-        			} 
-    				dotlockmemref.get(memaddr).add( i );
-    			}
+    			// build accurateLockmemref: all locks, use the key of 'pid+opval0'
+    			String pidopval0 = getNodePIDOPVAL0( i );
+    			if (accurateLockmemref.get(pidopval0) == null) {
+    				ArrayList<Integer> list = new ArrayList<Integer>();
+    				accurateLockmemref.put(pidopval0, list);
+    			} 
+    			accurateLockmemref.get(pidopval0).add( i );
     			
-    			// all locks, including 3 types
+    			// build lockmemref: all locks, including 3 types
     			if (lockmemref.get(memaddr) == null) {
     				ArrayList<Integer> list = new ArrayList<Integer>(nList.size());
     				lockmemref.put(memaddr, list);
@@ -1420,14 +1404,73 @@ public class GraphBuilder {
     			} 
     			lockmemref.get(memaddr).add( i );
     			lockmemrefType.get(memaddr).set( locktype, new Integer(lockmemrefType.get(memaddr).get(locktype).intValue() + 1) );
+    			
+    			// build dotlockmemref: only get type "_3" ie xxx.lock
+    			if (locktype == 3) {
+        			if (dotlockmemref.get(memaddr) == null) {
+        				ArrayList<Integer> list = new ArrayList<Integer>();
+        				dotlockmemref.put(memaddr, list);
+        			} 
+    				dotlockmemref.get(memaddr).add( i );
+    			}
+    		}
+    		    		
+    		// get all rwlock matches, that is, 1 ReadWriteLock -> 1 Readlock + 1 Writelock
+    		if ( opty.equals("RWLockCreate") ) {
+    			totalRWLockCreates ++;
+    			String [] opvalarray = opval.split("\\|");  //JX - "|" needs to be written as "\\|"
+    	        String pidopval0;
+    	        // ReadLock
+    	        pidopval0 = pid + opvalarray[1]; 
+    	        if (rwlockmatch.get(pidopval0) == null) {
+    	        	String[] strs = new String[2];
+    	        	strs[0] = "R";
+    	        	strs[1] = pid + opvalarray[0];
+    	        	rwlockmatch.put(pidopval0, strs);    // "pid"+"hashcode" -> "R/W", "pid"+"superobjhashcode"
+    	        } else {
+    	        	System.out.println("JX - ERROR - " + "NOT rwlockmemref.get(str) == null - R");
+    	        }
+    	        // WriteLock
+    	        pidopval0 = pid + opvalarray[2]; 
+    	        if (rwlockmatch.get(pidopval0) == null) {
+    	        	String[] strs = new String[2];
+    	        	strs[0] = "W";
+    	        	strs[1] = pid + opvalarray[0];
+    	        	rwlockmatch.put(pidopval0, strs);    // "pid"+"hashcode" -> "R/W", "pid"+"superobjhashcode"
+    	        } else { 
+    	        	System.out.println("JX - ERROR - " + "NOT rwlockmemref.get(str) == null - W");
+    	        }
     		}
     	}
     	System.out.println("#totalRWLockCreates = " + totalRWLockCreates);
     	System.out.println("#totalLockRequires = " + totalLockRequires);
     	System.out.println("#_1sync(obj):"+typesOfTotalLockRequires[1] + "  #_2syncMethod:"+typesOfTotalLockRequires[2] + "  #_3lock:"+typesOfTotalLockRequires[3] );
     	
-    	//for Debug
+    	
+    	System.out.println("#total accurateLockmemref = " + accurateLockmemref.size());
         System.out.println("#total lockmemaddr = " + lockmemref.size());
+        // count the frequence of every accurateLock
+        // sort
+		List< Map.Entry<String, ArrayList<Integer>> > tmplist = new LinkedList< Map.Entry<String, ArrayList<Integer>> >( accurateLockmemref.entrySet() ); 
+		Collections.sort( tmplist, new Comparator<Map.Entry<String, ArrayList<Integer>>>() {
+			public int compare(Map.Entry<String, ArrayList<Integer>> o1, Map.Entry<String, ArrayList<Integer>> o2) {
+				return o2.getValue().size() - o1.getValue().size();
+			}
+		});
+		Map<String, ArrayList<Integer>>  newAccurateLockmemref = new LinkedHashMap<String, ArrayList<Integer>>();
+		for (Map.Entry<String, ArrayList<Integer>> entry: tmplist) {
+			newAccurateLockmemref.put(entry.getKey(), entry.getValue());
+			System.out.println("JX - freq - " + entry.getKey() + " : " + entry.getValue());
+		}
+		/*
+		for (String memaddr: accurateLockmemref.keySet()) {
+        	
+        }
+        */
+        
+		
+		
+        //for Debug
         int tmp[] = {0, 0, 0, 0};
         int N13 = 0; 
         int N23 = 0;
@@ -1843,15 +1886,17 @@ public class GraphBuilder {
         //System.out.println("Memory location is "+memref.keySet());
         
         //Added by JX
-        System.out.println("\nJX - Results of Fliped Locks");
+        System.out.println("\nJX - Results of Flipped Locks");
         
-        // get mutual effect by R & W , ie, flipped R/W pairs 
+        // JX - get mutual effect by R & W , ie, flipped R/W pairs.   PS - this is fine, because the number of R/W locks is small usually. 
         for (String memaddr1: dotlockmemref.keySet()) {
         	ArrayList<Integer> list1 = dotlockmemref.get(memaddr1);
         	for (int i = 0; i < list1.size(); i++) {
         		int index1 = list1.get(i);
+        		// jx - if exists, means SingleObject.lock()? or some R/W locks haven't been recorded?    For now, haven't taken place
         		if ( isReadOrWriteLock(index1).equals("null") )
-        			System.out.println("JX - ERROR?????????? - " + lastCallstack(index1) );
+        			System.out.println("JX - ERROR??? - " + lastCallstack(index1) ); 
+        		// get one R & one W to check if they are flipped
         		if (isReadOrWriteLock(index1).equals("R")) {
         			for (String memaddr2: dotlockmemref.keySet()) {
         				ArrayList<Integer> list2 = dotlockmemref.get(memaddr2);
@@ -1873,35 +1918,34 @@ public class GraphBuilder {
         	        	}
         			}
         		}
-        	
         	}
         }
+        System.out.println("After getting R & W pairs, #pairs in 'complex'(complete): " + totalsum );
         
-        /*
         //find mutual effect by the same lock
         System.out.println("#lockmemaddr = " + lockmemref.size());
         for (String memaddr : lockmemref.keySet()) {
             ArrayList<Integer> list = lockmemref.get(memaddr);
-            System.out.println("#this addr = " + list.size());
+            System.out.println("memaddr " + memaddr + " has " + list.size() + " locks");
             int lsum = 0;
-            for (int i = 0; i < list.size(); i++)
+            for (int i = 0; i < list.size(); i++) {
+            	int index1 = list.get(i);
                 for (int j = i + 1; j < list.size(); j++) {
-                	int idindex1 = list.get(i);
-                	int idindex2 = list.get(j);
-                    if ( flippedorder(idindex1, idindex2) ) {
+                	int index2 = list.get(j);
+                	if ( isReadOrWriteLock(index1).equals("R") && isReadOrWriteLock(index2).equals("R") ) continue;  //filter R & R
+                    if ( flippedorder(index1, index2) ) {
                         //if ((typeref.get("HeapWrite").contains(i)) ||(typeref.get("HeapWrite").contains(j)))
                         totalsum++;
                         lsum++;
-                        writeaddrlist(idindex1, idindex2);    //JX - for simple
-                        writeaddrlist2(idindex1, idindex2);   //JX - for median
-                        writetext(cout, idindex1, idindex2, 1, 0);  //'1' means freq=1, added by JX
-                        writetextDetailed(cdout, idindex1, idindex2, 1); //Added by JX
+                        writeaddrlist(index1, index2);    //JX - for simple
+                        writeaddrlist2(index1, index2);   //JX - for median
+                        writetext(cout, index1, index2, 1, 0);  //'1' means freq=1, added by JX
+                        writetextDetailed(cdout, index1, index2, 1); //Added by JX
                         //System.out.println("JX - " + totalsum + ": " + list.get(i) + "  " + list.get(j));
                     }
                 }
+            }
         }
-        */
-
         System.out.println("#pairs in 'complex'(complete): " + totalsum);
         //End-Added
         
