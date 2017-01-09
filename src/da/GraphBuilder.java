@@ -1449,24 +1449,22 @@ public class GraphBuilder {
     	
     	System.out.println("#total accurateLockmemref = " + accurateLockmemref.size());
         System.out.println("#total lockmemaddr = " + lockmemref.size());
-        // count the frequence of every accurateLock
-        // sort
+        System.out.println("#total dotlockmemaddr = " + dotlockmemref.size());
+        // count the frequence of every accurateLock   #for filtering if needed
 		List< Map.Entry<String, ArrayList<Integer>> > tmplist = new LinkedList< Map.Entry<String, ArrayList<Integer>> >( accurateLockmemref.entrySet() ); 
 		Collections.sort( tmplist, new Comparator<Map.Entry<String, ArrayList<Integer>>>() {
 			public int compare(Map.Entry<String, ArrayList<Integer>> o1, Map.Entry<String, ArrayList<Integer>> o2) {
 				return o2.getValue().size() - o1.getValue().size();
 			}
 		});
-		Map<String, ArrayList<Integer>>  newAccurateLockmemref = new LinkedHashMap<String, ArrayList<Integer>>();
+		Map<String, ArrayList<Integer>> newAccurateLockmemref = new LinkedHashMap<String, ArrayList<Integer>>();
 		for (Map.Entry<String, ArrayList<Integer>> entry: tmplist) {
 			newAccurateLockmemref.put(entry.getKey(), entry.getValue());
-			System.out.println("JX - freq - " + entry.getKey() + " : " + entry.getValue());
+			System.out.println("JX - freq - " + entry.getKey() + " : " + entry.getValue().size() + " - " + lastCallstack(entry.getValue().get(0)));
 		}
-		/*
-		for (String memaddr: accurateLockmemref.keySet()) {
-        	
-        }
-        */
+		// traverse newAccurateLockmemref
+		//for (String memaddr: newAccurateLockmemref.keySet()) {
+        //}
         
 		
 		
@@ -1923,6 +1921,7 @@ public class GraphBuilder {
         System.out.println("After getting R & W pairs, #pairs in 'complex'(complete): " + totalsum );
         
         //find mutual effect by the same lock
+        /*
         System.out.println("#lockmemaddr = " + lockmemref.size());
         for (String memaddr : lockmemref.keySet()) {
             ArrayList<Integer> list = lockmemref.get(memaddr);
@@ -1946,6 +1945,7 @@ public class GraphBuilder {
                 }
             }
         }
+        */
         System.out.println("#pairs in 'complex'(complete): " + totalsum);
         //End-Added
         
