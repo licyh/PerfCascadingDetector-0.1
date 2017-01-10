@@ -307,9 +307,9 @@ public class GraphBuilder {
                         idplist.add(idPair);
                         edge.add(new ArrayList<Pair>());
                         backedge.add(new ArrayList<Pair>());
-                        if ((i > 0) &&(!tp.equals("ThdEnter"))                      //not enter thread          
-                        			&&(!tp.equals("MsgProcEnter"))                  //not msg handler enter    
-                    				&&(!tp.equals("EventProcEnter")) ){             //not event handler enter   
+                        if ((i > 0) && (!tp.equals("ThdEnter"))                      //not enter thread          
+                        			&& (!tp.equals("MsgProcEnter"))                  //not msg handler enter    
+                    				&& (!tp.equals("EventProcEnter")) ) {             //not event handler enter   
 			                addedge(index-1,index);                                 //ie, 0->1->2->3->4->5
 						    if (mflag > 0) {
 						    	mheader = index;                                    //how to determine the mheader?
@@ -1474,7 +1474,6 @@ public class GraphBuilder {
 		}
         
 		
-		
         //for Debug
         int tmp[] = {0, 0, 0, 0};
         int N12 = 0;
@@ -1483,10 +1482,10 @@ public class GraphBuilder {
         for (String memaddr : accurateLockmemref.keySet()) {
             ArrayList<Integer> list = accurateLockmemref.get(memaddr);
             ArrayList<Integer> typelist = lockmemrefType.get( memaddr );
-            
+            /*
             System.out.println("addr " + memaddr + " has " + list.size() + " locks" 
             		+ "\t_1sync(obj)="+typelist.get(1) + "\t_2syncMethod="+typelist.get(2) + "\t_3lock="+typelist.get(3));
-     
+            */
         	int numTypes = 0;
         	if ( typelist.get(1) > 0 ) numTypes ++;
         	if ( typelist.get(2) > 0 ) numTypes ++;

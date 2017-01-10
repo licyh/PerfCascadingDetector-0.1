@@ -24,6 +24,8 @@ public class _DM_Log {
     LockRelease, //release lock
     //Added by JX
     RWLockCreate,  //jx - for creating ReentrantReadWriteLock
+    TargetCodeBegin,
+    TargetCodeEnd,
     //end-Added
   };
 
@@ -134,10 +136,27 @@ public class _DM_Log {
     String opType = _DM_Log.OPTYPE.LockRelease.name();
     _DM_Log.log_Base(opType, opValue);
   }
+  
   //Added by JX
   public static void log_RWLockCreate(String opValue) {
 	String opType = _DM_Log.OPTYPE.RWLockCreate.name();
 	_DM_Log.log_Base(opType, opValue);
   }
   //end-Added
+  
+  //Added by JX
+  public static void log_TargetCodeBegin(String opValue) {
+	String opType = _DM_Log.OPTYPE.TargetCodeBegin.name();
+	_DM_Log.log_Base(opType, opValue);
+  }
+  //end-Added
+  
+  //Added by JX
+  public static void log_TargetCodeEnd(String opValue) {
+	String opType = _DM_Log.OPTYPE.TargetCodeEnd.name();
+	_DM_Log.log_Base(opType, opValue);
+  }
+  //end-Added
+  
+  
 }

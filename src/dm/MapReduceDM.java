@@ -37,6 +37,16 @@ class MapReduceTransformer extends Transformer {
 
   RPCInfo rpcInfo = new RPCInfo();
   CalleeInfo calleeInfo = new CalleeInfo();
+  
+  //Added by JX
+  List<String> classesForInst = new ArrayList<String>();
+  List<String> methodsForInst = new ArrayList<String>();
+  List<String> linesForInst  = new ArrayList<String>();
+  List<String> typesForInst  = new ArrayList<String>();
+  List<Integer> flagsForInst = new ArrayList<Integer>();
+  String instBegin = "";
+  String instEnd = "";
+  //end-Added
 
   public MapReduceTransformer(String str) {
     super(str);
@@ -63,6 +73,38 @@ class MapReduceTransformer extends Transformer {
     //callee
     calleeInfo.setInfoFilePath("resource/mr_callee.txt");
     calleeInfo.readFile();
+    
+    //Added by JX    
+    try {
+		BufferedReader bufreader = new BufferedReader( new FileReader("/resource/targetlocations") ); 
+		String tmpline;
+		while ( (tmpline = bufreader.readLine()) != null ) {
+			String[] strs = tmpline.trim().split("\\s+");
+			if ( tmpline.trim().length() > 0 ) {
+				classesForInst.add( strs[0] );
+				methodsForInst.add( strs[1] );
+				linesForInst.add( strs[2] );
+				typesForInst.add( strs[3] );
+				flagsForInst.add(0);
+			}
+		}
+		bufreader.close();
+		
+		bufreader = new BufferedReader( new FileReader("/resource/targetinstructions") );
+		instBegin = bufreader.readLine();
+		instEnd = bufreader.readLine();
+		bufreader.close();
+    } catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	System.out.println("JX - " + classesForInst.size() + " locations are loaded");
+	System.out.println("JX - " + "classesForInst = " + classesForInst);
+	System.out.println("JX - " + "methodsForInst = " + methodsForInst);
+	System.out.println("JX - " + "linesForInst =  " + linesForInst );
+	System.out.println("JX - " + "instructions = " + instBegin + " " + instEnd);
+    //end-Added
   }
 
   public boolean speventcreate(String cn){
@@ -72,6 +114,39 @@ class MapReduceTransformer extends Transformer {
 	return false;
   }
 
+  
+  //Added by JX
+  public void transformClassForCodeSnippets(CtClass cl, CtBehavior[] methods) {
+	  if ( !classesForInst.contains(cl.getName()) ) return;
+	  
+      for (CtBehavior method : methods) {
+          if ( method.isEmpty() ) continue;
+          // traverse all locations for instrumentation
+          for (int i = 0; i < classesForInst.size(); i++) {
+    		  if ( classesForInst.get(i).equals(cl.getName())
+    				  && methodsForInst.get(i).equals(method.getName()) ) {
+    			  int linenumber = Integer.parseInt( linesForInst.get(i) );
+    			  try {
+	    			  if ( typesForInst.get(i).equals("TargetCodeBegin") ) {
+	    				  method.insertAt(linenumber, true, instBegin);
+	    				  flagsForInst.set(i, flagsForInst.get(i)+1);
+	    				  System.out.println( "JX - " + "location " + i + " is found. this is the " + flagsForInst.get(i) + " st/nd/rd/th time." );
+	    			  }
+	    			  else { //this is "TargetCodeEnd"
+	    				  method.insertAt(linenumber, true, instEnd);
+	    				  flagsForInst.set(i, flagsForInst.get(i)+1);
+	    				  System.out.println( "JX - " + "location " + i + " is found. this is the " + flagsForInst.get(i) + " st/nd/rd/th time." );
+	    			  }
+    			  } catch (CannotCompileException e) {
+    				  // TODO Auto-generated catch block
+    				  e.printStackTrace();
+    			  }
+    		  }
+    	  }
+      }//end-outer for
+  }
+  //end-Added
+  
   public void transformMethod(CtClass cl, CtBehavior method) {
     MethodInfo methodInfo = method.getMethodInfo();
     String methodName = method.getName().toString();

@@ -52,6 +52,11 @@ public class Transformer implements ClassFileTransformer {
           transformMethod(cl, method);
         }
       }
+      
+      //Added by JX
+      transformClassForCodeSnippets(cl, methods);
+      //end-Added
+      
       b = cl.toBytecode();
     }
     catch (Exception e) { e.printStackTrace();}
@@ -63,7 +68,12 @@ public class Transformer implements ClassFileTransformer {
     return b;
   }
 
+  //Added by JX
+  public void transformClassForCodeSnippets(CtClass cl, CtBehavior[] methods) {}
+  //end-Added
+  
   public void transformMethod(CtClass cl, CtBehavior method) {} //implement in difficult application
+  
 }
 
 

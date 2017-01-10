@@ -111,12 +111,13 @@
                         </manifest>
                         <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
                         <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
-                        <zipfileset dir="${src.dir}" includes="res/api.txt" fullpath="resource/api.txt"/>
-                        <zipfileset dir="${src.dir}" includes="res/mr_rpc.txt" fullpath="resource/mr_rpc.txt"/>
-                        <zipfileset dir="${src.dir}" includes="res/mr_rpc_v1.txt" fullpath="resource/mr_rpc_v1.txt"/>
-                        <zipfileset dir="${src.dir}" includes="res/mr_callee.txt" fullpath="resource/mr_callee.txt"/>
-		        <!--
-			<zipfileset dir="src" includes="com/api.txt" fullpath="jiaxin/www/api.txt" />
+                        <zipfileset dir="${src.dm.dir}" includes="res/mr/api.txt" fullpath="resource/api.txt"/>
+                        <zipfileset dir="${src.dm.dir}" includes="res/mr/mr_rpc.txt" fullpath="resource/mr_rpc.txt"/>
+                        <zipfileset dir="${src.dm.dir}" includes="res/mr/mr_rpc_v1.txt" fullpath="resource/mr_rpc_v1.txt"/>
+                        <zipfileset dir="${src.dm.dir}" includes="res/mr/targetlocations" fullpath="resource/targetlocations"/>
+                	    <zipfileset dir="${src.dm.dir}" includes="res/mr/targetinstructions" fullpath="resource/targetinstructions"/>
+		                <!--
+			            <zipfileset dir="src" includes="com/api.txt" fullpath="jiaxin/www/api.txt" />
                         <zipfileset dir="build/classes/com" includes="dm/**/*.class" prefix="jiaxinclass" />
                         -->
                 </jar>
