@@ -555,6 +555,7 @@ public class MethodUtil {
     }
     return str;
   }
+  
   public void insertCallInstBefore(String logClass, String logFunc, int flag) {
     try {
       method.insertBefore(callStrInstBA(logClass, logFunc, flag));

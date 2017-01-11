@@ -73,7 +73,7 @@ class MapReduceTransformer extends Transformer {
     //callee
     calleeInfo.setInfoFilePath("resource/mr_callee.txt");
     calleeInfo.readFile();
-    /*
+    
     //Added by JX    
     try {
     	InputStream ins = MapReduceTransformer.class.getClassLoader().getResourceAsStream("resource/targetlocations");
@@ -108,7 +108,7 @@ class MapReduceTransformer extends Transformer {
 	System.out.println("JX - " + "linesForInst =  " + linesForInst );
 	System.out.println("JX - " + "instructions = " + instBegin + " " + instEnd);
     //end-Added
-    */
+    
   }
 
   public boolean speventcreate(String cn){
@@ -120,7 +120,6 @@ class MapReduceTransformer extends Transformer {
 
   
   //Added by JX
-  /*
   public void transformClassForCodeSnippets(CtClass cl, CtBehavior[] methods) {
 	  if ( !classesForInst.contains(cl.getName()) ) return;
 	  
@@ -152,7 +151,6 @@ class MapReduceTransformer extends Transformer {
     	  }
       }//end-outer for
   }
-  */
   //end-Added
   
   public void transformMethod(CtClass cl, CtBehavior method) {
