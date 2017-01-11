@@ -114,6 +114,7 @@
                         <zipfileset dir="${src.dm.dir}" includes="res/mr/api.txt" fullpath="resource/api.txt"/>
                         <zipfileset dir="${src.dm.dir}" includes="res/mr/mr_rpc.txt" fullpath="resource/mr_rpc.txt"/>
                         <zipfileset dir="${src.dm.dir}" includes="res/mr/mr_rpc_v1.txt" fullpath="resource/mr_rpc_v1.txt"/>
+                		<zipfileset dir="${src.dm.dir}" includes="res/mr/mr_callee.txt" fullpath="resource/mr_callee.txt"/>
                         <zipfileset dir="${src.dm.dir}" includes="res/mr/targetlocations" fullpath="resource/targetlocations"/>
                 	    <zipfileset dir="${src.dm.dir}" includes="res/mr/targetinstructions" fullpath="resource/targetinstructions"/>
 		                <!--
