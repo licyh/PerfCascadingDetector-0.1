@@ -76,7 +76,9 @@ class MapReduceTransformer extends Transformer {
     
     //Added by JX    
     try {
-		BufferedReader bufreader = new BufferedReader( new FileReader("resource/targetlocations") ); 
+    	InputStream ins = MapReduceTransformer.class.getClassLoader().getResourceAsStream("resource/targetlocations");
+    	BufferedReader bufreader = new BufferedReader( new InputStreamReader(ins) );
+    	//BufferedReader bufreader = new BufferedReader( new FileReader("resource/targetlocations") );
 		String tmpline;
 		while ( (tmpline = bufreader.readLine()) != null ) {
 			String[] strs = tmpline.trim().split("\\s+");
@@ -89,8 +91,9 @@ class MapReduceTransformer extends Transformer {
 			}
 		}
 		bufreader.close();
-		
-		bufreader = new BufferedReader( new FileReader("resource/targetinstructions") );
+    	ins = MapReduceTransformer.class.getClassLoader().getResourceAsStream("resource/targetinstructions");
+    	bufreader = new BufferedReader( new InputStreamReader(ins) );
+		//bufreader = new BufferedReader( new FileReader("resource/targetinstructions") );
 		instBegin = bufreader.readLine();
 		instEnd = bufreader.readLine();
 		bufreader.close();
