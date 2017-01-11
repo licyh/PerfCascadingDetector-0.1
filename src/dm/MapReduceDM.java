@@ -133,6 +133,11 @@ class MapReduceTransformer extends Transformer {
     			  int linenumber = Integer.parseInt( linesForInst.get(i) );
     			  System.out.println("JX - @3 - expected linenumber = " + linenumber);
     			  try {
+    				  
+    				  for (int k = 224; k <= 248; k++) {
+    					  System.out.println( "JX - " + "for line " + k + " will insert at " + method.insertAt(k, false, instBegin) );
+    				  }
+    				  
 	    			  if ( typesForInst.get(i).equals("TargetCodeBegin") ) {
 	    				  System.out.println("JX - @4");
 	    				  System.out.println( "JX - " + "will insert at " + method.insertAt(linenumber, false, instBegin) );
