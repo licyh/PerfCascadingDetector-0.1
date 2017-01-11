@@ -122,27 +122,27 @@ class MapReduceTransformer extends Transformer {
   //Added by JX
   public void transformClassForCodeSnippets(CtClass cl, CtBehavior[] methods) {
 	  if ( !classesForInst.contains(cl.getName()) ) return;
-	  System.out.println("JX - @1");
+	  System.out.println("JX - @1 - " + cl.getName());
       for (CtBehavior method : methods) {
           if ( method.isEmpty() ) continue;
-          System.out.println("JX - @2");
+          System.out.println("JX - @2 - " + method.getName());
           // traverse all locations for instrumentation
           for (int i = 0; i < classesForInst.size(); i++) {
     		  if ( classesForInst.get(i).equals(cl.getName())
     				  && methodsForInst.get(i).equals(method.getName()) ) {
-    			  System.out.println("JX - @3");
     			  int linenumber = Integer.parseInt( linesForInst.get(i) );
+    			  System.out.println("JX - @3 - expected linenumber = " + linenumber);
     			  try {
 	    			  if ( typesForInst.get(i).equals("TargetCodeBegin") ) {
 	    				  System.out.println("JX - @4");
-	    				  System.out.println( "JX - " + "want to insert at " + method.insertAt(linenumber, false, instBegin) );
+	    				  System.out.println( "JX - " + "will insert at " + method.insertAt(linenumber, false, instBegin) );
 	    				  method.insertAt(linenumber, true, instBegin);
 	    				  flagsForInst.set(i, flagsForInst.get(i)+1);
 	    				  System.out.println( "JX - " + "location " + i + " is found. this is the " + flagsForInst.get(i) + " st/nd/rd/th time." );
 	    			  }
 	    			  else { //this is "TargetCodeEnd"
 	    				  System.out.println("JX - @5");
-	    				  System.out.println( "JX - " + "want to insert at " + method.insertAt(linenumber, false, instEnd) );
+	    				  System.out.println( "JX - " + "will insert at " + method.insertAt(linenumber, false, instEnd) );
 	    				  method.insertAt(linenumber, true, instEnd);
 	    				  flagsForInst.set(i, flagsForInst.get(i)+1);
 	    				  System.out.println( "JX - " + "location " + i + " is found. this is the " + flagsForInst.get(i) + " st/nd/rd/th time." );
