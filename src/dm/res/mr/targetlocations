@@ -1,6 +1,9 @@
-org.apache.hadoop.mapreduce.v2.app.rm.RMCommunicator$1 startAllocatorThread 231 		TargetCodeBegin 
-org.apache.hadoop.mapreduce.v2.app.rm.RMCommunicator$1 startAllocatorThread 232		TargetCodeEnd
+org.apache.hadoop.mapreduce.v2.app.rm.RMCommunicator startAllocatorThread 231 		TargetCodeBegin 
+org.apache.hadoop.mapreduce.v2.app.rm.RMCommunicator startAllocatorThread 232		TargetCodeEnd
 
-org.apache.hadoop.mapreduce.v2.app.rm.RMCommunicator$2 startAllocatorThread 231 		TargetCodeBegin 
-org.apache.hadoop.mapreduce.v2.app.rm.RMCommunicator$2 startAllocatorThread 232		TargetCodeEnd
+org.apache.hadoop.mapreduce.v2.app.rm.RMCommunicator$1 run 231 		TargetCodeBegin 
+org.apache.hadoop.mapreduce.v2.app.rm.RMCommunicator$1 run 232		TargetCodeEnd
+
+org.apache.hadoop.mapreduce.v2.app.rm.RMCommunicator$2 run 231 		TargetCodeBegin 
+org.apache.hadoop.mapreduce.v2.app.rm.RMCommunicator$2 run 232		TargetCodeEnd
  
