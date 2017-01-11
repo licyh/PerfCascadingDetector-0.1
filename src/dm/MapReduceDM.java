@@ -132,14 +132,14 @@ class MapReduceTransformer extends Transformer {
     			  int linenumber = Integer.parseInt( linesForInst.get(i) );
     			  try {
 	    			  if ( typesForInst.get(i).equals("TargetCodeBegin") ) {
-	    				  //method.insertAt(linenumber, true, instBegin);
 	    				  System.out.println( "JX - " + "want to insert at " + method.insertAt(linenumber, false, instBegin) );
+	    				  method.insertAt(linenumber, true, instBegin);
 	    				  flagsForInst.set(i, flagsForInst.get(i)+1);
 	    				  System.out.println( "JX - " + "location " + i + " is found. this is the " + flagsForInst.get(i) + " st/nd/rd/th time." );
 	    			  }
 	    			  else { //this is "TargetCodeEnd"
-	    				  //method.insertAt(linenumber, true, instEnd);
 	    				  System.out.println( "JX - " + "want to insert at " + method.insertAt(linenumber, false, instEnd) );
+	    				  method.insertAt(linenumber, true, instEnd);
 	    				  flagsForInst.set(i, flagsForInst.get(i)+1);
 	    				  System.out.println( "JX - " + "location " + i + " is found. this is the " + flagsForInst.get(i) + " st/nd/rd/th time." );
 	    			  }
@@ -230,13 +230,17 @@ class MapReduceTransformer extends Transformer {
     String msgSendingLog      = logFuncPre + "_" + "MsgSending";
     String processCreateLog   = logFuncPre + "_" + "ProcessCreate";
     String eventCreateLog     = logFuncPre + "_" + "EventCreate";
+    //Added by JX
     String lockEnterLog       = logFuncPre + "_" + "LockRequire";
     String lockExitLog        = logFuncPre + "_" + "LockRelease";
-    //Added by JX
     String rwlockCreateLog    = logFuncPre + "_" + "RWLockCreate";
     //end-Added
 
     boolean injectFlag = false;
+    
+    
+    // JX - Begin to insert LOG code
+    
     /* main function:
      * 1. add ThdEnter
      * 2. add ThdExit
@@ -256,19 +260,20 @@ class MapReduceTransformer extends Transformer {
               (classUtil.isThreadClass(className) || classUtil.isRunnableClass(className))
 		&& (!className.contains("EventProcessor"))
             ) {
-      //insert ThdEnter & ThdExit log
-      methodUtil.insertCallInstBefore(logClass, thdEnterLog, 4);
-      methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
-    }else if (methodName.equals("run") && (className.contains("EventProcessor"))){
-	 methodUtil.insertCallInstBefore(logClass, eventProcEnterLog, 43);
-         methodUtil.insertCallInstAfter(logClass, eventProcExitLog, 43);
-
-    }else if (methodName.equals("call") &&
+    	//insert ThdEnter & ThdExit log
+    	methodUtil.insertCallInstBefore(logClass, thdEnterLog, 4);
+    	methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
+    } else if (methodName.equals("run") && (className.contains("EventProcessor"))) {
+    	//Commented by JX
+    	//methodUtil.insertCallInstBefore(logClass, eventProcEnterLog, 43);
+        //methodUtil.insertCallInstAfter(logClass, eventProcExitLog, 43);
+        //end-Commented
+    } else if (methodName.equals("call") &&
            classUtil.isTargetClass(className, "java.util.concurrent.Callable") &&
            method.getSignature().endsWith("Ljava/lang/Object;") == false) {
-      //insert ThdEnter & ThdExit log
-      methodUtil.insertCallInstBefore(logClass, thdEnterLog, 4);
-      methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
+    	//insert ThdEnter & ThdExit log
+    	methodUtil.insertCallInstBefore(logClass, thdEnterLog, 4);
+    	methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
     }
 
     else if (methodName.equals("handle")) {
