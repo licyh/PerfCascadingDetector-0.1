@@ -572,8 +572,11 @@ public class MethodUtil {
     try {
       if (flag != 10)
           method.insertAfter(callStrInstBA(logClass, logFunc, flag));
-      else
-          method.insertAt(222 , true,callStrInstBA(logClass, logFunc, flag));
+      else {
+    	  //Commented by JX - this is a bug
+          //method.insertAt(222 , true,callStrInstBA(logClass, logFunc, flag));
+          //end-Commented
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }

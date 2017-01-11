@@ -54,6 +54,7 @@ public class Transformer implements ClassFileTransformer {
       }
       
       //Added by JX
+      System.out.println("JX - will enter a class for instrumenting target codes");
       transformClassForCodeSnippets(cl, methods);
       //end-Added
       

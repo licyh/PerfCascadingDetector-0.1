@@ -122,22 +122,26 @@ class MapReduceTransformer extends Transformer {
   //Added by JX
   public void transformClassForCodeSnippets(CtClass cl, CtBehavior[] methods) {
 	  if ( !classesForInst.contains(cl.getName()) ) return;
-	  
+	  System.out.println("JX - @1");
       for (CtBehavior method : methods) {
           if ( method.isEmpty() ) continue;
+          System.out.println("JX - @2");
           // traverse all locations for instrumentation
           for (int i = 0; i < classesForInst.size(); i++) {
     		  if ( classesForInst.get(i).equals(cl.getName())
     				  && methodsForInst.get(i).equals(method.getName()) ) {
+    			  System.out.println("JX - @3");
     			  int linenumber = Integer.parseInt( linesForInst.get(i) );
     			  try {
 	    			  if ( typesForInst.get(i).equals("TargetCodeBegin") ) {
+	    				  System.out.println("JX - @4");
 	    				  System.out.println( "JX - " + "want to insert at " + method.insertAt(linenumber, false, instBegin) );
 	    				  method.insertAt(linenumber, true, instBegin);
 	    				  flagsForInst.set(i, flagsForInst.get(i)+1);
 	    				  System.out.println( "JX - " + "location " + i + " is found. this is the " + flagsForInst.get(i) + " st/nd/rd/th time." );
 	    			  }
 	    			  else { //this is "TargetCodeEnd"
+	    				  System.out.println("JX - @5");
 	    				  System.out.println( "JX - " + "want to insert at " + method.insertAt(linenumber, false, instEnd) );
 	    				  method.insertAt(linenumber, true, instEnd);
 	    				  flagsForInst.set(i, flagsForInst.get(i)+1);
@@ -264,9 +268,11 @@ class MapReduceTransformer extends Transformer {
     	methodUtil.insertCallInstBefore(logClass, thdEnterLog, 4);
     	methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
     } else if (methodName.equals("run") && (className.contains("EventProcessor"))) {
-    	//Commented by JX
-    	//methodUtil.insertCallInstBefore(logClass, eventProcEnterLog, 43);
-        //methodUtil.insertCallInstAfter(logClass, eventProcExitLog, 43);
+    	//Commented by JX - this is a bug
+    	/*
+    	methodUtil.insertCallInstBefore(logClass, eventProcEnterLog, 43);
+        methodUtil.insertCallInstAfter(logClass, eventProcExitLog, 43);
+        */
         //end-Commented
     } else if (methodName.equals("call") &&
            classUtil.isTargetClass(className, "java.util.concurrent.Callable") &&
@@ -370,15 +376,18 @@ class MapReduceTransformer extends Transformer {
 
     /* for process create */
     if (methodName.equals("runCommand") && className.endsWith("org.apache.hadoop.util.Shell")) {
+      //JX - this is a bug, I've commented it at its subcall
       methodUtil.insertCallInstAfter(logClass, processCreateLog, 10);
     }
 
-
     /* lock */
+    //Added by JX
     methodUtil.insertSyncMethod(logClass, lockEnterLog, logClass, lockExitLog);
     methodUtil.insertMonitorInst(logClass, lockEnterLog, logClass, lockExitLog);
     methodUtil.insertRWLock(logClass, rwlockCreateLog);
-
+    //end-Added
+    
+    
     /*Instruction i = new Instruction();
     i.setMethod(method);
     ConstPool constPool = methodInfo.getConstPool();
