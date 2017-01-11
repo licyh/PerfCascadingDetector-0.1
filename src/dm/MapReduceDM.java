@@ -73,7 +73,7 @@ class MapReduceTransformer extends Transformer {
     //callee
     calleeInfo.setInfoFilePath("resource/mr_callee.txt");
     calleeInfo.readFile();
-    
+    /*
     //Added by JX    
     try {
     	InputStream ins = MapReduceTransformer.class.getClassLoader().getResourceAsStream("resource/targetlocations");
@@ -108,6 +108,7 @@ class MapReduceTransformer extends Transformer {
 	System.out.println("JX - " + "linesForInst =  " + linesForInst );
 	System.out.println("JX - " + "instructions = " + instBegin + " " + instEnd);
     //end-Added
+    */
   }
 
   public boolean speventcreate(String cn){
@@ -119,6 +120,7 @@ class MapReduceTransformer extends Transformer {
 
   
   //Added by JX
+  /*
   public void transformClassForCodeSnippets(CtClass cl, CtBehavior[] methods) {
 	  if ( !classesForInst.contains(cl.getName()) ) return;
 	  
@@ -131,16 +133,18 @@ class MapReduceTransformer extends Transformer {
     			  int linenumber = Integer.parseInt( linesForInst.get(i) );
     			  try {
 	    			  if ( typesForInst.get(i).equals("TargetCodeBegin") ) {
-	    				  method.insertAt(linenumber, true, instBegin);
+	    				  //method.insertAt(linenumber, true, instBegin);
+	    				  System.out.println( "JX - " + "want to insert at " + method.insertAt(linenumber, false, instBegin) );
 	    				  flagsForInst.set(i, flagsForInst.get(i)+1);
 	    				  System.out.println( "JX - " + "location " + i + " is found. this is the " + flagsForInst.get(i) + " st/nd/rd/th time." );
 	    			  }
 	    			  else { //this is "TargetCodeEnd"
-	    				  method.insertAt(linenumber, true, instEnd);
+	    				  //method.insertAt(linenumber, true, instEnd);
+	    				  System.out.println( "JX - " + "want to insert at " + method.insertAt(linenumber, false, instEnd) );
 	    				  flagsForInst.set(i, flagsForInst.get(i)+1);
 	    				  System.out.println( "JX - " + "location " + i + " is found. this is the " + flagsForInst.get(i) + " st/nd/rd/th time." );
 	    			  }
-    			  } catch (CannotCompileException e) {
+    			  } catch (Exception e) {
     				  // TODO Auto-generated catch block
     				  e.printStackTrace();
     			  }
@@ -148,6 +152,7 @@ class MapReduceTransformer extends Transformer {
     	  }
       }//end-outer for
   }
+  */
   //end-Added
   
   public void transformMethod(CtClass cl, CtBehavior method) {
