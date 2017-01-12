@@ -122,38 +122,32 @@ class MapReduceTransformer extends Transformer {
   //Added by JX
   public void transformClassForCodeSnippets(CtClass cl, CtBehavior[] methods) {
 	  if ( !classesForInst.contains(cl.getName()) ) return;
-	  System.out.println("JX - @1 - " + cl.getName());
+	  //System.out.println("JX - @1 - " + cl.getName());
       for (CtBehavior method : methods) {
           if ( method.isEmpty() ) continue;
-          System.out.println("JX - @2 - " + method.getName());
+          //System.out.println("JX - @2 - " + method.getName());
           // traverse all locations for instrumentation
           for (int i = 0; i < classesForInst.size(); i++) {
     		  if ( classesForInst.get(i).equals(cl.getName())
     				  && methodsForInst.get(i).equals(method.getName()) ) {
     			  int linenumber = Integer.parseInt( linesForInst.get(i) );
-    			  System.out.println("JX - @3 - expected linenumber = " + linenumber);
     			  try {
-    				  /*
+    				  /* test
     				  for (int k = 224; k <= 248; k++) {
     					  System.out.println( "JX - " + "for line " + k + " will insert at " + method.insertAt(k, false, instBegin) );
     				  }
     				  */
 	    			  if ( typesForInst.get(i).equals("TargetCodeBegin") ) {
-	    				  /*
-	    				  System.out.println("JX - @4");
-	    				  System.out.println( "JX - " + "will insert at " + method.insertAt(linenumber, false, instBegin) );
+	    				  System.out.println( "JX - TargetCodeBegin: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, instBegin) );
 	    				  method.insertAt(linenumber, true, instBegin);
 	    				  flagsForInst.set(i, flagsForInst.get(i)+1);
-	    				  System.out.println( "JX - " + "location " + i + " is found. this is the " + flagsForInst.get(i) + " st/nd/rd/th time." );
-	    				  */
+	    				  System.out.println( "JX - " + "this is the " + flagsForInst.get(i) + " st/nd/rd/th time for location " + i );
 	    			  }
 	    			  else { //this is "TargetCodeEnd"
-	    				  System.out.println("JX - @5");
-	    				  //System.out.println( "JX - " + "will insert at " + method.insertAt(linenumber, false, instEnd) );
-	    				  System.out.println("JX - " + instEnd + "**");
+	    				  System.out.println( "JX - TargetCodeEnd: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, instEnd) );
 	    				  method.insertAt(linenumber, true, instEnd);
 	    				  flagsForInst.set(i, flagsForInst.get(i)+1);
-	    				  System.out.println( "JX - " + "location " + i + " is found. this is the " + flagsForInst.get(i) + " st/nd/rd/th time." );
+	    				  System.out.println( "JX - " + "this is the " + flagsForInst.get(i) + " st/nd/rd/th time for location " + i );
 	    			  }
     			  } catch (Exception e) {
     				  // TODO Auto-generated catch block
