@@ -274,10 +274,10 @@ class MapReduceTransformer extends Transformer {
     	methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
     } else if (methodName.equals("run") && (className.contains("EventProcessor"))) {
     	//Commented by JX - this is a bug
-    	/*
-    	methodUtil.insertCallInstBefore(logClass, eventProcEnterLog, 43);
-        methodUtil.insertCallInstAfter(logClass, eventProcExitLog, 43);
-        */
+    	if ( !className.equals("org.apache.hadoop.yarn.server.resourcemanager.ResourceManager$SchedulerEventDispatcher$EventProcessor") ) {
+    		methodUtil.insertCallInstBefore(logClass, eventProcEnterLog, 43);
+    		methodUtil.insertCallInstAfter(logClass, eventProcExitLog, 43);
+    	}
         //end-Commented
     } else if (methodName.equals("call") &&
            classUtil.isTargetClass(className, "java.util.concurrent.Callable") &&

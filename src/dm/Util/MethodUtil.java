@@ -574,7 +574,7 @@ public class MethodUtil {
           method.insertAfter(callStrInstBA(logClass, logFunc, flag));
       else {
     	  //Commented by JX - this is a bug
-          //method.insertAt(222 , true,callStrInstBA(logClass, logFunc, flag));
+          //method.insertAt(222 , true, callStrInstBA(logClass, logFunc, flag));
           //end-Commented
       }
     } catch (Exception e) {
