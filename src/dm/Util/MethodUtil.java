@@ -542,7 +542,7 @@ public class MethodUtil {
       str += "_pid = f.getInt(process);";
       str += "}";
       str += "String opValue = Integer.toString(_pid);";
-      str += logClass + "." + logFunc + "(opValue);";
+      str += logClass + "." + logFunc + "(opValue+\"HAHAHA\");";
       //end-Modified
     }
 
