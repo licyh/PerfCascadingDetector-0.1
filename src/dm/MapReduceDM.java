@@ -106,7 +106,7 @@ class MapReduceTransformer extends Transformer {
 	System.out.println("JX - " + "classesForInst = " + classesForInst);
 	System.out.println("JX - " + "methodsForInst = " + methodsForInst);
 	System.out.println("JX - " + "linesForInst =  " + linesForInst );
-	System.out.println("JX - " + "instructions = " + instBegin + " " + instEnd);
+	System.out.println("JX - " + "instructions = " + instBegin + "*" + instEnd + "*");
     //end-Added
     
   }
@@ -133,21 +133,24 @@ class MapReduceTransformer extends Transformer {
     			  int linenumber = Integer.parseInt( linesForInst.get(i) );
     			  System.out.println("JX - @3 - expected linenumber = " + linenumber);
     			  try {
-    				  
+    				  /*
     				  for (int k = 224; k <= 248; k++) {
     					  System.out.println( "JX - " + "for line " + k + " will insert at " + method.insertAt(k, false, instBegin) );
     				  }
-    				  
+    				  */
 	    			  if ( typesForInst.get(i).equals("TargetCodeBegin") ) {
+	    				  /*
 	    				  System.out.println("JX - @4");
 	    				  System.out.println( "JX - " + "will insert at " + method.insertAt(linenumber, false, instBegin) );
 	    				  method.insertAt(linenumber, true, instBegin);
 	    				  flagsForInst.set(i, flagsForInst.get(i)+1);
 	    				  System.out.println( "JX - " + "location " + i + " is found. this is the " + flagsForInst.get(i) + " st/nd/rd/th time." );
+	    				  */
 	    			  }
 	    			  else { //this is "TargetCodeEnd"
 	    				  System.out.println("JX - @5");
-	    				  System.out.println( "JX - " + "will insert at " + method.insertAt(linenumber, false, instEnd) );
+	    				  //System.out.println( "JX - " + "will insert at " + method.insertAt(linenumber, false, instEnd) );
+	    				  System.out.println("JX - " + instEnd + "**");
 	    				  method.insertAt(linenumber, true, instEnd);
 	    				  flagsForInst.set(i, flagsForInst.get(i)+1);
 	    				  System.out.println( "JX - " + "location " + i + " is found. this is the " + flagsForInst.get(i) + " st/nd/rd/th time." );
