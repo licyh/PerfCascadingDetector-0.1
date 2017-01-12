@@ -534,8 +534,16 @@ public class MethodUtil {
     }
 
     else if (flag == 10) {
-      str = "String opValue = Integer.toString(_pid2333);";
+      //Modified by JX
+      str = "int _pid;";
+      str += "try {";
+      str += "java.lang.reflect.Field f = process.getClass().getDeclaredField(\"pid\");";
+      str += "f.setAccessible(true);";
+      str += "_pid = f.getInt(process);";
+      str += "}";
+      str += "String opValue = Integer.toString(_pid);";
       str += logClass + "." + logFunc + "(opValue);";
+      //end-Modified
     }
 
     else if (flag == 41){
@@ -573,9 +581,9 @@ public class MethodUtil {
       if (flag != 10)
           method.insertAfter(callStrInstBA(logClass, logFunc, flag));
       else {
-    	  //Commented by JX - this is a bug
-          //method.insertAt(222 , true, callStrInstBA(logClass, logFunc, flag));
-          //end-Commented
+    	  //Modified by JX
+          method.insertAt(149 , true, callStrInstBA(logClass, logFunc, flag));
+          //end-Modified
       }
     } catch (Exception e) {
       e.printStackTrace();
