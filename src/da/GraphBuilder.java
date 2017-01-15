@@ -1932,12 +1932,18 @@ public class GraphBuilder {
     	dfsTraversing( beginIndex, endIndex );
     	
     	// analyzing
-    	System.out.println("JX - TargetCode (" + beginIndex + " to " + endIndex + ") :");
-    	System.out.println("JX - includes " + bitsetflag.cardinality() + " nodes");
+    	System.out.println("JX - TargetCodeSnippet (" + beginIndex + " to " + endIndex + ") includes " + bitsetflag.cardinality() + " nodes");
+    	System.out.println( "#LockRquire: " + targetcodeLocks.size());
+    	for (int index: targetcodeLocks) {
+    		System.out.println( getWholeIdentity(nList.get(index)) );
+    	}
     }
     
     public void dfsTraversing( int x, int endIndex ) {
     	bitsetflag.set( x );
+    	if ( getNodeOPTY(x).equals("LockRequire") ) {
+    		targetcodeLocks.add( x );
+    	}
 
         List<Pair> list = edge.get(x);
         for (Pair pair: list) {
