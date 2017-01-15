@@ -1328,6 +1328,14 @@ public class GraphBuilder {
     	return pid;
     }
     
+    public String getNodePIDTID(int index) {
+    	Node node = nList.get( index );
+    	Element e = (Element) node;
+    	String pid = e.getElementsByTagName("PID").item(0).getTextContent();
+    	String tid = e.getElementsByTagName("TID").item(0).getTextContent();
+    	return pid+tid;
+    }
+    
     public String getNodeOPVAL(int index) {
     	Node node = nList.get( index );
     	Element e = (Element) node;
@@ -1813,8 +1821,10 @@ public class GraphBuilder {
             System.out.println("Dont find edge from " + x + " to "+y + ", when removeing");
     }
     
-    public void findflippedorder(){
-        //eventremovethreadorder();
+    
+    //Added & Modified by JX
+    public void buildReachSet() {
+    	//eventremovethreadorder();
         eventend = new ArrayList<Integer>(nList.size());
         for (int i = 0 ; i < nList.size(); i++)
             eventend.add(-1);
@@ -1866,6 +1876,87 @@ public class GraphBuilder {
             System.out.println("compute bit set finished");
         } while (addeventatomicedge()&&(loop<20));
 
+    }
+    
+    
+    //Added by JX - traverse Target Code Snippets like heartbeat
+    List<Integer> targetcodeIndexes = new ArrayList<Integer>(); 
+    List<Integer> targetcodeLocks = new ArrayList<Integer>();
+    BitSet bitsetflag;
+    public void traverseTargetCodes() {
+    	
+    	for (int i = 0; i < nList.size(); i++) {
+    		String opty = getNodeOPTY(i);
+    		if ( opty.equals("TargetCodeBegin") | opty.equals("TargetCodeEnd") )
+    			targetcodeIndexes.add( i );
+    	}
+    	
+    	// print for debug
+    	for (int i = 0; i < targetcodeIndexes.size(); i++) {
+    		System.out.println("JX - i=" + i + " - index=" + targetcodeIndexes.get(i) + " - " + getNodeOPTY(targetcodeIndexes.get(i)));
+    	}
+    	
+    	bitsetflag = new BitSet( nList.size() );
+    	
+    	// traverse every pair of TargetCodeBegin & TargetCodeEnd
+    	for (int i = 0; i < targetcodeIndexes.size(); i++) 
+    		if ( getNodeOPTY(targetcodeIndexes.get(i)).equals("TargetCodeBegin") ) {
+    			String pidtid = getNodePIDTID(targetcodeIndexes.get(i));
+    			int flag = 1;
+    			for (int j = i+1; j < targetcodeIndexes.size(); j++) {
+    				if ( !getNodePIDTID(targetcodeIndexes.get(j)).equals(pidtid) ) {
+    					System.out.println("JX - WARN - " + "couldn't find TargetCodeEND for TargetCodeBegin " + i);
+    					break;
+    				}
+    				if ( getNodeOPTY(targetcodeIndexes.get(j)).equals("TargetCodeBegin") ) 
+    					flag ++;
+    				else
+    					flag --;
+    				if (flag == 0) {
+    					firstRoundTraversing(targetcodeIndexes.get(i), targetcodeIndexes.get(j));
+    					break;
+    				}
+    			}
+    		}
+    }
+    
+    //Added by JX
+    public void firstRoundTraversing(int beginIndex, int endIndex) {
+    	if ( !reachbitset.get(beginIndex).get(endIndex) ) {
+    		System.out.println("JX - ERROR - " + "couldn't reach from " + beginIndex + " to " + endIndex);
+    		return;
+    	}
+    	// traversing
+    	targetcodeLocks.clear();
+    	bitsetflag.clear();
+    	dfsTraversing( beginIndex, endIndex );
+    	
+    	// analyzing
+    	System.out.println("JX - TargetCode (" + beginIndex + " to " + endIndex + ") :");
+    	System.out.println("JX - includes " + bitsetflag.cardinality() + " nodes");
+    }
+    
+    public void dfsTraversing( int x, int endIndex ) {
+    	bitsetflag.set( x );
+
+        List<Pair> list = edge.get(x);
+        for (Pair pair: list) {
+        	int y = pair.destination;
+        	if ( !bitsetflag.get(y) && reachbitset.get(y).get(endIndex) )
+        		dfsTraversing( y, endIndex );
+        }
+    }
+    
+    
+    
+    
+    
+    
+    /**
+     * JX - Core
+     */
+    public void findflippedorder(){
+        
         //JX - ??
         initfile();
 
@@ -2722,7 +2813,7 @@ public void stasticalana(int x, int y, int freq) {
         else     return  false;
     }
     
-    public void computereachbitset(){
+    public void computereachbitset() {
         flag = new int[nList.size()];
         for ( int i = 0 ; i < nList.size(); i++ ) {
             reachbitset.get(i).clear();

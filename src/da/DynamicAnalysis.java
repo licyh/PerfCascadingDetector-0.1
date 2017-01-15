@@ -36,6 +36,12 @@ public class DynamicAnalysis {
 		
 		System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
 		
+		// build ReachSet
+		graphBuilder.buildReachSet();
+		
+		// 
+		graphBuilder.traverseTargetCodes();
+		
 		// find out 1.flipped order 2.lock relationship graph by the same locks
 		graphBuilder.findflippedorder();  
 		// build lock relationship between different locks
