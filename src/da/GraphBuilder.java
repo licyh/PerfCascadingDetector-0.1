@@ -2008,12 +2008,14 @@ public class GraphBuilder {
     /** JX - traverseTargetCodes - Traversing target code snippets */
     //Added by JX   
     public void traverseTargetCodes() {
-    	System.out.println("\nJX - traverseTargetCodes");
+    	System.out.println("\nJX - traverseTargetCodes - including all TARGET CODE snippets");
     	// traverse every pair of TargetCodeBegin & TargetCodeEnd
+    	int numofsnippets = 0;
     	for (int beginindex: targetblocks.keySet() ) {
     		if ( targetblocks.get(beginindex) == null )
     			continue;
     		int endindex = targetblocks.get(beginindex);
+    		System.out.println( "Code Snippet #" + numofsnippets + ": (" + beginindex + " to " + endindex + ")"  );
     		firstRoundTraversing( beginindex, endindex );
     	}
 
@@ -2033,7 +2035,7 @@ public class GraphBuilder {
     	
     	// analyzing
     	System.out.println("JX - TargetCodeSnippet (" + beginIndex + " to " + endIndex + ") includes " + targetcodeNodes.cardinality() + " nodes");
-    	System.out.println( "#LockRquire: " + targetcodeLocks.size());    	
+    	System.out.println( "#LockRquire/FirstBatchLocks: " + targetcodeLocks.size());    	
     	if (tmpflag == 0) {
     		tmpflag = 1;
     		for (int index: targetcodeLocks)
@@ -2067,6 +2069,7 @@ public class GraphBuilder {
     /** JX - findLockRelatedBugs - */
     
     public void findLockRelatedBugs( List<Integer> firstbatchLocks ) {
+    	System.out.println( "JX - findLockRelatedBugs" );
     	if ( firstbatchLocks.size() <= 0 ) {
     		System.out.println( "JX - CascadingBugDetection - there is no first batch of locks, finished normally!" );
     		return;
@@ -2074,18 +2077,17 @@ public class GraphBuilder {
     	List<Integer> batchLocks = firstbatchLocks;
     	int CASCADING_LEVEL = 2;  //minimum:2; default:3;
     	int times = CASCADING_LEVEL - 1;
-    	System.out.println( "JX - test - 1" );
+    	int tmpbatch = 0;
     	while ( times-- > 0) {
     		ArrayList<Integer> nextbatchLocks = findNextbatchLocks( batchLocks );
+    		System.out.println("batch #" + (++tmpbatch) + ": #locks=" + batchLocks.size() + " <- #locks=" + nextbatchLocks.size() );
     		batchLocks = new ArrayList<Integer>();
-    		System.out.println( "JX - test - 2.1" );
     		for (int index: nextbatchLocks) {
     			int ii = index;
     			if ( lockblocks.get(ii) == null ) 
     				continue;
     			int jj = lockblocks.get( ii );
     			int loopflag = 0;
-    			System.out.println( "JX - test - 3.1" );
     			for (int k = ii; k <= jj; k++) {
     				if ( getNodeOPTY(k).equals("LockRequire") ) {
     					batchLocks.add( k );
@@ -2097,7 +2099,7 @@ public class GraphBuilder {
     					break;
     				}
     			}
-    			System.out.println( "JX - test - 3.2" );
+    			//System.out.println( "JX - test - 3.2" );
     		}
     		if ( batchLocks.size() <= 0 ) {
     			System.out.println( "JX - CascadingBugDetection - finished normally" );
@@ -2111,10 +2113,8 @@ public class GraphBuilder {
     
     public ArrayList<Integer> findNextbatchLocks( List<Integer> batchLocks ) {
     	ArrayList<Integer> nextbatchLocks = new ArrayList<Integer>();
-    	System.out.println( "JX - test - 1.1" );
     	for (int lockindex: batchLocks) {
     		String pidopval0 = getNodePIDOPVAL0(lockindex);
-    		System.out.println( "JX - test - 1.1.1" );
     		// 1. if not R lock; cuz R will not affect R, but a general obj.lock can affect the obj itself
     		if ( !isReadOrWriteLock(lockindex).equals("R") ) {
     			ArrayList<Integer> list = accurateLockmemref.get( pidopval0 );
@@ -2124,7 +2124,6 @@ public class GraphBuilder {
 	                	nextbatchLocks.add( index );
 	    		}
     		}
-    		System.out.println( "JX - test - 1.1.2" );
     		// 2. if R/W lock
     		if ( !isReadOrWriteLock(lockindex).equals("null") ) {
     			String correspondingPidopval0 = rwlockmatch.get( pidopval0 )[1];
@@ -2135,7 +2134,6 @@ public class GraphBuilder {
     			}
     		}
     	}
-    	System.out.println( "JX - test - 1.2" );
     	return nextbatchLocks;
     }
     
