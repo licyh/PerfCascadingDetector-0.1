@@ -84,18 +84,24 @@ public class GraphBuilder {
     ArrayList<ArrayList<Pair>> backedge;              //adjcent list of backward edges for tracing back
     ArrayList<HashSet<Integer>> reach;                //reach[i] = set of reachable node form Node I
     HashMap <String, ArrayList<Integer> >memref;      //JX: record HeapRead/HeapWrite. ie, memref[addr] = set of nodes which read or write memory location addr
+    
     //Added by JX
     HashMap<String, ArrayList<Integer> > accurateLockmemref;  //New: pid+opval0 -> set of nodes
     
     HashMap<String, ArrayList<Integer> > lockmemref;      //JX: record all LockRequire/LockRelease. 
     HashMap<String, ArrayList<Integer> > lockmemrefType;  //for test: lock mem addr -> [_1sync(ojb), _2sync method, _3lock];   the number of every kind of lock
     HashMap<String, ArrayList<Integer> > dotlockmemref;   // same as above, but only type "_3" ie, xxx.lock
-    HashMap<String, String[]> rwlockmatch;               // "pid"+"hashcode" -> "R/W", "pid"+"superobjhashcode"
+    HashMap<String, String[]> rwlockmatch;               // "pid"+"hashcode" -> "R/W", "pid"+"correspondinghashcode", "pid"+"superobjhashcode" 
     
     ArrayList<ArrayList<Pair>> lockrelationedge;      //adjcent list of edges for lock relationship graph
     ArrayList<ArrayList<Pair>> lockrelationbackedge;  //adjcent list of backward edges for tracing back
-    
+    //In .traverseTargetCodes()
+    ArrayList<Integer> alltargetitems;    				//all nodes of all TargetCodeBegin & TargetCodeEnd snippets
+    BitSet targetcodeNodes;                      		//set of all nodes for a single target code snippet
+    ArrayList<Integer> targetcodeLoops;  				//never used, just ps for time-consuming loops?
+    ArrayList<Integer> targetcodeLocks;   				//set of lock nodes for a single target code snippet
     //End-Added
+    
     ArrayList<IdPair> idplist;                        //JX: pid/tid for all nodes. ie, idplist[i] includes the pid and tid of node i
     HashMap <IdPair, ArrayList<Integer>> ptidref;     //ptidref(idpair) includes the node in ptid from the beginning to end
     HashMap <String, ArrayList<Integer>> typeref;     //add the same optype to a same list
@@ -164,6 +170,7 @@ public class GraphBuilder {
         ptideventref = new HashMap<IdPair,ArrayList<Integer>>();
         typeref = new HashMap<String,ArrayList<Integer>>();
         memref = new HashMap<String , ArrayList<Integer>>(nList.size());
+        
         //Added by JX
         accurateLockmemref = new HashMap<String, ArrayList<Integer> >();
         
@@ -173,7 +180,13 @@ public class GraphBuilder {
         rwlockmatch = new HashMap<String, String[]>();               
         lockrelationedge  = new ArrayList<ArrayList<Pair>>();
         lockrelationbackedge  = new ArrayList<ArrayList<Pair>>();
+        //In .traverseTargetCodes()
+        alltargetitems = new ArrayList<Integer>();    //all nodes of all TargetCodeBegin & TargetCodeEnd snippets
+        targetcodeNodes = new BitSet();                      //set of all nodes for a single target code snippet
+        //targetcodeLoops = new ArrayList<Integer>();                              //never used, just ps for time-consuming loops?
+        targetcodeLocks = new ArrayList<Integer>();   //set of lock nodes for a single target code snippet
         //End-Added
+        
         hashMsgSending = new HashMap<String, ArrayList<Integer>>();
         hashMsgProcEnter = new HashMap<String, ArrayList<Integer>>();
         syncedges = new ArrayList<ArrayList<EgPair>>(50);
@@ -1365,7 +1378,7 @@ public class GraphBuilder {
     public boolean isRelatedLocks(int index1, int index2) {
     	String pidhashcode1 = getNodePIDOPVAL0(index1);
     	String pidhashcode2 = getNodePIDOPVAL0(index2);
-    	return rwlockmatch.get(pidhashcode1)[1].equals( rwlockmatch.get(pidhashcode2)[1] );         // [1] means "pid"+"superobjhashcode"
+    	return rwlockmatch.get(pidhashcode1)[2].equals( rwlockmatch.get(pidhashcode2)[2] );         // [1] means "pid"+"superobjhashcode"
     }
     //end-Added
     
@@ -1431,20 +1444,22 @@ public class GraphBuilder {
     	        // ReadLock
     	        pidopval0 = pid + opvalarray[1]; 
     	        if (rwlockmatch.get(pidopval0) == null) {
-    	        	String[] strs = new String[2];
+    	        	String[] strs = new String[3];
     	        	strs[0] = "R";
-    	        	strs[1] = pid + opvalarray[0];
-    	        	rwlockmatch.put(pidopval0, strs);    // "pid"+"hashcode" -> "R/W", "pid"+"superobjhashcode"
+    	        	strs[1] = pid + opvalarray[2];
+    	        	strs[2] = pid + opvalarray[0];
+    	        	rwlockmatch.put(pidopval0, strs);    // "pid"+"hashcode" -> "R/W", "pid"+"correspondinghashcode", "pid"+"superobjhashcode"
     	        } else {
     	        	System.out.println("JX - ERROR - " + "NOT rwlockmemref.get(str) == null - R");
     	        }
     	        // WriteLock
     	        pidopval0 = pid + opvalarray[2]; 
     	        if (rwlockmatch.get(pidopval0) == null) {
-    	        	String[] strs = new String[2];
+    	        	String[] strs = new String[3];
     	        	strs[0] = "W";
-    	        	strs[1] = pid + opvalarray[0];
-    	        	rwlockmatch.put(pidopval0, strs);    // "pid"+"hashcode" -> "R/W", "pid"+"superobjhashcode"
+    	        	strs[1] = pid + opvalarray[1];
+    	        	strs[2] = pid + opvalarray[0];
+    	        	rwlockmatch.put(pidopval0, strs);    // "pid"+"hashcode" -> "R/W", "pid"+"correspondinghashcode", "pid"+"superobjhashcode"
     	        } else { 
     	        	System.out.println("JX - ERROR - " + "NOT rwlockmemref.get(str) == null - W");
     	        }
@@ -1479,8 +1494,12 @@ public class GraphBuilder {
 		for (String memaddr: dotlockmemref.keySet()) { 
 			ArrayList<Integer> list = dotlockmemref.get(memaddr);
 			System.out.println("JX - dotlock - " + memaddr + " : " + list.size() + " : " + lastCallstack(list.get(0)) );
+			
+			for (int index: list) {
+        		if ( isReadOrWriteLock(index).equals("null") )
+        			System.out.println("JX - ERROR???(that's FINE if generalobj.lock()) - " + lastCallstack(index) ); 
+			}
 		}
-        
 		
         //for Debug
         int tmp[] = {0, 0, 0, 0};
@@ -1879,48 +1898,128 @@ public class GraphBuilder {
     }
     
     
-    //Added by JX - traverse Target Code Snippets like heartbeat
-    List<Integer> targetcodeIndexes = new ArrayList<Integer>(); 
-    List<Integer> targetcodeLocks = new ArrayList<Integer>();
-    BitSet bitsetflag;
-    public void traverseTargetCodes() {
+    /**
+     * JX - extractTargetLockLoopInfo
+     */
+    ArrayList<Integer> allloopitems = new ArrayList<Integer>();
+    LinkedHashMap<Integer, Integer> targetblocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
+    LinkedHashMap<Integer, Integer> lockblocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
+    LinkedHashMap<Integer, Integer> loopblocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
+    // Added by JX
+    public void extractTargetLockLoopInfo() {
+    	// init, No need actually
+    	targetblocks.clear();
+    	lockblocks.clear();
+    	loopblocks.clear();
     	
+    	// scan all nodes
     	for (int i = 0; i < nList.size(); i++) {
     		String opty = getNodeOPTY(i);
-    		if ( opty.equals("TargetCodeBegin") | opty.equals("TargetCodeEnd") )
-    			targetcodeIndexes.add( i );
-    	}
-    	
-    	// print for debug
-    	for (int i = 0; i < targetcodeIndexes.size(); i++) {
-    		System.out.println("JX - i=" + i + " - index=" + targetcodeIndexes.get(i) + " - " + getNodeOPTY(targetcodeIndexes.get(i)));
-    	}
-    	
-    	bitsetflag = new BitSet( nList.size() );
-    	
-    	// traverse every pair of TargetCodeBegin & TargetCodeEnd
-    	for (int i = 0; i < targetcodeIndexes.size(); i++) 
-    		if ( getNodeOPTY(targetcodeIndexes.get(i)).equals("TargetCodeBegin") ) {
-    			String pidtid = getNodePIDTID(targetcodeIndexes.get(i));
-    			int flag = 1;
-    			for (int j = i+1; j < targetcodeIndexes.size(); j++) {
-    				if ( !getNodePIDTID(targetcodeIndexes.get(j)).equals(pidtid) ) {
-    					System.out.println("JX - WARN - " + "couldn't find TargetCodeEND for TargetCodeBegin " + i);
-    					break;
-    				}
-    				if ( getNodeOPTY(targetcodeIndexes.get(j)).equals("TargetCodeBegin") ) 
-    					flag ++;
-    				else
-    					flag --;
-    				if (flag == 0) {
-    					firstRoundTraversing(targetcodeIndexes.get(i), targetcodeIndexes.get(j));
+    		// find out all Target Code nodes/blocks
+    		if ( opty.equals("TargetCodeBegin") || opty.equals("TargetCodeEnd") ) {
+    			alltargetitems.add( i );
+    		}
+    		// find out all Lock code blocks
+    		else if ( opty.equals("LockRequire") ) {
+    			String pidtid = getNodePIDTID(i);
+    			String pidopval0 = getNodePIDOPVAL0(i);
+    			for (int j = i+1; j < nList.size(); j++) {
+    				if ( !getNodePIDTID(j).equals(pidtid) ) break;
+    				if ( getNodeOPTY(j).equals("LockRelease") && getNodePIDOPVAL0(j).equals(pidopval0) ) {
+    					lockblocks.put(i, j);
     					break;
     				}
     			}
+    			if ( !lockblocks.containsKey(i) ) 
+    				lockblocks.put(i, null);
     		}
+    		// find out all Loop code blocks
+    		// TODO
+    		else if ( opty.equals("LoopBegin") || opty.equals("LoopEnd") ) {
+    			allloopitems.add( i );
+    		}
+    	}
+    	
+    	// Handle target codes: alltargetitems -> targetblocks: get targetblocks by TargetCodeBegin & TargetCodeEnd    	
+    	for (int i = 0; i < alltargetitems.size(); i++) {
+    		//print for debug
+    		System.out.println("JX - i=" + i + " - index=" + alltargetitems.get(i) + " - " + getNodeOPTY(alltargetitems.get(i)));
+    		//end-print
+    		int iindex = alltargetitems.get(i);
+    		if ( getNodeOPTY( iindex ).equals("TargetCodeBegin") ) {
+    			String pidtid = getNodePIDTID( iindex );
+    			int flag = 1;
+    			for (int j = i+1; j < alltargetitems.size(); j++) {
+    				int jindex = alltargetitems.get(j);
+    				if ( !getNodePIDTID( jindex ).equals(pidtid) ) {
+    					System.out.println("JX - WARN - " + "couldn't find TargetCodeEND for TargetCodeBegin " + i + " its index = " + iindex);
+    					break;
+    				}
+    				if ( getNodeOPTY( jindex ).equals("TargetCodeBegin") ) flag ++;
+    				else flag --;
+    				if (flag == 0) {
+    					targetblocks.put( iindex, jindex );
+    					break;
+    				}
+    			}
+    			if ( !targetblocks.containsKey( iindex ) )
+    				targetblocks.put( iindex, null );
+    		}
+    	}
+    	
+    	// Handle lock codes: already handled in 'scan' phase
+    	
+    	// Handle loop codes
+    	for (int i = 0; i < allloopitems.size(); i++) {
+    		int iindex = allloopitems.get(i);
+    		if ( getNodeOPTY( iindex ).equals("LoopBegin") ) {
+    			String pidtid = getNodePIDTID( iindex );
+    			int flag = 1;
+    			for (int j = i+1; j < allloopitems.size(); j++) {
+    				int jindex = allloopitems.get(j);
+    				if ( !getNodePIDTID( jindex ).equals(pidtid) ) {
+    					System.out.println("JX - WARN - " + "couldn't find LoopEND for LoopBegin " + i + " its index = " + iindex);
+    					break;
+    				}
+    				if ( getNodeOPTY( jindex ).equals("LoopBegin") ) flag ++;
+    				else flag --;
+    				if (flag == 0) {
+    					loopblocks.put( iindex, jindex );
+    					break;
+    				}
+    			}
+    			if ( !loopblocks.containsKey( iindex ) )
+    				loopblocks.put( iindex, null );
+    		}
+    	}
+    	
+    	// for test
+    	System.out.println("\nJX - extractTargetLockLoopInfo");
+    	System.out.println("#targetblocks = " + targetblocks.size());
+    	System.out.println("#lockblocks = " + lockblocks.size());
+    	System.out.println("#loopblocks = " + loopblocks.size());
+    	
+    	// build the relationship between locks and loops
+    	// JX - it seems NO NEED
+    	
+    }
+    
+    /** JX - traverseTargetCodes - Traversing target code snippets */
+    //Added by JX   
+    public void traverseTargetCodes() {
+    
+    	// traverse every pair of TargetCodeBegin & TargetCodeEnd
+    	for (int beginindex: targetblocks.keySet() ) {
+    		if ( targetblocks.get(beginindex) == null )
+    			continue;
+    		int endindex = targetblocks.get(beginindex);
+    		firstRoundTraversing( beginindex, endindex );
+    	}
+
     }
     
     //Added by JX
+    int tmpflag = 0;  //just for test
     public void firstRoundTraversing(int beginIndex, int endIndex) {
     	if ( !reachbitset.get(beginIndex).get(endIndex) ) {
     		System.out.println("JX - ERROR - " + "couldn't reach from " + beginIndex + " to " + endIndex);
@@ -1928,33 +2027,94 @@ public class GraphBuilder {
     	}
     	// traversing
     	targetcodeLocks.clear();
-    	bitsetflag.clear();
+    	targetcodeNodes.clear();
     	dfsTraversing( beginIndex, endIndex );
     	
     	// analyzing
-    	System.out.println("JX - TargetCodeSnippet (" + beginIndex + " to " + endIndex + ") includes " + bitsetflag.cardinality() + " nodes");
-    	System.out.println( "#LockRquire: " + targetcodeLocks.size());
-    	for (int index: targetcodeLocks) {
-    		System.out.println( getWholeIdentity(nList.get(index)) );
+    	System.out.println("JX - TargetCodeSnippet (" + beginIndex + " to " + endIndex + ") includes " + targetcodeNodes.cardinality() + " nodes");
+    	System.out.println( "#LockRquire: " + targetcodeLocks.size());    	
+    	if (tmpflag == 0) {
+    		tmpflag = 1;
+    		for (int index: targetcodeLocks)
+    			System.out.println( lastCallstack(index) );
     	}
+    	// time-consuming loops - suspected bugs
+    	
+    	// locks
+    	findLockRelatedBugs( targetcodeLocks );
     }
     
     public void dfsTraversing( int x, int endIndex ) {
-    	bitsetflag.set( x );
+    	targetcodeNodes.set( x );
     	if ( getNodeOPTY(x).equals("LockRequire") ) {
     		targetcodeLocks.add( x );
+    	}
+    	// TODO - for Loop - suspected bugs
+    	if ( getNodeOPTY(x).equals("LoopBegin") ) {
+    		System.out.println("JX - Bugs - FirstRoundBugs: " + "LoopBegin " + lastCallstack(x));
     	}
 
         List<Pair> list = edge.get(x);
         for (Pair pair: list) {
         	int y = pair.destination;
-        	if ( !bitsetflag.get(y) && reachbitset.get(y).get(endIndex) )
+        	if ( !targetcodeNodes.get(y) && reachbitset.get(y).get(endIndex) )
         		dfsTraversing( y, endIndex );
         }
     }
     
     
+    /** JX - findLockRelatedBugs - */
     
+    public void findLockRelatedBugs( List<Integer> firstbatchLocks ) {
+    	List<Integer> batchLocks = firstbatchLocks;
+    	int CASCADING_LEVEL = 2;  //minimum:2; default:3;
+    	int times = CASCADING_LEVEL - 1;
+    	while ( times-- > 0) {
+    		ArrayList<Integer> nextbatchLocks = findNextbatchLocks( batchLocks );
+    		batchLocks.clear();
+    		for (int index: nextbatchLocks) {
+    			int ii = index;
+    			int jj = lockblocks.get( ii );
+    			int loopflag = 0;
+    			for (int k = ii; k <= jj; k++) {
+    				// TODO
+    				if ( getNodeOPTY(k).equals("LoopBegin") ) {
+    					loopflag = 1;
+    					System.out.println("JX - Bugs - LockRelatedBugs: " + "LoopBegin " + lastCallstack(k));
+    					break;
+    				}
+    			}
+    		}
+    	}
+    	
+    }
+    
+    public ArrayList<Integer> findNextbatchLocks( List<Integer> batchLocks ) {
+    	ArrayList<Integer> nextbatchLocks = new ArrayList<Integer>();
+    	
+    	for (int lockindex: batchLocks) {
+    		String pidopval0 = getNodePIDOPVAL0(lockindex);
+    		// 1. if not R lock; cuz R will not affect R, but a general obj.lock can affect the obj itself
+    		if ( !isReadOrWriteLock(lockindex).equals("R") ) {
+    			ArrayList<Integer> list = accurateLockmemref.get( pidopval0 );
+	    		for (int index: list) {
+	    			if (lockindex == index) continue;
+	                if ( flippedorder(lockindex, index) )
+	                	nextbatchLocks.add( index );
+	    		}
+    		}
+    		// 2. if R/W lock
+    		if ( !isReadOrWriteLock(lockindex).equals("null") ) {
+    			String correspondingPidopval0 = rwlockmatch.get( pidopval0 )[1];
+    			ArrayList<Integer> list = accurateLockmemref.get( correspondingPidopval0 );   //or using dotlockmemref.get( xx )
+    			for (int index: list) {
+    				if ( flippedorder(lockindex, index) )
+    					nextbatchLocks.add( index );
+    			}
+    		}
+    	}
+    	return nextbatchLocks;
+    }
     
     
     
