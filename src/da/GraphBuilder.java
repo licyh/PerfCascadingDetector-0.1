@@ -1907,6 +1907,8 @@ public class GraphBuilder {
     LinkedHashMap<Integer, Integer> loopblocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
     // Added by JX
     public void extractTargetLockLoopInfo() {
+    	System.out.println("\nJX - extractTargetLockLoopInfo");
+    	
     	// init, No need actually
     	targetblocks.clear();
     	lockblocks.clear();
@@ -1994,7 +1996,6 @@ public class GraphBuilder {
     	}
     	
     	// for test
-    	System.out.println("\nJX - extractTargetLockLoopInfo");
     	System.out.println("#targetblocks = " + targetblocks.size());
     	System.out.println("#lockblocks = " + lockblocks.size());
     	System.out.println("#loopblocks = " + loopblocks.size());
@@ -2007,7 +2008,7 @@ public class GraphBuilder {
     /** JX - traverseTargetCodes - Traversing target code snippets */
     //Added by JX   
     public void traverseTargetCodes() {
-    
+    	System.out.println("\nJX - traverseTargetCodes");
     	// traverse every pair of TargetCodeBegin & TargetCodeEnd
     	for (int beginindex: targetblocks.keySet() ) {
     		if ( targetblocks.get(beginindex) == null )
@@ -2077,6 +2078,9 @@ public class GraphBuilder {
     			int jj = lockblocks.get( ii );
     			int loopflag = 0;
     			for (int k = ii; k <= jj; k++) {
+    				if ( getNodeOPTY(k).equals("LockRequire") ) {
+    					batchLocks.add( k );
+    				}
     				// TODO
     				if ( getNodeOPTY(k).equals("LoopBegin") ) {
     					loopflag = 1;
@@ -2085,7 +2089,13 @@ public class GraphBuilder {
     				}
     			}
     		}
+    		if ( batchLocks.size() <= 0 ) {
+    			System.out.println( "JX - CascadingBugDetection - finished normally" );
+    			break;
+    		}
     	}
+    	System.out.println( "JX - CascadingBugDetection - finished by CASCADING_LEVEL = " + CASCADING_LEVEL );
+    	
     	
     }
     
