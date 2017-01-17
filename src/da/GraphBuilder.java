@@ -1932,8 +1932,8 @@ public class GraphBuilder {
     					break;
     				}
     			}
-    			//if ( !lockblocks.containsKey(i) ) 
-    			//	lockblocks.put(i, null);
+    			if ( !lockblocks.containsKey(i) ) 
+    				lockblocks.put(i, null);
     		}
     		// find out all Loop code blocks
     		// TODO
@@ -1964,8 +1964,8 @@ public class GraphBuilder {
     					break;
     				}
     			}
-    			//if ( !targetblocks.containsKey( iindex ) )
-    			//	targetblocks.put( iindex, null );
+    			if ( !targetblocks.containsKey( iindex ) )
+    				targetblocks.put( iindex, null );
     		}
     	}
     	
@@ -1990,8 +1990,8 @@ public class GraphBuilder {
     					break;
     				}
     			}
-    			//if ( !loopblocks.containsKey( iindex ) )
-    			//	loopblocks.put( iindex, null );
+    			if ( !loopblocks.containsKey( iindex ) )
+    				loopblocks.put( iindex, null );
     		}
     	}
     	
@@ -2081,6 +2081,8 @@ public class GraphBuilder {
     		System.out.println( "JX - test - 2.1" );
     		for (int index: nextbatchLocks) {
     			int ii = index;
+    			if ( lockblocks.get(ii) == null ) 
+    				continue;
     			int jj = lockblocks.get( ii );
     			int loopflag = 0;
     			System.out.println( "JX - test - 3.1" );
@@ -2095,6 +2097,7 @@ public class GraphBuilder {
     					break;
     				}
     			}
+    			System.out.println( "JX - test - 3.2" );
     		}
     		if ( batchLocks.size() <= 0 ) {
     			System.out.println( "JX - CascadingBugDetection - finished normally" );
