@@ -2074,13 +2074,16 @@ public class GraphBuilder {
     	List<Integer> batchLocks = firstbatchLocks;
     	int CASCADING_LEVEL = 2;  //minimum:2; default:3;
     	int times = CASCADING_LEVEL - 1;
+    	System.out.println( "JX - test - 1" );
     	while ( times-- > 0) {
     		ArrayList<Integer> nextbatchLocks = findNextbatchLocks( batchLocks );
-    		batchLocks.clear();
+    		batchLocks = new ArrayList<Integer>();
+    		System.out.println( "JX - test - 2.1" );
     		for (int index: nextbatchLocks) {
     			int ii = index;
     			int jj = lockblocks.get( ii );
     			int loopflag = 0;
+    			System.out.println( "JX - test - 3.1" );
     			for (int k = ii; k <= jj; k++) {
     				if ( getNodeOPTY(k).equals("LockRequire") ) {
     					batchLocks.add( k );
@@ -2105,9 +2108,10 @@ public class GraphBuilder {
     
     public ArrayList<Integer> findNextbatchLocks( List<Integer> batchLocks ) {
     	ArrayList<Integer> nextbatchLocks = new ArrayList<Integer>();
-    	
+    	System.out.println( "JX - test - 1.1" );
     	for (int lockindex: batchLocks) {
     		String pidopval0 = getNodePIDOPVAL0(lockindex);
+    		System.out.println( "JX - test - 1.1.1" );
     		// 1. if not R lock; cuz R will not affect R, but a general obj.lock can affect the obj itself
     		if ( !isReadOrWriteLock(lockindex).equals("R") ) {
     			ArrayList<Integer> list = accurateLockmemref.get( pidopval0 );
@@ -2117,6 +2121,7 @@ public class GraphBuilder {
 	                	nextbatchLocks.add( index );
 	    		}
     		}
+    		System.out.println( "JX - test - 1.1.2" );
     		// 2. if R/W lock
     		if ( !isReadOrWriteLock(lockindex).equals("null") ) {
     			String correspondingPidopval0 = rwlockmatch.get( pidopval0 )[1];
@@ -2127,6 +2132,7 @@ public class GraphBuilder {
     			}
     		}
     	}
+    	System.out.println( "JX - test - 1.2" );
     	return nextbatchLocks;
     }
     
