@@ -2015,7 +2015,7 @@ public class GraphBuilder {
     		if ( targetblocks.get(beginindex) == null )
     			continue;
     		int endindex = targetblocks.get(beginindex);
-    		System.out.println( "Code Snippet #" + numofsnippets + ": (" + beginindex + " to " + endindex + ")"  );
+    		System.out.println( "Code Snippet #" + (++numofsnippets) + ": (" + beginindex + " to " + endindex + ")"  );
     		firstRoundTraversing( beginindex, endindex );
     	}
 
@@ -2074,14 +2074,14 @@ public class GraphBuilder {
     		System.out.println( "JX - CascadingBugDetection - there is no first batch of locks, finished normally!" );
     		return;
     	}
-    	List<Integer> batchLocks = firstbatchLocks;
+    	Set<Integer> batchLocks = new TreeSet<Integer>( firstbatchLocks );
     	int CASCADING_LEVEL = 2;  //minimum:2; default:3;
     	int times = CASCADING_LEVEL - 1;
     	int tmpbatch = 0;
     	while ( times-- > 0) {
-    		ArrayList<Integer> nextbatchLocks = findNextbatchLocks( batchLocks );
+    		Set<Integer> nextbatchLocks = findNextbatchLocks( batchLocks );
     		System.out.println("batch #" + (++tmpbatch) + ": #locks=" + batchLocks.size() + " <- #locks=" + nextbatchLocks.size() );
-    		batchLocks = new ArrayList<Integer>();
+    		batchLocks = new TreeSet<Integer>();
     		for (int index: nextbatchLocks) {
     			int ii = index;
     			if ( lockblocks.get(ii) == null ) 
@@ -2099,20 +2099,18 @@ public class GraphBuilder {
     					break;
     				}
     			}
-    			//System.out.println( "JX - test - 3.2" );
     		}
     		if ( batchLocks.size() <= 0 ) {
     			System.out.println( "JX - CascadingBugDetection - finished normally" );
     			break;
     		}
     	}
-    	System.out.println( "JX - CascadingBugDetection - finished by CASCADING_LEVEL = " + CASCADING_LEVEL );
-    	
-    	
+    	System.out.println( "JX - CascadingBugDetection - finished with CASCADING_LEVEL = " + CASCADING_LEVEL );
     }
     
-    public ArrayList<Integer> findNextbatchLocks( List<Integer> batchLocks ) {
-    	ArrayList<Integer> nextbatchLocks = new ArrayList<Integer>();
+    public Set<Integer> findNextbatchLocks( Set<Integer> batchLocks ) {
+    	//ArrayList<Integer> nextbatchLocks = new ArrayList<Integer>();
+    	Set<Integer> nextbatchLocks = new TreeSet<Integer>();
     	for (int lockindex: batchLocks) {
     		String pidopval0 = getNodePIDOPVAL0(lockindex);
     		// 1. if not R lock; cuz R will not affect R, but a general obj.lock can affect the obj itself
