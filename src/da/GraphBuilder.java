@@ -1932,8 +1932,8 @@ public class GraphBuilder {
     					break;
     				}
     			}
-    			if ( !lockblocks.containsKey(i) ) 
-    				lockblocks.put(i, null);
+    			//if ( !lockblocks.containsKey(i) ) 
+    			//	lockblocks.put(i, null);
     		}
     		// find out all Loop code blocks
     		// TODO
@@ -1964,8 +1964,8 @@ public class GraphBuilder {
     					break;
     				}
     			}
-    			if ( !targetblocks.containsKey( iindex ) )
-    				targetblocks.put( iindex, null );
+    			//if ( !targetblocks.containsKey( iindex ) )
+    			//	targetblocks.put( iindex, null );
     		}
     	}
     	
@@ -1990,8 +1990,8 @@ public class GraphBuilder {
     					break;
     				}
     			}
-    			if ( !loopblocks.containsKey( iindex ) )
-    				loopblocks.put( iindex, null );
+    			//if ( !loopblocks.containsKey( iindex ) )
+    			//	loopblocks.put( iindex, null );
     		}
     	}
     	
@@ -2067,6 +2067,10 @@ public class GraphBuilder {
     /** JX - findLockRelatedBugs - */
     
     public void findLockRelatedBugs( List<Integer> firstbatchLocks ) {
+    	if ( firstbatchLocks.size() <= 0 ) {
+    		System.out.println( "JX - CascadingBugDetection - there is no first batch of locks, finished normally!" );
+    		return;
+    	}
     	List<Integer> batchLocks = firstbatchLocks;
     	int CASCADING_LEVEL = 2;  //minimum:2; default:3;
     	int times = CASCADING_LEVEL - 1;
