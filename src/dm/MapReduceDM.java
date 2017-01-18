@@ -39,6 +39,7 @@ class MapReduceTransformer extends Transformer {
   CalleeInfo calleeInfo = new CalleeInfo();
   
   //Added by JX
+  /*
   List<String> classesForInst = new ArrayList<String>();
   List<String> methodsForInst = new ArrayList<String>();
   List<String> linesForInst  = new ArrayList<String>();
@@ -46,6 +47,7 @@ class MapReduceTransformer extends Transformer {
   List<Integer> flagsForInst = new ArrayList<Integer>();
   String instBegin = "";
   String instEnd = "";
+  */
   //end-Added
 
   public MapReduceTransformer(String str) {
@@ -75,6 +77,7 @@ class MapReduceTransformer extends Transformer {
     calleeInfo.readFile();
     
     //Added by JX    
+    /*
     try {
     	InputStream ins = MapReduceTransformer.class.getClassLoader().getResourceAsStream("resource/targetlocations");
     	BufferedReader bufreader = new BufferedReader( new InputStreamReader(ins) );
@@ -107,6 +110,7 @@ class MapReduceTransformer extends Transformer {
 	System.out.println("JX - " + "methodsForInst = " + methodsForInst);
 	System.out.println("JX - " + "linesForInst =  " + linesForInst );
 	System.out.println("JX - " + "instructions = " + instBegin + "*" + instEnd + "*");
+	*/
     //end-Added
     
   }
@@ -120,6 +124,7 @@ class MapReduceTransformer extends Transformer {
 
   
   //Added by JX
+  /*
   public void transformClassForCodeSnippets(CtClass cl, CtBehavior[] methods) {
 	  if ( !classesForInst.contains(cl.getName()) ) return;
 	  //System.out.println("JX - @1 - " + cl.getName());
@@ -132,11 +137,6 @@ class MapReduceTransformer extends Transformer {
     				  && methodsForInst.get(i).equals(method.getName()) ) {
     			  int linenumber = Integer.parseInt( linesForInst.get(i) );
     			  try {
-    				  /* test
-    				  for (int k = 224; k <= 248; k++) {
-    					  System.out.println( "JX - " + "for line " + k + " will insert at " + method.insertAt(k, false, instBegin) );
-    				  }
-    				  */
 	    			  if ( typesForInst.get(i).equals("TargetCodeBegin") ) {
 	    				  System.out.println( "JX - TargetCodeBegin: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, instBegin) );
 	    				  method.insertAt(linenumber, true, instBegin);
@@ -157,6 +157,7 @@ class MapReduceTransformer extends Transformer {
     	  }
       }//end-outer for
   }
+  */
   //end-Added
   
   public void transformMethod(CtClass cl, CtBehavior method) {
