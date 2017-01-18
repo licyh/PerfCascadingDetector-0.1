@@ -1,0 +1,2 @@
+org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter commitJob 302 	LoopBegin 
+org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter commitJob 303  	LoopCenter

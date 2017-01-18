@@ -23,9 +23,11 @@ public class _DM_Log {
     LockRequire, //require lock
     LockRelease, //release lock
     //Added by JX
-    RWLockCreate,  //jx - for creating ReentrantReadWriteLock
+    RWLockCreate,   	//jx - for creating ReentrantReadWriteLock
     TargetCodeBegin,
     TargetCodeEnd,
+    LoopBegin,
+    //LoopCenter,         //tmp
     //end-Added
   };
 
@@ -158,5 +160,19 @@ public class _DM_Log {
   }
   //end-Added
   
+  //Added by JX
+  public static void log_LoopBegin(String opValue) {
+	String opType = _DM_Log.OPTYPE.LoopBegin.name();
+	_DM_Log.log_Base(opType, opValue);
+  }
+  //end-Added
   
+  /*
+  //Added by JX
+  public static void log_LoopCenter(String opValue) {
+	String opType = _DM_Log.OPTYPE.LoopCenter.name();
+	_DM_Log.log_Base(opType, opValue);
+  }
+  //end-Added
+  */
 }
