@@ -2015,7 +2015,7 @@ public class GraphBuilder {
     		if ( targetblocks.get(beginindex) == null )
     			continue;
     		int endindex = targetblocks.get(beginindex);
-    		System.out.println( "Code Snippet #" + (++numofsnippets) + ": (" + beginindex + " to " + endindex + ")"  );
+    		System.out.println( "\nTarget Code Snippet #" + (++numofsnippets) + ": (" + beginindex + " to " + endindex + ")"  );
     		firstRoundTraversing( beginindex, endindex );
     	}
 
@@ -2034,13 +2034,18 @@ public class GraphBuilder {
     	dfsTraversing( beginIndex, endIndex );
     	
     	// analyzing
-    	System.out.println("JX - TargetCodeSnippet (" + beginIndex + " to " + endIndex + ") includes " + targetcodeNodes.cardinality() + " nodes");
-    	System.out.println( "#LockRquire/FirstBatchLocks: " + targetcodeLocks.size());    	
-    	if (tmpflag == 0) {
-    		tmpflag = 1;
-    		for (int index: targetcodeLocks)
-    			System.out.println( lastCallstack(index) );
+    	Set<String> setofinvolvingthreads = new HashSet<String>();
+    	for (int index: targetcodeLocks) {
+    		setofinvolvingthreads.add( getNodePIDTID(index) );
+    		// for test, print all locks' names
+    		if (tmpflag == 0 ) {
+    			System.out.println( "including" + getNodePIDTID(index) + " " + lastCallstack(index) );
+    		}
     	}
+    	tmpflag = 1;
+    	System.out.println("this snippet includes " + targetcodeNodes.cardinality()
+    						+ " nodes, #firstbatchLocks = " + targetcodeLocks.size() + ", #involving threads = " + setofinvolvingthreads);
+    
     	// time-consuming loops - suspected bugs
     	
     	// locks
@@ -2074,33 +2079,18 @@ public class GraphBuilder {
     		System.out.println( "JX - CascadingBugDetection - there is no first batch of locks, finished normally!" );
     		return;
     	}
-    	Set<Integer> batchLocks = new TreeSet<Integer>( firstbatchLocks );
+    	Set<Integer> curbatchLocks = new TreeSet<Integer>( firstbatchLocks );
     	int CASCADING_LEVEL = 2;  //minimum:2; default:3;
     	int times = CASCADING_LEVEL - 1;
     	int tmpbatch = 0;
     	while ( times-- > 0) {
-    		Set<Integer> nextbatchLocks = findNextbatchLocks( batchLocks );
-    		System.out.println("batch #" + (++tmpbatch) + ": #locks=" + batchLocks.size() + " <- #locks=" + nextbatchLocks.size() );
-    		batchLocks = new TreeSet<Integer>();
-    		for (int index: nextbatchLocks) {
-    			int ii = index;
-    			if ( lockblocks.get(ii) == null ) 
-    				continue;
-    			int jj = lockblocks.get( ii );
-    			int loopflag = 0;
-    			for (int k = ii; k <= jj; k++) {
-    				if ( getNodeOPTY(k).equals("LockRequire") ) {
-    					batchLocks.add( k );
-    				}
-    				// TODO
-    				if ( getNodeOPTY(k).equals("LoopBegin") ) {
-    					loopflag = 1;
-    					System.out.println("JX - Bugs - LockRelatedBugs: " + "LoopBegin " + lastCallstack(k));
-    					break;
-    				}
-    			}
-    		}
-    		if ( batchLocks.size() <= 0 ) {
+    		// Find affected locks in different threads
+    		Set<Integer> nextbatchLocks = findNextbatchLocksInDiffThreads( curbatchLocks );
+    		System.out.print("batch #" + (++tmpbatch) + ":#locks=" + curbatchLocks.size() + " <--- #" + tmpbatch + ".5:#locks=" + nextbatchLocks.size() );
+    		// Find affected locks based on 1 in the same thread
+    		curbatchLocks = findNextbatchLocksInSameThread( nextbatchLocks );
+    		System.out.println( " <- #" + (tmpbatch+1) + ":#intermediate locks=" + curbatchLocks.size()  );
+    		if ( curbatchLocks.size() <= 0 ) {
     			System.out.println( "JX - CascadingBugDetection - finished normally" );
     			break;
     		}
@@ -2108,7 +2098,8 @@ public class GraphBuilder {
     	System.out.println( "JX - CascadingBugDetection - finished with CASCADING_LEVEL = " + CASCADING_LEVEL );
     }
     
-    public Set<Integer> findNextbatchLocks( Set<Integer> batchLocks ) {
+    // JX - Find affected locks in different threads
+    public Set<Integer> findNextbatchLocksInDiffThreads( Set<Integer> batchLocks ) {
     	//ArrayList<Integer> nextbatchLocks = new ArrayList<Integer>();
     	Set<Integer> nextbatchLocks = new TreeSet<Integer>();
     	for (int lockindex: batchLocks) {
@@ -2135,6 +2126,30 @@ public class GraphBuilder {
     	return nextbatchLocks;
     }
     
+    // JX - Find affected locks based on 'findNextbatchLocksInDiffThreads' in the same thread
+    public Set<Integer> findNextbatchLocksInSameThread( Set<Integer> batchLocks ) {
+    	Set<Integer> nextbatchLocks = new TreeSet<Integer>();
+		for (int index: batchLocks) {
+			int beginIndex = index;
+			if ( lockblocks.get(beginIndex) == null ) 
+				continue;
+			int endIndex = lockblocks.get( beginIndex );
+			int loopflag = 0;
+			for (int k = beginIndex; k <= endIndex; k++) {
+				// TODO
+				if ( getNodeOPTY(k).equals("LoopBegin") ) {
+					loopflag = 1;
+					System.out.println("JX - Bugs - LockRelatedBugs: " + "LoopBegin " + lastCallstack(k));
+					//break;
+				}
+				if ( getNodeOPTY(k).equals("LockRequire") ) {
+					nextbatchLocks.add( k );
+					//jx: it seems no need to check if the LockReuire has LockRelease or not
+				}
+			}
+		}
+		return nextbatchLocks;
+    }
     
     
     /**

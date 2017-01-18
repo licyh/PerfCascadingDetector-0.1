@@ -233,12 +233,14 @@ public class Transformer implements ClassFileTransformer {
 	    				  loop_flagsForInst.set(i, loop_flagsForInst.get(i)+1);
 	    				  System.out.println( "JX - " + "this is the " + loop_flagsForInst.get(i) + " st/nd/rd/th time for location " + i );
 	    			  }
+	    			  /*
 	    			  else if ( loop_typesForInst.get(i).equals("LoopCenter") ) { //this is "TargetCodeEnd"
 	    				  System.out.println( "JX - LoopCenter: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, loop_instCenter) );
 	    				  method.insertAt(linenumber, true, loop_instCenter);
 	    				  loop_flagsForInst.set(i, loop_flagsForInst.get(i)+1);
 	    				  System.out.println( "JX - " + "this is the " + loop_flagsForInst.get(i) + " st/nd/rd/th time for location " + i );
 	    			  }
+	    			  */
     			  } catch (Exception e) {
     				  // TODO Auto-generated catch block
     				  e.printStackTrace();
