@@ -2006,19 +2006,33 @@ public class GraphBuilder {
     }
     
     /** JX - traverseTargetCodes - Traversing target code snippets */
+    //for now, only one bug pool for whole code snippets 
+	Set<Integer> bugpool = new TreeSet<Integer>();
     //Added by JX   
     public void traverseTargetCodes() {
     	System.out.println("\nJX - traverseTargetCodes - including all TARGET CODE snippets");
-    	// traverse every pair of TargetCodeBegin & TargetCodeEnd
+    	
     	int numofsnippets = 0;
+    	// traverse every pair of TargetCodeBegin & TargetCodeEnd
     	for (int beginindex: targetblocks.keySet() ) {
     		if ( targetblocks.get(beginindex) == null )
     			continue;
     		int endindex = targetblocks.get(beginindex);
     		System.out.println( "\nTarget Code Snippet #" + (++numofsnippets) + ": (" + beginindex + " to " + endindex + ")"  );
+    		// Step 1 of 2
     		firstRoundTraversing( beginindex, endindex );
+        	// Step 1.5 - time-consuming loops - suspected bugs
+        	//TODO
+    		// Step 2 of 2
+        	findLockRelatedBugs( targetcodeLocks );
     	}
-
+    	
+    	// results
+    	System.out.println("\nJX - Results of traverseTargetCodes");
+    	for (int index: bugpool) {
+    		System.out.println( lastCallstack(index) );
+    	}
+    
     }
     
     //Added by JX
@@ -2045,11 +2059,6 @@ public class GraphBuilder {
     	tmpflag = 1;
     	System.out.println("this snippet includes " + targetcodeNodes.cardinality()
     						+ " nodes, #firstbatchLocks = " + targetcodeLocks.size() + ", #involving threads = " + setofinvolvingthreads);
-    
-    	// time-consuming loops - suspected bugs
-    	
-    	// locks
-    	findLockRelatedBugs( targetcodeLocks );
     }
     
     public void dfsTraversing( int x, int endIndex ) {
@@ -2059,6 +2068,7 @@ public class GraphBuilder {
     	}
     	// TODO - for Loop - suspected bugs
     	if ( getNodeOPTY(x).equals("LoopBegin") ) {
+    		bugpool.add( x );
     		System.out.println("JX - Bugs - FirstRoundBugs: " + "LoopBegin " + lastCallstack(x));
     	}
 
@@ -2083,18 +2093,20 @@ public class GraphBuilder {
     	int CASCADING_LEVEL = 2;  //minimum:2; default:3;
     	int times = CASCADING_LEVEL - 1;
     	int tmpbatch = 0;
+    	
     	while ( times-- > 0) {
     		// Find affected locks in different threads
     		Set<Integer> nextbatchLocks = findNextbatchLocksInDiffThreads( curbatchLocks );
-    		System.out.print("batch #" + (++tmpbatch) + ":#locks=" + curbatchLocks.size() + " <--- #" + tmpbatch + ".5:#locks=" + nextbatchLocks.size() );
+    		System.out.println("batch #" + (++tmpbatch) + ":#locks=" + curbatchLocks.size() + " <--- #" + tmpbatch + ".5:#locks=" + nextbatchLocks.size() );
     		// Find affected locks based on 1 in the same thread
     		curbatchLocks = findNextbatchLocksInSameThread( nextbatchLocks );
-    		System.out.println( " <- #" + (tmpbatch+1) + ":#intermediate locks=" + curbatchLocks.size()  );
+    		System.out.println("batch #" + (tmpbatch+1) + ":#intermediate locks=" + curbatchLocks.size()  );
     		if ( curbatchLocks.size() <= 0 ) {
     			System.out.println( "JX - CascadingBugDetection - finished normally" );
     			break;
     		}
     	}
+    	
     	System.out.println( "JX - CascadingBugDetection - finished with CASCADING_LEVEL = " + CASCADING_LEVEL );
     }
     
@@ -2139,6 +2151,7 @@ public class GraphBuilder {
 				// TODO
 				if ( getNodeOPTY(k).equals("LoopBegin") ) {
 					loopflag = 1;
+					bugpool.add( k );
 					System.out.println("JX - Bugs - LockRelatedBugs: " + "LoopBegin " + lastCallstack(k));
 					//break;
 				}
