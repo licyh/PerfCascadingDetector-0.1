@@ -2006,8 +2006,9 @@ public class GraphBuilder {
     }
     
     /** JX - traverseTargetCodes - Traversing target code snippets */
-    //for now, only one bug pool for whole code snippets 
-	Set<Integer> bugpool = new TreeSet<Integer>();
+    int CASCADING_LEVEL = 3;  //minimum:2; default:3;
+	Set<Integer> bugpool = new TreeSet<Integer>();   //for now, only one bug pool for whole code snippets
+	
     //Added by JX   
     public void traverseTargetCodes() {
     	System.out.println("\nJX - traverseTargetCodes - including all TARGET CODE snippets");
@@ -2090,7 +2091,6 @@ public class GraphBuilder {
     		return;
     	}
     	Set<Integer> curbatchLocks = new TreeSet<Integer>( firstbatchLocks );
-    	int CASCADING_LEVEL = 2;  //minimum:2; default:3;
     	int times = CASCADING_LEVEL - 1;
     	int tmpbatch = 0;
     	
