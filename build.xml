@@ -117,6 +117,8 @@
                 		<zipfileset dir="${src.dm.dir}" includes="res/mr/mr_callee.txt" fullpath="resource/mr_callee.txt"/>
                         <zipfileset dir="${src.dm.dir}" includes="res/mr/targetlocations" fullpath="resource/targetlocations"/>
                 	    <zipfileset dir="${src.dm.dir}" includes="res/mr/targetinstructions" fullpath="resource/targetinstructions"/>
+                		<zipfileset dir="${src.dm.dir}" includes="res/mr/looplocations" fullpath="resource/looplocations"/>
+                	    <zipfileset dir="${src.dm.dir}" includes="res/mr/loopinstructions" fullpath="resource/loopinstructions"/>
 		                <!--
 			            <zipfileset dir="src" includes="com/api.txt" fullpath="jiaxin/www/api.txt" />
                         <zipfileset dir="build/classes/com" includes="dm/**/*.class" prefix="jiaxinclass" />

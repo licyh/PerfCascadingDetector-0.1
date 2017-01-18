@@ -88,8 +88,9 @@ public class Transformer implements ClassFileTransformer {
 		loop_instCenter = bufreader.readLine();
 		bufreader.close();
 		
-    } catch (IOException e) {
+    } catch (Exception e) {
 		// TODO Auto-generated catch block
+    	System.out.println("JX - ERROR - when reading resource/xxxlocations&xxxinstructions at Transformer.java");
 		e.printStackTrace();
 	}
 	
