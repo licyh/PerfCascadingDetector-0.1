@@ -2006,7 +2006,7 @@ public class GraphBuilder {
     }
     
     /** JX - traverseTargetCodes - Traversing target code snippets */
-    int CASCADING_LEVEL = 3;  //minimum:2; default:3;
+    int CASCADING_LEVEL = 10;  //minimum:2; default:3;
 	Set<Integer> bugpool = new TreeSet<Integer>();   //for now, only one bug pool for whole code snippets
 	
     //Added by JX   

@@ -1,4 +1,4 @@
-//////package com.dm.Util.LogClass; //performance overhead... 1min --> 2min
+//package dm.Util.LogClass; //performance overhead... 1min --> 2min
 
 import java.io.*;
 import java.util.*;
