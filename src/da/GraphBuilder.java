@@ -2146,6 +2146,8 @@ public class GraphBuilder {
 			if ( lockblocks.get(beginIndex) == null ) 
 				continue;
 			int endIndex = lockblocks.get( beginIndex );
+			
+			String pidopval0 = getNodePIDOPVAL0( index );
 			int loopflag = 0;
 			for (int k = beginIndex; k <= endIndex; k++) {
 				// TODO
@@ -2156,7 +2158,8 @@ public class GraphBuilder {
 					//break;
 				}
 				if ( getNodeOPTY(k).equals("LockRequire") ) {
-					nextbatchLocks.add( k );
+					if ( !getNodePIDOPVAL0(k).equals(pidopval0) )
+						nextbatchLocks.add( k );
 					//jx: it seems no need to check if the LockReuire has LockRelease or not
 				}
 			}
