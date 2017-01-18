@@ -99,6 +99,12 @@ public class Transformer implements ClassFileTransformer {
 	System.out.println("JX - " + "methodsForInst = " + methodsForInst);
 	System.out.println("JX - " + "linesForInst =  " + linesForInst );
 	System.out.println("JX - " + "instructions = " + instBegin + "*" + instEnd + "*");
+	
+	System.out.println("JX - " + loop_classesForInst.size() + " locations are loaded");
+	System.out.println("JX - " + "loop_classesForInst = " + loop_classesForInst);
+	System.out.println("JX - " + "loop_methodsForInst = " + loop_methodsForInst);
+	System.out.println("JX - " + "loop_linesForInst =  " + loop_linesForInst );
+	System.out.println("JX - " + "loop_instructions = " + loop_instBegin + "*" + loop_instCenter + "*");
     
   }
 
@@ -206,10 +212,10 @@ public class Transformer implements ClassFileTransformer {
   
   public void transformClassForLoops(CtClass cl, CtBehavior[] methods) {
 	  if ( !loop_classesForInst.contains(cl.getName()) ) return;
-	  //System.out.println("JX - @1 - " + cl.getName());
+	  System.out.println("JX - @1 - " + cl.getName());
       for (CtBehavior method : methods) {
           if ( method.isEmpty() ) continue;
-          //System.out.println("JX - @2 - " + method.getName());
+          System.out.println("JX - @2 - " + method.getName());
           // traverse all locations for instrumentation
           for (int i = 0; i < loop_classesForInst.size(); i++) {
     		  if ( loop_classesForInst.get(i).equals(cl.getName())
