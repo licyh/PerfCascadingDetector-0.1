@@ -220,8 +220,9 @@ public class Transformer implements ClassFileTransformer {
           for (int i = 0; i < loop_classesForInst.size(); i++) {
     		  if ( loop_classesForInst.get(i).equals(cl.getName())
     				  && loop_methodsForInst.get(i).equals(method.getName()) ) {
-    			  int linenumber = Integer.parseInt( loop_linesForInst.get(i) );
     			  try {
+        			  method.addLocalVariable("jxloop", CtClass.intType);
+        			  int linenumber = Integer.parseInt( loop_linesForInst.get(i) );
     				  /* test
     				  for (int k = 224; k <= 248; k++) {
     					  System.out.println( "JX - " + "for line " + k + " will insert at " + method.insertAt(k, false, instBegin) );
@@ -233,14 +234,12 @@ public class Transformer implements ClassFileTransformer {
 	    				  loop_flagsForInst.set(i, loop_flagsForInst.get(i)+1);
 	    				  System.out.println( "JX - " + "this is the " + loop_flagsForInst.get(i) + " st/nd/rd/th time for location " + i );
 	    			  }
-	    			  /*
 	    			  else if ( loop_typesForInst.get(i).equals("LoopCenter") ) { //this is "TargetCodeEnd"
 	    				  System.out.println( "JX - LoopCenter: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, loop_instCenter) );
 	    				  method.insertAt(linenumber, true, loop_instCenter);
 	    				  loop_flagsForInst.set(i, loop_flagsForInst.get(i)+1);
 	    				  System.out.println( "JX - " + "this is the " + loop_flagsForInst.get(i) + " st/nd/rd/th time for location " + i );
 	    			  }
-	    			  */
     			  } catch (Exception e) {
     				  // TODO Auto-generated catch block
     				  e.printStackTrace();
