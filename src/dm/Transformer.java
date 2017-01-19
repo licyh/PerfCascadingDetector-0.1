@@ -221,7 +221,7 @@ public class Transformer implements ClassFileTransformer {
     		  if ( loop_classesForInst.get(i).equals(cl.getName())
     				  && loop_methodsForInst.get(i).equals(method.getName()) ) {
     			  try {
-        			  method.addLocalVariable("jxloop", CtClass.intType);
+        			  
         			  int linenumber = Integer.parseInt( loop_linesForInst.get(i) );
     				  /* test
     				  for (int k = 224; k <= 248; k++) {
@@ -229,6 +229,7 @@ public class Transformer implements ClassFileTransformer {
     				  }
     				  */
 	    			  if ( loop_typesForInst.get(i).equals("LoopBegin") ) {
+	    				  method.addLocalVariable("jxloop", CtClass.intType);
 	    				  System.out.println( "JX - LoopBegin: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, loop_instBegin) );
 	    				  method.insertAt(linenumber, true, loop_instBegin);
 	    				  loop_flagsForInst.set(i, loop_flagsForInst.get(i)+1);
