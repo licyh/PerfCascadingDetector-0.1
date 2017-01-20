@@ -1960,7 +1960,7 @@ public class JXLocks {
       record.longest_function_chain_ids.add(function.getGraphNodeId());
       records_for_all_functions.put(function.getGraphNodeId(), record);
     }
-    if (!function.getMethod().getDeclaringClass().getClassLoader().getReference().equals(ClassLoaderReference.Application)) { //JX£ºneeded
+    if (!function.getMethod().getDeclaringClass().getClassLoader().getReference().equals(ClassLoaderReference.Application)) { //JX: needed
       record.max_depth_of_loops = 0; //maybe some can be marked as a big value;
       record.longest_function_chain_ids.add(function.getGraphNodeId());
       records_for_all_functions.put(function.getGraphNodeId(), record);
@@ -2219,7 +2219,7 @@ public class JXLocks {
       valfunc.max_layer = layer+1;
       return valfunc;
     }
-    if (!function.getMethod().getDeclaringClass().getClassLoader().getReference().equals(ClassLoaderReference.Application)) { //JX£ºneeded
+    if (!function.getMethod().getDeclaringClass().getClassLoader().getReference().equals(ClassLoaderReference.Application)) { //JX: needed
       valfunc.max_numOfFors = 1;
       valfunc.functions[layer] = function.getMethod().getSignature();
       valfunc.variables[layer] = "";
