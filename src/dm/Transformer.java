@@ -229,7 +229,8 @@ public class Transformer implements ClassFileTransformer {
     				  }
     				  */
 	    			  if ( loop_typesForInst.get(i).equals("LoopBegin") ) {
-	    				  method.addLocalVariable("jxloop", CtClass.intType);
+	    				  // JX - only one time for a method
+	    				  method.addLocalVariable("jxloop", CtClass.intType); 
 	    				  System.out.println( "JX - LoopBegin: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, loop_instBegin) );
 	    				  method.insertAt(linenumber, true, loop_instBegin);
 	    				  loop_flagsForInst.set(i, loop_flagsForInst.get(i)+1);
