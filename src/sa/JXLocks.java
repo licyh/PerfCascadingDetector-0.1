@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package com.ibm.wala.examples.drivers;
+package sa;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import org.eclipse.jface.window.ApplicationWindow;
+//import org.eclipse.jface.window.ApplicationWindow;
 
 import com.ibm.wala.analysis.pointers.BasicHeapGraph;
 import com.ibm.wala.analysis.typeInference.TypeAbstraction;
@@ -68,6 +68,7 @@ import com.ibm.wala.ipa.callgraph.propagation.PointerAnalysis;
 import com.ibm.wala.ipa.callgraph.propagation.SSAContextInterpreter;
 import com.ibm.wala.ipa.callgraph.propagation.SSAPropagationCallGraphBuilder;
 import com.ibm.wala.ipa.callgraph.propagation.cfa.nCFABuilder;
+import com.ibm.wala.ipa.cha.ClassHierarchyFactory;
 import com.ibm.wala.ipa.cha.ClassHierarchy;
 import com.ibm.wala.ipa.cha.ClassHierarchyException;
 import com.ibm.wala.ipa.cha.IClassHierarchy;
@@ -284,7 +285,7 @@ public class JXLocks {
     // Create a Scope                                                                           #"JXJavaRegressionExclusions.txt"
     scope = AnalysisScopeReader.makeJavaBinaryAnalysisScope(appJar, (new FileProvider()).getFile(CallGraphTestUtil.REGRESSION_EXCLUSIONS)); //default: CallGraphTestUtil.REGRESSION_EXCLUSIONS
     // Create a Class Hierarchy
-    cha = ClassHierarchy.make(scope); 
+    cha = ClassHierarchyFactory.make(scope);  //2017: ClassHierarchy -> ClassHierarchyFactory
     //testTypeHierarchy();
     
     // Create a Entry Points
@@ -1997,7 +1998,7 @@ public class JXLocks {
             record.longest_function_chain_ids.add(function.getGraphNodeId());
             records_for_all_functions.put(function.getGraphNodeId(), record);
           }  
-          tmp.add(e)
+          tmp.add(e);
         } else {
           //TODO
           
@@ -2011,7 +2012,7 @@ public class JXLocks {
     if (!functions_with_loops.containsKey(id)) {
       
     } else {
-      functions_with_loops.get(function.getGraphNodeId())
+      functions_with_loops.get(function.getGraphNodeId());
     }
     
     // Scan the current function for the current layer

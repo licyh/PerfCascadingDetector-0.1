@@ -15,18 +15,48 @@
 
         <!--classpath-->
         <property name="lib.dir" value="lib"/>
-        <property name="lib.wala" value="${lib.dir}/sa/WALA-R_1.3.8"/>
+        <property name="lib.wala" value="${lib.dir}/sa/wala-1.3.10-jars"/>
         <property name="lib.slf4j" value="${lib.dir}/slf4j/slf4j-1.7.21/"/>
         <property name="lib.logback" value="${lib.dir}/slf4j/logback/logback-1.1.7"/>
         
+		<path id="sa.classpath">
+			<pathelement location="${lib.wala}/android.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.cast-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.cast.java-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.cast.java.ecj-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.cast.java.test-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.cast.java.test.data-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.cast.js-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.cast.js.html.nu_validator-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.cast.js.rhino-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.cast.js.rhino.test-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.cast.js.test-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.cast.js.test.data-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.cast.test-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.core-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.core.testdata-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.core.tests-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.dalvik-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.dalvik.test-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala-feature-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala-feature-1.3.10-SNAPSHOT-sources-feature.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.ide-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.ide-feature-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.ide-feature-1.3.10-SNAPSHOT-sources-feature.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.ide.jdt-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.ide.jdt.test-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.ide.jsdt-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.ide.jsdt.tests-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.ide.tests-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.scandroid-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.shrike-1.3.10-SNAPSHOT.jar"/>
+			<pathelement location="${lib.wala}/com.ibm.wala.util-1.3.10-SNAPSHOT.jar"/>
+		</path>
+	
 		<path id="classpath">
                 <pathelement location="${lib.dir}/javassist-3.20.jar"/>
                 <pathelement location="${lib.dir}/commons-cli-1.3.1.jar"/>
-                <pathelement location="${lib.wala}/com.ibm.wala.core/bin"/>
-                <pathelement location="${lib.wala}/com.ibm.wala.util/bin"/>
-                <pathelement location="${lib.wala}/com.ibm.wala.shrike/bin"/>
-                <pathelement location="${lib.wala}/com.ibm.wala.cast/bin"/>
-
+                
                 <pathelement location="${lib.slf4j}/slf4j-api-1.7.21.jar"/>
                 <pathelement location="${lib.logback}/logback-access-1.1.7.jar"/>
                 <pathelement location="${lib.logback}/logback-classic-1.1.7.jar"/>
@@ -51,7 +81,7 @@
 	    <!--target compile sa, ie, Static Analysis of Loops-->
 	    <target name="compile-sa" depends="prepare" description="compile static analysiser">
 	            <javac srcdir="${src.sa.dir}" destdir="${build.classes}" includeantruntime="false">
-	                    <classpath refid="classpath" />
+	                    <classpath refid="sa.classpath" />
 	            </javac>
 	    </target>
 	
@@ -109,6 +139,34 @@
                 </jar>
         </target>
 
+	
+    	<!--target jar dm-SA        !!!!!!!!!!!!!!!!!!!-->
+    	<target name="jar-sa" depends="compile-sa" description="generate jar for Static Analysis for Loops">
+            <jar jarfile="${build.lib}/MR_DM.jar">
+                    <fileset dir="${build.classes}" includes="dm/**/*.class" />
+                    <fileset dir="${build.classes}" includes="com/*.class" />
+                    <manifest>
+                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
+                            <attribute name="Premain-Class" value="dm.MapReduceDM" />
+                    </manifest>
+                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
+                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
+                    <zipfileset dir="${src.dm.dir}" includes="res/mr/api.txt" fullpath="resource/api.txt"/>
+                    <zipfileset dir="${src.dm.dir}" includes="res/mr/mr_rpc.txt" fullpath="resource/mr_rpc.txt"/>
+                    <zipfileset dir="${src.dm.dir}" includes="res/mr/mr_rpc_v1.txt" fullpath="resource/mr_rpc_v1.txt"/>
+            		<zipfileset dir="${src.dm.dir}" includes="res/mr/mr_callee.txt" fullpath="resource/mr_callee.txt"/>
+                    <zipfileset dir="${src.dm.dir}" includes="res/mr/targetlocations" fullpath="resource/targetlocations"/>
+            	    <zipfileset dir="${src.dm.dir}" includes="res/mr/targetinstructions" fullpath="resource/targetinstructions"/>
+            		<zipfileset dir="${src.dm.dir}" includes="res/mr/looplocations" fullpath="resource/looplocations"/>
+            	    <zipfileset dir="${src.dm.dir}" includes="res/mr/loopinstructions" fullpath="resource/loopinstructions"/>
+	                <!--
+		            <zipfileset dir="src" includes="com/api.txt" fullpath="jiaxin/www/api.txt" />
+                    <zipfileset dir="build/classes/com" includes="dm/**/*.class" prefix="jiaxinclass" />
+                    -->
+            </jar>
+    	</target>
+	
+	
         <!--target jar dm-MR-->
         <target name="jar-dm" depends="compile-dm, compile-api-rpc, jar-log" description="generate jar for MR dynamic monitor">
                 <jar jarfile="${build.lib}/MR_DM.jar">
@@ -195,6 +253,7 @@
 
 
         <!--target compile SA part-->
+	
 <!-- commented by JX
 		<target name="compile-sa" depends="prepare" description="compile SA">
                 <javac srcdir="${src.com.dir}/sa" destdir="${build.classes}" includeantruntime="false">
@@ -202,6 +261,7 @@
                 </javac>
         </target>
 -->
+	
         <!--target jar sa-->
         <target name="jar-sa" depends="compile-sa-opt-server" description="generate jar for sa">
                 <jar jarfile="${build.lib}/SA.jar">
