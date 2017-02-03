@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Implementation-Title: HBase - Server
+Implementation-Version: 0.95.0-hadoop1
+Specification-Vendor: The Apache Software Foundation
+Built-By: stack
+Created-By: Apache Maven 3.0.4
+Implementation-Vendor: The Apache Software Foundation
+Implementation-Vendor-Id: org.apache.hbase
+Build-Jdk: 1.6.0_43
+Specification-Title: HBase - Server
+Specification-Version: 0.95.0-hadoop1
+Main-Class: org/apache/hadoop/hbase/mapreduce/Driver
+Archiver-Version: Plexus Archiver
+

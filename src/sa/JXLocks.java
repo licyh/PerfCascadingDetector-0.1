@@ -226,17 +226,17 @@ public class JXLocks {
       //testTypeHierarchy();
       //testCGNode();
       //testPartialCallGraph();
-      testIR();
+      //testIR();         				//JX - need to configurate Dot and PDFViewer
       //testWalaAPI();
       
       // Phase 1 -
-      findLockingFunctions();
+      //findLockingFunctions();
       findLoopingFunctions();
-      findLoopingLockingFunctions();
+      //findLoopingLockingFunctions();
       
       // Phase 2 -
-      analyzeAllLocks();
-      analyzeLoopingLocks();
+      //analyzeAllLocks();
+      //analyzeLoopingLocks();
       
     } catch (Exception e) {
       System.err.println("JX-StackTrace-run-begin");
@@ -249,7 +249,7 @@ public class JXLocks {
   
   public static void init(Properties p) 
       throws IOException, IllegalArgumentException, CallGraphBuilderCancelException, UnsoundGraphException, WalaException {
-    System.out.println("Testing Information");
+    System.err.println("\nTesting Information");
     
     // Read external arguments
     String appJar = p.getProperty("appJar");
@@ -742,7 +742,7 @@ public class JXLocks {
    * Note: Only focus on "Application" functions
    */
   public static void findLockingFunctions() {
-    System.out.println("JX-breakpoint-1");
+    System.out.println("\nJX-findLockingFunctions-1");
     
     int nFiltered = 0;
     for (Iterator<? extends CGNode> it = cg.iterator(); it.hasNext(); ) {
@@ -1327,7 +1327,7 @@ public class JXLocks {
    * Note: we just focus on "Application" functions, without "Primordial" functions
    */
   public static void findLoopingFunctions() {
-    System.out.println("JX-breakpoint-2");
+    System.out.println("\nJX-findLoopingFunctions-2");
 
     for (Iterator<? extends CGNode> it = cg.iterator(); it.hasNext(); ) {
       CGNode function = it.next();
@@ -1456,7 +1456,7 @@ public class JXLocks {
    * Find Locks with Loops
    */
   public static void findLoopingLockingFunctions() {
-    System.out.println("JX-checkpoint-3");
+    System.out.println("\nJX-findLoopingLockingFunctions-3");
     
     // Initialization by DFS for locking functions
     for (Integer id: functions_with_locks.keySet()) {
@@ -1736,7 +1736,7 @@ public class JXLocks {
   
   
   public static void analyzeAllLocks() {
-    System.out.println("JX-breakpoint-4");
+    System.out.println("\nJX-analyzeAllLocks-4");
 
     //for test
     Set<String> set_of_locks = new TreeSet<String>();    // for test, TreeSet is ordered by Java
@@ -1761,7 +1761,7 @@ public class JXLocks {
   static Set<String> set_of_heavylocks = new TreeSet<String>();   
   
   public static void analyzeLoopingLocks() {
-    System.out.println("JX-breakpoint-5");
+    System.out.println("\nJX-analyzeLoopingLocks-5");
  
     int requiredDepth = 2;
     for (Integer id: functions_with_locks.keySet()) {

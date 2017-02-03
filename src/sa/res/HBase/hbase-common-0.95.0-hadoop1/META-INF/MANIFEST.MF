@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Implementation-Vendor: The Apache Software Foundation
+Implementation-Title: HBase - Common
+Implementation-Version: 0.95.0-hadoop1
+Implementation-Vendor-Id: org.apache.hbase
+Built-By: stack
+Build-Jdk: 1.6.0_43
+Specification-Vendor: The Apache Software Foundation
+Specification-Title: HBase - Common
+Created-By: Apache Maven 3.0.4
+Specification-Version: 0.95.0-hadoop1
+Archiver-Version: Plexus Archiver
+

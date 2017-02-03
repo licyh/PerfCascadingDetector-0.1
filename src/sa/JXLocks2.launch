@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/com.ibm.wala.ide.tests/src/com/ibm/wala/examples/drivers/JXLocks.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.ibm.wala.examples.drivers.JXLocks"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-appJar ${workspace_loc}/JarFilesForTesting/HDFS/hadoop-hdfs-2.3.0"/>    
+                                                                          # HDFS/hadoop-hdfs-2.3.0
+                                                                          # HBase/hbase-0.95    
+                                                                          # MapReduce/hadoop-core-1.0.0
+                                                                          # MapReduce/hadoop-mapreduce-client-2.3.0
+                                                                          # JLex.jar
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="com.ibm.wala.ide.tests"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx3G"/>                  #-Xmx800M
+</launchConfiguration>
