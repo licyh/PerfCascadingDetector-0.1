@@ -220,7 +220,7 @@ public class JXLocks {
   public static void run(Properties p) {
     try {
       // Test Part -
-      testQuickly();
+      //testQuickly();
       init(p);
       //testIClass();
       //testTypeHierarchy();
