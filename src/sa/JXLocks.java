@@ -10,7 +10,9 @@
  *******************************************************************************/
 package sa;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +40,7 @@ import com.ibm.wala.cast.ir.ssa.AstEchoInstruction;
 import com.ibm.wala.cast.ir.ssa.AstIsDefinedInstruction;
 import com.ibm.wala.cast.ir.ssa.AstLexicalAccess;
 import com.ibm.wala.classLoader.CallSiteReference;
+import com.ibm.wala.classLoader.IBytecodeMethod;
 import com.ibm.wala.classLoader.IClass;
 import com.ibm.wala.classLoader.IMethod;
 import com.ibm.wala.classLoader.NewSiteReference;
@@ -72,6 +75,7 @@ import com.ibm.wala.ipa.cha.ClassHierarchy;
 import com.ibm.wala.ipa.cha.ClassHierarchyException;
 import com.ibm.wala.ipa.cha.IClassHierarchy;
 import com.ibm.wala.properties.WalaProperties;
+import com.ibm.wala.shrikeCT.InvalidClassFileException;
 import com.ibm.wala.ssa.IR;
 import com.ibm.wala.ssa.ISSABasicBlock;
 import com.ibm.wala.ssa.ReflectiveMemberAccess;
@@ -130,7 +134,9 @@ import com.ibm.wala.viz.DotUtil;
 import com.ibm.wala.viz.PDFViewUtil;
 
 public class JXLocks {
-
+  // JXLocks basis
+  static String appDir;	
+	
   // WALA basis
   private final static boolean CHECK_GRAPH = false;
   final public static String CG_PDF_FILE = "cg.pdf";
@@ -230,7 +236,7 @@ public class JXLocks {
       //testWalaAPI();
       
       // Phase 1 -
-      //findLockingFunctions();
+      findLockingFunctions();
       findLoopingFunctions();
       //findLoopingLockingFunctions();
       
@@ -253,6 +259,7 @@ public class JXLocks {
     
     // Read external arguments
     String appJar = p.getProperty("appJar");
+    appDir = appJar;
     //System.out.println("Testing directory - " + appJar);
     
     // Get the Target System Name for testing
@@ -273,6 +280,7 @@ public class JXLocks {
     
     // Get all Jar Files for testing
     if (PDFCallGraph.isDirectory(appJar)) {
+      System.out.println("Testing paths - " + appJar);
       appJar = PDFCallGraph.findJarFiles(new String[] { appJar }); 
       System.out.println("Testing paths - " + appJar);  
     }
@@ -1322,11 +1330,15 @@ public class JXLocks {
   }
   
   
-  /**
+  
+  
+  /****************************************************************************************************
    * Find functions with loops
    * Note: we just focus on "Application" functions, without "Primordial" functions
+   * @throws IOException 
+   **************************************************************************************************
    */
-  public static void findLoopingFunctions() {
+  public static void findLoopingFunctions() throws IOException {
     System.out.println("\nJX-findLoopingFunctions-2");
 
     for (Iterator<? extends CGNode> it = cg.iterator(); it.hasNext(); ) {
@@ -1369,6 +1381,9 @@ public class JXLocks {
   public static List<LoopInfo> findLoops(CGNode function) {
     IR ir = function.getIR();
     SSACFG cfg = ir.getControlFlowGraph();
+    //newly added - for source line number
+    SSAInstruction[] ssas = ir.getInstructions();
+    IBytecodeMethod bytecodemethod = (IBytecodeMethod) ir.getMethod();
     
     List<LoopInfo> loops = new ArrayList<LoopInfo>();
     int n_backedges = 0; //for Test
@@ -1389,9 +1404,10 @@ public class JXLocks {
               break;
             }
           if (existed == -1) { //the for hasn't yet been recorded  
-            LoopInfo loop = new LoopInfo();
+            LoopInfo loop = new LoopInfo();   
             loop.begin_bb = succ;
             loop.end_bb = bbnum;
+            loop.line_number = getSourceLineNumberFromBB( cfg.getBasicBlock(loop.begin_bb), ssas, bytecodemethod );
             //loop.var_name = ???
             // Get the basic block set for this loop
             loop.succbbs.add(loop.begin_bb);
@@ -1430,30 +1446,74 @@ public class JXLocks {
   }
  
   
-  public static void printFunctionsWithLoops() {
+  public static void printFunctionsWithLoops() throws IOException {
+	  
+  	File loopfile = new File(appDir, "loops");
+  	BufferedWriter bufwriter = new BufferedWriter(new FileWriter(loopfile));    
+  	bufwriter.write( nLoopingFuncs + "\n" );
+  
     //print all locks for those functions with loops
     for (Iterator<Integer> it = functions_with_loops.keySet().iterator(); it.hasNext(); ) {
       int id = it.next();
       List<LoopInfo> loops = functions_with_loops.get(id);
-      if (!(cg.getNode(id).getMethod().getSignature().indexOf(functionname_for_test) >= 0)) continue;
-      System.err.println(cg.getNode(id).getMethod().getSignature()); 
-      printLoops(loops);
+      //if (!(cg.getNode(id).getMethod().getSignature().indexOf(functionname_for_test) >= 0)) continue;
+      //System.err.println(cg.getNode(id).getMethod().getSignature());
+      bufwriter.write( cg.getNode(id).getMethod().getSignature() + " " );
+      printLoops(loops, bufwriter);
     }
+    
+    bufwriter.close();
   }
   
-  public static void printLoops(List<LoopInfo> loops) {
+  public static void printLoops(List<LoopInfo> loops, BufferedWriter bufwriter) throws IOException {
     // Print the function's loops
     //System.out.println(function.getMethod().getSignature());
-    System.err.print("#loops-" +loops.size() + " - ");
-    for (Iterator<LoopInfo> it = loops.iterator(); it.hasNext(); )
-      System.err.print(it.next() + ", ");
-    System.err.println();
+    //System.err.print("#loops=" + loops.size() + " - ");
+    bufwriter.write( loops.size() + " " );
+    for (Iterator<LoopInfo> it = loops.iterator(); it.hasNext(); ) {
+      LoopInfo loop = it.next();
+      // print normal	
+      //System.err.print(loop + ", ");
+      // print source line number
+      //System.err.print(loop.line_number + ", ");
+      bufwriter.write( loop.line_number + " " );
+    }
+    //System.err.println();
+    bufwriter.write( "\n" );
+  }
+ 
+  // 
+  public static int getSourceLineNumberFromBB(ISSABasicBlock bb, SSAInstruction[] ssas, IBytecodeMethod bytecodemethod) {
+	  
+      for (Iterator<SSAInstruction> it = bb.iterator(); it.hasNext(); ) {
+          SSAInstruction ssa = it.next();
+          int index = getSSAIndexBySSA(ssas, ssa); 
+          if (index != -1) {
+        	  
+			try {
+				int bytecodeindex = bytecodemethod.getBytecodeIndex( index );
+				int sourcelinenum = bytecodemethod.getLineNumber( bytecodeindex );
+	            if (sourcelinenum != -1) 
+	            	  return sourcelinenum;
+			} catch (InvalidClassFileException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            
+          }
+      }
+	  
+	  return -1;
   }
   
   
  
-  /**
+  
+  
+  
+  /***********************************************************************************************************
    * Find Locks with Loops
+   ***********************************************************************************************************
    */
   public static void findLoopingLockingFunctions() {
     System.out.println("\nJX-findLoopingLockingFunctions-3");
@@ -2087,6 +2147,9 @@ class LockInfo {
 
 
 class LoopInfo {
+  //newly added
+  int line_number = 0;
+	
   int begin_bb;         // bb - basic block in WALA
   int end_bb;
   String var_name;
