@@ -2202,7 +2202,7 @@ public class GraphBuilder {
     	}
     	System.out.println("\nmedianbugpool - " + "has " + medianbugpool.size() + " loops");
     	for (String fullcallstack: medianbugpool) {
-    		System.out.println( fullcallstack );
+    		//System.out.println( fullcallstack );
     	}
     	System.out.println("\nsimplebugpool - " + "has " + simplebugpool.size() + " loops");
     	for (String lastcallstack: simplebugpool) {
@@ -2329,8 +2329,10 @@ public class GraphBuilder {
 				// TODO
 				if ( getNodeOPTY(k).equals("LoopBegin") ) {
 					loopflag = 1;
+					/*
 					bugpool.add( k );
 					System.out.println("JX - Bugs - LockRelatedBugs: " + "LoopBegin " + lastCallstack(k));
+					*/
 					//break;
 				}
 				if ( getNodeOPTY(k).equals("LockRequire") ) {
