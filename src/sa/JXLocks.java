@@ -242,6 +242,7 @@ public class JXLocks {
       // Phase 1 -
       findLockingFunctions();
       findLoopingFunctions();
+      printFunctionsWithLoops();     //JX - NO necessary, can be commented, 
       //findLoopingLockingFunctions();
       
       // Phase 2 -
@@ -1345,6 +1346,8 @@ public class JXLocks {
   public static void findLoopingFunctions() throws IOException {
     System.out.println("\nJX-findLoopingFunctions-2");
 
+    int totalloops = 0;
+    
     for (Iterator<? extends CGNode> it = cg.iterator(); it.hasNext(); ) {
       CGNode function = it.next();
       IMethod m = function.getMethod();
@@ -1353,13 +1356,16 @@ public class JXLocks {
       if (classloader_ref.equals(ClassLoaderReference.Application) && !m.isNative()) {   //IMPO:  native method is App class, but can't IR#getControlFlowGraph or viewIR    #must be
         int id = function.getGraphNodeId();
         List<LoopInfo> loops = findLoops(function);
-        if (loops.size() > 0)
+        if (loops.size() > 0) {
           functions_with_loops.put(id, loops);
+          totalloops += loops.size();
+        }
       } else {
         //System.out.println(classloader_ref + sig); 
       }
     }
     nLoopingFuncs = functions_with_loops.size();
+    nLoops = totalloops;
     
     // Print the status
     int N_LOOPS = 20;
@@ -1378,7 +1384,6 @@ public class JXLocks {
       System.out.print("#" + i + ":" + count[i] + ", ");
     System.out.println("\n");
     
-    printFunctionsWithLoops();
   }
   
   
@@ -1454,7 +1459,7 @@ public class JXLocks {
 	  
   	File loopfile = new File(appDir, "looplocations");
   	BufferedWriter bufwriter = new BufferedWriter(new FileWriter(loopfile));    
-  	bufwriter.write( nLoopingFuncs + "\n" );
+  	bufwriter.write( nLoopingFuncs + " " + nLoops + "\n" );
   
     //print all locks for those functions with loops
     for (Iterator<Integer> it = functions_with_loops.keySet().iterator(); it.hasNext(); ) {

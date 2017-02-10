@@ -2129,9 +2129,32 @@ public class GraphBuilder {
     	}
     	
     	// for test
-    	System.out.println("#targetblocks = " + targetblocks.size());
-    	System.out.println("#lockblocks = " + lockblocks.size());
-    	System.out.println("#loopblocks = " + loopblocks.size());
+    	Set<String> tmpset = new HashSet<String>();
+    	int ntargetsInSourceCode = 0;
+    	int nlocksInSourceCode = 0;
+    	int nloopsInSourceCode = 0;
+    	
+    	tmpset.clear();
+    	for (Integer index: targetblocks.keySet()) {
+    		tmpset.add( lastCallstack(index) );
+    	}
+    	ntargetsInSourceCode = tmpset.size();
+    	tmpset.clear();
+    	for (Integer index: lockblocks.keySet()) {
+    		tmpset.add( lastCallstack(index) );
+    	}
+    	nlocksInSourceCode = tmpset.size();
+    	tmpset.clear();
+    	for (Integer index: loopblocks.keySet()) {
+    		tmpset.add( lastCallstack(index) );
+    	}
+    	nloopsInSourceCode = tmpset.size();
+    			
+    	// for test
+    	System.out.println("#targetblocks = " + targetblocks.size() + " -> ntargetsInSourceCode=" + ntargetsInSourceCode);
+    	System.out.println("#lockblocks = " + lockblocks.size() + " -> nlocksInSourceCode=" + nlocksInSourceCode);
+    	System.out.println("#loopblocks = " + loopblocks.size() + " -> nloopsInSourceCode=" + nloopsInSourceCode);
+    	
     	
     	// build the relationship between locks and loops
     	// JX - it seems NO NEED
@@ -2177,11 +2200,11 @@ public class GraphBuilder {
     		simplebugpool.add( lastCallstack(index) );
     		medianbugpool.add( fullCallstack(index) );
     	}
-    	System.out.println("\nmedianbugpool - " + "has " + medianbugpool.size() + " nodes");
+    	System.out.println("\nmedianbugpool - " + "has " + medianbugpool.size() + " loops");
     	for (String fullcallstack: medianbugpool) {
     		System.out.println( fullcallstack );
     	}
-    	System.out.println("\nsimplebugpool - " + "has " + simplebugpool.size() + " nodes");
+    	System.out.println("\nsimplebugpool - " + "has " + simplebugpool.size() + " loops");
     	for (String lastcallstack: simplebugpool) {
     		System.out.println( lastcallstack );
     	}

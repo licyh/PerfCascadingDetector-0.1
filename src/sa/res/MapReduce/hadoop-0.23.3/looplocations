@@ -1,4 +1,4 @@
-773
+773 1024
 org.apache.hadoop.mapred.MapTask$TrackedRecordReader.getInputBytes(Ljava/util/List;)J 1 216 
 org.apache.hadoop.yarn.server.nodemanager.NodeStatusUpdaterImpl.getNodeStatus()Lorg/apache/hadoop/yarn/server/api/records/NodeStatus; 1 247 
 org.apache.hadoop.yarn.server.nodemanager.webapp.ApplicationPage$ApplicationBlock.render(Lorg/apache/hadoop/yarn/webapp/view/HtmlBlock$Block;)V 1 89 

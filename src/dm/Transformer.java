@@ -128,7 +128,9 @@ public class Transformer implements ClassFileTransformer {
 		// Read loop instrumentation infos
 		ins = MapReduceTransformer.class.getClassLoader().getResourceAsStream("resource/looplocations");
     	bufreader = new BufferedReader( new InputStreamReader(ins) );
-    	int num_of_method = Integer.parseInt( bufreader.readLine() );
+    	String[] nums = bufreader.readLine().trim().split("\\s+");
+    	int num_of_methods = Integer.parseInt( nums[0] );
+    	int num_of_loops = Integer.parseInt( nums[1] );
         	
 		while ( (tmpline = bufreader.readLine()) != null ) {
 			String[] strs = tmpline.trim().split("\\s+");
