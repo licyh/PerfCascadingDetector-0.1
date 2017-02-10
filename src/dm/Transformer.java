@@ -313,6 +313,26 @@ public class Transformer implements ClassFileTransformer {
           System.out.println( "JX - IN - method sig = " + methodsig );  
           Integer[] loops = looplocations.get( methodsig );
           
+          // insert loops
+          // for test - TODO - please see
+          for (int i = 0; i < loops.length; i++)
+        	  for (int j = 0; j < loops.length; j++)
+        		  if ( loops[i]+1 == loops[j] ) {
+        			  System.err.println( "JX - " + i + "&" + j + " for " + methodsig );
+        		  }
+          // end-test
+          for (int i = 0; i < loops.length; i++) {
+        	  int linenumber = loops[i];         //jx: some particular examples: "do { .." OR "while (true) ( .." would became insert inside
+        	  int actualline = method.insertAt(linenumber, false, "_DM_Log.log_LoopBegin( \"xx\" );");
+        	  if ( linenumber == actualline )    //some particular examples: "do { .." OR "while (true) ( .." would became insert at next line than normal
+        		  method.insertAt( linenumber, "_DM_Log.log_LoopBegin( \"xx\" );" );
+        	  else {
+        		  // TODO - please see
+        		  System.err.println( "JX - WARN - cannot insert at " + loops[i] + " (actual:" + actualline + ") for " + methodsig );
+        	  }    
+          }
+          
+          /*
           // insert before
           for (int i = 0; i < loops.length; i++) {
         	  method.addLocalVariable( "loop" + i, CtClass.intType );
@@ -328,7 +348,7 @@ public class Transformer implements ClassFileTransformer {
         		  }
           // end-test
           for (int i = 0; i < loops.length; i++) {
-        	  int linenumber = loops[i] + 1;
+        	  int linenumber = loops[i] + 1;             //in body
         	  int actualline = method.insertAt(linenumber, false, "loop" + i + "++;");
         	  if ( linenumber == actualline ) //some particular examples: "do { .." OR "while (true) ( .." would became insert at next line than normal
         		  method.insertAt( linenumber, "loop" + i + "++;" );
@@ -341,7 +361,8 @@ public class Transformer implements ClassFileTransformer {
           // insert after
           for (int i = 0; i < loops.length; i++) {
         	  method.insertAfter( "_DM_Log.log_LoopPrint( \"loop_\" + " + i + " + \"_\" + loop" + i + ");" );
-          }          
+          }  
+          */        
       }//end-outer for
   }
   
