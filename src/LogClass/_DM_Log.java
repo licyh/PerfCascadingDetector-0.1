@@ -26,8 +26,8 @@ public class _DM_Log {
     RWLockCreate,   	//jx - for creating ReentrantReadWriteLock
     TargetCodeBegin,
     TargetCodeEnd,
-    LoopBegin,
-    //LoopCenter,         //tmp
+    LargeLoopBegin,
+    //LargeLoopCenter,         //tmp
     //end-Added
   };
 
@@ -161,8 +161,8 @@ public class _DM_Log {
   //end-Added
   
   //Added by JX
-  public static void log_LoopBegin(String opValue) {
-	String opType = _DM_Log.OPTYPE.LoopBegin.name();
+  public static void log_LargeLoopBegin(String opValue) {
+	String opType = _DM_Log.OPTYPE.LargeLoopBegin.name();
 	_DM_Log.log_Base(opType, opValue);
   }
   //end-Added

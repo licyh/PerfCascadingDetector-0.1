@@ -27,21 +27,26 @@ public class Transformer implements ClassFileTransformer {
   String instBegin = "";
   String instEnd = "";
   // For loop instrumentation
-  List<String> loop_classesForInst = new ArrayList<String>();
-  List<String> loop_methodsForInst = new ArrayList<String>();
-  List<String> loop_linesForInst  = new ArrayList<String>();
-  List<String> loop_typesForInst  = new ArrayList<String>();
-  List<Integer> loop_flagsForInst = new ArrayList<Integer>();
-  String loop_instBegin = "";
-  String loop_instCenter = "";
-  //String loop_instEnd = "";  
+  List<String> largeloop_classesForInst = new ArrayList<String>();
+  List<String> largeloop_methodsForInst = new ArrayList<String>();
+  List<String> largeloop_linesForInst  = new ArrayList<String>();
+  List<String> largeloop_typesForInst  = new ArrayList<String>();
+  List<Integer> largeloop_flagsForInst = new ArrayList<Integer>();
+  String largeloop_instBegin = "";
+  String largeloop_instCenter = "";
+  //String largeloop_instEnd = "";  
   //end-Added
 
   public Transformer(String args) {
     super();
     option = new DMOption(args);
     
-    //Added by JX  
+    //read targetlocations & largelooplocations
+    read();
+  }
+  
+  public void read() {
+	//Added by JX  
     InputStream ins;
     BufferedReader bufreader;
     String tmpline;
@@ -69,23 +74,23 @@ public class Transformer implements ClassFileTransformer {
 		bufreader.close();
 		
 		// Read loop instrumentation infos
-		ins = MapReduceTransformer.class.getClassLoader().getResourceAsStream("resource/looplocations");
+		ins = MapReduceTransformer.class.getClassLoader().getResourceAsStream("resource/largelooplocations");
     	bufreader = new BufferedReader( new InputStreamReader(ins) );
 		while ( (tmpline = bufreader.readLine()) != null ) {
 			String[] strs = tmpline.trim().split("\\s+");
 			if ( tmpline.trim().length() > 0 ) {
-				loop_classesForInst.add( strs[0] );
-				loop_methodsForInst.add( strs[1] );
-				loop_linesForInst.add( strs[2] );
-				loop_typesForInst.add( strs[3] );
-				loop_flagsForInst.add(0);
+				largeloop_classesForInst.add( strs[0] );
+				largeloop_methodsForInst.add( strs[1] );
+				largeloop_linesForInst.add( strs[2] );
+				largeloop_typesForInst.add( strs[3] );
+				largeloop_flagsForInst.add(0);
 			}
 		}
 		bufreader.close();
-    	ins = MapReduceTransformer.class.getClassLoader().getResourceAsStream("resource/loopinstructions");
+    	ins = MapReduceTransformer.class.getClassLoader().getResourceAsStream("resource/largeloopinstructions");
     	bufreader = new BufferedReader( new InputStreamReader(ins) );
-		loop_instBegin = bufreader.readLine();
-		loop_instCenter = bufreader.readLine();
+		largeloop_instBegin = bufreader.readLine();
+		largeloop_instCenter = bufreader.readLine();
 		bufreader.close();
 		
     } catch (Exception e) {
@@ -100,12 +105,11 @@ public class Transformer implements ClassFileTransformer {
 	System.out.println("JX - " + "linesForInst =  " + linesForInst );
 	System.out.println("JX - " + "instructions = " + instBegin + "*" + instEnd + "*");
 	
-	System.out.println("JX - " + loop_classesForInst.size() + " locations are loaded");
-	System.out.println("JX - " + "loop_classesForInst = " + loop_classesForInst);
-	System.out.println("JX - " + "loop_methodsForInst = " + loop_methodsForInst);
-	System.out.println("JX - " + "loop_linesForInst =  " + loop_linesForInst );
-	System.out.println("JX - " + "loop_instructions = " + loop_instBegin + "*" + loop_instCenter + "*");
-    
+	System.out.println("JX - " + largeloop_classesForInst.size() + " locations are loaded");
+	System.out.println("JX - " + "largeloop_classesForInst = " + largeloop_classesForInst);
+	System.out.println("JX - " + "largeloop_methodsForInst = " + largeloop_methodsForInst);
+	System.out.println("JX - " + "largeloop_linesForInst =  " + largeloop_linesForInst );
+	System.out.println("JX - " + "largeloop_instructions = " + largeloop_instBegin + "*" + largeloop_instCenter + "*");
   }
 
   //default function in javassist
@@ -121,6 +125,7 @@ public class Transformer implements ClassFileTransformer {
     try {
       cl = pool.makeClass(new java.io.ByteArrayInputStream(b));
       CtBehavior[] methods = cl.getDeclaredBehaviors();
+      
       //Added by JX
       //System.out.println("JX - CLASS - " + cl.getName() );
       /*
@@ -148,7 +153,7 @@ public class Transformer implements ClassFileTransformer {
       // instrument for target codes");
       transformClassForCodeSnippets(cl, methods);
       // instrument for (large) loops
-      transformClassForLoops(cl, methods);
+      transformClassForLargeLoops(cl, methods);
       //end-Added
       
       b = cl.toBytecode();
@@ -210,37 +215,37 @@ public class Transformer implements ClassFileTransformer {
   }
   
   
-  public void transformClassForLoops(CtClass cl, CtBehavior[] methods) {
-	  if ( !loop_classesForInst.contains(cl.getName()) ) return;
+  public void transformClassForLargeLoops(CtClass cl, CtBehavior[] methods) {
+	  if ( !largeloop_classesForInst.contains(cl.getName()) ) return;
 	  System.out.println("JX - @1 - " + cl.getName());
       for (CtBehavior method : methods) {
           if ( method.isEmpty() ) continue;
           System.out.println("JX - @2 - " + method.getName());
           // traverse all locations for instrumentation
-          for (int i = 0; i < loop_classesForInst.size(); i++) {
-    		  if ( loop_classesForInst.get(i).equals(cl.getName())
-    				  && loop_methodsForInst.get(i).equals(method.getName()) ) {
+          for (int i = 0; i < largeloop_classesForInst.size(); i++) {
+    		  if ( largeloop_classesForInst.get(i).equals(cl.getName())
+    				  && largeloop_methodsForInst.get(i).equals(method.getName()) ) {
     			  try {
         			  
-        			  int linenumber = Integer.parseInt( loop_linesForInst.get(i) );
+        			  int linenumber = Integer.parseInt( largeloop_linesForInst.get(i) );
     				  /* test
     				  for (int k = 224; k <= 248; k++) {
     					  System.out.println( "JX - " + "for line " + k + " will insert at " + method.insertAt(k, false, instBegin) );
     				  }
     				  */
-	    			  if ( loop_typesForInst.get(i).equals("LoopBegin") ) {
+	    			  if ( largeloop_typesForInst.get(i).equals("LargeLoopBegin") ) {
 	    				  // JX - only one time for a method
 	    				  method.addLocalVariable("jxloop", CtClass.intType); 
-	    				  System.out.println( "JX - LoopBegin: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, loop_instBegin) );
-	    				  method.insertAt(linenumber, true, loop_instBegin);
-	    				  loop_flagsForInst.set(i, loop_flagsForInst.get(i)+1);
-	    				  System.out.println( "JX - " + "this is the " + loop_flagsForInst.get(i) + " st/nd/rd/th time for location " + i );
+	    				  System.out.println( "JX - LargeLoopBegin: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, largeloop_instBegin) );
+	    				  method.insertAt(linenumber, true, largeloop_instBegin);
+	    				  largeloop_flagsForInst.set(i, largeloop_flagsForInst.get(i)+1);
+	    				  System.out.println( "JX - " + "this is the " + largeloop_flagsForInst.get(i) + " st/nd/rd/th time for location " + i );
 	    			  }
-	    			  else if ( loop_typesForInst.get(i).equals("LoopCenter") ) { //this is "TargetCodeEnd"
-	    				  System.out.println( "JX - LoopCenter: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, loop_instCenter) );
-	    				  method.insertAt(linenumber, true, loop_instCenter);
-	    				  loop_flagsForInst.set(i, loop_flagsForInst.get(i)+1);
-	    				  System.out.println( "JX - " + "this is the " + loop_flagsForInst.get(i) + " st/nd/rd/th time for location " + i );
+	    			  else if ( largeloop_typesForInst.get(i).equals("LargeLoopCenter") ) { //this is "TargetCodeEnd"
+	    				  System.out.println( "JX - LargeLoopCenter: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, largeloop_instCenter) );
+	    				  method.insertAt(linenumber, true, largeloop_instCenter);
+	    				  largeloop_flagsForInst.set(i, largeloop_flagsForInst.get(i)+1);
+	    				  System.out.println( "JX - " + "this is the " + largeloop_flagsForInst.get(i) + " st/nd/rd/th time for location " + i );
 	    			  }
     			  } catch (Exception e) {
     				  // TODO Auto-generated catch block

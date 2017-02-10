@@ -14,6 +14,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -135,7 +138,8 @@ import com.ibm.wala.viz.PDFViewUtil;
 
 public class JXLocks {
   // JXLocks basis
-  static String appDir;	
+  static String appDir;
+  static String dtDir;   //should be "../../../../dt/res/", but couldn't write directly like this
 	
   // WALA basis
   private final static boolean CHECK_GRAPH = false;
@@ -1448,7 +1452,7 @@ public class JXLocks {
   
   public static void printFunctionsWithLoops() throws IOException {
 	  
-  	File loopfile = new File(appDir, "loops");
+  	File loopfile = new File(appDir, "looplocations");
   	BufferedWriter bufwriter = new BufferedWriter(new FileWriter(loopfile));    
   	bufwriter.write( nLoopingFuncs + "\n" );
   
@@ -1463,6 +1467,10 @@ public class JXLocks {
     }
     
     bufwriter.close();
+    
+    // copy the result of "looplocations" to the common directory of dt
+    dtDir = Paths.get(appDir, "../../../../dt/res/").toString();
+    Files.copy(loopfile.toPath(), Paths.get(dtDir, "looplocations"), StandardCopyOption.REPLACE_EXISTING);
   }
   
   public static void printLoops(List<LoopInfo> loops, BufferedWriter bufwriter) throws IOException {
