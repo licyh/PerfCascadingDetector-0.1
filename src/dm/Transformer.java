@@ -262,16 +262,16 @@ public class Transformer implements ClassFileTransformer {
   
   public void transformClassForLargeLoops(CtClass cl, CtBehavior[] methods) {
 	  if ( !largeloop_classesForInst.contains(cl.getName()) ) return;
-	  System.out.println("JX - @1 - " + cl.getName());
+	  //System.out.println("JX - @1 - " + cl.getName());
       for (CtBehavior method : methods) {
           if ( method.isEmpty() ) continue;
-          System.out.println("JX - @2 - " + method.getName());
+          //System.out.println("JX - @2 - " + method.getName());
           // traverse all locations for instrumentation
           for (int i = 0; i < largeloop_classesForInst.size(); i++) {
     		  if ( largeloop_classesForInst.get(i).equals(cl.getName())
     				  && largeloop_methodsForInst.get(i).equals(method.getName()) ) {
     			  try {
-        			  
+    				  System.out.println("JX - LargeLoop - IN - " + method.getName());
         			  int linenumber = Integer.parseInt( largeloop_linesForInst.get(i) );
     				  /* test
     				  for (int k = 224; k <= 248; k++) {
@@ -318,7 +318,7 @@ public class Transformer implements ClassFileTransformer {
           for (int i = 0; i < loops.length; i++)
         	  for (int j = 0; j < loops.length; j++)
         		  if ( loops[i]+1 == loops[j] ) {
-        			  System.err.println( "JX - " + i + "&" + j + " for " + methodsig );
+        			  System.err.println( "JX - WARN - " + i + "&" + j + " for " + methodsig );
         		  }
           // end-test
           for (int i = 0; i < loops.length; i++) {

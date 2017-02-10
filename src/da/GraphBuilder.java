@@ -490,7 +490,140 @@ public class GraphBuilder {
 		return id;
     }
     
-    public boolean goodnode(Node node){
+    public String lastCallstack(int i){
+	    Node ni = nList.get(i);
+	    Element ei = (Element) ni;
+	    String sti = "";
+	    int ind = 0;
+	    Element esi = (Element) ei.getElementsByTagName("Stacks").item(0);
+	    while (true){
+	        Element si  = (Element) esi.getElementsByTagName("Stack").item(ind);
+	        if (si.getElementsByTagName("Line").item(0).getTextContent().equals("-1")){
+	            ind++;
+	            continue;
+	        }
+	        // Modified by JX
+	        //sti = "@" + i + ":" + 
+	        sti = 
+	        	si.getElementsByTagName("Class").item(0).getTextContent()  + " "
+	            + si.getElementsByTagName("Method").item(0).getTextContent() + " "
+	            + si.getElementsByTagName("Line").item(0).getTextContent();
+	        break;
+	    }
+	    return sti;		
+	}
+
+	public String fullCallstack(int i){
+	    Node ni = nList.get(i);
+	    Element ei = (Element) ni;
+	    String sti = "";
+	    int ind = 0;
+	    Element esi = (Element) ei.getElementsByTagName("Stacks").item(0);
+	    int slenx = Integer.parseInt(esi.getAttribute("Len"));
+	    while (ind < slenx){
+	        Element si  = (Element) esi.getElementsByTagName("Stack").item(ind);
+	        if (si.getElementsByTagName("Line").item(0).getTextContent().equals("-1")){
+	            ind++;
+	            continue;
+	        }
+	        sti = sti
+	            + si.getElementsByTagName("Class").item(0).getTextContent()  + "-"
+	            + si.getElementsByTagName("Method").item(0).getTextContent() + "-"
+	            + si.getElementsByTagName("Line").item(0).getTextContent() + ";";
+	        ind++;
+	    }
+	    return sti;
+	}
+
+	//JX - compare whole call stacks of two nodes/operations
+	public boolean lastCallstackEqual(int x, int y){
+	    Node nx = nList.get(x);
+	    Node ny = nList.get(y);
+	    Element ex = (Element) nx;
+	    Element ey = (Element) ny;
+	
+	    String pidx = ex.getElementsByTagName("PID").item(0).getTextContent();
+	    String tidx = ex.getElementsByTagName("TID").item(0).getTextContent();
+	    String optyx = ex.getElementsByTagName("OPTY").item(0).getTextContent();
+	    String opvalx = ex.getElementsByTagName("OPVAL").item(0).getTextContent();
+	    Element esx = (Element) ex.getElementsByTagName("Stacks").item(0);
+	    String slenx = esx.getAttribute("Len");
+	
+	    String pidy = ey.getElementsByTagName("PID").item(0).getTextContent();
+	    String tidy = ey.getElementsByTagName("TID").item(0).getTextContent();
+	    String optyy = ey.getElementsByTagName("OPTY").item(0).getTextContent();
+	    String opvaly = ey.getElementsByTagName("OPVAL").item(0).getTextContent();
+	    Element esy = (Element) ey.getElementsByTagName("Stacks").item(0);
+	    String sleny = esy.getAttribute("Len");
+	    //if ((!pidx.equals(pidy))||(!tidx.equals(tidy))||(!optyx.equals(optyy))||(!opvalx.equals(opvaly))
+	    if (!optyx.equals(optyy)
+	    		// ||(!slenx.equals(sleny))
+		)
+	    return false;
+	    //for (int i = 0 ; i < Integer.parseInt(slenx); i++ ){
+	    for (int i = 0 ; i < 1; i++ ){  //jx - yes, 1
+	        Element sx = (Element) esx.getElementsByTagName("Stack").item(i);
+	        Element sy = (Element) esy.getElementsByTagName("Stack").item(i);
+	
+	        String xclass = sx.getElementsByTagName("Class").item(0).getTextContent();
+	        String xmethod = sx.getElementsByTagName("Method").item(0).getTextContent();
+	        String xlen = sx.getElementsByTagName("Line").item(0).getTextContent();
+	        String yclass = sy.getElementsByTagName("Class").item(0).getTextContent();
+	        String ymethod = sy.getElementsByTagName("Method").item(0).getTextContent();
+	        String ylen = sy.getElementsByTagName("Line").item(0).getTextContent();
+	
+	        if ((!xclass.equals(yclass))||(!xmethod.equals(ymethod))||(!xlen.equals(ylen)))
+	            return false;
+	    }
+	    return true;
+	}
+
+	public boolean wholeCallstackEqual(int x, int y){
+	    Node nx = nList.get(x);
+	    Node ny = nList.get(y);
+	    Element ex = (Element) nx;
+	    Element ey = (Element) ny;
+	
+	    String pidx = ex.getElementsByTagName("PID").item(0).getTextContent();
+	    String tidx = ex.getElementsByTagName("TID").item(0).getTextContent();
+	    String optyx = ex.getElementsByTagName("OPTY").item(0).getTextContent();
+	    String opvalx = ex.getElementsByTagName("OPVAL").item(0).getTextContent();
+	    Element esx = (Element) ex.getElementsByTagName("Stacks").item(0);
+	    String slenx = esx.getAttribute("Len");
+	
+	    String pidy = ey.getElementsByTagName("PID").item(0).getTextContent();
+	    String tidy = ey.getElementsByTagName("TID").item(0).getTextContent();
+	    String optyy = ey.getElementsByTagName("OPTY").item(0).getTextContent();
+	    String opvaly = ey.getElementsByTagName("OPVAL").item(0).getTextContent();
+	    Element esy = (Element) ey.getElementsByTagName("Stacks").item(0);
+	    String sleny = esy.getAttribute("Len");
+	    //if ((!pidx.equals(pidy))||(!tidx.equals(tidy))||(!optyx.equals(optyy))||(!opvalx.equals(opvaly))
+	    if (!optyx.equals(optyy)
+	            ||(!slenx.equals(sleny))
+	            )
+	        return false;
+	    for (int i = 0 ; i < Integer.parseInt(slenx); i++ ){
+	    //for (int i = 0 ; i < 1; i++ ){
+	        Element sx = (Element) esx.getElementsByTagName("Stack").item(i);
+	        Element sy = (Element) esy.getElementsByTagName("Stack").item(i);
+	
+	        String xclass = sx.getElementsByTagName("Class").item(0).getTextContent();
+	        String xmethod = sx.getElementsByTagName("Method").item(0).getTextContent();
+	        String xlen = sx.getElementsByTagName("Line").item(0).getTextContent();
+	        String yclass = sy.getElementsByTagName("Class").item(0).getTextContent();
+	        String ymethod = sy.getElementsByTagName("Method").item(0).getTextContent();
+	        String ylen = sy.getElementsByTagName("Line").item(0).getTextContent();
+	
+	        if ((!xclass.equals(yclass))||(!xmethod.equals(ymethod))||(!xlen.equals(ylen)))
+	            return false;
+	
+	    }
+	
+	    return true;
+	
+	}
+
+	public boolean goodnode(Node node){
         Element ex = (Element) node;
 		try {
 	        String optyx = ex.getElementsByTagName("OPTY").item(0).getTextContent();
@@ -2008,6 +2141,9 @@ public class GraphBuilder {
     /** JX - traverseTargetCodes - Traversing target code snippets */
     int CASCADING_LEVEL = 10;  //minimum:2; default:3;
 	Set<Integer> bugpool = new TreeSet<Integer>();   //for now, only one bug pool for whole code snippets
+	Set<String> simplebugpool = new TreeSet<String>();
+	Set<String> medianbugpool = new TreeSet<String>();
+	//Set<String> complexbugpool = new TreeSet<String>();
 	
     //Added by JX   
     public void traverseTargetCodes() {
@@ -2027,14 +2163,31 @@ public class GraphBuilder {
     		// Step 2 of 2
         	findLockRelatedBugs( targetcodeLocks );
     	}
-    	
-    	// results
-    	System.out.println("\nJX - Results of traverseTargetCodes");
-    	for (int index: bugpool) {
-    		System.out.println( lastCallstack(index) );
-    	}
-    
+       
+    	// print the results
+    	printResultsOfTraverseTargetCodes();
     }
+    
+    //Added by JX
+    public void printResultsOfTraverseTargetCodes() {
+    	System.out.println("\nJX - Results of traverseTargetCodes");
+    	
+    	System.out.println("\nbugpool - " + "has " + bugpool.size() + " nodes");
+    	for (int index: bugpool) {
+    		simplebugpool.add( lastCallstack(index) );
+    		medianbugpool.add( fullCallstack(index) );
+    	}
+    	System.out.println("\nmedianbugpool - " + "has " + medianbugpool.size() + " nodes");
+    	for (String fullcallstack: medianbugpool) {
+    		System.out.println( fullcallstack );
+    	}
+    	System.out.println("\nsimplebugpool - " + "has " + simplebugpool.size() + " nodes");
+    	for (String lastcallstack: simplebugpool) {
+    		System.out.println( lastcallstack );
+    	}
+    	
+    }
+    
     
     //Added by JX
     int tmpflag = 0;  //just for test
@@ -2694,48 +2847,6 @@ public String suggestion(int x, int y){
     return sti+"@"+stj+"!"+ai+"@"+aj;
 
 }
-public String lastCallstack(int i){
-    Node ni = nList.get(i);
-    Element ei = (Element) ni;
-    String sti = "";
-    int ind = 0;
-    Element esi = (Element) ei.getElementsByTagName("Stacks").item(0);
-    while (true){
-        Element si  = (Element) esi.getElementsByTagName("Stack").item(ind);
-        if (si.getElementsByTagName("Line").item(0).getTextContent().equals("-1")){
-            ind++;
-            continue;
-        }
-        sti = "@" + i + ":"
-            + si.getElementsByTagName("Class").item(0).getTextContent()  + " "
-            + si.getElementsByTagName("Method").item(0).getTextContent() + " "
-            + si.getElementsByTagName("Line").item(0).getTextContent();
-        break;
-    }
-    return sti;		
-}
-
-public String fullCallstack(int i){
-    Node ni = nList.get(i);
-    Element ei = (Element) ni;
-    String sti = "";
-    int ind = 0;
-    Element esi = (Element) ei.getElementsByTagName("Stacks").item(0);
-    int slenx = Integer.parseInt(esi.getAttribute("Len"));
-    while (ind < slenx){
-        Element si  = (Element) esi.getElementsByTagName("Stack").item(ind);
-        if (si.getElementsByTagName("Line").item(0).getTextContent().equals("-1")){
-            ind++;
-            continue;
-        }
-        sti = sti
-            + si.getElementsByTagName("Class").item(0).getTextContent()  + "-"
-            + si.getElementsByTagName("Method").item(0).getTextContent() + "-"
-            + si.getElementsByTagName("Line").item(0).getTextContent() + ";";
-        ind++;
-    }
-    return sti;
-}
 public void stasticalana(int x, int y, int freq) {
     Node nx = nList.get(x);
     Node ny = nList.get(y);
@@ -2751,94 +2862,6 @@ public void stasticalana(int x, int y, int freq) {
     if ((xmethod.equals("doTransition"))&&(ymethod.equals("doTransition"))) { twodotrans += freq; unitwotrans ++;}
     if ((xmethod.equals("setHeadroom"))||(ymethod.equals("setHeadroom"))) { uni3 ++;}
 }
-
-	//JX - compare whole call stacks of two nodes/operations
-	public boolean lastCallstackEqual(int x, int y){
-        Node nx = nList.get(x);
-        Node ny = nList.get(y);
-        Element ex = (Element) nx;
-        Element ey = (Element) ny;
-
-        String pidx = ex.getElementsByTagName("PID").item(0).getTextContent();
-        String tidx = ex.getElementsByTagName("TID").item(0).getTextContent();
-        String optyx = ex.getElementsByTagName("OPTY").item(0).getTextContent();
-        String opvalx = ex.getElementsByTagName("OPVAL").item(0).getTextContent();
-        Element esx = (Element) ex.getElementsByTagName("Stacks").item(0);
-        String slenx = esx.getAttribute("Len");
-
-        String pidy = ey.getElementsByTagName("PID").item(0).getTextContent();
-        String tidy = ey.getElementsByTagName("TID").item(0).getTextContent();
-        String optyy = ey.getElementsByTagName("OPTY").item(0).getTextContent();
-        String opvaly = ey.getElementsByTagName("OPVAL").item(0).getTextContent();
-        Element esy = (Element) ey.getElementsByTagName("Stacks").item(0);
-        String sleny = esy.getAttribute("Len");
-        //if ((!pidx.equals(pidy))||(!tidx.equals(tidy))||(!optyx.equals(optyy))||(!opvalx.equals(opvaly))
-        if (!optyx.equals(optyy)
-        		// ||(!slenx.equals(sleny))
-		)
-        return false;
-        //for (int i = 0 ; i < Integer.parseInt(slenx); i++ ){
-        for (int i = 0 ; i < 1; i++ ){  //jx - yes, 1
-            Element sx = (Element) esx.getElementsByTagName("Stack").item(i);
-            Element sy = (Element) esy.getElementsByTagName("Stack").item(i);
-
-            String xclass = sx.getElementsByTagName("Class").item(0).getTextContent();
-            String xmethod = sx.getElementsByTagName("Method").item(0).getTextContent();
-            String xlen = sx.getElementsByTagName("Line").item(0).getTextContent();
-            String yclass = sy.getElementsByTagName("Class").item(0).getTextContent();
-            String ymethod = sy.getElementsByTagName("Method").item(0).getTextContent();
-            String ylen = sy.getElementsByTagName("Line").item(0).getTextContent();
-
-            if ((!xclass.equals(yclass))||(!xmethod.equals(ymethod))||(!xlen.equals(ylen)))
-                return false;
-        }
-        return true;
-    }
-	
-	public boolean wholeCallstackEqual(int x, int y){
-        Node nx = nList.get(x);
-        Node ny = nList.get(y);
-        Element ex = (Element) nx;
-        Element ey = (Element) ny;
-
-        String pidx = ex.getElementsByTagName("PID").item(0).getTextContent();
-        String tidx = ex.getElementsByTagName("TID").item(0).getTextContent();
-        String optyx = ex.getElementsByTagName("OPTY").item(0).getTextContent();
-        String opvalx = ex.getElementsByTagName("OPVAL").item(0).getTextContent();
-        Element esx = (Element) ex.getElementsByTagName("Stacks").item(0);
-        String slenx = esx.getAttribute("Len");
-
-        String pidy = ey.getElementsByTagName("PID").item(0).getTextContent();
-        String tidy = ey.getElementsByTagName("TID").item(0).getTextContent();
-        String optyy = ey.getElementsByTagName("OPTY").item(0).getTextContent();
-        String opvaly = ey.getElementsByTagName("OPVAL").item(0).getTextContent();
-        Element esy = (Element) ey.getElementsByTagName("Stacks").item(0);
-        String sleny = esy.getAttribute("Len");
-        //if ((!pidx.equals(pidy))||(!tidx.equals(tidy))||(!optyx.equals(optyy))||(!opvalx.equals(opvaly))
-        if (!optyx.equals(optyy)
-                ||(!slenx.equals(sleny))
-                )
-            return false;
-        for (int i = 0 ; i < Integer.parseInt(slenx); i++ ){
-        //for (int i = 0 ; i < 1; i++ ){
-            Element sx = (Element) esx.getElementsByTagName("Stack").item(i);
-            Element sy = (Element) esy.getElementsByTagName("Stack").item(i);
-
-            String xclass = sx.getElementsByTagName("Class").item(0).getTextContent();
-            String xmethod = sx.getElementsByTagName("Method").item(0).getTextContent();
-            String xlen = sx.getElementsByTagName("Line").item(0).getTextContent();
-            String yclass = sy.getElementsByTagName("Class").item(0).getTextContent();
-            String ymethod = sy.getElementsByTagName("Method").item(0).getTextContent();
-            String ylen = sy.getElementsByTagName("Line").item(0).getTextContent();
-
-            if ((!xclass.equals(yclass))||(!xmethod.equals(ymethod))||(!xlen.equals(ylen)))
-                return false;
-
-        }
-
-        return true;
-
-    }
 
 	//JX - for simple output
     public void writeaddrlist(int x, int y) {
