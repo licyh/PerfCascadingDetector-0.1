@@ -47,7 +47,7 @@ public class Transformer implements ClassFileTransformer {
 				int nloops = Integer.parseInt( strs[1] );
 				Integer[] loops = new Integer[nloops];
 				for (int i = 0; i < nloops; i++)
-					loops[i] = Integer.parseInt( strs[i] );
+					loops[i] = Integer.parseInt( strs[2+i] );
 				looplocations.put(methodsig, loops);
 			}
 		}
@@ -94,11 +94,12 @@ public class Transformer implements ClassFileTransformer {
   public void transformClassForLoops(CtClass cl, CtBehavior[] methods) throws CannotCompileException {
 	  
       for (CtBehavior method : methods) {
-          if ( method.isEmpty() ) continue;
-          String methodsig = method.getSignature();
-          System.out.println( "JX - method signature: " + methodsig );   //method.getGenericSignature();
+          if ( method.isEmpty() ) continue; 
+          String methodsig = cl.getName() + "." + method.getName() + method.getSignature();  //full signature, like wala's signature
+          //System.out.println( "JX - method signature: " + methodsig );   
           if ( !looplocations.containsKey( methodsig ) ) continue;
           
+          System.out.println( "JX - IN - method sig = " + methodsig );  
           Integer[] loops = looplocations.get( methodsig );
           
           // insert before
@@ -111,23 +112,24 @@ public class Transformer implements ClassFileTransformer {
           // for test - TODO - please see
           for (int i = 0; i < loops.length; i++)
         	  for (int j = 0; j < loops.length; j++)
-        		  if ( i+1 == j ) {
+        		  if ( loops[i]+1 == loops[j] ) {
         			  System.err.println( "JX - WARN - " + i + "&" + j + " for " + methodsig );
         		  }
           // end-test
           for (int i = 0; i < loops.length; i++) {
         	  int linenumber = loops[i] + 1;
-        	  if ( method.insertAt(linenumber, false, "loop" + i + "++;") == linenumber ) //some particular examples: "do { .." OR "while (true) ( .." would became insert at next line than normal
+        	  int actualline = method.insertAt(linenumber, false, "loop" + i + "++;");
+        	  if ( linenumber == actualline ) //some particular examples: "do { .." OR "while (true) ( .." would became insert at next line than normal
         		  method.insertAt( linenumber, "loop" + i + "++;" );
         	  else {
         		  // TODO - please see
-        		  System.err.println( "JX - WARN - cannot insert at " + loops[i] + " for " + methodsig );
+        		  System.err.println( "JX - WARN - cannot insert at " + loops[i] + " (actual:" + actualline + ") for " + methodsig );
         	  }
           }
           
           // insert after
           for (int i = 0; i < loops.length; i++) {
-        	  method.insertAfter( "_DM_Log.log_LoopPrint( \"loop_\"" + i + "\"_\" + loop" + i + ");" );
+        	  method.insertAfter( "dt._DM_Log.log_LoopPrint( \"loop_\" + " + i + " + \"_\" + loop" + i + ");" );
           }          
       }//end-outer for
   }

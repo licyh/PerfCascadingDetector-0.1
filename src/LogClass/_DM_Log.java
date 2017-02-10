@@ -3,6 +3,8 @@
 import java.io.*;
 import java.util.*;
 
+import dt._DM_Log;
+
 public class _DM_Log {
 
   //copy from LogFunc.java
@@ -29,6 +31,7 @@ public class _DM_Log {
     LargeLoopBegin,
     //LargeLoopCenter,         //tmp
     //end-Added
+    LoopPrint,
   };
 
   public static void log_Base(String opType, String opValue) {
@@ -175,4 +178,9 @@ public class _DM_Log {
   }
   //end-Added
   */
+  
+  public static void log_LoopPrint(String opValue) {
+	String opType = _DM_Log.OPTYPE.LoopPrint.name();
+	_DM_Log.log_Base(opType, opValue);
+  }
 }

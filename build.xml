@@ -179,7 +179,7 @@
     	<!--target jar dt-MR-->
     	<target name="jar-dt" depends="compile-dt" description="generate jar for MR dynamic monitor">
             <jar jarfile="${build.lib}/_DM_Log.jar">
-                    <fileset dir="${build.classes}" includes="dt/_DM_Log*.class" />
+                    <fileset dir="${build.classes}" includes="dt/_DM_Log*.class" /> 
             </jar>
     		<jar jarfile="${build.lib}/MR_DM.jar">
                     <fileset dir="${build.classes}" includes="dt/**/*.class" />  <!-- need to exclude _DM_Log*.class -->
@@ -210,8 +210,10 @@
                 		<zipfileset dir="${src.dm.dir}" includes="res/mr/mr_callee.txt" fullpath="resource/mr_callee.txt"/>
                         <zipfileset dir="${src.dm.dir}" includes="res/mr/targetlocations" fullpath="resource/targetlocations"/>
                 	    <zipfileset dir="${src.dm.dir}" includes="res/mr/targetinstructions" fullpath="resource/targetinstructions"/>
-                		<zipfileset dir="${src.dm.dir}" includes="res/mr/looplocations" fullpath="resource/looplocations"/>
-                	    <zipfileset dir="${src.dm.dir}" includes="res/mr/loopinstructions" fullpath="resource/loopinstructions"/>
+                		<zipfileset dir="${src.dm.dir}" includes="res/mr/largelooplocations" fullpath="resource/largelooplocations"/>
+                	    <zipfileset dir="${src.dm.dir}" includes="res/mr/largeloopinstructions" fullpath="resource/largeloopinstructions"/>
+                	    <zipfileset dir="${src.dm.dir}" includes="res/mr/looplocations" fullpath="resource/looplocations"/>
+                                	
 		                <!--
 			            <zipfileset dir="src" includes="com/api.txt" fullpath="jiaxin/www/api.txt" />
                         <zipfileset dir="build/classes/com" includes="dm/**/*.class" prefix="jiaxinclass" />
