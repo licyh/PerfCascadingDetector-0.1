@@ -1603,17 +1603,12 @@ public class JXLocks {
 		  findNestedForEachLoopingFunction(cg.getNode(id));
 	  }
 	  
-	  System.out.println("jx - functions.size() = " + functions.size() );
-	  	  
-	  
 	  
 	  // Print the status
-	  int testn = 0;
 	  int N_NestedLOOPS = 20;
 	  int[] count = new int[N_NestedLOOPS];
 	  for (List<LoopInfo> loops: functions_with_loops.values()) {
 		  for (LoopInfo loop: loops) {
-			  testn ++;
 			  int depthOfLoops = loop.max_depthOfLoops;
 			  if (depthOfLoops < N_NestedLOOPS) count[depthOfLoops]++;
 		  }
@@ -1626,7 +1621,6 @@ public class JXLocks {
 	  for (int i = 0; i < N_NestedLOOPS; i++)
 	      System.out.print("#" + i + ":" + count[i] + ", ");
 	  System.out.println("\n");
-	  System.out.println("jx - testn = " + testn);
 	  
   }
   
