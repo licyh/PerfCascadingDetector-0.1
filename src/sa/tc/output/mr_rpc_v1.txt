@@ -1,0 +1,85 @@
+//format: class iface method #parameters ..
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getNewJobID 0 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol submitJob 3 Lorg/apache/hadoop/mapreduce/JobID Ljava/lang/String Lorg/apache/hadoop/security/Credentials 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getClusterMetrics 0 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getJobTrackerStatus 0 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getTaskTrackerExpiryInterval 0 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getQueueAdmins 1 Ljava/lang/String 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol killJob 1 Lorg/apache/hadoop/mapreduce/JobID 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol setJobPriority 2 Lorg/apache/hadoop/mapreduce/JobID Ljava/lang/String 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol killTask 2 Lorg/apache/hadoop/mapreduce/TaskAttemptID Z 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getJobStatus 1 Lorg/apache/hadoop/mapreduce/JobID 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getJobCounters 1 Lorg/apache/hadoop/mapreduce/JobID 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getTaskReports 2 Lorg/apache/hadoop/mapreduce/JobID Lorg/apache/hadoop/mapreduce/TaskType 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getFilesystemName 0 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getAllJobs 0 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getTaskCompletionEvents 3 Lorg/apache/hadoop/mapreduce/JobID I I 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getTaskDiagnostics 1 Lorg/apache/hadoop/mapreduce/TaskAttemptID 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getActiveTrackers 0 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getBlacklistedTrackers 0 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getSystemDir 0 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getStagingAreaDir 0 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getJobHistoryDir 0 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getQueues 0 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getQueue 1 Ljava/lang/String 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getQueueAclsForCurrentUser 0 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getRootQueues 0 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getChildQueues 1 Ljava/lang/String 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getDelegationToken 1 Lorg/apache/hadoop/io/Text 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol renewDelegationToken 1 Lorg/apache/hadoop/security/token/Token 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol cancelDelegationToken 1 Lorg/apache/hadoop/security/token/Token 
+org.apache.hadoop.mapred.LocalJobRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getLogFileParams 2 Lorg/apache/hadoop/mapreduce/JobID Lorg/apache/hadoop/mapreduce/TaskAttemptID 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getNewJobID 0 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol submitJob 3 Lorg/apache/hadoop/mapreduce/JobID Ljava/lang/String Lorg/apache/hadoop/security/Credentials 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getClusterMetrics 0 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getJobTrackerStatus 0 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getTaskTrackerExpiryInterval 0 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getQueueAdmins 1 Ljava/lang/String 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol killJob 1 Lorg/apache/hadoop/mapreduce/JobID 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol setJobPriority 2 Lorg/apache/hadoop/mapreduce/JobID Ljava/lang/String 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol killTask 2 Lorg/apache/hadoop/mapreduce/TaskAttemptID Z 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getJobStatus 1 Lorg/apache/hadoop/mapreduce/JobID 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getJobCounters 1 Lorg/apache/hadoop/mapreduce/JobID 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getTaskReports 2 Lorg/apache/hadoop/mapreduce/JobID Lorg/apache/hadoop/mapreduce/TaskType 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getFilesystemName 0 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getAllJobs 0 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getTaskCompletionEvents 3 Lorg/apache/hadoop/mapreduce/JobID I I 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getTaskDiagnostics 1 Lorg/apache/hadoop/mapreduce/TaskAttemptID 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getActiveTrackers 0 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getBlacklistedTrackers 0 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getSystemDir 0 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getStagingAreaDir 0 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getJobHistoryDir 0 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getQueues 0 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getQueue 1 Ljava/lang/String 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getQueueAclsForCurrentUser 0 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getRootQueues 0 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getChildQueues 1 Ljava/lang/String 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getDelegationToken 1 Lorg/apache/hadoop/io/Text 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol renewDelegationToken 1 Lorg/apache/hadoop/security/token/Token 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol cancelDelegationToken 1 Lorg/apache/hadoop/security/token/Token 
+org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getLogFileParams 2 Lorg/apache/hadoop/mapreduce/JobID Lorg/apache/hadoop/mapreduce/TaskAttemptID 
+org.apache.hadoop.mapred.LocalJobRunner$Job org.apache.hadoop.mapred.TaskUmbilicalProtocol getTask 2 Lorg/apache/hadoop/mapred/JvmContext Ljava/lang/String 
+org.apache.hadoop.mapred.LocalJobRunner$Job org.apache.hadoop.mapred.TaskUmbilicalProtocol statusUpdate 3 Lorg/apache/hadoop/mapred/TaskAttemptID Lorg/apache/hadoop/mapred/TaskStatus Ljava/lang/String 
+org.apache.hadoop.mapred.LocalJobRunner$Job org.apache.hadoop.mapred.TaskUmbilicalProtocol reportDiagnosticInfo 3 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String Ljava/lang/String 
+org.apache.hadoop.mapred.LocalJobRunner$Job org.apache.hadoop.mapred.TaskUmbilicalProtocol reportNextRecordRange 3 Lorg/apache/hadoop/mapred/TaskAttemptID Lorg/apache/hadoop/mapred/SortedRanges$Range Ljava/lang/String 
+org.apache.hadoop.mapred.LocalJobRunner$Job org.apache.hadoop.mapred.TaskUmbilicalProtocol ping 2 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 
+org.apache.hadoop.mapred.LocalJobRunner$Job org.apache.hadoop.mapred.TaskUmbilicalProtocol done 2 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 
+org.apache.hadoop.mapred.LocalJobRunner$Job org.apache.hadoop.mapred.TaskUmbilicalProtocol commitPending 3 Lorg/apache/hadoop/mapred/TaskAttemptID Lorg/apache/hadoop/mapred/TaskStatus Ljava/lang/String 
+org.apache.hadoop.mapred.LocalJobRunner$Job org.apache.hadoop.mapred.TaskUmbilicalProtocol canCommit 2 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 
+org.apache.hadoop.mapred.LocalJobRunner$Job org.apache.hadoop.mapred.TaskUmbilicalProtocol shuffleError 2 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 
+org.apache.hadoop.mapred.LocalJobRunner$Job org.apache.hadoop.mapred.TaskUmbilicalProtocol fsError 3 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String Ljava/lang/String 
+org.apache.hadoop.mapred.LocalJobRunner$Job org.apache.hadoop.mapred.TaskUmbilicalProtocol fatalError 3 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String Ljava/lang/String 
+org.apache.hadoop.mapred.LocalJobRunner$Job org.apache.hadoop.mapred.TaskUmbilicalProtocol getMapCompletionEvents 5 Lorg/apache/hadoop/mapred/JobID I I Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol getTask 2 Lorg/apache/hadoop/mapred/JvmContext Ljava/lang/String 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol statusUpdate 3 Lorg/apache/hadoop/mapred/TaskAttemptID Lorg/apache/hadoop/mapred/TaskStatus Ljava/lang/String 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol reportDiagnosticInfo 3 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String Ljava/lang/String 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol reportNextRecordRange 3 Lorg/apache/hadoop/mapred/TaskAttemptID Lorg/apache/hadoop/mapred/SortedRanges$Range Ljava/lang/String 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol ping 2 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol done 2 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol commitPending 3 Lorg/apache/hadoop/mapred/TaskAttemptID Lorg/apache/hadoop/mapred/TaskStatus Ljava/lang/String 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol canCommit 2 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol shuffleError 2 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol fsError 3 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String Ljava/lang/String 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol fatalError 3 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String Ljava/lang/String 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol getMapCompletionEvents 5 Lorg/apache/hadoop/mapred/JobID I I Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 

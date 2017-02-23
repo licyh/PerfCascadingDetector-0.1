@@ -187,8 +187,8 @@ public class PDFCallGraph {
    * @throws UnsupportedOperationException if command-line is malformed.
    */
   public static void validateCommandLine(Properties p) {
-    if (p.get("appJar") == null) {
-      throw new UnsupportedOperationException("expected command-line to include -appJar");
+    if (p.get("appJarDir") == null) {
+      throw new UnsupportedOperationException("expected command-line to include -appJarDir");
     }
   }
 

@@ -11,7 +11,7 @@ org.apache.hadoop.yarn.server.resourcemanager.AdminService org.apache.hadoop.yar
 org.apache.hadoop.yarn.server.resourcemanager.AdminService org.apache.hadoop.yarn.server.resourcemanager.api.RMAdminProtocol refreshNodes 1 Ljava/lang/Object
 org.apache.hadoop.yarn.server.resourcemanager.AdminService org.apache.hadoop.yarn.server.resourcemanager.api.RMAdminProtocol refreshSuperUserGroupsConfiguration 1 Ljava/lang/Object
 org.apache.hadoop.yarn.server.resourcemanager.AdminService org.apache.hadoop.yarn.server.resourcemanager.api.RMAdminProtocol refreshUserToGroupsMappings 1 Ljava/lang/Object
-org.apache.hadoop.yarn.server.resourcemanager.AdminService org.apache.hadoop.yarn.server.resourcemanager.api.RMAdminProtocol refreshAdminAcls 1 Ljava/lang/Object
+org.apache.had oop.yarn.server.resourcemanager.AdminService org.apache.hadoop.yarn.server.resourcemanager.api.RMAdminProtocol refreshAdminAcls 1 Ljava/lang/Object
 org.apache.hadoop.yarn.server.resourcemanager.AdminService org.apache.hadoop.yarn.server.resourcemanager.api.RMAdminProtocol refreshServiceAcls 1 Ljava/lang/Object
 org.apache.hadoop.yarn.server.resourcemanager.ClientRMService org.apache.hadoop.yarn.api.ClientRMProtocol getNewApplication 1 Ljava/lang/Object
 org.apache.hadoop.yarn.server.resourcemanager.ClientRMService org.apache.hadoop.yarn.api.ClientRMProtocol getApplicationReport 1 Ljava/lang/Object

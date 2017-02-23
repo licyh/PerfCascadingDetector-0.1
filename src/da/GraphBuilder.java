@@ -2329,10 +2329,8 @@ public class GraphBuilder {
 				// TODO
 				if ( getNodeOPTY(k).equals("LoopBegin") ) {
 					loopflag = 1;
-					/*
 					bugpool.add( k );
 					System.out.println("JX - Bugs - LockRelatedBugs: " + "LoopBegin " + lastCallstack(k));
-					*/
 					//break;
 				}
 				if ( getNodeOPTY(k).equals("LockRequire") ) {

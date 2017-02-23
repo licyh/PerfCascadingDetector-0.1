@@ -136,11 +136,16 @@ import com.ibm.wala.util.strings.StringStuff;
 import com.ibm.wala.viz.DotUtil;
 import com.ibm.wala.viz.PDFViewUtil;
 
+import sa.tc.HDrpc;
+import sa.tc.MRrpc;
+
 public class JXLocks {
-  // JXLocks basis
-  static String appDir;
-  static String dtDir;   //should be "../../../../dt/res/", but couldn't write directly like this
-	
+  // dir paths
+  static String projectDir;  // read from arguments, couldn't obtain automatically, because of many scenarios
+  static String appJarDir;   // read from arguments
+  static String dtDir;       //should be "projectDir/src/dt/res/", but couldn't write directly like this
+  
+  
   // WALA basis
   private final static boolean CHECK_GRAPH = false;
   final public static String CG_PDF_FILE = "cg.pdf";
@@ -166,7 +171,7 @@ public class JXLocks {
   static Map<Integer, List<LockInfo>> functions_with_locks = new HashMap<Integer, List<LockInfo>>();
   // map: function CGNode id -> loops, ONLY covers functions that really involve loops  
   static Map<Integer, List<LoopInfo>> functions_with_loops = new HashMap<Integer, List<LoopInfo>>();
-  // map: function id -> looping_locking_functions
+  // map: function CGNode id -> traversed functions (including looping_locking_functions)
   static Map<Integer, FunctionInfo> functions = new HashMap<Integer, FunctionInfo>();
   
   // Statistics
@@ -195,6 +200,8 @@ public class JXLocks {
   
   // List of distributed systems
   static List<String> systems = Arrays.asList("HDFS", "MapReduce", "HBase");
+  static String systemname = null;   // current system's name  
+  
   // Whether it will use all Entry Points for different distributed systems or not
   static Map<String,String> mapOfWhetherAllEntries = new HashMap<String,String>() {{
     put("HDFS", "No");
@@ -223,15 +230,16 @@ public class JXLocks {
     System.out.println("JX-breakpoint-...");
     Properties p = CommandLine.parse(args);
     PDFCallGraph.validateCommandLine(p);
-    new JXLocks().run(p);  // or JXLocks.run(p) or run(p) directly
+    new JXLocks().doWork(p);  // or JXLocks.run(p) or run(p) directly
   }
 
   
-  public static void run(Properties p) {
+  public static void doWork(Properties p) {
     try {
       // Test Part -
       //testQuickly();
       init(p);
+      buildWalaAnalysisEnv();
       //testIClass();
       //testTypeHierarchy();
       //testCGNode();
@@ -239,11 +247,20 @@ public class JXLocks {
       //testIR();         				//JX - need to configurate Dot and PDFViewer
       //testWalaAPI();
       
+      // New added - RPC
+      findRPCs();
+           
       // Phase 1 -
-      findLockingFunctions();
+      findLockingFunctions();      //JX - can be commented
       findLoopingFunctions();
-      printFunctionsWithLoops();     //JX - NO necessary, can be commented, 
+      printLoopingFunctions();     //JX - write to local files. NO necessary, can be commented
+      
+      findNestedLoopsInLoops();
+      findTimeConsumingOperationsInLoops();
+      
       //findLoopingLockingFunctions();
+      
+      
       
       // Phase 2 -
       //analyzeAllLocks();
@@ -258,18 +275,20 @@ public class JXLocks {
   }
   
   
-  public static void init(Properties p) 
-      throws IOException, IllegalArgumentException, CallGraphBuilderCancelException, UnsoundGraphException, WalaException {
-    System.err.println("\nTesting Information");
-    
+  public static void init(Properties p) {
     // Read external arguments
-    String appJar = p.getProperty("appJar");
-    appDir = appJar;
-    //System.out.println("Testing directory - " + appJar);
+    projectDir = p.getProperty("projectDir");
+    appJarDir = p.getProperty("appJarDir");
+    dtDir = Paths.get(projectDir, "src/dt/res/").toString();
     
-    // Get the Target System Name for testing
-    String systemname = null;
-    String[] path_components = appJar.split( "\\/" );           // can't use File.separator
+    String satcDir = projectDir + "src/sa/tc/";
+    
+  
+	  
+	// Get the Target System Name for testing
+	System.out.println("\nJX - Testing Information");     
+    systemname = null;
+    String[] path_components = appJarDir.split( "\\/" );           // can't use File.separator
     //for (int i=0; i < path_components.length; i++) System.out.println(path_components[i]);
     for (int i=0; i < path_components.length; i++)
       for (int j=0; j < systems.size(); j++)
@@ -282,16 +301,23 @@ public class JXLocks {
       System.err.println("Error - Target System is UNREADY !!!!!");
       return;
     }
-    
+    System.out.println("Testing paths - " + appJarDir);
+  }
+  
+  
+  public static void buildWalaAnalysisEnv() 
+      throws IOException, IllegalArgumentException, CallGraphBuilderCancelException, UnsoundGraphException, WalaException {
+	System.out.println("\nJX-buildWalaAnalysisEnv");
+	
     // Get all Jar Files for testing
-    if (PDFCallGraph.isDirectory(appJar)) {
-      System.out.println("Testing paths - " + appJar);
-      appJar = PDFCallGraph.findJarFiles(new String[] { appJar }); 
-      System.out.println("Testing paths - " + appJar);  
+    String appJars = "";
+    if (PDFCallGraph.isDirectory(appJarDir)) {
+      appJars = PDFCallGraph.findJarFiles(new String[] { appJarDir }); 
+      System.out.println("Testing Jars - " + appJars);  
     }
     
     // Create a Scope                                                                           #"JXJavaRegressionExclusions.txt"
-    scope = AnalysisScopeReader.makeJavaBinaryAnalysisScope(appJar, (new FileProvider()).getFile(CallGraphTestUtil.REGRESSION_EXCLUSIONS)); //default: CallGraphTestUtil.REGRESSION_EXCLUSIONS
+    scope = AnalysisScopeReader.makeJavaBinaryAnalysisScope(appJars, (new FileProvider()).getFile(CallGraphTestUtil.REGRESSION_EXCLUSIONS)); //default: CallGraphTestUtil.REGRESSION_EXCLUSIONS
     // Create a Class Hierarchy
     cha = ClassHierarchy.make(scope);  
     //testTypeHierarchy();
@@ -749,6 +775,38 @@ public class JXLocks {
   }
   
  
+  
+ 
+//===============================================================================================
+//+++++++++++++++++++++++++++++++++++++++++ Find RPCs +++++++++++++++++++++++++++++++++++++++++++
+//===============================================================================================
+  
+  public static void findRPCs() {
+	System.out.println("\nJX-findRPCs");
+
+	switch (systemname) {
+		case "HDFS":
+			HDrpc hdrpc = new HDrpc(cha, projectDir+"src/sa/tc/");  
+			hdrpc.doWork();
+			break;
+		case "MapReduce":
+			MRrpc mrrpc = new MRrpc(cha, projectDir+"src/sa/tc/");
+			mrrpc.doWork();
+			HDrpc hdrpc2 = new HDrpc(cha, projectDir+"src/sa/tc/");  
+			hdrpc2.doWork();
+			break;
+		case "HBase":
+			break;
+		default:
+			break;
+	}
+	
+  }
+  
+  
+//===============================================================================================
+//++++++++++++++++++++++++++++++++++++++++ Find Locks +++++++++++++++++++++++++++++++++++++++++++
+//===============================================================================================
   
   /**
    * Find Functions with locks
@@ -1344,7 +1402,7 @@ public class JXLocks {
    **************************************************************************************************
    */
   public static void findLoopingFunctions() throws IOException {
-    System.out.println("\nJX-findLoopingFunctions-2");
+    System.out.println("\nJX-findLoopingFunctions");
 
     int totalloops = 0;
     
@@ -1355,6 +1413,7 @@ public class JXLocks {
       ClassLoaderReference classloader_ref = m.getDeclaringClass().getClassLoader().getReference();
       if (classloader_ref.equals(ClassLoaderReference.Application) && !m.isNative()) {   //IMPO:  native method is App class, but can't IR#getControlFlowGraph or viewIR    #must be
         int id = function.getGraphNodeId();
+        // Find loops for each function
         List<LoopInfo> loops = findLoops(function);
         if (loops.size() > 0) {
           functions_with_loops.put(id, loops);
@@ -1378,7 +1437,7 @@ public class JXLocks {
     System.out.println("The Status of Loops in All Functions:\n" 
         + "#scanned functions: " + nApplicationFuncs 
         + " out of #Total:" + nTotalFuncs + "(#AppFuncs:" + nApplicationFuncs + "+#PremFuncs:" + nPremordialFuncs +")");    
-    System.out.println("#functions with loops: " + nLoopingFuncs);
+    System.out.println("#functions with loops: " + nLoopingFuncs + " (#loops:" + nLoops + ")");
     System.out.println("//distribution of #loops");
     for (int i = 0; i < N_LOOPS; i++)
       System.out.print("#" + i + ":" + count[i] + ", ");
@@ -1387,8 +1446,9 @@ public class JXLocks {
   }
   
   
-  public static List<LoopInfo> findLoops(CGNode function) {
-    IR ir = function.getIR();
+  // Find loops for each function
+  public static List<LoopInfo> findLoops(CGNode f) {
+    IR ir = f.getIR();
     SSACFG cfg = ir.getControlFlowGraph();
     //newly added - for source line number
     SSAInstruction[] ssas = ir.getInstructions();
@@ -1416,6 +1476,7 @@ public class JXLocks {
             LoopInfo loop = new LoopInfo();   
             loop.begin_bb = succ;
             loop.end_bb = bbnum;
+            loop.function = f;  //for the future
             loop.line_number = getSourceLineNumberFromBB( cfg.getBasicBlock(loop.begin_bb), ssas, bytecodemethod );
             //loop.var_name = ???
             // Get the basic block set for this loop
@@ -1446,7 +1507,7 @@ public class JXLocks {
       if (ip.getX() != ip.getY()) total ++;
     } 
     if (total != n_backedges) {  //for Test
-      System.err.println("total != n_backedges  #backedges:" + total + " #real backedges:" + n_backedges + " Method:" + function.getMethod().getSignature());
+      System.err.println("total != n_backedges  #backedges:" + total + " #real backedges:" + n_backedges + " Method:" + f.getMethod().getSignature());
     }
    
     //printLoops(loops);
@@ -1455,9 +1516,9 @@ public class JXLocks {
   }
  
   
-  public static void printFunctionsWithLoops() throws IOException {
+  public static void printLoopingFunctions() throws IOException {
 	  
-  	File loopfile = new File(appDir, "looplocations");
+  	File loopfile = new File(appJarDir, "looplocations");
   	BufferedWriter bufwriter = new BufferedWriter(new FileWriter(loopfile));    
   	bufwriter.write( nLoopingFuncs + " " + nLoops + "\n" );
   
@@ -1474,7 +1535,6 @@ public class JXLocks {
     bufwriter.close();
     
     // copy the result of "looplocations" to the common directory of dt
-    dtDir = Paths.get(appDir, "../../../../dt/res/").toString();
     Files.copy(loopfile.toPath(), Paths.get(dtDir, "looplocations"), StandardCopyOption.REPLACE_EXISTING);
   }
   
@@ -1520,8 +1580,122 @@ public class JXLocks {
   }
   
   
- 
   
+  
+  /*
+   * New added - JX - just find time-consuming operations               //nestedLoops
+   */
+  
+  public static void findTimeConsumingOperationsInLoops() {
+	  
+  }
+  
+ 
+  public static void findNestedLoopsInLoops() {
+	  System.out.println("\nJX-findNestedLoops");
+	  
+	  // Initialization by DFS for all looping functions
+	  for (Integer id: functions_with_loops.keySet() ) {
+		  dfsToGetFunctionInfos(cg.getNode(id), 0);
+	  }
+	  
+	  for (Integer id: functions_with_loops.keySet() ) {
+		  findNestedForEachLoopingFunction(cg.getNode(id));
+	  }
+	  
+	  System.out.println("jx - functions.size() = " + functions.size() );
+	  	  
+	  
+	  
+	  // Print the status
+	  int testn = 0;
+	  int N_NestedLOOPS = 20;
+	  int[] count = new int[N_NestedLOOPS];
+	  for (List<LoopInfo> loops: functions_with_loops.values()) {
+		  for (LoopInfo loop: loops) {
+			  testn ++;
+			  int depthOfLoops = loop.max_depthOfLoops;
+			  if (depthOfLoops < N_NestedLOOPS) count[depthOfLoops]++;
+		  }
+	  }
+	  System.out.println("The Status of Loops in All Functions:\n" 
+	        + "#scanned functions: " + nApplicationFuncs 
+	        + " out of #Total:" + nTotalFuncs + "(#AppFuncs:" + nApplicationFuncs + "+#PremFuncs:" + nPremordialFuncs +")");    
+	  System.out.println("#loops: " + nLoops + " (#functions with loops:" + nLoopingFuncs + ")");
+	  System.out.println("//distribution of #nestedloops");
+	  for (int i = 0; i < N_NestedLOOPS; i++)
+	      System.out.print("#" + i + ":" + count[i] + ", ");
+	  System.out.println("\n");
+	  System.out.println("jx - testn = " + testn);
+	  
+  }
+  
+  
+  public static void findNestedForEachLoopingFunction(CGNode f) {
+	  
+    int id = f.getGraphNodeId();
+    IR ir = f.getIR();
+    SSACFG cfg = ir.getControlFlowGraph();
+    List<LoopInfo> loops = functions_with_loops.get(id);
+    
+    FunctionInfo function = functions.get(id); 
+      
+    //System.out.print("function " + id + ": ");
+    for (int i = 0; i < loops.size(); i++) {
+      LoopInfo loop = loops.get(i);
+      // tmp vars
+      InstructionInfo max_instruction = null;
+      int max_depthOfLoops_in_current_function = 0;
+      // end-tmp
+      for (Iterator<Integer> it = loop.bbs.iterator(); it.hasNext(); ) {
+        int bbnum = it.next();
+        int first_index = cfg.getBasicBlock(bbnum).getFirstInstructionIndex();
+        int last_index = cfg.getBasicBlock(bbnum).getLastInstructionIndex();
+        for (int index = first_index; index <= last_index; index++) {
+          InstructionInfo instruction = function.instructions.get(index);
+          if (instruction == null)
+            continue;
+          // Re-compute the numOfLoops in current/first-level function
+          int numOfSurroundingLoops_in_current_function = 0;
+          if (instruction.numOfSurroundingLoops_in_current_function > 0) {
+            for (int j = 0; j < instruction.surroundingLoops_in_current_function.size(); j ++) {
+              LoopInfo loop2 = loops.get( instruction.surroundingLoops_in_current_function.get(j) );
+              if (loop.bbs.containsAll(loop2.bbs))
+                numOfSurroundingLoops_in_current_function ++;
+            }
+          }
+          // Then
+          int depthOfLoops = numOfSurroundingLoops_in_current_function + instruction.maxdepthOfLoops_in_call;
+          //if (instruction.numOfLoops_in_call >= 7 && instruction.numOfLoops_in_call <= 15) System.err.println("!!:" + instruction.numOfLoops_in_call);
+          if (depthOfLoops <= 0)
+            continue;
+          
+          if (depthOfLoops > loop.max_depthOfLoops) {
+            loop.max_depthOfLoops = depthOfLoops;
+            max_instruction = instruction;
+            max_depthOfLoops_in_current_function = numOfSurroundingLoops_in_current_function;
+          }
+        }
+      } //for-it
+      //save others, ie function path, for the Loop             haven't yet verified
+      if (max_instruction != null && max_instruction.call >= 0) {
+        loop.function_chain_for_max_depthOfLoops.addAll(functions.get(max_instruction.call).function_chain_for_max_depthOfLoops);
+        loop.hasLoops_in_current_function_for_max_depthOfLoops.addAll(functions.get(max_instruction.call).hasLoops_in_current_function_for_max_depthOfLoops);
+      }
+      loop.function_chain_for_max_depthOfLoops.add(id);
+      loop.hasLoops_in_current_function_for_max_depthOfLoops.add(max_depthOfLoops_in_current_function);
+      
+     
+      // For Test
+      if (f.getMethod().getSignature().indexOf("BlockManager.processReport(") >=0 || loop.max_depthOfLoops == 15 && loop.max_depthOfLoops < 15) {
+          System.err.println(loop.max_depthOfLoops + " : " + f.getMethod().getSignature() );
+          // print the function chain
+          for (int k = loop.function_chain_for_max_depthOfLoops.size()-1; k >= 0; k--)
+            System.err.print(cg.getNode( loop.function_chain_for_max_depthOfLoops.get(k) ).getMethod().getName() + "#" + loop.hasLoops_in_current_function_for_max_depthOfLoops.get(k) + "#" + "->");
+          System.err.println("End");
+      }
+    }//for-outermost
+  }
   
   
   /***********************************************************************************************************
@@ -1529,7 +1703,7 @@ public class JXLocks {
    ***********************************************************************************************************
    */
   public static void findLoopingLockingFunctions() {
-    System.out.println("\nJX-findLoopingLockingFunctions-3");
+    System.out.println("\nJX-findLoopingLockingFunctions");
     
     // Initialization by DFS for locking functions
     for (Integer id: functions_with_locks.keySet()) {
@@ -1589,6 +1763,7 @@ public class JXLocks {
       System.out.print("#" + i + ":" + count2[i] + ", ");
     }
     System.out.println("#>=" + MAXN_LOOPS_FOR_A_FUNCTION + ":" + rest);
+    System.out.println("jx - functions.size() = " + functions.size() );
     System.out.println();
     
   }
@@ -1633,17 +1808,17 @@ public class JXLocks {
         InstructionInfo instruction = new InstructionInfo();
         // Current function level
         if (loops != null) {
-          instruction.numOfLoops_in_current_function = 0;
+          instruction.numOfSurroundingLoops_in_current_function = 0;
           for (int j = 0; j < loops.size(); j++)
             if (loops.get(j).bbs.contains(bb)) {
-              instruction.numOfLoops_in_current_function ++;
-              instruction.loops_in_current_function.add(j);
+              instruction.numOfSurroundingLoops_in_current_function ++;
+              instruction.surroundingLoops_in_current_function.add(j);
             }
           //test
           //if (instruction.numOfLoops_in_current_function > 0) System.err.println(instruction.numOfLoops_in_current_function);
         }
         else {
-          instruction.numOfLoops_in_current_function = 0;
+          instruction.numOfSurroundingLoops_in_current_function = 0;
         }
         // Go into calls
         if (ssa instanceof SSAInvokeInstruction) {  //SSAAbstractInvokeInstruction
@@ -1665,15 +1840,15 @@ public class JXLocks {
               }
               */
             }
-            instruction.numOfLoops_in_call = functions.get(n.getGraphNodeId()).max_depthOfLoops;
+            instruction.maxdepthOfLoops_in_call = functions.get(n.getGraphNodeId()).max_depthOfLoops;
             instruction.call = n.getGraphNodeId();
           } else {                     //if we can't find the called CGNode.
             //TODO
-            instruction.numOfLoops_in_call = 0;
+            instruction.maxdepthOfLoops_in_call = 0;
           }  
         } else {
           //TODO
-          instruction.numOfLoops_in_call = 0;
+          instruction.maxdepthOfLoops_in_call = 0;
         }
         // Put into FunctionInfo.Map<Integer, InstructionInfo>
         function.instructions.put(i, instruction);
@@ -1685,9 +1860,9 @@ public class JXLocks {
     for (Iterator<Integer> it = function.instructions.keySet().iterator(); it.hasNext(); ) {
       int index = it.next();
       InstructionInfo instruction = function.instructions.get(index);
-      if (instruction.numOfLoops_in_current_function + instruction.numOfLoops_in_call > function.max_depthOfLoops) {
+      if (instruction.numOfSurroundingLoops_in_current_function + instruction.maxdepthOfLoops_in_call > function.max_depthOfLoops) {
         max_instruction = instruction;
-        function.max_depthOfLoops = instruction.numOfLoops_in_current_function + instruction.numOfLoops_in_call;
+        function.max_depthOfLoops = instruction.numOfSurroundingLoops_in_current_function + instruction.maxdepthOfLoops_in_call;
       }
     }
     if (max_instruction != null && max_instruction.call >= 0) {
@@ -1695,8 +1870,8 @@ public class JXLocks {
       function.hasLoops_in_current_function_for_max_depthOfLoops.addAll(functions.get(max_instruction.call).hasLoops_in_current_function_for_max_depthOfLoops);
     }
     function.function_chain_for_max_depthOfLoops.add(id);
-    if (max_instruction != null && max_instruction.numOfLoops_in_current_function > 0)
-      function.hasLoops_in_current_function_for_max_depthOfLoops.add(max_instruction.numOfLoops_in_current_function);
+    if (max_instruction != null && max_instruction.numOfSurroundingLoops_in_current_function > 0)
+      function.hasLoops_in_current_function_for_max_depthOfLoops.add(max_instruction.numOfSurroundingLoops_in_current_function);
     else
       function.hasLoops_in_current_function_for_max_depthOfLoops.add(0);
     
@@ -1747,27 +1922,27 @@ public class JXLocks {
           if (instruction == null)
             continue;
           // Re-compute the numOfLoops in current/first-level function
-          int numOfLoops_in_current_function = 0;
-          if (instruction.numOfLoops_in_current_function > 0) {
-            for (int j = 0; j < instruction.loops_in_current_function.size(); j ++) {
-              LoopInfo loop = loops.get( instruction.loops_in_current_function.get(j) );
+          int numOfSurroundingLoops_in_current_function = 0;
+          if (instruction.numOfSurroundingLoops_in_current_function > 0) {
+            for (int j = 0; j < instruction.surroundingLoops_in_current_function.size(); j ++) {
+              LoopInfo loop = loops.get( instruction.surroundingLoops_in_current_function.get(j) );
               if (lock.bbs.containsAll(loop.bbs))
-                numOfLoops_in_current_function ++;
+                numOfSurroundingLoops_in_current_function ++;
             }
           }
           // Then
-          int numOfLoops = numOfLoops_in_current_function + instruction.numOfLoops_in_call;
+          int depthOfLoops = numOfSurroundingLoops_in_current_function + instruction.maxdepthOfLoops_in_call;
           //if (instruction.numOfLoops_in_call >= 7 && instruction.numOfLoops_in_call <= 15) System.err.println("!!:" + instruction.numOfLoops_in_call);
-          if (numOfLoops <= 0)
+          if (depthOfLoops <= 0)
             continue;
           if (loopinglock == null) {
             loopinglock = new LoopingLockInfo();
             loopinglock.max_depthOfLoops = 0;
           }
-          if (numOfLoops > loopinglock.max_depthOfLoops) {
-            loopinglock.max_depthOfLoops = numOfLoops;
+          if (depthOfLoops > loopinglock.max_depthOfLoops) {
+            loopinglock.max_depthOfLoops = depthOfLoops;
             max_instruction = instruction;
-            max_depthOfLoops_in_current_function = numOfLoops_in_current_function;
+            max_depthOfLoops_in_current_function = numOfSurroundingLoops_in_current_function;
           }
         }
       }//for-it
@@ -2041,259 +2216,6 @@ class ApplicationLoaderFilter extends Predicate<CGNode> {
   }
 }
 
-
-class LockInfo {
-  CGNode func;
-  int func_id;       //ie, func.getGraphNodeId()  
-  String func_name;  //ie, func.getMethod().getSignature();
-  
-  String lock_identity;   //only be used in & after the phase of "analyzeAllLocks"
-  
-  String lock_type;  //for now: "synchronized_method", "synchronized_lock" + "lock", "readLock", "writeLock", "tryLock", "writeLockInterruptibly", "readLockInterruptibly", "lockInterruptibly"
-  int lock_name_vn;  //only for "synchronized (vn)"
-  String lock_class; //only for "class.lock()/readLock()/writeLock()"    #will not just like this
-  String lock_name;  //useless now
-  
-  int begin_bb;         // bb - basic block in WALA
-  int end_bb;  
-  Set<Integer> bbs;
-  Set<Integer> succbbs; //used as a temporary variable
-  Set<Integer> predbbs; //used as a temporary variable
-  
-  LockInfo() {  
-    this.func_id = -1;
-    this.func_name = "";
-    
-    this.lock_type = "";
-    this.lock_name_vn = -1;
-    this.lock_name = "";
-    this.lock_class = "";
-
-    this.begin_bb = -1;
-    this.end_bb = -1;
-    this.bbs = new TreeSet<Integer>();
-    this.succbbs = new HashSet<Integer>();
-    this.predbbs = new HashSet<Integer>();
-  }
- 
-  /*
-  public void dfsFromEnter(ISSABasicBlock bb, SSACFG cfg) {
-    if (isMatched(bb))
-      return;
-    for (Iterator<ISSABasicBlock> it = cfg.getSuccNodes(bb); it.hasNext(); ) {
-      ISSABasicBlock succ = it.next();
-      int succnum = succ.getNumber();
-      //if (succ.isExitBlock()) System.err.println("succ.isExitBlock() = " + bb.getNumber() + ":" + succnum);
-      if (!succ.isExitBlock() && !this.bbs.contains(succnum)) {  //add "!succ.isExitBlock()" because there are many edges to Exit Block, but the PDF IR never show that but IR.toString do
-        this.bbs.add(succnum);
-        dfsFromEnter(succ, cfg);
-      }
-    } 
-  }
-  */
-  
-  public void dfsFromEnter(ISSABasicBlock bb, SSACFG cfg) {
-    for (Iterator<ISSABasicBlock> it = cfg.getSuccNodes(bb); it.hasNext(); ) {
-      ISSABasicBlock succ = it.next();
-      int succnum = succ.getNumber();
-      if (!this.succbbs.contains(succnum)) {
-        this.succbbs.add(succnum);
-        dfsFromEnter(succ, cfg);
-      }
-    } 
-  }
-  
-  public void dfsFromExit(ISSABasicBlock bb, SSACFG cfg) {
-    if (this.isMatched(bb))
-      return;
-    for (Iterator<ISSABasicBlock> it = cfg.getPredNodes(bb); it.hasNext(); ) {
-      ISSABasicBlock pred = it.next();
-      int prednum = pred.getNumber();
-      if (!this.predbbs.contains(prednum)) {
-        this.predbbs.add(prednum);
-        dfsFromExit(pred, cfg);
-      }
-    } 
-  }
-  
-  public void mergeLoop() {
-    this.predbbs.retainAll(this.succbbs);   
-    this.bbs.addAll(this.predbbs);
-  }
-  
-  public boolean isMatched(ISSABasicBlock bb) {
-    if (this.lock_type.equals(JXLocks.synchronizedtypes.get(1))) {
-      for (Iterator<SSAInstruction> it = bb.iterator(); it.hasNext(); ) {
-        SSAInstruction ssa = it.next();
-        if (ssa instanceof SSAMonitorInstruction)
-          if (((SSAMonitorInstruction) ssa).isMonitorEnter()) { //enter
-            int vn = ((SSAMonitorInstruction) ssa).getRef();
-            if (this.lock_name_vn == vn)
-              return true;
-          }
-      } //for-it
-    }
-    else { //this.lock_type.equals.("lock/readLock/WriteLock/...")
-      for (Iterator<SSAInstruction> it = bb.iterator(); it.hasNext(); ) {
-        SSAInstruction ssa = it.next();
-        if (ssa instanceof SSAInvokeInstruction) {
-          String short_funcname = ((SSAInvokeInstruction) ssa).getDeclaredTarget().getName().toString();
-          if (JXLocks.locktypes.contains(short_funcname)) { //lock
-            String lock_class = ((SSAInvokeInstruction) ssa).getDeclaredTarget().getDeclaringClass().toString();
-            if (this.lock_class.equals(lock_class) && this.lock_type.equals(short_funcname))
-              return true;
-          }
-        }
-      } //for-it
-    }
-    return false;
-  }
-  
-  @Override
-  public String toString() {
-    return "{function:" + func_name + "\t" 
-      + " lock_class:" + lock_class + "\t" + " lock_type:" + lock_type + "\t" 
-      + " lock_name:" + lock_name + "\t" + " lock_name_vn:" + lock_name_vn + "\t" 
-      + " begin:" + begin_bb + " end:" + end_bb + " bbs:" + bbs + "}";
-  }
-}
-
-
-class LoopInfo {
-  //newly added
-  int line_number = 0;
-	
-  int begin_bb;         // bb - basic block in WALA
-  int end_bb;
-  String var_name;
-  Set<Integer> bbs;
-  
-  Set<Integer> succbbs; //used as a temporary variable
-  Set<Integer> predbbs; //used as a temporary variable
-  
-  LoopInfo() {
-    this.bbs = new TreeSet<Integer>();
-    this.succbbs = new HashSet<Integer>();
-    this.predbbs = new HashSet<Integer>();
-  }
-  
-  public void dfsFromEnter(ISSABasicBlock bb, SSACFG cfg) {
-    for (Iterator<ISSABasicBlock> it = cfg.getSuccNodes(bb); it.hasNext(); ) {
-      ISSABasicBlock succ = it.next();
-      int succnum = succ.getNumber();
-      if (!this.succbbs.contains(succnum)) {
-        this.succbbs.add(succnum);
-        dfsFromEnter(succ, cfg);
-      }
-    } 
-  }
-  
-  public void dfsFromExit(ISSABasicBlock bb, SSACFG cfg) {
-    if (bb.equals(cfg.getNode(this.begin_bb)))
-      return;
-    for (Iterator<ISSABasicBlock> it = cfg.getPredNodes(bb); it.hasNext(); ) {
-      ISSABasicBlock pred = it.next();
-      int prednum = pred.getNumber();
-      if (!this.predbbs.contains(prednum)) {
-        this.predbbs.add(prednum);
-        dfsFromExit(pred, cfg);
-      }
-    } 
-  }
-  
-  public void mergeLoop() {
-    this.predbbs.retainAll(this.succbbs);
-    this.bbs.addAll(this.predbbs);
-  }
-  
-  @Override
-  public String toString() {
-    return "{begin:" + begin_bb + " end:" + end_bb + " var_name:" + var_name + " bbs:" + bbs + "}";
-  }
-}
-
-
-
-class FunctionInfo {
-  boolean hasLoopingLocks;                     //only for first-level functions that have locks
-  Map<Integer, LoopingLockInfo> looping_locks;  //only for first-level functions that have locks, map: lock-id -> max_depthOfLoops
-  
-  //Newest! just added
-  List<LockInfo> locks = null;                //Type - ArrayList<LoopInfo>
-  List<LoopInfo> loops = null;                //Type - ArrayList<LoopInfo>
-  
-  int max_depthOfLoops;
-  List<Integer> function_chain_for_max_depthOfLoops;
-  List<Integer> hasLoops_in_current_function_for_max_depthOfLoops;
-  
-  Map<Integer, InstructionInfo> instructions;
-  
-  FunctionInfo() {
-    this.hasLoopingLocks = false;                           //only for first-level functions that have locks
-    this.looping_locks = new TreeMap<Integer, LoopingLockInfo>(); //only for first-level functions that have locks
-    
-    this.max_depthOfLoops = 0;
-    this.function_chain_for_max_depthOfLoops = new ArrayList<Integer>();
-    this.hasLoops_in_current_function_for_max_depthOfLoops = new ArrayList<Integer>();
-    
-    this.instructions = new TreeMap<Integer, InstructionInfo>();
-  }
-  
-  @Override
-  public String toString() {
-    String result = "FunctionInfo{ ";
-    for (int i = 0; i < instructions.size(); i++) {
-      result.concat(instructions.get(i).toString() + " ");
-    }
-    result.concat("}");
-    return result;
-  }
-}
-
-class LoopingLockInfo {
-  CGNode function;
-  LockInfo lock;
-  
-  int max_depthOfLoops;
-  List<Integer> function_chain_for_max_depthOfLoops;
-  List<Integer> hasLoops_in_current_function_for_max_depthOfLoops;
-  
-  LoopingLockInfo() {
-    this.function = null;
-    this.lock = null;
-    
-    this.max_depthOfLoops = 0;
-    this.function_chain_for_max_depthOfLoops = new ArrayList<Integer>();
-    this.hasLoops_in_current_function_for_max_depthOfLoops = new ArrayList<Integer>();
-  }
-}
-
-
-class InstructionInfo {
-  int numOfLoops_in_current_function;         //only for current-level function
-  List<Integer> loops_in_current_function;    //only for current-level function
-  //List<String> variables;
-  
-  int numOfLoops_in_call; //only save the longest loop chain
-  int call;               //CGNode id, if any 
-  List<Integer> function_chain; //CGNode id
-  List<Integer> instruction_chain; //instruction index
-  
-  InstructionInfo() {
-    this.numOfLoops_in_current_function = 0;                    //only for current-level function
-    this.loops_in_current_function = new ArrayList<Integer>();  //only for current-level function
-    
-    this.numOfLoops_in_call = 0;
-    this.call = -1;
-    this.function_chain = new ArrayList<Integer>();
-    this.instruction_chain = new ArrayList<Integer>();
-  }
-  
-  @Override
-  public String toString() {
-    return "InstructionInfo{numOfLoops_in_current_function:" + numOfLoops_in_current_function + ",numOfLoops_in_call:" + numOfLoops_in_call + ",function_chain:" + function_chain + "}";
-  }
-}
 
 
 
