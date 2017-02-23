@@ -156,19 +156,19 @@ public class MRrpc {
         if (requestIface.contains(paraTy)){
           String str = c.getName().toString();
           String outStr;
-          str = MapReduceRPCRequest.format(str);
+          str = MRrpc.format(str);
           System.out.println(str + " ");
           outStr = str + " ";
           for (IClass iface : c.getAllImplementedInterfaces()) {
-            if (MapReduceRPCRequest.containMethod(iface, m.getName().toString()) == true) {
+            if (MRrpc.containMethod(iface, m.getName().toString()) == true) {
               str = iface.getName().toString();
-              str = MapReduceRPCRequest.format(str);
+              str = MRrpc.format(str);
               System.out.println(str + " ");
               outStr += str + " ";
             }
           }
           str = m.getName().toString();
-          str = MapReduceRPCRequest.format(str);
+          str = MRrpc.format(str);
           System.out.println(str);
           outStr += str + " ";
           outStr += "1 Ljava/lang/Object";
