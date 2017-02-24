@@ -1583,14 +1583,137 @@ public class JXLocks {
   
   
   /*
-   * New added - JX - just find time-consuming operations               //nestedLoops
+   * New added - JX - just find time-consuming operations    
    */
   
   public static void findTimeConsumingOperationsInLoops() {
+	  for (Integer id: functions_with_loops.keySet() ) {
+		  dfsToTimeConsumingOperations(cg.getNode(id), 0);
+	  }
 	  
   }
   
- 
+  public static void dfsToTimeConsumingOperations(CGNode f, int depth) {
+	
+    int id = f.getGraphNodeId();
+    String short_funcname = f.getMethod().getName().toString();
+    /*
+    if (depth > MAXN_DEPTH) {
+      function.max_depthOfLoops = 0;
+      functions.put(id, function);
+      return ;
+    }
+    
+    if (!f.getMethod().getDeclaringClass().getClassLoader().getReference().equals(ClassLoaderReference.Application) || f.getMethod().isNative()) { // IMPO - native - must be
+      function.max_depthOfLoops = 0;
+      functions.put(id, function);
+      return ;
+    }
+    
+    if (locktypes.contains(short_funcname) || unlocktypes.contains(short_funcname)) {  //TODO - others
+      function.max_depthOfLoops = 0;
+      functions.put(id, function);
+      return ;
+    }
+    */
+    IR ir = f.getIR();
+    SSACFG cfg = ir.getControlFlowGraph();
+    SSAInstruction[] instructions = ir.getInstructions();
+    
+    
+    for (int i = 0; i < instructions.length; i++) {
+      SSAInstruction ssa = instructions[i];
+      if (ssa == null)
+    	  continue;
+      int bb = cfg.getBlockForInstruction(i).getNumber();
+      InstructionInfo instruction = new InstructionInfo();
+    
+      // Go into calls
+      if (ssa instanceof SSAInvokeInstruction) {  //SSAAbstractInvokeInstruction
+    	  SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;
+    	  
+    	  if ( invokessa.isDispatch() ) {
+    		  System.err.println( invokessa.getDeclaredTarget().getDeclaringClass().getName().toString() 
+    				  + " : " + invokessa.getDeclaredTarget().getDeclaringClass().getName() );
+    		  
+    	  }
+    	  
+    	  
+    	  
+    	  
+    	  
+    	  /*
+          java.util.Set<CGNode> set = cg.getPossibleTargets(f, ((SSAInvokeInstruction) ssa).getCallSite());
+          //if (set.size() > 1) System.err.println("CallGraph#getPossibleTargets's size > 1"); // for Test, how to solve the problem??
+          if (set.size() > 0) {         //JX: because I haven't yet added "hadoop-common"
+            CGNode n = set.iterator().next(); 
+            if (!functions.containsKey(n.getGraphNodeId())) {
+              //function.max_depthOfLoops = 1;  //how many???????
+              //functions.put(n.getGraphNodeId(), function);
+              dfsToGetFunctionInfos(n, depth+1); //layer+1?
+            } else {  //especial case: recursive function.    //TODO - maybe something wrong
+
+            }
+            instruction.maxdepthOfLoops_in_call = functions.get(n.getGraphNodeId()).max_depthOfLoops;
+            instruction.call = n.getGraphNodeId();
+          } else {                     //if we can't find the called CGNode.
+            //TODO
+            instruction.maxdepthOfLoops_in_call = 0;
+          }  
+      } else {
+          //TODO
+          //instruction.maxdepthOfLoops_in_call = 0;
+    	  */
+      }
+      // Put into FunctionInfo.Map<Integer, InstructionInfo>
+      
+      
+    }//for
+    /*
+    // find the instruction with maximal loops && save the function path
+    InstructionInfo max_instruction = null;
+    for (Iterator<Integer> it = function.instructions.keySet().iterator(); it.hasNext(); ) {
+      int index = it.next();
+      InstructionInfo instruction = function.instructions.get(index);
+      if (instruction.numOfSurroundingLoops_in_current_function + instruction.maxdepthOfLoops_in_call > function.max_depthOfLoops) {
+        max_instruction = instruction;
+        function.max_depthOfLoops = instruction.numOfSurroundingLoops_in_current_function + instruction.maxdepthOfLoops_in_call;
+      }
+    }
+    if (max_instruction != null && max_instruction.call >= 0) {
+      function.function_chain_for_max_depthOfLoops.addAll(functions.get(max_instruction.call).function_chain_for_max_depthOfLoops);
+      function.hasLoops_in_current_function_for_max_depthOfLoops.addAll(functions.get(max_instruction.call).hasLoops_in_current_function_for_max_depthOfLoops);
+    }
+    function.function_chain_for_max_depthOfLoops.add(id);
+    if (max_instruction != null && max_instruction.numOfSurroundingLoops_in_current_function > 0)
+      function.hasLoops_in_current_function_for_max_depthOfLoops.add(max_instruction.numOfSurroundingLoops_in_current_function);
+    else
+      function.hasLoops_in_current_function_for_max_depthOfLoops.add(0);
+    
+    //test - specified function's loop status
+    if (f.getMethod().getSignature().indexOf(functionname_for_test) >= 0) {
+      System.err.println("aa " + f.getMethod().getSignature());
+      System.err.println("bb " + function.max_depthOfLoops);
+      System.err.println(function.function_chain_for_max_depthOfLoops);
+      System.err.println("cc " + cg.getNode(549).getMethod().getSignature());
+      System.err.println("cc " + cg.getNode(280).getMethod().getSignature());
+      // print the function chain
+      for (int k = function.function_chain_for_max_depthOfLoops.size()-1; k >= 0; k--)
+        System.out.print(cg.getNode( function.function_chain_for_max_depthOfLoops.get(k) ).getMethod().getName() + "#" + function.hasLoops_in_current_function_for_max_depthOfLoops.get(k) + "#" + "->");
+      System.out.println("End");
+    }
+    
+    
+    //if (!functions.containsKey(id))
+    //  functions.put(id, function);
+    //else if (function.max_depthOfLoops > functions.get(id).max_depthOfLoops)
+    functions.put(id, function);
+    */
+  }
+  
+  /*
+   * New added - JX - just find nested loops                 
+   */
   public static void findNestedLoopsInLoops() {
 	  System.out.println("\nJX-findNestedLoops");
 	  
@@ -1602,15 +1725,15 @@ public class JXLocks {
 	  for (Integer id: functions_with_loops.keySet() ) {
 		  findNestedForEachLoopingFunction(cg.getNode(id));
 	  }
-	  
-	  
+	  	  
 	  // Print the status
 	  int N_NestedLOOPS = 20;
-	  int[] count = new int[N_NestedLOOPS];
+	  int[] count = new int[N_NestedLOOPS]; int othercount = 0;
 	  for (List<LoopInfo> loops: functions_with_loops.values()) {
 		  for (LoopInfo loop: loops) {
 			  int depthOfLoops = loop.max_depthOfLoops;
 			  if (depthOfLoops < N_NestedLOOPS) count[depthOfLoops]++;
+			  else othercount = 0;
 		  }
 	  }
 	  System.out.println("The Status of Loops in All Functions:\n" 
@@ -1620,9 +1743,9 @@ public class JXLocks {
 	  System.out.println("//distribution of #nestedloops");
 	  for (int i = 0; i < N_NestedLOOPS; i++)
 	      System.out.print("#" + i + ":" + count[i] + ", ");
-	  System.out.println("\n");
-	  
+	  System.out.println("#>=" + N_NestedLOOPS + ":" + othercount);
   }
+  
   
   
   public static void findNestedForEachLoopingFunction(CGNode f) {
@@ -1690,6 +1813,9 @@ public class JXLocks {
       }
     }//for-outermost
   }
+  
+  
+  
   
   
   /***********************************************************************************************************

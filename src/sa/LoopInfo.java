@@ -203,6 +203,9 @@ public class LoopInfo {
 
 
 class FunctionInfo {
+  // newly added
+  List<SSAInstruction> tcOperations;
+	
   boolean hasLoopingLocks;                     //only for first-level functions that have locks
   Map<Integer, LoopingLockInfo> looping_locks;  //only for first-level functions that have locks, map: lock-id -> max_depthOfLoops
   
@@ -216,7 +219,10 @@ class FunctionInfo {
   
   Map<Integer, InstructionInfo> instructions;
   
+  
   FunctionInfo() {
+	this.tcOperations = new ArrayList<SSAInstruction>();  
+	  
     this.hasLoopingLocks = false;                           //only for first-level functions that have locks
     this.looping_locks = new TreeMap<Integer, LoopingLockInfo>(); //only for first-level functions that have locks
     
