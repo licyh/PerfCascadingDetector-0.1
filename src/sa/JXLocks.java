@@ -10,10 +10,14 @@
  *******************************************************************************/
 package sa;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -139,6 +143,7 @@ import com.ibm.wala.viz.PDFViewUtil;
 import sa.tc.HDrpc;
 import sa.tc.MRrpc;
 
+
 public class JXLocks {
   // dir paths
   static String projectDir;  // read from arguments, couldn't obtain automatically, because of many scenarios
@@ -249,13 +254,16 @@ public class JXLocks {
       
       // New added - RPC
       findRPCs();
-           
+      readTimeConsumingOperations();
+      
       // Phase 1 -
       findLockingFunctions();      //JX - can be commented
       findLoopingFunctions();
       printLoopingFunctions();     //JX - write to local files. NO necessary, can be commented
       
       findNestedLoopsInLoops();
+      
+      
       findTimeConsumingOperationsInLoops();
       
       //findLoopingLockingFunctions();
@@ -800,7 +808,53 @@ public class JXLocks {
 		default:
 			break;
 	}
-	
+  }
+  
+  
+  static List<String> rpcClasses = new ArrayList<String>();
+  static List<String> rpcIfaces = new ArrayList<String>();
+  static List<String> rpcMethods = new ArrayList<String>();
+  
+  static public void readTimeConsumingOperations() {
+	  System.out.println("\nJX-readTimeConsumingOperations");
+	  String filepath = projectDir + "src/sa/tc/";
+	  
+	  switch (systemname) {
+	  	case "HDFS":
+			filepath += "output/hd_rpc.txt";
+			break;
+	  	case "MapReduce":
+	  		filepath += "output/mr_rpc.txt";
+			break;
+	  	case "HBase":
+	  		filepath += "output/hb_rpc.txt";
+			break;
+	  	default:
+			break;
+	  }  
+	  
+	  BufferedReader bufreader;
+	  String tmpline;
+	  try {
+		  bufreader = new BufferedReader( new FileReader( filepath ) );
+		  tmpline = bufreader.readLine(); // the 1st line is useless
+        	
+		  while ( (tmpline = bufreader.readLine()) != null ) {
+			  String[] strs = tmpline.trim().split("\\s+");
+			  if ( tmpline.trim().length() > 0 ) {
+				  rpcClasses.add( strs[0] );
+				  rpcIfaces.add( strs[1] );
+				  rpcMethods.add( strs[2] );
+			  }
+		  }
+		  bufreader.close();
+		
+	  } catch (Exception e) {
+		  // TODO Auto-generated catch block
+		  System.out.println("JX - ERROR - when reading RPC files");
+		  e.printStackTrace();
+	  }
+	  System.out.println("JX - successfully read " + rpcClasses.size() + " RPCs as time-consuming operations");      
   }
   
   
@@ -1585,8 +1639,8 @@ public class JXLocks {
   /*
    * New added - JX - just find time-consuming operations    
    */
-  
   public static void findTimeConsumingOperationsInLoops() {
+	  
 	  for (Integer id: functions_with_loops.keySet() ) {
 		  dfsToTimeConsumingOperations(cg.getNode(id), 0);
 	  }
@@ -1628,22 +1682,11 @@ public class JXLocks {
       int bb = cfg.getBlockForInstruction(i).getNumber();
       InstructionInfo instruction = new InstructionInfo();
     
+      checkTimeConsumingSSA( ssa );
       // Go into calls
       if (ssa instanceof SSAInvokeInstruction) {  //SSAAbstractInvokeInstruction
     	  SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;
-
-    	  //if ( invokessa.isDispatch() ) {
-    		  String classname = invokessa.getDeclaredTarget().getDeclaringClass().getName().toString();
-    		  if ( classname.startsWith("Ljava/io/") ||
-    			   classname.startsWith("Ljava/nio/") ||
-    			   classname.startsWith("Ljava/net/") ||
-    			   classname.startsWith("Ljava/rmi/") )
-    			  System.err.println( invokessa.getDeclaredTarget().toString() );
-    	  //}
-    	  
-    	  
-    	  
-    	  
+      
     	  
     	  /*
           java.util.Set<CGNode> set = cg.getPossibleTargets(f, ((SSAInvokeInstruction) ssa).getCallSite());
@@ -1712,6 +1755,55 @@ public class JXLocks {
     //else if (function.max_depthOfLoops > functions.get(id).max_depthOfLoops)
     functions.put(id, function);
     */
+    
+    
+    
+	  
+  }
+  
+  public static boolean checkTimeConsumingSSA(SSAInstruction ssa) {
+	  // if a invoke instruction
+      if (ssa instanceof SSAInvokeInstruction) {  //SSAAbstractInvokeInstruction
+    	  SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;
+    	  String classname = invokessa.getDeclaredTarget().getDeclaringClass().getName().toString();
+		  String methodname = invokessa.getDeclaredTarget().getName().toString();
+		  
+    	  // identify RPC
+		  String signature = invokessa.getDeclaredTarget().getSignature().toString();
+		  if ( invokessa.isDispatch() 
+	    	   || invokessa.isSpecial() 
+	    	   || invokessa.isStatic() 
+				  ) {
+			  //  !!!!tmp, have a problem
+			  if (rpcClasses.contains(classname) && rpcMethods.contains(methodname)) {
+				  System.err.println("RPC Call: " + signature);
+				  return true;
+			  }
+		  }
+		  
+    	  // identify I/O
+    	  if ( invokessa.isDispatch() 
+    		   || invokessa.isSpecial() 
+    		   || invokessa.isStatic() 
+    			  ) {
+    		  
+    		  if ( !methodname.equals("<init>") )
+    		  if ( classname.startsWith("Ljava/io/")  ||
+    			   classname.startsWith("Ljava/nio/") ||
+    			   classname.startsWith("Ljava/net/") ||
+    			   classname.startsWith("Ljava/rmi/") ||
+    			   classname.startsWith("Ljava/sql/")
+    				  ) {     		  
+    			  //System.err.println("INVOKE: " + invokessa.getDeclaredTarget().toString() );
+    			  //return true;
+    		  }
+    			 
+    	  }
+      }
+      else {
+    	  //TODO - if need be
+      }
+      return false;
   }
   
   /*

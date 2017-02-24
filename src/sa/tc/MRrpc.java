@@ -20,8 +20,7 @@ public class MRrpc {
  
   ClassHierarchy cha;
   String packageDir;
-  String rpcv2filepath = "output/mr_rpc_v2.txt";
-  String rpcv1filepath = "output/mr_rpc_v1.txt";
+  String rpcfilepath = "output/mr_rpc.txt";   //including mr_rpc_v2.txt & mr_rpc_v1.txt 
   
   ArrayList<IClass> classList = new ArrayList<IClass>();          //jx: a class list filtered from 'cha'
   ArrayList<IClass> requestClassList = new ArrayList<IClass>();
@@ -156,19 +155,19 @@ public class MRrpc {
         if (requestIface.contains(paraTy)){
           String str = c.getName().toString();
           String outStr;
-          str = MRrpc.format(str);
+          //str = MRrpc.format(str);
           System.out.println(str + " ");
           outStr = str + " ";
           for (IClass iface : c.getAllImplementedInterfaces()) {
             if (MRrpc.containMethod(iface, m.getName().toString()) == true) {
               str = iface.getName().toString();
-              str = MRrpc.format(str);
+              //str = MRrpc.format(str);
               System.out.println(str + " ");
               outStr += str + " ";
             }
           }
           str = m.getName().toString();
-          str = MRrpc.format(str);
+          //str = MRrpc.format(str);
           System.out.println(str);
           outStr += str + " ";
           outStr += "1 Ljava/lang/Object";
@@ -186,10 +185,10 @@ public class MRrpc {
 
     System.out.println("JX - checkpoint - here - 2");
     
-    String filepath = packageDir + rpcv2filepath; 
+    String filepath = packageDir + rpcfilepath; 
     try {
       PrintWriter outFile = new PrintWriter(filepath, "UTF-8");
-      outFile.println("//format: class iface method");
+      outFile.println("//format: class iface method #parameters ..");
       for (String str : out) {
         outFile.println(str);
       }
@@ -248,8 +247,8 @@ public class MRrpc {
     	// only find out RPC interfaces   #one RPC class <- many (RPC or non-RPC) interfaces
         if ( mrv1Iface.contains(iface) ) {
           for (IMethod m : iface.getDeclaredMethods()) {
-            String str = MRrpc.format(clazz.getName().toString()) + " " 
-            			+ MRrpc.format(iface.getName().toString()) + " " 
+            String str = clazz.getName().toString() + " " 
+            			+ iface.getName().toString() + " " 
             			+ m.getName().toString() + " " 
             			+ (m.getNumberOfParameters()-1) + " ";
             for (int i = 1; i < m.getNumberOfParameters(); i++) {
@@ -262,12 +261,11 @@ public class MRrpc {
         }
     }//outer-for
 
-    String filepath = packageDir + rpcv1filepath;
+    String filepath = packageDir + rpcfilepath;
     try {
-      PrintWriter outFile = new PrintWriter(filepath, "UTF-8");
-      outFile.println("//format: class iface method #parameters ..");
+      FileWriter outFile = new FileWriter(filepath, true);  //PrintWrite(filepath, "UTF-8");
       for (String str : mrv1Out) {
-        outFile.println(str);
+        outFile.write(str + "\n");
       }
       outFile.close();
     } catch (Exception e) {

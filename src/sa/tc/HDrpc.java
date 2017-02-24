@@ -55,8 +55,8 @@ public class HDrpc {
     	// only find out RPC interfaces   #one RPC class <- many (RPC or non-RPC) interfaces
         if ( mrv1Iface.contains(iface) ) {
           for (IMethod m : iface.getDeclaredMethods()) {
-            String str = MRrpc.format(clazz.getName().toString()) + " " 
-            			+ MRrpc.format(iface.getName().toString()) + " " 
+            String str = clazz.getName().toString() + " " 
+            			+ iface.getName().toString() + " " 
             			+ m.getName().toString() + " " 
             			+ (m.getNumberOfParameters()-1) + " ";
             for (int i = 1; i < m.getNumberOfParameters(); i++) {
