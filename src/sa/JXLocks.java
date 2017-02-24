@@ -1631,12 +1631,15 @@ public class JXLocks {
       // Go into calls
       if (ssa instanceof SSAInvokeInstruction) {  //SSAAbstractInvokeInstruction
     	  SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;
-    	  
-    	  if ( invokessa.isDispatch() ) {
-    		  System.err.println( invokessa.getDeclaredTarget().getDeclaringClass().getName().toString() 
-    				  + " : " + invokessa.getDeclaredTarget().getDeclaringClass().getName() );
-    		  
-    	  }
+
+    	  //if ( invokessa.isDispatch() ) {
+    		  String classname = invokessa.getDeclaredTarget().getDeclaringClass().getName().toString();
+    		  if ( classname.startsWith("Ljava/io/") ||
+    			   classname.startsWith("Ljava/nio/") ||
+    			   classname.startsWith("Ljava/net/") ||
+    			   classname.startsWith("Ljava/rmi/") )
+    			  System.err.println( invokessa.getDeclaredTarget().toString() );
+    	  //}
     	  
     	  
     	  
