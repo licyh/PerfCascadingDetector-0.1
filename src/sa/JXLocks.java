@@ -256,13 +256,13 @@ public class JXLocks {
       findRPCs();
       readTimeConsumingOperations();
       
-      // Phase 1 -
+      // Phase 1 - find out loops
       findLockingFunctions();      //JX - can be commented
       findLoopingFunctions();
       printLoopingFunctions();     //JX - write to local files. NO necessary, can be commented
       
+      // Phase 2 - deal with loops
       findNestedLoopsInLoops();
-      
       
       findTimeConsumingOperationsInLoops();
       
@@ -845,6 +845,7 @@ public class JXLocks {
 				  rpcClasses.add( strs[0] );
 				  rpcIfaces.add( strs[1] );
 				  rpcMethods.add( strs[2] );
+				  System.err.println(strs[0]+":"+strs[2]);
 			  }
 		  }
 		  bufreader.close();
@@ -1636,130 +1637,120 @@ public class JXLocks {
   
   
   
-  /*
+  /**************************************************************************
    * New added - JX - just find time-consuming operations    
-   */
+   **************************************************************************/
   public static void findTimeConsumingOperationsInLoops() {
-	  
+	  System.out.println("\nJX-findTimeConsumingOperationsInLoops");
+	  // Initialize Time-consuming operation information by DFS for all looping functions
 	  for (Integer id: functions_with_loops.keySet() ) {
-		  dfsToTimeConsumingOperations(cg.getNode(id), 0);
+		  dfsToGetTimeConsumingOperations(cg.getNode(id), 0);
+	  }
+	  // Deal with the outermost loops
+	  for (Integer id: functions_with_loops.keySet() ) {
+		  findTimeConsumingOperations( cg.getNode(id) );
 	  }
 	  
+	  // Print the Results
+	  for (Integer id: functions_with_loops.keySet() ) {
+		  
+	  }
+	  
+	  // for test
+	  /*
+	  for (Iterator<? extends CGNode> it = cg.iterator(); it.hasNext(); ) {
+	      CGNode f = it.next();
+	      String tmpsig = f.getMethod().getSignature();
+	      if (tmpsig.contains("org.apache.hadoop.mapreduce.Cluster.getAllJobs")) {
+	    	  System.out.println( tmpsig );
+	          dfsToTimeConsumingOperations(f, 0);
+	      }
+	  }
+	  */
   }
   
-  public static void dfsToTimeConsumingOperations(CGNode f, int depth) {
+  
+  public static int dfsToGetTimeConsumingOperations(CGNode f, int depth) {
 	
     int id = f.getGraphNodeId();
-    String short_funcname = f.getMethod().getName().toString();
-    /*
-    if (depth > MAXN_DEPTH) {
-      function.max_depthOfLoops = 0;
-      functions.put(id, function);
-      return ;
+    if ( !functions.containsKey(id) ) {
+    	FunctionInfo function = new FunctionInfo();
+        functions.put(id, function);
     }
     
-    if (!f.getMethod().getDeclaringClass().getClassLoader().getReference().equals(ClassLoaderReference.Application) || f.getMethod().isNative()) { // IMPO - native - must be
-      function.max_depthOfLoops = 0;
-      functions.put(id, function);
-      return ;
+    FunctionInfo function = functions.get(id);
+    if (function.numOfTcOperations >= 0) { // if has already been traversed, then return
+    	return function.numOfTcOperations_recusively;
+    }   
+    else if (function.numOfTcOperations == -1) { // if hasn't been traversed
+        function.numOfTcOperations = 0;            // change "-1" to "0" RIGHT NOW to prevent this scenario: func1 -call-> func2 -> func1(NOW func1 should be forbidden)
+        function.numOfTcOperations_recusively = 0; // this value should keep 0 until go through the function, because it may be return in the process 
     }
     
-    if (locktypes.contains(short_funcname) || unlocktypes.contains(short_funcname)) {  //TODO - others
-      function.max_depthOfLoops = 0;
-      functions.put(id, function);
-      return ;
+    if ( !f.getMethod().getDeclaringClass().getClassLoader().getReference().equals(ClassLoaderReference.Application) 
+    	|| f.getMethod().isNative()) { // IMPO - native - must be
+      return 0;
     }
-    */
-    IR ir = f.getIR();
+
+    IR ir = f.getIR();  //if (ir == null) return;
     SSACFG cfg = ir.getControlFlowGraph();
     SSAInstruction[] instructions = ir.getInstructions();
     
-    
+    int numOfTcOperations = 0;             
+    int numOfTcOperations_recusively = 0;  
+ 
     for (int i = 0; i < instructions.length; i++) {
       SSAInstruction ssa = instructions[i];
       if (ssa == null)
     	  continue;
-      int bb = cfg.getBlockForInstruction(i).getNumber();
-      InstructionInfo instruction = new InstructionInfo();
+
+      if ( !function.instructions.containsKey(i) ) {
+    	  InstructionInfo instruction = new InstructionInfo();
+    	  function.instructions.put(i, instruction);
+      }
+      InstructionInfo instruction = function.instructions.get(i);
     
-      checkTimeConsumingSSA( ssa );
-      // Go into calls
+      boolean isTcOp = checkTimeConsumingSSA(ssa);
+      if ( isTcOp ) {
+    	  instruction.isTcOperation = true;
+    	  instruction.numOfTcOperations_recusively = 1;
+    	  instruction.tcOperations_recusively.add( ssa );
+    	  function.tcOperations.add( ssa );
+    	  numOfTcOperations ++;
+    	  numOfTcOperations_recusively ++;
+    	  continue;
+      }
+      
+      // if meeting a normal call(NOT RPC and I/O), Go into the call targets
       if (ssa instanceof SSAInvokeInstruction) {  //SSAAbstractInvokeInstruction
     	  SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;
-      
-    	  
-    	  /*
-          java.util.Set<CGNode> set = cg.getPossibleTargets(f, ((SSAInvokeInstruction) ssa).getCallSite());
-          //if (set.size() > 1) System.err.println("CallGraph#getPossibleTargets's size > 1"); // for Test, how to solve the problem??
-          if (set.size() > 0) {         //JX: because I haven't yet added "hadoop-common"
-            CGNode n = set.iterator().next(); 
-            if (!functions.containsKey(n.getGraphNodeId())) {
-              //function.max_depthOfLoops = 1;  //how many???????
-              //functions.put(n.getGraphNodeId(), function);
-              dfsToGetFunctionInfos(n, depth+1); //layer+1?
-            } else {  //especial case: recursive function.    //TODO - maybe something wrong
-
-            }
-            instruction.maxdepthOfLoops_in_call = functions.get(n.getGraphNodeId()).max_depthOfLoops;
-            instruction.call = n.getGraphNodeId();
-          } else {                     //if we can't find the called CGNode.
-            //TODO
-            instruction.maxdepthOfLoops_in_call = 0;
-          }  
-      } else {
-          //TODO
-          //instruction.maxdepthOfLoops_in_call = 0;
-    	  */
+    	  // get all possible targets
+          java.util.Set<CGNode> set = cg.getPossibleTargets(f, invokessa.getCallSite());
+          // traverse all possible targets
+          int tmpNumTcOps = 0;
+          List<SSAInstruction> tmpTcOps = new ArrayList<SSAInstruction>();          
+          for (CGNode cgnode: set) {
+        	  tmpNumTcOps += dfsToGetTimeConsumingOperations(cgnode, depth+1);
+        	  tmpTcOps.addAll( functions.get( cgnode.getGraphNodeId() ).tcOperations_recusively );
+          }
+          // accumulation to this instruction and this function
+          instruction.tcOperations_recusively.addAll( tmpTcOps );
+    	  function.tcOperations_recusively.addAll( tmpTcOps );
+          instruction.numOfTcOperations_recusively = tmpNumTcOps;
+          numOfTcOperations_recusively += tmpNumTcOps;
       }
-      // Put into FunctionInfo.Map<Integer, InstructionInfo>
-      
-      
-    }//for
-    /*
-    // find the instruction with maximal loops && save the function path
-    InstructionInfo max_instruction = null;
-    for (Iterator<Integer> it = function.instructions.keySet().iterator(); it.hasNext(); ) {
-      int index = it.next();
-      InstructionInfo instruction = function.instructions.get(index);
-      if (instruction.numOfSurroundingLoops_in_current_function + instruction.maxdepthOfLoops_in_call > function.max_depthOfLoops) {
-        max_instruction = instruction;
-        function.max_depthOfLoops = instruction.numOfSurroundingLoops_in_current_function + instruction.maxdepthOfLoops_in_call;
+      else {
+    	// TODO - if need be
       }
-    }
-    if (max_instruction != null && max_instruction.call >= 0) {
-      function.function_chain_for_max_depthOfLoops.addAll(functions.get(max_instruction.call).function_chain_for_max_depthOfLoops);
-      function.hasLoops_in_current_function_for_max_depthOfLoops.addAll(functions.get(max_instruction.call).hasLoops_in_current_function_for_max_depthOfLoops);
-    }
-    function.function_chain_for_max_depthOfLoops.add(id);
-    if (max_instruction != null && max_instruction.numOfSurroundingLoops_in_current_function > 0)
-      function.hasLoops_in_current_function_for_max_depthOfLoops.add(max_instruction.numOfSurroundingLoops_in_current_function);
-    else
-      function.hasLoops_in_current_function_for_max_depthOfLoops.add(0);
+      
+    }//for	 
     
-    //test - specified function's loop status
-    if (f.getMethod().getSignature().indexOf(functionname_for_test) >= 0) {
-      System.err.println("aa " + f.getMethod().getSignature());
-      System.err.println("bb " + function.max_depthOfLoops);
-      System.err.println(function.function_chain_for_max_depthOfLoops);
-      System.err.println("cc " + cg.getNode(549).getMethod().getSignature());
-      System.err.println("cc " + cg.getNode(280).getMethod().getSignature());
-      // print the function chain
-      for (int k = function.function_chain_for_max_depthOfLoops.size()-1; k >= 0; k--)
-        System.out.print(cg.getNode( function.function_chain_for_max_depthOfLoops.get(k) ).getMethod().getName() + "#" + function.hasLoops_in_current_function_for_max_depthOfLoops.get(k) + "#" + "->");
-      System.out.println("End");
-    }
-    
-    
-    //if (!functions.containsKey(id))
-    //  functions.put(id, function);
-    //else if (function.max_depthOfLoops > functions.get(id).max_depthOfLoops)
-    functions.put(id, function);
-    */
-    
-    
-    
-	  
+    function.tcOperations_recusively.addAll( function.tcOperations );
+    function.numOfTcOperations = numOfTcOperations;
+    function.numOfTcOperations_recusively = numOfTcOperations_recusively;
+    return function.numOfTcOperations_recusively;
   }
+  
   
   public static boolean checkTimeConsumingSSA(SSAInstruction ssa) {
 	  // if a invoke instruction
@@ -1775,18 +1766,20 @@ public class JXLocks {
 	    	   || invokessa.isStatic() 
 				  ) {
 			  //  !!!!tmp, have a problem
-			  if (rpcClasses.contains(classname) && rpcMethods.contains(methodname)) {
+			  if (rpcIfaces.contains(classname) && rpcMethods.contains(methodname)
+				  || rpcClasses.contains(classname) && rpcMethods.contains(methodname)
+					  ) {
+		      if ( rpcIfaces.contains(classname) )
 				  System.err.println("RPC Call: " + signature);
 				  return true;
 			  }
+			  
 		  }
-		  
     	  // identify I/O
     	  if ( invokessa.isDispatch() 
     		   || invokessa.isSpecial() 
     		   || invokessa.isStatic() 
     			  ) {
-    		  
     		  if ( !methodname.equals("<init>") )
     		  if ( classname.startsWith("Ljava/io/")  ||
     			   classname.startsWith("Ljava/nio/") ||
@@ -1796,8 +1789,7 @@ public class JXLocks {
     				  ) {     		  
     			  //System.err.println("INVOKE: " + invokessa.getDeclaredTarget().toString() );
     			  //return true;
-    		  }
-    			 
+    		  }	 
     	  }
       }
       else {
@@ -1806,19 +1798,51 @@ public class JXLocks {
       return false;
   }
   
-  /*
+  
+  public static void findTimeConsumingOperations(CGNode f) {
+	  
+	  int id = f.getGraphNodeId();
+	  IR ir = f.getIR();
+	  SSACFG cfg = ir.getControlFlowGraph();
+	  SSAInstruction[] instructions = ir.getInstructions();
+	  List<LoopInfo> loops = functions_with_loops.get(id);
+    
+	  FunctionInfo function = functions.get(id); 
+      
+	  for (LoopInfo loop: loops) {
+		  loop.numOfTcOperations_recusively = 0;
+		  for (int bbnum: loop.bbs) {
+	        int first_index = cfg.getBasicBlock(bbnum).getFirstInstructionIndex();
+	        int last_index = cfg.getBasicBlock(bbnum).getLastInstructionIndex();
+	        for (int i = first_index; i <= last_index; i++) {
+	        	SSAInstruction ssa = instructions[i];
+	        	if (ssa == null)
+	        		continue;
+	        	InstructionInfo instruction = function.instructions.get(i);
+	        	loop.numOfTcOperations_recusively += instruction.numOfTcOperations_recusively;
+	        	loop.tcOperations_recusively.addAll( instruction.tcOperations_recusively );
+	        }
+	      } //for-bbnum
+		  System.out.println( loop );
+	  }//for-loop
+	  
+  }
+  
+  
+  /*********************************************************
    * New added - JX - just find nested loops                 
-   */
+   ********************************************************/
   public static void findNestedLoopsInLoops() {
 	  System.out.println("\nJX-findNestedLoops");
 	  
-	  // Initialization by DFS for all looping functions
+	  // Initialize nested loop information by DFS for all looping functions
 	  for (Integer id: functions_with_loops.keySet() ) {
 		  dfsToGetFunctionInfos(cg.getNode(id), 0);
 	  }
 	  
+	  // deal with outermost loops 
 	  for (Integer id: functions_with_loops.keySet() ) {
-		  findNestedForEachLoopingFunction(cg.getNode(id));
+		  findNested(cg.getNode(id));
 	  }
 	  	  
 	  // Print the status
@@ -1842,8 +1866,7 @@ public class JXLocks {
   }
   
   
-  
-  public static void findNestedForEachLoopingFunction(CGNode f) {
+  public static void findNested(CGNode f) {
 	  
     int id = f.getGraphNodeId();
     IR ir = f.getIR();

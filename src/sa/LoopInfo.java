@@ -138,14 +138,18 @@ public class LoopInfo {
   CGNode function;
   int line_number;
   
-  // its info
+  // its Basic Block info
   Set<Integer> bbs;
   int begin_bb;         // bb - basic block in WALA
   int end_bb;
-  
   Set<Integer> succbbs; //used as a temporary variable
   Set<Integer> predbbs; //used as a temporary variable
   
+  // included time-consuming operation info
+  int numOfTcOperations_recusively;
+  List<SSAInstruction> tcOperations_recusively;
+  
+  // nested loop info
   int max_depthOfLoops;  //ie, nested loops inside the loop
   List<Integer> function_chain_for_max_depthOfLoops;
   List<Integer> hasLoops_in_current_function_for_max_depthOfLoops;
@@ -159,6 +163,9 @@ public class LoopInfo {
     this.bbs = new TreeSet<Integer>();
     this.succbbs = new HashSet<Integer>();
     this.predbbs = new HashSet<Integer>();
+    
+    this.numOfTcOperations_recusively = 0;    //jx: yes
+    this.tcOperations_recusively = new ArrayList<SSAInstruction>();
     
     this.max_depthOfLoops = 0;
     this.function_chain_for_max_depthOfLoops = new ArrayList<Integer>();
@@ -196,7 +203,9 @@ public class LoopInfo {
   
   @Override
   public String toString() {
-    return "{begin:" + begin_bb + " end:" + end_bb + " var_name:" + var_name + " bbs:" + bbs + "}";
+    return "LOOP - " + function.getMethod().getSignature() + ":" + line_number + ","
+    		+ "Time-consumingOps(" + numOfTcOperations_recusively + "):" + tcOperations_recusively + "," 
+    		+ "{begin:" + begin_bb + " end:" + end_bb + " var_name:" + var_name + " bbs:" + bbs + "}";
   }
 }
 
@@ -204,14 +213,17 @@ public class LoopInfo {
 
 class FunctionInfo {
   // newly added
-  List<SSAInstruction> tcOperations;
+  int numOfTcOperations;
+  int numOfTcOperations_recusively;
+  List<SSAInstruction> tcOperations;            // time-consuming operation locations
+  List<SSAInstruction> tcOperations_recusively; // won't be used&inited. if want to
 	
-  boolean hasLoopingLocks;                     //only for first-level functions that have locks
+  boolean hasLoopingLocks;                      //only for first-level functions that have locks
   Map<Integer, LoopingLockInfo> looping_locks;  //only for first-level functions that have locks, map: lock-id -> max_depthOfLoops
   
   //Newest! just added
-  List<LockInfo> locks = null;                //Type - ArrayList<LoopInfo>
-  List<LoopInfo> loops = null;                //Type - ArrayList<LoopInfo>
+  List<LockInfo> locks = null;                 //Type - ArrayList<LoopInfo>
+  List<LoopInfo> loops = null;                 //Type - ArrayList<LoopInfo>
   
   int max_depthOfLoops;
   List<Integer> function_chain_for_max_depthOfLoops;
@@ -221,7 +233,10 @@ class FunctionInfo {
   
   
   FunctionInfo() {
-	this.tcOperations = new ArrayList<SSAInstruction>();  
+	this.numOfTcOperations = -1;               //also a flag indicating if the function is traversed or not
+	this.numOfTcOperations_recusively = -1;
+	this.tcOperations = new ArrayList<SSAInstruction>();
+	this.tcOperations_recusively = new ArrayList<SSAInstruction>();       //just put here, won't be used
 	  
     this.hasLoopingLocks = false;                           //only for first-level functions that have locks
     this.looping_locks = new TreeMap<Integer, LoopingLockInfo>(); //only for first-level functions that have locks
@@ -264,6 +279,10 @@ class LoopingLockInfo {
 
 
 class InstructionInfo {
+  boolean isTcOperation;
+  int numOfTcOperations_recusively;
+  List<SSAInstruction> tcOperations_recusively; // won't be used&inited. if want to
+	
   int numOfSurroundingLoops_in_current_function;         //only for current-level function
   List<Integer> surroundingLoops_in_current_function;    //only for current-level function
   //List<String> variables;
@@ -274,6 +293,10 @@ class InstructionInfo {
   List<Integer> instruction_chain; //instruction index
   
   InstructionInfo() {
+	this.isTcOperation = false;  
+	this.numOfTcOperations_recusively = 0;
+	this.tcOperations_recusively = new ArrayList<SSAInstruction>();
+	  
     this.numOfSurroundingLoops_in_current_function = 0;                    //only for current-level function
     this.surroundingLoops_in_current_function = new ArrayList<Integer>();  //only for current-level function
     
