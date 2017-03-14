@@ -1,0 +1,122 @@
+//format: class iface method #parameters ..
+Lorg/apache/hadoop/yarn/server/nodemanager/containermanager/ContainerManagerImpl Lorg/apache/hadoop/yarn/api/ContainerManager startContainer 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/nodemanager/containermanager/ContainerManagerImpl Lorg/apache/hadoop/yarn/api/ContainerManager stopContainer 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/nodemanager/containermanager/ContainerManagerImpl Lorg/apache/hadoop/yarn/api/ContainerManager getContainerStatus 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/AdminService Lorg/apache/hadoop/yarn/server/resourcemanager/api/RMAdminProtocol refreshQueues 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/AdminService Lorg/apache/hadoop/yarn/server/resourcemanager/api/RMAdminProtocol refreshNodes 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/AdminService Lorg/apache/hadoop/yarn/server/resourcemanager/api/RMAdminProtocol refreshSuperUserGroupsConfiguration 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/AdminService Lorg/apache/hadoop/yarn/server/resourcemanager/api/RMAdminProtocol refreshUserToGroupsMappings 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/AdminService Lorg/apache/hadoop/yarn/server/resourcemanager/api/RMAdminProtocol refreshAdminAcls 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/AdminService Lorg/apache/hadoop/yarn/server/resourcemanager/api/RMAdminProtocol refreshServiceAcls 1 Ljava/lang/Object
+Lorg/apache/hadoop/mapred/NotRunningJob Lorg/apache/hadoop/mapreduce/v2/api/MRClientProtocol failTaskAttempt 1 Ljava/lang/Object
+Lorg/apache/hadoop/mapred/NotRunningJob Lorg/apache/hadoop/mapreduce/v2/api/MRClientProtocol getCounters 1 Ljava/lang/Object
+Lorg/apache/hadoop/mapred/NotRunningJob Lorg/apache/hadoop/mapreduce/v2/api/MRClientProtocol getDiagnostics 1 Ljava/lang/Object
+Lorg/apache/hadoop/mapred/NotRunningJob Lorg/apache/hadoop/mapreduce/v2/api/MRClientProtocol getJobReport 1 Ljava/lang/Object
+Lorg/apache/hadoop/mapred/NotRunningJob Lorg/apache/hadoop/mapreduce/v2/api/MRClientProtocol getTaskAttemptCompletionEvents 1 Ljava/lang/Object
+Lorg/apache/hadoop/mapred/NotRunningJob Lorg/apache/hadoop/mapreduce/v2/api/MRClientProtocol getTaskAttemptReport 1 Ljava/lang/Object
+Lorg/apache/hadoop/mapred/NotRunningJob Lorg/apache/hadoop/mapreduce/v2/api/MRClientProtocol getTaskReport 1 Ljava/lang/Object
+Lorg/apache/hadoop/mapred/NotRunningJob Lorg/apache/hadoop/mapreduce/v2/api/MRClientProtocol getTaskReports 1 Ljava/lang/Object
+Lorg/apache/hadoop/mapred/NotRunningJob Lorg/apache/hadoop/mapreduce/v2/api/MRClientProtocol killJob 1 Ljava/lang/Object
+Lorg/apache/hadoop/mapred/NotRunningJob Lorg/apache/hadoop/mapreduce/v2/api/MRClientProtocol killTask 1 Ljava/lang/Object
+Lorg/apache/hadoop/mapred/NotRunningJob Lorg/apache/hadoop/mapreduce/v2/api/MRClientProtocol killTaskAttempt 1 Ljava/lang/Object
+Lorg/apache/hadoop/mapred/NotRunningJob Lorg/apache/hadoop/mapreduce/v2/api/MRClientProtocol getDelegationToken 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/ApplicationMasterService Lorg/apache/hadoop/yarn/api/AMRMProtocol registerApplicationMaster 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/ApplicationMasterService Lorg/apache/hadoop/yarn/api/AMRMProtocol finishApplicationMaster 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/ApplicationMasterService Lorg/apache/hadoop/yarn/api/AMRMProtocol allocate 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/ClientRMService Lorg/apache/hadoop/yarn/api/ClientRMProtocol getNewApplication 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/ClientRMService Lorg/apache/hadoop/yarn/api/ClientRMProtocol getApplicationReport 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/ClientRMService Lorg/apache/hadoop/yarn/api/ClientRMProtocol submitApplication 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/ClientRMService Lorg/apache/hadoop/yarn/api/ClientRMProtocol forceKillApplication 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/ClientRMService Lorg/apache/hadoop/yarn/api/ClientRMProtocol getClusterMetrics 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/ClientRMService Lorg/apache/hadoop/yarn/api/ClientRMProtocol getAllApplications 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/ClientRMService Lorg/apache/hadoop/yarn/api/ClientRMProtocol getClusterNodes 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/ClientRMService Lorg/apache/hadoop/yarn/api/ClientRMProtocol getQueueInfo 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/ClientRMService Lorg/apache/hadoop/yarn/api/ClientRMProtocol getQueueUserAcls 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/ClientRMService Lorg/apache/hadoop/yarn/api/ClientRMProtocol getDelegationToken 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/ResourceTrackerService Lorg/apache/hadoop/yarn/server/api/ResourceTracker registerNodeManager 1 Ljava/lang/Object
+Lorg/apache/hadoop/yarn/server/resourcemanager/ResourceTrackerService Lorg/apache/hadoop/yarn/server/api/ResourceTracker nodeHeartbeat 1 Ljava/lang/Object
+
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getNewJobID 0 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol submitJob 3 Lorg/apache/hadoop/mapreduce/JobID Ljava/lang/String Lorg/apache/hadoop/security/Credentials 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getClusterMetrics 0 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getJobTrackerStatus 0 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getTaskTrackerExpiryInterval 0 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getQueueAdmins 1 Ljava/lang/String 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol killJob 1 Lorg/apache/hadoop/mapreduce/JobID 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol setJobPriority 2 Lorg/apache/hadoop/mapreduce/JobID Ljava/lang/String 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol killTask 2 Lorg/apache/hadoop/mapreduce/TaskAttemptID Z 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getJobStatus 1 Lorg/apache/hadoop/mapreduce/JobID 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getJobCounters 1 Lorg/apache/hadoop/mapreduce/JobID 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getTaskReports 2 Lorg/apache/hadoop/mapreduce/JobID Lorg/apache/hadoop/mapreduce/TaskType 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getFilesystemName 0 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getAllJobs 0 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getTaskCompletionEvents 3 Lorg/apache/hadoop/mapreduce/JobID I I 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getTaskDiagnostics 1 Lorg/apache/hadoop/mapreduce/TaskAttemptID 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getActiveTrackers 0 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getBlacklistedTrackers 0 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getSystemDir 0 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getStagingAreaDir 0 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getJobHistoryDir 0 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getQueues 0 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getQueue 1 Ljava/lang/String 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getQueueAclsForCurrentUser 0 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getRootQueues 0 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getChildQueues 1 Ljava/lang/String 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getDelegationToken 1 Lorg/apache/hadoop/io/Text 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol renewDelegationToken 1 Lorg/apache/hadoop/security/token/Token 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol cancelDelegationToken 1 Lorg/apache/hadoop/security/token/Token 
+Lorg/apache/hadoop/mapred/LocalJobRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getLogFileParams 2 Lorg/apache/hadoop/mapreduce/JobID Lorg/apache/hadoop/mapreduce/TaskAttemptID 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getNewJobID 0 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol submitJob 3 Lorg/apache/hadoop/mapreduce/JobID Ljava/lang/String Lorg/apache/hadoop/security/Credentials 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getClusterMetrics 0 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getJobTrackerStatus 0 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getTaskTrackerExpiryInterval 0 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getQueueAdmins 1 Ljava/lang/String 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol killJob 1 Lorg/apache/hadoop/mapreduce/JobID 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol setJobPriority 2 Lorg/apache/hadoop/mapreduce/JobID Ljava/lang/String 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol killTask 2 Lorg/apache/hadoop/mapreduce/TaskAttemptID Z 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getJobStatus 1 Lorg/apache/hadoop/mapreduce/JobID 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getJobCounters 1 Lorg/apache/hadoop/mapreduce/JobID 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getTaskReports 2 Lorg/apache/hadoop/mapreduce/JobID Lorg/apache/hadoop/mapreduce/TaskType 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getFilesystemName 0 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getAllJobs 0 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getTaskCompletionEvents 3 Lorg/apache/hadoop/mapreduce/JobID I I 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getTaskDiagnostics 1 Lorg/apache/hadoop/mapreduce/TaskAttemptID 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getActiveTrackers 0 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getBlacklistedTrackers 0 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getSystemDir 0 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getStagingAreaDir 0 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getJobHistoryDir 0 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getQueues 0 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getQueue 1 Ljava/lang/String 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getQueueAclsForCurrentUser 0 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getRootQueues 0 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getChildQueues 1 Ljava/lang/String 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getDelegationToken 1 Lorg/apache/hadoop/io/Text 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol renewDelegationToken 1 Lorg/apache/hadoop/security/token/Token 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol cancelDelegationToken 1 Lorg/apache/hadoop/security/token/Token 
+Lorg/apache/hadoop/mapred/YARNRunner Lorg/apache/hadoop/mapreduce/protocol/ClientProtocol getLogFileParams 2 Lorg/apache/hadoop/mapreduce/JobID Lorg/apache/hadoop/mapreduce/TaskAttemptID 
+Lorg/apache/hadoop/mapred/LocalJobRunner$Job Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol getTask 2 Lorg/apache/hadoop/mapred/JvmContext Ljava/lang/String 
+Lorg/apache/hadoop/mapred/LocalJobRunner$Job Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol statusUpdate 3 Lorg/apache/hadoop/mapred/TaskAttemptID Lorg/apache/hadoop/mapred/TaskStatus Ljava/lang/String 
+Lorg/apache/hadoop/mapred/LocalJobRunner$Job Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol reportDiagnosticInfo 3 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/mapred/LocalJobRunner$Job Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol reportNextRecordRange 3 Lorg/apache/hadoop/mapred/TaskAttemptID Lorg/apache/hadoop/mapred/SortedRanges$Range Ljava/lang/String 
+Lorg/apache/hadoop/mapred/LocalJobRunner$Job Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol ping 2 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 
+Lorg/apache/hadoop/mapred/LocalJobRunner$Job Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol done 2 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 
+Lorg/apache/hadoop/mapred/LocalJobRunner$Job Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol commitPending 3 Lorg/apache/hadoop/mapred/TaskAttemptID Lorg/apache/hadoop/mapred/TaskStatus Ljava/lang/String 
+Lorg/apache/hadoop/mapred/LocalJobRunner$Job Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol canCommit 2 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 
+Lorg/apache/hadoop/mapred/LocalJobRunner$Job Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol shuffleError 2 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 
+Lorg/apache/hadoop/mapred/LocalJobRunner$Job Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol fsError 3 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/mapred/LocalJobRunner$Job Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol fatalError 3 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/mapred/LocalJobRunner$Job Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol getMapCompletionEvents 5 Lorg/apache/hadoop/mapred/JobID I I Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 
+Lorg/apache/hadoop/mapred/TaskAttemptListenerImpl Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol getTask 2 Lorg/apache/hadoop/mapred/JvmContext Ljava/lang/String 
+Lorg/apache/hadoop/mapred/TaskAttemptListenerImpl Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol statusUpdate 3 Lorg/apache/hadoop/mapred/TaskAttemptID Lorg/apache/hadoop/mapred/TaskStatus Ljava/lang/String 
+Lorg/apache/hadoop/mapred/TaskAttemptListenerImpl Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol reportDiagnosticInfo 3 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/mapred/TaskAttemptListenerImpl Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol reportNextRecordRange 3 Lorg/apache/hadoop/mapred/TaskAttemptID Lorg/apache/hadoop/mapred/SortedRanges$Range Ljava/lang/String 
+Lorg/apache/hadoop/mapred/TaskAttemptListenerImpl Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol ping 2 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 
+Lorg/apache/hadoop/mapred/TaskAttemptListenerImpl Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol done 2 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 
+Lorg/apache/hadoop/mapred/TaskAttemptListenerImpl Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol commitPending 3 Lorg/apache/hadoop/mapred/TaskAttemptID Lorg/apache/hadoop/mapred/TaskStatus Ljava/lang/String 
+Lorg/apache/hadoop/mapred/TaskAttemptListenerImpl Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol canCommit 2 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 
+Lorg/apache/hadoop/mapred/TaskAttemptListenerImpl Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol shuffleError 2 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 
+Lorg/apache/hadoop/mapred/TaskAttemptListenerImpl Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol fsError 3 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/mapred/TaskAttemptListenerImpl Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol fatalError 3 Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/mapred/TaskAttemptListenerImpl Lorg/apache/hadoop/mapred/TaskUmbilicalProtocol getMapCompletionEvents 5 Lorg/apache/hadoop/mapred/JobID I I Lorg/apache/hadoop/mapred/TaskAttemptID Ljava/lang/String 

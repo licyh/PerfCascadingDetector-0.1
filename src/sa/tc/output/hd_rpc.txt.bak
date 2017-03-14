@@ -1,0 +1,139 @@
+//format: class iface method #parameters ..
+Lorg/apache/hadoop/hdfs/server/datanode/DataNode Lorg/apache/hadoop/hdfs/server/protocol/InterDatanodeProtocol initReplicaRecovery 1 Lorg/apache/hadoop/hdfs/server/protocol/BlockRecoveryCommand$RecoveringBlock 
+Lorg/apache/hadoop/hdfs/server/datanode/DataNode Lorg/apache/hadoop/hdfs/server/protocol/InterDatanodeProtocol updateReplicaUnderRecovery 3 Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock J J 
+Lorg/apache/hadoop/hdfs/server/datanode/DataNode Lorg/apache/hadoop/hdfs/server/protocol/InterDatanodeProtocol <clinit> -1 
+Lorg/apache/hadoop/hdfs/server/datanode/DataNode Lorg/apache/hadoop/hdfs/protocol/ClientDatanodeProtocol getReplicaVisibleLength 1 Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock 
+Lorg/apache/hadoop/hdfs/server/datanode/DataNode Lorg/apache/hadoop/hdfs/protocol/ClientDatanodeProtocol refreshNamenodes 0 
+Lorg/apache/hadoop/hdfs/server/datanode/DataNode Lorg/apache/hadoop/hdfs/protocol/ClientDatanodeProtocol deleteBlockPool 2 Ljava/lang/String Z 
+Lorg/apache/hadoop/hdfs/server/datanode/DataNode Lorg/apache/hadoop/hdfs/protocol/ClientDatanodeProtocol getBlockLocalPathInfo 2 Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock Lorg/apache/hadoop/security/token/Token 
+Lorg/apache/hadoop/hdfs/server/datanode/DataNode Lorg/apache/hadoop/hdfs/protocol/ClientDatanodeProtocol <clinit> -1 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/JournalProtocol journal 4 Lorg/apache/hadoop/hdfs/server/protocol/NamenodeRegistration J I [B 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/JournalProtocol startLogSegment 2 Lorg/apache/hadoop/hdfs/server/protocol/NamenodeRegistration J 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getBlockLocations 3 Ljava/lang/String J J 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getServerDefaults 0 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol create 7 Ljava/lang/String Lorg/apache/hadoop/fs/permission/FsPermission Ljava/lang/String Lorg/apache/hadoop/io/EnumSetWritable Z S J 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol append 2 Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol setReplication 2 Ljava/lang/String S 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol setPermission 2 Ljava/lang/String Lorg/apache/hadoop/fs/permission/FsPermission 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol setOwner 3 Ljava/lang/String Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol abandonBlock 3 Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol addBlock 4 Ljava/lang/String Ljava/lang/String Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock [Lorg/apache/hadoop/hdfs/protocol/DatanodeInfo 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getAdditionalDatanode 6 Ljava/lang/String Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock [Lorg/apache/hadoop/hdfs/protocol/DatanodeInfo [Lorg/apache/hadoop/hdfs/protocol/DatanodeInfo I Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol complete 3 Ljava/lang/String Ljava/lang/String Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol reportBadBlocks 1 [Lorg/apache/hadoop/hdfs/protocol/LocatedBlock 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol rename 2 Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol concat 2 Ljava/lang/String [Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol rename2 3 Ljava/lang/String Ljava/lang/String [Lorg/apache/hadoop/fs/Options$Rename 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol delete 2 Ljava/lang/String Z 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol mkdirs 3 Ljava/lang/String Lorg/apache/hadoop/fs/permission/FsPermission Z 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getListing 3 Ljava/lang/String [B Z 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol renewLease 1 Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol recoverLease 2 Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getStats 0 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getDatanodeReport 1 Lorg/apache/hadoop/hdfs/protocol/HdfsConstants$DatanodeReportType 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getPreferredBlockSize 1 Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol setSafeMode 1 Lorg/apache/hadoop/hdfs/protocol/HdfsConstants$SafeModeAction 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol saveNamespace 0 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol restoreFailedStorage 1 Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol refreshNodes 0 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol finalizeUpgrade 0 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol distributedUpgradeProgress 1 Lorg/apache/hadoop/hdfs/protocol/HdfsConstants$UpgradeAction 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol listCorruptFileBlocks 2 Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol metaSave 1 Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol setBalancerBandwidth 1 J 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getFileInfo 1 Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getFileLinkInfo 1 Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getContentSummary 1 Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol setQuota 3 Ljava/lang/String J J 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol fsync 2 Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol setTimes 3 Ljava/lang/String J J 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol createSymlink 4 Ljava/lang/String Ljava/lang/String Lorg/apache/hadoop/fs/permission/FsPermission Z 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getLinkTarget 1 Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol updateBlockForPipeline 2 Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol updatePipeline 4 Ljava/lang/String Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock [Lorg/apache/hadoop/hdfs/protocol/DatanodeID 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getDelegationToken 1 Lorg/apache/hadoop/io/Text 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol renewDelegationToken 1 Lorg/apache/hadoop/security/token/Token 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol cancelDelegationToken 1 Lorg/apache/hadoop/security/token/Token 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/DatanodeProtocol registerDatanode 1 Lorg/apache/hadoop/hdfs/server/protocol/DatanodeRegistration 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/DatanodeProtocol sendHeartbeat 8 Lorg/apache/hadoop/hdfs/server/protocol/DatanodeRegistration J J J J I I I 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/DatanodeProtocol blockReport 3 Lorg/apache/hadoop/hdfs/server/protocol/DatanodeRegistration Ljava/lang/String [J 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/DatanodeProtocol blockReceived 4 Lorg/apache/hadoop/hdfs/server/protocol/DatanodeRegistration Ljava/lang/String [Lorg/apache/hadoop/hdfs/protocol/Block [Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/DatanodeProtocol errorReport 3 Lorg/apache/hadoop/hdfs/server/protocol/DatanodeRegistration I Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/DatanodeProtocol versionRequest 0 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/DatanodeProtocol processUpgradeCommand 1 Lorg/apache/hadoop/hdfs/server/protocol/UpgradeCommand 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/DatanodeProtocol reportBadBlocks 1 [Lorg/apache/hadoop/hdfs/protocol/LocatedBlock 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/DatanodeProtocol commitBlockSynchronization 6 Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock J J Z Z [Lorg/apache/hadoop/hdfs/protocol/DatanodeID 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol getBlocks 2 Lorg/apache/hadoop/hdfs/protocol/DatanodeInfo J 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol getBlockKeys 0 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol getTransactionID 0 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol rollEditLog 0 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol versionRequest 0 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol errorReport 3 Lorg/apache/hadoop/hdfs/server/protocol/NamenodeRegistration I Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol register 1 Lorg/apache/hadoop/hdfs/server/protocol/NamenodeRegistration 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol startCheckpoint 1 Lorg/apache/hadoop/hdfs/server/protocol/NamenodeRegistration 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol endCheckpoint 2 Lorg/apache/hadoop/hdfs/server/protocol/NamenodeRegistration Lorg/apache/hadoop/hdfs/server/namenode/CheckpointSignature 
+Lorg/apache/hadoop/hdfs/server/namenode/BackupNode$BackupNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol getEditLogManifest 1 J 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getBlockLocations 3 Ljava/lang/String J J 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getServerDefaults 0 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol create 7 Ljava/lang/String Lorg/apache/hadoop/fs/permission/FsPermission Ljava/lang/String Lorg/apache/hadoop/io/EnumSetWritable Z S J 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol append 2 Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol setReplication 2 Ljava/lang/String S 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol setPermission 2 Ljava/lang/String Lorg/apache/hadoop/fs/permission/FsPermission 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol setOwner 3 Ljava/lang/String Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol abandonBlock 3 Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol addBlock 4 Ljava/lang/String Ljava/lang/String Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock [Lorg/apache/hadoop/hdfs/protocol/DatanodeInfo 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getAdditionalDatanode 6 Ljava/lang/String Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock [Lorg/apache/hadoop/hdfs/protocol/DatanodeInfo [Lorg/apache/hadoop/hdfs/protocol/DatanodeInfo I Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol complete 3 Ljava/lang/String Ljava/lang/String Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol reportBadBlocks 1 [Lorg/apache/hadoop/hdfs/protocol/LocatedBlock 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol rename 2 Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol concat 2 Ljava/lang/String [Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol rename2 3 Ljava/lang/String Ljava/lang/String [Lorg/apache/hadoop/fs/Options$Rename 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol delete 2 Ljava/lang/String Z 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol mkdirs 3 Ljava/lang/String Lorg/apache/hadoop/fs/permission/FsPermission Z 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getListing 3 Ljava/lang/String [B Z 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol renewLease 1 Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol recoverLease 2 Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getStats 0 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getDatanodeReport 1 Lorg/apache/hadoop/hdfs/protocol/HdfsConstants$DatanodeReportType 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getPreferredBlockSize 1 Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol setSafeMode 1 Lorg/apache/hadoop/hdfs/protocol/HdfsConstants$SafeModeAction 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol saveNamespace 0 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol restoreFailedStorage 1 Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol refreshNodes 0 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol finalizeUpgrade 0 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol distributedUpgradeProgress 1 Lorg/apache/hadoop/hdfs/protocol/HdfsConstants$UpgradeAction 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol listCorruptFileBlocks 2 Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol metaSave 1 Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol setBalancerBandwidth 1 J 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getFileInfo 1 Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getFileLinkInfo 1 Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getContentSummary 1 Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol setQuota 3 Ljava/lang/String J J 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol fsync 2 Ljava/lang/String Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol setTimes 3 Ljava/lang/String J J 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol createSymlink 4 Ljava/lang/String Ljava/lang/String Lorg/apache/hadoop/fs/permission/FsPermission Z 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getLinkTarget 1 Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol updateBlockForPipeline 2 Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol updatePipeline 4 Ljava/lang/String Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock [Lorg/apache/hadoop/hdfs/protocol/DatanodeID 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol getDelegationToken 1 Lorg/apache/hadoop/io/Text 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol renewDelegationToken 1 Lorg/apache/hadoop/security/token/Token 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/protocol/ClientProtocol cancelDelegationToken 1 Lorg/apache/hadoop/security/token/Token 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/DatanodeProtocol registerDatanode 1 Lorg/apache/hadoop/hdfs/server/protocol/DatanodeRegistration 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/DatanodeProtocol sendHeartbeat 8 Lorg/apache/hadoop/hdfs/server/protocol/DatanodeRegistration J J J J I I I 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/DatanodeProtocol blockReport 3 Lorg/apache/hadoop/hdfs/server/protocol/DatanodeRegistration Ljava/lang/String [J 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/DatanodeProtocol blockReceived 4 Lorg/apache/hadoop/hdfs/server/protocol/DatanodeRegistration Ljava/lang/String [Lorg/apache/hadoop/hdfs/protocol/Block [Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/DatanodeProtocol errorReport 3 Lorg/apache/hadoop/hdfs/server/protocol/DatanodeRegistration I Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/DatanodeProtocol versionRequest 0 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/DatanodeProtocol processUpgradeCommand 1 Lorg/apache/hadoop/hdfs/server/protocol/UpgradeCommand 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/DatanodeProtocol reportBadBlocks 1 [Lorg/apache/hadoop/hdfs/protocol/LocatedBlock 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/DatanodeProtocol commitBlockSynchronization 6 Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock J J Z Z [Lorg/apache/hadoop/hdfs/protocol/DatanodeID 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol getBlocks 2 Lorg/apache/hadoop/hdfs/protocol/DatanodeInfo J 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol getBlockKeys 0 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol getTransactionID 0 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol rollEditLog 0 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol versionRequest 0 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol errorReport 3 Lorg/apache/hadoop/hdfs/server/protocol/NamenodeRegistration I Ljava/lang/String 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol register 1 Lorg/apache/hadoop/hdfs/server/protocol/NamenodeRegistration 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol startCheckpoint 1 Lorg/apache/hadoop/hdfs/server/protocol/NamenodeRegistration 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol endCheckpoint 2 Lorg/apache/hadoop/hdfs/server/protocol/NamenodeRegistration Lorg/apache/hadoop/hdfs/server/namenode/CheckpointSignature 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNodeRpcServer Lorg/apache/hadoop/hdfs/server/protocol/NamenodeProtocol getEditLogManifest 1 J 

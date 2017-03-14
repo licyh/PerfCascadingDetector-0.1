@@ -148,6 +148,7 @@ public class LoopInfo {
   // included time-consuming operation info
   int numOfTcOperations_recusively;
   List<SSAInstruction> tcOperations_recusively;
+  List<TcOperationInfo> tcOperations_recusively_info;
   
   // nested loop info
   int max_depthOfLoops;  //ie, nested loops inside the loop
@@ -166,6 +167,7 @@ public class LoopInfo {
     
     this.numOfTcOperations_recusively = 0;    //jx: yes
     this.tcOperations_recusively = new ArrayList<SSAInstruction>();
+    this.tcOperations_recusively_info = new ArrayList<TcOperationInfo>();
     
     this.max_depthOfLoops = 0;
     this.function_chain_for_max_depthOfLoops = new ArrayList<Integer>();
@@ -203,10 +205,17 @@ public class LoopInfo {
   
   @Override
   public String toString() {
-    return "LOOP - " + function.getMethod().getSignature() + ":" + line_number + ","
-    		+ "Time-consumingOps(" + numOfTcOperations_recusively + "):" + tcOperations_recusively + "," 
+    return "LOOP - " + function.getMethod().getSignature() + ":" + line_number + ", "
+    		+ "Time-consumingOps(" + numOfTcOperations_recusively + "):" + tcOperations_recusively + ", " 
     		+ "{begin:" + begin_bb + " end:" + end_bb + " var_name:" + var_name + " bbs:" + bbs + "}";
   }
+  
+  //tmp for loop's Time-consuming operations
+  public String toString_detail() {
+	    return "LOOP - " + function.getMethod().getSignature() + ":" + line_number + ", "
+	    		+ "Time-consumingOps(" + numOfTcOperations_recusively + "):" + tcOperations_recusively_info;
+	  }
+  
 }
 
 
@@ -233,8 +242,8 @@ class FunctionInfo {
   
   
   FunctionInfo() {
-	this.numOfTcOperations = -1;               //also a flag indicating if the function is traversed or not
-	this.numOfTcOperations_recusively = -1;
+	this.numOfTcOperations = 0;           
+	this.numOfTcOperations_recusively = 0;
 	this.tcOperations = new ArrayList<SSAInstruction>();
 	this.tcOperations_recusively = new ArrayList<SSAInstruction>();       //just put here, won't be used
 	  
@@ -280,8 +289,6 @@ class LoopingLockInfo {
 
 class InstructionInfo {
   boolean isTcOperation;
-  int numOfTcOperations_recusively;
-  List<SSAInstruction> tcOperations_recusively; // won't be used&inited. if want to
 	
   int numOfSurroundingLoops_in_current_function;         //only for current-level function
   List<Integer> surroundingLoops_in_current_function;    //only for current-level function
@@ -294,8 +301,6 @@ class InstructionInfo {
   
   InstructionInfo() {
 	this.isTcOperation = false;  
-	this.numOfTcOperations_recusively = 0;
-	this.tcOperations_recusively = new ArrayList<SSAInstruction>();
 	  
     this.numOfSurroundingLoops_in_current_function = 0;                    //only for current-level function
     this.surroundingLoops_in_current_function = new ArrayList<Integer>();  //only for current-level function
@@ -310,5 +315,28 @@ class InstructionInfo {
   public String toString() {
     return "InstructionInfo{numOfLoops_in_current_function:" + numOfSurroundingLoops_in_current_function + ",numOfLoops_in_call:" + maxdepthOfLoops_in_call + ",function_chain:" + function_chain + "}";
   }
+}
+
+
+class TcOperationInfo {
+	CGNode function;
+		String callpath;
+	int line_number;
+	
+	SSAInstruction ssa;   //this is the core, the tc operation
+	
+	TcOperationInfo() {
+		this.function = null;
+			this.callpath = "";
+		this.line_number = 0;
+		this.ssa = null;
+	}
+	
+    @Override
+    public String toString() { 
+        //return function.getMethod().getSignature().substring(0, function.getMethod().getSignature().indexOf('('))
+        	//	+ ":" + line_number + ":" + ((SSAInvokeInstruction)ssa).getDeclaredTarget(); 
+        return line_number + ":" + callpath + "@" + ((SSAInvokeInstruction)ssa).getDeclaredTarget(); 
+    }
 }
 

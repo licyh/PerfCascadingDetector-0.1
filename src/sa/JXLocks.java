@@ -23,6 +23,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -140,16 +141,17 @@ import com.ibm.wala.util.strings.StringStuff;
 import com.ibm.wala.viz.DotUtil;
 import com.ibm.wala.viz.PDFViewUtil;
 
+import android.graphics.Path;
 import sa.tc.HDrpc;
 import sa.tc.MRrpc;
 
 
 public class JXLocks {
   // dir paths
-  static String projectDir;  // read from arguments, couldn't obtain automatically, because of many scenarios
-  static String appJarDir;   // read from arguments
+  static String projectDir;  // read from arguments, like "/root/JXCascading-detector(/)"   #jx: couldn't obtain automatically, because of many scenarios
+  static String appJarDir;   // read from arguments, like "/root/JXCascading-detector/src/sa/res/MapReduce/hadoop-0.23.3(/)"
   static String dtDir;       //should be "projectDir/src/dt/res/", but couldn't write directly like this
-  
+  static String dmDir;       
   
   // WALA basis
   private final static boolean CHECK_GRAPH = false;
@@ -158,6 +160,7 @@ public class JXLocks {
   static ClassHierarchy cha;
   static HashSet<Entrypoint> entrypoints;
   static CallGraph cg;
+  static List<String> packageScopePrefixes = new ArrayList<String>();  //read from 'package-scope.txt' if exists
   
   // Lock Names
   static List<String> synchronizedtypes = Arrays.asList("synchronized_method", "synchronized_lock");
@@ -209,14 +212,14 @@ public class JXLocks {
   
   // Whether it will use all Entry Points for different distributed systems or not
   static Map<String,String> mapOfWhetherAllEntries = new HashMap<String,String>() {{
-    put("HDFS", "No");
-    put("MapReduce", "Yes");  //should be No I think, now using Yes for testing, that is, 7396 vs 13942 scanned functions.   #??? 3 or more?   
-    put("HBase", "Yes");
+    put("HDFS", "Yes");      //Yes by default
+    put("MapReduce", "Yes"); //Yes by default       //should be No I think, now using Yes for testing, that is, 7396 vs 13942 scanned functions.   #??? 3 or more?   
+    put("HBase", "Yes");     //Yes by default
   }};
   // Entry Points for different distributed systems
   static Map<String,List<String>> mapOfSystemEntries = new HashMap<String,List<String>>() {{
     put("HDFS", Arrays.asList("org.apache.hadoop.hdfs"));
-    put("MapReduce", Arrays.asList("org.apache.hadoop.mapred", "org.apache.hadoop.mapreduce"));  //3 or more?
+    put("MapReduce", Arrays.asList("org.apache.hadoop.mapred", "org.apache.hadoop.mapreduce", "org.apache.hadoop.yarn"));  //3 or more?
     put("HBase", Arrays.asList("org.apache.hadoop.xx"));
   }};
   
@@ -245,6 +248,7 @@ public class JXLocks {
       //testQuickly();
       init(p);
       buildWalaAnalysisEnv();
+      readPackageScope();
       //testIClass();
       //testTypeHierarchy();
       //testCGNode();
@@ -265,7 +269,10 @@ public class JXLocks {
       findNestedLoopsInLoops();
       
       findTimeConsumingOperationsInLoops();
+      //printTcOperationTypes();   //for test
       
+      
+      printBugLoops();
       //findLoopingLockingFunctions();
       
       
@@ -287,11 +294,10 @@ public class JXLocks {
     // Read external arguments
     projectDir = p.getProperty("projectDir");
     appJarDir = p.getProperty("appJarDir");
-    dtDir = Paths.get(projectDir, "src/dt/res/").toString();
-    
-    String satcDir = projectDir + "src/sa/tc/";
-    
-  
+    if (!projectDir.endsWith("/")) projectDir += "/";   //actually if we use File(xx, xx) or Path(xx, xx), we won't need this.
+    if (!appJarDir.endsWith("/") )  appJarDir += "/";
+    dtDir = Paths.get(projectDir, "src/dt/").toString();
+    dmDir = Paths.get(projectDir, "src/dm/").toString();
 	  
 	// Get the Target System Name for testing
 	System.out.println("\nJX - Testing Information");     
@@ -334,7 +340,7 @@ public class JXLocks {
     entrypoints = new HashSet<Entrypoint>();
     Iterable<Entrypoint> allappentrypoints = new AllApplicationEntrypoints(scope, cha);  //Usually: entrypoints = com.ibm.wala.ipa.callgraph.impl.Util.makeMainEntrypoints(scope, cha);  //get main entrypoints
     // Get all entry points
-    if (mapOfWhetherAllEntries.get(systemname).toUpperCase().equals("YES"))
+    if (mapOfWhetherAllEntries.get(systemname).toUpperCase().equals("YES"))  //YES by default
       entrypoints = (HashSet<Entrypoint>) allappentrypoints;
     // Get the specified system's entries, ie, HDFS without hadoop-common
     else {
@@ -396,6 +402,55 @@ public class JXLocks {
   }
   
   
+  // notice: now unused,
+  // except: printLoopingFunctions()
+  public static void readPackageScope() {
+	  System.out.println("\nJX-readPackageScope");
+	  String filepath = Paths.get(appJarDir, "package-scope.txt").toString();
+
+	  BufferedReader bufreader;
+	  String tmpline;
+	  File f = new File( filepath );
+	  
+	  if (f.exists()) {
+		  try {
+			  bufreader = new BufferedReader( new FileReader( f ) );
+			  tmpline = bufreader.readLine();    // the 1st line is useless
+			  while ( (tmpline = bufreader.readLine()) != null ) {
+				  String[] strs = tmpline.trim().split("\\s+");
+				  if ( tmpline.trim().length() > 0 ) {
+					  packageScopePrefixes.add( strs[0] );
+				  }
+			  }
+			  bufreader.close();
+		  } catch (Exception e) {
+			  // TODO Auto-generated catch block
+			  System.out.println("JX - ERROR - when reading package-scpoe.txt files");
+			  e.printStackTrace();
+		  }
+		  System.out.print("NOTICE - successfully read the 'package-scope.txt' file as SCOPE, including:");
+		  for (String str: packageScopePrefixes)
+			  System.out.print( " " + str );
+		  System.out.println();
+	  }
+	  else {
+		  System.out.println("NOTICE - not find the 'package-scope.txt' file, so SCOPE is ALL methods!!");
+	  }
+  }
+  
+  // for where that needed 
+  public static boolean isInPackageScope(CGNode f) {
+	  // if without 'package-scope.txt'
+	  if (packageScopePrefixes.size() == 0)
+		  return true;
+	  String signature = f.getMethod().getSignature();
+	  for (String str: packageScopePrefixes)
+		  if (signature.startsWith(str))
+			  return true;
+	  return false;
+  }
+
+
   public static void testQuickly() {
     System.err.println("JX-breakpoint-testQuickly");
     StackTraceElement[] traces = Thread.currentThread().getStackTrace();
@@ -810,42 +865,47 @@ public class JXLocks {
 	}
   }
   
-  
-  static List<String> rpcClasses = new ArrayList<String>();
-  static List<String> rpcIfaces = new ArrayList<String>();
-  static List<String> rpcMethods = new ArrayList<String>();
+  static List<String> rpcMethodSigs = new ArrayList<String>();
+  static List<String> ioMethodPrefixes = new ArrayList<String>();
   
   static public void readTimeConsumingOperations() {
 	  System.out.println("\nJX-readTimeConsumingOperations");
-	  String filepath = projectDir + "src/sa/tc/";
+	  String dirpath = projectDir + "src/sa/tc/";
+	  String rpcfile = "";
+	  String iofile = "";
+	  String commonIOfile = dirpath + "res/io.txt";   //jx: io_specific.txt or io.txt
 	  
 	  switch (systemname) {
 	  	case "HDFS":
-			filepath += "output/hd_rpc.txt";
+	  		rpcfile = dirpath + "output/hd_rpc.txt";
+	  		iofile =  dirpath + "res/hd_io.txt";
 			break;
 	  	case "MapReduce":
-	  		filepath += "output/mr_rpc.txt";
+	  		rpcfile = dirpath + "output/mr_rpc.txt";
+	  		iofile =  dirpath + "res/mr_io.txt";
 			break;
 	  	case "HBase":
-	  		filepath += "output/hb_rpc.txt";
+	  		rpcfile = dirpath + "output/hb_rpc.txt";
+	  		iofile =  dirpath + "res/hb_io.txt";
 			break;
 	  	default:
 			break;
 	  }  
-	  
+	
 	  BufferedReader bufreader;
 	  String tmpline;
+	  
+	  //1. read RPC file
+      int tmpnn = 0;
 	  try {
-		  bufreader = new BufferedReader( new FileReader( filepath ) );
+		  bufreader = new BufferedReader( new FileReader( rpcfile ) );
 		  tmpline = bufreader.readLine(); // the 1st line is useless
-        	
 		  while ( (tmpline = bufreader.readLine()) != null ) {
 			  String[] strs = tmpline.trim().split("\\s+");
 			  if ( tmpline.trim().length() > 0 ) {
-				  rpcClasses.add( strs[0] );
-				  rpcIfaces.add( strs[1] );
-				  rpcMethods.add( strs[2] );
-				  System.err.println(strs[0]+":"+strs[2]);
+				  tmpnn++;
+				  for (String str: strs)
+					  rpcMethodSigs.add(str);
 			  }
 		  }
 		  bufreader.close();
@@ -855,7 +915,37 @@ public class JXLocks {
 		  System.out.println("JX - ERROR - when reading RPC files");
 		  e.printStackTrace();
 	  }
-	  System.out.println("JX - successfully read " + rpcClasses.size() + " RPCs as time-consuming operations");      
+	  System.out.println("JX - successfully read " + tmpnn + "(total:" + rpcMethodSigs.size() + ") RPCs as time-consuming operations");
+	  
+	  //2. read IO file
+	  try {
+		  bufreader = new BufferedReader( new FileReader( commonIOfile ) );
+		  tmpline = bufreader.readLine(); // the 1st line is useless
+		  while ( (tmpline = bufreader.readLine()) != null ) {
+			  String[] strs = tmpline.trim().split("\\s+");
+			  if ( tmpline.trim().length() > 0 ) {
+				  ioMethodPrefixes.add( strs[0] );
+			  }
+		  }
+		  bufreader.close();
+		  File f = new File( iofile );
+		  if (f.exists()) {
+			  bufreader = new BufferedReader( new FileReader( f ) );
+			  tmpline = bufreader.readLine(); // the 1st line is useless
+			  while ( (tmpline = bufreader.readLine()) != null ) {
+				  String[] strs = tmpline.trim().split("\\s+");
+				  if ( tmpline.trim().length() > 0 ) {
+					  ioMethodPrefixes.add( strs[0] );
+				  }
+			  }
+		  }
+		  bufreader.close();
+	  } catch (Exception e) {
+		  // TODO Auto-generated catch block
+		  System.out.println("JX - ERROR - when reading IO files");
+		  e.printStackTrace();
+	  }
+	  System.out.println("JX - successfully read " + ioMethodPrefixes.size() + " IO Prefixes as time-consuming operations");
   }
   
   
@@ -875,16 +965,26 @@ public class JXLocks {
       CGNode f = it.next();
       IMethod m = f.getMethod();
       int id = f.getGraphNodeId();
+      
+      ClassLoaderReference classloader_ref = m.getDeclaringClass().getClassLoader().getReference(); 
+      
+      //test
       /*
-      // test - print
       String sig = m.getSignature();
       if (sig.indexOf(functionname_for_test) >= 0) {
         System.err.println("* - " + sig + "\n" + m.getDeclaringClass().getClassLoader().getReference() + "\n*\n");
         continue;
       }
       */
-      ClassLoaderReference classloader_ref = m.getDeclaringClass().getClassLoader().getReference();
-      if (classloader_ref.equals(ClassLoaderReference.Application) && !m.isNative()) {     //IMPO:  native method is App class, but can't IR#getControlFlowGraph or viewIR     #must be
+      /*
+      if (classloader_ref.equals(ClassLoaderReference.Primordial) && !m.isNative()) {
+    	  IR ir = f.getIR();
+	      SSAInstruction[] instructions = ir.getInstructions();
+	      System.out.println("jx-prim-# " + instructions.length + "  - " + f.getMethod());
+      }
+      */
+      
+      if (classloader_ref.equals(ClassLoaderReference.Application) && !m.isNative()) {     //IMPO:  some native methods are App class, but can't IR#getControlFlowGraph or viewIR     #must be  
         nApplicationFuncs++;
         String short_funcname = f.getMethod().getName().toString();
         if (locktypes.contains(short_funcname) || unlocktypes.contains(short_funcname)) //filter lock/unlock functions
@@ -1466,7 +1566,7 @@ public class JXLocks {
       IMethod m = function.getMethod();
       //String sig = m.getSignature();
       ClassLoaderReference classloader_ref = m.getDeclaringClass().getClassLoader().getReference();
-      if (classloader_ref.equals(ClassLoaderReference.Application) && !m.isNative()) {   //IMPO:  native method is App class, but can't IR#getControlFlowGraph or viewIR    #must be
+      if (classloader_ref.equals(ClassLoaderReference.Application) && !m.isNative()) {   //IMPO: native method is App class, but can't IR#getControlFlowGraph or viewIR    #must be
         int id = function.getGraphNodeId();
         // Find loops for each function
         List<LoopInfo> loops = findLoops(function);
@@ -1572,34 +1672,49 @@ public class JXLocks {
  
   
   public static void printLoopingFunctions() throws IOException {
-	  
+	System.out.println("\nJX-printLoopingFunctions");
   	File loopfile = new File(appJarDir, "looplocations");
-  	BufferedWriter bufwriter = new BufferedWriter(new FileWriter(loopfile));    
+  	BufferedWriter bufwriter = new BufferedWriter(new FileWriter(loopfile));
+  	
+    // Print all loops - for test
+  	/*
   	bufwriter.write( nLoopingFuncs + " " + nLoops + "\n" );
-  
-    //print all locks for those functions with loops
-    for (Iterator<Integer> it = functions_with_loops.keySet().iterator(); it.hasNext(); ) {
-      int id = it.next();
-      List<LoopInfo> loops = functions_with_loops.get(id);
-      //if (!(cg.getNode(id).getMethod().getSignature().indexOf(functionname_for_test) >= 0)) continue;
-      //System.err.println(cg.getNode(id).getMethod().getSignature());
-      bufwriter.write( cg.getNode(id).getMethod().getSignature() + " " );
+    for (List<LoopInfo> loops: functions_with_loops.values()) {
+      //System.err.println(loops.get(0).function.getMethod().getSignature());
+      bufwriter.write( loops.get(0).function.getMethod().getSignature() + " " );
       printLoops(loops, bufwriter);
     }
+    */
     
+    // Print all the loops that are in the "package-scope.txt"
+    // ps: it will print ALL if without 'package-scope.txt'
+    int nfuncsInScope = 0;
+    int nloopsInScope = 0;
+    for (List<LoopInfo> loops: functions_with_loops.values())
+    	if ( isInPackageScope(loops.get(0).function) ) {
+    		nfuncsInScope ++;
+    		nloopsInScope += loops.size();
+    	}
+    bufwriter.write( nfuncsInScope + " " + nloopsInScope + "\n" );
+    for (List<LoopInfo> loops: functions_with_loops.values())
+    	if ( isInPackageScope(loops.get(0).function) ) {
+    		bufwriter.write( loops.get(0).function.getMethod().getSignature() + " " );
+    		printLoops(loops, bufwriter);
+    	}
+    	
     bufwriter.close();
     
     // copy the result of "looplocations" to the common directory of dt
-    Files.copy(loopfile.toPath(), Paths.get(dtDir, "looplocations"), StandardCopyOption.REPLACE_EXISTING);
+    java.nio.file.Path newpath = Paths.get(dtDir, "res/looplocations");
+    Files.copy(loopfile.toPath(), newpath, StandardCopyOption.REPLACE_EXISTING);
+    System.out.println("Successfully write loops into " + loopfile.toString() + " & " + newpath.toString());
   }
   
   public static void printLoops(List<LoopInfo> loops, BufferedWriter bufwriter) throws IOException {
     // Print the function's loops
-    //System.out.println(function.getMethod().getSignature());
     //System.err.print("#loops=" + loops.size() + " - ");
     bufwriter.write( loops.size() + " " );
-    for (Iterator<LoopInfo> it = loops.iterator(); it.hasNext(); ) {
-      LoopInfo loop = it.next();
+    for (LoopInfo loop: loops) {
       // print normal	
       //System.err.print(loop + ", ");
       // print source line number
@@ -1634,6 +1749,22 @@ public class JXLocks {
 	  return -1;
   }
   
+  public static int getSourceLineNumberFromSSA(SSAInstruction ssa, SSAInstruction[] ssas, IBytecodeMethod bytecodemethod) {
+      int index = getSSAIndexBySSA(ssas, ssa); 
+      if (index != -1) {
+		try {
+			int bytecodeindex = bytecodemethod.getBytecodeIndex( index );
+			int sourcelinenum = bytecodemethod.getLineNumber( bytecodeindex );
+            if (sourcelinenum != -1) 
+            	  return sourcelinenum;
+		} catch (InvalidClassFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      }
+	  return -1;
+  }
+  
   
   
   
@@ -1643,60 +1774,59 @@ public class JXLocks {
   public static void findTimeConsumingOperationsInLoops() {
 	  System.out.println("\nJX-findTimeConsumingOperationsInLoops");
 	  // Initialize Time-consuming operation information by DFS for all looping functions
+	  BitSet traversednodes = new BitSet();
+	  traversednodes.clear();
 	  for (Integer id: functions_with_loops.keySet() ) {
-		  dfsToGetTimeConsumingOperations(cg.getNode(id), 0);
+		  dfsToGetTimeConsumingOperations(cg.getNode(id), 0, traversednodes);
 	  }
 	  // Deal with the outermost loops
 	  for (Integer id: functions_with_loops.keySet() ) {
-		  findTimeConsumingOperations( cg.getNode(id) );
+		  List<LoopInfo> loops = functions_with_loops.get(id);
+		  for (LoopInfo loop: loops)
+			  findTimeConsumingOperationsForALoop( loop );  
 	  }
 	  
-	  // Print the Results
-	  for (Integer id: functions_with_loops.keySet() ) {
-		  
-	  }
-	  
-	  // for test
-	  /*
-	  for (Iterator<? extends CGNode> it = cg.iterator(); it.hasNext(); ) {
-	      CGNode f = it.next();
-	      String tmpsig = f.getMethod().getSignature();
-	      if (tmpsig.contains("org.apache.hadoop.mapreduce.Cluster.getAllJobs")) {
-	    	  System.out.println( tmpsig );
-	          dfsToTimeConsumingOperations(f, 0);
-	      }
-	  }
-	  */
+	  // Print - Test
+	  for (List<LoopInfo> loops: functions_with_loops.values() )
+		  for (LoopInfo loop: loops) {
+			  if (loop.numOfTcOperations_recusively > 0) {
+				  //System.out.println( loop );
+			  }
+		  }
   }
   
   
-  public static int dfsToGetTimeConsumingOperations(CGNode f, int depth) {
-	
-    int id = f.getGraphNodeId();
+  public static int dfsToGetTimeConsumingOperations(CGNode f, int depth, BitSet traversednodes) {
+    
+	// for test - the depth can reach 58
+    /*
+	if (depth > 50) {
+		System.err.println("JX - WARN - depth > " + depth);
+	}
+	*/
+
+	if ( !f.getMethod().getDeclaringClass().getClassLoader().getReference().equals(ClassLoaderReference.Application) 
+	     || f.getMethod().isNative()) { // IMPO - native - must be
+	    return 0;
+	}
+
+	int id = f.getGraphNodeId();
     if ( !functions.containsKey(id) ) {
     	FunctionInfo function = new FunctionInfo();
         functions.put(id, function);
     }
-    
     FunctionInfo function = functions.get(id);
-    if (function.numOfTcOperations >= 0) { // if has already been traversed, then return
-    	return function.numOfTcOperations_recusively;
-    }   
-    else if (function.numOfTcOperations == -1) { // if hasn't been traversed
-        function.numOfTcOperations = 0;            // change "-1" to "0" RIGHT NOW to prevent this scenario: func1 -call-> func2 -> func1(NOW func1 should be forbidden)
-        function.numOfTcOperations_recusively = 0; // this value should keep 0 until go through the function, because it may be return in the process 
-    }
     
-    if ( !f.getMethod().getDeclaringClass().getClassLoader().getReference().equals(ClassLoaderReference.Application) 
-    	|| f.getMethod().isNative()) { // IMPO - native - must be
-      return 0;
-    }
+	if ( traversednodes.get( id ) )            // if has already been traversed, then return
+    	return function.numOfTcOperations_recusively; //maybe 0(unfinished) or realValue(finished)
+       
+    traversednodes.set( id );                  // if hasn't been traversed
+    function.numOfTcOperations = 0;            // "0" RIGHT NOW to prevent this scenario: func1 -call-> func2 -> func1(NOW func1 should be forbidden)
+    function.numOfTcOperations_recusively = 0; // this value should keep 0 until go through the function, because it may be return in the process 
 
     IR ir = f.getIR();  //if (ir == null) return;
-    SSACFG cfg = ir.getControlFlowGraph();
     SSAInstruction[] instructions = ir.getInstructions();
-    
-    int numOfTcOperations = 0;             
+    int numOfTcOperations = 0;              //tmp var
     int numOfTcOperations_recusively = 0;  
  
     for (int i = 0; i < instructions.length; i++) {
@@ -1704,40 +1834,25 @@ public class JXLocks {
       if (ssa == null)
     	  continue;
 
-      if ( !function.instructions.containsKey(i) ) {
-    	  InstructionInfo instruction = new InstructionInfo();
-    	  function.instructions.put(i, instruction);
-      }
-      InstructionInfo instruction = function.instructions.get(i);
-    
-      boolean isTcOp = checkTimeConsumingSSA(ssa);
-      if ( isTcOp ) {
-    	  instruction.isTcOperation = true;
-    	  instruction.numOfTcOperations_recusively = 1;
-    	  instruction.tcOperations_recusively.add( ssa );
+      if ( checkTimeConsumingSSA(ssa) ) {
     	  function.tcOperations.add( ssa );
     	  numOfTcOperations ++;
     	  numOfTcOperations_recusively ++;
     	  continue;
       }
+      // filter the rest I/Os
+      if ( isIO(ssa) )
+    	  continue;
       
       // if meeting a normal call(NOT RPC and I/O), Go into the call targets
       if (ssa instanceof SSAInvokeInstruction) {  //SSAAbstractInvokeInstruction
-    	  SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;
+    	  SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;   
     	  // get all possible targets
           java.util.Set<CGNode> set = cg.getPossibleTargets(f, invokessa.getCallSite());
           // traverse all possible targets
-          int tmpNumTcOps = 0;
-          List<SSAInstruction> tmpTcOps = new ArrayList<SSAInstruction>();          
           for (CGNode cgnode: set) {
-        	  tmpNumTcOps += dfsToGetTimeConsumingOperations(cgnode, depth+1);
-        	  tmpTcOps.addAll( functions.get( cgnode.getGraphNodeId() ).tcOperations_recusively );
+        	  numOfTcOperations_recusively += dfsToGetTimeConsumingOperations(cgnode, depth+1, traversednodes);
           }
-          // accumulation to this instruction and this function
-          instruction.tcOperations_recusively.addAll( tmpTcOps );
-    	  function.tcOperations_recusively.addAll( tmpTcOps );
-          instruction.numOfTcOperations_recusively = tmpNumTcOps;
-          numOfTcOperations_recusively += tmpNumTcOps;
       }
       else {
     	// TODO - if need be
@@ -1745,12 +1860,13 @@ public class JXLocks {
       
     }//for	 
     
-    function.tcOperations_recusively.addAll( function.tcOperations );
     function.numOfTcOperations = numOfTcOperations;
     function.numOfTcOperations_recusively = numOfTcOperations_recusively;
     return function.numOfTcOperations_recusively;
   }
   
+  
+  static Set<String> tmpTcOps = new TreeSet<String>();
   
   public static boolean checkTimeConsumingSSA(SSAInstruction ssa) {
 	  // if a invoke instruction
@@ -1766,11 +1882,8 @@ public class JXLocks {
 	    	   || invokessa.isStatic() 
 				  ) {
 			  //  !!!!tmp, have a problem
-			  if (rpcIfaces.contains(classname) && rpcMethods.contains(methodname)
-				  || rpcClasses.contains(classname) && rpcMethods.contains(methodname)
-					  ) {
-		      if ( rpcIfaces.contains(classname) )
-				  System.err.println("RPC Call: " + signature);
+			  if (rpcMethodSigs.contains(signature)) {
+		      	  tmpTcOps.add( "RPC Call: " + signature );
 				  return true;
 			  }
 			  
@@ -1781,14 +1894,9 @@ public class JXLocks {
     		   || invokessa.isStatic() 
     			  ) {
     		  if ( !methodname.equals("<init>") )
-    		  if ( classname.startsWith("Ljava/io/")  ||
-    			   classname.startsWith("Ljava/nio/") ||
-    			   classname.startsWith("Ljava/net/") ||
-    			   classname.startsWith("Ljava/rmi/") ||
-    			   classname.startsWith("Ljava/sql/")
-    				  ) {     		  
-    			  //System.err.println("INVOKE: " + invokessa.getDeclaredTarget().toString() );
-    			  //return true;
+    		  if ( isInIoMethodPrefixes(signature) ) {     		  
+    			  tmpTcOps.add( invokessa.getDeclaredTarget().getSignature().toString() );
+    			  return true;
     		  }	 
     	  }
       }
@@ -1798,35 +1906,161 @@ public class JXLocks {
       return false;
   }
   
+  public static boolean isInIoMethodPrefixes(String signature) {
+	  for (String str: ioMethodPrefixes)
+		  if (signature.startsWith(str))
+			  return true;
+	  return false;
+  }
   
-  public static void findTimeConsumingOperations(CGNode f) {
+  
+  public static boolean isIO(SSAInstruction ssa) {
+	  //filter rest I/Os that are not time-consuming for avoiding to get into,   #this is also can be removed
+	  if (ssa instanceof SSAInvokeInstruction) {
+		  SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;
+		  String sig = invokessa.getDeclaredTarget().getSignature().toString();
+		  if ( sig.startsWith("java.io.")
+			   || sig.startsWith("java.nio.")
+			   || sig.startsWith("java.net.")
+			   || sig.startsWith("java.rmi.")
+			   || sig.startsWith("java.sql.")
+			   )
+			  return true;
+	  }
+	  return false;
+  }
+  
+  
+  public static void findTimeConsumingOperationsForALoop(LoopInfo loop) {
 	  
+	  CGNode f = loop.function;
 	  int id = f.getGraphNodeId();
 	  IR ir = f.getIR();
 	  SSACFG cfg = ir.getControlFlowGraph();
 	  SSAInstruction[] instructions = ir.getInstructions();
-	  List<LoopInfo> loops = functions_with_loops.get(id);
     
 	  FunctionInfo function = functions.get(id); 
       
-	  for (LoopInfo loop: loops) {
-		  loop.numOfTcOperations_recusively = 0;
-		  for (int bbnum: loop.bbs) {
-	        int first_index = cfg.getBasicBlock(bbnum).getFirstInstructionIndex();
-	        int last_index = cfg.getBasicBlock(bbnum).getLastInstructionIndex();
-	        for (int i = first_index; i <= last_index; i++) {
-	        	SSAInstruction ssa = instructions[i];
-	        	if (ssa == null)
-	        		continue;
-	        	InstructionInfo instruction = function.instructions.get(i);
-	        	loop.numOfTcOperations_recusively += instruction.numOfTcOperations_recusively;
-	        	loop.tcOperations_recusively.addAll( instruction.tcOperations_recusively );
-	        }
-	      } //for-bbnum
-		  System.out.println( loop );
-	  }//for-loop
+	  /* already done at LoopInfo initializtion
+	  loop.numOfTcOperations_recusively = 0;
+	  loop.tcOperations_recusively = new ArrayList<SSAInstruction>();
+	  */
+	  BitSet traversednodes = new BitSet();
+	  traversednodes.clear();
+	  traversednodes.set( id );
+	  
+	  //for debug
+	  String callpath = f.getMethod().getSignature().substring(0, f.getMethod().getSignature().indexOf('('));
+	  
+	  for (int bbnum: loop.bbs) {
+        int first_index = cfg.getBasicBlock(bbnum).getFirstInstructionIndex();
+        int last_index = cfg.getBasicBlock(bbnum).getLastInstructionIndex();
+        for (int i = first_index; i <= last_index; i++) {
+        	SSAInstruction ssa = instructions[i];
+        	if (ssa == null)
+        		continue;
+        	if ( function.tcOperations.contains( ssa ) ) {
+        		loop.numOfTcOperations_recusively ++;
+        		loop.tcOperations_recusively.add( ssa );
+        		//added tc_info
+        		TcOperationInfo tcOperation = new TcOperationInfo();
+        		tcOperation.ssa = ssa;
+        		tcOperation.function = f;
+        		tcOperation.callpath = callpath;
+        		tcOperation.line_number = getSourceLineNumberFromSSA(ssa, instructions, (IBytecodeMethod)f.getMethod());
+        		loop.tcOperations_recusively_info.add( tcOperation );
+        		//end
+        		continue;
+        	}
+        	// filter the rest I/Os
+            if ( isIO(ssa) )
+          	  continue;
+            if (ssa instanceof SSAInvokeInstruction) {  
+          	  SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;
+                java.util.Set<CGNode> set = cg.getPossibleTargets(f, invokessa.getCallSite());
+                for (CGNode cgnode: set) {
+              	  dfsToGetTimeConsumingOperationsForSSA(cgnode, 0, traversednodes, loop,  callpath);
+                }
+            }
+        }
+      } //for-bbnum
 	  
   }
+  
+
+  
+  public static void dfsToGetTimeConsumingOperationsForSSA(CGNode f, int depth, BitSet traversednodes, LoopInfo loop, String callpath) {
+	/* jx: if want to add this, then for MapReduce we need to more hadoop-common&hdfs like "org.apache.hadoop.conf" not juse 'fs/security' for it
+	if ( !isInPackageScope(f) )
+		return ;
+	*/
+    if ( !f.getMethod().getDeclaringClass().getClassLoader().getReference().equals(ClassLoaderReference.Application) 
+         || f.getMethod().isNative()) { // IMPO - native - must be
+      return ;
+    }
+    
+	int id = f.getGraphNodeId();
+    FunctionInfo function = functions.get(id);
+    
+    if ( traversednodes.get(id) )
+      return ;
+    
+    //test
+    if (function == null) 
+    	System.out.println("jx - error - function == null");
+   
+    traversednodes.set(id);
+    loop.numOfTcOperations_recusively += function.tcOperations.size();
+    loop.tcOperations_recusively.addAll( function.tcOperations );
+    
+    IR ir = f.getIR();  //if (ir == null) return;
+    SSAInstruction[] instructions = ir.getInstructions();
+    
+    //for debug
+    String curCallpath = callpath + "-" + f.getMethod().getSignature().substring(0, f.getMethod().getSignature().indexOf('('));
+    
+    //added tc_info
+  	for (SSAInstruction ssa: function.tcOperations) {
+  		TcOperationInfo tcOperation = new TcOperationInfo();
+  		tcOperation.ssa = ssa;
+  		tcOperation.function = f;
+  		tcOperation.callpath = curCallpath;
+  		tcOperation.line_number = getSourceLineNumberFromSSA(ssa, instructions, (IBytecodeMethod)f.getMethod());
+  		loop.tcOperations_recusively_info.add( tcOperation );
+      }
+  	//end
+    
+    
+    for (int i = 0; i < instructions.length; i++) {
+      SSAInstruction ssa = instructions[i];
+      if (ssa == null)
+    	  continue;
+      if ( function.tcOperations.contains( ssa ) )
+    	  continue;
+      // filter the rest I/Os
+      if ( isIO(ssa) )
+    	  continue;
+      if (ssa instanceof SSAInvokeInstruction) {  
+    	  SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;
+          java.util.Set<CGNode> set = cg.getPossibleTargets(f, invokessa.getCallSite());
+          for (CGNode cgnode: set) {
+        	  dfsToGetTimeConsumingOperationsForSSA(cgnode, depth+1, traversednodes, loop, curCallpath);
+          }
+      }
+    }//for
+    
+  }
+  
+  
+  public static void printTcOperationTypes() {
+	  System.out.println("\nJX-printTcOperationTypes");
+	  System.out.println("#types = " + tmpTcOps.size());
+	  // test
+	  for (String str: tmpTcOps) {
+		  System.out.println(str);
+	  }
+  }
+  
   
   
   /*********************************************************
@@ -2220,9 +2454,74 @@ public class JXLocks {
   
   
   
+  /***********************************************************************************
+   * printOnlyBugLoops
+   **********************************************************************************/
+
+  
+  static public void readBugLoops() {
+	  System.out.println("\nJX-readBugLoops");
+	  
+	        
+  }
+  
+  public static void printBugLoops() {
+	  System.out.println("\nJX-printBugLoops");
+
+	  List<String> loopClasses = new ArrayList<String>();
+	  List<String> loopMethods = new ArrayList<String>();
+	  List<String> loopLinenumbers = new ArrayList<String>();
+	  String filepath = projectDir + "src/da/" + "output/simplebugpool.txt";
+	  
+	  BufferedReader bufreader;
+	  String tmpline;
+	  try {
+		  bufreader = new BufferedReader( new FileReader( filepath ) );
+		  tmpline = bufreader.readLine(); // the 1st line is useless
+        	
+		  while ( (tmpline = bufreader.readLine()) != null ) {
+			  String[] strs = tmpline.trim().split("\\s+");
+			  if ( tmpline.trim().length() > 0 ) {
+				  loopClasses.add( strs[0] );
+				  loopMethods.add( strs[1] );
+				  loopLinenumbers.add( strs[2] );
+			  }
+		  }
+		  bufreader.close();
+		
+	  } catch (Exception e) {
+		  // TODO Auto-generated catch block
+		  System.out.println("JX - ERROR - when reading da/output/simplebugpool.txt");
+		  e.printStackTrace();
+	  }
+	  System.out.println("JX - successfully read " + loopClasses.size() + " Bug Loops from " + filepath);
+	  
+      // tmp!!!!	  
+	  int count = 0;
+	  for (List<LoopInfo> loops: functions_with_loops.values() )
+		  for (LoopInfo loop: loops)
+			  if (loop.numOfTcOperations_recusively > 0) {
+				  String classname = MRrpc.format( loop.function.getMethod().getDeclaringClass().getName().toString() );
+				  String methodname = loop.function.getMethod().getName().toString();
+				  String linenumber = String.valueOf( loop.line_number );
+				  if (loopClasses.contains(classname) && loopMethods.contains(methodname)) {
+					  count ++;
+					  System.out.println( loop.toString_detail() );
+					  
+				  }
+			  }
+	  System.out.println( "count = " + count );
+
+  }
+  
+  
+  
+  
+  
+  
   
   public static void analyzeAllLocks() {
-    System.out.println("\nJX-analyzeAllLocks-4");
+    System.out.println("\nJX-analyzeAllLocks");
 
     //for test
     Set<String> set_of_locks = new TreeSet<String>();    // for test, TreeSet is ordered by Java

@@ -22,13 +22,6 @@ public class MRrpc {
   String packageDir;
   String rpcfilepath = "output/mr_rpc.txt";   //including mr_rpc_v2.txt & mr_rpc_v1.txt 
   
-  ArrayList<IClass> classList = new ArrayList<IClass>();          //jx: a class list filtered from 'cha'
-  ArrayList<IClass> requestClassList = new ArrayList<IClass>();
-  ArrayList<String> requestNameList = new ArrayList<String>();
-  ArrayList<IClass> responseClassList = new ArrayList<IClass>();
-  ArrayList<String> responseNameList = new ArrayList<String>();
-  ArrayList<IClass> otherClassList = new ArrayList<IClass>();
-  ArrayList<String> otherNameList = new ArrayList<String>();
 	
   public MRrpc(ClassHierarchy cha, String packageDir) {
 	  this.cha = cha;
@@ -45,14 +38,13 @@ public class MRrpc {
     return rt;
   }
 
-  public static boolean containMethod(IClass c, String method) {
-    boolean rt = false;
+  public static String containMethod(IClass c, String methodSelector) {
     for (IMethod im : c.getDeclaredMethods()) {
-      if (im.getName().toString().equals(method)) {
-        rt = true;
+      if ( im.getSelector().toString().equals(methodSelector) ) {
+    	return im.getSignature();
       }
     }
-    return rt;
+    return null;
   }
   
   
@@ -63,10 +55,19 @@ public class MRrpc {
    * 2. which RPC server-side methods use the requests (as a parameter) 
    */ 
   public void findRPCv2() {
-	System.out.println("\nJX - MRV2 RPC");
+	System.out.println("\nJX - findRPCv2 - MRV2 RPC");
+	
+	ArrayList<IClass> requestClasses = new ArrayList<IClass>();
+	ArrayList<String> requestNames = new ArrayList<String>();
+	ArrayList<IClass> responseClasses = new ArrayList<IClass>();
+	ArrayList<String> responseNames = new ArrayList<String>();
+	ArrayList<IClass> otherClasses = new ArrayList<IClass>();
+	ArrayList<String> otherNames = new ArrayList<String>();
+	  
 	// JX - Find out MapReduce's Classes of RPC's "request" and "response"
     for (IClass c : cha) {
-      if (c.getName().toString().startsWith("Lorg/apache/") == false) { System.err.println("not Lorg/apache/" + c.getName().toString()); continue; }
+      if ( !c.getName().toString().startsWith("Lorg/apache/") ) 
+    	  continue;
       /* for now, the results are same w/ w/o the this code snippet
       String className = c.getName().toString();
       if ( !className.startsWith("Lorg/apache/hadoop/mapred/") && 
@@ -74,125 +75,110 @@ public class MRrpc {
        	   !className.startsWith("Lorg/apache/hadoop/yarn/") )
            continue;
       */
-      classList.add(c);
-      /* if the class is a subclass of ProtoBase.*/
+      // if the class is a subclass of ProtoBase
       if (c.getSuperclass().getName().toString().endsWith("ProtoBase")) {
-        if (c.getName().toString().contains("Request")) {
-          requestClassList.add(c);
-          requestNameList.add(c.getName().toString());
+        if (c.getName().toString().contains("Request")) {   //jx: like FailTaskAttemptRequestPBImpl
+          requestClasses.add(c);
+          requestNames.add(c.getName().toString());
         }
         else if (c.getName().toString().contains("Response")) {
-          responseClassList.add(c);
-          responseNameList.add(c.getName().toString());
+          responseClasses.add(c);
+          responseNames.add(c.getName().toString());
         }
-        else { //this class is not a direct rpc related class.
+        else { //this class is not a direct rpc-related class.
           if (c.getName().toString().endsWith("LocalizerStatusPBImpl")) {
-            otherClassList.add(c);
-            otherNameList.add(c.getName().toString());
+            otherClasses.add(c);
+            otherNames.add(c.getName().toString());
           }
         }
       }
     }
 
-    // prune request and response
-    Iterator<IClass> iter = requestClassList.iterator();
+    // Prune request and response, jx: Actually, only need to focus on request
+    Iterator<IClass> iter = requestClasses.iterator();
     while (iter.hasNext()) {
       IClass c = iter.next();
       String name = c.getName().toString();
       String responseName = name.replaceAll("Request", "Response");
-      if (responseNameList.contains(responseName) == false) {
+      if ( !responseNames.contains(responseName) ) {
         iter.remove();
-        requestNameList.remove(name);
+        requestNames.remove(name);
       }
     }
-    iter = responseClassList.iterator();
+    iter = responseClasses.iterator(); //this step is not needed actually
     while (iter.hasNext()) {
       IClass c = iter.next();
       String name = c.getName().toString();
       String requestName = name.replaceAll("Response", "Request");
-      if (requestNameList.contains(requestName) == false) {
+      if ( !requestNames.contains(requestName) ) {
         iter.remove();
-        responseNameList.remove(name);
+        responseNames.remove(name);
       }
     }
 
-    // get request's interface, & otherclass's interface?
-    ArrayList<String> requestIface = new ArrayList<String>();
-    for (IClass c : requestClassList) {
+    // Get request's interface, & otherclass's interface?
+    System.out.println("requestClasses.size()=" + requestClasses.size() + " - " + requestClasses);  //jx: like FailTaskAttemptRequestPBImpl
+    ArrayList<String> requestIfaces = new ArrayList<String>();                                      //jx: like FailTaskAttemptRequest
+    for (IClass c : requestClasses) {
       for (IClass iface : c.getAllImplementedInterfaces()) {
-        requestIface.add(iface.getName().toString());
-        System.out.println("JX-" + iface.getName().toString());
+        requestIfaces.add(iface.getName().toString());
       }
     }
+    System.out.println("requestIfaces.size()=" + requestIfaces.size() + " - " + requestIfaces);
 
-    ArrayList<String> otherIface = new ArrayList<String>();
-    for (IClass c : otherClassList) {
+    ArrayList<String> otherIfaces = new ArrayList<String>();
+    for (IClass c : otherClasses) {
       for (IClass iface : c.getAllImplementedInterfaces()) {
-        otherIface.add(iface.getName().toString());
-        System.out.println(" debug iface: " + iface.getName());
+        otherIfaces.add(iface.getName().toString());
+        System.out.println("WARN - debug iface: " + iface.getName());
       }
     }
 
 
-        
 
-    // get each rpc function and its class.
-    ArrayList<String> out = new ArrayList<String>();
+    // Get each rpc function's 1) implementation method and its interface method 2)
+    ArrayList<String> results = new ArrayList<String>();
 
-
-    // JX - ??
-    for (IClass c : classList) {
-      if (c.getName().toString().startsWith("Lorg/apache/") == false) { continue; }
+    for (IClass c : cha) {
+      if ( !c.getName().toString().startsWith("Lorg/apache/") ) 
+    	  continue;
       if (c.getName().toString().contains("$")) { continue; } // private class
       if (c.getName().toString().contains("ClientImpl")) { continue; } // client impl
 
-      for (IMethod m : c.getDeclaredMethods()) {
-        if (m.isAbstract() == true) { continue; } // abstrct method
-        if (m.getNumberOfParameters() != 2) { continue; }
+      for (IMethod m : c.getDeclaredMethods()) {    	      	  
+    	if (m.isAbstract() == true) { continue; }          // jx: avoid abstrct methods,ie, only get implemented methods, also can be abstract class's or general class's
+        if (m.getNumberOfParameters() != 2) { continue; }  // param0: this, param1: request 
 
         String paraTy = m.getParameterType(1).toString(); // format: <Application, Lorg/.../Class>
-        paraTy = paraTy.substring(paraTy.lastIndexOf(",")+1, paraTy.length()-1);
-        if (requestIface.contains(paraTy)){
-          String str = c.getName().toString();
-          String outStr;
-          //str = MRrpc.format(str);
-          System.out.println(str + " ");
-          outStr = str + " ";
+        paraTy = paraTy.substring(paraTy.lastIndexOf(",")+1, paraTy.length()-1); //jx: like FailTaskAttemptRequest, NOT xxxRequestPBImpl                
+        
+        if (requestIfaces.contains(paraTy)){
+          String outStr = m.getSignature() + "\t";
           for (IClass iface : c.getAllImplementedInterfaces()) {
-            if (MRrpc.containMethod(iface, m.getName().toString()) == true) {
-              str = iface.getName().toString();
-              //str = MRrpc.format(str);
-              System.out.println(str + " ");
-              outStr += str + " ";
-            }
+        	  String ifacemethodsig = MRrpc.containMethod(iface, m.getSelector().toString());
+        	  if (ifacemethodsig != null) {   //jx: may have serval: eg,  m1 in Class A <- abstract m1 in Abstract Class B <- abstract m1 in Interface C
+        		  outStr += ifacemethodsig + "\t";
+        	  }
           }
-          str = m.getName().toString();
-          //str = MRrpc.format(str);
-          System.out.println(str);
-          outStr += str + " ";
-          outStr += "1 Ljava/lang/Object";
-          out.add(outStr);
+          results.add(outStr);
         }
-        else if (otherIface.contains(paraTy)) {
+        else if (otherIfaces.contains(paraTy)) {
           System.out.println("Method: " + m.getName() + " in cc: " + c.getName());
         }
 
       }
     }
-    System.out.println("JX - checkpoint - here - 1");
     
-    //System.exit(-1);
-
-    System.out.println("JX - checkpoint - here - 2");
-    
+    // write to file
     String filepath = packageDir + rpcfilepath; 
     try {
-      PrintWriter outFile = new PrintWriter(filepath, "UTF-8");
-      outFile.println("//format: class iface method #parameters ..");
-      for (String str : out) {
-        outFile.println(str);
+      PrintWriter writer = new PrintWriter(filepath, "UTF-8");
+      writer.println("//format: implementation method's signature  \t  interface method's signature1  ..2 .. if any");
+      for (String str : results) {
+    	  writer.println(str);
       }
-      outFile.close();
+      writer.println();
+      writer.close();
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -202,7 +188,7 @@ public class MRrpc {
   
   
   public void findRPCv1() {
-    System.out.println("\nJX - MRV1 RPC");
+    System.out.println("\nJX - findRPCv1 - MRV1 RPC");
     ArrayList<IClass> mrv1Class = new ArrayList<IClass>();
     ArrayList<IClass> mrv1Iface = new ArrayList<IClass>();
     
@@ -228,46 +214,47 @@ public class MRrpc {
       for (IClass cc : c.getAllImplementedInterfaces() ) {
         if (cc.getName().toString().endsWith("VersionedProtocol")) {
           if (c.isInterface()) 
-        	  mrv1Iface.add(c);
+        	  mrv1Iface.add(c);  //interface classes
           else
-        	  mrv1Class.add(c);
+        	  mrv1Class.add(c);  //implemented classes
           break;
         }
       }
     }//outer-for
 
-    System.out.println( "mrv1Class(length=" + mrv1Class.size() + "): " + mrv1Class );
+    System.out.println( "mrv1Class(length=" + mrv1Class.size() + "): " + mrv1Class );  
     System.out.println( "mrv1Iface(length=" + mrv1Iface.size() + "): " + mrv1Iface );
 
-    ArrayList<String> mrv1Out = new ArrayList<String>();
+    ArrayList<String> results = new ArrayList<String>();
     
-    // 2. Get RPC methods that included in RPC interfaces
-    for (IClass clazz : mrv1Class) {
-      for (IClass iface : clazz.getAllImplementedInterfaces())
-    	// only find out RPC interfaces   #one RPC class <- many (RPC or non-RPC) interfaces
-        if ( mrv1Iface.contains(iface) ) {
-          for (IMethod m : iface.getDeclaredMethods()) {
-            String str = clazz.getName().toString() + " " 
-            			+ iface.getName().toString() + " " 
-            			+ m.getName().toString() + " " 
-            			+ (m.getNumberOfParameters()-1) + " ";
-            for (int i = 1; i < m.getNumberOfParameters(); i++) {
-            	//if (m.getParameterType(i).isReferenceType())
-            	str += m.getParameterType(i).getName() + " ";
-            }
-            mrv1Out.add(str);
-            System.out.println(str);
-          }
-        }
-    }//outer-for
-
+    // 2. Get RPC methods that included in RPC
+    for (IClass c : mrv1Class) {
+      for (IMethod m : c.getDeclaredMethods()) { 
+    	  String str = m.getSignature() + "\t";
+    	  boolean find = false;
+	      for (IClass iface : c.getAllImplementedInterfaces())
+	    	// only find out RPC interfaces   #one RPC class <- many (RPC or non-RPC) interfaces
+	        if ( mrv1Iface.contains(iface) ) {
+	        	String ifacemethodsig = MRrpc.containMethod(iface, m.getSelector().toString());
+	        	if (ifacemethodsig != null) {
+	        		str += ifacemethodsig + "\t";
+	        		find = true;
+	        	}
+	        }
+	      if (find)
+	 	     results.add(str);
+      }
+    }//outer-for 
+    
+    
+    // write to file
     String filepath = packageDir + rpcfilepath;
     try {
-      FileWriter outFile = new FileWriter(filepath, true);  //PrintWrite(filepath, "UTF-8");
-      for (String str : mrv1Out) {
-        outFile.write(str + "\n");
+      FileWriter writer = new FileWriter(filepath, true);  //PrintWrite(filepath, "UTF-8");
+      for (String str : results) {
+    	  writer.write(str + "\n");
       }
-      outFile.close();
+      writer.close();
     } catch (Exception e) {
       e.printStackTrace();
     }

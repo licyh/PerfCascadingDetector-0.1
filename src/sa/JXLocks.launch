@@ -16,5 +16,5 @@
                                                                           # HBase/hbase-0.95    
                                                                           # JLex.jar
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="JXCascading-detector"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx3G"/>                  #-Xmx800M
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx8G"/>                  #-Xmx800M
 </launchConfiguration>

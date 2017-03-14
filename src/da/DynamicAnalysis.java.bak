@@ -39,9 +39,10 @@ public class DynamicAnalysis {
 		// build ReachSet
 		graphBuilder.buildReachSet();
 		
-		// Cascading Analysis
-		CascadingFinder cascadingFinder = new CascadingFinder(graphBuilder);
-		cascadingFinder.doWork();
+		// extract Target, Lock, Loop logs
+		graphBuilder.extractTargetLockLoopInfo();
+		
+		graphBuilder.traverseTargetCodes();
 		
 		// find out 1.flipped order 2.lock relationship graph by the same locks
 		graphBuilder.findflippedorder();  

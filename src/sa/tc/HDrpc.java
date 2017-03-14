@@ -47,33 +47,33 @@ public class HDrpc {
     System.out.println( "mrv1Class(length=" + mrv1Class.size() + "): " + mrv1Class );
     System.out.println( "mrv1Iface(length=" + mrv1Iface.size() + "): " + mrv1Iface );
 
-    ArrayList<String> mrv1Out = new ArrayList<String>();
+    ArrayList<String> results = new ArrayList<String>();
     
-    // 2. Get RPC methods that included in RPC interfaces
-    for (IClass clazz : mrv1Class) {
-      for (IClass iface : clazz.getAllImplementedInterfaces())
-    	// only find out RPC interfaces   #one RPC class <- many (RPC or non-RPC) interfaces
-        if ( mrv1Iface.contains(iface) ) {
-          for (IMethod m : iface.getDeclaredMethods()) {
-            String str = clazz.getName().toString() + " " 
-            			+ iface.getName().toString() + " " 
-            			+ m.getName().toString() + " " 
-            			+ (m.getNumberOfParameters()-1) + " ";
-            for (int i = 1; i < m.getNumberOfParameters(); i++) {
-            	//if (m.getParameterType(i).isReferenceType())
-            	str += m.getParameterType(i).getName() + " ";
-            }
-            mrv1Out.add(str);
-            System.out.println(str);
-          }
-        }
-    }//outer-for
+    // 2. Get RPC methods that included in RPC
+    for (IClass c : mrv1Class) {
+      for (IMethod m : c.getDeclaredMethods()) { 
+    	  String str = m.getSignature() + "\t";
+    	  boolean find = false;
+	      for (IClass iface : c.getAllImplementedInterfaces())
+	    	// only find out RPC interfaces   #one RPC class <- many (RPC or non-RPC) interfaces
+	        if ( mrv1Iface.contains(iface) ) {
+	        	String ifacemethodsig = MRrpc.containMethod(iface, m.getSelector().toString());
+	        	if (ifacemethodsig != null) {
+	        		str += ifacemethodsig + "\t";
+	        		find = true;
+	        	}
+	        }
+	      if (find)
+	 	     results.add(str);
+      }
+    }//outer-for 
+    
 
     String filepath = packageDir + rpcfilepath;
     try {
       PrintWriter outFile = new PrintWriter(filepath, "UTF-8");
-      outFile.println("//format: class iface method #parameters ..");
-      for (String str : mrv1Out) {
+      outFile.println("//format: implementation method's signature  \t  interface method's signature1  ..2 .. if any");
+      for (String str : results) {
         outFile.println(str);
       }
       outFile.close();
