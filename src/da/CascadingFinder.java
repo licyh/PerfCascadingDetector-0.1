@@ -425,14 +425,14 @@ public class CascadingFinder {
     	BufferedWriter mBufwriter = new BufferedWriter( new FileWriter( medianbugpoolFilename ) );
     	BufferedWriter sBufwriter = new BufferedWriter( new FileWriter( simplebugpoolFilename ) );
 
-    	System.out.println("\ncompletebugpool(whole chain's fullcallstacks) - " + "has " + medianchainbugpool.size() + " loops");
+    	System.out.println("\nmedianchainbugpool(whole chain's fullcallstacks) - " + "has " + medianchainbugpool.size() + " loops");
     	mcBufwriter.write( medianchainbugpool.size() + "\n" );
     	for (String chainfullcallstacks: medianchainbugpool) {
     		System.out.println( chainfullcallstacks );
     		mcBufwriter.write( chainfullcallstacks + "\n" );
     	}
     	
-    	System.out.println("\ncompletebugpool(whole chain's fullcallstacks) - " + "has " + simplechainbugpool.size() + " loops");
+    	System.out.println("\nsimplechainbugpool(whole chain's lastcallstacks) - " + "has " + simplechainbugpool.size() + " loops");
     	scBufwriter.write( simplechainbugpool.size() + "\n" );
     	for (String chainfullcallstacks: simplechainbugpool) {
     		System.out.println( chainfullcallstacks );
@@ -502,9 +502,10 @@ public class CascadingFinder {
 
     	//useless now
 		@Override
-		public int compareTo(LoopBug arg0) {
+		public int compareTo(LoopBug other) {
 			// TODO Auto-generated method stub
-			return -1;   //couldn't 0, should be consistent with equals()
+			//return -1;   //couldn't 0, should be consistent with equals()
+			return nodeIndex - other.nodeIndex; 
 		}
 		
 		//useless now
@@ -512,7 +513,8 @@ public class CascadingFinder {
     	public int hashCode() {
     		int result = 17;
     		result = 31 * result + nodeIndex;
-    		result = 31 * result + cascadingChain.hashCode();
+    		//result = 31 * result + cascadingLevel;
+    		//result = 31 * result + cascadingChain.hashCode();
     		return result;
     	}
     	
@@ -524,8 +526,13 @@ public class CascadingFinder {
     		if ( obj == null || this.getClass() != obj.getClass() )
     			return false;
     		LoopBug other = (LoopBug) obj;
-    		return nodeIndex == other.nodeIndex &&
+    		return nodeIndex == other.nodeIndex 
+    				;
+    				/*
+    				&&
+    				cascadingLevel == other.cascadingLevel &&
     				( cascadingChain == other.cascadingChain || (cascadingChain!=null && cascadingChain.equals(other.cascadingChain)) );
+    				*/
     	}
     	
     	@Override
