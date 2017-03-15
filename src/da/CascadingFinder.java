@@ -32,26 +32,19 @@ public class CascadingFinder {
     LinkedHashMap<Integer, Integer> loopblocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
 	
     int CASCADING_LEVEL = 10;  //minimum:2; default:3;
-	//Set<Integer> bugpool = new TreeSet<Integer>();        //for now, only one bug pool for whole code snippets
     Set<LoopBug> bugpool = new TreeSet<LoopBug>();          //for now, only one bug pool for whole code snippets
-	Set<String> simplebugpool = new TreeSet<String>();
+    String simplebugpoolFilename = "output/simplebugpool.txt";
+    String medianbugpoolFilename = "output/medianbugpool.txt";
+    String completebugpoolFilename = "output/completebugpool.txt";
+    Set<String> simplebugpool = new TreeSet<String>();
 	Set<String> medianbugpool = new TreeSet<String>();
 	Set<String> completebugpool = new TreeSet<String>();
-    String simplebugpoolFilename = Paths.get(projectDir, packageDir, "output/simplebugpool.txt").toString();
-    String medianbugpoolFilename = Paths.get(projectDir, packageDir, "output/medianbugpool.txt").toString();
-    String completebugpoolFilename = Paths.get(projectDir, packageDir, "output/completebugpool.txt").toString();
+
 	
 	
 	CascadingFinder(String projectDir, GraphBuilder graphBuilder) {
 		this.projectDir = projectDir;
 		this.gb = graphBuilder;
-		
-		//test
-		System.out.println( simplebugpoolFilename );
-		System.out.println( medianbugpoolFilename );
-		System.out.println( completebugpoolFilename );
-		
-		
 		
         this.alltargetitems = new ArrayList<Integer>();    //all nodes of all TargetCodeBegin & TargetCodeEnd snippets
         //targetcodeLoops = new ArrayList<Integer>();                              //never used, just ps for time-consuming loops?
@@ -396,12 +389,20 @@ public class CascadingFinder {
     		completebugpool.add( "CL" + cascadingLevel + ": " + fullCallstacksOfCascadingChain(loopbug) );
     	}
     	
-    	
     	// bug pools - 
         // write to file & print
-    	BufferedWriter cBufwriter = new BufferedWriter( new FileWriter( completebugpoolFilename ) );
-    	BufferedWriter mBufwriter = new BufferedWriter( new FileWriter( medianbugpoolFilename ) );
-    	BufferedWriter sBufwriter = new BufferedWriter( new FileWriter( simplebugpoolFilename ) );
+
+		//test
+    	String completefilename = Paths.get(projectDir, packageDir, completebugpoolFilename).toString();
+    	String medianfilename = Paths.get(projectDir, packageDir, medianbugpoolFilename).toString();
+    	String simplefilename = Paths.get(projectDir, packageDir, simplebugpoolFilename).toString();
+		System.out.println( simplefilename );
+		System.out.println( medianfilename );
+		System.out.println( completefilename );
+		
+    	BufferedWriter cBufwriter = new BufferedWriter( new FileWriter( completefilename ) );
+    	BufferedWriter mBufwriter = new BufferedWriter( new FileWriter( medianfilename ) );
+    	BufferedWriter sBufwriter = new BufferedWriter( new FileWriter( simplefilename ) );
     	
     	System.out.println("\ncompletebugpool(whole chain's fullcallstacks) - " + "has " + completebugpool.size() + " loops");
     	for (String chainfullcallstacks: completebugpool) {
