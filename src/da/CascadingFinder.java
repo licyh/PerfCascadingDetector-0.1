@@ -502,10 +502,11 @@ public class CascadingFinder {
 
     	//useless now
 		@Override
-		public int compareTo(LoopBug other) {
+		public int compareTo(LoopBug o) {
 			// TODO Auto-generated method stub
 			//return -1;   //couldn't 0, should be consistent with equals()
-			return (nodeIndex - other.nodeIndex) + (cascadingLevel - other.cascadingLevel); 
+			return (nodeIndex - o.nodeIndex) + (cascadingLevel - o.cascadingLevel) 
+					+ (cascadingChain.equals(o.cascadingChain) ? 0:1); 
 		}
 		
 		//useless now
@@ -514,7 +515,7 @@ public class CascadingFinder {
     		int result = 17;
     		result = 31 * result + nodeIndex;
     		result = 31 * result + cascadingLevel;
-    		//result = 31 * result + cascadingChain.hashCode();
+    		result = 31 * result + cascadingChain.hashCode();
     		return result;
     	}
     	
@@ -527,9 +528,9 @@ public class CascadingFinder {
     			return false;
     		LoopBug other = (LoopBug) obj;
     		return nodeIndex == other.nodeIndex &&
-    				cascadingLevel == other.cascadingLevel ; /*&&
+    				cascadingLevel == other.cascadingLevel &&
     				( cascadingChain == other.cascadingChain || (cascadingChain!=null && cascadingChain.equals(other.cascadingChain)) );
-    				*/
+    				
     	}
     	
     	@Override
