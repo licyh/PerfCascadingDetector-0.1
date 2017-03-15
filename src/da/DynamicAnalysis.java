@@ -9,8 +9,8 @@ public class DynamicAnalysis {
     public static void main (String [] argv) {
         
     	//Added by JX
-		if (argv.length != 1){
-            System.out.println( "Please specify a correct xml file dir!! (argv.lenth=" + argv.length + ")" );
+		if (argv.length != 2){
+            System.out.println( "Please specify a correct project dir or a xml file dir!! (argv.lenth=" + argv.length + ")" );
             return;
         }
 		
@@ -18,7 +18,7 @@ public class DynamicAnalysis {
 		long start_time = System.currentTimeMillis();         
 		
 		//init and get 'base' file
-		GraphBuilder graphBuilder = new GraphBuilder( argv[0] );
+		GraphBuilder graphBuilder = new GraphBuilder( argv[1] );
     	//GraphBuilder graphBuilder = new GraphBuilder("input/MR-4813-xml"); //"input/JX-MR-xml" //Test-HB-4729-v6-3-xml");   "Test-HB-4729-v6-3-xml"
     	
 		System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
@@ -29,10 +29,6 @@ public class DynamicAnalysis {
     	System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
     	
     	graphBuilder.buildlockmemref(); 
-		if (argv.length > 1 ){                         //what's this for??
-            graphBuilder.addspecialedges(argv[1]);
-            System.out.println("---------S S S S S S S S S S S---------------");
-		} 
 		
 		System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
 		
@@ -40,7 +36,7 @@ public class DynamicAnalysis {
 		graphBuilder.buildReachSet();
 		
 		// Cascading Analysis
-		CascadingFinder cascadingFinder = new CascadingFinder(graphBuilder);
+		CascadingFinder cascadingFinder = new CascadingFinder( argv[0], graphBuilder);
 		cascadingFinder.doWork();
 		
 		// find out 1.flipped order 2.lock relationship graph by the same locks

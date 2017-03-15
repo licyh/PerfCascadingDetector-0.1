@@ -1,5 +1,9 @@
 package da;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashSet;
@@ -11,6 +15,8 @@ import java.util.TreeSet;
 
 public class CascadingFinder {
 
+	String projectDir;
+	String packageDir = "src/da";
 	GraphBuilder gb;
     //In .traverseTargetCodes()
     ArrayList<Integer> alltargetitems;    				//all nodes of all TargetCodeBegin & TargetCodeEnd snippets
@@ -30,10 +36,22 @@ public class CascadingFinder {
     Set<LoopBug> bugpool = new TreeSet<LoopBug>();          //for now, only one bug pool for whole code snippets
 	Set<String> simplebugpool = new TreeSet<String>();
 	Set<String> medianbugpool = new TreeSet<String>();
-	//Set<String> complexbugpool = new TreeSet<String>();
-    
-	CascadingFinder(GraphBuilder graphBuilder) {
+	Set<String> completebugpool = new TreeSet<String>();
+    String simplebugpoolFilename = Paths.get(projectDir, packageDir, "output/simplebugpool.txt").toString();
+    String medianbugpoolFilename = Paths.get(projectDir, packageDir, "output/medianbugpool.txt").toString();
+    String completebugpoolFilename = Paths.get(projectDir, packageDir, "output/completebugpool.txt").toString();
+	
+	
+	CascadingFinder(String projectDir, GraphBuilder graphBuilder) {
+		this.projectDir = projectDir;
 		this.gb = graphBuilder;
+		
+		//test
+		System.out.println( simplebugpoolFilename );
+		System.out.println( medianbugpoolFilename );
+		System.out.println( completebugpoolFilename );
+		
+		
 		
         this.alltargetitems = new ArrayList<Integer>();    //all nodes of all TargetCodeBegin & TargetCodeEnd snippets
         //targetcodeLoops = new ArrayList<Integer>();                              //never used, just ps for time-consuming loops?
@@ -49,7 +67,12 @@ public class CascadingFinder {
         // traverseTargetCodes
 		traverseTargetCodes();
     	// print the results
-		printResultsOfTraverseTargetCodes();
+		try {
+			printResultsOfTraverseTargetCodes();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
     /**
@@ -347,12 +370,12 @@ public class CascadingFinder {
     	bugpool.add( loopbug );	
     	// get cascading lock chain
     	if ( cascadingLevel == 1 ) { // Immediate loop bug
-    		loopbug.lockchain.add( nodeIndex );
+    		loopbug.cascadingChain.add( nodeIndex );
     	}
     	else if ( cascadingLevel >= 2 ) { // Lock-related loop bug
         	int tmp = nodeIndex;
         	while ( tmp != 0 ) {
-        		loopbug.lockchain.add( tmp );
+        		loopbug.cascadingChain.add( tmp );
         		tmp = predNodes[ tmp ];
         	}
     	}
@@ -360,26 +383,63 @@ public class CascadingFinder {
     }
     
 	
-    public void printResultsOfTraverseTargetCodes() {
+    public void printResultsOfTraverseTargetCodes() throws IOException {
     	System.out.println("\nJX - Results of traverseTargetCodes");
     	
+    	// real bug pool
     	System.out.println("\nbugpool - " + "has " + bugpool.size() + " nodes");
     	for (LoopBug loopbug: bugpool) {
     		int nodeIndex = loopbug.nodeIndex;
-    		simplebugpool.add( gb.lastCallstack(nodeIndex) );
-    		medianbugpool.add( gb.fullCallstack(nodeIndex) );
-    	}
-    	System.out.println("\nmedianbugpool - " + "has " + medianbugpool.size() + " loops");
-    	for (String fullcallstack: medianbugpool) {
-    		System.out.println( fullcallstack );
-    	}
-    	System.out.println("\nsimplebugpool - " + "has " + simplebugpool.size() + " loops");
-    	for (String lastcallstack: simplebugpool) {
-    		System.out.println( lastcallstack );
+    		int cascadingLevel = loopbug.cascadingLevel;
+    		simplebugpool.add( "CL" + cascadingLevel + ": " + gb.lastCallstack(nodeIndex) );
+    		medianbugpool.add( "CL" + cascadingLevel + ": " + gb.fullCallstack(nodeIndex) );
+    		completebugpool.add( "CL" + cascadingLevel + ": " + fullCallstacksOfCascadingChain(loopbug) );
     	}
     	
+    	
+    	// bug pools - 
+        // write to file & print
+    	BufferedWriter cBufwriter = new BufferedWriter( new FileWriter( completebugpoolFilename ) );
+    	BufferedWriter mBufwriter = new BufferedWriter( new FileWriter( medianbugpoolFilename ) );
+    	BufferedWriter sBufwriter = new BufferedWriter( new FileWriter( simplebugpoolFilename ) );
+    	
+    	System.out.println("\ncompletebugpool(whole chain's fullcallstacks) - " + "has " + completebugpool.size() + " loops");
+    	for (String chainfullcallstacks: completebugpool) {
+    		System.out.println( chainfullcallstacks );
+    		cBufwriter.write( chainfullcallstacks + "\n" );
+    	}
+    	
+    	System.out.println("\nmedianbugpool(loop's fullcallstack) - " + "has " + medianbugpool.size() + " loops");
+    	for (String fullcallstack: medianbugpool) {
+    		System.out.println( fullcallstack );
+    		mBufwriter.write( fullcallstack + "\n" );
+    	}
+    	
+    	System.out.println("\nsimplebugpool(loop's lastcallstack) - " + "has " + simplebugpool.size() + " loops");
+    	for (String lastcallstack: simplebugpool) {
+    		System.out.println( lastcallstack );
+    		sBufwriter.write( lastcallstack + "\n" );
+    	}
+    	
+    	cBufwriter.flush();
+    	cBufwriter.close();
+    	mBufwriter.flush();
+    	mBufwriter.close();
+    	sBufwriter.flush();
+    	sBufwriter.close();
     }
-	
+    
+    public String fullCallstacksOfCascadingChain(LoopBug loopbug) {
+    	String result = "";
+    	for (int nodeindex: loopbug.cascadingChain)
+    		result += gb.fullCallstack(nodeindex) + " | ";
+    	return result;
+    }
+
+    
+    
+    
+    
     
     
     /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -390,34 +450,37 @@ public class CascadingFinder {
     	
     	int nodeIndex;
     	int cascadingLevel;
-    	LinkedList<Integer> lockchain;
+    	LinkedList<Integer> cascadingChain;
     	
     	LoopBug(int nodeIndex) {
     		this.nodeIndex = nodeIndex;
     		this.cascadingLevel = 1;
-    		this.lockchain = new LinkedList<Integer>();
+    		this.cascadingChain = new LinkedList<Integer>();
     	}
     	
     	LoopBug(int nodeIndex, int cascadingLevel) {
     		this.nodeIndex = nodeIndex;
     		this.cascadingLevel = cascadingLevel;
-    		this.lockchain = new LinkedList<Integer>();
+    		this.cascadingChain = new LinkedList<Integer>();
     	}
 
+    	//useless now
 		@Override
 		public int compareTo(LoopBug arg0) {
 			// TODO Auto-generated method stub
-			return 0;
+			return -1;   //couldn't 0, should be consistent with equals()
 		}
 		
+		//useless now
     	@Override
     	public int hashCode() {
     		int result = 17;
     		result = 31 * result + nodeIndex;
-    		result = 31 * result + lockchain.hashCode();
+    		result = 31 * result + cascadingChain.hashCode();
     		return result;
     	}
     	
+    	//useless now
     	@Override
     	public boolean equals(Object obj) {
     		if ( this == obj )
@@ -426,7 +489,7 @@ public class CascadingFinder {
     			return false;
     		LoopBug other = (LoopBug) obj;
     		return nodeIndex == other.nodeIndex &&
-    				( lockchain == other.lockchain || (lockchain!=null && lockchain.equals(other.lockchain)) );
+    				( cascadingChain == other.cascadingChain || (cascadingChain!=null && cascadingChain.equals(other.cascadingChain)) );
     	}
     	
     	@Override
