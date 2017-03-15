@@ -37,13 +37,14 @@ public class CascadingFinder {
     Set<LoopBug> bugpool = new TreeSet<LoopBug>();          //for now, only one bug pool for whole code snippets
     
     // for output
-    String simplebugpoolFilename = "output/simplebugpool.txt";
-    String medianbugpoolFilename = "output/medianbugpool.txt";
-    String completebugpoolFilename = "output/completebugpool.txt";
+    String simplebugpoolFilename = "output/simple_bugpool.txt";
+    String medianbugpoolFilename = "output/median_bugpool.txt";
+    String simplechainbugpoolFilename = "output/simplechain_bugpool.txt";
+    String medianchainbugpoolFilename = "output/medianchain_bugpool.txt";
     Set<String> simplebugpool = new TreeSet<String>();
 	Set<String> medianbugpool = new TreeSet<String>();
-	Set<String> completebugpool = new TreeSet<String>();
-
+	Set<String> simplechainbugpool = new TreeSet<String>();
+	Set<String> medianchainbugpool = new TreeSet<String>();
 	
 	
 	CascadingFinder(String projectDir, GraphBuilder graphBuilder) {
@@ -401,30 +402,41 @@ public class CascadingFinder {
     	for (LoopBug loopbug: bugpool) {
     		int nodeIndex = loopbug.nodeIndex;
     		int cascadingLevel = loopbug.cascadingLevel;
-    		simplebugpool.add( "CL" + cascadingLevel + ": " + gb.lastCallstack(nodeIndex) );
+    		medianchainbugpool.add( "CL" + cascadingLevel + ": " + fullCallstacksOfCascadingChain(loopbug) );
+    		simplechainbugpool.add( "CL" + cascadingLevel + ": " + lastCallstacksOfCascadingChain(loopbug) );
     		medianbugpool.add( "CL" + cascadingLevel + ": " + gb.fullCallstack(nodeIndex) );
-    		completebugpool.add( "CL" + cascadingLevel + ": " + fullCallstacksOfCascadingChain(loopbug) );
+    		simplebugpool.add( "CL" + cascadingLevel + ": " + gb.lastCallstack(nodeIndex) );
     	}
-    	
+
     	// bug pools - 
         // write to file & print
-    	completebugpoolFilename = Paths.get(projectDir, packageDir, completebugpoolFilename).toString();
+    	medianchainbugpoolFilename = Paths.get(projectDir, packageDir, medianchainbugpoolFilename).toString();
+    	simplechainbugpoolFilename = Paths.get(projectDir, packageDir, simplechainbugpoolFilename).toString();
     	medianbugpoolFilename = Paths.get(projectDir, packageDir, medianbugpoolFilename).toString();
     	simplebugpoolFilename = Paths.get(projectDir, packageDir, simplebugpoolFilename).toString();
     	System.out.println( "\nwrite to files - " );
-    	System.out.println( "\t" + completebugpoolFilename );
+    	System.out.println( "\t" + medianchainbugpoolFilename );
+    	System.out.println( "\t" + simplechainbugpoolFilename );
     	System.out.println( "\t" + medianbugpoolFilename );
     	System.out.println( "\t" + simplebugpoolFilename );
 		
-    	BufferedWriter cBufwriter = new BufferedWriter( new FileWriter( completebugpoolFilename ) );
+    	BufferedWriter mcBufwriter = new BufferedWriter( new FileWriter( medianchainbugpoolFilename ) );
+    	BufferedWriter scBufwriter = new BufferedWriter( new FileWriter( simplechainbugpoolFilename ) );
     	BufferedWriter mBufwriter = new BufferedWriter( new FileWriter( medianbugpoolFilename ) );
     	BufferedWriter sBufwriter = new BufferedWriter( new FileWriter( simplebugpoolFilename ) );
-    	
-    	System.out.println("\ncompletebugpool(whole chain's fullcallstacks) - " + "has " + completebugpool.size() + " loops");
-    	cBufwriter.write( completebugpool.size() + "\n" );
-    	for (String chainfullcallstacks: completebugpool) {
+
+    	System.out.println("\ncompletebugpool(whole chain's fullcallstacks) - " + "has " + medianchainbugpool.size() + " loops");
+    	mcBufwriter.write( medianchainbugpool.size() + "\n" );
+    	for (String chainfullcallstacks: medianchainbugpool) {
     		System.out.println( chainfullcallstacks );
-    		cBufwriter.write( chainfullcallstacks + "\n" );
+    		mcBufwriter.write( chainfullcallstacks + "\n" );
+    	}
+    	
+    	System.out.println("\ncompletebugpool(whole chain's fullcallstacks) - " + "has " + simplechainbugpool.size() + " loops");
+    	scBufwriter.write( simplechainbugpool.size() + "\n" );
+    	for (String chainfullcallstacks: simplechainbugpool) {
+    		System.out.println( chainfullcallstacks );
+    		scBufwriter.write( chainfullcallstacks + "\n" );
     	}
     	
     	System.out.println("\nmedianbugpool(loop's fullcallstack) - " + "has " + medianbugpool.size() + " loops");
@@ -441,12 +453,10 @@ public class CascadingFinder {
     		sBufwriter.write( lastcallstack + "\n" );
     	}
     	
-    	cBufwriter.flush();
-    	cBufwriter.close();
-    	mBufwriter.flush();
-    	mBufwriter.close();
-    	sBufwriter.flush();
-    	sBufwriter.close();
+    	mcBufwriter.flush(); mcBufwriter.close();
+    	scBufwriter.flush(); scBufwriter.close();
+    	mBufwriter.flush();  mBufwriter.close();
+    	sBufwriter.flush();  sBufwriter.close();
     }
     
     public String fullCallstacksOfCascadingChain(LoopBug loopbug) {
@@ -455,9 +465,15 @@ public class CascadingFinder {
     		result += gb.fullCallstack(nodeindex) + " | ";
     	return result;
     }
+    
+    public String lastCallstacksOfCascadingChain(LoopBug loopbug) {
+    	String result = "";
+    	for (int nodeindex: loopbug.cascadingChain)
+    		result += gb.lastCallstack(nodeindex) + " | ";
+    	return result;
+    }
+    
 
-    
-    
     
     
     
