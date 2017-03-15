@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -23,16 +24,19 @@ public class CascadingFinder {
     //ArrayList<Integer> targetcodeLoops;  				//never used, just ps for time-consuming loops?
     ArrayList<Integer> targetcodeLocks;   				//set of lock nodes for a single target code snippet
     BitSet traversedNodes;                      		//tmp var. set of all nodes for a single target code snippet
-    int[] predNodes; 
-    //End-Added
     
     ArrayList<Integer> allloopitems = new ArrayList<Integer>();
     LinkedHashMap<Integer, Integer> targetblocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
     LinkedHashMap<Integer, Integer> lockblocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
     LinkedHashMap<Integer, Integer> loopblocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
 	
-    int CASCADING_LEVEL = 10;  //minimum:2; default:3;
+    // for results
+    int CASCADING_LEVEL = 10;                               //minimum:2; default:3;
+    HashMap<Integer, Integer>[] predNodes = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for different threads
+    HashMap<Integer, Integer>[] upNodes   = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for the same thread
     Set<LoopBug> bugpool = new TreeSet<LoopBug>();          //for now, only one bug pool for whole code snippets
+    
+    // for output
     String simplebugpoolFilename = "output/simplebugpool.txt";
     String medianbugpoolFilename = "output/medianbugpool.txt";
     String completebugpoolFilename = "output/completebugpool.txt";
@@ -50,7 +54,12 @@ public class CascadingFinder {
         //targetcodeLoops = new ArrayList<Integer>();                              //never used, just ps for time-consuming loops?
         this.targetcodeLocks = new ArrayList<Integer>();   //set of lock nodes for a single target code snippet
         this.traversedNodes = new BitSet();                //tmp var. set of all nodes for a single target code snippet
-        this.predNodes = new int[this.gb.nList.size()];
+        
+        for (int i = 1; i <= CASCADING_LEVEL; i++) {
+        	this.predNodes[i] = new HashMap<Integer, Integer>();
+        	this.upNodes[i]   = new HashMap<Integer, Integer>();
+        }
+        //this.predNodes = new int[this.gb.nList.size()];
 	}
 	
 	
@@ -273,21 +282,25 @@ public class CascadingFinder {
     		return;
     	}
     	Set<Integer> curbatchLocks = new TreeSet<Integer>( firstbatchLocks );
-    	int cascadingLevel = 2;   //this is the minimum level for lock-related cascading bugs
+    	int curCascadingLevel = 2;   //this is the minimum level for lock-related cascading bugs
+        for (int i = 1; i <= CASCADING_LEVEL; i++) {
+        	predNodes[i].clear();
+        	upNodes[i].clear();
+        }
     	int tmpbatch = 0;
     	
-    	while ( cascadingLevel <= CASCADING_LEVEL ) {
+    	while ( curCascadingLevel <= CASCADING_LEVEL ) {
     		// Find affected locks in different threads
-    		Set<Integer> nextbatchLocks = findNextbatchLocksInDiffThreads( curbatchLocks );
+    		Set<Integer> nextbatchLocks = findNextbatchLocksInDiffThreads( curbatchLocks, curCascadingLevel );
     		System.out.println("batch #" + (++tmpbatch) + ":#locks=" + curbatchLocks.size() + " <--- #" + tmpbatch + ".5:#locks=" + nextbatchLocks.size() );
     		// Find affected locks based on 1 in the same thread
-    		curbatchLocks = findNextbatchLocksInSameThread( nextbatchLocks, cascadingLevel );
+    		curbatchLocks = findNextbatchLocksInSameThread( nextbatchLocks, curCascadingLevel );
     		System.out.println("batch #" + (tmpbatch+1) + ":#intermediate locks=" + curbatchLocks.size()  );
     		if ( curbatchLocks.size() <= 0 ) {
     			System.out.println( "JX - CascadingBugDetection - finished normally" );
     			break;
     		}
-    		cascadingLevel ++;
+    		curCascadingLevel ++;
     	}
     	
     	System.out.println( "JX - CascadingBugDetection - finished with CASCADING_LEVEL = " + CASCADING_LEVEL );
@@ -295,7 +308,7 @@ public class CascadingFinder {
     
     
     // JX - Find affected locks in different threads
-    public Set<Integer> findNextbatchLocksInDiffThreads( Set<Integer> batchLocks ) {
+    public Set<Integer> findNextbatchLocksInDiffThreads( Set<Integer> batchLocks, int curCascadingLevel ) {
     	//ArrayList<Integer> nextbatchLocks = new ArrayList<Integer>();
     	Set<Integer> nextbatchLocks = new TreeSet<Integer>();
     	for (int lockindex: batchLocks) {
@@ -307,7 +320,7 @@ public class CascadingFinder {
 	    			if (lockindex == index) continue;
 	                if ( gb.flippedorder(lockindex, index) ) {
 	                	nextbatchLocks.add( index );
-	                	predNodes[index] = lockindex;
+	                	predNodes[curCascadingLevel].put(index, lockindex);
 	                }
 	    		}
     		}
@@ -318,7 +331,7 @@ public class CascadingFinder {
     			for (int index: list) {
     				if ( gb.flippedorder(lockindex, index) ) {
     					nextbatchLocks.add( index );
-    					predNodes[index] = lockindex;
+    					predNodes[curCascadingLevel].put(index, lockindex);
     				}
     			}
     		}
@@ -328,7 +341,7 @@ public class CascadingFinder {
     
     
     // JX - Find affected locks based on 'findNextbatchLocksInDiffThreads' in the same thread
-    public Set<Integer> findNextbatchLocksInSameThread( Set<Integer> batchLocks, int cascadingLevel ) {
+    public Set<Integer> findNextbatchLocksInSameThread( Set<Integer> batchLocks, int curCascadingLevel ) {
     	Set<Integer> nextbatchLocks = new TreeSet<Integer>();
 		for (int index: batchLocks) {
 			int beginIndex = index;
@@ -343,13 +356,13 @@ public class CascadingFinder {
 				if ( gb.getNodeOPTY(k).equals("LoopBegin") ) {
 					loopflag = 1;
 		    		// add to bug pool
-					predNodes[k] = index;
-					addToBugPool( k, cascadingLevel );
+					upNodes[curCascadingLevel].put(k, index);
+					addToBugPool( k, curCascadingLevel );
 				}
 				if ( gb.getNodeOPTY(k).equals("LockRequire") ) {
 					if ( !gb.getNodePIDOPVAL0(k).equals(pidopval0) )
 						nextbatchLocks.add( k );
-						predNodes[k] = index;
+						upNodes[curCascadingLevel].put(k, index);
 					//jx: it seems no need to check if the LockReuire has LockRelease or not
 				}
 			}
@@ -367,11 +380,14 @@ public class CascadingFinder {
     		loopbug.cascadingChain.add( nodeIndex );
     	}
     	else if ( cascadingLevel >= 2 ) { // Lock-related loop bug
+        	loopbug.cascadingChain.add( nodeIndex );
         	int tmp = nodeIndex;
-        	while ( tmp != 0 ) {
-        		loopbug.cascadingChain.add( tmp );
-        		tmp = predNodes[ tmp ];
-        	}
+    		for (int i=cascadingLevel; i>=2; i--) {
+    			tmp = upNodes[i].get(tmp);
+    			loopbug.cascadingChain.add( tmp );
+    			tmp = predNodes[i].get(tmp);
+    			loopbug.cascadingChain.add( tmp );
+    		}
     	}
     	System.out.println( loopbug );
     }
