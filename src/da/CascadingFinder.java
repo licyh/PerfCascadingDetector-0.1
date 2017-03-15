@@ -343,6 +343,7 @@ public class CascadingFinder {
 				if ( gb.getNodeOPTY(k).equals("LoopBegin") ) {
 					loopflag = 1;
 		    		// add to bug pool
+					predNodes[k] = index;
 					addToBugPool( k, cascadingLevel );
 				}
 				if ( gb.getNodeOPTY(k).equals("LockRequire") ) {
