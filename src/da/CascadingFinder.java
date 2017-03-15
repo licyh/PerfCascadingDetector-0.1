@@ -386,7 +386,7 @@ public class CascadingFinder {
     // SubClasses
     /////////////////////////////////////////////////////////////////////////////////////////////////
     
-    class LoopBug {
+    class LoopBug implements Comparable<LoopBug> {
     	
     	int nodeIndex;
     	int cascadingLevel;
@@ -403,7 +403,13 @@ public class CascadingFinder {
     		this.cascadingLevel = cascadingLevel;
     		this.lockchain = new LinkedList<Integer>();
     	}
-    	
+
+		@Override
+		public int compareTo(LoopBug arg0) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+		
     	@Override
     	public int hashCode() {
     		int result = 17;
@@ -428,6 +434,7 @@ public class CascadingFinder {
     		String str = "BugLoop - cascadingLevel=" + cascadingLevel + " - " + gb.lastCallstack(nodeIndex);
     		return str;
     	}
+
     }
 }
 
