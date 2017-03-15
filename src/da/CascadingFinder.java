@@ -391,32 +391,34 @@ public class CascadingFinder {
     	
     	// bug pools - 
         // write to file & print
-
-		//test
-    	String completefilename = Paths.get(projectDir, packageDir, completebugpoolFilename).toString();
-    	String medianfilename = Paths.get(projectDir, packageDir, medianbugpoolFilename).toString();
-    	String simplefilename = Paths.get(projectDir, packageDir, simplebugpoolFilename).toString();
-		System.out.println( simplefilename );
-		System.out.println( medianfilename );
-		System.out.println( completefilename );
+    	completebugpoolFilename = Paths.get(projectDir, packageDir, completebugpoolFilename).toString();
+    	medianbugpoolFilename = Paths.get(projectDir, packageDir, medianbugpoolFilename).toString();
+    	simplebugpoolFilename = Paths.get(projectDir, packageDir, simplebugpoolFilename).toString();
+    	System.out.println( "\nwrite to files - " );
+    	System.out.println( "\t" + completebugpoolFilename );
+    	System.out.println( "\t" + medianbugpoolFilename );
+    	System.out.println( "\t" + simplebugpoolFilename );
 		
-    	BufferedWriter cBufwriter = new BufferedWriter( new FileWriter( completefilename ) );
-    	BufferedWriter mBufwriter = new BufferedWriter( new FileWriter( medianfilename ) );
-    	BufferedWriter sBufwriter = new BufferedWriter( new FileWriter( simplefilename ) );
+    	BufferedWriter cBufwriter = new BufferedWriter( new FileWriter( completebugpoolFilename ) );
+    	BufferedWriter mBufwriter = new BufferedWriter( new FileWriter( medianbugpoolFilename ) );
+    	BufferedWriter sBufwriter = new BufferedWriter( new FileWriter( simplebugpoolFilename ) );
     	
     	System.out.println("\ncompletebugpool(whole chain's fullcallstacks) - " + "has " + completebugpool.size() + " loops");
+    	cBufwriter.write( completebugpool.size() + "\n" );
     	for (String chainfullcallstacks: completebugpool) {
     		System.out.println( chainfullcallstacks );
     		cBufwriter.write( chainfullcallstacks + "\n" );
     	}
     	
     	System.out.println("\nmedianbugpool(loop's fullcallstack) - " + "has " + medianbugpool.size() + " loops");
+    	mBufwriter.write( medianbugpool.size() + "\n" );
     	for (String fullcallstack: medianbugpool) {
     		System.out.println( fullcallstack );
     		mBufwriter.write( fullcallstack + "\n" );
     	}
     	
     	System.out.println("\nsimplebugpool(loop's lastcallstack) - " + "has " + simplebugpool.size() + " loops");
+    	sBufwriter.write( simplebugpool.size() + "\n" );
     	for (String lastcallstack: simplebugpool) {
     		System.out.println( lastcallstack );
     		sBufwriter.write( lastcallstack + "\n" );
