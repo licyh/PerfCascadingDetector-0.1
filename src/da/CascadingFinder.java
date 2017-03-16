@@ -34,7 +34,7 @@ public class CascadingFinder {
     int CASCADING_LEVEL = 10;                               //minimum:2; default:3;
     HashMap<Integer, Integer>[] predNodes = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for different threads
     HashMap<Integer, Integer>[] upNodes   = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for the same thread
-    Set<LoopBug> bugpool = new TreeSet<LoopBug>();          //for now, only one bug pool for whole code snippets
+    Set<LoopBug> bugpool = new HashSet<LoopBug>();          //for now, only one bug pool for whole code snippets
     
     // for output
     String simplebugpoolFilename = "output/simple_bugpool.txt";
@@ -482,7 +482,7 @@ public class CascadingFinder {
     // SubClasses
     /////////////////////////////////////////////////////////////////////////////////////////////////
     
-    class LoopBug implements Comparable<LoopBug> {
+    class LoopBug { // implements Comparable<LoopBug> {
     	
     	int nodeIndex;
     	int cascadingLevel;
@@ -501,6 +501,7 @@ public class CascadingFinder {
     	}
 
     	//useless now
+    	/*
 		@Override
 		public int compareTo(LoopBug o) {
 			// TODO Auto-generated method stub
@@ -509,6 +510,7 @@ public class CascadingFinder {
 					+ (cascadingLevel - o.cascadingLevel)
 					+ (cascadingChain.equals(o.cascadingChain) ? 0:1); 
 		}
+		*/
 		
 		//useless now
     	@Override
