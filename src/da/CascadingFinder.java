@@ -32,8 +32,10 @@ public class CascadingFinder {
 	
     // for results
     int CASCADING_LEVEL = 10;                               //minimum:2; default:3;
-    HashMap<Integer, Integer>[] predNodes = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for different threads
-    HashMap<Integer, Integer>[] upNodes   = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for the same thread
+    @SuppressWarnings("unchecked")
+	HashMap<Integer, Integer>[] predNodes = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for different threads
+    @SuppressWarnings("unchecked")
+	HashMap<Integer, Integer>[] upNodes   = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for the same thread
     Set<LoopBug> bugpool = new HashSet<LoopBug>();          //for now, only one bug pool for whole code snippets
     
     // for output
@@ -482,7 +484,7 @@ public class CascadingFinder {
     // SubClasses
     /////////////////////////////////////////////////////////////////////////////////////////////////
     
-    class LoopBug { // implements Comparable<LoopBug> {
+    class LoopBug { 
     	
     	int nodeIndex;
     	int cascadingLevel;
@@ -499,37 +501,26 @@ public class CascadingFinder {
     		this.cascadingLevel = cascadingLevel;
     		this.cascadingChain = new LinkedList<Integer>();
     	}
-
-    	//useless now
-    	/*
-		@Override
-		public int compareTo(LoopBug o) {
-			// TODO Auto-generated method stub
-			//return -1;   //couldn't 0, should be consistent with equals()
-			return (nodeIndex - o.nodeIndex)
-					+ (cascadingLevel - o.cascadingLevel)
-					+ (cascadingChain.equals(o.cascadingChain) ? 0:1); 
-		}
-		*/
+    	
 		
 		//useless now
     	@Override
     	public int hashCode() {
     		int result = 17;
-    		result = 31 * result + nodeIndex;
-    		result = 31 * result + cascadingLevel;
-    		result = 31 * result + cascadingChain.hashCode();
+    		//result = 31 * result + nodeIndex;
+    		//result = 31 * result + cascadingLevel;
+    		//result = 31 * result + cascadingChain.hashCode();
     		return result;
     	}
     	
     	//useless now
     	@Override
-    	public boolean equals(Object obj) {
-    		if ( this == obj )
+    	public boolean equals(Object o) {
+    		if ( this == o )
     			return true;
-    		if ( obj == null || this.getClass() != obj.getClass() )
+    		if ( o == null || this.getClass() != o.getClass() )
     			return false;
-    		LoopBug other = (LoopBug) obj;
+    		LoopBug other = (LoopBug) o;
     		return nodeIndex == other.nodeIndex
     				&& cascadingLevel == other.cascadingLevel
     				&& ( cascadingChain == other.cascadingChain || (cascadingChain!=null && cascadingChain.equals(other.cascadingChain)) );
