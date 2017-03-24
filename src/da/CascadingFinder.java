@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -36,7 +37,8 @@ public class CascadingFinder {
 	HashMap<Integer, Integer>[] predNodes = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for different threads
     @SuppressWarnings("unchecked")
 	HashMap<Integer, Integer>[] upNodes   = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for the same thread
-    Set<LoopBug> bugpool = new HashSet<LoopBug>();          //for now, only one bug pool for whole code snippets
+    Set<LoopBug> bugpool = new HashSet<LoopBug>();          //dynamic loop instances, only one bug pool for whole code snippets
+    Set<Integer> bugnodeset = new HashSet<Integer>();       //GraphBuilder's node index set for bugpool 
     
     // for output
     String simplebugpoolFilename = "output/simple_bugpool.txt";
@@ -400,15 +402,18 @@ public class CascadingFinder {
     	System.out.println("\nJX - Results of traverseTargetCodes");
     	
     	// real bug pool
-    	System.out.println("\nbugpool - " + "has " + bugpool.size() + " nodes");
+    	System.out.println("\nbugpool - " + "has " + bugpool.size() + " dynamic instances ");
+    	
     	for (LoopBug loopbug: bugpool) {
     		int nodeIndex = loopbug.nodeIndex;
     		int cascadingLevel = loopbug.cascadingLevel;
+    		bugnodeset.add( nodeIndex );
     		medianchainbugpool.add( "CL" + cascadingLevel + ": " + fullCallstacksOfCascadingChain(loopbug) );
     		simplechainbugpool.add( "CL" + cascadingLevel + ": " + lastCallstacksOfCascadingChain(loopbug) );
     		medianbugpool.add( "CL" + cascadingLevel + ": " + gb.fullCallstack(nodeIndex) );
     		simplebugpool.add( "CL" + cascadingLevel + ": " + gb.lastCallstack(nodeIndex) );
     	}
+    	System.out.println("\t\t ie, " + bugnodeset.size() + " nodes out of total " + gb.nList.size() + " nodes");
 
     	// bug pools - 
         // write to file & print
@@ -510,7 +515,8 @@ public class CascadingFinder {
     		//result = 31 * result + nodeIndex;
     		//result = 31 * result + cascadingLevel;
     		//result = 31 * result + cascadingChain.hashCode();
-    		return result;
+    		//return result;
+    		return Objects.hash( nodeIndex, cascadingLevel, cascadingChain );
     	}
     	
     	//useless now
