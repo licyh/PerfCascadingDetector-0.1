@@ -402,8 +402,7 @@ public class CascadingFinder {
     	System.out.println("\nJX - Results of traverseTargetCodes");
     	
     	// real bug pool
-    	System.out.println("\nbugpool - " + "has " + bugpool.size() + " dynamic instances ");
-    	
+    	System.out.print("\nbugpool - " + "has " + bugpool.size() + " dynamic instances");
     	for (LoopBug loopbug: bugpool) {
     		int nodeIndex = loopbug.nodeIndex;
     		int cascadingLevel = loopbug.cascadingLevel;
@@ -413,7 +412,7 @@ public class CascadingFinder {
     		medianbugpool.add( "CL" + cascadingLevel + ": " + gb.fullCallstack(nodeIndex) );
     		simplebugpool.add( "CL" + cascadingLevel + ": " + gb.lastCallstack(nodeIndex) );
     	}
-    	System.out.println("\t\t ie, " + bugnodeset.size() + " nodes out of total " + gb.nList.size() + " nodes");
+    	System.out.println(", ie, " + bugnodeset.size() + " nodes out of total " + gb.nList.size() + " nodes");
 
     	// bug pools - 
         // write to file & print
@@ -469,14 +468,14 @@ public class CascadingFinder {
     public String fullCallstacksOfCascadingChain(LoopBug loopbug) {
     	String result = "";
     	for (int nodeindex: loopbug.cascadingChain)
-    		result += gb.fullCallstack(nodeindex) + " | ";
+    		result += gb.fullCallstack(nodeindex) + "|";
     	return result;
     }
     
     public String lastCallstacksOfCascadingChain(LoopBug loopbug) {
     	String result = "";
     	for (int nodeindex: loopbug.cascadingChain)
-    		result += gb.lastCallstack(nodeindex) + " | ";
+    		result += gb.lastCallstack(nodeindex) + "|";
     	return result;
     }
     
@@ -514,7 +513,7 @@ public class CascadingFinder {
     		int result = 17;
     		//result = 31 * result + nodeIndex;
     		//result = 31 * result + cascadingLevel;
-    		//result = 31 * result + cascadingChain.hashCode();
+    		//result = 31 * result + cascadingChain.hashCode();         //this one has some problem!!!   or maybe the below equals' problem
     		//return result;
     		return Objects.hash( nodeIndex, cascadingLevel, cascadingChain );
     	}

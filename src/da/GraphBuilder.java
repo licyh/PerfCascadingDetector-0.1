@@ -493,9 +493,9 @@ public class GraphBuilder {
 	        // Modified by JX
 	        //sti = "@" + i + ":" + 
 	        sti = 
-	        	si.getElementsByTagName("Class").item(0).getTextContent()  + " "
-	            + si.getElementsByTagName("Method").item(0).getTextContent() + " "
-	            + si.getElementsByTagName("Line").item(0).getTextContent();
+	        	si.getElementsByTagName("Class").item(0).getTextContent() + "-"       //jx-modified: " "->"-"
+	            + si.getElementsByTagName("Method").item(0).getTextContent() + "-"     //jx-modified: " "->"-"
+	            + si.getElementsByTagName("Line").item(0).getTextContent() + ";";
 	        break;
 	    }
 	    return sti;		
