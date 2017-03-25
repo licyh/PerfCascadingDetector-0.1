@@ -144,6 +144,9 @@ import com.ibm.wala.viz.PDFViewUtil;
 import android.graphics.Path;
 import sa.tc.HDrpc;
 import sa.tc.MRrpc;
+import sa.util.PDFCallGraph;
+import sa.util.PDFTypeHierarchy;
+import sa.util.PDFWalaIR;
 
 
 public class JXLocks {
@@ -268,11 +271,15 @@ public class JXLocks {
       // Phase 2 - deal with loops
       findNestedLoopsInLoops();
       
-      findTimeConsumingOperationsInLoops();
-      //printTcOperationTypes();   //for test
       
+      // init
+      findTimeConsumingOperationsInLoops();     // for all loops
+      //printTcOperationTypes();                //for test
       
-      printBugLoops();
+      // Static Pruning
+      staticPruningForCriticalLoops();
+
+      
       //findLoopingLockingFunctions();
       
       
@@ -2455,72 +2462,14 @@ public class JXLocks {
   
   
   /***********************************************************************************
-   * printOnlyBugLoops
+   * staticPruningForCriticalLoops
+   * Note: ONLY for Suspected/Critical loops that are read from da(dynamic analysis)
    **********************************************************************************/
-
-  
-  static public void readBugLoops() {
-	  System.out.println("\nJX-readBugLoops");
-	  
-	        
+  public static void staticPruningForCriticalLoops() {
+	  System.out.println("\nJX-staticPruningForCriticalLoops"); 
+	  StaticPruning printBugLoops = new StaticPruning(functions_with_loops, Paths.get(projectDir, "src/da/").toString());
+	  printBugLoops.doWork();
   }
-  
-  
-  
-  /**
-   * 
-   */
-  public static void printBugLoops() {
-	  System.out.println("\nJX-printBugLoops");
-
-	  List<String> loopClasses = new ArrayList<String>();
-	  List<String> loopMethods = new ArrayList<String>();
-	  List<String> loopLinenumbers = new ArrayList<String>();
-	  String filepath = projectDir + "src/da/" + "output/simplebugpool.txt";
-	  
-	  BufferedReader bufreader;
-	  String tmpline;
-	  try {
-		  bufreader = new BufferedReader( new FileReader( filepath ) );
-		  tmpline = bufreader.readLine(); // the 1st line is useless
-        	
-		  while ( (tmpline = bufreader.readLine()) != null ) {
-			  String[] strs = tmpline.trim().split("\\s+");
-			  if ( tmpline.trim().length() > 0 ) {
-				  loopClasses.add( strs[0] );
-				  loopMethods.add( strs[1] );
-				  loopLinenumbers.add( strs[2] );
-			  }
-		  }
-		  bufreader.close();
-		
-	  } catch (Exception e) {
-		  // TODO Auto-generated catch block
-		  System.out.println("JX - ERROR - when reading da/output/simplebugpool.txt");
-		  e.printStackTrace();
-	  }
-	  System.out.println("JX - successfully read " + loopClasses.size() + " Bug Loops from " + filepath);
-	  
-      // tmp!!!!	  
-	  int count = 0;
-	  for (List<LoopInfo> loops: functions_with_loops.values() )
-		  for (LoopInfo loop: loops)
-			  if (loop.numOfTcOperations_recusively > 0) {
-				  String classname = MRrpc.format( loop.function.getMethod().getDeclaringClass().getName().toString() );
-				  String methodname = loop.function.getMethod().getName().toString();
-				  String linenumber = String.valueOf( loop.line_number );
-				  if (loopClasses.contains(classname) && loopMethods.contains(methodname)) {
-					  count ++;
-					  System.out.println( loop.toString_detail() );
-					  
-				  }
-			  }
-	  System.out.println( "count = " + count );
-
-  }
-  
-  
-  
   
   
   

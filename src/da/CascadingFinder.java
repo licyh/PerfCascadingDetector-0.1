@@ -32,6 +32,7 @@ public class CascadingFinder {
     LinkedHashMap<Integer, Integer> loopblocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
 	
     // for results
+    boolean ONLY_LOCK_RELATED_BUGS = true;                  //default
     int CASCADING_LEVEL = 10;                               //minimum:2; default:3;
     @SuppressWarnings("unchecked")
 	HashMap<Integer, Integer>[] predNodes = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for different threads
@@ -266,7 +267,11 @@ public class CascadingFinder {
     	// TODO - for Loop - suspected bugs
     	if ( gb.getNodeOPTY(x).equals("LoopBegin") ) {
     		// add to bug pool
-			addToBugPool( x, 1 );
+    		if ( ONLY_LOCK_RELATED_BUGS ) {
+    			//Do Nothing
+    		} else {
+    			addToBugPool( x, 1 );
+    		}
     	}
 
         List<Pair> list = gb.edge.get(x);
