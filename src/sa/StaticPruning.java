@@ -66,7 +66,6 @@ public class StaticPruning {
 		String tmpline;
 		int total = Integer.parseInt( bufreader.readLine() ); // the 1st line is useless
 		int count = 0;
-		int onlylockrelated = 0;
 		Set<String> tmpset = new HashSet<String>();
 		
 		while ( (tmpline = bufreader.readLine()) != null ) {
@@ -77,21 +76,17 @@ public class StaticPruning {
 				if ( isTimeConsumingLoop(codepoint) ) {
 					bufwriter.write( tmpline + "\n" );
 					count ++;
-					if (cascadingLevel >= 2)  {
-						onlylockrelated ++;
-						tmpset.add( codepoint );
-					}
+					tmpset.add( codepoint );
 				}
 			}
 		}
 		// summary -
-		bufwriter.write( "#Lock-related(CL2~CLn): " + onlylockrelated + " in #codepoint: " + tmpset.size() + "\n" );
+		bufwriter.write( "summary - " + count + "(#static codepoints=" + tmpset.size() + ")" );
 		bufreader.close();
 		bufwriter.flush();
     	bufwriter.close();
 		System.out.println("JX - successfully read " + total + " Suspected/Critical Bug Loops from " + infilepath);
-    	System.out.println("JX - successfully write " + count + " time-consuming Bug Loops into " + outfilepath);
-    	System.out.println("     #Lock-related(CL2~CLn): " + onlylockrelated + " in #codepoint: " + tmpset.size());
+    	System.out.println("JX - successfully write " + count + "(#static codepoints=" + tmpset.size() + ") time-consuming Bug Loops into " + outfilepath);
 	}
 	
 	public boolean isTimeConsumingLoop(String codepoint) {

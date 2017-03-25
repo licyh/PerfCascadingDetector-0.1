@@ -407,7 +407,8 @@ public class CascadingFinder {
     	System.out.println("\nJX - Results of traverseTargetCodes");
     	
     	// real bug pool
-    	System.out.print("\nbugpool - " + "has " + bugpool.size() + " dynamic instances");
+    	System.out.print("\nbugpool - " + "has " + bugpool.size() + " dynamic loop instances");
+    	Set<String> tmpset = new HashSet<String>();
     	for (LoopBug loopbug: bugpool) {
     		int nodeIndex = loopbug.nodeIndex;
     		int cascadingLevel = loopbug.cascadingLevel;
@@ -416,8 +417,9 @@ public class CascadingFinder {
     		simplechainbugpool.add( "CL" + cascadingLevel + ": " + lastCallstacksOfCascadingChain(loopbug) );
     		medianbugpool.add( "CL" + cascadingLevel + ": " + gb.fullCallstack(nodeIndex) );
     		simplebugpool.add( "CL" + cascadingLevel + ": " + gb.lastCallstack(nodeIndex) );
+    		tmpset.add( gb.lastCallstack(nodeIndex) );
     	}
-    	System.out.println(", ie, " + bugnodeset.size() + " nodes out of total " + gb.nList.size() + " nodes");
+    	System.out.println(", ie, representing " + bugnodeset.size() + " nodes out of total " + gb.nList.size() + " nodes");
 
     	// bug pools - 
         // write to file & print
@@ -436,29 +438,29 @@ public class CascadingFinder {
     	BufferedWriter mBufwriter = new BufferedWriter( new FileWriter( medianbugpoolFilename ) );
     	BufferedWriter sBufwriter = new BufferedWriter( new FileWriter( simplebugpoolFilename ) );
 
-    	System.out.println("\nmedianchainbugpool(whole chain's fullcallstacks) - " + "has " + medianchainbugpool.size() + " loops");
-    	mcBufwriter.write( medianchainbugpool.size() + "\n" );
+    	System.out.println("\nmedianchainbugpool(whole chain's fullcallstacks) - " + "has " + medianchainbugpool.size() + " loops (#static codepoints=" + tmpset.size() + ")" );
+    	mcBufwriter.write( medianchainbugpool.size() + " (#static codepoints=" + tmpset.size() + ")" + "\n" );
     	for (String chainfullcallstacks: medianchainbugpool) {
     		System.out.println( chainfullcallstacks );
     		mcBufwriter.write( chainfullcallstacks + "\n" );
     	}
     	
-    	System.out.println("\nsimplechainbugpool(whole chain's lastcallstacks) - " + "has " + simplechainbugpool.size() + " loops");
-    	scBufwriter.write( simplechainbugpool.size() + "\n" );
+    	System.out.println("\nsimplechainbugpool(whole chain's lastcallstacks) - " + "has " + simplechainbugpool.size() + " loops (#static codepoints=" + tmpset.size() + ")" );
+    	scBufwriter.write( simplechainbugpool.size() + " (#static codepoints=" + tmpset.size() + ")" + "\n" );
     	for (String chainfullcallstacks: simplechainbugpool) {
     		System.out.println( chainfullcallstacks );
     		scBufwriter.write( chainfullcallstacks + "\n" );
     	}
     	
-    	System.out.println("\nmedianbugpool(loop's fullcallstack) - " + "has " + medianbugpool.size() + " loops");
-    	mBufwriter.write( medianbugpool.size() + "\n" );
+    	System.out.println("\nmedianbugpool(loop's fullcallstack) - " + "has " + medianbugpool.size() + " loops (#static codepoints=" + tmpset.size() + ")" );
+    	mBufwriter.write( medianbugpool.size() + " (#static codepoints=" + tmpset.size() + ")" + "\n" );
     	for (String fullcallstack: medianbugpool) {
     		System.out.println( fullcallstack );
     		mBufwriter.write( fullcallstack + "\n" );
     	}
     	
-    	System.out.println("\nsimplebugpool(loop's lastcallstack) - " + "has " + simplebugpool.size() + " loops");
-    	sBufwriter.write( simplebugpool.size() + "\n" );
+    	System.out.println("\nsimplebugpool(loop's lastcallstack) - " + "has " + simplebugpool.size() + " loops (#static codepoints=" + tmpset.size() + ")");
+    	sBufwriter.write( simplebugpool.size() + " (#static codepoints=" + tmpset.size() + ")" + "\n" );
     	for (String lastcallstack: simplebugpool) {
     		System.out.println( lastcallstack );
     		sBufwriter.write( lastcallstack + "\n" );
