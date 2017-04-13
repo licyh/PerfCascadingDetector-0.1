@@ -4,6 +4,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/javassist-3.20.jar"/>
 	<classpathentry kind="lib" path="lib/commons-cli-1.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/dt/spoon-core-5.5.0-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="lib/dt/org.eclipse.equinox.common-3.6.0.v20110523.jar"/>
 	<classpathentry kind="lib" path="lib/sa/wala-1.3.8-jars/android.jar"/>
 	<classpathentry kind="lib" path="lib/sa/wala-1.3.8-jars/com.ibm.wala-feature-1.3.8-sources-feature.jar"/>
 	<classpathentry kind="lib" path="lib/sa/wala-1.3.8-jars/com.ibm.wala-feature-1.3.8.jar"/>

@@ -16,137 +16,51 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.jar.JarFile;
-import java.util.regex.Pattern;
 import java.util.HashMap;
-import java.util.HashSet;
 
 //import org.eclipse.jface.window.ApplicationWindow;
 
-import com.ibm.wala.analysis.pointers.BasicHeapGraph;
-import com.ibm.wala.analysis.typeInference.TypeAbstraction;
 import com.ibm.wala.analysis.typeInference.TypeInference;
-import com.ibm.wala.cast.ir.ssa.AstAssertInstruction;
-import com.ibm.wala.cast.ir.ssa.AstEchoInstruction;
-import com.ibm.wala.cast.ir.ssa.AstIsDefinedInstruction;
-import com.ibm.wala.cast.ir.ssa.AstLexicalAccess;
-import com.ibm.wala.classLoader.CallSiteReference;
 import com.ibm.wala.classLoader.IBytecodeMethod;
-import com.ibm.wala.classLoader.IClass;
 import com.ibm.wala.classLoader.IMethod;
-import com.ibm.wala.classLoader.NewSiteReference;
-import com.ibm.wala.classLoader.ProgramCounter;
-import com.ibm.wala.core.tests.callGraph.CallGraphTestUtil;
-import com.ibm.wala.examples.properties.WalaExamplesProperties;
-import com.ibm.wala.ide.ui.SWTTreeViewer;
-import com.ibm.wala.ide.ui.ViewIRAction;
-import com.ibm.wala.ipa.callgraph.AnalysisCache;
-import com.ibm.wala.ipa.callgraph.AnalysisOptions;
-import com.ibm.wala.ipa.callgraph.AnalysisOptions.ReflectionOptions;
-import com.ibm.wala.ipa.callgraph.AnalysisScope;
 import com.ibm.wala.ipa.callgraph.CGNode;
 import com.ibm.wala.ipa.callgraph.CallGraph;
-import com.ibm.wala.ipa.callgraph.CallGraphBuilder;
-import com.ibm.wala.ipa.callgraph.CallGraphBuilderCancelException;
-import com.ibm.wala.ipa.callgraph.CallGraphStats;
-import com.ibm.wala.ipa.callgraph.Entrypoint;
-import com.ibm.wala.ipa.callgraph.impl.AllApplicationEntrypoints;
-import com.ibm.wala.ipa.callgraph.impl.DefaultContextSelector;
-import com.ibm.wala.ipa.callgraph.impl.DefaultEntrypoint;
-import com.ibm.wala.ipa.callgraph.impl.Everywhere;
-import com.ibm.wala.ipa.callgraph.impl.Util;
-import com.ibm.wala.ipa.callgraph.propagation.AllocationSiteInNodeFactory;
-import com.ibm.wala.ipa.callgraph.propagation.HeapModel;
-import com.ibm.wala.ipa.callgraph.propagation.LocalPointerKey;
-import com.ibm.wala.ipa.callgraph.propagation.PointerAnalysis;
-import com.ibm.wala.ipa.callgraph.propagation.SSAContextInterpreter;
-import com.ibm.wala.ipa.callgraph.propagation.SSAPropagationCallGraphBuilder;
-import com.ibm.wala.ipa.callgraph.propagation.cfa.nCFABuilder;
 import com.ibm.wala.ipa.cha.ClassHierarchy;
-import com.ibm.wala.ipa.cha.ClassHierarchyException;
-import com.ibm.wala.ipa.cha.IClassHierarchy;
-import com.ibm.wala.properties.WalaProperties;
 import com.ibm.wala.shrikeCT.InvalidClassFileException;
 import com.ibm.wala.ssa.IR;
 import com.ibm.wala.ssa.ISSABasicBlock;
-import com.ibm.wala.ssa.ReflectiveMemberAccess;
-import com.ibm.wala.ssa.SSAAbstractInvokeInstruction;
-import com.ibm.wala.ssa.SSAAbstractThrowInstruction;
-import com.ibm.wala.ssa.SSAAbstractUnaryInstruction;
-import com.ibm.wala.ssa.SSAAddressOfInstruction;
-import com.ibm.wala.ssa.SSAArrayLengthInstruction;
 import com.ibm.wala.ssa.SSAArrayReferenceInstruction;
-import com.ibm.wala.ssa.SSABinaryOpInstruction;
 import com.ibm.wala.ssa.SSACFG;
 import com.ibm.wala.ssa.SSACheckCastInstruction;
-import com.ibm.wala.ssa.SSAComparisonInstruction;
-import com.ibm.wala.ssa.SSAConditionalBranchInstruction;
-import com.ibm.wala.ssa.SSAConversionInstruction;
 import com.ibm.wala.ssa.SSAFieldAccessInstruction;
-import com.ibm.wala.ssa.SSAGetCaughtExceptionInstruction;
-import com.ibm.wala.ssa.SSAGotoInstruction;
-import com.ibm.wala.ssa.SSAInstanceofInstruction;
 import com.ibm.wala.ssa.SSAInstruction;
 import com.ibm.wala.ssa.SSAInvokeInstruction;
 import com.ibm.wala.ssa.SSALoadMetadataInstruction;
 import com.ibm.wala.ssa.SSAMonitorInstruction;
 import com.ibm.wala.ssa.SSANewInstruction;
-import com.ibm.wala.ssa.SSAOptions;
-import com.ibm.wala.ssa.SSAPhiInstruction;
-import com.ibm.wala.ssa.SSAReturnInstruction;
-import com.ibm.wala.ssa.SSAStoreIndirectInstruction;
-import com.ibm.wala.ssa.SSASwitchInstruction;
-import com.ibm.wala.ssa.SymbolTable;
 import com.ibm.wala.types.ClassLoaderReference;
-import com.ibm.wala.types.MethodReference;
-import com.ibm.wala.types.TypeReference;
-import com.ibm.wala.util.CancelException;
-import com.ibm.wala.util.Predicate;
 import com.ibm.wala.util.WalaException;
-import com.ibm.wala.util.collections.CollectionFilter;
-import com.ibm.wala.util.collections.HashSetFactory;
-import com.ibm.wala.util.config.AnalysisScopeReader;
-import com.ibm.wala.util.debug.Assertions;
 import com.ibm.wala.util.graph.Acyclic;
-import com.ibm.wala.util.graph.Graph;
-import com.ibm.wala.util.graph.GraphIntegrity;
-import com.ibm.wala.util.graph.GraphSlicer;
-import com.ibm.wala.util.graph.GraphIntegrity.UnsoundGraphException;
-import com.ibm.wala.util.graph.impl.SlowSparseNumberedGraph;
-import com.ibm.wala.util.graph.InferGraphRoots;
 import com.ibm.wala.util.intset.IBinaryNaturalRelation;
 import com.ibm.wala.util.intset.IntIterator;
 import com.ibm.wala.util.intset.IntPair;
-import com.ibm.wala.util.intset.IntSet;
 import com.ibm.wala.util.io.CommandLine;
-import com.ibm.wala.util.io.FileProvider;
-import com.ibm.wala.util.strings.StringStuff;
-import com.ibm.wala.viz.DotUtil;
-import com.ibm.wala.viz.PDFViewUtil;
 
-import android.graphics.Path;
 import sa.tc.HDrpc;
 import sa.tc.MRrpc;
 import sa.util.PDFCallGraph;
-import sa.util.PDFTypeHierarchy;
-import sa.util.PDFWalaIR;
 
 
 public class JXLocks {
@@ -157,13 +71,17 @@ public class JXLocks {
   static String dmDir;       
   
   // WALA basis
-  private final static boolean CHECK_GRAPH = false;
-  final public static String CG_PDF_FILE = "cg.pdf";
-  static AnalysisScope scope;
+  static WalaAnalysis wala;
   static ClassHierarchy cha;
-  static HashSet<Entrypoint> entrypoints;
   static CallGraph cg;
-  static List<String> packageScopePrefixes = new ArrayList<String>();  //read from 'package-scope.txt' if exists
+  static int nPackageFuncs = 0;           // the real functions we focuses  //must satisfy "isApplicationAndNonNativeMethod" first
+  static int nTotalFuncs = 0;
+  static int nApplicationFuncs = 0;       
+  static int nPremordialFuncs = 0;
+  static int nOtherFuncs = 0;
+  
+  // Target System
+  static String systemname = null;   // current system's name  
   
   // Lock Names
   static List<String> synchronizedtypes = Arrays.asList("synchronized_method", "synchronized_lock");
@@ -186,10 +104,6 @@ public class JXLocks {
   static Map<Integer, FunctionInfo> functions = new HashMap<Integer, FunctionInfo>();
   
   // Statistics
-  static int nTotalFuncs = 0;
-  static int nApplicationFuncs = 0;       // The FOCUS
-  static int nPremordialFuncs = 0;
-  
   static int nLocks = 0;
   static int nLockingFuncs = 0;
   static int nLockGroups = 0;
@@ -208,23 +122,6 @@ public class JXLocks {
   
   static int nSuspectedHeavyLocks = 0;
  
-  
-  // List of distributed systems
-  static List<String> systems = Arrays.asList("HDFS", "MapReduce", "HBase");
-  static String systemname = null;   // current system's name  
-  
-  // Whether it will use all Entry Points for different distributed systems or not
-  static Map<String,String> mapOfWhetherAllEntries = new HashMap<String,String>() {{
-    put("HDFS", "Yes");      //Yes by default
-    put("MapReduce", "Yes"); //Yes by default       //should be No I think, now using Yes for testing, that is, 7396 vs 13942 scanned functions.   #??? 3 or more?   
-    put("HBase", "Yes");     //Yes by default
-  }};
-  // Entry Points for different distributed systems
-  static Map<String,List<String>> mapOfSystemEntries = new HashMap<String,List<String>>() {{
-    put("HDFS", Arrays.asList("org.apache.hadoop.hdfs"));
-    put("MapReduce", Arrays.asList("org.apache.hadoop.mapred", "org.apache.hadoop.mapreduce", "org.apache.hadoop.yarn"));  //3 or more?
-    put("HBase", Arrays.asList("org.apache.hadoop.xx"));
-  }};
   
   // For test
   static String functionname_for_test = "org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer$ResponseProcessor.run("; //"RetryCache.waitForCompletion(Lorg/apache/hadoop/ipc/RetryCache$CacheEntry;)"; //"org.apache.hadoop.hdfs.server.balancer.Balancer"; //"Balancer$Source.getBlockList";//"DirectoryScanner.scan"; //"ReadaheadPool.getInstance("; //"BPServiceActor.run("; //"DataNode.runDatanodeDaemon"; //"BPServiceActor.run("; //"BlockPoolManager.startAll"; //"NameNodeRpcServer"; //"BackupNode$BackupNodeRpcServer"; // //".DatanodeProtocolServerSideTranslatorPB"; //"DatanodeProtocolService$BlockingInterface"; //"sendHeartbeat("; //"org.apache.hadoop.hdfs.protocolPB.DatanodeProtocolServerSideTranslatorPB";  //java.util.regex.Matcher.match(";
@@ -250,14 +147,7 @@ public class JXLocks {
       // Test Part -
       //testQuickly();
       init(p);
-      buildWalaAnalysisEnv();
-      readPackageScope();
-      //testIClass();
-      //testTypeHierarchy();
-      //testCGNode();
-      //testPartialCallGraph();
-      //testIR();         				//JX - need to configurate Dot and PDFViewer
-      //testWalaAPI();
+      doWalaAnalysis();
       
       // New added - RPC
       findRPCs();
@@ -267,6 +157,7 @@ public class JXLocks {
       findLockingFunctions();      //JX - can be commented
       findLoopingFunctions();
       printLoopingFunctions();     //JX - write to local files. NO necessary, can be commented
+      //findLoopingLockingFunctions();
       
       // Phase 2 - deal with loops
       findNestedLoopsInLoops();
@@ -279,10 +170,7 @@ public class JXLocks {
       // Static Pruning
       staticPruningForCriticalLoops();
 
-      
-      //findLoopingLockingFunctions();
-      
-      
+     
       
       // Phase 2 -
       //analyzeAllLocks();
@@ -296,7 +184,7 @@ public class JXLocks {
     }
   }
   
-  
+
   public static void init(Properties p) {
     // Read external arguments
     projectDir = p.getProperty("projectDir");
@@ -305,545 +193,37 @@ public class JXLocks {
     if (!appJarDir.endsWith("/") )  appJarDir += "/";
     dtDir = Paths.get(projectDir, "src/dt/").toString();
     dmDir = Paths.get(projectDir, "src/dm/").toString();
-	  
-	// Get the Target System Name for testing
-	System.out.println("\nJX - Testing Information");     
-    systemname = null;
-    String[] path_components = appJarDir.split( "\\/" );           // can't use File.separator
-    //for (int i=0; i < path_components.length; i++) System.out.println(path_components[i]);
-    for (int i=0; i < path_components.length; i++)
-      for (int j=0; j < systems.size(); j++)
-        if (path_components[i].toUpperCase().equals( systems.get(j).toUpperCase() )) {
-          systemname = systems.get(j);
-          System.out.println("Target system - " + systemname);
-          break;
-        }
-    if (systemname == null) {
-      System.err.println("Error - Target System is UNREADY !!!!!");
-      return;
-    }
-    System.out.println("Testing paths - " + appJarDir);
   }
   
   
-  public static void buildWalaAnalysisEnv() 
-      throws IOException, IllegalArgumentException, CallGraphBuilderCancelException, UnsoundGraphException, WalaException {
-	System.out.println("\nJX-buildWalaAnalysisEnv");
-	
-    // Get all Jar Files for testing
-    String appJars = "";
-    if (PDFCallGraph.isDirectory(appJarDir)) {
-      appJars = PDFCallGraph.findJarFiles(new String[] { appJarDir }); 
-      System.out.println("Testing Jars - " + appJars);  
-    }
-    
-    // Create a Scope                                                                           #"JXJavaRegressionExclusions.txt"
-    scope = AnalysisScopeReader.makeJavaBinaryAnalysisScope(appJars, (new FileProvider()).getFile(CallGraphTestUtil.REGRESSION_EXCLUSIONS)); //default: CallGraphTestUtil.REGRESSION_EXCLUSIONS
-    // Create a Class Hierarchy
-    cha = ClassHierarchy.make(scope);  
-    //testTypeHierarchy();
-    
-    // Create a Entry Points
-    entrypoints = new HashSet<Entrypoint>();
-    Iterable<Entrypoint> allappentrypoints = new AllApplicationEntrypoints(scope, cha);  //Usually: entrypoints = com.ibm.wala.ipa.callgraph.impl.Util.makeMainEntrypoints(scope, cha);  //get main entrypoints
-    // Get all entry points
-    if (mapOfWhetherAllEntries.get(systemname).toUpperCase().equals("YES"))  //YES by default
-      entrypoints = (HashSet<Entrypoint>) allappentrypoints;
-    // Get the specified system's entries, ie, HDFS without hadoop-common
-    else {
-      for (Iterator<Entrypoint> it = allappentrypoints.iterator(); it.hasNext();) {
-        Entrypoint entry = it.next();
-        String sig = entry.getMethod().getSignature();
-        boolean realentry = false;
-        for (int i=0; i < mapOfSystemEntries.get(systemname).size(); i++)
-          if (sig.indexOf( mapOfSystemEntries.get(systemname).get(i) ) >= 0) {
-            realentry = true;
-            break;
-          }
-        if ( realentry ) {
-          entrypoints.add(entry);
-          //System.err.println(entry.getMethod().getSignatur e());
-        }
-      }
-    }//else
-    //System.err.println("Number of Entrypoints = " + entrypoints.size());
-    
-    
-    // Create Analysis Options
-    AnalysisOptions options = new AnalysisOptions(scope, entrypoints); 
-    options.setReflectionOptions(ReflectionOptions.ONE_FLOW_TO_CASTS_NO_METHOD_INVOKE);   //ReflectionOptions.FULL will just cause a few more nodes and methods 
-
-    // Create a builder - default: Context-insensitive   
-    //#makeZeroCFABuilder(options, new AnalysisCache(), cha, scope, null, null); 
-    //#makeVanillaZeroOneCFABuilder(options, new AnalysisCache(), cha, scope, null, null);   // this will take 20+ mins to finish
-    //#makeZeroOneCFABuilder(options, new AnalysisCache(), cha, scope, null, null);
-    //#makeZeroOneContainerCFABuilder(options, new AnalysisCache(), cha, scope, null, null);
-    com.ibm.wala.ipa.callgraph.CallGraphBuilder builder = Util.makeZeroCFABuilder(options, new AnalysisCache(), cha, scope, null, null); 
-    // Context-sensitive
-    /*
-    com.ibm.wala.ipa.callgraph.impl.Util.addDefaultSelectors(options, cha); 
-    com.ibm.wala.ipa.callgraph.impl.Util.addDefaultBypassLogic(options, scope, Util.class.getClassLoader(), cha); 
-    //ContextSelector contextSelector = new DefaultContextSelector(options);    
-    //SSAContextInterpreter contextInterpreter = new DefaultSSAInterpreter(options, Cache);
-    SSAPropagationCallGraphBuilder builder = new nCFABuilder(1, cha, options, new AnalysisCache(), null, null); 
-    AllocationSiteInNodeFactory factory = new AllocationSiteInNodeFactory(options, cha);
-    builder.setInstanceKeys(factory);
-    */
-    
-    // Build the call graph JX: time-consuming
-    cg = builder.makeCallGraph(options, null);
-    System.out.println(CallGraphStats.getStats(cg));
-    
-    // Get pointer analysis results
-    /*
-    PointerAnalysis pa = builder.getPointerAnalysis();
-    HeapModel hm = pa.getHeapModel();   //JX: #getHeapModel's reslult is com.ibm .wala.ipa.callgraph.propagation.PointerAnalysisImpl$HModel@24ccf6a8
-    BasicHeapGraph hg = new BasicHeapGraph(pa, cg);
-    System.err.println(hg);
-    */
-    //System.err.println(builder.getPointerAnalysis().getHeapGraph());  
-
-    if (CHECK_GRAPH) {
-      GraphIntegrity.check(cg);
-    }
-  }
-  
-  
-  // notice: now unused,
-  // except: printLoopingFunctions()
-  public static void readPackageScope() {
-	  System.out.println("\nJX-readPackageScope");
-	  String filepath = Paths.get(appJarDir, "package-scope.txt").toString();
-
-	  BufferedReader bufreader;
-	  String tmpline;
-	  File f = new File( filepath );
-	  
-	  if (f.exists()) {
-		  try {
-			  bufreader = new BufferedReader( new FileReader( f ) );
-			  tmpline = bufreader.readLine();    // the 1st line is useless
-			  while ( (tmpline = bufreader.readLine()) != null ) {
-				  String[] strs = tmpline.trim().split("\\s+");
-				  if ( tmpline.trim().length() > 0 ) {
-					  packageScopePrefixes.add( strs[0] );
-				  }
-			  }
-			  bufreader.close();
-		  } catch (Exception e) {
-			  // TODO Auto-generated catch block
-			  System.out.println("JX - ERROR - when reading package-scpoe.txt files");
-			  e.printStackTrace();
-		  }
-		  System.out.print("NOTICE - successfully read the 'package-scope.txt' file as SCOPE, including:");
-		  for (String str: packageScopePrefixes)
-			  System.out.print( " " + str );
-		  System.out.println();
-	  }
-	  else {
-		  System.out.println("NOTICE - not find the 'package-scope.txt' file, so SCOPE is ALL methods!!");
-	  }
-  }
-  
-  // for where that needed 
-  public static boolean isInPackageScope(CGNode f) {
-	  // if without 'package-scope.txt'
-	  if (packageScopePrefixes.size() == 0)
-		  return true;
-	  String signature = f.getMethod().getSignature();
-	  for (String str: packageScopePrefixes)
-		  if (signature.startsWith(str))
-			  return true;
-	  return false;
+  public static void doWalaAnalysis() {
+	  System.out.println("JX-doWalaAnalysis");
+	  wala = new WalaAnalysis(appJarDir);
+	  wala.doWork();
+	  systemname = wala.systemname; 
+			  
+	  cg = wala.cg;
+	  cha = wala.cha;
+	  nPackageFuncs = wala.nPackageFuncs;
+	  nTotalFuncs = wala.nTotalFuncs;
+	  nApplicationFuncs = wala.nApplicationFuncs;
+	  nPremordialFuncs = wala.nPremordialFuncs;
+	  nOtherFuncs = wala.nOtherFuncs;
   }
 
-
+  
   public static void testQuickly() {
-    System.err.println("JX-breakpoint-testQuickly");
-    StackTraceElement[] traces = Thread.currentThread().getStackTrace();
-    String tmpstr = "";
-    for (int i = 1; i < traces.length; i++)
-      tmpstr += traces[i].getFileName().substring(0, traces[i].getFileName().indexOf('.'))+"."+traces[i].getMethodName()+":"+traces[i].getLineNumber() + "-";
-    System.out.println( tmpstr );
-    
-    System.out.println( new java.util.Date() );
-    java.text.DateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
-    System.out.println( sdf.format( new java.util.Date() ) );  
+	    System.err.println("JX-breakpoint-testQuickly");
+	    StackTraceElement[] traces = Thread.currentThread().getStackTrace();
+	    String tmpstr = "";
+	    for (int i = 1; i < traces.length; i++)
+	      tmpstr += traces[i].getFileName().substring(0, traces[i].getFileName().indexOf('.'))+"."+traces[i].getMethodName()+":"+traces[i].getLineNumber() + "-";
+	    System.out.println( tmpstr );
+	    
+	    System.out.println( new java.util.Date() );
+	    java.text.DateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
+	    System.out.println( sdf.format( new java.util.Date() ) );  
   }
-  
-  
-  public static void testIClass() throws WalaException {
-    System.err.println("JX-breakpoint-testIClass");
-    
-    // Fetch a class from ClassHierarchy
-    IClass ic = null;
-    for (IClass c : cha) {  
-      //System.err.println(c.getName().toString()); //output like Lorg/apache/hadoop/io/ObjectWritable  //ps - IClass.getClass(.getName/getCanonicalName) = class com.ibm.wala.classLoader.ShrikeClass
-      if (c.getName().toString().indexOf(functionname_for_test.replace(".", "/")) >= 0) {
-        System.err.println("ic - " + c.toString());  //equals "c", output like <Application,Lorg/apache/hadoop/hdfs/server/balancer/Balancer>
-        System.err.println("ic.getName - " + c.getName().toString());  //output like Lorg/apache/hadoop/hdfs/server/balancer/Balancer
-        ic = c;
-        System.err.println( ic.getSourceFileName() );     //null
-        System.err.println( ic.getAllFields() );          //[< Application, Lorg/apache/hadoop/hdfs/server/balancer/Balancer, globalBlockList, <Application,Ljava/util/Map> >, xx... ]
-        System.err.println( ic.getAllInstanceFields() );
-        System.err.println( ic.getAllStaticFields() );
-        System.err.println( ic.getAnnotations() );        //[Annotation type <Application,Lorg/apache/hadoop/classification/InterfaceAudience$Private>]
-        //break;
-      }
-    }
-    
-    // Fetch a class
-    TypeReference tempclass = TypeReference.findOrCreate(ClassLoaderReference.Application, "Lorg/apache/hadoop/hdfs/server/blockmanagement/BlockManager");
-    //TypeReference tempclass = TypeReference.findOrCreate(ClassLoaderReference.Application, "Lorg/apache/hadoop/hdfs/server/namenode/FSNamesystem");
-    IClass tempic = cha.lookupClass(tempclass);
-    System.out.println(tempic.getAllMethods().size());
-    for (Iterator<IMethod> it =tempic.getAllMethods().iterator(); it.hasNext();)
-      System.out.println(it.next());
-  }
-  
-  public static void testTypeHierarchy() throws WalaException {
-    System.err.println("JX-breakpoint-testTypeHierarchy");
-    
-    // Test - class hierarchy
-    System.err.println("Number of All Classes = " + cha.getNumberOfClasses());
-    for (IClass c : cha) {  
-      if (c.getName().toString().indexOf(functionname_for_test) >= 0) {
-        System.err.println(c.getName().toString());
-      }
-    }
-    
-    // View the whole Type Hierarchy SWT if needed
-    /*
-    Graph<IClass> g = typeHierarchy2Graph(cha);
-    g = pruneForAppLoader(g);
-    viewTypeHierarchySWT(g);
-    */
-    
-    // Print some related Type Hierarchy
-    Graph<IClass> result = SlowSparseNumberedGraph.make();
-    for (IClass c : cha) {   //JX: this step should ensure including all needed nodes used below
-      //if (c.getName().toString().indexOf(functionname_for_test) >= 0) {
-        //System.err.println(c.getName().toString());
-        result.addNode(c);
-      //}
-    }
-    for (IClass c : cha) {
-      if (c.getName().toString().indexOf(functionname_for_test) >= 0) {
-        for (IClass x : cha.getImmediateSubclasses(c)) {
-          System.err.println(x.getName().toString());
-          result.addEdge(c, x);
-        }
-        if (c.isInterface()) {  
-          for (IClass x : cha.getImplementors(c.getReference())) {
-            result.addEdge(c, x);
-          }
-        }
-      }
-    }
-    result = pruneForAppLoader(result);
-    viewTypeHierarchySWT(result);
-  }
-  
-  
-  /**
-   * Note - The way to print call graph from a entry point (DataNode.runDatanodeDaemon) is wrong, the call graph will be incomplete, 
-   * because it will miss some context information in this method, so it will miss some call sites in this method.
-   * E.g., DataNode.runDatanodeDaemon will miss all call sites (eg, blockPoolManager.startAll(); dataXceiverServer.start();),
-   * because it can't get the variables blockPoolManager and dataXceiverServer
-   */
-  public static void testPartialCallGraph() throws IllegalArgumentException, CallGraphBuilderCancelException, WalaException {  
-    System.err.println("JX-breakpoint-testPartialCallGraph");
-    // Method 1
-    //Graph<CGNode> g = buildPrunedCallGraph(appJar, (new FileProvider()).getFile(exclusionFile));
-    
-    // Method 2
-    HashSet<Entrypoint> tmp_eps = HashSetFactory.make();
-    // get from Application entry points
-    for (Iterator<Entrypoint> it = entrypoints.iterator(); it.hasNext();) {
-      Entrypoint entry = it.next();
-      if (entry.getMethod().getSignature().indexOf(functionname_for_test) >= 0) {
-        System.err.println("Entry - " + entry.getMethod().getSignature());
-        tmp_eps.add(entry);
-      }
-    }
-    // get from call graph nodes
-    /*
-    CGNode n = null;
-    IMethod m;
-    int currentone = 0;
-    for (Iterator<? extends CGNode> it = cg.iterator(); it.hasNext(); ) {
-      n = it.next();
-      m = n.getMethod();
-      if (m.getSignature().indexOf(functionname_for_test) >= 0)   // Memo - FSNamesystem$DefaultAuditLogger.logAuditMessage( Log4JLogger.info(    InetAddress.getByName(
-        if (++currentone == which_functionname_for_test) {
-          System.err.println("entrypoint: " + m.getSignature());
-          entrypoints.add(new DefaultEntrypoint(m, cha));
-          break;
-        } 
-    }//for
-    */
-    System.err.println("Entrypoints' size = " + tmp_eps.size() + " : " + tmp_eps);
-    
-    /*
-    //test
-    System.err.println("current nodes:");
-    System.err.println(n.getMethod().getSignature());
-    System.err.println("pred nodes:");
-    for (Iterator<CGNode> it = cg.getPredNodes(n); it.hasNext(); ) {
-      CGNode node = it.next();
-      IMethod mm = node.getMethod();
-      System.err.println(mm.getSignature());
-    }
-    System.err.println("succ nodes:");
-    for (Iterator<CGNode> it = cg.getSuccNodes(n); it.hasNext(); ) {
-      CGNode node = it.next();
-      IMethod mm = node.getMethod();
-      System.err.println(mm.getSignature());
-    }
-    */
-    
-    AnalysisOptions options = new AnalysisOptions(scope, tmp_eps); 
-    options.setReflectionOptions(ReflectionOptions.FULL); //ONE_FLOW_TO_CASTS_NO_METHOD_INVOKE); //ONE_FLOW_TO_CASTS_NO_METHOD_INVOKE);
-    // Contex-insensitive
-    com.ibm.wala.ipa.callgraph.CallGraphBuilder builder = Util.makeZeroCFABuilder(options, new AnalysisCache(), cha, scope, null, null);
-    // Context-sensitive
-    /*
-    com.ibm.wala.ipa.callgraph.impl.Util.addDefaultSelectors(options, cha); 
-    com.ibm.wala.ipa.callgraph.impl.Util.addDefaultBypassLogic(options, scope, Util.class.getClassLoader(), cha); 
-    //ContextSelector contextSelector = new DefaultContextSelector(options);    
-    //SSAContextInterpreter contextInterpreter = new DefaultSSAInterpreter(options, Cache);
-    SSAPropagationCallGraphBuilder builder = new nCFABuilder(1, cha, options, new AnalysisCache(), null, null); 
-    AllocationSiteInNodeFactory factory = new AllocationSiteInNodeFactory(options, cha);
-    builder.setInstanceKeys(factory);
-    */  
-  
-    CallGraph g = builder.makeCallGraph(options, null);
-    System.err.println("CallGraph.getEntrypointNodes : " + g.getEntrypointNodes());
-    System.err.println(CallGraphStats.getStats(g) + "\n");
-    
-    viewCallGraphSWT(g);
-    Graph<CGNode> newg = pruneGraph(g, new ApplicationLoaderFilter());  
-    viewCallGraphPDF(newg);
-  }
-  
-  
-  public static void testCGNode() {
-    System.err.println("JX-breakpoint-testCGNode");
-    
-    int currentone = 0;
-    for (Iterator<? extends CGNode> it = cg.iterator(); it.hasNext(); ) {
-      CGNode n = it.next();
-      IMethod m = n.getMethod();
-      // test - ClassLoader category   #results NOW - only App & Pri, nothing else
-      if (!n.getMethod().getDeclaringClass().getClassLoader().getReference().equals(ClassLoaderReference.Application) 
-          && !n.getMethod().getDeclaringClass().getClassLoader().getReference().equals(ClassLoaderReference.Primordial))
-         System.err.println(n.getMethod().getDeclaringClass().getClassLoader().getReference().toString());
-      // print specified
-      if (n.getMethod().getSignature().indexOf(functionname_for_test) >= 0) {
-        //if (++currentone == which_functionname_for_test) {
-          System.err.println("name: " + n.getMethod().getSignature());
-          // see the function's class loader
-          System.err.println(n.getMethod().getDeclaringClass().getClassLoader().getReference().toString());
-          //break;
-        //}
-      }
-    }
-  
-    /*
-    // Test if all CGNodes are not Interface    #JX: this is unrelated to the method "getPartialCallGraphPDFForTest"
-    // test results: only 1(<clinit>) out of 10000+ function belongs to Interface Class
-    for (Iterator<? extends CGNode> it = cg.iterator(); it.hasNext(); ) {
-      CGNode n = it.next();
-      IMethod m = n.getMethod();
-      if (m.getDeclaringClass().isInterface()) {
-        System.err.println("!!!hasInterface");
-        System.err.println(m.getSignature());
-      }
-      //if (m.getDeclaringClass().isAbstract()) System.err.println("!!!hasAbstract");
-    }
-    */
-  }
-  
-  
-  public static void testIR() throws WalaException {
-    System.err.println("JX-breakpoint-testIR");
-    
-    // Memo - "InetAddress.getAllByName("  "FSDirectory.mkdirs("  //"hdfs.qjournal.client.IPCLoggerChannel$7.call()Ljava/lang/Void"
-    CGNode n = null;
-    IMethod m = null;
-    IR ir = null;
-    int currentone = 0;
-    
-    // Get IR
-    int num_of_ircgnode = 0;
-    for (Iterator<? extends CGNode> it = cg.iterator(); it.hasNext();) {
-      CGNode tmp_n = it.next();
-      IMethod tmp_m = tmp_n.getMethod();
-      if (tmp_m.getSignature().indexOf(functionname_for_test)>=0) {  //TODO - can't find "loopbackAddress(" at "InetAddress.getAllByName("&whichone=2, this ia s example for advanced pointer analysis
-        num_of_ircgnode ++;
-        if (++currentone==which_functionname_for_test) {
-          n = tmp_n;
-          m = tmp_m;
-          ir = n.getIR();
-          viewIR(ir);  
-          System.out.println(m.getSignature());
-          //findLocks(n);
-          //findLoops(n);  //add find var_name??????????????????????????????????????????????
-        } 
-      }
-    }//for
-    if (ir != null) {
-      System.err.println( "Totally find " + num_of_ircgnode + " IR(s) for " + functionname_for_test );
-    } else {
-      System.err.println( "Can't find IR !!!!!!!!!!\n" );
-      return;
-    }
-    
-    // test TypeInference
-    /*
-    boolean doPrimitives = false; // infer types for primitive vars?
-    TypeInference ti = TypeInference.make(ir, doPrimitives);
-    //TypeAbstraction type = ti.getType(vn);
-    //TypeAbstraction type = ti.getType(lock.lock_name_vn);
-    //lock.lock_name = type.getClass().toString()+" "+type.getType().toString()+" "+type.getTypeReference().toString();//type.toString();
-    for (int i=1; i<50; i++) {
-      TypeAbstraction type = ti.getType(i);     //WARN: i can't be 0 or >maxValueNumber, if so, it will cause exception!!!!!!!!!
-      if (type != null) {
-        System.out.println("ti.getType(" + i + ") - ");
-        System.out.println("- " + type.toString());
-        System.out.println("- " + type.getClass().toString());             //this and below are part of "type" actually, so we just need to know "type", then to get "getClass"/"getType"/...
-        //System.out.println("- " + type.getType().toString());            //some will cause exception!!
-        //System.out.println("- " + type.getTypeReference().toString());   //some will cause exception!!
-      }
-    }
-    */
-    
-    
-    //IR#getInstructions
-    /*
-    SSAInstruction[] ssas= ir.getInstructions();
-    for (int i = 0; i < ssas.length; i++) {
-      System.out.println("i=" + i + ": " + ssas[i]);
-    }
-    System.out.println();
-    */
-    
-    
-    //test pred nodes and succ nodes
-    System.err.println("#pred CGNodes = " + cg.getPredNodeCount(n));
-    for (Iterator<CGNode> it = cg.getPredNodes(n); it.hasNext();)
-      System.err.println("----" + it.next().toString());
-    System.err.println("#succ CGNodes = " + cg.getSuccNodeCount(n));
-    for (Iterator<CGNode> it = cg.getSuccNodes(n); it.hasNext();)
-      System.err.println("----" + it.next().toString());
-    
-    //test BasicBlocks and SSAs + call sites
-    System.out.println("JX - test BasicBlocks and SSAs + call sites");
-    int k=0;
-    SSACFG cfg = ir.getControlFlowGraph();
-    for (Iterator<ISSABasicBlock> it = cfg.iterator(); it.hasNext(); ) {
-      ISSABasicBlock bb = it.next();
-      //System.out.println(bb);
-      for (Iterator<SSAInstruction> it_2 = bb.iterator(); it_2.hasNext(); ) {
-        SSAInstruction ssa = it_2.next();
-        
-        //int num = 0;
-        //for (int j=0; j<ssas.length; j++)
-        //  if (ssas[j] != null)
-        //    if (ssas[j] == ssa) { num++; k = j;}  
-        //    //if (ssas[j].equals(ssa)) { num++; k = j;}  
-        //    //if (ssas[j].toString().equals(ssa.toString())) { num++; k = j; }
-        //if (num != 1) System.err.println("num = " + num + " " + ssa + " k=" + k);
-        
-        
-        if (ssa instanceof SSAInvokeInstruction) {  //SSAAbstractInvokeInstruction
-          System.out.println(ssa.toString());
-          java.util.Set<CGNode> set = cg.getPossibleTargets(n, ((SSAInvokeInstruction) ssa).getCallSite());
-          //if (set.size() > 1)
-          //  System.err.println("CallGraph#getPossibleTargets's size > 1");
-          if (set.size() > 0) {                    //JX: because I haven't yet added "hadoop-common"
-            System.err.println("CallGraph#getPossibleTargets's size = " + set.size() + "   cg.getSuccNodeNumbers = " + cg.getSuccNodeCount(n));
-            for (CGNode cgnode: set) {
-              System.err.println(cgnode.toString());
-            }
-            /*
-            CGNode cgnode = set.iterator().next(); 
-            System.out.println(cgnode.toString());
-            */
-          } else {
-            System.err.println("!:can't find");
-          }  
-        } else {
-          //TODO
-        }
-        
-      }//for-it_2
-    }//for-it
-    
-    
-    // test value numbers
-    System.err.println("Test Value Numbers - ");
-    System.out.println("ir.getParameterValueNumbers: " + ir.getParameterValueNumbers()); //JX: it's an array, only following operations can get value numbers.
-    for (int i=0; i<ir.getParameterValueNumbers().length; i++)
-      System.out.println("i=" + i + ": " + ir.getParameterValueNumbers()[i]);
-    System.out.println(ir.getNumberOfParameters());                             //JX: it's 5 in #processReport IR, ie, 5 incoming parameters.
-    for (int i=0; i<ir.getNumberOfParameters(); i++)
-      System.out.println("i=" + i + ": " + ir.getParameter(i) + " ** " + ir.getParameterType(i));  //JX:#getParameter(i) equals #getParameterValueNumbers()[i]  
-    SymbolTable symboltable = ir.getSymbolTable();                                                 //JX: seems same??
-    System.out.println("ir.getSymbolTable: " + symboltable);
-    System.out.println(symboltable.getNumberOfParameters());
-    for (int i=0; i<symboltable.getNumberOfParameters(); i++)
-      System.out.println(symboltable.getParameter(i)); 
-    System.out.println(symboltable.getMaxValueNumber());  //JX: the maximal variable number, it's 123 in #processReport IR
-    System.out.println(symboltable.getPhiValue(1));
-    System.out.println(symboltable.getValueString(0) + " " + symboltable.getValueString(1) + " " + symboltable.getValueString(2));
-    System.out.println(ir.getOptions());         //?   
-  }
-  
-  
-  static MethodReference mr_FS_writeLock, mr_FS_writeUnlock, mr_processReport, mr_processFirstBlockReport, mr_processReport_2;
-  static IMethod m_FS_writeLock, m_FS_writeUnlock, m_processReport, m_processFirstBlockReport, m_processReport_2;
-   
-  public static void testWalaAPI() {
-    System.err.println("JX-breakpoint-testWalaAPI");
-    
-    // Get the Methods of "Locks" what we want to study     
-    // FSNamesystem#writeLock
-    mr_FS_writeLock = StringStuff.makeMethodReference(
-        "org.apache.hadoop.hdfs.server.namenode.FSNamesystem.writeLock()V");  
-    m_FS_writeLock = cha.resolveMethod(mr_FS_writeLock);
-    System.out.println("method = " + m_FS_writeLock.getSignature()); 
-    System.out.println("method = " + m_FS_writeLock); 
-    // FSNamesystem#writeUnlock
-    mr_FS_writeUnlock = StringStuff.makeMethodReference(
-        "org.apache.hadoop.hdfs.server.namenode.FSNamesystem.writeUnlock()V");  
-    m_FS_writeUnlock = cha.resolveMethod(mr_FS_writeUnlock);
-    System.out.println("method = " + m_FS_writeUnlock.getSignature()); 
-    // BlockManager#processReport, not a lock
-    mr_processReport = StringStuff.makeMethodReference(
-        "org.apache.hadoop.hdfs.server.blockmanagement.BlockManager.processReport(Lorg/apache/hadoop/hdfs/protocol/DatanodeID;Lorg/apache/hadoop/hdfs/server/protocol/DatanodeStorage;Ljava/lang/String;Lorg/apache/hadoop/hdfs/protocol/BlockListAsLongs;)V");
-    m_processReport = cha.resolveMethod(mr_processReport);
-    System.out.println("method = " + m_processReport);
-    System.out.println("method = " + m_processReport.getDeclaringClass());
-    System.out.println("method = " + m_processReport.getName());
-    System.out.println("method = " + m_processReport.getDescriptor());
-    System.out.println("method = " + m_processReport.getReturnType());
-    // BlockManager#processFirstBlockReport, not a lock
-    mr_processFirstBlockReport = StringStuff.makeMethodReference(
-        "org.apache.hadoop.hdfs.server.blockmanagement.BlockManager.processFirstBlockReport(Lorg/apache/hadoop/hdfs/server/blockmanagement/DatanodeDescriptor;Ljava/lang/String;Lorg/apache/hadoop/hdfs/protocol/BlockListAsLongs;)V");
-    m_processFirstBlockReport = cha.resolveMethod(mr_processFirstBlockReport);
-    System.out.println("method = " + m_processFirstBlockReport);
-    // BlockManager#processReport_2, not a lock
-    mr_processReport_2 = StringStuff.makeMethodReference(
-        "org.apache.hadoop.hdfs.server.blockmanagement.BlockManager.processReport(Lorg/apache/hadoop/hdfs/server/blockmanagement/DatanodeDescriptor;Lorg/apache/hadoop/hdfs/server/protocol/DatanodeStorage;Lorg/apache/hadoop/hdfs/protocol/BlockListAsLongs;)V");
-    m_processReport_2 = cha.resolveMethod(mr_processReport_2);
-    System.out.println("method = " + m_processReport_2);
-    System.out.println("method = " + m_processReport_2.getDeclaringClass());
-    System.out.println("method = " + m_processReport_2.getName());
-    System.out.println("method = " + m_processReport_2.getDescriptor());
-    System.out.println("method = " + m_processReport_2.getReference());
-  }
-  
  
   
  
@@ -964,110 +344,88 @@ public class JXLocks {
    * Find Functions with locks
    * Note: Only focus on "Application" functions
    */
+  
+  
   public static void findLockingFunctions() {
-    System.out.println("\nJX-findLockingFunctions-1");
+      System.out.println("\nJX-findLockingFunctions");
     
-    int nFiltered = 0;
-    for (Iterator<? extends CGNode> it = cg.iterator(); it.hasNext(); ) {
-      CGNode f = it.next();
-      IMethod m = f.getMethod();
-      int id = f.getGraphNodeId();
-      
-      ClassLoaderReference classloader_ref = m.getDeclaringClass().getClassLoader().getReference(); 
-      
-      //test
-      /*
-      String sig = m.getSignature();
-      if (sig.indexOf(functionname_for_test) >= 0) {
-        System.err.println("* - " + sig + "\n" + m.getDeclaringClass().getClassLoader().getReference() + "\n*\n");
-        continue;
-      }
-      */
-      /*
-      if (classloader_ref.equals(ClassLoaderReference.Primordial) && !m.isNative()) {
-    	  IR ir = f.getIR();
-	      SSAInstruction[] instructions = ir.getInstructions();
-	      System.out.println("jx-prim-# " + instructions.length + "  - " + f.getMethod());
-      }
-      */
-      
-      if (classloader_ref.equals(ClassLoaderReference.Application) && !m.isNative()) {     //IMPO:  some native methods are App class, but can't IR#getControlFlowGraph or viewIR     #must be  
-        nApplicationFuncs++;
-        String short_funcname = f.getMethod().getName().toString();
-        if (locktypes.contains(short_funcname) || unlocktypes.contains(short_funcname)) //filter lock/unlock functions
-          continue;
-        List<LockInfo> locks = findLocks(f);
-        if (locks.size() > 0) {
-          boolean verified = true;               //filter those functions cannot be figured out, ie, including "LockInfo.end_bb == -1", eg, readLock - NO readUnlock
-          for (Iterator<LockInfo> it_lock = locks.iterator(); it_lock.hasNext(); ) {
-            if (it_lock.next().end_bb == -1) {
-              System.err.println("Filtered function: " + f.getMethod().getSignature());
-              nFiltered++;
-              verified = false;
-              break;
-            }
+      int nFiltered = 0;
+      for (Iterator<? extends CGNode> it = cg.iterator(); it.hasNext(); ) {
+	      CGNode f = it.next();
+	      if ( !wala.isInPackageScope(f) ) continue;
+	      
+	      int id = f.getGraphNodeId();    
+          String short_funcname = f.getMethod().getName().toString();
+          if (locktypes.contains(short_funcname) || unlocktypes.contains(short_funcname)) //filter lock/unlock functions
+              continue;
+          List<LockInfo> locks = findLocks(f);
+          if (locks.size() > 0) {
+	          boolean verified = true;               //filter those functions cannot be figured out, ie, including "LockInfo.end_bb == -1", eg, readLock - NO readUnlock
+	          for (Iterator<LockInfo> it_lock = locks.iterator(); it_lock.hasNext(); ) {
+	              if (it_lock.next().end_bb == -1) {
+	            	  System.err.println("Filtered function: " + f.getMethod().getSignature());
+	            	  nFiltered++;
+	            	  verified = false;
+	            	  break;
+	              }
+	          }
+	          if (!verified)
+	              continue;
+	          functions_with_locks.put(id, locks);
           }
-          if (!verified)
-            continue;
-          functions_with_locks.put(id, locks);
-        }
-      } else {
-        //System.out.println(classloader_ref + sig); 
-        nPremordialFuncs++;
-      }
-    }//for
+      
+      }//for
     
-    nTotalFuncs = nApplicationFuncs + nPremordialFuncs;
-    nLockingFuncs = functions_with_locks.size();
+      nLockingFuncs = functions_with_locks.size();
     
-    // Print the status
-    int N_LOCKS = 20;
-    int[] count = new int[N_LOCKS];
-    count[0] = nApplicationFuncs - nLockingFuncs;
-    for (Iterator<Integer> it = functions_with_locks.keySet().iterator(); it.hasNext(); ) {
-      int id = it.next();
-      List<LockInfo> locks = functions_with_locks.get(id);
-      int size = locks.size();
-      nLocks += size;
-      //System.out.println(cg.getNode(id).getMethod().getSignature()); 
-      if (size < N_LOCKS) count[size]++;
-      /*
-      if (size == 5) {
-        System.out.println(cg.getNode(id).getMethod().getSignature());
-        System.out.println(locks);
+      // Print the status
+      int N_LOCKS = 20;
+      int[] count = new int[N_LOCKS];
+      count[0] = nPackageFuncs - nLockingFuncs;
+      for (Iterator<Integer> it = functions_with_locks.keySet().iterator(); it.hasNext(); ) {
+	      int id = it.next();
+	      List<LockInfo> locks = functions_with_locks.get(id);
+	      int size = locks.size();
+	      nLocks += size;
+	      //System.out.println(cg.getNode(id).getMethod().getSignature()); 
+	      if (size < N_LOCKS) count[size]++;
+	      /*
+	      if (size == 5) {
+	        System.out.println(cg.getNode(id).getMethod().getSignature());
+	        System.out.println(locks);
+	      }
+	      */
       }
-      */
-    }
-    System.out.println("The Status of Locks in All Functions:\n" 
-        + "#scanned functions: " + nApplicationFuncs 
-        + " out of #Total:" + nTotalFuncs + "(#AppFuncs:" + nApplicationFuncs + "+#PremFuncs:" + nPremordialFuncs +")");
-    System.out.println("#functions with locks: " + nLockingFuncs + "(" + nLocks + "locks)" + " (excluding " + nFiltered + " filtered functions that have locks)");
-    // distribution of #locks
-    System.out.println("//distribution of #locks");
-    for (int i = 0; i < N_LOCKS; i++)
-      System.out.print("#" + i + ":" + count[i] + ", ");
-    System.out.println();
-    // distribution of lock types
-    Map<String, Integer> numOfLockTypes = new HashMap<String, Integer>();
-    for (Iterator<Integer> it = functions_with_locks.keySet().iterator(); it.hasNext(); ) {
-      int id = it.next();
-      List<LockInfo> locks = functions_with_locks.get(id);
-      for (Iterator<LockInfo> it_2 = locks.iterator(); it_2.hasNext(); ) {
-        LockInfo lock = it_2.next();
-        if (!numOfLockTypes.containsKey(lock.lock_type))
-          numOfLockTypes.put(lock.lock_type, 1);
-        else
-          numOfLockTypes.put(lock.lock_type, numOfLockTypes.get(lock.lock_type)+1);
+      System.out.println("The Status of Locks in All Functions:\n" 
+          + "#scanned functions: " + nPackageFuncs 
+          + " out of #Total:" + nTotalFuncs + "(#AppFuncs:" + nApplicationFuncs + "+#PremFuncs:" + nPremordialFuncs +")");
+      System.out.println("#functions with locks: " + nLockingFuncs + "(" + nLocks + "locks)" + " (excluding " + nFiltered + " filtered functions that have locks)");
+      // distribution of #locks
+      System.out.println("//distribution of #locks");
+      for (int i = 0; i < N_LOCKS; i++)
+          System.out.print("#" + i + ":" + count[i] + ", ");
+      System.out.println();
+      // distribution of lock types
+      Map<String, Integer> numOfLockTypes = new HashMap<String, Integer>();
+      for (Iterator<Integer> it = functions_with_locks.keySet().iterator(); it.hasNext(); ) {
+	      int id = it.next();
+	      List<LockInfo> locks = functions_with_locks.get(id);
+	      for (Iterator<LockInfo> it_2 = locks.iterator(); it_2.hasNext(); ) {
+		        LockInfo lock = it_2.next();
+		        if (!numOfLockTypes.containsKey(lock.lock_type))
+		          numOfLockTypes.put(lock.lock_type, 1);
+		        else
+		          numOfLockTypes.put(lock.lock_type, numOfLockTypes.get(lock.lock_type)+1);
+	      }
       }
-    }
-    System.out.println("//distribution of lock types");
-    for (Iterator<String> it = numOfLockTypes.keySet().iterator(); it.hasNext(); ) {
-      String s = it.next();
-      System.out.print("#" + s + ":" + numOfLockTypes.get(s) + ", ");
-    }
-    System.out.println("\n");
+      System.out.println("//distribution of lock types");
+      for (Iterator<String> it = numOfLockTypes.keySet().iterator(); it.hasNext(); ) {
+	      String s = it.next();
+	      System.out.print("#" + s + ":" + numOfLockTypes.get(s) + ", ");
+      }
+      System.out.println("\n");
     
-    //printFunctionsWithLocks();
+      //printFunctionsWithLocks();
   }
   
   
@@ -1569,21 +927,16 @@ public class JXLocks {
     int totalloops = 0;
     
     for (Iterator<? extends CGNode> it = cg.iterator(); it.hasNext(); ) {
-      CGNode function = it.next();
-      IMethod m = function.getMethod();
-      //String sig = m.getSignature();
-      ClassLoaderReference classloader_ref = m.getDeclaringClass().getClassLoader().getReference();
-      if (classloader_ref.equals(ClassLoaderReference.Application) && !m.isNative()) {   //IMPO: native method is App class, but can't IR#getControlFlowGraph or viewIR    #must be
-        int id = function.getGraphNodeId();
+        CGNode f = it.next();
+        if ( !wala.isInPackageScope(f) ) continue;
+      
+        int id = f.getGraphNodeId();
         // Find loops for each function
-        List<LoopInfo> loops = findLoops(function);
+        List<LoopInfo> loops = findLoops(f);
         if (loops.size() > 0) {
           functions_with_loops.put(id, loops);
           totalloops += loops.size();
         }
-      } else {
-        //System.out.println(classloader_ref + sig); 
-      }
     }
     nLoopingFuncs = functions_with_loops.size();
     nLoops = totalloops;
@@ -1591,13 +944,13 @@ public class JXLocks {
     // Print the status
     int N_LOOPS = 20;
     int[] count = new int[N_LOOPS];
-    count[0] = nApplicationFuncs - nLoopingFuncs;
+    count[0] = nPackageFuncs - nLoopingFuncs;
     for (Iterator<List<LoopInfo>> it = functions_with_loops.values().iterator(); it.hasNext(); ) {
       int size = it.next().size();
       if (size < N_LOOPS) count[size]++;
     }
     System.out.println("The Status of Loops in All Functions:\n" 
-        + "#scanned functions: " + nApplicationFuncs 
+        + "#scanned functions: " + nPackageFuncs 
         + " out of #Total:" + nTotalFuncs + "(#AppFuncs:" + nApplicationFuncs + "+#PremFuncs:" + nPremordialFuncs +")");    
     System.out.println("#functions with loops: " + nLoopingFuncs + " (#loops:" + nLoops + ")");
     System.out.println("//distribution of #loops");
@@ -1698,13 +1051,13 @@ public class JXLocks {
     int nfuncsInScope = 0;
     int nloopsInScope = 0;
     for (List<LoopInfo> loops: functions_with_loops.values())
-    	if ( isInPackageScope(loops.get(0).function) ) {
+    	if ( wala.isInPackageScope(loops.get(0).function) ) {
     		nfuncsInScope ++;
     		nloopsInScope += loops.size();
     	}
     bufwriter.write( nfuncsInScope + " " + nloopsInScope + "\n" );
     for (List<LoopInfo> loops: functions_with_loops.values())
-    	if ( isInPackageScope(loops.get(0).function) ) {
+    	if ( wala.isInPackageScope(loops.get(0).function) ) {
     		bufwriter.write( loops.get(0).function.getMethod().getSignature() + " " );
     		printLoops(loops, bufwriter);
     	}
@@ -1800,6 +1153,7 @@ public class JXLocks {
 				  //System.out.println( loop );
 			  }
 		  }
+	  System.out.println("success!");
   }
   
   
@@ -2097,13 +1451,15 @@ public class JXLocks {
 		  }
 	  }
 	  System.out.println("The Status of Loops in All Functions:\n" 
-	        + "#scanned functions: " + nApplicationFuncs 
+	        + "#scanned functions: " + nPackageFuncs 
 	        + " out of #Total:" + nTotalFuncs + "(#AppFuncs:" + nApplicationFuncs + "+#PremFuncs:" + nPremordialFuncs +")");    
 	  System.out.println("#loops: " + nLoops + " (#functions with loops:" + nLoopingFuncs + ")");
 	  System.out.println("//distribution of #nestedloops");
 	  for (int i = 0; i < N_NestedLOOPS; i++)
 	      System.out.print("#" + i + ":" + count[i] + ", ");
 	  System.out.println("#>=" + N_NestedLOOPS + ":" + othercount);
+	  System.out.println("jx - functions.size() = " + functions.size() );
+	  System.out.println();
   }
   
   
@@ -2182,36 +1538,36 @@ public class JXLocks {
    ***********************************************************************************************************
    */
   public static void findLoopingLockingFunctions() {
-    System.out.println("\nJX-findLoopingLockingFunctions");
+      System.out.println("\nJX-findLoopingLockingFunctions");
     
-    // Initialization by DFS for locking functions
-    for (Integer id: functions_with_locks.keySet()) {
-      //System.err.println(cg.getNode(id).getMethod().getSignature());
-      dfsToGetFunctionInfos(cg.getNode(id), 0);
-    }   
-    // Find Locks with loops for locking functions. For safety, can't combine with the above, because this may modify value in FunctionInfo for eventual usage.
-    for (Integer id: functions_with_locks.keySet()) {
-      findForLockingFunction(cg.getNode(id));
-    }
-    
-    // Print the status    
-    int MAXN_LOOPS_FOR_A_LOCK = 20;
-    int[] count = new int[MAXN_LOOPS_FOR_A_LOCK]; int rest = 0;
-    for (Iterator<Integer> it = functions_with_locks.keySet().iterator(); it.hasNext(); ) {
-      int id = it.next();
-      FunctionInfo function = functions.get(id);
-      if (function.hasLoopingLocks) {
-        nLoopingLockingFuncs ++;
-        for (Iterator<LoopingLockInfo> it_2 = function.looping_locks.values().iterator(); it_2.hasNext(); ) {
-          int num = it_2.next().max_depthOfLoops;
-          if (num > 0) {
-            nLoopingLocks ++;
-            if (num < MAXN_LOOPS_FOR_A_LOCK) count[num] ++;
-            else rest ++;
-          }
-        }
+      // Initialization by DFS for locking functions
+      for (Integer id: functions_with_locks.keySet()) {
+	      //System.err.println(cg.getNode(id).getMethod().getSignature());
+	      dfsToGetFunctionInfos(cg.getNode(id), 0);
+      }   
+      // Find Locks with loops for locking functions. For safety, can't combine with the above, because this may modify value in FunctionInfo for eventual usage.
+      for (Integer id: functions_with_locks.keySet()) {
+	      findForLockingFunction(cg.getNode(id));
       }
-    }
+    
+      // Print the status    
+      int MAXN_LOOPS_FOR_A_LOCK = 20;
+      int[] count = new int[MAXN_LOOPS_FOR_A_LOCK]; int rest = 0;
+      for (Iterator<Integer> it = functions_with_locks.keySet().iterator(); it.hasNext(); ) {
+	      int id = it.next();
+	      FunctionInfo function = functions.get(id);
+	      if (function.hasLoopingLocks) {
+	          nLoopingLockingFuncs ++;
+	          for (Iterator<LoopingLockInfo> it_2 = function.looping_locks.values().iterator(); it_2.hasNext(); ) {
+		          int num = it_2.next().max_depthOfLoops;
+		          if (num > 0) {
+		            nLoopingLocks ++;
+		            if (num < MAXN_LOOPS_FOR_A_LOCK) count[num] ++;
+		            else rest ++;
+		          }
+	          }
+	      }
+      }
     count[0] = nLocks - nLoopingLocks;
     System.out.println("The Status of Critical Sections:");
     System.out.println("#functions that their critical sections involve loops: " + nLoopingLockingFuncs + "(" + nLoopingLocks + "critical sections)" 
@@ -2252,87 +1608,87 @@ public class JXLocks {
   
   public static void dfsToGetFunctionInfos(CGNode f, int depth) {
     
-    FunctionInfo function = new FunctionInfo();
-    function.max_depthOfLoops = 0;
-    int id = f.getGraphNodeId();
-    String short_funcname = f.getMethod().getName().toString();
-    
-    if (depth > MAXN_DEPTH) {
+      FunctionInfo function = new FunctionInfo();
       function.max_depthOfLoops = 0;
-      functions.put(id, function);
-      return ;
-    }
+      int id = f.getGraphNodeId();
+      String short_funcname = f.getMethod().getName().toString();
     
-    if (!f.getMethod().getDeclaringClass().getClassLoader().getReference().equals(ClassLoaderReference.Application) || f.getMethod().isNative()) { // IMPO - native - must be
-      function.max_depthOfLoops = 0;
-      functions.put(id, function);
-      return ;
-    }
-    
-    if (locktypes.contains(short_funcname) || unlocktypes.contains(short_funcname)) {  //TODO - others
-      function.max_depthOfLoops = 0;
-      functions.put(id, function);
-      return ;
-    }
-    
-    IR ir = f.getIR();
-    SSACFG cfg = ir.getControlFlowGraph();
-    SSAInstruction[] instructions = ir.getInstructions();
-    List<LoopInfo> loops = functions_with_loops.get(id);
-    
-    for (int i = 0; i < instructions.length; i++) {
-      SSAInstruction ssa = instructions[i];
-      if (ssa != null) {
-        int bb = cfg.getBlockForInstruction(i).getNumber();
-        InstructionInfo instruction = new InstructionInfo();
-        // Current function level
-        if (loops != null) {
-          instruction.numOfSurroundingLoops_in_current_function = 0;
-          for (int j = 0; j < loops.size(); j++)
-            if (loops.get(j).bbs.contains(bb)) {
-              instruction.numOfSurroundingLoops_in_current_function ++;
-              instruction.surroundingLoops_in_current_function.add(j);
-            }
-          //test
-          //if (instruction.numOfLoops_in_current_function > 0) System.err.println(instruction.numOfLoops_in_current_function);
-        }
-        else {
-          instruction.numOfSurroundingLoops_in_current_function = 0;
-        }
-        // Go into calls
-        if (ssa instanceof SSAInvokeInstruction) {  //SSAAbstractInvokeInstruction
-          java.util.Set<CGNode> set = cg.getPossibleTargets(f, ((SSAInvokeInstruction) ssa).getCallSite());
-          //if (set.size() > 1) System.err.println("CallGraph#getPossibleTargets's size > 1"); // for Test, how to solve the problem??
-          if (set.size() > 0) {         //JX: because I haven't yet added "hadoop-common"
-            CGNode n = set.iterator().next(); 
-            if (!functions.containsKey(n.getGraphNodeId())) {
-              //function.max_depthOfLoops = 1;  //how many???????
-              //functions.put(n.getGraphNodeId(), function);
-              dfsToGetFunctionInfos(n, depth+1); //layer+1?
-            } else {  //especial case: recursive function.    //TODO - maybe something wrong
-              /*
-              if (id == n.getGraphNodeId()) {
-                function.max_depthOfLoops = 15;
-                functions.put(id, function);
-                System.err.println("asdafasfd!!!");
-                //return;
-              }
-              */
-            }
-            instruction.maxdepthOfLoops_in_call = functions.get(n.getGraphNodeId()).max_depthOfLoops;
-            instruction.call = n.getGraphNodeId();
-          } else {                     //if we can't find the called CGNode.
-            //TODO
-            instruction.maxdepthOfLoops_in_call = 0;
-          }  
-        } else {
-          //TODO
-          instruction.maxdepthOfLoops_in_call = 0;
-        }
-        // Put into FunctionInfo.Map<Integer, InstructionInfo>
-        function.instructions.put(i, instruction);
+      if (depth > MAXN_DEPTH) {
+	      function.max_depthOfLoops = 0;
+	      functions.put(id, function);
+	      return ;
       }
-    }//for
+    
+      if ( !wala.isInPackageScope(f) ) { 
+	      function.max_depthOfLoops = 0;
+	      functions.put(id, function);
+	      return ;
+      }
+    
+      if (locktypes.contains(short_funcname) || unlocktypes.contains(short_funcname)) {  //TODO - others
+	      function.max_depthOfLoops = 0;
+	      functions.put(id, function);
+	      return ;
+      }
+    
+      IR ir = f.getIR();
+      SSACFG cfg = ir.getControlFlowGraph();
+      SSAInstruction[] instructions = ir.getInstructions();
+      List<LoopInfo> loops = functions_with_loops.get(id);
+    
+      for (int i = 0; i < instructions.length; i++) {
+	      SSAInstruction ssa = instructions[i];
+	      if (ssa != null) {
+	        int bb = cfg.getBlockForInstruction(i).getNumber();
+	        InstructionInfo instruction = new InstructionInfo();
+	        // Current function level
+	        if (loops != null) {
+	          instruction.numOfSurroundingLoops_in_current_function = 0;
+	          for (int j = 0; j < loops.size(); j++)
+	            if (loops.get(j).bbs.contains(bb)) {
+	              instruction.numOfSurroundingLoops_in_current_function ++;
+	              instruction.surroundingLoops_in_current_function.add(j);
+	            }
+	          //test
+	          //if (instruction.numOfLoops_in_current_function > 0) System.err.println(instruction.numOfLoops_in_current_function);
+	        }
+	        else {
+	          instruction.numOfSurroundingLoops_in_current_function = 0;
+	        }
+	        // Go into calls
+	        if (ssa instanceof SSAInvokeInstruction) {  //SSAAbstractInvokeInstruction
+	          java.util.Set<CGNode> set = cg.getPossibleTargets(f, ((SSAInvokeInstruction) ssa).getCallSite());
+	          //if (set.size() > 1) System.err.println("CallGraph#getPossibleTargets's size > 1"); // for Test, how to solve the problem??
+	          if (set.size() > 0) {         //JX: because I haven't yet added "hadoop-common"
+	            CGNode n = set.iterator().next(); 
+	            if (!functions.containsKey(n.getGraphNodeId())) {
+	              //function.max_depthOfLoops = 1;  //how many???????
+	              //functions.put(n.getGraphNodeId(), function);
+	              dfsToGetFunctionInfos(n, depth+1); //layer+1?
+	            } else {  //especial case: recursive function.    //TODO - maybe something wrong
+	              /*
+	              if (id == n.getGraphNodeId()) {
+	                function.max_depthOfLoops = 15;
+	                functions.put(id, function);
+	                System.err.println("asdafasfd!!!");
+	                //return;
+	              }
+	              */
+	            }
+	            instruction.maxdepthOfLoops_in_call = functions.get(n.getGraphNodeId()).max_depthOfLoops;
+	            instruction.call = n.getGraphNodeId();
+	          } else {                     //if we can't find the called CGNode.
+	            //TODO
+	            instruction.maxdepthOfLoops_in_call = 0;
+	          }  
+	        } else {
+	          //TODO
+	          instruction.maxdepthOfLoops_in_call = 0;
+	        }
+	        // Put into FunctionInfo.Map<Integer, InstructionInfo>
+	        function.instructions.put(i, instruction);
+	      }
+      }//for
     
     // find the instruction with maximal loops && save the function path
     InstructionInfo max_instruction = null;
@@ -2526,186 +1882,12 @@ public class JXLocks {
     System.out.println();
   }
   
-  
-
-  public static void viewTypeHierarchySWT(Graph<IClass> g) throws WalaException {
-    // create and run the viewer
-    final SWTTreeViewer v = new SWTTreeViewer();
-    v.setGraphInput(g);
-    Collection<IClass> roots = InferGraphRoots.inferRoots(g);
-    if (roots.size() < 1) {
-      System.err.println("PANIC: roots.size()=" + roots.size());
-      System.exit(-1);
-    }
-    v.setRootsInput(roots);
-    v.run();
-    //return v.getApplicationWindow();
-  }
-
-  /**
-  * Return a view of an {@link IClassHierarchy} as a {@link Graph}, with edges from classes to immediate subtypes
-  */
-  public static Graph<IClass> typeHierarchy2Graph(IClassHierarchy cha) throws WalaException {
-    Graph<IClass> result = SlowSparseNumberedGraph.make();
-    for (IClass c : cha) {
-      result.addNode(c);
-    }
-    for (IClass c : cha) {
-      for (IClass x : cha.getImmediateSubclasses(c)) {
-        result.addEdge(c, x);
-      }
-      if (c.isInterface()) {  
-        for (IClass x : cha.getImplementors(c.getReference())) {
-          result.addEdge(c, x);
-        }
-      }
-    }
-    return result;
-  }
-  
-  /**
-  * Restrict g to nodes from the Application loader   //JX: only require classes from App loader, No Bootstrap/Extension class loader
-  */
-  static Graph<IClass> pruneForAppLoader(Graph<IClass> g) throws WalaException {
-    Predicate<IClass> f = new Predicate<IClass>() {
-      @Override public boolean test(IClass c) {
-        //return true;    //by JX
-        return (c.getClassLoader().getReference().equals(ClassLoaderReference.Application));    //JX: only acquire classes from App loader, No Bootstrap/Extension class loader
-      }
-    };
-    return pruneGraph(g, f);
-  }
-  
-  /**
-  * Remove from a graph g any nodes that are not accepted by a {@link Predicate}
-  */
-  public static <T> Graph<T> pruneGraph(Graph<T> g, Predicate<T> f) throws WalaException {
-    Collection<T> slice = GraphSlicer.slice(g, f);
-    return GraphSlicer.prune(g, new CollectionFilter<T>(slice));
-  }
-  
-  
-  public static void viewCallGraphPDF(Graph<CGNode> g) throws WalaException {       
-    /**
-     * we can't build overall graph, it's tooooooo big.
-     * So we need to prune the call graph or use entry points of interests.
-     */
-    Properties p = null;
-    try {
-      p = WalaExamplesProperties.loadProperties();
-      p.putAll(WalaProperties.loadProperties());
-    } catch (WalaException e) {
-      e.printStackTrace();
-      Assertions.UNREACHABLE();
-    }
-    //System.out.println("here1");
-    
-    String pdfFile = p.getProperty(WalaProperties.OUTPUT_DIR) + File.separatorChar + CG_PDF_FILE;
-    String dotExe = p.getProperty(WalaExamplesProperties.DOT_EXE);
-    DotUtil.dotify(g, null, PDFTypeHierarchy.DOT_FILE, pdfFile, dotExe);
-    String gvExe = p.getProperty(WalaExamplesProperties.PDFVIEW_EXE);
-    
-    //System.out.println("here2");
-    PDFViewUtil.launchPDFView(pdfFile, gvExe);  
-  }
-  
-  
-  public static void viewCallGraphSWT(Graph<CGNode> g) throws WalaException {
    
-    Properties wp = null;
-    try {
-      wp = WalaProperties.loadProperties();
-      wp.putAll(WalaExamplesProperties.loadProperties());
-    } catch (WalaException e) {
-      e.printStackTrace();
-      Assertions.UNREACHABLE();
-    }
-    String psFile = wp.getProperty(WalaProperties.OUTPUT_DIR) + File.separatorChar + PDFWalaIR.PDF_FILE;
-    String dotFile = wp.getProperty(WalaProperties.OUTPUT_DIR) + File.separatorChar + PDFTypeHierarchy.DOT_FILE;
-    String dotExe = wp.getProperty(WalaExamplesProperties.DOT_EXE);
-    String gvExe = wp.getProperty(WalaExamplesProperties.PDFVIEW_EXE);
-
-    // create and run the viewer
-    final SWTTreeViewer v = new SWTTreeViewer();
-    /* commented by JX temporarily - because couldn't import org.eclipse.jface.*
-    v.setGraphInput(g);
-    v.setRootsInput(inferRoots(g)); //Originally, InferGraphRoots.inferRoots(cg)
-    v.getPopUpActions().add(new ViewIRAction(v, g, psFile, dotFile, dotExe, gvExe));
-    v.run();
-    */
-  }
-  
-  public static <T> Collection<T> inferRoots(Graph<T> g){
-    if (g == null) {
-      throw new IllegalArgumentException("g is null");
-    }
-    HashSet<T> s = HashSetFactory.make();
-    for (Iterator<? extends T> it = g.iterator(); it.hasNext(); ) {
-      T node = it.next();   
-      if (g.getPredNodeCount(node) == 0) {
-        System.err.println("root : " + ((CGNode) node).getMethod().getSignature());
-        s.add(node);
-      }
-    }
-    return s;
-  }
-
-  
-  public static void viewIR(IR ir) throws WalaException {
-    /**
-     * JX: it seems "viewIR" is not suitable for some functions like "LeaseManager.checkLeases", 
-     * its Exception: failed to find <Application,Lorg/apache/hadoop/fs/UnresolvedLinkException>
-     */
-    
-    // Print IR's basic blocks and SSA instructions.    //JX: good, it includes variable names 
-    System.err.println(ir.toString());  
-    
-    // Preparing
-    Properties wp = null;
-    try {
-      wp = WalaProperties.loadProperties();
-      wp.putAll(WalaExamplesProperties.loadProperties());
-    } catch (WalaException e) {
-      e.printStackTrace();
-      Assertions.UNREACHABLE();
-    }
-    String psFile = wp.getProperty(WalaProperties.OUTPUT_DIR) + File.separatorChar + PDFWalaIR.PDF_FILE;
-    String dotFile = wp.getProperty(WalaProperties.OUTPUT_DIR) + File.separatorChar + PDFTypeHierarchy.DOT_FILE;
-    String dotExe = wp.getProperty(WalaExamplesProperties.DOT_EXE);
-    String gvExe = wp.getProperty(WalaExamplesProperties.PDFVIEW_EXE);
-   
-    // Generate IR ControlFlowGraph's SWT viewer
-    //SSACFG cfg = ir.getControlFlowGraph();
-    
-    // Generate IR PDF viewer
-    PDFViewUtil.ghostviewIR(cha, ir, psFile, dotFile, dotExe, gvExe);
-  }
-  
 }
 
 
 
-//===============================================================================================
-//++++++++++++++++++++++++++++++++++ External Classes +++++++++++++++++++++++++++++++++++++++++++
-//===============================================================================================
 
-
-class ApplicationLoaderFilter extends Predicate<CGNode> {
-  @Override public boolean test(CGNode o) {
-    //return true;   //by JX
-    if (o instanceof CGNode) {
-      CGNode n = (CGNode) o;
-      return n.getMethod().getDeclaringClass().getClassLoader().getReference().equals(ClassLoaderReference.Application);
-    }
-    else if (o instanceof LocalPointerKey) {
-      LocalPointerKey l = (LocalPointerKey) o;
-      return test(l.getNode());
-    } 
-    else {
-      return false;
-    }
-  }
-}
 
 
 

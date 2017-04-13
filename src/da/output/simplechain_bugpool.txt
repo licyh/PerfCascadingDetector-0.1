@@ -1,23 +1,4 @@
-141
-CL1: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl-computeProgress-591;|
-CL1: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl-selectBestAttempt-493;|
-CL1: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator$ScheduledRequests-assign-714;|
-CL1: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator$ScheduledRequests-assignToMap-926;|
-CL1: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator$ScheduledRequests-assignToMap-929;|
-CL1: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator-getResources-596;|
-CL1: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator-scheduleAllReduces-502;|
-CL1: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerRequestor-addContainerReq-266;|
-CL1: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerRequestor-addContainerReq-274;|
-CL1: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerRequestor-decContainerReq-284;|
-CL1: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerRequestor-decContainerReq-288;|
-CL1: org.apache.hadoop.yarn.api.protocolrecords.impl.pb.AllocateRequestPBImpl-initAsks-176;|
-CL1: org.apache.hadoop.yarn.api.protocolrecords.impl.pb.AllocateRequestPBImpl-initReleases-261;|
-CL1: org.apache.hadoop.yarn.api.records.impl.pb.AMResponsePBImpl-initLocalFinishedContainerList-252;|
-CL1: org.apache.hadoop.yarn.api.records.impl.pb.AMResponsePBImpl-initLocalNewContainerList-160;|
-CL1: org.apache.hadoop.yarn.server.resourcemanager.scheduler.AppSchedulingInfo-updateResourceRequests-129;|
-CL1: org.apache.hadoop.yarn.server.resourcemanager.scheduler.SchedulerApp-pullNewlyAllocatedContainers-269;|
-CL1: org.apache.hadoop.yarn.server.resourcemanager.scheduler.SchedulerUtils-normalizeRequests-89;|
-CL1: org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler-allocate-231;|
+122 (#static codepoints=47)
 CL2: org.apache.hadoop.mapred.MapReduceChildJVM-getVMCommand-201;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-handle-951;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-getProgress-926;|
 CL2: org.apache.hadoop.mapred.MapReduceChildJVM-getVMCommand-201;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-handle-955;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-getState-938;|
 CL2: org.apache.hadoop.mapred.MapReduceChildJVM-getVMCommand-246;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-handle-951;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-getProgress-926;|

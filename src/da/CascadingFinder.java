@@ -361,7 +361,7 @@ public class CascadingFinder {
 			
 			String pidopval0 = gb.getNodePIDOPVAL0( index );
 			int loopflag = 0;
-			for (int k = beginIndex; k <= endIndex; k++) {
+			for (int k = beginIndex; k <= endIndex; k++) {         /////////JXXXXXXXXXXX - here seems a big bug, I didn't find into RPC or method call
 				// TODO
 				if ( gb.getNodeOPTY(k).equals("LoopBegin") ) {
 					loopflag = 1;

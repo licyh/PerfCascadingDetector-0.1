@@ -55,6 +55,7 @@ public class StaticPruning {
 	}
 
 	public void findTimeConsumingLoopsForAFile(String infile, String outfile) throws IOException {
+		System.out.println("\nJX-findTimeConsumingLoopsForAFile:" + outfile);
 		List<String> loopClasses = new ArrayList<String>();
         List<String> loopMethods = new ArrayList<String>();
 		List<String> loopLinenumbers = new ArrayList<String>();
@@ -64,14 +65,16 @@ public class StaticPruning {
 		BufferedReader bufreader = new BufferedReader( new FileReader( infilepath ) );
 		BufferedWriter bufwriter = new BufferedWriter( new FileWriter( outfilepath ) );
 		String tmpline;
-		int total = Integer.parseInt( bufreader.readLine() ); // the 1st line is useless
+		String firstline = bufreader.readLine(); // the 1st line is useless
+		int total = 0;
 		int count = 0;
 		Set<String> tmpset = new HashSet<String>();
 		
 		while ( (tmpline = bufreader.readLine()) != null ) {
 			String[] strs = tmpline.trim().split("\\s+");
 			if ( tmpline.trim().length() > 0 ) {
-				int cascadingLevel = Integer.parseInt( strs[0].substring(2, strs[0].indexOf(':')) ); 
+				total ++;
+				int cascadingLevel = Integer.parseInt( strs[0].substring(2, strs[0].indexOf(':')) );  //useless now
 				String codepoint = strs[1].substring(0, strs[1].indexOf(';'));   // looks like "xx.ClassName-MethodName-LineNumber"
 				if ( isTimeConsumingLoop(codepoint) ) {
 					bufwriter.write( tmpline + "\n" );
@@ -80,13 +83,12 @@ public class StaticPruning {
 				}
 			}
 		}
-		// summary -
-		bufwriter.write( "summary - " + count + "(#static codepoints=" + tmpset.size() + ")" );
+		bufwriter.write( "summary - " + count + "(#static codepoints=" + tmpset.size() + ") from " + firstline);
 		bufreader.close();
 		bufwriter.flush();
     	bufwriter.close();
-		System.out.println("JX - successfully read " + total + " Suspected/Critical Bug Loops from " + infilepath);
-    	System.out.println("JX - successfully write " + count + "(#static codepoints=" + tmpset.size() + ") time-consuming Bug Loops into " + outfilepath);
+		System.out.println("JX - successfully read " + firstline + " Suspected/Critical Bug Loops from " + infilepath);
+    	System.out.println("JX - successfully write " + count + " (#static codepoints=" + tmpset.size() + ") time-consuming Bug Loops into " + outfilepath);
 	}
 	
 	public boolean isTimeConsumingLoop(String codepoint) {
@@ -101,8 +103,10 @@ public class StaticPruning {
 					String classname = MRrpc.format( loop.function.getMethod().getDeclaringClass().getName().toString() );
 					String methodname = loop.function.getMethod().getName().toString();
 					int linenumber = loop.line_number;
-					if (classname.equals(loopclass) && methodname.equals(loopmethod) && Math.abs(linenumber-loopline)<=2 ) //!!!!
+					if (classname.equals(loopclass) && methodname.equals(loopmethod) && Math.abs(linenumber-loopline)<=2 ) { //!!!!
+						System.out.println( loop.toString_detail() );
 						return true;
+					}
 				}
 		return false;
 	}
