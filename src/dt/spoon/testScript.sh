@@ -16,3 +16,7 @@ ant compile-dt
 java -cp /root/JXCascading-detector/lib/dt/*:/root/JXCascading-detector/build/classes spoon.Launcher -i /root/hadoop-0.23.3-src/hadoop-mapreduce-project/hadoop-mapreduce-client -p dt.spoon.CatchProcessor --noclasspath
 (fine)
 java -cp /root/JXCascading-detector/lib/dt/*:/root/JXCascading-detector/build/classes spoon.Launcher -i ~/JXCascading-detector/src/dt/spoon/ -p dt.spoon.CatchProcessor
+
+
+java -cp /home/vagrant/JXCascading-detector/lib/dt/*:/home/vagrant/JXCascading-detector/build/classes:/home/vagrant/hadoopjars/* spoon.Launcher -i ~/hadoop-0.23.3-src/hadoop-mapreduce-project/hadoop-mapreduce-client 
+-o withouted -p dt.spoon.CatchProcessor --no-copy-resources --noclasspath --level WARN

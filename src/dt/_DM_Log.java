@@ -3,17 +3,22 @@ package dt;
 import java.io.*;
 import java.util.*;
 
+
 public class _DM_Log {
 
   //copy from LogFunc.java
   public enum OPTYPE {
 
 	//
+    MsgProcEnter, //msg handler enter
+	MsgProcExit, //msg handler exit
+	MsgSending, //msg sending (rpc or sendSocket)
+	    
     LoopPrint,
     //LoopCenter,         //tmp
     //end-Added
   };
-
+  
   public static void log_Base(String opType, String opValue) {
     /*try {
       BufferedReader reader = new BufferedReader(new FileReader("/mnt/storage/haopeng/workstation/java-ws/DC-Detector/hbase_test_multinodes/logging_flag"));
@@ -57,9 +62,21 @@ public class _DM_Log {
     }
   }
 
+  	public static void log_MsgProcEnter(String opValue) {
+	    String opType = _DM_Log.OPTYPE.MsgProcEnter.name();
+	    _DM_Log.log_Base(opType, opValue);
+	}
+  	public static void log_MsgProcExit(String opValue) {
+	    String opType = _DM_Log.OPTYPE.MsgProcExit.name();
+	    _DM_Log.log_Base(opType, opValue);
+  	}
+  	public static void log_MsgSending(String opValue) {
+	    String opType = _DM_Log.OPTYPE.MsgSending.name();
+	    _DM_Log.log_Base(opType, opValue);
+  	}
   
-  public static void log_LoopPrint(String opValue) {
-	String opType = _DM_Log.OPTYPE.LoopPrint.name();
-	_DM_Log.log_Base(opType, opValue);
-  }
+  	public static void log_LoopPrint(String opValue) {
+  		String opType = _DM_Log.OPTYPE.LoopPrint.name();
+  		_DM_Log.log_Base(opType, opValue);
+  	}
 }
