@@ -55,7 +55,7 @@
 	
 		<path id="dt.classpath">			
 			<pathelement location="${lib.dir}/dt/spoon-core-5.5.0-jar-with-dependencies.jar"/>
-            <pathelement location="${lib.dir}/javassist-3.20.jar"/>
+            <pathelement location="${lib.dir}/javassist-3.20.jar"/> 
             <pathelement location="${lib.dir}/commons-cli-1.3.1.jar"/>
 		</path>
 			
@@ -97,8 +97,7 @@
     	<!--target compile dt, ie, Dynamic testing for all Loops to find large loops-->
 	    <target name="compile-dt" depends="prepare" description="compile Dynamic testing for all Loops to find large loops">
 	            <javac srcdir="${src.dt.dir}" destdir="${build.classes}" includeantruntime="false">
-	                    <classpath refid="dt.classpath" />
-	            		<!-- <classpath refid="classpath" /> -->
+	                    <classpath refid="dt.classpath" />    <!-- <classpath refid="classpath" /> -->
 	            </javac>
 	    </target>
 	
