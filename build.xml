@@ -187,7 +187,9 @@
                     <fileset dir="${build.classes}" includes="dt/_DM_Log*.class" /> 
             </jar>
     		<jar jarfile="${build.lib}/MR_DM.jar">
-                    <fileset dir="${build.classes}" includes="dt/**/*.class" />  <!-- need to exclude _DM_Log*.class -->
+                    <fileset dir="${build.classes}" includes="dt/**/*.class" />  <!-- TODO - need to exclude _DM_Log*.class, because the above already included -->
+    				<fileset dir="${build.classes}" includes="dm/Util/**/*.class" />
+    				<fileset dir="${build.classes}" includes="com/*.class" />
                     <manifest>
                     		<!--<attribute name="Boot-Class-Path" value="javassist.jar"/>-->
                             <attribute name="Premain-Class" value="dt.MapReduceDM" />
@@ -195,6 +197,8 @@
                     <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
                     <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
             		<zipfileset dir="${src.dt.dir}" includes="res/looplocations" fullpath="resource/looplocations"/>
+                	<zipfileset dir="${src.dm.dir}" includes="res/mr_rpc.txt" fullpath="resource/mr_rpc.txt"/>
+                	<zipfileset dir="${src.dm.dir}" includes="res/mr_rpc_v1.txt" fullpath="resource/mr_rpc_v1.txt"/>
             </jar>
     	</target>
 	
