@@ -233,7 +233,7 @@ public class Transformer implements ClassFileTransformer {
   		// JX - instrument for all loops
 		transformLoops(cl, method);
 		// JX - instrument for Time-Consuming operations like RPCs, I/Os, network operations...
-		transformTimeConsumingOperations(cl, method);
+		//transformTimeConsumingOperations(cl, method);
   	} 
   	
   	
