@@ -28,7 +28,7 @@ public class RPCInfo {
   }
 
   public void readFile() {
-	System.out.println("\nJX-readFile");
+	System.out.println("JX-readFile");
     try {
       /*ArrayList<String> path = new ArrayList<String>();
       path.add("resource/mr_rpc.txt");

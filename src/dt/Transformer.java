@@ -63,7 +63,7 @@ public class Transformer implements ClassFileTransformer {
   
   
   public void readLoopLocations() {
-	System.out.println("\nJX-readLoopLocations");
+	System.out.println("JX-readLoopLocations");
 	//Added by JX  
 	InputStream ins;
     BufferedReader bufreader;
@@ -98,7 +98,7 @@ public class Transformer implements ClassFileTransformer {
   }
 
   public void readTimeConsumingOperations() {
-	  System.out.println("\nJX-readTimeConsumingOperations");
+	  System.out.println("JX-readTimeConsumingOperations");
 	  String rpcfile = "";
 	  String iofile = "";
 	  String commonIOfile = "resource/io.txt";   //jx: io_specific.txt or io.tx
@@ -232,13 +232,12 @@ public class Transformer implements ClassFileTransformer {
 
   
   	public void transformMethod(CtClass cl, CtBehavior method) throws CannotCompileException {
-		// for general
+		// for general - empty for now
   		transformGeneral(cl, method);
-  		
   		// JX - instrument for all loops
 		transformLoops(cl, method);
 		// JX - instrument for Time-Consuming operations like RPCs, I/Os, network operations...
-		//transformTimeConsumingOperations(cl, method);
+		transformTimeConsumingOperations(cl, method);
   	} 
   	
   	
@@ -344,7 +343,7 @@ public class Transformer implements ClassFileTransformer {
 
  	    
  	    // I/Os 
- 	    //methodUtil.insertIOs(logClass, iOLog,         ioMethodPrefixes);
+ 	    methodUtil.insertIOs(logClass, iOLog,         ioMethodPrefixes);
  	    
 	}
 
