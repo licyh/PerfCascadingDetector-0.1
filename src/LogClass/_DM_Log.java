@@ -35,9 +35,9 @@ public class _DM_Log {
     //end-Added
     LoopBegin,
     
-    //for dm & dt
-    LoopPrint,   
     //only for dt
+    LoopCenter,
+    LoopPrint,   
     IO,
   };
 
@@ -191,14 +191,21 @@ public class _DM_Log {
 	_DM_Log.log_Base(opType, opValue);
   }  
   
-  
-    //for dm and dt
+
+    ///////////////////////////////////////////////////////////////
+  	// ONLY for dt
+  	///////////////////////////////////////////////////////////////
+ 
+	public static void log_LoopCenter(String opValue) {
+		String opType = _DM_Log.OPTYPE.LoopCenter.name();
+		_DM_Log.log_Base(opType, opValue);
+	}
+	
 	public static void log_LoopPrint(String opValue) {
   		String opType = _DM_Log.OPTYPE.LoopPrint.name();
   		_DM_Log.log_Base(opType, opValue);
   	}
 	
-    //only for dt
 	public static void log_IO(String opValue) {
   		String opType = _DM_Log.OPTYPE.IO.name();
   		_DM_Log.log_Base(opType, opValue);

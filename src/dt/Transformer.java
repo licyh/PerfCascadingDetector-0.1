@@ -244,6 +244,39 @@ public class Transformer implements ClassFileTransformer {
   	public void transformGeneral(CtClass cl, CtBehavior method) {}  //TODO - if needed 
  
   	
+  	
+  	/* Insert Flags:
+  	 * 		1 - insert at method BEGIN - method.insertBefore
+  	 * 		2 - insert at loop BEGIN - ie the 1st place inside loop body, NOT outside
+  	 * 		3 - insert at method END - method.insertAfter
+  	 * Arguments:
+  	 * 		int flag - the location for the method 
+  	 * 		int loopindex - loop index in the method
+  	 * Note: 
+  	 * 		the best way to write the below codes for insertion is to Print Out(eg, in JXTest) to see.
+  	 */
+  	public String codeForLoopInst(int flag, String methodsig, int loopindex) {
+  		String codestr = "";
+  		if (flag == 1) {
+  			codestr = "loop" + loopindex + " = 0;";
+  		}
+  		else if (flag == 2) {
+  			codestr = "loop" + loopindex + "++;";
+  			// jx - looks like _DM_Log.log_LoopPrint("xx.xx.xx.yy_loop?");
+  			codestr += "_DM_Log.log_LoopCenter(" 
+  					 + "\"" + methodsig+"_loop"+loopindex + "\""
+  					 + ");";
+  		}
+  		else if (flag == 3) {
+  			//codestr = "_DM_Log.log_LoopPrint( \"loop_\" + " + loopindex + " + \"_\" + loop" + loopindex + ");";
+  			// jx - looks like _DM_Log.log_LoopPrint("xx.xx.xx.yy_loop?_"+loop?);
+  			codestr = "_DM_Log.log_LoopPrint(" 
+  					+ "\"" + methodsig+"_loop"+loopindex+"_" + "\"" + "+" + "loop" + loopindex
+  					+ ");";
+  		}
+  		return codestr;
+  	}
+  	
   	public void transformLoops(CtClass cl, CtBehavior method) throws CannotCompileException {
 	  
 		String methodsig = cl.getName() + "." + method.getName() + method.getSignature();  //full signature, like wala's signature
@@ -256,7 +289,7 @@ public class Transformer implements ClassFileTransformer {
 		// insert before
 		for (int i = 0; i < loops.length; i++) {
 			method.addLocalVariable( "loop" + i, CtClass.intType );
-			method.insertBefore( "loop" + i + " = 0;" );
+			method.insertBefore( codeForLoopInst(1, methodsig, i) );
 		}
       
 		// insert loops
@@ -269,9 +302,9 @@ public class Transformer implements ClassFileTransformer {
 		// end-test
 		for (int i = 0; i < loops.length; i++) {
 			int linenumber = loops[i] + 1;
-			int actualline = method.insertAt(linenumber, false, "loop" + i + "++;");
+			int actualline = method.insertAt(linenumber, false, codeForLoopInst(2, methodsig, i) );
 			if ( linenumber == actualline ) //some particular examples: "do { .." OR "while (true) ( .." would became insert at next line than normal
-				method.insertAt( linenumber, "loop" + i + "++;" );
+				method.insertAt( linenumber, codeForLoopInst(2, methodsig, i) );
 			else {
 				// TODO - please see
 				System.err.println( "JX - WARN - cannot insert at " + loops[i] + " (actual:" + actualline + ") for " + methodsig );
@@ -280,7 +313,7 @@ public class Transformer implements ClassFileTransformer {
       
 		// insert after
 		for (int i = 0; i < loops.length; i++) {
-			method.insertAfter( "_DM_Log.log_LoopPrint( \"loop_\" + " + i + " + \"_\" + loop" + i + ");" );
+			method.insertAfter( codeForLoopInst(3, methodsig, i) );
 		}          
   		
   	}
