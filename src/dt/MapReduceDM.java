@@ -33,10 +33,6 @@ class MapReduceTransformer extends Transformer {
 	
 	public MapReduceTransformer(String str) {
 		super(str);   
-	    //rpc
-	    rpcInfo.setInfoFilePath("resource/mr_rpc.txt", 2);
-	    rpcInfo.setInfoFilePath("resource/mr_rpc_v1.txt", 1);
-	    rpcInfo.readFile();
 	}
 	
 

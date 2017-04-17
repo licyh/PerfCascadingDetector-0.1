@@ -33,6 +33,8 @@ public class RPCInfo {
       path.add("resource/mr_rpc.txt");
       path.add("resource/mr_rpc_v1.txt");*/
       for (String i : filePaths) {
+    	System.out.println("JX - rpc0 - " + i);  
+    	  
         InputStream rpcIn = RPCInfo.class.getClassLoader().getResourceAsStream(i);
         Reader rpcReader = new InputStreamReader(rpcIn);
         BufferedReader buf = new BufferedReader(rpcReader);
@@ -42,6 +44,7 @@ public class RPCInfo {
           if (line.startsWith("//")) {
             continue;
           }
+          System.out.println("JX - rpc00 - " + line);  
           words = line.split(" ");
           /*System.out.println("Debug >> : " + words[0]);
           System.out.println("Debug >> : " + words[1]);
@@ -59,7 +62,8 @@ public class RPCInfo {
           else {
             rpcI.version = 1;
           }*/
-
+          
+          System.out.println("JX - rpc000 - *" + words[ind] + "*");
           rpcI.paraNum = Integer.parseInt(words[ind++]);
           if (rpcI.paraNum == 0) { //useless rpc
             continue;

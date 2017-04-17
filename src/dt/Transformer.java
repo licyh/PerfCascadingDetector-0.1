@@ -53,6 +53,10 @@ public class Transformer implements ClassFileTransformer {
     //read loop locations' file for instrumentation
     readLoopLocations();
     
+    //rpc
+    rpcInfo.setInfoFilePath("resource/mr_rpc.txt", 2);
+    rpcInfo.setInfoFilePath("resource/mr_rpc_v1.txt", 1);
+    rpcInfo.readFile();
     //jx - read (rpc) + io
     readTimeConsumingOperations();
   }
@@ -276,7 +280,7 @@ public class Transformer implements ClassFileTransformer {
       
 		// insert after
 		for (int i = 0; i < loops.length; i++) {
-			method.insertAfter( "dt._DM_Log.log_LoopPrint( \"loop_\" + " + i + " + \"_\" + loop" + i + ");" );
+			method.insertAfter( "_DM_Log.log_LoopPrint( \"loop_\" + " + i + " + \"_\" + loop" + i + ");" );
 		}          
   		
   	}
