@@ -63,6 +63,7 @@ public class Transformer implements ClassFileTransformer {
   
   
   public void readLoopLocations() {
+	System.out.println("\nJX-readLoopLocations");
 	//Added by JX  
 	InputStream ins;
     BufferedReader bufreader;
