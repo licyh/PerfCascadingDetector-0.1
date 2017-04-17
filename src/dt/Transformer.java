@@ -313,9 +313,11 @@ public class Transformer implements ClassFileTransformer {
  	    boolean injectFlag = false;
 
  	    /* for rpc calling */
+ 	    System.out.println("JX - debugpoint - 1");
  	    methodUtil.insertRPCCallInst(logClass, msgSendingLog, rpcInfo);
+ 	    System.out.println("JX - debugpoint - 2");
  	    methodUtil.insertRPCInvoke(logClass, msgSendingLog);
- 	    
+ 	    System.out.println("JX - debugpoint - 3");
  	    /* RPC function */
  	    if (rpcInfo.isRPCMethod(className, methodName) && //is a rpc
  	             (rpcInfo.getVersion(className, methodName) == 1 || // version 1
@@ -328,8 +330,11 @@ public class Transformer implements ClassFileTransformer {
  	    	int rpc_flag = rpc_version == 2 ? 2 : 3; //see note in methodUtil.java. flag=2: mrv2 rpc. flag=3: mrv1 rpc.
 
  	    	//insert RPCEnter & RPCExit log
+ 	    	System.out.println("JX - debugpoint - 4");
  	    	methodUtil.insertCallInstBefore(logClass, msgProcEnterLog, rpc_flag);
+ 	    	System.out.println("JX - debugpoint - 5");
  	    	methodUtil.insertCallInstAfter(logClass, msgProcExitLog, rpc_flag);
+ 	    	System.out.println("JX - debugpoint - 6");
  	    }
 
  	    
