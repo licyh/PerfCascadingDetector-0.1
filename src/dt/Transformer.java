@@ -198,7 +198,16 @@ public class Transformer implements ClassFileTransformer {
   		try {
   			cl = pool.makeClass(new java.io.ByteArrayInputStream(b));
   			CtBehavior[] methods = cl.getDeclaredBehaviors();
-
+  			
+	  	      //Test - Added by JX
+	  	      //System.out.println("JX - CLASS - " + cl.getName() );
+	  	      /*
+	  	      for (CtBehavior method : methods) 
+	  	    	System.out.println( method.getName() + " @ " + method.getSignature() 
+	  	  	  		+ " - constr?" + method.getMethodInfo().isConstructor() + " - cl?" + method.getMethodInfo().isStaticInitializer() + " - meth?" + method.getMethodInfo().isMethod());
+	  	      */
+	  	      //end-Added
+  			
   			for (CtBehavior method : methods) {
   				if ( method.isEmpty() ) continue;
   				// default
@@ -224,7 +233,7 @@ public class Transformer implements ClassFileTransformer {
   		// JX - instrument for all loops
 		transformLoops(cl, method);
 		// JX - instrument for Time-Consuming operations like RPCs, I/Os, network operations...
-		transformTimeConsumingOperations(cl, method);
+		//transformTimeConsumingOperations(cl, method);
   	} 
   	
   	
