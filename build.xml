@@ -2,12 +2,12 @@
 
 <project name="JXCascading-detector" default="help" basedir=".">
         <!--src dir-->
-        <property name="src.dir" value="src"/>
-		<property name="src.sa.dir" value = "${src.dir}/sa"/>
-		<property name="src.dt.dir" value = "${src.dir}/dt"/>
-		<property name="src.com.dir" value="${src.dir}/com"/>
-        <property name="src.dm.dir" value="${src.dir}/dm"/>
-		<property name="src.da.dir" value="${src.dir}/da"/>
+        <property name="src.dir" value="src/"/>
+		<property name="src.sa.dir" value = "${src.dir}/sa/"/>
+		<property name="src.dt.dir" value = "${src.dir}/dt/"/>
+		<property name="src.com.dir" value="${src.dir}/com/"/>
+        <property name="src.dm.dir" value="${src.dir}/dm/"/>
+		<property name="src.da.dir" value="${src.dir}/da/"/>
 
         <!--build dir-->
         <property name="build.dir" value="build"/>
@@ -15,7 +15,7 @@
         <property name="build.lib" value="${build.dir}/lib"/>
 
         <!--classpath-->
-        <property name="lib.dir" value="lib"/>
+        <property name="lib.dir" value="lib/"/>
         <property name="lib.wala" value="${lib.dir}/sa/wala-1.3.8-jars"/>
         <property name="lib.slf4j" value="${lib.dir}/slf4j/slf4j-1.7.21/"/>
         <property name="lib.logback" value="${lib.dir}/slf4j/logback/logback-1.1.7"/>
