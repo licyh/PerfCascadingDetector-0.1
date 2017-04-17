@@ -91,16 +91,7 @@
 	            <javac srcdir="${src.sa.dir}" destdir="${build.classes}" includeantruntime="false">
 	                    <classpath refid="sa.classpath" />
 	            </javac>
-	    </target>
-	
-    	<!-- added by JX -->
-    	<!--target compile dt, ie, Dynamic testing for all Loops to find large loops-->
-	    <target name="compile-dt" depends="prepare" description="compile Dynamic testing for all Loops to find large loops">
-	            <javac srcdir="${src.dt.dir}" destdir="${build.classes}" includeantruntime="false">
-	                    <classpath refid="dt.classpath" />    <!-- <classpath refid="classpath" /> -->
-	            </javac>
-	    </target>
-	
+	    </target>	
 	
 	    <!--target compile API&RPC class-->
         <target name="compile-api-rpc" depends="prepare" description="compile API and RPCInfo class">
@@ -125,13 +116,21 @@
                         <fileset dir="${build.classes}" includes="_DM_Log*.class" />
                 </jar>
         </target>
-
+	
         <!--target compile dm (MR) -->
         <target name="compile-dm" depends="prepare, compile-api-rpc" description="compile dynamic monitor">
                 <javac srcdir="${src.dm.dir}" destdir="${build.classes}" includeantruntime="false">
                         <classpath refid="classpath" />
                 </javac>
         </target>
+	
+		<!-- added by JX -->
+		<!--target compile dt, ie, Dynamic testing for all Loops to find large loops-->
+		<target name="compile-dt" depends="prepare, compile-api-rpc" description="compile Dynamic testing for all Loops to find large loops">
+	        <javac srcdir="${src.dt.dir}" destdir="${build.classes}" includeantruntime="false">
+	                <classpath refid="dt.classpath" />    <!-- <classpath refid="classpath" /> -->
+	        </javac>
+		</target>
         	
         <!--target compile da-->
         <target name="compile-da" depends="prepare" description="compile dynamic analysiser">

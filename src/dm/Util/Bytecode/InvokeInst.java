@@ -118,6 +118,12 @@ public class InvokeInst extends Instruction {
   }*/
 
 
+  //Added by JX
+  public String getSignature() {
+	  return calledClass() + "." + calledMethod();
+  }
+  
+  
   public String toString() {
 	// Modified by JX - this may be still not formal
     return opcode() + " " + "#" + calledIndex() + " = (..)Method " +

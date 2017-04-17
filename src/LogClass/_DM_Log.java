@@ -4,25 +4,28 @@ import java.io.*;
 import java.util.*;
 
 
+
 public class _DM_Log {
 
   //copy from LogFunc.java
   public enum OPTYPE {
-    ThdEnter,   //enter thread
-    ThdExit,    //exit thread
-    ThdCreate,  //create thread
-    ThdJoin,    //join thread
-    HeapRead,   //read a heap var
-    HeapWrite,  //write a heap var
-    MsgProcEnter, //msg handler enter
-    MsgProcExit, //msg handler exit
-    MsgSending, //msg sending (rpc or sendSocket)
+    ThdEnter,   	//enter thread
+    ThdExit,    	//exit thread
+    ThdCreate,  	//create thread
+    ThdJoin,    	//join thread
+    HeapRead,   	//read a heap var
+    HeapWrite,  	//write a heap var
+    //JX - also for dt
+    MsgProcEnter, 	//msg handler enter
+    MsgProcExit, 	//msg handler exit
+    MsgSending, 	//msg sending (rpc or sendSocket)
+    //end-JX
     EventProcEnter, //event handler enter
-    EventProcExit, //event handler exit
-    EventCreate, //event create
-    ProcessCreate, //process create
-    LockRequire, //require lock
-    LockRelease, //release lock
+    EventProcExit, 	//event handler exit
+    EventCreate, 	//event create
+    ProcessCreate, 	//process create
+    LockRequire, 	//require lock
+    LockRelease, 	//release lock
     //Added by JX
     RWLockCreate,   	//jx - for creating ReentrantReadWriteLock
     TargetCodeBegin,
@@ -31,7 +34,11 @@ public class _DM_Log {
     //LargeLoopCenter,         //tmp
     //end-Added
     LoopBegin,
-    LoopPrint,
+    
+    //for dm & dt
+    LoopPrint,   
+    //only for dt
+    IO,
   };
 
   public static void log_Base(String opType, String opValue) {
@@ -183,8 +190,19 @@ public class _DM_Log {
 	String opType = _DM_Log.OPTYPE.LoopBegin.name();
 	_DM_Log.log_Base(opType, opValue);
   }  
-  public static void log_LoopPrint(String opValue) {
-	String opType = _DM_Log.OPTYPE.LoopPrint.name();
-	_DM_Log.log_Base(opType, opValue);
-  }
+  
+  
+    //for dm and dt
+	public static void log_LoopPrint(String opValue) {
+  		String opType = _DM_Log.OPTYPE.LoopPrint.name();
+  		_DM_Log.log_Base(opType, opValue);
+  	}
+	
+    //only for dt
+	public static void log_IO(String opValue) {
+  		String opType = _DM_Log.OPTYPE.IO.name();
+  		_DM_Log.log_Base(opType, opValue);
+  	}  
+
 }
+

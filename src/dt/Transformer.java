@@ -12,6 +12,8 @@ import dm.Util.DMOption;
 import dm.Util.MethodUtil;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -32,6 +34,11 @@ public class Transformer implements ClassFileTransformer {
   //jx: RPC
   RPCInfo rpcInfo = new RPCInfo();
   
+  //jx: added
+  List<String> rpcMethodSigs = new ArrayList<String>();
+  List<String> ioMethodPrefixes = new ArrayList<String>();
+  
+  
   public Transformer(String args) {
     super();
     option = new DMOption(args);
@@ -45,7 +52,11 @@ public class Transformer implements ClassFileTransformer {
     classUtil.setSearchScope(option.getValue("s"));
     //read loop locations' file for instrumentation
     readLoopLocations();
+    
+    //jx - read (rpc) + io
+    readTimeConsumingOperations();
   }
+  
   
   public void readLoopLocations() {
 	//Added by JX  
@@ -81,13 +92,104 @@ public class Transformer implements ClassFileTransformer {
 	System.out.println("JX - successfully read " + looplocations.size() + " loop locations for instrumentation");      
   }
 
+  public void readTimeConsumingOperations() {
+	  System.out.println("\nJX-readTimeConsumingOperations");
+	  String rpcfile = "";
+	  String iofile = "";
+	  String commonIOfile = "resource/io.txt";   //jx: io_specific.txt or io.tx
+	  String systemname = "MapReduce";
+	  
+	  switch (systemname) {
+	  	case "HDFS":
+	  		rpcfile = "resource/hd_rpc.txt";
+	  		iofile  = "resource/hd_io.txt";
+			break;
+	  	case "MapReduce":
+	  		rpcfile = "resource/mr_rpc.txt";
+	  		iofile  = "resource/mr_io.txt";
+			break;
+	  	case "HBase":
+	  		rpcfile = "resource/hb_rpc.txt";
+	  		iofile  = "resource/hb_io.txt";
+			break;
+	  	default:
+			break;
+	  }  
+	
+	  InputStream ins;
+	  BufferedReader bufreader;
+	  String tmpline;
+	  
+	  //1. read RPC file
+      int tmpnn = 0;
+	  try {
+		  ins = MapReduceTransformer.class.getClassLoader().getResourceAsStream( rpcfile );
+		  bufreader = new BufferedReader( new InputStreamReader(ins) );
+		  tmpline = bufreader.readLine(); // the 1st line is useless
+		  while ( (tmpline = bufreader.readLine()) != null ) {
+			  String[] strs = tmpline.trim().split("\\s+");
+			  if ( tmpline.trim().length() > 0 ) {
+				  tmpnn++;
+				  for (String str: strs)
+					  rpcMethodSigs.add(str);
+			  }
+		  }
+		  bufreader.close();
+		
+	  } catch (Exception e) {
+		  // TODO Auto-generated catch block
+		  System.out.println("JX - ERROR - when reading RPC files");
+		  e.printStackTrace();
+	  }
+	  System.out.println("JX - successfully read " + tmpnn + "(total:" + rpcMethodSigs.size() + ") RPCs as time-consuming operations");
+	  
+	  //2. read IO file
+	  try {
+		  ins = MapReduceTransformer.class.getClassLoader().getResourceAsStream( commonIOfile );
+		  bufreader = new BufferedReader( new InputStreamReader(ins) );  
+		  tmpline = bufreader.readLine(); // the 1st line is useless
+		  while ( (tmpline = bufreader.readLine()) != null ) {
+			  String[] strs = tmpline.trim().split("\\s+");
+			  if ( tmpline.trim().length() > 0 ) {
+				  ioMethodPrefixes.add( strs[0] );
+			  }
+		  }
+		  bufreader.close();
+		
+		  File f = new File( MapReduceTransformer.class.getClassLoader().getResource( iofile ).getPath() );
+		  if (f.exists()) {
+			  bufreader = new BufferedReader( new FileReader( f ) );
+			  tmpline = bufreader.readLine(); // the 1st line is useless
+			  while ( (tmpline = bufreader.readLine()) != null ) {
+				  String[] strs = tmpline.trim().split("\\s+");
+				  if ( tmpline.trim().length() > 0 ) {
+					  ioMethodPrefixes.add( strs[0] );
+				  }
+			  }
+		  }
+		  bufreader.close();
+	  } catch (Exception e) {
+		  // TODO Auto-generated catch block
+		  System.out.println("JX - ERROR - when reading IO files");
+		  e.printStackTrace();
+	  }
+	  System.out.println("JX - successfully read " + ioMethodPrefixes.size() + " IO Prefixes as time-consuming operations");
+  }
   
+  
+  
+  
+  
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    // JX - Javassist's Transform Methods
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    
   	// default function in javassist
   	public byte[] transform(ClassLoader loader, String className, Class redefiningClass, 
   			ProtectionDomain domain, byte[] bytes) throws IllegalClassFormatException {
   		return transformClass(redefiningClass, bytes);
   	}
-
+    
  
   	public byte[] transformClass(Class classToTrans, byte[] b) {
   		ClassPool pool = ClassPool.getDefault();
@@ -171,40 +273,17 @@ public class Transformer implements ClassFileTransformer {
   	}
   
   	
+  	public boolean isInPackageScope(String className) { return false; }  //should be inherited
+  	
+  	
   	public void transformTimeConsumingOperations(CtClass cl, CtBehavior method) throws CannotCompileException {
   		
  	    MethodInfo methodInfo = method.getMethodInfo();
  	    String methodName = method.getName().toString();
  	    String className = cl.getName().toString();
- 	    /*if (methodInfo.isConstructor() || methodInfo.isStaticInitializer()) {
- 	      return; //bypass all constructors.
- 	    }*/
-
- 	    if (cl.getName().contains("xerces") ||
- 	        cl.getName().contains("xml") ||
- 	        cl.getName().contains("xalan")) {
- 	      return; //these classes are about xml parser.
- 	    }
-
- 	    if (cl.getName().startsWith("java.") ||
- 	        cl.getName().startsWith("sun.")) {
- 	      return; //bypass
- 	    }
- 	    	
- 	    if (className.startsWith("org.apache.hadoop.yarn.") == false
- 	        && className.startsWith("org.apache.hadoop.mapred.") == false
- 	        && className.startsWith("org.apache.hadoop.mapreduce.") == false
- 	        && className.startsWith("org.apache.hadoop.ipc.") == false
- 	        && className.startsWith("org.apache.hadoop.util.RunJar") == false
- 	        && className.startsWith("org.apache.hadoop.util.Shell") == false
- 	 //The CodeAttribute of some methods in util is empty. ignore them.
- 	       ) {
- 	      return;
- 	    }
- 	    if (className.contains("PBClientImpl") ||
- 	        className.contains("PBServiceImpl") ||
- 		className.contains("org.apache.hadoop.yarn.event.EventHandler")) {
- 	      return;
+ 	 
+ 	    if ( !isInPackageScope(className) ) {
+ 	    	return; 
  	    }
 
  	    String logClass = "_DM_Log";
@@ -219,10 +298,14 @@ public class Transformer implements ClassFileTransformer {
 
  	    String msgProcEnterLog    = logFuncPre + "_" + "MsgProcEnter";
  	    String msgProcExitLog     = logFuncPre + "_" + "MsgProcExit";
- 	    String msgSendingLog      = logFuncPre + "_" + "MsgSending";
- 	    
+ 	    String msgSendingLog      = logFuncPre + "_" + "MsgSending"; 	    
+ 	    String iOLog      	      = logFuncPre + "_" + "IO";
 
  	    boolean injectFlag = false;
+
+ 	    /* for rpc calling */
+ 	    methodUtil.insertRPCCallInst(logClass, msgSendingLog, rpcInfo);
+ 	    methodUtil.insertRPCInvoke(logClass, msgSendingLog);
  	    
  	    /* RPC function */
  	    if (rpcInfo.isRPCMethod(className, methodName) && //is a rpc
@@ -231,21 +314,20 @@ public class Transformer implements ClassFileTransformer {
  	              //mainly for refreshServiceAcls method in AdminService.
  	             )
  	            ) {
- 	      injectFlag = true;
- 	      int rpc_version = rpcInfo.getVersion(className, methodName);
- 	      int rpc_flag = rpc_version == 2 ? 2 : 3; //see note in methodUtil.java. flag=2: mrv2 rpc. flag=3: mrv1 rpc.
+ 	    	injectFlag = true;
+ 	    	int rpc_version = rpcInfo.getVersion(className, methodName);
+ 	    	int rpc_flag = rpc_version == 2 ? 2 : 3; //see note in methodUtil.java. flag=2: mrv2 rpc. flag=3: mrv1 rpc.
 
- 	      //insert RPCEnter & RPCExit log
- 	      methodUtil.insertCallInstBefore(logClass, msgProcEnterLog, rpc_flag);
- 	      methodUtil.insertCallInstAfter(logClass, msgProcExitLog, rpc_flag);
-
+ 	    	//insert RPCEnter & RPCExit log
+ 	    	methodUtil.insertCallInstBefore(logClass, msgProcEnterLog, rpc_flag);
+ 	    	methodUtil.insertCallInstAfter(logClass, msgProcExitLog, rpc_flag);
  	    }
 
- 	    /* for rpc calling */
- 	    methodUtil.insertRPCCallInst(logClass, msgSendingLog, rpcInfo);
- 	    methodUtil.insertRPCInvoke(logClass, msgSendingLog);
-
- 	  }
+ 	    
+ 	    // I/Os 
+ 	    methodUtil.insertIOs(logClass, iOLog,         ioMethodPrefixes);
+ 	    
+	}
 
 }
 
