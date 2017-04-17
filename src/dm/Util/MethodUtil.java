@@ -1016,34 +1016,32 @@ public void insertRPCInvoke(String logClass, String logMethod) {
 		        	}
 		        }
 		        
-		        if ( isIO ) {
+		        if ( !isIO ) continue; 
 		
-		          	Bytecode code = new Bytecode(constPool);
-		          	allocStack(3);
-		          	/* cannot use storePara at here because monitorenter/exit doesn't include obj.
-		           	*/
-		          	int objIndex = allocLocal(1);
-		          	code.addAstore(objIndex);
-		          	code.addAload(objIndex);
-		          
-		          	code.addNew("java/lang/StringBuilder");
-		          	code.addOpcode(Opcode.DUP);
-		          	code.addInvokespecial("java/lang/StringBuilder", "<init>", "()V");
-		          	// add xx like "java.io.File.read"
-		          	code.addLdc(invokeSig); 
-		          	code.addInvokevirtual("java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
-		          	code.addInvokevirtual("java/lang/StringBuilder", "toString", "()Ljava/lang/String;");
-		          	code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
-		          	try {
-			            int loc = codeIter.insertExAt(cur, code.get());
-			            codeIter.insert(code.getExceptionTable(), loc);
-			            methodInfo.rebuildStackMapIf6(method.getDeclaringClass().getClassPool(),
-			                            method.getDeclaringClass().getClassFile2());
-		          	} catch (BadBytecode e) {
-			            System.out.print("Badcode when insert monitor instruction.");
-			            e.printStackTrace();
-		          	}
-		        }
+	          	Bytecode code = new Bytecode(constPool);
+	          	allocStack(3);
+	          	/* JX - I don't need the top of stack
+	          	int objIndex = allocLocal(1);
+	          	code.addAstore(objIndex);
+	          	code.addAload(objIndex);
+	          	*/
+	          	code.addNew("java/lang/StringBuilder");
+	          	code.addOpcode(Opcode.DUP);
+	          	code.addInvokespecial("java/lang/StringBuilder", "<init>", "()V");
+	          	// add xx like "java.io.File.read"
+	          	code.addLdc(invokeSig); 
+	          	code.addInvokevirtual("java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
+	          	code.addInvokevirtual("java/lang/StringBuilder", "toString", "()Ljava/lang/String;");
+	          	code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
+	          	try {
+		            int loc = codeIter.insertExAt(cur, code.get());
+		            codeIter.insert(code.getExceptionTable(), loc);
+		            methodInfo.rebuildStackMapIf6(method.getDeclaringClass().getClassPool(),
+		                            method.getDeclaringClass().getClassFile2());
+	          	} catch (BadBytecode e) {
+		            System.out.print("Badcode when insert monitor instruction.");
+		            e.printStackTrace();
+	          	}
 	    	}
 	    } catch (Exception e) {
 		      e.printStackTrace();
