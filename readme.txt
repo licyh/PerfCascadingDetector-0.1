@@ -5,5 +5,5 @@
 
 src/da/         #Dynamic Analysis
 	dt/         #Dynamic Testing
-	dm/         #Dyanmic Logging
+	dm/         #Dyanmic Monitor/Logging
 	sa/         #Static Analysis      

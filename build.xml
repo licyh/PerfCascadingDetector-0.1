@@ -182,12 +182,9 @@
     	</target>
 	
     	<!--target jar dt-MR-->
-    	<target name="jar-dt" depends="compile-dt" description="generate jar for MR dynamic monitor">
-            <jar jarfile="${build.lib}/_DM_Log.jar">
-                    <fileset dir="${build.classes}" includes="dt/_DM_Log*.class" /> 
-            </jar>
+    	<target name="jar-dt" depends="compile-dt, jar-log" description="generate jar for MR dynamic monitor">
     		<jar jarfile="${build.lib}/MR_DM.jar">
-                    <fileset dir="${build.classes}" includes="dt/**/*.class" />  <!-- TODO - need to exclude _DM_Log*.class, because the above already included -->
+                    <fileset dir="${build.classes}" includes="dt/**/*.class" /> 
     				<fileset dir="${build.classes}" includes="dm/Util/**/*.class" />
     				<fileset dir="${build.classes}" includes="com/*.class" />
                     <manifest>
@@ -196,14 +193,17 @@
                     </manifest>
                     <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
                     <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
+    				<zipfileset dir="${src.dt.dir}/res/" prefix="resource/"/>
+    			<!--
             		<zipfileset dir="${src.dt.dir}" includes="res/looplocations" fullpath="resource/looplocations"/>
                 	<zipfileset dir="${src.dm.dir}" includes="res/mr_rpc.txt" fullpath="resource/mr_rpc.txt"/>
                 	<zipfileset dir="${src.dm.dir}" includes="res/mr_rpc_v1.txt" fullpath="resource/mr_rpc_v1.txt"/>
+                -->
             </jar>
     	</target>
 	
         <!--target jar dm-MR-->
-        <target name="jar-dm" depends="compile-dm, compile-api-rpc, jar-log" description="generate jar for MR dynamic monitor">
+        <target name="jar-dm" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
                 <jar jarfile="${build.lib}/MR_DM.jar">
                         <fileset dir="${build.classes}" includes="dm/**/*.class" />
                         <fileset dir="${build.classes}" includes="com/*.class" />
