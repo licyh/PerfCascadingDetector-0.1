@@ -343,7 +343,7 @@ public class Transformer implements ClassFileTransformer {
 
  	    
  	    // I/Os 
- 	    methodUtil.insertIOs(logClass, iOLog,         ioMethodPrefixes);
+ 	    //methodUtil.insertIOs(logClass, iOLog,         ioMethodPrefixes);
  	    
 	}
 
