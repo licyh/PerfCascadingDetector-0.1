@@ -113,7 +113,10 @@
         </target>
         <target name="jar-log" depends="compile-log" description="generate jar for all log methods">
                 <jar jarfile="${build.lib}/_DM_Log.jar">
-                        <fileset dir="${build.classes}" includes="_DM_Log*.class" />
+                		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
+                		<!--
+                		<fileset dir="${build.classes}" includes="_DM_Log*.class" />
+                		-->
                 </jar>
         </target>
 	
