@@ -1,9 +1,19 @@
 
+java cmd   
+#就不进去cd ~/JXCascading-detector/bin/    #or ~/JXCascading-detector/build/classes/了，因为eclipse中也是当project根目录为当前目录
+#(-cp couldn't include "~")
+cd ~/JXCascading-detector/  
+java -cp /root/JXCascading-detector/build/classes/:/root/JXCascading-detector/lib/dt/spoon-core-5.5.0-jar-with-dependencies.jar dt.spoon.MySpoon
+or
+java -cp /root/JXCascading-detector/bin/:/root/JXCascading-detector/lib/dt/spoon-core-5.5.0-jar-with-dependencies.jar dt.spoon.MySpoon
+
+
+
 eclipse cmd
 cmd: java -cp /root/JXCascading-detector/lib/dt/spoon-core-5.5.0-jar-with-dependencies.jar spoon.Launcher -i ~/JXCascading-detector/src/dt/spoon/ --gui (--noclasspath)
 runConfig: SpoonTest-gui
 
-java -cp ~/JXCascading-detector/lib/dt/spoon-core-5.5.0-jar-with-dependencies.jar:~/JXCascading-detector/build/classes spoon.Launcher -i ~/hadoop-0.23.3-src -p dt.spoon.CatchProcessor
+java -cp xx/JXCascading-detector/lib/dt/spoon-core-5.5.0-jar-with-dependencies.jar:xx/JXCascading-detector/build/classes spoon.Launcher -i ~/hadoop-0.23.3-src -p dt.spoon.CatchProcessor
 
 
 

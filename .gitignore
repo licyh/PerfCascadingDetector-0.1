@@ -8,6 +8,14 @@
 input/
 build/
 bin/
+spooned/
+spooned-classes/
+
+
+
+
+
+
 
 
 #*.class

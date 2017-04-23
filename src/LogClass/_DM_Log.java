@@ -1,4 +1,5 @@
 //package dm.Util.LogClass; //performance overhead... 1min --> 2min
+package LogClass;              //jx: new changed
 
 import java.io.*;
 import java.util.*;
@@ -33,11 +34,12 @@ public class _DM_Log {
     LargeLoopBegin,
     //LargeLoopCenter,         //tmp
     //end-Added
-    LoopBegin,
+    LoopBegin,               //also for spoon
     
     //only for dt
     LoopCenter,
-    LoopPrint,   
+    LoopPrint,     //only for javassist
+    LoopEnd,       //only for spoon
     IO,
   };
 
@@ -203,6 +205,11 @@ public class _DM_Log {
 	
 	public static void log_LoopPrint(String opValue) {
   		String opType = _DM_Log.OPTYPE.LoopPrint.name();
+  		_DM_Log.log_Base(opType, opValue);
+  	}
+	
+	public static void log_LoopEnd(String opValue) {
+  		String opType = _DM_Log.OPTYPE.LoopEnd.name();
   		_DM_Log.log_Base(opType, opValue);
   	}
 	

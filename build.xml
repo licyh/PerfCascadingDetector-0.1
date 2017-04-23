@@ -122,6 +122,7 @@
 		<target name="compile-dt" depends="prepare, compile-api-rpc, compile-dm" description="compile Dynamic testing for all Loops to find large loops">
 	        <javac srcdir="${src.dt.dir}" destdir="${build.classes}" includeantruntime="false">
 	                <classpath refid="dt.classpath" />    <!-- <classpath refid="classpath" /> -->
+	        		<exclude name="da/" />
 	        </javac>
 		</target>
 	
