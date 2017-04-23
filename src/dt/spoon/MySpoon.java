@@ -17,11 +17,36 @@ import spoon.Launcher;
 
 public class MySpoon {
 
+	/**
+	 * @param args
+	 * 		  args[0] is a dir path string
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception {
+		
+		if (args.length != 1) {
+			System.err.println("JX - ERROR - args.length != 1");
+			return;
+		}
+		Path dirpath = Paths.get( args[0] );
+		if ( !Files.exists(dirpath) ) {
+			System.err.println("JX - ERROR - !Files.exists @ " + dirpath);
+			return;
+		}
+		System.out.println("JX - INFO - " + "the target dir is " + dirpath.toAbsolutePath());
+		
+		
+		// Testing - Getting Spoon GUI Tree for a Directory
+		//Process: Launcher.main(String[]) -> run(String[]) -> run() + new XxGuiTree()
+		//Launcher.main( new String[] {"-i", "src/dt/spoon/test", "--gui"} );
+		// Or
 		//Launcher guilauncher = new Launcher();
-		//guilauncher.run( new String[] {"-i", "src/dt/spoon", "--gui"} );
-	
-		new MySpoon().scanInputDir( Paths.get("src/dt/spoon/test/") );
+		//guilauncher.run( new String[] {"-i", "src/dt/spoon/test", "--gui"} );
+		
+		// Testing
+		//new MySpoon().scanInputDir( Paths.get("src/dt/spoon/test/") );
+		
+		new MySpoon().scanInputDir( dirpath );
 	}
 
 	public MySpoon() {		
@@ -70,9 +95,6 @@ public class MySpoon {
 		/* Basic Usage */
 		
 		try {
-			//Process: Launcher.main(String[]) -> run(String[]) -> run() + new XxGuiTree()
-			//Launcher.main( new String[] {"-i", "src/dt/spoon", "--gui"} );
-
 			//jx - ps: xx[:|;]xx[:|;]xx[:|;]  in Linux & Windows respectively
 			Launcher.main( new String[] {
 					"-i", filepath.toString(),		// input file or dir
