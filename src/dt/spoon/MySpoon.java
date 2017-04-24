@@ -24,6 +24,17 @@ public class MySpoon {
 	 */
 	public static void main(String[] args) throws Exception {
 		
+		// Testing - Getting Spoon GUI Tree for a Directory
+		//Process: Launcher.main(String[]) -> run(String[]) -> run() + new XxGuiTree()
+		//Launcher.main( new String[] {"-i", "src/dt/spoon/test", "--gui"} );
+		// Or
+		//Launcher guilauncher = new Launcher();
+		//guilauncher.run( new String[] {"-i", "src/dt/spoon/test", "--gui"} );
+				
+		// Testing
+		//new MySpoon().scanInputDir( Paths.get("src/dt/spoon/") );
+				
+		
 		if (args.length != 1) {
 			System.err.println("JX - ERROR - args.length != 1");
 			return;
@@ -34,17 +45,6 @@ public class MySpoon {
 			return;
 		}
 		System.out.println("JX - INFO - " + "the target dir is " + dirpath.toAbsolutePath());
-		
-		
-		// Testing - Getting Spoon GUI Tree for a Directory
-		//Process: Launcher.main(String[]) -> run(String[]) -> run() + new XxGuiTree()
-		//Launcher.main( new String[] {"-i", "src/dt/spoon/test", "--gui"} );
-		// Or
-		//Launcher guilauncher = new Launcher();
-		//guilauncher.run( new String[] {"-i", "src/dt/spoon/test", "--gui"} );
-		
-		// Testing
-		//new MySpoon().scanInputDir( Paths.get("src/dt/spoon/test/") );
 		
 		new MySpoon().scanInputDir( dirpath );
 	}
@@ -78,6 +78,10 @@ public class MySpoon {
                 @Override  
                 public FileVisitResult preVisitDirectory(Path dirpath, BasicFileAttributes attrs) throws IOException {
                 	// TODO
+                	System.out.println("Processing dir: " + dirpath.toString());
+                	if ( dirpath.getFileName().toString().equals("test") ) {
+                		return FileVisitResult.SKIP_SUBTREE;
+                	}
                 	return FileVisitResult.CONTINUE;
                 }
                 
@@ -104,10 +108,9 @@ public class MySpoon {
 							+ File.pathSeparator + "dt.spoon.processors.MethodProcessor",
 					"--no-copy-resources",          // jx - should be NO copy non-java files
 					"--level", "WARN",
-					"--compile",                    // PS: "--compile/--precompile" used for compiling transformed/orignial codes respectively
-					"-d", "spooned-classes/", 		// default
-					//"--source-classpath", "bin/",   // for "--compile" to load "LogClass._DM_Log" PS: a wrong "WARN" at console
-					"--source-classpath", "build/classes/",
+					//"--compile",                    // PS: "--compile/--precompile" used for compiling transformed/orignial codes respectively
+					//"-d", "spooned-classes/", 		// default
+					//"--source-classpath", "build/classes/", //"--source-classpath", "bin/",   // for "--compile" to load "LogClass._DM_Log" PS: a wrong "WARN" at console
 					// No need for me now
 					//"--lines",                    //jx - this couldn't really preserve all of line numbers
 					//"--compliance", "7",          //default is 8, because of spoon's own compiler(from Eclipse), so even Eclipse is 7, it will still be its own setting
