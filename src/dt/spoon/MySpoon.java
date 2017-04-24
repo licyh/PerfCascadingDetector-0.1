@@ -79,7 +79,10 @@ public class MySpoon {
                 public FileVisitResult preVisitDirectory(Path dirpath, BasicFileAttributes attrs) throws IOException {
                 	// TODO
                 	System.out.println("Processing dir: " + dirpath.toString());
-                	if ( dirpath.getFileName().toString().equals("test") ) {
+                	String dirname = dirpath.getFileName().toString(); 
+                	if ( dirname.equals("test")
+                			|| dirname.equals("target") 
+                			) {
                 		return FileVisitResult.SKIP_SUBTREE;
                 	}
                 	return FileVisitResult.CONTINUE;

@@ -1,7 +1,10 @@
 #Usage of MySpoon
+#NOTE: MAY NEED DO THE FOLLOWING CMD for the shell FIRST
+#Under Linux: "tr -d "\r" < oldname.sh > newname.sh"
 
 # Compile dt 
 cd ~/JXCascading-detector/
+pwd
 ant compile-dt
 
 # Copy out all of Hadoop-related jars
@@ -16,4 +19,5 @@ ant compile-dt
 # 3. location of dependencies of "target source codes" - /home/vagrant/hadoop-jars/*
 #java -cp /root/JXCascading-detector/build/classes/:/root/JXCascading-detector/lib/dt/spoon-core-5.5.0-jar-with-dependencies.jar dt.spoon.MySpoon xxx
 cd ~
+pwd
 java -cp /home/vagrant/JXCascading-detector/build/classes/:/home/vagrant/JXCascading-detector/lib/dt/spoon-core-5.5.0-jar-with-dependencies.jar:/home/vagrant/hadoop-jars/* dt.spoon.MySpoon /home/vagrant/spoontest/hadoop-0.23.3-src
