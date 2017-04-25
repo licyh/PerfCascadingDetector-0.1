@@ -90,17 +90,18 @@ public class MySpoon {
                 		spoon( dirpath.toAbsolutePath() );
                 		System.out.println("JX - Completion Time: " + (double)(System.currentTimeMillis()-start_time)/1000 + "s");
                 		nProcessedJavaFiles ++;
-                		return FileVisitResult.CONTINUE;
-                	}
-                	else 
                 		
+                	}
+                	 
+                	/*
                 	if ( dirname.equals("test")
                 			|| dirname.equals("target") 
                 			|| dirname.contains("examples")
                 			) {
-                		
+                		return FileVisitResult.SKIP_SUBTREE;
                 	}
-                	return FileVisitResult.SKIP_SUBTREE;
+                	*/
+                	return FileVisitResult.CONTINUE;
                 }
                 
                 @Override
