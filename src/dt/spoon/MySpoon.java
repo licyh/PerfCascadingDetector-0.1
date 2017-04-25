@@ -75,10 +75,7 @@ public class MySpoon {
                 	if (filepath.getFileName().toString().endsWith(".java")) {
                 		System.out.println("Processing file: " + filepath.toString());
                 		System.out.println("\t\t" + filepath.toAbsolutePath());
-                		long start_time = System.currentTimeMillis();
-                		spoon(filepath.toAbsolutePath());
-                		System.out.println("JX - Completion Time: " + (double)(System.currentTimeMillis()-start_time)/1000 + "s");
-                		nProcessedJavaFiles ++;
+                		
                 	}
                     return FileVisitResult.CONTINUE;
                 }
@@ -88,13 +85,22 @@ public class MySpoon {
                 	// TODO
                 	System.out.println("Processing dir: " + dirpath.toString());
                 	String dirname = dirpath.getFileName().toString(); 
+                	if ( dirname.equals("java") ) {
+                		long start_time = System.currentTimeMillis();
+                		spoon( dirpath.toAbsolutePath() );
+                		System.out.println("JX - Completion Time: " + (double)(System.currentTimeMillis()-start_time)/1000 + "s");
+                		nProcessedJavaFiles ++;
+                		return FileVisitResult.CONTINUE;
+                	}
+                	else 
+                		
                 	if ( dirname.equals("test")
                 			|| dirname.equals("target") 
                 			|| dirname.contains("examples")
                 			) {
-                		return FileVisitResult.SKIP_SUBTREE;
+                		
                 	}
-                	return FileVisitResult.CONTINUE;
+                	return FileVisitResult.SKIP_SUBTREE;
                 }
                 
                 @Override
