@@ -20,10 +20,13 @@ public class MethodProcessor extends AbstractProcessor<CtMethod> {
 		String methodsig = method.getDeclaringType().getQualifiedName()
 				+ "." + method.getSimpleName()
 				+ method.getSignature(); 
-		
+		System.out.println("JX - DEBUG - 1");
 		// insert for all loops inside the method
 		int count = -1;
 		for ( CtLoop loop: method.getElements(new LoopFilter()) ) {
+			System.out.println("JX - DEBUG - 2");
+			if (loop == null)
+				System.out.println("JX - DEBUG - 2.1!!!");
 			++count;
 			System.out.println( loop.getPosition().toString() );
 			// before loop
@@ -32,6 +35,8 @@ public class MethodProcessor extends AbstractProcessor<CtMethod> {
 			CtBlock<?> block = (CtBlock<?>) loop.getBody();
 			block.insertBegin( getCodeSnippetStatement( codeStr(2,methodsig,count) ) );
 			for ( CtCFlowBreak cflowbreak: loop.getElements(new ReturnOrThrowFilter()) ) { //insert before "Return" and "Throw"
+				if (cflowbreak == null)
+				System.out.println("JX - DEBUG - 2.2");
 				cflowbreak.insertBefore( getCodeSnippetStatement( codeStr(3,methodsig,count) ) );
 			}
 			// after loop			

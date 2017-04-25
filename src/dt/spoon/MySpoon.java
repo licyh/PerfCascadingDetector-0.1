@@ -33,8 +33,8 @@ public class MySpoon {
 		// Testing
 		if (isTesting) {
 			System.out.println("JX - WARN - Under Testing State!!!");
-			Path dirOrFilePath = Paths.get( "src/dt/spoon/test" );
-			new MySpoon().scanInputDir( dirOrFilePath );
+			Path dirOrFilePath = Paths.get( "src/dt/spoon/test/" );
+			//new MySpoon().scanInputDir( dirOrFilePath );
 			// Testing - Getting Spoon GUI Tree for a Directory
 			//Process: Launcher.main(String[]) -> run(String[]) -> run() + new XxGuiTree()
 			Launcher.main( new String[] {"-i", dirOrFilePath.toString(), "--gui"} );
@@ -151,20 +151,14 @@ public class MySpoon {
                 public FileVisitResult visitFile(Path filepath, BasicFileAttributes attrs) throws IOException {
                 	String absoluteFilename = filepath.toAbsolutePath().toString();
                 	if (absoluteFilename.endsWith(".java")) {
-                		// TODO - filters
-                		if (!BlackList.isBlack(absoluteFilename))
-                			inputlist += absoluteFilename;
+                		// blacklist to filter
+                		if (!BlackList.isBlack(absoluteFilename)) {
+                			if (inputlist.length() == 0)
+                				inputlist = absoluteFilename;
+                			else
+                				inputlist += File.pathSeparator + absoluteFilename;
+                		}
                 	}
-                    return FileVisitResult.CONTINUE;
-                }
-                
-                @Override  
-                public FileVisitResult preVisitDirectory(Path dirpath, BasicFileAttributes attrs) throws IOException {
-                	return FileVisitResult.CONTINUE;
-                }
-                @Override
-                public FileVisitResult postVisitDirectory(Path dirpath, IOException exc) throws IOException {
-                    // TODO
                     return FileVisitResult.CONTINUE;
                 }
             });
@@ -173,7 +167,7 @@ public class MySpoon {
 			inputlist = path.toString();
 		}
 		
-		System.out.println("JX - INFO - " + "inputlist: " + inputlist);
+		//System.out.println("JX - INFO - " + "inputlist: " + inputlist);
 		
 		/* Basic Usage */
 		try {
