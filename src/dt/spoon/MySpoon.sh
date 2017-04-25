@@ -1,6 +1,6 @@
 #Usage of MySpoon
 #NOTE: MAY NEED DO THE FOLLOWING CMD for the shell FIRST
-#Under Linux: "tr -d "\r" < oldname.sh > newname.sh"
+#Under Linux: "tr -d "\r" < MySpoon.sh > newMySpoon.sh"
 
 # Compile dt 
 cd ~/JXCascading-detector/
@@ -21,3 +21,8 @@ ant compile-dt
 cd ~
 pwd
 java -cp /home/vagrant/JXCascading-detector/build/classes/:/home/vagrant/JXCascading-detector/lib/dt/spoon-core-5.5.0-jar-with-dependencies.jar:/home/vagrant/hadoop-jars/* dt.spoon.MySpoon /home/vagrant/spoontest/hadoop-0.23.3-src
+
+
+
+# TMP
+#java -cp /home/vagrant/JXCascading-detector/build/classes/:/home/vagrant/JXCascading-detector/lib/dt/spoon-core-5.5.0-jar-with-dependencies.jar:/home/vagrant/hadoop-jars/* dt.spoon.MySpoon /home/vagrant/spoontest/hadoop-0.23.3-src/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-core/src/main/java/org/apache/hadoop/mapred/pipes/PipesNonJavaInputFormat.java
