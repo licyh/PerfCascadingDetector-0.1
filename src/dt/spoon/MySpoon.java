@@ -34,7 +34,7 @@ public class MySpoon {
 		// Testing
 		if (isTesting) {
 			System.out.println("JX - WARN - Under Testing State!!!");
-			Path dirOrFilePath = Paths.get( "src/dt/spoon/test/JXTest.java" );
+			Path dirOrFilePath = Paths.get( "src/dt/spoon/test/" );
 			new MySpoon().scanInputDir( dirOrFilePath );
 			// Testing - Getting Spoon GUI Tree for a Directory
 			//Process: Launcher.main(String[]) -> run(String[]) -> run() + new XxGuiTree()
@@ -145,20 +145,23 @@ public class MySpoon {
 	
 	public void spoon(Path path) throws IOException {
 		
+		// Get all normal *.java files for this SPOON process
 		inputlist = "";
 		if (Files.isDirectory(path)) {
 	        Files.walkFileTree( path, new SimpleFileVisitor<Path>(){
                 @Override 
                 public FileVisitResult visitFile(Path filepath, BasicFileAttributes attrs) throws IOException {
                 	String absoluteFilename = filepath.toAbsolutePath().toString();
-                	if (absoluteFilename.endsWith(".java")) {
-                		// blacklist to filter
-                		if (!BlackList.isBlack(absoluteFilename)) {
-                			if (inputlist.length() == 0)
-                				inputlist = absoluteFilename;
-                			else
-                				inputlist += File.pathSeparator + absoluteFilename;
-                		}
+                	String filename = filepath.getFileName().toString();
+                	// filters
+                	if ( absoluteFilename.endsWith(".java")
+                			&& !filename.equals("package-info.java")        // empty java files without "class xxx {}", just "package xx" or nothing
+                			&& !BlackList.isBlack(absoluteFilename)			// customized
+                			) {
+                		if (inputlist.length() == 0)
+                			inputlist = absoluteFilename;
+                		else
+                			inputlist += File.pathSeparator + absoluteFilename;
                 	}
                     return FileVisitResult.CONTINUE;
                 }
@@ -167,7 +170,6 @@ public class MySpoon {
 		else {
 			inputlist = path.toString();
 		}
-		
 		//System.out.println("JX - INFO - " + "inputlist: " + inputlist);
 		
 		/* Basic Usage */
