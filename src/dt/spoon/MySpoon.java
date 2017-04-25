@@ -18,24 +18,32 @@ import spoon.Launcher;
 public class MySpoon {
 
 	int nProcessedJavaDirs = 0;
+	// for Testing
+	static boolean isTesting = false;  
+	// End - for Testing
+	
 	/**
 	 * @param args
 	 * 		  args[0] is a dir or file path string
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		
-		// Testing - Getting Spoon GUI Tree for a Directory
-		//Process: Launcher.main(String[]) -> run(String[]) -> run() + new XxGuiTree()
-		//Launcher.main( new String[] {"-i", "src/dt/spoon/test", "--gui"} );
-		// Or
-		//Launcher guilauncher = new Launcher();
-		//guilauncher.run( new String[] {"-i", "src/dt/spoon/test", "--gui"} );
-				
+						
 		// Testing
-		//new MySpoon().scanInputDir( Paths.get("src/dt/spoon/util/Util.java") );
+		if (isTesting) {
+			System.out.println("JX - WARN - Under Testing State!!!");
+			Path dirOrFilePath = Paths.get( "src/dt/spoon/test" );
+			new MySpoon().scanInputDir( dirOrFilePath );
+			// Testing - Getting Spoon GUI Tree for a Directory
+			//Process: Launcher.main(String[]) -> run(String[]) -> run() + new XxGuiTree()
+			Launcher.main( new String[] {"-i", dirOrFilePath.toString(), "--gui"} );
+			// Or
+			//Launcher guilauncher = new Launcher();
+			//guilauncher.run( new String[] {"-i", dirOrFilePath.toString(), "--gui"} );
+			return;
+		}
 				
-		
+		// Regular codes
 		if (args.length != 1) {
 			System.err.println("JX - ERROR - args.length != 1");
 			return;
@@ -72,6 +80,16 @@ public class MySpoon {
         Files.walkFileTree( path, new SimpleFileVisitor<Path>(){
                 @Override 
                 public FileVisitResult visitFile(Path filepath, BasicFileAttributes attrs) throws IOException {
+                	// Testing
+                	if (isTesting) {
+                		if (filepath.getFileName().toString().endsWith(".java")) {
+                			System.out.println("Processing file: " + filepath.toString());
+                			spoon( filepath.toAbsolutePath() );
+                		}
+                		return FileVisitResult.CONTINUE;
+                	}
+                	// End-Testing
+                	
                 	if (filepath.getFileName().toString().endsWith(".java")) {
                 		System.out.println("JX - INFO - overlooked .java file: " + filepath.toString());
                 	}
@@ -80,8 +98,14 @@ public class MySpoon {
                 
                 @Override  
                 public FileVisitResult preVisitDirectory(Path dirpath, BasicFileAttributes attrs) throws IOException {
-                	String dirname = dirpath.getFileName().toString();
+                	// Testing
+                	if (isTesting) {
+                		System.out.println("Meet dir: " + dirpath.toString());
+                		return FileVisitResult.CONTINUE;
+                	}
+                	// End-Testing
                 	
+                	String dirname = dirpath.getFileName().toString();
                 	// filters
                 	if ( dirname.contains("examples") 
                 			|| dirname.contains("benchmarks")
@@ -91,7 +115,7 @@ public class MySpoon {
                 			|| dirname.equals("tools")
                 			|| dirname.equals("ant")
                 			) {
-                		// Testing & Debugging
+                		// Testing
                 		//System.out.println("JX - INFO - Skip dir: " + dirpath.toString());
                 		return FileVisitResult.SKIP_SUBTREE;
                 	}
@@ -123,11 +147,11 @@ public class MySpoon {
 		try {
 			//jx - ps: xx[:|;]xx[:|;]xx[:|;]  in Linux & Windows respectively
 			Launcher.main( new String[] {
-					"-i", filepath.toString(),		// input file or dir
-					"-o", "spooned/",               // default. 
-					"-p", "dt.spoon.processors.CatchProcessor"
-							+ File.pathSeparator + "dt.spoon.processors.LoopProcessor"
-							+ File.pathSeparator + "dt.spoon.processors.MethodProcessor",
+					"-i", filepath.toString(),						// input file or dir
+					"-o", "spooned/",               				// default. 
+					//"-p", "dt.spoon.processors.CatchProcessor",   // for test
+					"-p", "dt.spoon.processors.MethodProcessor" 
+						  + File.pathSeparator + "dt.spoon.processors.LoopProcessor",
 					"--level", "WARN",
 					"--no-copy-resources",          // jx - should be NO copy non-java files
 					//"--compile",                    // PS: "--compile/--precompile" used for compiling transformed/orignial codes respectively
