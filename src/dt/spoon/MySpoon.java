@@ -18,6 +18,7 @@ import spoon.Launcher;
 public class MySpoon {
 
 	int nProcessedJavaDirs = 0;
+	String inputlist = "";             // for each time Spooning
 	// for Testing
 	static boolean isTesting = false;  
 	// End - for Testing
@@ -141,13 +142,44 @@ public class MySpoon {
 	}
 
 	
-	public void spoon(Path filepath) {
+	public void spoon(Path path) throws IOException {
+		
+		inputlist = "";
+		if (Files.isDirectory(path)) {
+	        Files.walkFileTree( path, new SimpleFileVisitor<Path>(){
+                @Override 
+                public FileVisitResult visitFile(Path filepath, BasicFileAttributes attrs) throws IOException {
+                	String absoluteFilename = filepath.toAbsolutePath().toString();
+                	if (absoluteFilename.endsWith(".java")) {
+                		// TODO - filters
+                		if (!BlackList.isBlack(absoluteFilename))
+                			inputlist += absoluteFilename;
+                	}
+                    return FileVisitResult.CONTINUE;
+                }
+                
+                @Override  
+                public FileVisitResult preVisitDirectory(Path dirpath, BasicFileAttributes attrs) throws IOException {
+                	return FileVisitResult.CONTINUE;
+                }
+                @Override
+                public FileVisitResult postVisitDirectory(Path dirpath, IOException exc) throws IOException {
+                    // TODO
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+		}
+		else {
+			inputlist = path.toString();
+		}
+		
+		System.out.println("JX - INFO - " + "inputlist: " + inputlist);
+		
 		/* Basic Usage */
-
 		try {
 			//jx - ps: xx[:|;]xx[:|;]xx[:|;]  in Linux & Windows respectively
 			Launcher.main( new String[] {
-					"-i", filepath.toString(),						// input file or dir
+					"-i", inputlist,						// input file or dir
 					"-o", "spooned/",               				// default. 
 					//"-p", "dt.spoon.processors.CatchProcessor",   // for test
 					"-p", "dt.spoon.processors.MethodProcessor" 
@@ -171,7 +203,7 @@ public class MySpoon {
 		/* Usage in Java Style */
 		/*
 		Launcher launcher = new Launcher();
-		launcher.addInputResource( filepath.toString() );
+		launcher.addInputResource( inputlist );
 		launcher.setSourceOutputDirectory("spooned/");
 		// Add Processors
 		CatchProcessor catchProcessor = new CatchProcessor();
