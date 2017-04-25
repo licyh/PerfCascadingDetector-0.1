@@ -4,8 +4,14 @@ package dt.spoon.test;
 
 
 public class JXTest {
+    public static boolean next() {
+        return true;
+    }
+
     public static void entrance() throws java.lang.Exception {
         long start_time = java.lang.System.nanoTime();
+        int x = -5;
+        while ((x <= 0) && (dt.spoon.test.JXTest.next()));
         for (int i = 0; i < 2; i++)
             for (int j = 1; j < 5; j++)
                 for (int f = -1; f < 10; f++) {

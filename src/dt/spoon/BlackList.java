@@ -9,7 +9,8 @@ public class BlackList {
 			"/home/vagrant/spoontest/hadoop-0.23.3-src/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-common/src/main/java/org/apache/hadoop/mapred/LocalJobRunner.java"
 			,"/home/vagrant/spoontest/hadoop-0.23.3-src/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-core/src/main/java/org/apache/hadoop/mapred/pipes/PipesNonJavaInputFormat.java"
 			,"/home/vagrant/spoontest/hadoop-0.23.3-src/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-core/src/main/java/org/apache/hadoop/mapreduce/lib/partition/InputSampler.java"
-			,"/home/vagrant/spoontest/hadoop-0.23.3-src/hadoop-mapreduce-project/src/java/org/apache/hadoop/mapred/Child.java"
+			//,"/home/vagrant/spoontest/hadoop-0.23.3-src/hadoop-mapreduce-project/src/java/org/apache/hadoop/mapred/Child.java"
+			,"/home/vagrant/spoontest/hadoop-0.23.3-src/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/record/compiler/ant/RccTask.java"
 			
 		);
 	

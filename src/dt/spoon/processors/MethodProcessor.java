@@ -20,29 +20,28 @@ public class MethodProcessor extends AbstractProcessor<CtMethod> {
 		String methodsig = method.getDeclaringType().getQualifiedName()
 				+ "." + method.getSimpleName()
 				+ method.getSignature(); 
-		System.out.println("JX - DEBUG - 1");
+		
 		// insert for all loops inside the method
 		int count = -1;
 		for ( CtLoop loop: method.getElements(new LoopFilter()) ) {
-			System.out.println("JX - DEBUG - 2");
-			if (loop == null)
-				System.out.println("JX - DEBUG - 2.1!!!");
+			CtBlock<?> bodyblock = (CtBlock<?>) loop.getBody();
+			if (bodyblock == null) continue;   	 //like "while (x<= 0 && next());" or "for (xx);"
+				
 			++count;
 			System.out.println( loop.getPosition().toString() );
+			
 			// before loop
 			loop.insertBefore( getCodeSnippetStatement( codeStr(1,methodsig,count) ) );
+
 			// inside loop
-			CtBlock<?> block = (CtBlock<?>) loop.getBody();
-			block.insertBegin( getCodeSnippetStatement( codeStr(2,methodsig,count) ) );
-			for ( CtCFlowBreak cflowbreak: loop.getElements(new ReturnOrThrowFilter()) ) { //insert before "Return" and "Throw"
-				if (cflowbreak == null)
-				System.out.println("JX - DEBUG - 2.2");
+			bodyblock.insertBegin( getCodeSnippetStatement( codeStr(2,methodsig,count) ) );
+			for ( CtCFlowBreak cflowbreak: loop.getElements(new ReturnOrThrowFilter()) ) {   //insert before "Return" and "Throw"
 				cflowbreak.insertBefore( getCodeSnippetStatement( codeStr(3,methodsig,count) ) );
 			}
+			
 			// after loop			
 			loop.insertAfter( getCodeSnippetStatement( codeStr(3,methodsig,count) ) );
 		}
-	
 		// insert at the end of method. jx - no need for now
 		/*
 		CtBlock methodblock = method.getBody();
