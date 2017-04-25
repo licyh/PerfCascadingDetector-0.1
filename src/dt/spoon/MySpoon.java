@@ -17,7 +17,7 @@ import spoon.Launcher;
 
 public class MySpoon {
 
-	int nProcessedJavaFiles = 0;
+	int nProcessedJavaDirs = 0;
 	/**
 	 * @param args
 	 * 		  args[0] is a dir or file path string
@@ -49,11 +49,11 @@ public class MySpoon {
 		
 		MySpoon myspoon = new MySpoon();
 		myspoon.scanInputDir( path );
-		System.out.println("JX - INFO - finished for " + myspoon.nProcessedJavaFiles + " *.java files");
+		System.out.println("JX - INFO - finished for " + myspoon.nProcessedJavaDirs + " /java/ dirs");
 	}
 
 	public MySpoon() {	
-		this.nProcessedJavaFiles = 0;
+		this.nProcessedJavaDirs = 0;
 	}
 	
 	
@@ -73,9 +73,7 @@ public class MySpoon {
                 @Override 
                 public FileVisitResult visitFile(Path filepath, BasicFileAttributes attrs) throws IOException {
                 	if (filepath.getFileName().toString().endsWith(".java")) {
-                		System.out.println("Processing file: " + filepath.toString());
-                		System.out.println("\t\t" + filepath.toAbsolutePath());
-                		
+                		System.out.println("JX - INFO - overlooked .java file: " + filepath.toString());
                 	}
                     return FileVisitResult.CONTINUE;
                 }
@@ -92,17 +90,18 @@ public class MySpoon {
                 			|| dirname.equals("target") 
                 			|| dirname.equals("tools")
                 			|| dirname.equals("ant")
-                			
                 			) {
+                		// Testing & Debugging
+                		//System.out.println("JX - INFO - Skip dir: " + dirpath.toString());
                 		return FileVisitResult.SKIP_SUBTREE;
                 	}
                 	
                 	if ( dirname.equals("java") ) {
-                		System.out.println("Processing dir: " + dirpath.toString());
+                		System.out.println("Processing java dir: " + dirpath.toString());
                 		long start_time = System.currentTimeMillis();
-                		//spoon( dirpath.toAbsolutePath() );
-                		//System.out.println("JX - Completion Time: " + (double)(System.currentTimeMillis()-start_time)/1000 + "s");
-                		nProcessedJavaFiles ++;
+                		spoon( dirpath.toAbsolutePath() );
+                		System.out.println("Completion Time: " + (double)(System.currentTimeMillis()-start_time)/1000 + "s");
+                		nProcessedJavaDirs ++;
                 		return FileVisitResult.SKIP_SUBTREE;
                 	}
                 	return FileVisitResult.CONTINUE;
