@@ -19,6 +19,7 @@ public class MySpoon {
 
 	int nProcessedJavaDirs = 0;
 	String inputlist = "";             // for each time Spooning
+	
 	// for Testing
 	static boolean isTesting = false;  
 	// End - for Testing
@@ -34,10 +35,10 @@ public class MySpoon {
 		if (isTesting) {
 			System.out.println("JX - WARN - Under Testing State!!!");
 			Path dirOrFilePath = Paths.get( "src/dt/spoon/test/JXTest.java" );
-			//new MySpoon().scanInputDir( dirOrFilePath );
+			new MySpoon().scanInputDir( dirOrFilePath );
 			// Testing - Getting Spoon GUI Tree for a Directory
 			//Process: Launcher.main(String[]) -> run(String[]) -> run() + new XxGuiTree()
-			Launcher.main( new String[] {"-i", dirOrFilePath.toString(), "--gui"} );
+			//Launcher.main( new String[] {"-i", dirOrFilePath.toString(), "--gui"} );
 			// Or
 			//Launcher guilauncher = new Launcher();
 			//guilauncher.run( new String[] {"-i", dirOrFilePath.toString(), "--gui"} );
@@ -178,6 +179,7 @@ public class MySpoon {
 					//"-p", "dt.spoon.processors.CatchProcessor",   // for test
 					"-p", "dt.spoon.processors.MethodProcessor" 
 						  + File.pathSeparator + "dt.spoon.processors.LoopProcessor",
+					"--output-type", "compilationunits",   // jx: means NO split a .java by its multi classes. The default is "classes",
 					"--level", "WARN",
 					"--no-copy-resources",          // jx - should be NO copy non-java files
 					//"--compile",                    // PS: "--compile/--precompile" used for compiling transformed/orignial codes respectively
