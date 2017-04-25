@@ -82,25 +82,29 @@ public class MySpoon {
                 
                 @Override  
                 public FileVisitResult preVisitDirectory(Path dirpath, BasicFileAttributes attrs) throws IOException {
-                	// TODO
-                	System.out.println("Processing dir: " + dirpath.toString());
-                	String dirname = dirpath.getFileName().toString(); 
-                	if ( dirname.equals("java") ) {
-                		long start_time = System.currentTimeMillis();
-                		spoon( dirpath.toAbsolutePath() );
-                		System.out.println("JX - Completion Time: " + (double)(System.currentTimeMillis()-start_time)/1000 + "s");
-                		nProcessedJavaFiles ++;
-                		
-                	}
-                	 
-                	/*
-                	if ( dirname.equals("test")
+                	String dirname = dirpath.getFileName().toString();
+                	
+                	// filters
+                	if ( dirname.contains("examples") 
+                			|| dirname.contains("benchmarks")
+                			|| dirname.equals("test")                  //test-related *.java files
+                			|| dirname.equals("contrib")
                 			|| dirname.equals("target") 
-                			|| dirname.contains("examples")
+                			|| dirname.equals("tools")
+                			|| dirname.equals("ant")
+                			
                 			) {
                 		return FileVisitResult.SKIP_SUBTREE;
                 	}
-                	*/
+                	
+                	if ( dirname.equals("java") ) {
+                		System.out.println("Processing dir: " + dirpath.toString());
+                		long start_time = System.currentTimeMillis();
+                		//spoon( dirpath.toAbsolutePath() );
+                		//System.out.println("JX - Completion Time: " + (double)(System.currentTimeMillis()-start_time)/1000 + "s");
+                		nProcessedJavaFiles ++;
+                		return FileVisitResult.SKIP_SUBTREE;
+                	}
                 	return FileVisitResult.CONTINUE;
                 }
                 
