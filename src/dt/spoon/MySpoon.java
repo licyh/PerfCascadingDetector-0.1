@@ -144,33 +144,8 @@ public class MySpoon {
 
 	
 	public void spoon(Path path) throws IOException {
-		
 		// Get all normal *.java files for this SPOON process
-		inputlist = "";
-		if (Files.isDirectory(path)) {
-	        Files.walkFileTree( path, new SimpleFileVisitor<Path>(){
-                @Override 
-                public FileVisitResult visitFile(Path filepath, BasicFileAttributes attrs) throws IOException {
-                	String absoluteFilename = filepath.toAbsolutePath().toString();
-                	String filename = filepath.getFileName().toString();
-                	// filters
-                	if ( absoluteFilename.endsWith(".java")
-                			&& !filename.equals("package-info.java")        // empty java files without "class xxx {}", just "package xx" or nothing
-                			&& !BlackList.isBlack(absoluteFilename)			// customized
-                			) {
-                		if (inputlist.length() == 0)
-                			inputlist = absoluteFilename;
-                		else
-                			inputlist += File.pathSeparator + absoluteFilename;
-                	}
-                    return FileVisitResult.CONTINUE;
-                }
-            });
-		}
-		else {
-			inputlist = path.toString();
-		}
-		//System.out.println("JX - INFO - " + "inputlist: " + inputlist);
+		String inputlist = getSpecificJavaFiles(path);
 		
 		/* Basic Usage */
 		try {
@@ -197,7 +172,6 @@ public class MySpoon {
 			e.printStackTrace();
 		}
 		
-		
 		/* Usage in Java Style */
 		/*
 		Launcher launcher = new Launcher();
@@ -220,7 +194,41 @@ public class MySpoon {
 		
 		launcher.run();
 		*/
+	}
 	
+	
+	/**
+	 * Get all normal *.java files for this SPOON process
+	 * @param path : a dir or file path
+	 */
+	public String getSpecificJavaFiles(Path path) throws IOException {
+		
+		if ( !Files.isDirectory(path) ) {
+			inputlist = path.toString();
+			return inputlist;
+		}
+		
+		inputlist = "";
+        Files.walkFileTree( path, new SimpleFileVisitor<Path>(){
+            @Override 
+            public FileVisitResult visitFile(Path filepath, BasicFileAttributes attrs) throws IOException {
+            	String absoluteFilename = filepath.toAbsolutePath().toString();
+            	String filename = filepath.getFileName().toString();
+            	// filters
+            	if ( absoluteFilename.endsWith(".java")
+            			&& !filename.equals("package-info.java")        // Empty java files without "class xxx {}", just "package xx" or nothing that will cause "RuntimeException: inconsistent compilation unit" when using "--output-type", "compilationunits"
+            			&& !BlackList.isBlack(absoluteFilename)			// customized
+            			) {
+            		if (inputlist.length() == 0)
+            			inputlist = absoluteFilename;
+            		else
+            			inputlist += File.pathSeparator + absoluteFilename;
+            	}
+                return FileVisitResult.CONTINUE;
+            }
+        });
+		//System.out.println("JX - INFO - " + "inputlist: " + inputlist);
+		return inputlist;
 	}
 	
 }
