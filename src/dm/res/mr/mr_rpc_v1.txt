@@ -41,3 +41,5 @@ org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUm
 //org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol renewDelegationToken 1 Ljava/lang/Object 
 //org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol cancelDelegationToken 1 Ljava/lang/Object 
 //org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getLogFileParams 2 Ljava/lang/Object Ljava/lang/Object 
+// (by JX)
+// LocalJobRunner & LocalJobRunner$Job

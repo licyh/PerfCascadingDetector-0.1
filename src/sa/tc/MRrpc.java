@@ -76,7 +76,7 @@ public class MRrpc {
            continue;
       */
       // if the class is a subclass of ProtoBase
-      if (c.getSuperclass().getName().toString().endsWith("ProtoBase")) {
+      if (c.getSuperclass().getName().toString().endsWith("ProtoBase")) {     //this is the IMPO
         if (c.getName().toString().contains("Request")) {   //jx: like FailTaskAttemptRequestPBImpl
           requestClasses.add(c);
           requestNames.add(c.getName().toString());

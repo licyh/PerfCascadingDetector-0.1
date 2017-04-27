@@ -35,7 +35,7 @@ org.apache.hadoop.mapred.NotRunningJob org.apache.hadoop.mapreduce.v2.api.MRClie
 org.apache.hadoop.mapred.NotRunningJob org.apache.hadoop.mapreduce.v2.api.MRClientProtocol killTask 1 Ljava/lang/Object
 org.apache.hadoop.mapred.NotRunningJob org.apache.hadoop.mapreduce.v2.api.MRClientProtocol killTaskAttempt 1 Ljava/lang/Object
 org.apache.hadoop.mapred.NotRunningJob org.apache.hadoop.mapreduce.v2.api.MRClientProtocol getDelegationToken 1 Ljava/lang/Object
-//manually added (jx:the following is not used for now)
+//manually added (jx:the following are used for Logging, but not used for manually modifying codes(above are enough,because the IMPO is finding request!))
 org.apache.hadoop.mapreduce.v2.app.client.MRClientService$MRClientProtocolHandler org.apache.hadoop.mapreduce.v2.api.MRClientProtocol failTaskAttempt 1 Ljava/lang/Object
 org.apache.hadoop.mapreduce.v2.app.client.MRClientService$MRClientProtocolHandler org.apache.hadoop.mapreduce.v2.api.MRClientProtocol getCounters 1 Ljava/lang/Object
 org.apache.hadoop.mapreduce.v2.app.client.MRClientService$MRClientProtocolHandler org.apache.hadoop.mapreduce.v2.api.MRClientProtocol getDiagnostics 1 Ljava/lang/Object
