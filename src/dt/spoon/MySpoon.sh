@@ -2,9 +2,14 @@
 #NOTE: MAY NEED DO THE FOLLOWING CMD for the shell FIRST
 #Under Linux: "tr -d "\r" < MySpoon.sh > newMySpoon.sh"
 
+# Config/Env
+workspace_dir=/home/vagrant                               	 #JX - NO "/" at the end. JXCascading-detector's parent path. 
+spoon_input_dir=/home/vagrant/spoontest/hadoop-0.23.3-src    #JX - NO "/" at the end.
+# Generated Env
+project_dir=${workspace_dir}/JXCascading-detector            #JX - NO "/" at the end
+
 # Compile dt 
-cd ~/JXCascading-detector/
-pwd
+cd ${project_dir}
 ant compile-dt
 
 # Copy out all of Hadoop-related jars
@@ -12,17 +17,13 @@ ant compile-dt
 #mkdir -p ~/hadoop-jars/
 #find -name *.jar | xargs -i cp {} ~/hadoop-jars/
 
+
 # Spooning
 # -classpath includes:
 # 1. location of "dt.spoon.MySpoon" - /root/JXCascading-detector/build/classes/
 # 2. location of "spoon jar" - /home/vagrant/JXCascading-detector/lib/dt/spoon-core-5.5.0-jar-with-dependencies.jar
 # 3. location of dependencies of "target source codes" - /home/vagrant/hadoop-jars/*
-#java -cp /root/JXCascading-detector/build/classes/:/root/JXCascading-detector/lib/dt/spoon-core-5.5.0-jar-with-dependencies.jar dt.spoon.MySpoon xxx
-cd ~
-pwd
-java -cp /home/vagrant/JXCascading-detector/build/classes/:/home/vagrant/JXCascading-detector/lib/dt/spoon-core-5.5.0-jar-with-dependencies.jar:/home/vagrant/hadoop-jars/* dt.spoon.MySpoon /home/vagrant/spoontest/hadoop-0.23.3-src
-
-
-
-# TMP
-#java -cp /home/vagrant/JXCascading-detector/build/classes/:/home/vagrant/JXCascading-detector/lib/dt/spoon-core-5.5.0-jar-with-dependencies.jar:/home/vagrant/hadoop-jars/* dt.spoon.MySpoon /home/vagrant/spoontest/hadoop-0.23.3-src/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-core/src/main/java/org/apache/hadoop/mapred/pipes/PipesNonJavaInputFormat.java
+# Spooning Test
+#java -cp ${project_dir}/build/classes/:${project_dir}/lib/dt/spoon-core-5.5.0-jar-with-dependencies.jar dt.spoon.MySpoon
+# Real Spooning
+java -cp ${project_dir}/build/classes/:${project_dir}/lib/dt/spoon-core-5.5.0-jar-with-dependencies.jar:${workspace_dir}/hadoop-jars/* dt.spoon.MySpoon ${spoon_input_dir}
