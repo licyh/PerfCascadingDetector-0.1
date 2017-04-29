@@ -21,7 +21,7 @@ public class MySpoon {
 	String inputlist = "";             // for each time Spooning
 	
 	// for Testing
-	static boolean isTesting = false;  
+	static boolean isTesting = true;  
 	// End - for Testing
 	
 	/**
@@ -34,7 +34,7 @@ public class MySpoon {
 		// Testing
 		if (isTesting) {
 			System.out.println("JX - WARN - Under Testing State!!!");
-			Path dirOrFilePath = Paths.get( "src/dt/spoon/test/" );
+			Path dirOrFilePath = Paths.get( "src/dt/spoon/test/JXTest.java" );
 			new MySpoon().scanInputDir( dirOrFilePath );
 			// Testing - Getting Spoon GUI Tree for a Directory
 			//Process: Launcher.main(String[]) -> run(String[]) -> run() + new XxGuiTree()

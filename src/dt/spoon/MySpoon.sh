@@ -8,14 +8,18 @@ spoon_input_dir=/home/vagrant/spoontest/hadoop-0.23.3-src    #JX - NO "/" at the
 # Generated Env
 project_dir=${workspace_dir}/JXCascading-detector            #JX - NO "/" at the end
 
-# Compile dt 
-cd ${project_dir}
-ant compile-dt
+
 
 # Copy out all of Hadoop-related jars
 #cd ~/hadoop-0.23.3-src/hadoop-dist/target/hadoop-0.23.3/share/hadoop
 #mkdir -p ~/hadoop-jars/
 #find -name *.jar | xargs -i cp {} ~/hadoop-jars/
+
+# Enter JXCascading-detector's home directory for the following work
+cd ${project_dir}
+
+# Compile dt 
+ant compile-dt
 
 
 # Spooning

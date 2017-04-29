@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 
 <project name="JXCascading-detector" default="help" basedir=".">
-        <!--src dir-->
+		<!--src dir-->
         <property name="src.dir" value="src/"/>
 		<property name="src.sa.dir" value = "${src.dir}/sa/"/>
 		<property name="src.dt.dir" value = "${src.dir}/dt/"/>
 		<property name="src.com.dir" value="${src.dir}/com/"/>
         <property name="src.dm.dir" value="${src.dir}/dm/"/>
 		<property name="src.da.dir" value="${src.dir}/da/"/>
-
+		
         <!--build dir-->
         <property name="build.dir" value="build/"/>
         <property name="build.classes" value="${build.dir}/classes/"/>
@@ -60,37 +60,53 @@
 		</path>
 			
 		<path id="classpath">
-                <pathelement location="${lib.dir}/javassist-3.20.jar"/>
-                <pathelement location="${lib.dir}/commons-cli-1.3.1.jar"/>
+			<pathelement location="${lib.dir}/javassist-3.20.jar"/>
+			<pathelement location="${lib.dir}/commons-cli-1.3.1.jar"/>
                 
-                <pathelement location="${lib.slf4j}/slf4j-api-1.7.21.jar"/>
-                <pathelement location="${lib.logback}/logback-access-1.1.7.jar"/>
-                <pathelement location="${lib.logback}/logback-classic-1.1.7.jar"/>
-                <pathelement location="${lib.logback}/logback-core-1.1.7.jar"/>
-                <pathelement location="${lib.dir}/soot-2.5.0.jar"/>
-                <pathelement location="${lib.dir}/walaUtil/walautil-master/target/scala-2.10/classes"/>
-                <pathelement location="${lib.dir}/scala-library.jar"/>
+			<pathelement location="${lib.slf4j}/slf4j-api-1.7.21.jar"/>
+			<pathelement location="${lib.logback}/logback-access-1.1.7.jar"/>
+			<pathelement location="${lib.logback}/logback-classic-1.1.7.jar"/>
+			<pathelement location="${lib.logback}/logback-core-1.1.7.jar"/>
+			<pathelement location="${lib.dir}/soot-2.5.0.jar"/>
+			<pathelement location="${lib.dir}/walaUtil/walautil-master/target/scala-2.10/classes"/>
+			<pathelement location="${lib.dir}/scala-library.jar"/>
         </path>
 
 	
 	
         <!--target prepare directory-->
         <target name="prepare">
-                <mkdir dir="${build.dir}"/>
-                <mkdir dir="${build.classes}"/>
+            <mkdir dir="${build.dir}"/>
+            <mkdir dir="${build.classes}"/>
         </target>
 
         <!--target clean dir-->
         <target name="clean">
-                <delete dir="${build.dir}"/>
+            <delete dir="${build.dir}"/>
         </target>
 
+	
+    	<target name="compile-comm" depends="prepare" description="compile comm">
+            <javac srcdir="${src.dir}/com/comm" destdir="${build.classes}" includeantruntime="false">
+            </javac>
+    	</target>
+	
+    	<target name="compile-prepare" depends="compile-comm" description="compile predm">
+            <javac srcdir="${src.dir}/com/prepare" destdir="${build.classes}" includeantruntime="false">
+                <classpath>
+                	<path id="sa.classpath"/>
+                	<pathelement location="${lib.dir}/dt/spoon-core-5.5.0-jar-with-dependencies.jar"/>
+                </classpath>
+            </javac>
+    	</target>	
+		
+	
         <!-- added by JX -->
 	    <!--target compile sa, ie, Static Analysis of Loops-->
 	    <target name="compile-sa" depends="prepare" description="compile static analysiser">
-	            <javac srcdir="${src.sa.dir}" destdir="${build.classes}" includeantruntime="false">
-	                    <classpath refid="sa.classpath" />
-	            </javac>
+            <javac srcdir="${src.sa.dir}" destdir="${build.classes}" includeantruntime="false">
+                <classpath refid="sa.classpath" />
+            </javac>
 	    </target>	
 	
 	    <!--target compile API&RPC class-->

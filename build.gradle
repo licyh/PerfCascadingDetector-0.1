@@ -1,0 +1,184 @@
+description = """
+  CFinder project """
+
+apply plugin: 'java'
+
+task onlySpecifiesCodeForConfigurationPhase {
+    println 'Config phase.'
+}
+
+task prepare {
+    doLast {
+        def buildCCDir = new File("build/classes")
+        if (!buildCCDir.exists()) { buildCCDir.mkdirs() }
+        def buildJarDir = new File("build/lib")
+        if (!buildJarDir.exists()) { buildJarDir.mkdirs() }
+    }
+}
+
+task compile_comm (type: JavaCompile) {
+    source = fileTree(dir: 'src/com/comm', include: '**/*.java')
+    destinationDir = file('build/classes')
+    sourceCompatibility = '1.7'
+    targetCompatibility = '1.7'
+    classpath = files('build/classes')
+}
+task compile_DM_LOG (type: JavaCompile) {
+    source = fileTree(dir: 'src/LogClass', include: '**/*.java')
+    destinationDir = file('build/classes')
+    sourceCompatibility = '1.7'
+    targetCompatibility = '1.7'
+    classpath = files('build/classes')
+}
+task jar_DM_LOG (type: Jar) {
+    baseName = '_DM_Log'
+    destinationDir = file("build/lib")
+    from 'build/classes'
+    include 'LogClass/*.class'
+}
+jar_DM_LOG.dependsOn compile_DM_LOG
+
+
+
+task compile_pre_dm (type: JavaCompile) {
+    source = fileTree(dir: 'src/com/prepare', include: '**/*.java')
+    destinationDir = file('build/classes')
+    sourceCompatibility = '1.7'
+    targetCompatibility = '1.7'
+    classpath = files('build/classes', 'lib/javassist-3.20.jar', 'lib/spoon-core-5.5.0-jar-with-dependencies.jar',
+            'lib/scala-library.jar', 'lib/walautil_2.10-0.1-SNAPSHOT.jar',
+            '/mnt/storage/packages/wala/WALA-R_1.3.5/com.ibm.wala.core/bin',
+            '/mnt/storage/packages/wala/WALA-R_1.3.5/com.ibm.wala.util/bin',
+            '/mnt/storage/packages/wala/WALA-R_1.3.5/com.ibm.wala.shrike/bin',
+            '/mnt/storage/packages/wala/WALA-R_1.3.5/com.ibm.wala.core.testdata/bin',
+            '/mnt/storage/packages/wala/WALA-R_1.3.5/com.ibm.wala.core.tests/bin',
+            '/mnt/storage/packages/wala/WALA-R_1.3.5/com.ibm.wala.cast/bin')
+}
+task jar_pre_dm (type: Jar) {
+    baseName = 'PreDM'
+    destinationDir = file("build/lib")
+    from 'build/classes'
+    include 'com/prepare/**/*.class', 'com/comm/**/*.class'
+    from 'src'
+    include 'com/prepare/**/*.java'
+    //from zipTree('lib/scala-library.jar')
+    //include 'scala/**/*.class'
+    //from zipTree('lib/walautil_2.10-0.1-SNAPSHOT.jar')
+    //include 'edu/**/*.class'
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+                'Implementation-Version': 1.7,
+                'Boot-Class-Path': 'javassist.jar',
+                'Premain-Class': 'com.prepare.PreDM'
+    }
+}
+jar_pre_dm.dependsOn compile_pre_dm
+
+
+
+task compile_dm (type: JavaCompile) {
+    source = fileTree(dir: 'src/com/dm', include: '**/*.java')
+    destinationDir = file('build/classes')
+    sourceCompatibility = '1.7'
+    targetCompatibility = '1.7'
+    classpath = files('build/classes', 'lib/javassist.jar')
+}
+compile_dm.dependsOn compile_comm, compile_DM_LOG
+task jar_dm (type: Jar) {
+    baseName = 'CFinderDM'
+    destinationDir = file("build/lib")
+    from 'build/classes'
+    include 'com/dm/**/*.class', 'com/comm/**/*.class'
+    from zipTree('lib/javassist.jar')
+    include 'javassist/**/*.class'
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+                'Implementation-Version': 1.7,
+                'Boot-Class-Path': 'javassist.jar',
+                'Can-Redefine-Classes': true,
+                'Can-Retransform-Classes': true,
+                'Premain-Class': 'com.dm.CFinderDM'
+    }
+}
+jar_dm.dependsOn compile_dm, jar_DM_LOG
+
+task compile_da (type: JavaCompile) {
+    source = fileTree(dir: 'src/com/da', include: '**/*.java')
+    destinationDir = file('build/classes')
+    sourceCompatibility = '1.7'
+    targetCompatibility = '1.7'
+    classpath = files('build/classes')
+}
+
+task jar_da (type: Jar) {
+    baseName = 'DA'
+    destinationDir = file("build/lib")
+    dependsOn compile_da
+    from 'build/classes'
+    include 'com/da/**/*.class'
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+                'Implementation-Version': 1.7,
+                'Main-Class': 'com.da.DA'
+    }
+}
+jar_da.dependsOn compile_da
+
+task compile_da_no_graph (type: JavaCompile) {
+    source = fileTree(dir: 'src/com/da_no_graph', include: '**/*.java')
+    destinationDir = file('build/classes')
+    sourceCompatibility = '1.7'
+    targetCompatibility = '1.7'
+    classpath = files('build/classes')
+}
+
+task jar_da_no_graph (type: Jar) {
+    baseName = 'DANoGraph'
+    destinationDir = file("build/lib")
+    dependsOn compile_da_no_graph
+    from 'build/classes'
+    include 'com/da_no_graph/**/*.class'
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+                'Implementation-Version': 1.7,
+                'Main-Class': 'com.da.DANoGraph'
+    }
+}
+
+task compile_trigger (type: JavaCompile) {
+    source = fileTree(dir: 'src/com/trigger', include: '**/*.java')
+    destinationDir = file('build/classes')
+    sourceCompatibility = '1.7'
+    targetCompatibility = '1.7'
+    classpath = files('build/classes', 'lib/javassist.jar')
+}
+compile_trigger.dependsOn compile_comm
+task jar_trigger (type: Jar) {
+    baseName = 'CFinderTrigger'
+    destinationDir = file("build/lib")
+    from 'build/classes'
+    include 'com/trigger/**/*.class', 'com/comm/**/*.class'
+    from zipTree('lib/javassist.jar')
+    include 'javassist/**/*.class'
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+                'Implementation-Version': 1.7,
+                'Boot-Class-Path': 'javassist.jar',
+                'Can-Redefine-Classes': true,
+                'Can-Retransform-Classes': true,
+                'Premain-Class': 'com.trigger.CFinderTrigger'
+    }
+}
+jar_trigger.dependsOn compile_trigger
+
+task hello {
+    doLast {
+        println 'Hello CFinder project!'
+    }
+}
+
+/*task clean {
+  doLast {
+    println 'Clean all.'
+  }
+}*/

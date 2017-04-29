@@ -14,6 +14,7 @@ public class JXTest {
         long start_time = java.lang.System.nanoTime();
         int x = -5;
         while ((x <= 0) && (dt.spoon.test.JXTest.next()));
+        dt.spoon.test.Outer outer = new dt.spoon.test.Outer();
         int loop0 = 0;LogClass._DM_Log.log_LoopBegin("dt.spoon.test.JXTest.entrancevoid entrance()_loop0");
         for (int i = 0; i < 2; i++) {
             loop0++;LogClass._DM_Log.log_LoopCenter("dt.spoon.test.JXTest.entrancevoid entrance()_loop0");
