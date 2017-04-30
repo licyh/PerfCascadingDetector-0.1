@@ -11,6 +11,9 @@ import spoon.reflect.factory.Factory;
 import spoon.support.QueueProcessingManager;
 
 import com.prepare.Util.PrepareUtil;
+
+import dt.spoon.BlackList;
+
 import com.ibm.wala.util.io.FileProvider;
 import com.ibm.wala.core.tests.callGraph.CallGraphTestUtil;
 import com.ibm.wala.util.config.AnalysisScopeReader;
@@ -18,6 +21,13 @@ import com.ibm.wala.types.ClassLoaderReference;
 
 import java.util.*;
 import java.io.*;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.jar.JarFile;
 import com.prepare.Util.PrepareUtil;
 
@@ -45,7 +55,18 @@ import com.prepare.Modify.ZKMethodModifierWrap;
  */
 
 public class PreDM {
-  public static void main(String[] args) {
+	
+    Path inDirPath;
+    String inClasspathStr;
+    Path outDirPath;
+    Path spoonedPath = Paths.get(System.getProperty("user.dir"), "spooned");
+    
+	
+	public static void main(String[] args) throws IOException {
+		new PreDM().doWork(args);
+	}
+	
+  public void doWork(String[] args) throws IOException {
     /*Launcher launcher = new Launcher();
     launcher.setArgs(args);
     launcher.addInputResource(args[1]);
@@ -60,6 +81,10 @@ public class PreDM {
 
     //init config
     Config config = new Config(args[0]);
+    // jx
+    inDirPath = Paths.get( args[1] );
+    inClasspathStr = args[2];
+    outDirPath = Paths.get( args[3] );
 
     AnalysisScope scope = null;
     ClassHierarchy cha = null;
@@ -230,13 +255,7 @@ public class PreDM {
     }
 
     //change source code
-    String[] spoonArgs = new String[args.length-1];
-    int inputIndex = -1;
-    for (int i=1; i < args.length; i++) {
-      spoonArgs[i-1] = args[i];
-      if (spoonArgs[i-1].equals("-i")) inputIndex = i;
-    }
-    String inputDir = spoonArgs[inputIndex];
+    String inputDir = inDirPath.toString();
 
     Filewalker walker = new Filewalker();
     ArrayList<String> files = new ArrayList<String>();
@@ -244,6 +263,8 @@ public class PreDM {
     for (String str : files) {
       //if (str.endsWith("hadoop-yarn-server-resourcemanager/src/main/java") == false) continue;
 
+        
+    	
       Launcher launcher = new Launcher();
 
       final Factory factory = launcher.getFactory();
@@ -292,17 +313,62 @@ public class PreDM {
         launcher.addProcessor(zkMethodMod);
       }
 
-      //launcher.setArgs(spoonArgs);
-      //launcher.run();
-
 
       System.out.println("Process file: " + str);
-      spoonArgs[inputIndex] = str;
+      
+      String[] spoonArgs = new String[] {
+      		"-i", str,
+      		"--source-classpath", inClasspathStr,
+      		"--output-type", "compilationunits",
+      		"--level", "WARN",
+      		"--no-copy-resources",
+      };
+
       launcher.setArgs(spoonArgs);
       launcher.run();
+      
+      // jx: copyback
+      copyback(str);
     }
   }
+  
+  public void copyback(String str) throws IOException {
+	  Path srcpath = Paths.get(str);
+	  Path relative = inDirPath.relativize(srcpath);
+	  
+	  final Path dstpath = outDirPath.resolve(relative);
+	  System.out.println("srcpath: " + srcpath);
+	  System.out.println("spoonedPath: " + spoonedPath);
+	  System.out.println("dstpath: " + srcpath);
+	  
+	  // copy from "spooned" to "dstpath"
+	  // traverse "spooned"
+	  Files.walkFileTree( spoonedPath, new SimpleFileVisitor<Path>(){
+          @Override 
+          public FileVisitResult visitFile(Path filepath, BasicFileAttributes attrs) throws IOException {
+        	  if ( !filepath.getFileName().toString().endsWith(".java") ) {
+        		  System.out.println("JX - ERROR - filepath didn't end withs .java");
+        		  return FileVisitResult.CONTINUE;
+        	  }
+        	  Files.copy(filepath, dstpath.resolve(spoonedPath.relativize(filepath)), StandardCopyOption.REPLACE_EXISTING);
+              return FileVisitResult.CONTINUE;
+          }
+          
+      });
+	  
+	  // delete "spooned" or all subdirs and subfiles of "spooned"
+	  Files.walkFileTree( spoonedPath, new SimpleFileVisitor<Path>(){
+          @Override 
+          public FileVisitResult visitFile(Path filepath, BasicFileAttributes attrs) throws IOException {
+        	  Files.delete(filepath);
+              return FileVisitResult.CONTINUE;
+          }
+      });
+  }
+  
 }
+
+
 
 class Filewalker {
   public void walk (String path, ArrayList<String> files) {
