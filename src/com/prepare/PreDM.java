@@ -12,8 +12,6 @@ import spoon.support.QueueProcessingManager;
 
 import com.prepare.Util.PrepareUtil;
 
-import dt.spoon.BlackList;
-
 import com.ibm.wala.util.io.FileProvider;
 import com.ibm.wala.core.tests.callGraph.CallGraphTestUtil;
 import com.ibm.wala.util.config.AnalysisScopeReader;
@@ -339,7 +337,7 @@ public class PreDM {
 	  final Path dstpath = outDirPath.resolve(relative);
 	  System.out.println("srcpath: " + srcpath);
 	  System.out.println("spoonedPath: " + spoonedPath);
-	  System.out.println("dstpath: " + srcpath);
+	  System.out.println("dstpath: " + dstpath);
 	  
 	  // copy from "spooned" to "dstpath"
 	  // traverse "spooned"
