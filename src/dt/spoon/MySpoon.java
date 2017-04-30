@@ -34,7 +34,7 @@ public class MySpoon {
 		// Testing
 		if (isTesting) {
 			System.out.println("JX - WARN - Under Testing State!!!");
-			Path dirOrFilePath = Paths.get( "src/dt/spoon/test/JXTest.java" );
+			Path dirOrFilePath = Paths.get( "src/dt/spoon/test" );
 			new MySpoon().scanInputDir( dirOrFilePath );
 			// Testing - Getting Spoon GUI Tree for a Directory
 			//Process: Launcher.main(String[]) -> run(String[]) -> run() + new XxGuiTree()
@@ -153,9 +153,9 @@ public class MySpoon {
 			Launcher.main( new String[] {
 					"-i", inputlist,						// input file or dir
 					"-o", "spooned/",               				// default. 
-					//"-p", "dt.spoon.processors.CatchProcessor",   // for test
-					"-p", "dt.spoon.processors.MethodProcessor" 
-						  + File.pathSeparator + "dt.spoon.processors.LoopProcessor",
+					"-p", "dt.spoon.processors.CatchProcessor",   // for test
+					//"-p", "dt.spoon.processors.MethodProcessor" 
+						//  + File.pathSeparator + "dt.spoon.processors.LoopProcessor",
 					"--output-type", "compilationunits",   // jx: means NO split a .java by its multi classes. The default is "classes",
 					"--level", "WARN",
 					"--no-copy-resources",          // jx - should be NO copy non-java files

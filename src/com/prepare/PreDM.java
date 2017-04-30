@@ -292,7 +292,7 @@ public class PreDM {
         launcher.addProcessor(zkMethodMod);
       }
 
-      launcher.setArgs(spoonArgs);
+      //launcher.setArgs(spoonArgs);
       //launcher.run();
 
 

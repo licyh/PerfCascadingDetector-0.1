@@ -41,9 +41,7 @@ public class JXTest {
         + ((((double) ((java.lang.System.nanoTime()) - start_time)) / 1000) / 1000)) + "ms"));
         }
         catch (Exception e) {
-        	
-        	throw new Exception(e);
-        	//TODO
+
         }
     }
 

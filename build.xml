@@ -93,15 +93,13 @@
 	
     	<target name="compile-prepare" depends="compile-comm" description="compile predm">
             <javac srcdir="${src.dir}/com/prepare" destdir="${build.classes}" includeantruntime="false">
+            	<classpath refid="sa.classpath" />
                 <classpath>
-                	<path id="sa.classpath"/>
                 	<pathelement location="${lib.dir}/dt/spoon-core-5.5.0-jar-with-dependencies.jar"/>
                 </classpath>
             </javac>
     	</target>	
 		
-	
-        <!-- added by JX -->
 	    <!--target compile sa, ie, Static Analysis of Loops-->
 	    <target name="compile-sa" depends="prepare" description="compile static analysiser">
             <javac srcdir="${src.sa.dir}" destdir="${build.classes}" includeantruntime="false">

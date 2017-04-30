@@ -1,32 +1,36 @@
-cd ../../../..
-gradle jar_pre_dm
+# Please set the project home directory
+project_dir=/mnt/storage/jiaxinli/workspace/JXCascading-detector            #JX - NO "/" at the end
+
+
+# Compile prepare
+cd $project_dir
+ant compile-prepare
 if [ $? -ne 0 ]; then
   echo "compile error"
   exit
 fi
-cd -
 
-if [ -d ./tmp ]; then
-  rm -rf ./tmp
+
+# Clear "spooned" for the results of Spooning
+cd $project_dir
+mkdir -p output
+cd output
+touch ForSpoonRunningNormally.java  #Spoon Bug #1208 - jx: before outputing "spooned", it needs to traverse the current working dir for *.java files, so if the working dir is bigger, Spoon is slow for each execution
+if [ -d ./spooned ]; then
+  rm -rf ./spooned
 fi
-mkdir ./tmp
-cp ../../../../build/lib/PreDM.jar ./tmp
-cd ./tmp
-jar -xvf PreDM.jar > /dev/null 2>&1
+
+
+# Walaing & Spooning
+echo "JX - INFO - Spooning NOW .."
+# set classpath for Walaing & Spooning
+build_path=${project_dir}/build/classes/
+wala_path=${project_dir}/lib/sa/wala-1.3.8-jars/*
+spoon_path=${project_dir}/lib/dt/spoon-core-5.5.0-jar-with-dependencies.jar
+classpath=$build_path:$wala_path:$spoon_path
 
 #$1: config file
 #$2: allJar str
 #$3: src path
-
-wala_path=/mnt/storage/packages/wala/WALA-R_1.3.5
-wala_core=${wala_path}/com.ibm.wala.core/bin
-wala_util=${wala_path}/com.ibm.wala.util/bin
-wala_shrike=${wala_path}/com.ibm.wala.shrike/bin
-wala_testdata=${wala_path}/com.ibm.wala.core.testdata/bin
-wala_tests=${wala_path}/com.ibm.wala.core.tests/bin
-wala_cp=${wala_core}:${wala_util}:${wala_shrike}:${wala_tests}:${wala_testdata}:${walaUtil}
-spoon_lib=/mnt/storage/jiaxinli/workspace/predm/lib/spoon-core-5.5.0-jar-with-dependencies.jar
-
-#java -cp ./:${spoon_lib}:${wala_cp} com.prepare.PreDM $1 -i $src_path --source-classpath $allJar --output-type compilationunits
-java -cp ./:${spoon_lib}:${wala_cp} com.prepare.PreDM $1 -i $3 --source-classpath $2 --output-type compilationunits
+java -cp $classpath com.prepare.PreDM $1 -i $3 --source-classpath $2 --output-type compilationunits
 
