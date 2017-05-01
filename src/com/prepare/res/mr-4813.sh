@@ -5,11 +5,12 @@ project_dir=/home/vagrant/JXCascading-detector
 # Set the bug variables
 bug_id="mr-4813_spoon"
 app_src=/home/vagrant/spoonspace/hadoop-0.23.3-src         #JX - NO "/" at the end
+app_lib=/home/vagrant/spoonspace/hadoop-jars
 proto_src=/home/vagrant/spoonspace/proto                   
+
 tmp_dir=/tmp/$bug_id
 in_dir=/tmp/$bug_id/in/hadoop-0.23.3-src
 out_dir=/tmp/$bug_id/out/hadoop-0.23.3-src
-shared_lib=$app_src/hadoop-dist/target/hadoop-0.23.3/share
 
 
 # FIRST Compile the original app source codes!
@@ -52,31 +53,16 @@ done
 
 # 4. run spoon
 echo "JX - INFO - Call Spoon for running"
-allJar=`find $shared_lib -name "*.jar" | tr '\n' ':'`
+allJar=`find $app_lib -name "*.jar" | tr '\n' ':'`
 allJar=$allJar`find $JAVA_HOME/lib -name "*.jar" | tr '\n' ':'`
-allJar=$allJar${in_dir}/hadoop-tools/hadoop-distcp/target/lib/zookeeper-3.4.2.jar
+#allJar=$allJar${in_dir}/hadoop-tools/hadoop-distcp/target/lib/zookeeper-3.4.2.jar
 cd $project_dir/src/com/prepare/res
 ./pre_dm_run.sh $project_dir/src/com/prepare/res/mr-4813.config $in_dir $allJar $out_dir
 
 
 # 5. copy modified *.java to out-folder
 echo "JX - INFO - copy modified *.java to out-folder"
-out_path=$out_dir
-cd $project_dir/output/spooned/org
-for i in `find ./ -name "*.java"`
-do
-        #echo $i
-        name=$(basename "$i")
-        tar=`find $out_path -name $name |  grep $i`
-        num=`find $out_path -name $name |  grep $i | wc -l`
-        if [ $num -ne 1 ]; then
-          echo "Find multiple files: "$name
-          #exit
-          continue
-        fi
-        #echo "tar: "$tar
-        cp $i $tar
-done
+echo "     this is already done in Spooning"
 
 # 6. copy *.proto for mr
 echo "JX - INFO - copy *.proto for mr"
