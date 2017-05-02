@@ -1,5 +1,11 @@
 package dt.spoon.processors;
 
+import com.TextFileReader;
+import com.prepare.Modify.checker.MethodChecker;
+
+import dt.spoon.checkers.Checker;
+import dt.spoon.checkers.CommonChecker;
+import dt.spoon.util.Util;
 import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.CtLoop;
 import spoon.reflect.code.CtBlock;
@@ -15,33 +21,52 @@ import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.visitor.Filter;
 import spoon.reflect.visitor.filter.ReturnOrThrowFilter;
 
+
+/**
+ * Insert Loops
+ * @author xincafe
+ */
 public class MethodProcessor extends AbstractProcessor<CtMethod> {
+	
+	Checker checker = null;
+	
+	public MethodProcessor() {
+		this.checker = new CommonChecker( "src/dt/spoon/res/mr-4813/scope.txt" );
+	}
+	
+	
 	public void process(CtMethod method) {
 		String methodsig = method.getDeclaringType().getQualifiedName()
 				+ "." + method.getSimpleName()
 				+ method.getSignature(); 
 		
-		// insert for all loops inside the method
+		System.out.println("JX - DEBUG - methodsig: " + methodsig);
+		if (checker != null && !checker.isTarget(methodsig))
+			return;
+		//System.out.println("JX - DEBUG - methodsig: " + methodsig);
+		
+		// Insert for all loops inside the method
 		int count = -1;
 		for ( CtLoop loop: method.getElements(new LoopFilter()) ) {
+			// Check if a normal loop that has loop body
 			CtBlock<?> bodyblock = (CtBlock<?>) loop.getBody();
 			if (bodyblock == null) continue;   	 //like "while (x<= 0 && next());" or "for (xx);"
-				
 			++count;
-			System.out.println( loop.getPosition().toString() );
+			System.out.println( "JX - INFO - chaning loop - " + loop.getPosition().toString() );
 			
-			// before loop
-			loop.insertBefore( getCodeSnippetStatement( codeStr(1,methodsig,count) ) );
+			// Before Loop
+			loop.insertBefore( Util.getCodeSnippetStatement(this, codeStr(1,methodsig,count)) );
 
-			// inside loop
-			bodyblock.insertBegin( getCodeSnippetStatement( codeStr(2,methodsig,count) ) );
+			// Inside Loop
+			bodyblock.insertBegin( Util.getCodeSnippetStatement(this, codeStr(2,methodsig,count)) );
 			for ( CtCFlowBreak cflowbreak: loop.getElements(new ReturnOrThrowFilter()) ) {   //insert before "Return" and "Throw"
-				cflowbreak.insertBefore( getCodeSnippetStatement( codeStr(3,methodsig,count) ) );
+				cflowbreak.insertBefore( Util.getCodeSnippetStatement(this, codeStr(3,methodsig,count)) );
 			}
 			
-			// after loop			
-			loop.insertAfter( getCodeSnippetStatement( codeStr(3,methodsig,count) ) );
+			// After Loop			
+			loop.insertAfter( Util.getCodeSnippetStatement(this, codeStr(3,methodsig,count)) );
 		}
+		
 		// insert at the end of method. jx - no need for now
 		/*
 		CtBlock methodblock = method.getBody();
@@ -49,7 +74,7 @@ public class MethodProcessor extends AbstractProcessor<CtMethod> {
 		*/
     }
 
-	
+  	
   	/**
   	 * Insert Flags:
   	 * 		1 - insert at method BEGIN - method.insertBefore
@@ -84,14 +109,6 @@ public class MethodProcessor extends AbstractProcessor<CtMethod> {
   		return codestr;
   	}
   	
-  	
-  	public CtCodeSnippetStatement getCodeSnippetStatement(String codesnippet) {
-  		if ( codesnippet.endsWith(";") )
-  			codesnippet = codesnippet.substring(0, codesnippet.length()-1);
-		CtCodeSnippetStatement statement
-			= getFactory().Code().createCodeSnippetStatement( codesnippet );
-		return statement;
-	}
 }
 
 
@@ -105,3 +122,5 @@ class LoopFilter implements Filter<CtLoop> {
 				);
 	}
 }
+
+

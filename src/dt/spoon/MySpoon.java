@@ -8,8 +8,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.List;
 
+import dt.spoon.processors.AbsInvokeProcessor;
 import dt.spoon.processors.CatchProcessor;
+import dt.spoon.processors.InvokeProcessor;
 import dt.spoon.processors.LoopProcessor;
 import dt.spoon.processors.MethodProcessor;
 import spoon.Launcher;   
@@ -17,145 +21,96 @@ import spoon.Launcher;
 
 public class MySpoon {
 
-	int nProcessedJavaDirs = 0;
-	String inputlist = "";             // for each time Spooning
+	Path dirpath;           //Source code Dir
+	String srcClasspath;    //Source code's Classpath
 	
 	// for Testing
 	static boolean isTesting = true;  
 	// End - for Testing
 	
+	
 	/**
 	 * @param args
 	 * 		  args[0] is a dir or file path string
-	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
 						
 		// Testing
 		if (isTesting) {
 			System.out.println("JX - WARN - Under Testing State!!!");
-			Path dirOrFilePath = Paths.get( "src/dt/spoon/test" );
-			new MySpoon().scanInputDir( dirOrFilePath );
+			Path testingPath = Paths.get( "src/dt/spoon/test" );
+			
+			new MySpoon( testingPath, "" );
 			// Testing - Getting Spoon GUI Tree for a Directory
-			//Process: Launcher.main(String[]) -> run(String[]) -> run() + new XxGuiTree()
-			//Launcher.main( new String[] {"-i", dirOrFilePath.toString(), "--gui"} );
-			// Or
 			//Launcher guilauncher = new Launcher();
-			//guilauncher.run( new String[] {"-i", dirOrFilePath.toString(), "--gui"} );
+			//guilauncher.run( new String[] {"-i", testingPath.toString(), "--gui"} );
+			// Or
+			//Process: Launcher.main(String[]) -> run(String[]) -> run() + new XxGuiTree()
+			//Launcher.main( new String[] {"-i", testingPath.toString(), "--gui"} );
 			return;
 		}
 				
 		// Regular codes
-		if (args.length != 1) {
-			System.err.println("JX - ERROR - args.length != 1");
+		if (args.length != 2) {
+			System.err.println("JX - ERROR - args.length != 2");
 			return;
 		}
-		Path path = Paths.get( args[0] );
-		if ( !Files.exists(path) ) {
-			System.err.println("JX - ERROR - !Files.exists @ " + path);
-			return;
-		}
-		System.out.println("JX - INFO - " + "the target dir/file is " + path.toAbsolutePath());
-		
-		MySpoon myspoon = new MySpoon();
-		myspoon.scanInputDir( path );
-		System.out.println("JX - INFO - finished for " + myspoon.nProcessedJavaDirs + " /java/ dirs");
+		MySpoon myspoon = new MySpoon(args[0], args[1]);
+		System.out.println("JX - INFO - finished.");
 	}
 
-	public MySpoon() {	
-		this.nProcessedJavaDirs = 0;
+	
+	public MySpoon(String dirstr, String srcClasspath) {	
+		this(Paths.get(dirstr), srcClasspath);
+	}
+	
+	public MySpoon(Path dirpath, String srcClasspath) {
+		this.dirpath = dirpath;
+		this.srcClasspath = srcClasspath;
+		if ( !Files.exists(dirpath) ) {
+			System.err.println("JX - ERROR - !Files.exists @ " + dirpath);
+			return;
+		}
+		System.out.println("JX - INFO - " + "the target dir/file for spooning is " + dirpath.toAbsolutePath());
+		doWork();
 	}
 	
 	
+	public void doWork() {
+		try {
+			List<Path> javadirs = getJavaDirs(dirpath);
+			System.out.println("JX - INFO - #java dirs = " + javadirs.size());
+			for (Path path: javadirs) {
+				System.out.println("Java Dir: " + path);
+				spoon( path );
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+
+
+
 	/**
-	 * Handle *.java files one by one, NOT based on a dir or subdir.
-	 * @param path - a dir or file path
-	 * @throws IOException 
+	 * Spooning
+	 * @param path - is a absolute path
 	 */
-	public void scanInputDir(Path path) throws IOException {
-		
-		if ( !Files.exists(path) ) {
-			System.out.println("JX - ERROR - !Files.exists @ " + path);
-			return;
-		}
-
-        Files.walkFileTree( path, new SimpleFileVisitor<Path>(){
-                @Override 
-                public FileVisitResult visitFile(Path filepath, BasicFileAttributes attrs) throws IOException {
-                	// Testing
-                	if (isTesting) {
-                		if (filepath.getFileName().toString().endsWith(".java")) {
-                			System.out.println("Processing file: " + filepath.toString());
-                			spoon( filepath.toAbsolutePath() );
-                		}
-                		return FileVisitResult.CONTINUE;
-                	}
-                	// End-Testing
-                	
-                	if (filepath.getFileName().toString().endsWith(".java")) {
-                		System.out.println("JX - INFO - overlooked .java file: " + filepath.toString());
-                	}
-                    return FileVisitResult.CONTINUE;
-                }
-                
-                @Override  
-                public FileVisitResult preVisitDirectory(Path dirpath, BasicFileAttributes attrs) throws IOException {
-                	// Testing
-                	if (isTesting) {
-                		System.out.println("Meet dir: " + dirpath.toString());
-                		return FileVisitResult.CONTINUE;
-                	}
-                	// End-Testing
-                	
-                	String dirname = dirpath.getFileName().toString();
-                	// filters
-                	if ( dirname.contains("examples") 
-                			|| dirname.contains("benchmarks")
-                			|| dirname.equals("test")                  //test-related *.java files
-                			|| dirname.equals("contrib")
-                			|| dirname.equals("target") 
-                			|| dirname.equals("tools")
-                			|| dirname.equals("ant")
-                			) {
-                		// Testing
-                		//System.out.println("JX - INFO - Skip dir: " + dirpath.toString());
-                		return FileVisitResult.SKIP_SUBTREE;
-                	}
-                	
-                	if ( dirname.equals("java") ) {
-                		System.out.println("Processing java dir: " + dirpath.toString());
-                		long start_time = System.currentTimeMillis();
-                		spoon( dirpath.toAbsolutePath() );
-                		System.out.println("Completion Time: " + (double)(System.currentTimeMillis()-start_time)/1000 + "s");
-                		nProcessedJavaDirs ++;
-                		return FileVisitResult.SKIP_SUBTREE;
-                	}
-                	return FileVisitResult.CONTINUE;
-                }
-                
-                @Override
-                public FileVisitResult postVisitDirectory(Path dirpath, IOException exc) throws IOException {
-                    // TODO
-                    return FileVisitResult.CONTINUE;
-                }
-            });
-		
-	}
-
-	
 	public void spoon(Path path) throws IOException {
 		// Get all normal *.java files for this SPOON process
-		String inputlist = getSpecificJavaFiles(path);
+		//String inputlist = getSpecificJavaFiles(path);
 		
 		/* Basic Usage */
+		/*
 		try {
 			//jx - ps: xx[:|;]xx[:|;]xx[:|;]  in Linux & Windows respectively
 			Launcher.main( new String[] {
 					"-i", inputlist,						// input file or dir
 					"-o", "spooned/",               				// default. 
-					"-p", "dt.spoon.processors.CatchProcessor",   // for test
-					//"-p", "dt.spoon.processors.MethodProcessor" 
-						//  + File.pathSeparator + "dt.spoon.processors.LoopProcessor",
+					//"-p", "dt.spoon.processors.CatchProcessor",   // for test
+					"-p", "dt.spoon.processors.MethodProcessor" 
+						  + File.pathSeparator + "dt.spoon.processors.AbsInvokeProcessor",
 					"--output-type", "compilationunits",   // jx: means NO split a .java by its multi classes. The default is "classes",
 					"--level", "WARN",
 					"--no-copy-resources",          // jx - should be NO copy non-java files
@@ -171,38 +126,93 @@ public class MySpoon {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 		
 		/* Usage in Java Style */
-		/*
+		
 		Launcher launcher = new Launcher();
-		launcher.addInputResource( inputlist );
+		launcher.addInputResource( path.toString() );
 		launcher.setSourceOutputDirectory("spooned/");
+		
 		// Add Processors
-		CatchProcessor catchProcessor = new CatchProcessor();
-		launcher.addProcessor(catchProcessor);
-		LoopProcessor loopProcessor = new LoopProcessor();
-		launcher.addProcessor(loopProcessor);
+		// for Loops
 		MethodProcessor methodProcessor = new MethodProcessor();
 		launcher.addProcessor(methodProcessor);
-		launcher.getEnvironment().setLevel("WARN");
+		// for IOs
+		AbsInvokeProcessor absInvokeProcessor = new AbsInvokeProcessor();
+		launcher.addProcessor(absInvokeProcessor);
+		// for RPCs
+		InvokeProcessor invokeProcessor = new InvokeProcessor();
+		launcher.addProcessor(invokeProcessor);
+		
+		launcher.setArgs( new String[]{"--source-classpath", srcClasspath, "--output-type", "compilationunits"} );
 		launcher.getEnvironment().setCopyResources(false);
+		launcher.getEnvironment().setLevel("WARN");
+		
+		//launcher.getEnvironment().setSourceClasspath( new String[] {"build/lib/_DM_Log.jar"} );
 		//launcher.getEnvironment().setShouldCompile(true);
 		//launcher.getEnvironment().setPreserveLineNumbers(true); 
 		//launcher.getEnvironment().setComplianceLevel(7);   
-		//launcher.getEnvironment().setSourceClasspath( new String[] {"build/lib/_DM_Log.jar"} );
 		//launcher.getEnvironment().setNoClasspath(true);
 		
 		launcher.run();
-		*/
+		
+	}
+	
+		
+	/**
+	 * Get absolute Java Dirs
+	 */
+	public List<Path> getJavaDirs(Path path) throws IOException {
+		final List<Path> dirs = new ArrayList<Path>();
+		if ( isTesting || !Files.isDirectory(path) ) {
+			dirs.add(path.toAbsolutePath());
+			return dirs;
+		}
+		
+	    Files.walkFileTree( path, new SimpleFileVisitor<Path>() {
+               @Override 
+               public FileVisitResult visitFile(Path filepath, BasicFileAttributes attrs) throws IOException {
+                   return FileVisitResult.CONTINUE;
+               }
+               
+               @Override  
+               public FileVisitResult preVisitDirectory(Path dirpath, BasicFileAttributes attrs) throws IOException {
+
+	               	String dirname = dirpath.getFileName().toString();
+	               	// filters
+	               	if ( dirname.contains("examples") 
+	               			|| dirname.contains("benchmarks")
+	               			|| dirname.contains("generated")
+	               			|| dirname.equals("test")                  //test-related *.java files
+	               			|| dirname.equals("contrib")
+	               			|| dirname.equals("target") 
+	               			|| dirname.equals("tools")
+	               			|| dirname.equals("ant")
+	               			|| dirname.equals("webapp")
+	               			) {
+	               		return FileVisitResult.SKIP_SUBTREE;
+	               	}
+	               	// get "java" dirs
+	               	if ( dirname.equals("java") ) {
+	               		dirs.add( dirpath.toAbsolutePath() );
+	               		return FileVisitResult.SKIP_SUBTREE;
+	               	}
+	               	return FileVisitResult.CONTINUE;
+               }
+               
+           });
+		return dirs;
 	}
 	
 	
-	/**
+	/**  NOT USE NOW
 	 * Get all normal *.java files for this SPOON process
 	 * @param path : a dir or file path
 	 */
+	String inputlist;
 	public String getSpecificJavaFiles(Path path) throws IOException {
-		
+	
 		if ( !Files.isDirectory(path) ) {
 			inputlist = path.toString();
 			return inputlist;

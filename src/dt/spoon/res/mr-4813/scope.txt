@@ -1,0 +1,4 @@
+//package prefixes              only for print looplocatins NOW!!!
+org.apache.hadoop.mapred.
+org.apache.hadoop.mapreduce.
+org.apache.hadoop.yarn.

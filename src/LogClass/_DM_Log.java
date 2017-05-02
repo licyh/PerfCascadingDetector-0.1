@@ -41,6 +41,7 @@ public class _DM_Log {
     LoopPrint,     //only for javassist
     LoopEnd,       //only for spoon
     IO,
+    RPC,
   };
 
   public static void log_Base(String opType, String opValue) {
@@ -218,5 +219,10 @@ public class _DM_Log {
   		_DM_Log.log_Base(opType, opValue);
   	}  
 
+	public static void log_RPC(String opValue) {     //same as log_MsgSending
+  		String opType = _DM_Log.OPTYPE.RPC.name();
+  		_DM_Log.log_Base(opType, opValue);
+  	}  
+	
 }
 
