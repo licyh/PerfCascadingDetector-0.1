@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,161 +17,106 @@ import dt.spoon.processors.CatchProcessor;
 import dt.spoon.processors.InvokeProcessor;
 import dt.spoon.processors.LoopProcessor;
 import dt.spoon.processors.MethodProcessor;
+import dt.spoon.util.SpoonUtil;
 import spoon.Launcher;   
 
 
 public class MySpoon {
 
-	Path dirpath;           //Source code Dir
-	String srcClasspath;    //Source code's Classpath
+	Path srcDirPath;           //INPUT: Source code Dir
+	String srcClasspath;       //Source code's Classpath
+	Path spoonedDirPath;       //OUTPUT: spooned result 
+	Path dstDirPath;           //dest: copy from OUTPUT to dest 
 	
-	// for Testing
-	static boolean isTesting = false;  
-	// End - for Testing
-	
-	
-	/**
-	 * @param args
-	 * 		  args[0] is a dir or file path string
-	 */
+
 	public static void main(String[] args) throws Exception {
-						
-		// Testing
-		if (isTesting) {
-			System.out.println("JX - WARN - Under Testing State!!!");
-			Path testingPath = Paths.get( "src/dt/spoon/test" );
 			
-			new MySpoon( testingPath, "" );
-			// Testing - Getting Spoon GUI Tree for a Directory
-			//Launcher guilauncher = new Launcher();
-			//guilauncher.run( new String[] {"-i", testingPath.toString(), "--gui"} );
-			// Or
-			//Process: Launcher.main(String[]) -> run(String[]) -> run() + new XxGuiTree()
-			//Launcher.main( new String[] {"-i", testingPath.toString(), "--gui"} );
+		if (args.length != 4) {
+			System.err.println("JX - ERROR - args.length != 4");
 			return;
 		}
-				
-		// Regular codes
-		if (args.length != 2) {
-			System.err.println("JX - ERROR - args.length != 2");
-			return;
-		}
-		MySpoon myspoon = new MySpoon(args[0], args[1]);
+		MySpoon myspoon = new MySpoon(args[0], args[1], args[2], args[3]);
 		System.out.println("JX - INFO - finished.");
 	}
 
-	
-	public MySpoon(String dirstr, String srcClasspath) {	
-		this(Paths.get(dirstr), srcClasspath);
+
+	public MySpoon(String srcDir, String srcClasspath, String spoonedDir, String dstDir) {	
+		this(Paths.get(srcDir), srcClasspath, Paths.get(spoonedDir), Paths.get(dstDir));
 	}
 	
-	public MySpoon(Path dirpath, String srcClasspath) {
-		this.dirpath = dirpath;
+	
+	public MySpoon(Path srcDirPath, String srcClasspath, Path spoonedDirPath, Path dstDirPath) {
+		this.srcDirPath = srcDirPath;
 		this.srcClasspath = srcClasspath;
-		if ( !Files.exists(dirpath) ) {
-			System.err.println("JX - ERROR - !Files.exists @ " + dirpath);
+		this.spoonedDirPath = spoonedDirPath;
+		this.dstDirPath = dstDirPath;
+		if ( !Files.exists(srcDirPath) ) {
+			System.err.println("JX - ERROR - !Files.exists @ " + srcDirPath);
 			return;
 		}
-		System.out.println("JX - INFO - " + "the target dir/file for spooning is " + dirpath.toAbsolutePath());
+		System.out.println("JX - INFO - " + "Begin: the target dir/file for spooning is " + srcDirPath.toAbsolutePath());
 		doWork();
 	}
 	
 	
 	public void doWork() {
 		try {
-			List<Path> javadirs = getJavaDirs(dirpath);
+			List<Path> javadirs = getJavaDirs(srcDirPath);
 			System.out.println("JX - INFO - #java dirs = " + javadirs.size());
 			for (Path path: javadirs) {
 				System.out.println("Java Dir: " + path);
-				spoon( path );
+				SpoonUtil.spoon( path, srcClasspath, spoonedDirPath );
+				//copySpooned( path );
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	
-
-
-
-	/**
-	 * Spooning
-	 * @param path - is a absolute path
-	 */
-	public void spoon(Path path) throws IOException {
-		// Get all normal *.java files for this SPOON process
-		//String inputlist = getSpecificJavaFiles(path);
-		
-		/* Basic Usage */
-		/*
-		try {
-			//jx - ps: xx[:|;]xx[:|;]xx[:|;]  in Linux & Windows respectively
-			Launcher.main( new String[] {
-					"-i", inputlist,						// input file or dir
-					"-o", "spooned/",               				// default. 
-					//"-p", "dt.spoon.processors.CatchProcessor",   // for test
-					"-p", "dt.spoon.processors.MethodProcessor" 
-						  + File.pathSeparator + "dt.spoon.processors.AbsInvokeProcessor",
-					"--output-type", "compilationunits",   // jx: means NO split a .java by its multi classes. The default is "classes",
-					"--level", "WARN",
-					"--no-copy-resources",          // jx - should be NO copy non-java files
-					//"--compile",                    // PS: "--compile/--precompile" used for compiling transformed/orignial codes respectively
-					//"-d", "spooned-classes/", 		// default
-					//"--source-classpath", "build/classes/", //"--source-classpath", "bin/",   // for "--compile" to load "LogClass._DM_Log" PS: a wrong "WARN" at console
-					// No need for me now
-					//"--lines",                    //jx - this couldn't really preserve all of line numbers
-					//"--compliance", "7",          //default is 8, because of spoon's own compiler(from Eclipse), so even Eclipse is 7, it will still be its own setting
-					//"--precompile",
-			} );
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
-		
-		/* Usage in Java Style */
-		
-		Launcher launcher = new Launcher();
-		launcher.addInputResource( path.toString() );
-		launcher.setSourceOutputDirectory("spooned/");
-		
-		// Add Processors
-		// for Loops
-		MethodProcessor methodProcessor = new MethodProcessor();
-		launcher.addProcessor(methodProcessor);
-		// for IOs
-		AbsInvokeProcessor absInvokeProcessor = new AbsInvokeProcessor();
-		launcher.addProcessor(absInvokeProcessor);
-		// for RPCs
-		InvokeProcessor invokeProcessor = new InvokeProcessor();
-		launcher.addProcessor(invokeProcessor);
-		
-		launcher.setArgs( new String[]{"--source-classpath", srcClasspath, "--output-type", "compilationunits"} );
-		launcher.getEnvironment().setCopyResources(false);
-		launcher.getEnvironment().setLevel("WARN");
-		
-		//launcher.getEnvironment().setSourceClasspath( new String[] {"build/lib/_DM_Log.jar"} );
-		//launcher.getEnvironment().setShouldCompile(true);
-		//launcher.getEnvironment().setPreserveLineNumbers(true); 
-		//launcher.getEnvironment().setComplianceLevel(7);   
-		//launcher.getEnvironment().setNoClasspath(true);
-		
-		launcher.run();
-		
-	}
-	
+	/*
+	public void copySpooned(String str) throws IOException {
+		  Path srcpath = Paths.get(str);
+		  Path relative = inDirPath.relativize(srcpath);
+		  
+		  final Path dstpath = outDirPath.resolve(relative);
+		  System.out.println("srcpath: " + srcpath);
+		  System.out.println("spoonedPath: " + spoonedPath);
+		  System.out.println("dstpath: " + dstpath);
+		  
+		  // copy from "spooned" to "dstpath"
+		  // traverse "spooned"
+		  Files.walkFileTree( spoonedPath, new SimpleFileVisitor<Path>(){
+	          @Override 
+	          public FileVisitResult visitFile(Path filepath, BasicFileAttributes attrs) throws IOException {
+	        	  if ( !filepath.getFileName().toString().endsWith(".java") ) {
+	        		  System.out.println("JX - ERROR - filepath didn't end withs .java");
+	        		  return FileVisitResult.CONTINUE;
+	        	  }
+	        	  Files.copy(filepath, dstpath.resolve(spoonedPath.relativize(filepath)), StandardCopyOption.REPLACE_EXISTING);
+	              return FileVisitResult.CONTINUE;
+	          }
+	          
+	      });
+		  
+		  // delete "spooned" or all subdirs and subfiles of "spooned"
+		  Files.walkFileTree( spoonedPath, new SimpleFileVisitor<Path>(){
+	          @Override 
+	          public FileVisitResult visitFile(Path filepath, BasicFileAttributes attrs) throws IOException {
+	        	  Files.delete(filepath);
+	              return FileVisitResult.CONTINUE;
+	          }
+	      }); //xx   x
+		  
+    }
+	*/
 		
 	/**
 	 * Get absolute Java Dirs
 	 */
-	public List<Path> getJavaDirs(Path path) throws IOException {
+	public List<Path> getJavaDirs(Path dirpath) throws IOException {
 		final List<Path> dirs = new ArrayList<Path>();
-		if ( isTesting || !Files.isDirectory(path) ) {
-			dirs.add(path.toAbsolutePath());
-			return dirs;
-		}
 		
-	    Files.walkFileTree( path, new SimpleFileVisitor<Path>() {
+	    Files.walkFileTree( dirpath, new SimpleFileVisitor<Path>() {
                @Override 
                public FileVisitResult visitFile(Path filepath, BasicFileAttributes attrs) throws IOException {
                    return FileVisitResult.CONTINUE;
