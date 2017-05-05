@@ -23,9 +23,7 @@ public class SpoonUtil {
 	public static void spoon(Path inputPath, String srcClasspath, Path outputDirPath) {
 		
 		Launcher launcher = new Launcher();
-		launcher.addInputResource( inputPath.toString() );
-		launcher.setSourceOutputDirectory( outputDirPath.toString() );  //default is "spooned/"
-		
+
 		// Add Processors
 		// for Loops
 		MethodProcessor methodProcessor = new MethodProcessor();
@@ -37,15 +35,29 @@ public class SpoonUtil {
 		InvokeProcessor invokeProcessor = new InvokeProcessor();
 		launcher.addProcessor(invokeProcessor);
 		
-		//launcher.setArgs( new String[]{"--source-classpath", srcClasspath, "--output-type", "compilationunits"} );
+		// Note: setArgs should be put at first, or will override all args 
+		launcher.setArgs( new String[]{"--source-classpath", srcClasspath, "--output-type", "compilationunits"} );
+		launcher.addInputResource( inputPath.toString() );
+		launcher.setSourceOutputDirectory( outputDirPath.toString() );  //default is "spooned/"
 		launcher.getEnvironment().setCopyResources(false);
 		launcher.getEnvironment().setLevel("WARN");
-		
 		//launcher.getEnvironment().setSourceClasspath( new String[] {"build/lib/_DM_Log.jar"} );
 		//launcher.getEnvironment().setShouldCompile(true);
 		//launcher.getEnvironment().setPreserveLineNumbers(true); 
 		//launcher.getEnvironment().setComplianceLevel(7);   
 		//launcher.getEnvironment().setNoClasspath(true);
+
+		/* just use this it's a good way.
+		launcher.setArgs( new String[]{
+				"-i", inputPath.toString(),
+				"--source-classpath", srcClasspath,
+				"-o", outputDirPath.toString(),
+				"--output-type", "compilationunits",
+	      		"--no-copy-resources",
+	      		"--level", "WARN",
+			} );
+		*/
+		
 		
 		launcher.run();
 		

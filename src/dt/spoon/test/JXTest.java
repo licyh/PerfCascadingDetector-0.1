@@ -14,7 +14,6 @@ public class JXTest {
         int x = -5;
         while (x<= 0 && next());
         
-        Outer outer = new Outer();
         
         for (int i = 0; i< 2; i++) 
         	for (int j=1; j   <   5; j++)
