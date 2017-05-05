@@ -63,52 +63,48 @@ public class MySpoon {
 		try {
 			List<Path> javadirs = getJavaDirs(srcDirPath);
 			System.out.println("JX - INFO - #java dirs = " + javadirs.size());
-			for (Path path: javadirs) {
-				System.out.println("Java Dir: " + path);
-				SpoonUtil.spoon( path, srcClasspath, spoonedDirPath );
-				//copySpooned( path );
+			for (Path javapath: javadirs) {
+				System.out.println("Java Dir: " + javapath);
+				SpoonUtil.spoon( javapath, srcClasspath, spoonedDirPath );
+				copySpooned( javapath );
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	/*
-	public void copySpooned(String str) throws IOException {
-		  Path srcpath = Paths.get(str);
-		  Path relative = inDirPath.relativize(srcpath);
-		  
-		  final Path dstpath = outDirPath.resolve(relative);
-		  System.out.println("srcpath: " + srcpath);
-		  System.out.println("spoonedPath: " + spoonedPath);
+
+	public void copySpooned( Path javapath ) throws IOException {
+		  Path relative = srcDirPath.relativize(javapath);
+		  final Path dstpath = dstDirPath.resolve(relative);
+		  System.out.println("spoonedPath: " + spoonedDirPath);
 		  System.out.println("dstpath: " + dstpath);
 		  
 		  // copy from "spooned" to "dstpath"
 		  // traverse "spooned"
-		  Files.walkFileTree( spoonedPath, new SimpleFileVisitor<Path>(){
+		  Files.walkFileTree( spoonedDirPath, new SimpleFileVisitor<Path>(){
 	          @Override 
 	          public FileVisitResult visitFile(Path filepath, BasicFileAttributes attrs) throws IOException {
 	        	  if ( !filepath.getFileName().toString().endsWith(".java") ) {
 	        		  System.out.println("JX - ERROR - filepath didn't end withs .java");
 	        		  return FileVisitResult.CONTINUE;
 	        	  }
-	        	  Files.copy(filepath, dstpath.resolve(spoonedPath.relativize(filepath)), StandardCopyOption.REPLACE_EXISTING);
+	        	  Files.copy(filepath, dstpath.resolve(spoonedDirPath.relativize(filepath)), StandardCopyOption.REPLACE_EXISTING);
 	              return FileVisitResult.CONTINUE;
 	          }
 	          
 	      });
 		  
 		  // delete "spooned" or all subdirs and subfiles of "spooned"
-		  Files.walkFileTree( spoonedPath, new SimpleFileVisitor<Path>(){
+		  Files.walkFileTree( spoonedDirPath, new SimpleFileVisitor<Path>(){
 	          @Override 
 	          public FileVisitResult visitFile(Path filepath, BasicFileAttributes attrs) throws IOException {
 	        	  Files.delete(filepath);
 	              return FileVisitResult.CONTINUE;
 	          }
 	      }); //xx   x
-		  
     }
-	*/
+	
 		
 	/**
 	 * Get absolute Java Dirs

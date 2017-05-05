@@ -36,10 +36,10 @@ public class MethodProcessor extends AbstractProcessor<CtMethod> {
 	
 	public void process(CtMethod method) {
 		String methodsig = method.getDeclaringType().getQualifiedName()
-				+ "." + method.getSimpleName()
-				+ method.getSignature(); 
+							+ "." + method.getSimpleName();
+		//String methodsig = method.getSignature();   //looks like "java.lang.String[] getFileVisibilities(org.apache.hadoop.conf.Configuration)" 
 		
-		System.out.println("JX - DEBUG - methodsig: " + methodsig);
+		//System.out.println("JX - DEBUG - methodsig: " + methodsig);
 		if (checker != null && !checker.isTarget(methodsig))
 			return;
 		//System.out.println("JX - DEBUG - methodsig: " + methodsig);
