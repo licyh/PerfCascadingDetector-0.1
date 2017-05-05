@@ -137,6 +137,10 @@ public class MySpoon {
 	               	}
 	               	// get "java" dirs
 	               	if ( dirname.equals("java") ) {
+	               		// special filters
+	               		if (dirpath.endsWith("hadoop-mapreduce-project/src/java")) 
+	               			return FileVisitResult.SKIP_SUBTREE;
+	               		
 	               		dirs.add( dirpath.toAbsolutePath() );
 	               		return FileVisitResult.SKIP_SUBTREE;
 	               	}

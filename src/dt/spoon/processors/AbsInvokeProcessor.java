@@ -36,6 +36,7 @@ public class AbsInvokeProcessor extends AbstractProcessor<CtAbstractInvocation> 
 		
 		if (checker != null && !checker.isTarget(invokesig))
 			return;
+		System.out.println("JX - INFO - checked IO: " + invokesig);
 		
 		// Main work
 		CtStatement statement = (CtStatement)absinvoke;

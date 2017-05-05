@@ -51,7 +51,7 @@ public class MethodProcessor extends AbstractProcessor<CtMethod> {
 			CtBlock<?> bodyblock = (CtBlock<?>) loop.getBody();
 			if (bodyblock == null) continue;   	 //like "while (x<= 0 && next());" or "for (xx);"
 			++count;
-			System.out.println( "JX - INFO - chaning loop - " + loop.getPosition().toString() );
+			System.out.println( "JX - INFO - checked loop - " + loop.getPosition().toString() );
 			
 			// Before Loop
 			loop.insertBefore( Util.getCodeSnippetStatement(this, codeStr(1,methodsig,count)) );
