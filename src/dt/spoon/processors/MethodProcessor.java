@@ -1,7 +1,6 @@
 package dt.spoon.processors;
 
 import com.TextFileReader;
-import com.prepare.Modify.checker.MethodChecker;
 
 import dt.spoon.checkers.Checker;
 import dt.spoon.checkers.CommonChecker;

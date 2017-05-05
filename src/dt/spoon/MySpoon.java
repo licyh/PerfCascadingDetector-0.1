@@ -25,7 +25,7 @@ public class MySpoon {
 	String srcClasspath;    //Source code's Classpath
 	
 	// for Testing
-	static boolean isTesting = true;  
+	static boolean isTesting = false;  
 	// End - for Testing
 	
 	

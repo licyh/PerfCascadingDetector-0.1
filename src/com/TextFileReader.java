@@ -44,10 +44,10 @@ public class TextFileReader {
 	    String tmpline = "";
 	    do {
 	    	try {
-				tmpline = bufreader.readLine().trim();
+				tmpline = bufreader.readLine();   // Note: can't ".trim()" directly, because it may return null, so null.trim() will except xx
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
+			} 
 	    } while( tmpline != null && 
 	    		(tmpline.startsWith("//")||tmpline.startsWith("#")||tmpline.length()==0)
 	    	   );
@@ -60,7 +60,7 @@ public class TextFileReader {
 	public void readFile() {		
 		String tmpline;
 		while ( (tmpline = readLine()) != null ) {
-			strs.add( tmpline );
+			strs.add( tmpline.trim() );
 			String[] tmpstrs = tmpline.trim().split("\\s+");
 			splitstrs.add( tmpstrs );
 		}

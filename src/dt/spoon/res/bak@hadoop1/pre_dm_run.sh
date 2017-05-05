@@ -4,7 +4,7 @@ project_dir=/home/vagrant/JXCascading-detector
 
 # Compile prepare
 cd $project_dir
-ant compile-dt
+ant compile-prepare
 if [ $? -ne 0 ]; then
   echo "compile error"
   exit
@@ -25,13 +25,12 @@ fi
 echo "JX - INFO - Spooning NOW .."
 # set classpath for Walaing & Spooning
 build_path=${project_dir}/build/classes/
+wala_path=${project_dir}/lib/sa/wala-1.3.8-jars/*
 spoon_path=${project_dir}/lib/dt/spoon-core-5.5.0-jar-with-dependencies.jar
-#wala_path=${project_dir}/lib/sa/wala-1.3.8-jars/*
-classpath=$build_path:$spoon_path
+classpath=$build_path:$wala_path:$spoon_path
 
 #$1: config file
 #$2: allJar str
 #$3: src path
-cd $project_dir
-java -cp $classpath dt.spoon.MySpoon $1 $2 $3 
+java -cp $classpath com.prepare.PreDM $1 $2 $3 $4
 
