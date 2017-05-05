@@ -33,5 +33,4 @@ classpath=$build_path:$spoon_path
 #$2: allJar str
 #$3: src path
 cd $project_dir
-java -cp $classpath dt.spoon.MySpoon $1 $2 $3 
-
+java -cp $classpath dt.spoon.MySpoon $1 $2 $3 $4

@@ -8,6 +8,7 @@ import dt.spoon.processors.AbsInvokeProcessor;
 import dt.spoon.processors.InvokeProcessor;
 import dt.spoon.processors.MethodProcessor;
 import spoon.Launcher;
+import dt.spoon.util.SpoonUtil;
 
 public class SpoonTest {
 

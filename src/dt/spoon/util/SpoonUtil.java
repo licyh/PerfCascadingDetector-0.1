@@ -37,7 +37,7 @@ public class SpoonUtil {
 		InvokeProcessor invokeProcessor = new InvokeProcessor();
 		launcher.addProcessor(invokeProcessor);
 		
-		launcher.setArgs( new String[]{"--source-classpath", srcClasspath, "--output-type", "compilationunits"} );
+		//launcher.setArgs( new String[]{"--source-classpath", srcClasspath, "--output-type", "compilationunits"} );
 		launcher.getEnvironment().setCopyResources(false);
 		launcher.getEnvironment().setLevel("WARN");
 		
