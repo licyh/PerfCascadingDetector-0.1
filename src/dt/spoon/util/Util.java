@@ -14,10 +14,13 @@ public class Util {
 	}
 	
 	public static CtMethod getMethod(CtElement ele) {
-	    while ( !(ele instanceof CtMethod) ) 
+	    while ( (ele != null) && !(ele instanceof CtMethod) ) 
 	    	ele = ele.getParent();
-	    CtMethod method = (CtMethod)ele;
+            if ( ele != null ) {
+	        CtMethod method = (CtMethod)ele;
 		return method;
+            }
+            return null;
 	}
 	
   	public static CtCodeSnippetStatement getCodeSnippetStatement(AbstractProcessor processor, String codesnippet) {

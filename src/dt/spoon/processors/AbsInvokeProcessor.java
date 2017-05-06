@@ -41,10 +41,14 @@ public class AbsInvokeProcessor extends AbstractProcessor<CtAbstractInvocation> 
 		
 		if (checker != null && !checker.isTarget(invokesig))
 			return;
-		String methodsig = Util.getMethodSig(Util.getMethod(absinvoke));
-		if (scopeChecker != null && !scopeChecker.isTarget(methodsig)) 
-			return;
-		
+
+                CtMethod method = Util.getMethod(absinvoke);
+                if (method != null) {
+		        String methodsig = Util.getMethodSig(Util.getMethod(absinvoke));
+              		if (scopeChecker != null && !scopeChecker.isTarget(methodsig)) 
+			      return;
+		}
+
 		System.out.println("JX - INFO - checked IO: " + invokesig);
 		
 		// Main work

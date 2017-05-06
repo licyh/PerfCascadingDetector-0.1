@@ -41,18 +41,17 @@ public class InvokeProcessor extends AbstractProcessor<CtInvocation> {
 		String invokemethod = executable.getSimpleName();
 		
 		
-		// Get Method
-        CtElement ele = (CtElement)invoke;
-		//System.out.println("JX - CtElement: " + ele);
-        while ( !(ele instanceof CtMethod) ) {
-			//System.out.println("JX - CtElement: " + ele.getParent());
-			ele = ele.getParent();
-		}
-        CtMethod method = (CtMethod)ele;
-		String methodsig = method.getDeclaringType().getQualifiedName() + "." + method.getSimpleName();
-		
-		if (scopeChecker != null && !scopeChecker.isTarget(methodsig))
 		if (checker != null && !checker.isTarget(invokesig)) return;
+
+
+                CtMethod method = Util.getMethod(invoke);
+                if (method != null) {
+                        String methodsig = Util.getMethodSig(Util.getMethod(invoke));
+                        if (scopeChecker != null && !scopeChecker.isTarget(methodsig)) 
+                              return;
+                }
+
+
 		
 		//if (invokeclass.equals("java.lang.Object")) return;
 		

@@ -71,7 +71,7 @@ public class MySpoon {
 			for (Path javapath: javadirs) {
 				System.out.println("Now Spooning Java Dir("+(++num)+"): " + javapath);
 				SpoonUtil.spoon( javapath, srcClasspath, spoonedDirPath );
-				//copySpooned( javapath );
+				copySpooned( javapath );
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
