@@ -26,16 +26,17 @@ public class SpoonUtil {
 
 		// Add Processors
 		// for Loops
-		MethodProcessor methodProcessor = new MethodProcessor();
-		launcher.addProcessor(methodProcessor);
+		//MethodProcessor methodProcessor = new MethodProcessor();
+		//launcher.addProcessor(methodProcessor);
 		// for IOs
 		AbsInvokeProcessor absInvokeProcessor = new AbsInvokeProcessor();
 		launcher.addProcessor(absInvokeProcessor);
 		// for RPCs
-		InvokeProcessor invokeProcessor = new InvokeProcessor();
-		launcher.addProcessor(invokeProcessor);
+		//InvokeProcessor invokeProcessor = new InvokeProcessor();
+		//launcher.addProcessor(invokeProcessor);
 		
 		// Note: setArgs should be put at first, or will override all args 
+                /*
 		launcher.setArgs( new String[]{"--source-classpath", srcClasspath, "--output-type", "compilationunits"} );
 		launcher.addInputResource( inputPath.toString() );
 		launcher.setSourceOutputDirectory( outputDirPath.toString() );  //default is "spooned/"
@@ -46,17 +47,18 @@ public class SpoonUtil {
 		//launcher.getEnvironment().setPreserveLineNumbers(true); 
 		//launcher.getEnvironment().setComplianceLevel(7);   
 		//launcher.getEnvironment().setNoClasspath(true);
+                */
 
-		/* just use this it's a good way.
+		// just use this it's a good way.
 		launcher.setArgs( new String[]{
 				"-i", inputPath.toString(),
 				"--source-classpath", srcClasspath,
 				"-o", outputDirPath.toString(),
 				"--output-type", "compilationunits",
-	      		"--no-copy-resources",
-	      		"--level", "WARN",
+	      			"--no-copy-resources",
+	      			"--level", "WARN",
 			} );
-		*/
+		
 		
 		
 		launcher.run();

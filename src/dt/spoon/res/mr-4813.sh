@@ -22,6 +22,7 @@ out_dir=/tmp/$bug_id/out/hadoop-0.23.3-src
 # 6. compile the out-folder to verify
 
 # 1. copy app-src to a tmp folder as in and out
+:<<tmp
 echo "JX - INFO - copy app-src to a tmp folder as in and out"
 if [ -d $tmp_dir ]; then
   rm -rf $tmp_dir
@@ -30,12 +31,13 @@ mkdir -p $tmp_dir/in
 mkdir -p $tmp_dir/out
 cp -r $app_src $tmp_dir/in
 cp -r $app_src $tmp_dir/out
-
+tmp
 
 # 3. remove some special *.java that spoon doesn't support
 echo "JX - INFO - remove some special *.java that spoon doesn't support"
 list="package-info.java PipesNonJavaInputFormat.java InputSampler.java AggregatedLogsBlock.java AggregatedLogsPage.java MRProtos.java MRServiceProtos.java"
 list=$list" HSAdminRefreshProtocolProtos.java YarnProtos.java AppBlock.java"
+list=$list" RccTask.java Touchz.java"
 
 for i in $list
 do

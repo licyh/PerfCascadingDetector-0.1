@@ -37,11 +37,12 @@ public class InvokeProcessor extends AbstractProcessor<CtInvocation> {
 		if (checker != null && !checker.isTarget(invokesig))
 			return;
 		System.out.println("JX - INFO - checked RPC: " + invokesig);
+                System.out.println("JX - INFO - checked RPC: " + invoke.getPosition().toString());
 		
 		// Main work
-		CtStatement statement = (CtStatement)invoke;
-		statement.insertBefore( Util.getCodeSnippetStatement(this, codeStr(invokesig)) );
-			
+		//CtStatement statement = (CtStatement)invoke;
+		invoke.insertBefore( Util.getCodeSnippetStatement(this, codeStr(invokesig)) );
+                //invoke.insertAfter( Util.getCodeSnippetStatement(this, "wwwyyy") );			
 	}
 	
   	

@@ -32,5 +32,5 @@ classpath=$build_path:$spoon_path
 #$1: config file
 #$2: allJar str
 #$3: src path
-cd $project_dir
+cd $project_dir              #JX: should be here!!!
 java -cp $classpath dt.spoon.MySpoon $1 $2 $3 $4
