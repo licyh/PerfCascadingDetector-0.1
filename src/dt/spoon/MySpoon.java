@@ -63,10 +63,15 @@ public class MySpoon {
 		try {
 			List<Path> javadirs = getJavaDirs(srcDirPath);
 			System.out.println("JX - INFO - #java dirs = " + javadirs.size());
+                        int num = 0;
+                        for (Path javapath: javadirs) {
+                                System.out.println("Java Dir("+(++num)+"): " + javapath);
+                        }
+                        num = 0;
 			for (Path javapath: javadirs) {
-				System.out.println("Java Dir: " + javapath);
+				System.out.println("Now Spooning Java Dir("+(++num)+"): " + javapath);
 				SpoonUtil.spoon( javapath, srcClasspath, spoonedDirPath );
-				copySpooned( javapath );
+				//copySpooned( javapath );
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -122,6 +127,15 @@ public class MySpoon {
                public FileVisitResult preVisitDirectory(Path dirpath, BasicFileAttributes attrs) throws IOException {
 
 	               	String dirname = dirpath.getFileName().toString();
+                        // filters for subprojects
+                        if ( dirname.equals("hadoop-tools")
+                             || dirname.equals("hadoop-common-project")
+                             || dirname.equals("hadoop-hdfs-project")
+                             || dirname.equals("hadoop-yarn-common")
+                             )
+                             return FileVisitResult.SKIP_SUBTREE;
+
+
 	               	// filters
 	               	if ( dirname.contains("examples") 
 	               			|| dirname.contains("benchmarks")
