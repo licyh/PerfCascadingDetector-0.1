@@ -11,6 +11,9 @@ public class Outer {
 		
 		
 	    public void method() {
+	    	
+	    	
+	    	
 	        this.eventHandlingThread = new java.lang.Thread() {
 	            public void run() {
 	                int event = 1;
@@ -26,6 +29,10 @@ public class Outer {
 
 	            }
 	        };
+	        
+	        while (true) {
+	    		int a = 0;
+	    	}
 
 	    }
 		
