@@ -1,5 +1,6 @@
 package dt.spoon.processors;
 
+import dt.spoon.MySpoon;
 import dt.spoon.checkers.Checker;
 import dt.spoon.checkers.CommonChecker;
 import dt.spoon.checkers.RPCChecker;
@@ -69,6 +70,8 @@ public class InvokeProcessor extends AbstractProcessor<CtInvocation> {
 			CtStatement statement = (CtStatement)element;
 			statement.insertBefore( Util.getCodeSnippetStatement(this, codeStr(invokesig)) );
 		}
+		
+		++ MySpoon.rpccount;
 	}
 	
   	
