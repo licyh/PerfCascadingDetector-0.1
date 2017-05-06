@@ -37,7 +37,7 @@ public class InvokeProcessor extends AbstractProcessor<CtInvocation> {
 		String invokeclass = executable.getDeclaringType().getQualifiedName();
 		String invokemethod = executable.getSimpleName();
 		
-		//if (checker != null && !checker.isTarget(invokesig)) return;
+		if (checker != null && !checker.isTarget(invokesig)) return;
 		
 		//if (invokeclass.equals("java.lang.Object")) return;
 		
