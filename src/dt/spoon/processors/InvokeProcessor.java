@@ -13,6 +13,7 @@ import spoon.reflect.code.CtInvocation;
 import spoon.reflect.code.CtStatement;
 import spoon.reflect.declaration.CtElement;
 import spoon.reflect.declaration.CtExecutable;
+import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.reference.CtExecutableReference;
 
 
@@ -23,9 +24,11 @@ import spoon.reflect.reference.CtExecutableReference;
  */
 public class InvokeProcessor extends AbstractProcessor<CtInvocation> {
 	
+	Checker scopeChecker = null;
 	Checker checker = null;
 	
 	public InvokeProcessor() {
+		this.scopeChecker = new CommonChecker( "src/dt/spoon/res/mr-4813/scope.txt" );
 		this.checker = new RPCChecker( "src/dt/spoon/res/mr-4813/rpc.txt" );
 	}
 		
@@ -37,6 +40,18 @@ public class InvokeProcessor extends AbstractProcessor<CtInvocation> {
 		String invokeclass = executable.getDeclaringType().getQualifiedName();
 		String invokemethod = executable.getSimpleName();
 		
+		
+		// Get Method
+        CtElement ele = (CtElement)invoke;
+		//System.out.println("JX - CtElement: " + ele);
+        while ( !(ele instanceof CtMethod) ) {
+			//System.out.println("JX - CtElement: " + ele.getParent());
+			ele = ele.getParent();
+		}
+        CtMethod method = (CtMethod)ele;
+		String methodsig = method.getDeclaringType().getQualifiedName() + "." + method.getSimpleName();
+		
+		if (scopeChecker != null && !scopeChecker.isTarget(methodsig))
 		if (checker != null && !checker.isTarget(invokesig)) return;
 		
 		//if (invokeclass.equals("java.lang.Object")) return;

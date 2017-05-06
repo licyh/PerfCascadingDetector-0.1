@@ -7,6 +7,10 @@ import java.nio.file.Paths;
 
 public class JXTest {
 	
+	int fieldA = 0;
+	double fieldB = 1;
+	String s = new String("xxx");
+	
 	public static boolean next() {
 		return true;
 	}
