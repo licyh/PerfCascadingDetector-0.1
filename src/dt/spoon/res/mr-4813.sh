@@ -37,7 +37,7 @@ cp -r $app_src $tmp_dir/out
 echo "JX - INFO - remove some special *.java that spoon doesn't support"
 list="package-info.java PipesNonJavaInputFormat.java InputSampler.java AggregatedLogsBlock.java AggregatedLogsPage.java MRProtos.java MRServiceProtos.java"
 list=$list" HSAdminRefreshProtocolProtos.java YarnProtos.java AppBlock.java"
-list=$list" RccTask.java Touchz.java"
+list=$list" RccTask.java Touchz.java HsJobBlock.java"
 
 for i in $list
 do

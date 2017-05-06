@@ -26,8 +26,8 @@ public class SpoonUtil {
 
 		// Add Processors
 		// for Loops
-		MethodProcessor methodProcessor = new MethodProcessor();
-		launcher.addProcessor(methodProcessor);
+	       	//MethodProcessor methodProcessor = new MethodProcessor();
+		//launcher.addProcessor(methodProcessor);
 		// for IOs
 		AbsInvokeProcessor absInvokeProcessor = new AbsInvokeProcessor();
 		launcher.addProcessor(absInvokeProcessor);
