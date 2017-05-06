@@ -5,9 +5,11 @@ import dt.spoon.checkers.CommonChecker;
 import dt.spoon.util.Util;
 import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.CtAbstractInvocation;
+import spoon.reflect.code.CtBlock;
 import spoon.reflect.code.CtCodeSnippetStatement;
 import spoon.reflect.code.CtInvocation;
 import spoon.reflect.code.CtStatement;
+import spoon.reflect.declaration.CtElement;
 import spoon.reflect.declaration.CtExecutable;
 import spoon.reflect.reference.CtExecutableReference;
 
@@ -39,8 +41,16 @@ public class AbsInvokeProcessor extends AbstractProcessor<CtAbstractInvocation> 
 		System.out.println("JX - INFO - checked IO: " + invokesig);
 		
 		// Main work
-		CtStatement statement = (CtStatement)absinvoke;
-		statement.insertBefore( Util.getCodeSnippetStatement(this, codeStr(invokesig)) );
+        CtElement element = (CtElement)absinvoke;
+		//System.out.println("JX - CtElement: " + element);
+		while ( !(element.getParent() instanceof CtBlock) ) {
+			//System.out.println("JX - CtElement: " + element.getParent());
+			element = element.getParent();
+		}
+		if (element instanceof CtStatement) {
+			CtStatement statement = (CtStatement)element;
+			statement.insertBefore( Util.getCodeSnippetStatement(this, codeStr(invokesig)) );
+		}
 			
 	}
 	

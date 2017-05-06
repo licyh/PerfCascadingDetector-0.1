@@ -16,7 +16,7 @@ java.io.File.compareTo
 java.io.File.createTempFile
 java.io.File.delete
 java.io.File.deleteOnExit
-//java.io.File.exists
+java.io.File.exists
 java.io.File.mkdir
 java.io.File.mkdirs
 java.io.File.renameTo
