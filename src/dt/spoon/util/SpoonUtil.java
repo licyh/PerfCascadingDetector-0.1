@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 
 import dt.spoon.processors.AbsInvokeProcessor;
 import dt.spoon.processors.InvokeProcessor;
+import dt.spoon.processors.LoopProcessor;
 import dt.spoon.processors.MethodProcessor;
 import spoon.Launcher;
 
@@ -25,8 +26,11 @@ public class SpoonUtil {
 		Launcher launcher = new Launcher();
 
 		// Add Processors
+		// for new loops
+		LoopProcessor loopProcessor = new LoopProcessor();
+		launcher.addProcessor(loopProcessor);
 		// for Loops
-	       	//MethodProcessor methodProcessor = new MethodProcessor();
+		//MethodProcessor methodProcessor = new MethodProcessor();
 		//launcher.addProcessor(methodProcessor);
 		// for IOs
 		AbsInvokeProcessor absInvokeProcessor = new AbsInvokeProcessor();

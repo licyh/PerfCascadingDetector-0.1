@@ -16,11 +16,11 @@ public class Util {
 	public static CtMethod getMethod(CtElement ele) {
 	    while ( (ele != null) && !(ele instanceof CtMethod) ) 
 	    	ele = ele.getParent();
-            if ( ele != null ) {
+        if ( ele != null ) {
 	        CtMethod method = (CtMethod)ele;
-		return method;
-            }
-            return null;
+		    return method;
+        }
+        return null;
 	}
 	
   	public static CtCodeSnippetStatement getCodeSnippetStatement(AbstractProcessor processor, String codesnippet) {

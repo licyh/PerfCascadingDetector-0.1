@@ -42,10 +42,10 @@ public class AbsInvokeProcessor extends AbstractProcessor<CtAbstractInvocation> 
 		if (checker != null && !checker.isTarget(invokesig))
 			return;
 
-                CtMethod method = Util.getMethod(absinvoke);
-                if (method != null) {
-		        String methodsig = Util.getMethodSig(Util.getMethod(absinvoke));
-              		if (scopeChecker != null && !scopeChecker.isTarget(methodsig)) 
+        CtMethod method = Util.getMethod(absinvoke);
+        if (method != null) {
+        	String methodsig = Util.getMethodSig(method);
+        	if (scopeChecker != null && !scopeChecker.isTarget(methodsig)) 
 			      return;
 		}
 
