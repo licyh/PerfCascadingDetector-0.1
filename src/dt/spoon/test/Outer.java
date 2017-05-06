@@ -5,16 +5,31 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 
-
 public class Outer {
-	int a = 0;
-	int b = 0;
-	
-	public void methodA() {
-		File file = new File("xx");
-		Path path = Paths.get("yy", "fffff");
+
+	Thread eventHandlingThread = null;
 		
-	}
+		
+	    public void method() {
+	        this.eventHandlingThread = new java.lang.Thread() {
+	            public void run() {
+	                int event = 1;
+	                while ((!(java.lang.Thread.currentThread().isInterrupted()))) {
+	                    event = 2;
+	                    try {
+	                        event = 3;
+	                    } catch (java.lang.Throwable t) {
+	                    	System.out.println(("Returning, interrupted : " + t));
+	                        return ;
+	                    }
+	                }
+
+	            }
+	        };
+
+	    }
+		
+
 	
 	public void methodB() {
 		int k = 0;

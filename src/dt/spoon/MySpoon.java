@@ -27,7 +27,8 @@ public class MySpoon {
 	String srcClasspath;       //Source code's Classpath
 	Path spoonedDirPath;       //OUTPUT: spooned result 
 	Path dstDirPath;           //dest: copy from OUTPUT to dest 
-	
+
+	public static int loopcount = 0;
 
 	public static void main(String[] args) throws Exception {
 			

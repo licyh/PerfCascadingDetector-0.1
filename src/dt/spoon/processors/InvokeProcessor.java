@@ -44,12 +44,12 @@ public class InvokeProcessor extends AbstractProcessor<CtInvocation> {
 		if (checker != null && !checker.isTarget(invokesig)) return;
 
 
-                CtMethod method = Util.getMethod(invoke);
-                if (method != null) {
-                        String methodsig = Util.getMethodSig(Util.getMethod(invoke));
-                        if (scopeChecker != null && !scopeChecker.isTarget(methodsig)) 
-                              return;
-                }
+        CtMethod method = Util.getMethod(invoke);
+        if (method != null) {
+        	String methodsig = Util.getMethodSig(method);
+        	if (scopeChecker != null && !scopeChecker.isTarget(methodsig)) 
+        		return;
+        }
 
 
 		
