@@ -26,14 +26,14 @@ public class SpoonUtil {
 
 		// Add Processors
 		// for Loops
-		//MethodProcessor methodProcessor = new MethodProcessor();
-		//launcher.addProcessor(methodProcessor);
+		MethodProcessor methodProcessor = new MethodProcessor();
+		launcher.addProcessor(methodProcessor);
 		// for IOs
 		AbsInvokeProcessor absInvokeProcessor = new AbsInvokeProcessor();
 		launcher.addProcessor(absInvokeProcessor);
 		// for RPCs
-		//InvokeProcessor invokeProcessor = new InvokeProcessor();
-		//launcher.addProcessor(invokeProcessor);
+		InvokeProcessor invokeProcessor = new InvokeProcessor();
+		launcher.addProcessor(invokeProcessor);
 		
 		// Note: setArgs should be put at first, or will override all args 
                 /*
