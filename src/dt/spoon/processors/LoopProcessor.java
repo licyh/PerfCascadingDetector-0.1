@@ -4,7 +4,10 @@ import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.CtBlock;
 import spoon.reflect.code.CtCFlowBreak;
 import spoon.reflect.code.CtCodeSnippetStatement;
+import spoon.reflect.code.CtExpression;
+import spoon.reflect.code.CtLiteral;
 import spoon.reflect.code.CtLoop;
+import spoon.reflect.code.CtWhile;
 import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.visitor.filter.ReturnOrThrowFilter;
 import spoon.support.reflect.code.CtCommentImpl;
@@ -30,12 +33,22 @@ public class LoopProcessor extends AbstractProcessor<CtLoop> {
         	return;
         
         String methodsig = Util.getMethodSig(method);
-        if (scopeChecker != null && !scopeChecker.isTarget(methodsig)) 
-        	return;
+        //if (scopeChecker != null && !scopeChecker.isTarget(methodsig)) 
+        //	return;
 		
 		// Check if a normal loop that has loop body
 		CtBlock<?> bodyblock = (CtBlock<?>) loop.getBody();
 		if (bodyblock == null) return;   	 //like "while (x<= 0 && next());" or "for (xx);"
+		
+		// tmp filters - for "while (true) { return; } xxxxlog_loop_endxxxxx", couldn't insert after
+		if (loop instanceof CtWhile) {
+			CtExpression expr = ((CtWhile)loop).getLoopingExpression();
+			if (expr instanceof CtLiteral) {
+				if ( ((CtLiteral) expr).getValue().toString().equals("true") )
+					return;
+			}
+		}
+		
 		
 		String pos = loop.getPosition().toString();
 		System.out.println( "JX - INFO - checked loop - " + loop.getPosition().toString() );
