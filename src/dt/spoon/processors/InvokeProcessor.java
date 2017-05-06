@@ -6,9 +6,12 @@ import dt.spoon.checkers.RPCChecker;
 import dt.spoon.util.Util;
 import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.CtAbstractInvocation;
+import spoon.reflect.code.CtBlock;
 import spoon.reflect.code.CtCodeSnippetStatement;
+import spoon.reflect.code.CtExpression;
 import spoon.reflect.code.CtInvocation;
 import spoon.reflect.code.CtStatement;
+import spoon.reflect.declaration.CtElement;
 import spoon.reflect.declaration.CtExecutable;
 import spoon.reflect.reference.CtExecutableReference;
 
@@ -34,15 +37,24 @@ public class InvokeProcessor extends AbstractProcessor<CtInvocation> {
 		String invokeclass = executable.getDeclaringType().getQualifiedName();
 		String invokemethod = executable.getSimpleName();
 		
-		if (checker != null && !checker.isTarget(invokesig))
-			return;
-		System.out.println("JX - INFO - checked RPC: " + invokesig);
-                System.out.println("JX - INFO - checked RPC: " + invoke.getPosition().toString());
+		//if (checker != null && !checker.isTarget(invokesig)) return;
 		
+		//if (invokeclass.equals("java.lang.Object")) return;
+		
+		//System.out.println("JX - INFO - checked RPC: " + invokesig);
+        System.out.println("JX - INFO - checked RPC: " + invoke.getPosition().toString());
+        
 		// Main work
-		//CtStatement statement = (CtStatement)invoke;
-		invoke.insertBefore( Util.getCodeSnippetStatement(this, codeStr(invokesig)) );
-                //invoke.insertAfter( Util.getCodeSnippetStatement(this, "wwwyyy") );			
+        CtElement element = (CtElement)invoke;
+		//System.out.println("JX - CtElement: " + element);
+		while ( !(element.getParent() instanceof CtBlock) ) {
+			//System.out.println("JX - CtElement: " + element.getParent());
+			element = element.getParent();
+		}
+		if (element instanceof CtStatement) {
+			CtStatement statement = (CtStatement)element;
+			statement.insertBefore( Util.getCodeSnippetStatement(this, codeStr(invokesig)) );
+		}
 	}
 	
   	

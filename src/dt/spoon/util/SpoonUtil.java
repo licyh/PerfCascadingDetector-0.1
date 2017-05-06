@@ -29,11 +29,11 @@ public class SpoonUtil {
 		//MethodProcessor methodProcessor = new MethodProcessor();
 		//launcher.addProcessor(methodProcessor);
 		// for IOs
-		AbsInvokeProcessor absInvokeProcessor = new AbsInvokeProcessor();
-		launcher.addProcessor(absInvokeProcessor);
+		//AbsInvokeProcessor absInvokeProcessor = new AbsInvokeProcessor();
+		//launcher.addProcessor(absInvokeProcessor);
 		// for RPCs
-		//InvokeProcessor invokeProcessor = new InvokeProcessor();
-		//launcher.addProcessor(invokeProcessor);
+		InvokeProcessor invokeProcessor = new InvokeProcessor();
+		launcher.addProcessor(invokeProcessor);
 		
 		// Note: setArgs should be put at first, or will override all args 
                 /*
@@ -97,7 +97,7 @@ public class SpoonUtil {
 	}
 	
 	public static void spoon(Path inputPath, Path outputDirPath) {
-		spoon( inputPath, "", outputDirPath);
+		spoon( inputPath, ".", outputDirPath);
 	}
 	
 	
@@ -109,7 +109,7 @@ public class SpoonUtil {
 	}
 	
 	public static void spoon(Path inputPath) {
-		spoon( inputPath, "", Paths.get("spooned/") );
+		spoon( inputPath, ".", Paths.get("spooned/") );
 	}	
 	
 	
