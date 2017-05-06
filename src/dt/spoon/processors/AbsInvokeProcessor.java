@@ -11,6 +11,7 @@ import spoon.reflect.code.CtInvocation;
 import spoon.reflect.code.CtStatement;
 import spoon.reflect.declaration.CtElement;
 import spoon.reflect.declaration.CtExecutable;
+import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.reference.CtExecutableReference;
 
 
@@ -21,9 +22,11 @@ import spoon.reflect.reference.CtExecutableReference;
  */
 public class AbsInvokeProcessor extends AbstractProcessor<CtAbstractInvocation> {
 	
+	Checker scopeChecker = null;
 	Checker checker = null;
 	
 	public AbsInvokeProcessor() {
+		this.scopeChecker = new CommonChecker( "src/dt/spoon/res/mr-4813/scope.txt" );
 		this.checker = new CommonChecker( "src/dt/spoon/res/mr-4813/io.txt" );
 	}
 		
@@ -38,6 +41,10 @@ public class AbsInvokeProcessor extends AbstractProcessor<CtAbstractInvocation> 
 		
 		if (checker != null && !checker.isTarget(invokesig))
 			return;
+		String methodsig = Util.getMethodSig(Util.getMethod(absinvoke));
+		if (scopeChecker != null && !scopeChecker.isTarget(methodsig)) 
+			return;
+		
 		System.out.println("JX - INFO - checked IO: " + invokesig);
 		
 		// Main work
