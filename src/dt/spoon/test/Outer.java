@@ -12,7 +12,7 @@ public class Outer {
 		
 	    public void method() {
 	    	
-	    	
+	      for (int i = 0; i < 10; i++) {	
 	    	
 	        this.eventHandlingThread = new java.lang.Thread() {
 	            public void run() {
@@ -29,6 +29,7 @@ public class Outer {
 
 	            }
 	        };
+	      }
 	        
 	        while (true) {
 	    		int a = 0;
@@ -40,5 +41,11 @@ public class Outer {
 	
 	public void methodB() {
 		int k = 0;
+		
+
+	      do {
+	    	  int a = 0;
+	      } while (true);
+	      
 	}
 }

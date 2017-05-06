@@ -4,11 +4,15 @@ import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.CtBlock;
 import spoon.reflect.code.CtCFlowBreak;
 import spoon.reflect.code.CtCodeSnippetStatement;
+import spoon.reflect.code.CtDo;
 import spoon.reflect.code.CtExpression;
+import spoon.reflect.code.CtFor;
+import spoon.reflect.code.CtForEach;
 import spoon.reflect.code.CtLiteral;
 import spoon.reflect.code.CtLoop;
 import spoon.reflect.code.CtWhile;
 import spoon.reflect.declaration.CtMethod;
+import spoon.reflect.visitor.Filter;
 import spoon.reflect.visitor.filter.ReturnOrThrowFilter;
 import spoon.support.reflect.code.CtCommentImpl;
 import spoon.support.reflect.code.CtLocalVariableImpl;
@@ -41,8 +45,12 @@ public class LoopProcessor extends AbstractProcessor<CtLoop> {
 		if (bodyblock == null) return;   	 //like "while (x<= 0 && next());" or "for (xx);"
 		
 		// tmp filters - for "while (true) { return; } xxxxlog_loop_endxxxxx", couldn't insert after
-		if (loop instanceof CtWhile) {
-			CtExpression expr = ((CtWhile)loop).getLoopingExpression();
+		if (loop instanceof CtWhile || loop instanceof CtDo) {
+			CtExpression<Boolean> expr = null;
+			if (loop instanceof CtWhile)
+				expr = ((CtWhile)loop).getLoopingExpression();
+			else if (loop instanceof CtDo)
+				expr = ((CtDo)loop).getLoopingExpression();
 			if (expr instanceof CtLiteral) {
 				if ( ((CtLiteral) expr).getValue().toString().equals("true") )
 					return;
@@ -59,7 +67,8 @@ public class LoopProcessor extends AbstractProcessor<CtLoop> {
 		// Inside Loop
 		bodyblock.insertBegin( Util.getCodeSnippetStatement(this, codeStr(2,methodsig,MySpoon.loopcount,pos)) );
 		for ( CtCFlowBreak cflowbreak: loop.getElements(new ReturnOrThrowFilter()) ) {   //insert before "Return" and "Throw"
-			cflowbreak.insertBefore( Util.getCodeSnippetStatement(this, codeStr(3,methodsig,MySpoon.loopcount,pos)) );
+			if (method == Util.getMethod(cflowbreak))  // for removing "method{Loop1 {  new Class(){method{ return;}}  }}"
+				cflowbreak.insertBefore( Util.getCodeSnippetStatement(this, codeStr(3,methodsig,MySpoon.loopcount,pos)) );
 		}
 		
 		// After Loop			
@@ -103,8 +112,6 @@ public class LoopProcessor extends AbstractProcessor<CtLoop> {
   		return codestr;
   	}
 }
-
-
 
 
 
