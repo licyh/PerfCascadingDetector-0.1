@@ -1,5 +1,6 @@
 package dt.spoon.processors;
 
+import dt.spoon.MySpoon;
 import dt.spoon.checkers.Checker;
 import dt.spoon.checkers.CommonChecker;
 import dt.spoon.util.Util;
@@ -63,6 +64,7 @@ public class AbsInvokeProcessor extends AbstractProcessor<CtAbstractInvocation> 
 			statement.insertBefore( Util.getCodeSnippetStatement(this, codeStr(invokesig)) );
 		}
 			
+		++ MySpoon.iocount;
 	}
 	
   	

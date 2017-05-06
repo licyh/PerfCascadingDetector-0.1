@@ -29,6 +29,8 @@ public class MySpoon {
 	Path dstDirPath;           //dest: copy from OUTPUT to dest 
 
 	public static int loopcount = 0;
+	public static int iocount = 0;
+	public static int rpccount = 0; 
 
 	public static void main(String[] args) throws Exception {
 			
@@ -74,9 +76,17 @@ public class MySpoon {
 				SpoonUtil.spoon( javapath, srcClasspath, spoonedDirPath );
 				copySpooned( javapath );
 			}
+			summary();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	
+	public void summary() {
+		System.out.println("JX - INFO - processed loopcount = " + loopcount);
+		System.out.println("JX - INFO - processed iocount = " + iocount);
+		System.out.println("JX - INFO - processed rpccount = " + rpccount);
 	}
 	
 
