@@ -64,6 +64,7 @@ public class LoopAnalyzer {
 	public void analyzeLoops() {
 		
 		String prevPidtid = "xxx";
+		int num = 0;
 		
 		// Get all loop(begin, end)
 		for (int i = 0; i < nodelist.size(); i++) {
@@ -74,6 +75,9 @@ public class LoopAnalyzer {
 			if (!pidtid.equals(prevPidtid)) {
 				if (!stack.isEmpty()) {
 					System.out.println("JX - ERROR/WARN - !stack.isEmpty()");
+					System.out.println("JX - DEBUG - i=" + i + " stack.num=" + stack.size() );
+					for (int k = 0; k < stack.size(); k++)
+						System.out.println("JX - DEBUG - stack(" + k + "): " + nodelist.getNodeOPVAL(stack.get(k)) );
                     stack.clear();
 					//return;
 				}
@@ -82,15 +86,16 @@ public class LoopAnalyzer {
 			
 			if (opty.equals("LoopBegin")) {
 				stack.push(i);
-				System.out.println("JX - DEBUG - add: " + nodelist.getNodeOPVAL(i));
+				//System.out.println("JX - DEBUG - add: " + nodelist.getNodeOPVAL(i));
 			}
 			else if (opty.equals("LoopEnd")) {
-				System.out.println("JX - DEBUG - end: " + nodelist.getNodeOPVAL(i));
+				//System.out.println("JX - DEBUG - end: " + nodelist.getNodeOPVAL(i));
 				LoopInstance instance = new LoopInstance();
 				int beginIndex = stack.pop();
 				int endIndex = i;
 				
 				if ( nodelist.getNodeOPVAL(beginIndex).equals( nodelist.getNodeOPVAL012(endIndex) )) {
+					++num;
 					instance.identity = nodelist.getNodeOPVAL(beginIndex);
 					instance.beginIndex = beginIndex;
 					instance.endIndex = endIndex;
@@ -104,6 +109,7 @@ public class LoopAnalyzer {
 			}
 		}
 		
+		System.out.println("JX - DEBUG - num of instances = " + num);
 		
 	}
 	
