@@ -74,8 +74,10 @@ public class LoopAnalyzer {
 			if (!pidtid.equals(prevPidtid)) {
 				if (!stack.isEmpty()) {
 					System.out.println("JX - ERROR/WARN - !stack.isEmpty()");
-					return;
+                                        stack.clear();
+					//return;
 				}
+                                prevPidtid = pidtid;
 			}
 			
 			if (opty.equals("LoopBegin")) {
