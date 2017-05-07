@@ -3,13 +3,11 @@ package dt.spoon.processors;
 import dt.spoon.MySpoon;
 import dt.spoon.checkers.Checker;
 import dt.spoon.checkers.CommonChecker;
-import dt.spoon.checkers.RPCChecker;
 import dt.spoon.util.Util;
 import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.CtAbstractInvocation;
 import spoon.reflect.code.CtBlock;
 import spoon.reflect.code.CtCodeSnippetStatement;
-import spoon.reflect.code.CtExpression;
 import spoon.reflect.code.CtInvocation;
 import spoon.reflect.code.CtStatement;
 import spoon.reflect.declaration.CtElement;
@@ -19,48 +17,43 @@ import spoon.reflect.reference.CtExecutableReference;
 
 
 /**
- * Insert RPCs
+ * Insert IOs
  * For many kinds of invocations: ie, CtConstructorCall, CtInvocation, CtNewClass
  * @author xincafe
  */
-public class InvokeProcessor extends AbstractProcessor<CtInvocation> {
+public class IOAbsInvokeProcessor extends AbstractProcessor<CtAbstractInvocation> {
 	
 	Checker scopeChecker = null;
 	Checker checker = null;
 	
-	public InvokeProcessor() {
+	public IOAbsInvokeProcessor() {
 		this.scopeChecker = new CommonChecker( "src/dt/spoon/res/mr-4813/scope.txt" );
-		this.checker = new RPCChecker( "src/dt/spoon/res/mr-4813/rpc.txt" );
+		this.checker = new CommonChecker( "src/dt/spoon/res/mr-4813/io.txt" );
 	}
 		
-	
-	public void process (CtInvocation invoke) {
+	/**
+	 * for I/Os
+	 */
+	public void process (CtAbstractInvocation absinvoke) {
 		
-		CtExecutableReference executable = invoke.getExecutable();
+		CtExecutableReference executable = absinvoke.getExecutable();
+		//String sig = executable.getSignature();   //like JX - 1 - java.io.File#File(java.lang.String) java.io.PrintStream#println(java.lang.String)
 		String invokesig = executable.getDeclaringType().getQualifiedName() + "." + executable.getSimpleName();
-		String invokeclass = executable.getDeclaringType().getQualifiedName();
-		String invokemethod = executable.getSimpleName();
 		
-		
-		if (checker != null && !checker.isTarget(invokesig)) return;
+		if (checker != null && !checker.isTarget(invokesig))
+			return;
 
-
-        CtMethod method = Util.getMethod(invoke);
+        CtMethod method = Util.getMethod(absinvoke);
         if (method != null) {
         	String methodsig = Util.getMethodSig(method);
         	if (scopeChecker != null && !scopeChecker.isTarget(methodsig)) 
-        		return;
-        }
+			      return;
+		}
 
-
+		System.out.println("JX - INFO - checked IO: " + invokesig);
 		
-		//if (invokeclass.equals("java.lang.Object")) return;
-		
-		//System.out.println("JX - INFO - checked RPC: " + invokesig);
-        System.out.println("JX - INFO - checked RPC: " + invoke.getPosition().toString());
-        
 		// Main work
-        CtElement element = (CtElement)invoke;
+        CtElement element = (CtElement)absinvoke;
 		//System.out.println("JX - CtElement: " + element);
 		while ( !(element.getParent() instanceof CtBlock) ) {
 			//System.out.println("JX - CtElement: " + element.getParent());
@@ -70,15 +63,15 @@ public class InvokeProcessor extends AbstractProcessor<CtInvocation> {
 			CtStatement statement = (CtStatement)element;
 			statement.insertBefore( Util.getCodeSnippetStatement(this, codeStr(invokesig)) );
 		}
-		
-		++ MySpoon.rpccount;
+			
+		++ MySpoon.iocount;
 	}
 	
   	
   	public String codeStr(String sig) {
   		String codestr = "";
 		//codestr = "_DM_Log.log_LoopPrint( \"loop_\" + " + loopindex + " + \"_\" + loop" + loopindex + ");";
-		codestr = "LogClass._DM_Log.log_RPC("        // jx - looks like _DM_Log.log_LoopPrint("xx.xx.xx.yy_loop?_"+loop?); 
+		codestr = "LogClass._DM_Log.log_IO("        // jx - looks like _DM_Log.log_LoopPrint("xx.xx.xx.yy_loop?_"+loop?); 
 				+ "\"" + sig + "\""
 				+ ");";
   		return codestr;

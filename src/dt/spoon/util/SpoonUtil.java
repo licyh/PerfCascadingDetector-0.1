@@ -3,10 +3,10 @@ package dt.spoon.util;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import dt.spoon.processors.AbsInvokeProcessor;
-import dt.spoon.processors.InvokeProcessor;
+import dt.spoon.processors.IOAbsInvokeProcessor;
 import dt.spoon.processors.LoopProcessor;
 import dt.spoon.processors.MethodProcessor;
+import dt.spoon.processors.RPCInvokeProcessor;
 import spoon.Launcher;
 
 
@@ -33,11 +33,11 @@ public class SpoonUtil {
 		//MethodProcessor methodProcessor = new MethodProcessor();
 		//launcher.addProcessor(methodProcessor);
 		// for IOs
-		AbsInvokeProcessor absInvokeProcessor = new AbsInvokeProcessor();
-		launcher.addProcessor(absInvokeProcessor);
+		IOAbsInvokeProcessor ioProcessor = new IOAbsInvokeProcessor();
+		launcher.addProcessor(ioProcessor);
 		// for RPCs
-		InvokeProcessor invokeProcessor = new InvokeProcessor();
-		launcher.addProcessor(invokeProcessor);
+		RPCInvokeProcessor rpcProcessor = new RPCInvokeProcessor();
+		launcher.addProcessor(rpcProcessor);
 		
 		// Note: setArgs should be put at first, or will override all args 
                 /*
