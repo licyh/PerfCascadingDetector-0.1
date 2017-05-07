@@ -1,5 +1,6 @@
 package dt.da;
 
+import dt.da.xml.TexttoXml;
 
 public class Analysis {
 	
@@ -10,13 +11,13 @@ public class Analysis {
 		}
 		
 		String inputDir = args[0];               //inputDir, like  ~/JXCascading-detector/input/MR-4813  // the directory containing log files to process
-		String xmlDir = inputDir + "-xml";                                    	
 	
 		// transform inputDir to xmlDir
 		String[] argv = { inputDir, null, null };
 		TexttoXml.main( argv );
 		
 		// handle xmlDir
+		String xmlDir = inputDir + "-xml";
 		LoopAnalyzer loopAnalyzer = new LoopAnalyzer( xmlDir );
 		loopAnalyzer.doWork();
 	}

@@ -12,9 +12,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
-import dt.spoon.processors.AbsInvokeProcessor;
 import dt.spoon.processors.CatchProcessor;
-import dt.spoon.processors.InvokeProcessor;
 import dt.spoon.processors.LoopProcessor;
 import dt.spoon.processors.MethodProcessor;
 import dt.spoon.util.SpoonUtil;

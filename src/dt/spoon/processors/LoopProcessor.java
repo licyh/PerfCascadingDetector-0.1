@@ -114,4 +114,15 @@ public class LoopProcessor extends AbstractProcessor<CtLoop> {
 }
 
 
+/*
+class LoopFilter implements Filter<CtLoop> {
+	public boolean matches(CtLoop loop) {
+		return ((loop instanceof CtFor) 
+				|| (loop instanceof CtWhile)
+				|| (loop instanceof CtDo)
+				|| (loop instanceof CtForEach)
+				);
+	}
+}
+*/
 
