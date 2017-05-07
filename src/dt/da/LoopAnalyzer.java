@@ -74,16 +74,18 @@ public class LoopAnalyzer {
 			if (!pidtid.equals(prevPidtid)) {
 				if (!stack.isEmpty()) {
 					System.out.println("JX - ERROR/WARN - !stack.isEmpty()");
-                                        stack.clear();
+                    stack.clear();
 					//return;
 				}
-                                prevPidtid = pidtid;
+                prevPidtid = pidtid;
 			}
 			
 			if (opty.equals("LoopBegin")) {
 				stack.push(i);
+				System.out.println("JX - DEBUG - add: " + nodelist.getNodeOPVAL(i));
 			}
 			else if (opty.equals("LoopEnd")) {
+				System.out.println("JX - DEBUG - end: " + nodelist.getNodeOPVAL(i));
 				LoopInstance instance = new LoopInstance();
 				int beginIndex = stack.pop();
 				int endIndex = i;
