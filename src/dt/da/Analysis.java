@@ -13,7 +13,7 @@ public class Analysis {
 		String inputDir = args[0];               //inputDir, like  ~/JXCascading-detector/input/MR-4813  // the directory containing log files to process
 	
 		// transform inputDir to xmlDir
-		String[] argv = { inputDir, null, null };
+		String[] argv = { inputDir, "null", "null" };
 		TexttoXml.main( argv );
 		
 		// handle xmlDir
