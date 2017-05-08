@@ -325,9 +325,9 @@ public class Transformer implements ClassFileTransformer {
           // end-test
           for (int i = 0; i < loops.length; i++) {
         	  int linenumber = loops[i];         //jx: some particular examples: "do { .." OR "while (true) ( .." would became insert inside
-        	  int actualline = method.insertAt(linenumber, false, "_DM_Log.log_LoopBegin( \"xx\" );");
+        	  int actualline = method.insertAt(linenumber, false, "LogClass._DM_Log.log_LoopBegin( \"xx\" );");
         	  if ( linenumber == actualline )    //some particular examples: "do { .." OR "while (true) ( .." would became insert at next line than normal
-        		  method.insertAt( linenumber, "_DM_Log.log_LoopBegin( \"xx\" );" );
+        		  method.insertAt( linenumber, "LogClass._DM_Log.log_LoopBegin( \"xx\" );" );
         	  else {
         		  // TODO - please see
         		  System.err.println( "JX - WARN - cannot insert at " + loops[i] + " (actual:" + actualline + ") for " + methodsig );
@@ -362,7 +362,7 @@ public class Transformer implements ClassFileTransformer {
           
           // insert after
           for (int i = 0; i < loops.length; i++) {
-        	  method.insertAfter( "_DM_Log.log_LoopPrint( \"loop_\" + " + i + " + \"_\" + loop" + i + ");" );
+        	  method.insertAfter( "LogClass._DM_Log.log_LoopPrint( \"loop_\" + " + i + " + \"_\" + loop" + i + ");" );
           }  
           */        
       }//end-outer for

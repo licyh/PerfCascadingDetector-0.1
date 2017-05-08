@@ -111,7 +111,26 @@ class MapReduceTransformer extends Transformer {
       return;
     }
 
-    String logClass = "LogClass._DM_Log";
+
+    /*if (method == null) {
+      System.out.println("method is null");
+    }
+    else if (method.getMethodInfo() == null) {
+      System.out.println("m: " + methodName + "getMEthodInfo is null");
+    }
+    else if (method.getMethodInfo().getConstPool() == null) {
+      System.out.println("m: " + methodName + "getConstpool is null");
+    }
+    else if (method.getMethodInfo().getCodeAttribute() == null) {
+      System.out.println("m: " + methodName + "getCodeAtt is null");
+      return;
+    }
+    else if (method.getMethodInfo().getCodeAttribute().iterator() == null) {
+      System.out.println("m: " + methodName + "iterator is null");
+    }*/
+
+
+    String logClass = "_DM_Log";
     String logFuncPre = "log";
 
     classUtil.setClassPool(method);
@@ -188,7 +207,20 @@ class MapReduceTransformer extends Transformer {
       //insert eventEnter & eventExit log
           methodUtil.insertCallInstBefore(logClass, eventProcEnterLog, 1);
           methodUtil.insertCallInstAfter(logClass, eventProcExitLog, 1);
+      /*
+      // heap read
+          for (API apiI : apiRead) {
+            methodUtil.insertCallInst(apiI.className(), apiI.methodName(), apiI.paraNumber(), logClass, heapReadLog, classUtil);
+      		}
 
+      // heap write
+          for (API apiI : apiWrite) {
+            methodUtil.insertCallInst(apiI.className(), apiI.methodName(), apiI.paraNumber(), logClass, heapWriteLog, classUtil);
+      		}
+
+          // primitive type static/field read/write. 
+          methodUtil.insertGetPutInst(logClass, heapReadLog, logClass, heapWriteLog);
+      */
     	}else
 	methodUtil.insertCallInstBefore(logClass, eventCreateLog, 42);
     }
@@ -208,12 +240,40 @@ class MapReduceTransformer extends Transformer {
       methodUtil.insertCallInstBefore(logClass, msgProcEnterLog, rpc_flag);
       methodUtil.insertCallInstAfter(logClass, msgProcExitLog, rpc_flag);
 
+      /*
+      // heap read 
+      for (API apiI : apiRead) {
+        methodUtil.insertCallInst(apiI.className(), apiI.methodName(), apiI.paraNumber(), logClass, heapReadLog, classUtil);
+      }
+
+      // heap write 
+      for (API apiI : apiWrite) {
+        methodUtil.insertCallInst(apiI.className(), apiI.methodName(), apiI.paraNumber(), logClass, heapWriteLog, classUtil);
+      }
+
+      // primitive type static/field read/write.
+      methodUtil.insertGetPutInst(logClass, heapReadLog, logClass, heapWriteLog);
+      */
     }
 
     if (injectFlag == false && calleeInfo.isCallee(className, methodName, method.getSignature())) {
     //  if (injectFlag == false && methodName.contains("init") == false && methodInfo.isConstructor() == false &&  methodInfo.isStaticInitializer() == false) {
       injectFlag = true;
+      /*
+      // heap read 
+      for (API apiI : apiRead) {
+        methodUtil.insertCallInst(apiI.className(), apiI.methodName(), apiI.paraNumber(), logClass, heapReadLog, classUtil);
+      }
 
+      // heap write 
+      for (API apiI : apiWrite) {
+        methodUtil.insertCallInst(apiI.className(), apiI.methodName(), apiI.paraNumber(), logClass, heapWriteLog, classUtil);
+      }
+
+      // primitive type static/field read/write. 
+      methodUtil.insertGetPutInst(logClass, heapReadLog, logClass, heapWriteLog);
+      //System.out.println("AAAA Callee cc: " + className + " " + methodName + " " + method.getSignature());
+      */
     }
 
     /* for thread creation */
@@ -246,6 +306,164 @@ class MapReduceTransformer extends Transformer {
     methodUtil.insertRWLock(logClass, rWLockCreateLog);
     //end-Added
     
+    
+    /*Instruction i = new Instruction();
+    i.setMethod(method);
+    ConstPool constPool = methodInfo.getConstPool();
+    CodeAttribute codeAttr = methodInfo.getCodeAttribute();
+    CodeIterator codeIter = codeAttr.iterator();
+    try {
+      while (codeIter.hasNext()) {
+        int cur = codeIter.next();
+        i.setPos(cur);
+        if (i.isInvokeinterface() == true ||
+            i.isInvokevirtual() == true) {
+          InvokeInst invokeI = new InvokeInst(i);
+          if (invokeI.calledClass().contains("ClientServiceDelegate")) {
+            //other classes are IRC or un-wanted classes
+            if (invokeI.calledMethod().equals("invoke")) {
+              System.out.println("EEEE invoke: " + invokeI.calledMethodType());
+              System.out.println("EEEE invoke: " + method.getName().toString() + " in cc: " + method.getDeclaringClass().getName().toString());
+
+            }
+          }
+        }
+      }
+    } catch (Exception e) {}*/
+
+    /*else if (methodName.equals("launch")) {
+      System.out.println("HP launch function.");
+      Instruction i = new Instruction();
+      i.setMethod(method);
+
+      ConstPool constPool = methodInfo.getConstPool();
+      CodeAttribute codeAttr = methodInfo.getCodeAttribute();
+      CodeIterator codeIter = codeAttr.iterator();
+      try {
+        while (codeIter.hasNext()) {
+          int cur = codeIter.next();
+          i.setPos(cur);
+          if (i.isInvokeinterface() == true) {
+            InvokeInst invokeI = new InvokeInst(i);
+            if (invokeI.calledMethod().equals("startContainer")) {
+              System.out.println(" HP> " + invokeI.calledClass() + " " + invokeI.calledMethod() + " " + invokeI.calledMethodType());
+              String type = invokeI.calledMethodType();
+              String paraType = type.substring(type.indexOf("(") + 1, type.indexOf(")"));
+              System.out.println(" HP > > " + paraType.substring(1, paraType.length()-1));
+
+              paraType = paraType.substring(1, paraType.length()-1);
+              String paraClass = paraType.replaceAll("/", ".");
+              System.out.println(" HP > > " + paraClass);
+
+              Bytecode code = new Bytecode(constPool);
+              int tmpLocal = methodUtil.allocLocal(1);
+              code.addAstore(tmpLocal);
+              code.addAload(tmpLocal);
+              CtClass stream = classUtil.getClassPool().get("java.lang.System");
+              code.addGetstatic(stream, "out", "Ljava/io/PrintStream;");
+
+              code.addAload(tmpLocal);
+              code.addInvokevirtual("java/lang/Object", "toString", "()Ljava/lang/String;");
+              code.addInvokevirtual("java/lang/String", "hashCode", "()I");
+              code.addInvokevirtual("java/io/PrintStream", "println", "(I)V");
+
+
+              try {
+                int loc = codeIter.insertExAt(cur, code.get());
+                codeIter.insert(code.getExceptionTable(), loc);
+                methodInfo.rebuildStackMapIf6(method.getDeclaringClass().getClassPool(),
+                                method.getDeclaringClass().getClassFile2());
+              } catch (BadBytecode e) {
+                e.printStackTrace();
+              }
+            }
+          }
+        }
+      } catch (Exception e) { e.printStackTrace(); }
+    }*/
+
+    /*else if (methodName.equals("startContainer") &&
+             className.equals("org.apache.hadoop.yarn.server.nodemanager.containermanager.ContainerManagerImpl")) {
+      System.out.println(" HP > method: " + methodName + "; CC: " + className);
+      String str = "System.out.println(\"HP AAA>> \" + $1.toString().hashCode());";
+      try {
+        method.insertBefore(str);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }*/
+    //else if ( paras != null && paras.length == 1 && paras[0].getName().toString().equals("org.apache.hadoop.yarn.api.protocolrecords.StartContainerRequest")) {
+    /*else if ( paras != null && paras.length == 1 && rpcRequest.contains(paras[0].getName().toString())) {
+      System.out.println("HP >> RPC function: " + methodName + " in CC: " + className);
+      System.out.println("HP >>> RPC function para: " + paras[0].getName().toString());
+      //insert RPCEnter log
+      String rpcEnterLogFunc = logFuncPre + "_" + LogFunc.OPTYPE.MsgProcEnter;
+      methodUtil.insertCallInstBefore(logClass, rpcEnterLogFunc);
+
+      //insert RPCExit log
+      String rpcExitLogFunc = logFuncPre + "_" + LogFunc.OPTYPE.MsgProcExit;
+      methodUtil.insertCallInstAfter(logClass, rpcExitLogFunc);
+    }*/
+
+
+
+
+
+    /* RPC function:
+     * 1. heap read
+     * 2. heap write
+     */
+
+    /* for all functions:
+     * 1. add ThdCreate
+     * 2. add ThdJoin
+     */
+
+
+
+
+
+    //
+    //methodUtil.insertHeapCallInst(classUtil, 2);
+    //methodUtil.print();
+
+    /*if (method.getName().equals("main")) {
+      Instruction i = new Instruction();
+      i.setMethod(method);
+
+      MethodInfo methodInfo = method.getMethodInfo();
+      CodeAttribute codeAttr = methodInfo.getCodeAttribute();
+      CodeIterator codeIter = codeAttr.iterator();
+
+      try {
+        while (codeIter.hasNext()) {
+          int pos = codeIter.next();
+          i.setPos(pos);
+
+          System.out.println(i.opcode());
+
+          InstructionPrinter ip = new InstructionPrinter(System.out);
+          ConstPool pool = methodInfo.getConstPool();
+          System.out.println(ip.instructionString(codeIter, pos, pool));
+
+          if (i.isLoad() == true) {
+            LoadInst loadI = new LoadInst(i);
+            System.out.println(" > " + loadI.toString());
+          }
+
+          if (i.isInvokevirtual() == true) {
+            InvokeInst invokeI = new InvokeInst(i);
+            System.out.println(" > " + invokeI.calledClass() + " " + invokeI.calledMethod() + " " + invokeI.calledMethodType());
+            if (invokeI.isCalledThreadClass(option.getValue("s")) == true) {
+               if (invokeI.calledMethod().equals("start")) {
+                 System.out.println(" > > Yes");
+               }
+            }
+          }
+        }
+      } catch (Exception e) { e.printStackTrace(); }
+    }*/
+
   }
 
 }

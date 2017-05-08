@@ -248,6 +248,30 @@
                 </jar>
         </target>
 
+	
+	    <!--tmp jar-dm for mr-4576 -->
+        <target name="jar-dm-mr-4576" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
+            <jar jarfile="${build.lib}/MR_DM.jar">
+                    <fileset dir="${build.classes}" includes="dm/**/*.class" />
+                    <fileset dir="${build.classes}" includes="com/*.class" />
+                    <manifest>
+                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
+                            <attribute name="Premain-Class" value="dm.MapReduceDM" />
+                    </manifest>
+                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
+                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
+                    <zipfileset dir="${src.dm.dir}" includes="res/mr-4576/api.txt" fullpath="resource/api.txt"/>
+                    <zipfileset dir="${src.dm.dir}" includes="res/mr-4576/mr_rpc.txt" fullpath="resource/mr_rpc.txt"/>
+                    <zipfileset dir="${src.dm.dir}" includes="res/mr-4576/mr_rpc_v1.txt" fullpath="resource/mr_rpc_v1.txt"/>
+            		<zipfileset dir="${src.dm.dir}" includes="res/mr-4576/mr_callee.txt" fullpath="resource/mr_callee.txt"/>
+                    <zipfileset dir="${src.dm.dir}" includes="res/mr-4576/targetlocations" fullpath="resource/targetlocations"/>
+            	    <zipfileset dir="${src.dm.dir}" includes="res/mr-4576/targetinstructions" fullpath="resource/targetinstructions"/>
+            		<zipfileset dir="${src.dm.dir}" includes="res/mr-4576/largelooplocations" fullpath="resource/largelooplocations"/>
+            	    <zipfileset dir="${src.dm.dir}" includes="res/mr-4576/largeloopinstructions" fullpath="resource/largeloopinstructions"/>
+            	    <zipfileset dir="${src.dm.dir}" includes="res/mr-4576/looplocations" fullpath="resource/looplocations"/>
+            </jar>
+    	</target>	
+	
         	
         	
         <!--JX - the following are not used for now -->	
