@@ -87,7 +87,7 @@ public class LoopAnalyzer {
 			if (!pidtid.equals(prevPidtid)) {
 				if (!stack.isEmpty()) {
 					System.out.println("JX - WARN - !stack.isEmpty(), that should be the beginning of the thread without exiting correctly"
-							+ "maybe all of them are 'while(xx){ wait; }', I varified the most");
+							+ ", maybe all of them are 'while(xx){ wait; }', I varified the most");
 					/*
 					System.out.println("JX - DEBUG - i=" + i + " stack.num=" + stack.size() );
 					for (int k = 0; k < stack.size(); k++)

@@ -1,4 +1,5 @@
 //prefixes       org.apache.hadoop.fs.  org.apache.hadoop.security.
+org.apache.hadoop.fs.
 org.apache.hadoop.hdfs.
 
 //prefixes   #types < 953
