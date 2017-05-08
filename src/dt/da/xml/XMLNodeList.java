@@ -139,7 +139,7 @@ public class XMLNodeList extends ArrayList {
     	String opval = e.getElementsByTagName("OPVAL").item(0).getTextContent();
     	return opval.split("_")[3]; 
     }
-    
+   
     
     public String getNodeOPVAL012(int index) {   
     	return getNodeOPVAL012( nodelist.get(index) );
@@ -150,6 +150,15 @@ public class XMLNodeList extends ArrayList {
     	return opval.substring(0, opval.lastIndexOf('_')); 
     }
     
+    
+    public String getNodeOPVALn(int index) {   
+    	return getNodeOPVALn( nodelist.get(index) );
+    }
+    public String getNodeOPVALn(Node node) {   
+    	Element e = (Element) node;
+    	String opval = e.getElementsByTagName("OPVAL").item(0).getTextContent();
+    	return opval.substring(opval.lastIndexOf('_')+1); 
+    }
     
     
     // return "PID"+"OPVAL0" for 'lock' nodes, especially for r/w locks
