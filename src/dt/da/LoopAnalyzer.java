@@ -108,6 +108,8 @@ public class LoopAnalyzer {
 				int endIndex = i;              //LoopEnd
 				if ( nodelist.getNodeOPVAL(beginIndex).equals( nodelist.getNodeOPVAL012(endIndex) )) {
 					String identity = nodelist.getNodeOPVAL(beginIndex);
+					System.out.println("JX - DEBUG - *" + nodelist.getNodeOPVAL(endIndex) + "*" );
+					System.out.println("JX - DEBUG - *" + nodelist.getNodeOPVAL3(endIndex) + "*" );
 					int iterations = Integer.parseInt( nodelist.getNodeOPVAL3(endIndex) );
 					LoopInstance instance = new LoopInstance(identity, beginIndex, endIndex, iterations);
 					instances.add(instance);
