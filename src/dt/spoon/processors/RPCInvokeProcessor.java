@@ -62,7 +62,9 @@ public class RPCInvokeProcessor extends AbstractProcessor<CtInvocation> {
         
 		// Main work
         CtElement element = (CtElement)invoke;
-		//System.out.println("JX - CtElement: " + element);
+        if ( !Util.isInBlock(element) )     //maybe inside a Field
+        	return;
+        
 		while ( !(element.getParent() instanceof CtBlock) ) {
 			//System.out.println("JX - CtElement: " + element.getParent());
 			element = element.getParent();
