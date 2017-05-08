@@ -1,2 +1,0 @@
-org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter commitJob 302 	LargeLoopBegin 
-org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter commitJob 303  	LargeLoopCenter
