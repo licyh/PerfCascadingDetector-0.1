@@ -71,9 +71,9 @@ public class RPCInvokeProcessor extends AbstractProcessor<CtInvocation> {
 		if ( Util.canInsertBefore(statement) ) {
 			statement.insertBefore( Util.getCodeSnippetStatement(this, codeStr(invokesig,pos)) );
 		}
-		//else {
-		//	statement.insertAfter( Util.getCodeSnippetStatement(this, codeStr(invokesig,pos)) );
-		//}
+		else {
+			statement.insertAfter( Util.getCodeSnippetStatement(this, codeStr(invokesig,pos)) );
+		}
 		
 		++ MySpoon.rpccount;
 	}
