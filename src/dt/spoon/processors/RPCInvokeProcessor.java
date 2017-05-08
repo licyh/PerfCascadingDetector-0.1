@@ -51,20 +51,18 @@ public class RPCInvokeProcessor extends AbstractProcessor<CtInvocation> {
         	if (scopeChecker != null && !scopeChecker.isTarget(methodsig)) 
         		return;
         }
-
-
-		
+        
 		//if (invokeclass.equals("java.lang.Object")) return;
+        
+        CtElement element = (CtElement)invoke;
+        if ( !Util.isInBlock(element) )     //maybe inside a Field
+        	return;
 		
-		//System.out.println("JX - INFO - checked RPC: " + invokesig);
+		
         String pos = invoke.getPosition().toString();
         System.out.println("JX - INFO - checked RPC: " + invokesig + "_" + pos);
         
 		// Main work
-        CtElement element = (CtElement)invoke;
-        if ( !Util.isInBlock(element) )     //maybe inside a Field
-        	return;
-        
 		while ( !(element.getParent() instanceof CtBlock) ) {
 			//System.out.println("JX - CtElement: " + element.getParent());
 			element = element.getParent();

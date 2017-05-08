@@ -140,11 +140,11 @@ public class XMLNodeList extends ArrayList {
     	return opval.split("_")[3]; 
     }
    
-    
-    public String getNodeOPVAL012(int index) {   
-    	return getNodeOPVAL012( nodelist.get(index) );
+    // "0n_1" means 0~n-1
+    public String getNodeOPVAL0n_1(int index) {   
+    	return getNodeOPVAL0n_1( nodelist.get(index) );
     }
-    public String getNodeOPVAL012(Node node) {   
+    public String getNodeOPVAL0n_1(Node node) {   
     	Element e = (Element) node;
     	String opval = e.getElementsByTagName("OPVAL").item(0).getTextContent();
     	return opval.substring(0, opval.lastIndexOf('_')); 

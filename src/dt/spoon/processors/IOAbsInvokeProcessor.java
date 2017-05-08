@@ -50,15 +50,14 @@ public class IOAbsInvokeProcessor extends AbstractProcessor<CtAbstractInvocation
 			      return;
 		}
 
+		CtElement element = (CtElement)absinvoke;
+        if ( !Util.isInBlock(element) )     //maybe inside a Field
+        	return;   
         
         String pos = absinvoke.getPosition().toString();
 		System.out.println("JX - INFO - checked IO: " + invokesig + "_" + pos);
 		
 		// Main work
-		CtElement element = (CtElement)absinvoke;
-        if ( !Util.isInBlock(element) )     //maybe inside a Field
-        	return;        
-        
 		while ( !(element.getParent() instanceof CtBlock) ) {
 			//System.out.println("JX - CtElement: " + element.getParent());
 			element = element.getParent();

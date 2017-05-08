@@ -106,7 +106,7 @@ public class LoopAnalyzer {
 				//System.out.println("JX - DEBUG - end: " + nodelist.getNodeOPVAL(i));
 				int beginIndex = stack.pop();  //LoopBegin
 				int endIndex = i;              //LoopEnd
-				if ( nodelist.getNodeOPVAL(beginIndex).equals( nodelist.getNodeOPVAL012(endIndex) )) {
+				if ( nodelist.getNodeOPVAL(beginIndex).equals( nodelist.getNodeOPVAL0n_1(endIndex) )) {
 					String identity = nodelist.getNodeOPVAL(beginIndex);
 					//System.out.println("JX - DEBUG - *" + nodelist.getNodeOPVAL(endIndex) + "*" );
 					//System.out.println("JX - DEBUG - *" + nodelist.getNodeOPVAL3(endIndex) + "*" );
