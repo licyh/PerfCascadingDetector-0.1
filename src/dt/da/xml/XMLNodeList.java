@@ -155,7 +155,7 @@ public class XMLNodeList extends ArrayList {
     	return getNodeOPVALn( nodelist.get(index) );
     }
     public String getNodeOPVALn(Node node) {   
-    	Element e = (Element) node;
+    	Element e = (Element) node;   
     	String opval = e.getElementsByTagName("OPVAL").item(0).getTextContent();
     	return opval.substring(opval.lastIndexOf('_')+1); 
     }

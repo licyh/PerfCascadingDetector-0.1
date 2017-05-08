@@ -35,7 +35,7 @@ public class LoopInstance {
 		int iosForNewIteration = -1;
 		for (int i = beginIndex; i <= endIndex; i++) {
 			String opty = nodelist.getNodeOPTY(i);
-			String opval = nodelist.getNodeOPTY(i);
+			String opval = nodelist.getNodeOPVAL(i);
 			if (opty.equals("LoopCenter") && opval.equals(identity)) {
 				realIterations ++;
 				if (iosForNewIteration > 0)
