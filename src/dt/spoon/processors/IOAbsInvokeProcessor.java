@@ -62,9 +62,12 @@ public class IOAbsInvokeProcessor extends AbstractProcessor<CtAbstractInvocation
 			//System.out.println("JX - CtElement: " + element.getParent());
 			element = element.getParent();
 		}
-		if (element instanceof CtStatement) {
-			CtStatement statement = (CtStatement)element;
+		CtStatement statement = (CtStatement)element;
+		if ( Util.canInsertBefore(statement) ) {
 			statement.insertBefore( Util.getCodeSnippetStatement(this, codeStr(invokesig,pos)) );
+		}
+		else {
+			statement.insertAfter( Util.getCodeSnippetStatement(this, codeStr(invokesig,pos)) );
 		}
 			
 		++ MySpoon.iocount;

@@ -7,35 +7,22 @@ import java.nio.file.Paths;
 
 public class Outer {
 
-	Thread eventHandlingThread = null;
+	int intfield = 0;
+	
+	public Outer() {
+		this(5);
+	}
+	
+	public Outer(int intfield) {
 		
+	}
+	
 		
-	    public void method() {
-	    	
-	      for (int i = 0; i < 10; i++) {	
-	    	
-	        this.eventHandlingThread = new java.lang.Thread() {
-	            public void run() {
-	                int event = 1;
-	                while ((!(java.lang.Thread.currentThread().isInterrupted()))) {
-	                    event = 2;
-	                    try {
-	                        event = 3;
-	                    } catch (java.lang.Throwable t) {
-	                    	System.out.println(("Returning, interrupted : " + t));
-	                        return ;
-	                    }
-	                }
+    public void method() {
+    	
+     
 
-	            }
-	        };
-	      }
-	        
-	        while (true) {
-	    		int a = 0;
-	    	}
-
-	    }
+    }
 		
 
 	
