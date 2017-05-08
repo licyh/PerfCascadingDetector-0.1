@@ -65,7 +65,7 @@ public class IOAbsInvokeProcessor extends AbstractProcessor<CtAbstractInvocation
 		CtStatement statement = (CtStatement)element;
 		if ( Util.canInsertBefore(statement) ) {
 			statement.insertBefore( Util.getCodeSnippetStatement(this, codeStr(invokesig,pos)) );
-                }
+        }
 		else {
 			statement.insertAfter( Util.getCodeSnippetStatement(this, codeStr(invokesig,pos)) );
 		}
