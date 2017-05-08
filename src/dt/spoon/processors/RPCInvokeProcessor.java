@@ -57,7 +57,8 @@ public class RPCInvokeProcessor extends AbstractProcessor<CtInvocation> {
 		//if (invokeclass.equals("java.lang.Object")) return;
 		
 		//System.out.println("JX - INFO - checked RPC: " + invokesig);
-        System.out.println("JX - INFO - checked RPC: " + invoke.getPosition().toString());
+        String pos = invoke.getPosition().toString();
+        System.out.println("JX - INFO - checked RPC: " + invokesig + "_" + pos);
         
 		// Main work
         CtElement element = (CtElement)invoke;
@@ -68,18 +69,18 @@ public class RPCInvokeProcessor extends AbstractProcessor<CtInvocation> {
 		}
 		if (element instanceof CtStatement) {
 			CtStatement statement = (CtStatement)element;
-			statement.insertBefore( Util.getCodeSnippetStatement(this, codeStr(invokesig)) );
+			statement.insertBefore( Util.getCodeSnippetStatement(this, codeStr(invokesig,pos)) );
 		}
 		
 		++ MySpoon.rpccount;
 	}
 	
   	
-  	public String codeStr(String sig) {
+  	public String codeStr(String invokesig, String pos) {
   		String codestr = "";
 		//codestr = "_DM_Log.log_LoopPrint( \"loop_\" + " + loopindex + " + \"_\" + loop" + loopindex + ");";
 		codestr = "LogClass._DM_Log.log_RPC("        // jx - looks like _DM_Log.log_LoopPrint("xx.xx.xx.yy_loop?_"+loop?); 
-				+ "\"" + sig + "\""
+				+ "\"" + invokesig+"_"+pos + "\""
 				+ ");";
   		return codestr;
   	}

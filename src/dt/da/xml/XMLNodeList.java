@@ -28,6 +28,11 @@ public class XMLNodeList extends ArrayList {
 		return nodelist.get(index);
 	}
 	
+	@Override
+	public String toString() {
+		String str = "XMLNodeList: " + "#nodes=" + nodelist.size();
+		return str;
+	}
 	
 	/*
 	 * Node architecture:

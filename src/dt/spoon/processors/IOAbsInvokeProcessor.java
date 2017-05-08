@@ -50,7 +50,8 @@ public class IOAbsInvokeProcessor extends AbstractProcessor<CtAbstractInvocation
 			      return;
 		}
 
-		System.out.println("JX - INFO - checked IO: " + invokesig);
+        String pos = absinvoke.getPosition().toString();
+		System.out.println("JX - INFO - checked IO: " + invokesig + "_" + pos);
 		
 		// Main work
         CtElement element = (CtElement)absinvoke;
@@ -61,18 +62,18 @@ public class IOAbsInvokeProcessor extends AbstractProcessor<CtAbstractInvocation
 		}
 		if (element instanceof CtStatement) {
 			CtStatement statement = (CtStatement)element;
-			statement.insertBefore( Util.getCodeSnippetStatement(this, codeStr(invokesig)) );
+			statement.insertBefore( Util.getCodeSnippetStatement(this, codeStr(invokesig,pos)) );
 		}
 			
 		++ MySpoon.iocount;
 	}
 	
   	
-  	public String codeStr(String sig) {
+  	public String codeStr(String invokesig, String pos) {
   		String codestr = "";
 		//codestr = "_DM_Log.log_LoopPrint( \"loop_\" + " + loopindex + " + \"_\" + loop" + loopindex + ");";
 		codestr = "LogClass._DM_Log.log_IO("        // jx - looks like _DM_Log.log_LoopPrint("xx.xx.xx.yy_loop?_"+loop?); 
-				+ "\"" + sig + "\""
+				+ "\"" + invokesig+"_"+pos + "\""
 				+ ");";
   		return codestr;
   	}
