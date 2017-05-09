@@ -235,10 +235,10 @@ class MapReduceTransformer extends Transformer {
 
     
     /* for process create */
-    //if (methodName.equals("runCommand") && className.endsWith("org.apache.hadoop.util.Shell")) {
+    if (methodName.equals("runCommand") && className.endsWith("org.apache.hadoop.util.Shell")) {
       //JX - this is a bug, I've commented it at its subcall
-    //  methodUtil.insertCallInstAfter(logClass, processCreateLog, 10);
-    //}
+      methodUtil.insertCallInstAfter(logClass, processCreateLog, 10);
+    }
    
 
     /* lock */

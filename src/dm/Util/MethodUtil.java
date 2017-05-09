@@ -256,7 +256,11 @@ public class MethodUtil {
           method.insertAfter(callStrInstBA(logClass, logFunc, flag));
       else {
     	  //Modified by JX
-          method.insertAt(149 , true, callStrInstBA(logClass, logFunc, flag));
+    	  //Insert after "process = builder.start()" in "org.apache.hadoop.util.Shell.runCommand()" in "Shell.java"
+    	  //for mr-4813
+          //method.insertAt(149, true, callStrInstBA(logClass, logFunc, flag));
+          //for mr-4576 
+          method.insertAt(201, true, callStrInstBA(logClass, logFunc, flag));
           //end-Modified
       }
     } catch (Exception e) {
