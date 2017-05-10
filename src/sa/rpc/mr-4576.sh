@@ -6,5 +6,6 @@ jars_dir=$project_dir/src/sa/res/mr-4576
 
 
 # Call real RPC Finder
+echo "JX - INFO - call rpcfinder.sh .."
 cd $project_dir/src/sa/rpc
 ./rpcfinder.sh $jars_dir 

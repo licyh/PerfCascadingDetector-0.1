@@ -5,6 +5,7 @@
 project_dir=/home/vagrant/JXCascading-detector             #JX - NO "/" at the end
 
 # Compile sa
+echo "JX - INFO - compile sa .."
 cd $project_dir
 ant compile-sa
 if [ $? -ne 0 ]; then
