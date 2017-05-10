@@ -30,4 +30,4 @@ echo "JX - INFO - da NOW .."
 build_path=${project_dir}/build/classes/
 classpath=$build_path
 cd $project_dir
-java -Xmx18G -Xss5M -cp $classpath da.DynamicAnalysis $project_dir $1-xml
+java -Xmx18G -Xss10M -cp $classpath da.DynamicAnalysis $project_dir $1-xml
