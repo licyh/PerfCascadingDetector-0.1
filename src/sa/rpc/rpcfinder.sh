@@ -18,4 +18,4 @@ build_path=${project_dir}/build/classes/
 wala_path=${project_dir}/lib/sa/wala-1.3.8-jars/*
 classpath=$build_path:$wala_path
 cd $project_dir        
-java -cp $classpath sa.rpc.RPCFinder src/sa/res/mr-4813
+java -cp $classpath sa.rpc.RPCFinder $1
