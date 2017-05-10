@@ -22,7 +22,7 @@ import com.CalleeInfo;
 public class MapReduceDM {
 
   public static void premain(String agentArgs, Instrumentation inst) {
-    System.out.println("Agent arguments: " + agentArgs);
+    System.out.println("JX - INFO - started by Javassit DM. Agent arguments: " + agentArgs);
     inst.addTransformer(new MapReduceTransformer(agentArgs));
 
   }
