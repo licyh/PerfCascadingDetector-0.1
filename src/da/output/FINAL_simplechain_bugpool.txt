@@ -1,1 +1,1 @@
-summary - 0(#static codepoints=0) from 122 (#static codepoints=47)
+summary - 0(#static codepoints=0) from 0 (#static codepoints=0)
