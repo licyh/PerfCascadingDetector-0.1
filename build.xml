@@ -102,7 +102,7 @@
     	</target>	
 		
 	    <!--target compile sa, ie, Static Analysis of Loops-->
-	    <target name="compile-sa" depends="prepare" description="compile static analysiser">
+	    <target name="compile-sa" depends="prepare, compile-com" description="compile static analysiser">
             <javac srcdir="${src.sa.dir}" destdir="${build.classes}" includeantruntime="false">
                 <classpath refid="sa.classpath" />
             </javac>

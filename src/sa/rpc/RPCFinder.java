@@ -3,51 +3,61 @@ package sa.rpc;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import com.benchmark.Benchmarks;
+import com.ibm.wala.ipa.cha.ClassHierarchy;
+
 import sa.wala.WalaAnalyzer;
 
 public class RPCFinder {
 
-	Path dirpath;
-	String systemName = "MapReduce";   //by default;
+	Path jarDirPath;
+	String systemName;             //by default;
 	
 	WalaAnalyzer walaAnalyzer;
 	
 	
-	public static void main(String[] args) {
-		
+	/**
+	 * @param args - dir of jars
+	 */
+	public static void main(String[] args) {		
 		new RPCFinder( args[0] );
 	}
 	
 	public RPCFinder(String jarDir) {
-		this.dirpath = Paths.get(jarDir);
-		this.walaAnalyzer = new WalaAnalyzer( this.dirpath );
+		this.jarDirPath = Paths.get(jarDir);
+		this.systemName = Benchmarks.resolveSystem(jarDir);
+		this.walaAnalyzer = new WalaAnalyzer( this.jarDirPath );
 		doWork();
 	}
 	
 	public void doWork() {
 		findRPCs();
-		
 	}
+	
+
 		
 	public void findRPCs() {
 		System.out.println("JX - INFO - findRPCs...");
+		ClassHierarchy cha = walaAnalyzer.getClassHierarchy();
 		
 		switch ( systemName ) {
-			case "MapReduce":
-				MRrpc mrrpc = new MRrpc(walaAnalyzer.cha, dirpath.toString());
+			case Benchmarks.MR:
+				MRrpc mrrpc = new MRrpc(cha, jarDirPath.toString());
 				mrrpc.doWork();
-				HDrpc hdrpc2 = new HDrpc(walaAnalyzer.cha, dirpath.toString());  
-				hdrpc2.doWork();
+				//HDrpc hdrpc2 = new HDrpc(cha, jarDirPath.toString());  
+				//hdrpc2.doWork();
 				break;
-			case "HDFS":
-				HDrpc hdrpc = new HDrpc(walaAnalyzer.cha, dirpath.toString());  
+			case Benchmarks.HD:
+				HDrpc hdrpc = new HDrpc(cha, jarDirPath.toString());  
 				hdrpc.doWork();
 				break;
-			case "HBase":
+			case Benchmarks.HB:
 				break;
 			default:
 				break;
 		}
+		
+		System.out.println("JX - INFO - findRPCs finished. the results are written out into " + jarDirPath);
 	}
 	
 	

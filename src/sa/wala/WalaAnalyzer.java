@@ -75,9 +75,9 @@ public class WalaAnalyzer {
   
     // WALA basis
     AnalysisScope scope;
-    public ClassHierarchy cha;
+    ClassHierarchy cha;
     HashSet<Entrypoint> entrypoints;
-    public CallGraph cg;
+    CallGraph cg;
     public List<String> packageScopePrefixes = new ArrayList<String>();  //read from 'package-scope.txt' if exists
     
     // Statistics
@@ -108,6 +108,14 @@ public class WalaAnalyzer {
     	}
     	this.dirpath = dirpath;
     	initialize();
+    }
+    
+    public CallGraph getCallGrapth() {
+    	return this.cg;
+    }
+    
+    public ClassHierarchy getClassHierarchy() {
+    	return this.cha;
     }
     
  
