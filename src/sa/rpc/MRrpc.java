@@ -257,7 +257,7 @@ public class MRrpc {
     for (IClass c : mrv1Class) {
       for (IMethod m : c.getDeclaredMethods()) { 
     	  String str = m.getSignature() + "\t";
-    	  String str_2 = m.getDeclaringClass().getName().toString() + " ";
+    	  String str_2 = format( m.getDeclaringClass().getName().toString() ) + " ";
     	  boolean find = false;
 	      for (IClass iface : c.getAllImplementedInterfaces())
 	    	// only find out RPC interfaces   #one RPC class <- many (RPC or non-RPC) interfaces
@@ -265,7 +265,7 @@ public class MRrpc {
 	        	String ifacemethodsig = MRrpc.containMethod(iface, m.getSelector().toString());
 	        	if (ifacemethodsig != null) {
 	        		str += ifacemethodsig + "\t";
-	        		str_2 += iface.getName().toString() + " "
+	        		str_2 += format( iface.getName().toString() ) + " "
 	        				+ m.getName().toString() + " "
 	        				+ "0";
 	        		find = true;
