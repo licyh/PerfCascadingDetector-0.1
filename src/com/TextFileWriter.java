@@ -24,14 +24,23 @@ public class TextFileWriter {
 	}
 	
 	public TextFileWriter(Path filepath) {
+		this( filepath, false );
+	}
+	
+	public TextFileWriter(String filestr, boolean append) {
+		this( Paths.get(filestr), append );
+	}
+	
+	public TextFileWriter(Path filepath, boolean append) {
 		this.filepath = filepath;
 		try {
-			this.bufwriter = new BufferedWriter( new FileWriter( filepath.toString() ) );
+			this.bufwriter = new BufferedWriter( new FileWriter(filepath.toString(), append) );
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
 	
 	
 	public void writeLine(String line) {

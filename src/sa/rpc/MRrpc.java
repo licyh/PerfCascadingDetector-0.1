@@ -146,8 +146,10 @@ public class MRrpc {
 
 
 
-    // Get each rpc function's 1) implementation method and its interface method 2)
+    // Get each rpc function's 1) implementation method sig and its interface method sig
     ArrayList<String> results = new ArrayList<String>();
+    // just different format from the above
+    ArrayList<String> results_2 = new ArrayList<String>();
 
     for (IClass c : cha) {
       if ( !c.getName().toString().startsWith("Lorg/apache/") ) 
@@ -164,13 +166,18 @@ public class MRrpc {
         
         if (requestIfaces.contains(paraTy)){
           String outStr = m.getSignature() + "\t";
+          String outStr_2 = format( m.getDeclaringClass().getName().toString() ) + " ";
           for (IClass iface : c.getAllImplementedInterfaces()) {
         	  String ifacemethodsig = MRrpc.containMethod(iface, m.getSelector().toString());
         	  if (ifacemethodsig != null) {   //jx: may have serval: eg,  m1 in Class A <- abstract m1 in Abstract Class B <- abstract m1 in Interface C
         		  outStr += ifacemethodsig + "\t";
+        		  outStr_2 += format( iface.getName().toString() ) + " "
+        				  + m.getName().toString() + " " 
+        				  + "0";
         	  }
           }
           results.add(outStr);
+          results_2.add(outStr_2);
         }
         else if (otherIfaces.contains(paraTy)) {
           System.out.println("Method: " + m.getName() + " in cc: " + c.getName());
@@ -180,6 +187,7 @@ public class MRrpc {
     }
     
     // write to file
+    /*
     String filepath = Paths.get(parentDir, rpcfilepath).toString();
     try {
       PrintWriter writer = new PrintWriter(filepath, "UTF-8");
@@ -192,11 +200,14 @@ public class MRrpc {
     } catch (Exception e) {
       e.printStackTrace();
     }
-
+	*/
     
     TextFileWriter writer = new TextFileWriter( Paths.get(parentDir, rpcfilepath) );
     writer.writeLine("//format: 1.implementation class name  2.interface class name  3. method name  4. count of args  5+: args' class names ");
-    for (String str: results)
+    for (String str: results_2) {
+    	writer.writeLine(str);
+    }
+    writer.close();
 
   }
   
@@ -240,11 +251,13 @@ public class MRrpc {
     System.out.println( "mrv1Iface(length=" + mrv1Iface.size() + "): " + mrv1Iface );
 
     ArrayList<String> results = new ArrayList<String>();
+    ArrayList<String> results_2 = new ArrayList<String>();
     
     // 2. Get RPC methods that included in RPC
     for (IClass c : mrv1Class) {
       for (IMethod m : c.getDeclaredMethods()) { 
     	  String str = m.getSignature() + "\t";
+    	  String str_2 = m.getDeclaringClass().getName().toString() + " ";
     	  boolean find = false;
 	      for (IClass iface : c.getAllImplementedInterfaces())
 	    	// only find out RPC interfaces   #one RPC class <- many (RPC or non-RPC) interfaces
@@ -252,16 +265,22 @@ public class MRrpc {
 	        	String ifacemethodsig = MRrpc.containMethod(iface, m.getSelector().toString());
 	        	if (ifacemethodsig != null) {
 	        		str += ifacemethodsig + "\t";
+	        		str_2 += iface.getName().toString() + " "
+	        				+ m.getName().toString() + " "
+	        				+ "0";
 	        		find = true;
 	        	}
 	        }
-	      if (find)
+	      if (find) {
 	 	     results.add(str);
+	 	     results_2.add(str_2);
+	      }
       }
     }//outer-for 
     
     
     // write to file
+    /*
     String filepath = Paths.get(parentDir, rpcfilepath).toString();
     try {
       FileWriter writer = new FileWriter(filepath, true);  //PrintWrite(filepath, "UTF-8");
@@ -272,8 +291,15 @@ public class MRrpc {
     } catch (Exception e) {
       e.printStackTrace();
     }
+    */
+    
+    TextFileWriter writer = new TextFileWriter( Paths.get(parentDir, rpcfilepath), true );
+    writer.writeLine("//format: 1.implementation class name  2.interface class name  3. method name  4. count of args  5+: args' class names ");
+    for (String str: results_2) {
+    	writer.writeLine(str);
+    }
+    writer.close();
   }
-
   
   
 }
