@@ -11,6 +11,7 @@ import com.ibm.wala.core.tests.callGraph.CallGraphTestUtil;
 import com.ibm.wala.util.io.FileProvider;
 import com.ibm.wala.ipa.cha.ClassHierarchy;
 import com.ibm.wala.util.WalaException;
+import com.TextFileWriter;
 import com.ibm.wala.classLoader.IClass;
 import com.ibm.wala.classLoader.IMethod;
 import com.ibm.wala.types.ClassLoaderReference;
@@ -20,13 +21,21 @@ import com.ibm.wala.types.annotations.Annotation;
 public class MRrpc { 
  
   ClassHierarchy cha;
-  String packageDir;
+  String parentDir;
   String rpcfilepath = "mr_rpc.txt";   //including mr_rpc_v2.txt & mr_rpc_v1.txt 
   
 	
-  public MRrpc(ClassHierarchy cha, String packageDir) {
+  public MRrpc(ClassHierarchy cha, String parentDir) {
 	  this.cha = cha;
-	  this.packageDir = packageDir;
+	  this.parentDir = parentDir;
+  }
+  
+  // JX - main method
+  public void doWork() {
+	// JX - check mrv2 rpc
+	findRPCv2();  
+	// JX - check mrv1 rpc
+    findRPCv1();
   }
 	
   
@@ -171,7 +180,7 @@ public class MRrpc {
     }
     
     // write to file
-    String filepath = Paths.get(packageDir, rpcfilepath).toString();
+    String filepath = Paths.get(parentDir, rpcfilepath).toString();
     try {
       PrintWriter writer = new PrintWriter(filepath, "UTF-8");
       writer.println("//format: implementation method's signature  \t  interface method's signature1  ..2 .. if any");
@@ -184,6 +193,10 @@ public class MRrpc {
       e.printStackTrace();
     }
 
+    
+    TextFileWriter writer = new TextFileWriter( Paths.get(parentDir, rpcfilepath) );
+    writer.writeLine("//format: 1.implementation class name  2.interface class name  3. method name  4. count of args  5+: args' class names ");
+    for (String str: results)
 
   }
   
@@ -249,7 +262,7 @@ public class MRrpc {
     
     
     // write to file
-    String filepath = Paths.get(packageDir, rpcfilepath).toString();
+    String filepath = Paths.get(parentDir, rpcfilepath).toString();
     try {
       FileWriter writer = new FileWriter(filepath, true);  //PrintWrite(filepath, "UTF-8");
       for (String str : results) {
@@ -261,14 +274,6 @@ public class MRrpc {
     }
   }
 
-  
-  // JX - main method
-  public void doWork() {
-	// JX - check mrv2 rpc
-	findRPCv2();  
-	// JX - check mrv1 rpc
-    findRPCv1();
-  }
   
   
 }
