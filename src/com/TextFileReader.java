@@ -30,7 +30,7 @@ public class TextFileReader {
 	
 	
 	/**
-	 * For a common file
+	 * For a Common File
 	 */
 	public TextFileReader(String filestr) {
 		this( Paths.get(filestr) );
@@ -74,6 +74,10 @@ public class TextFileReader {
 	}
 		
 	
+	/**
+	 * For people who want to read directly from outside (ie, read file line by line manually) 
+	 * @return - maybe null
+	 */
 	public String readLine() {
 	    String tmpline = "";
 	    do {
@@ -85,8 +89,11 @@ public class TextFileReader {
 	    } while( tmpline != null && 
 	    		(tmpline.startsWith("//")||tmpline.startsWith("#")||tmpline.trim().length()==0)
 	    	   );
-	    return tmpline;
+	    if ( tmpline == null )
+	    	return null;
+	    return tmpline.trim();
 	}
+	
 	
 	/**
 	 * For reading all and saving
@@ -94,8 +101,8 @@ public class TextFileReader {
 	public void readFile() {		
 		String tmpline;
 		while ( (tmpline = readLine()) != null ) {
-			strs.add( tmpline.trim() );
-			String[] tmpstrs = tmpline.trim().split("\\s+");
+			strs.add( tmpline );
+			String[] tmpstrs = tmpline.split("\\s+");
 			splitstrs.add( tmpstrs );
 		}
 		try {

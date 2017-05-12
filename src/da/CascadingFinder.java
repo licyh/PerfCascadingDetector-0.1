@@ -160,7 +160,7 @@ public class CascadingFinder {
     			for (int j = i+1; j < allloopitems.size(); j++) {
     				int jindex = allloopitems.get(j);
     				if ( !gb.getNodePIDTID( jindex ).equals(pidtid) ) {
-    					System.out.println("JX - WARN - " + "couldn't find LoopEND for LoopBegin " + i + " its index = " + iindex);
+    					// System.out.println("JX - WARN - " + "couldn't find LoopEND for LoopBegin " + i + " its index = " + iindex);
     					break;
     				}
     				if ( gb.getNodeOPTY( jindex ).equals("LoopBegin") ) flag ++;
