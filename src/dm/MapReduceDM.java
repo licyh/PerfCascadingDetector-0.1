@@ -87,10 +87,17 @@ class MapReduceTransformer extends Transformer {
   	public void transformClass(CtClass cl) {
   		String className = cl.getName().toString();
 	  
-  		if ( className.startsWith("java.") ||
-  			 className.startsWith("sun.")
+  	    if (cl.getName().contains("xerces")
+  	    		|| cl.getName().contains("xml") 
+  	    		|| cl.getName().contains("xalan")
+  	    		) {
+  	        return; //these classes are about xml parser.
+  	    }
+  	    
+  		if ( className.startsWith("java.")
+  				|| className.startsWith("sun.")
   			 ) {
-  			return; //bypass
+  			return; //bypass jdk
   		}
 	     
   		CtBehavior[] methods = cl.getDeclaredBehaviors();   
@@ -126,8 +133,17 @@ class MapReduceTransformer extends Transformer {
 	    transformers.transformClassForLargeLoops(cl, methods);
 
 	    // JX - instrument for all loops
-	    if ( className.startsWith("org.apache.hadoop.hdfs.") )
-	    	return;
+		if ( !className.startsWith("org.apache.hadoop.yarn.")
+  				&& !className.startsWith("org.apache.hadoop.mapred.") 
+  				&& !className.startsWith("org.apache.hadoop.mapreduce.")
+  				&& !className.startsWith("org.apache.hadoop.io.IOUtils")   //for the real bug in mr-4576
+  				// +
+  				//&& !className.startsWith("org.apache.hadoop.filecache.")
+  				//&& !className.startsWith("org.apache.hadoop.fs.")
+	           ) {
+	          return;
+  		}
+	    
 	    try {
 			transformers.transformClassForLoops(cl, methods);
 		} catch (CannotCompileException e) {
@@ -145,12 +161,6 @@ class MapReduceTransformer extends Transformer {
     /*if (methodInfo.isConstructor() || methodInfo.isStaticInitializer()) {
       return; //bypass all constructors.
     }*/
-
-    if (cl.getName().contains("xerces") ||
-        cl.getName().contains("xml") ||
-        cl.getName().contains("xalan")) {
-      return; //these classes are about xml parser.
-    }
 
 		if ( !className.startsWith("org.apache.hadoop.yarn.")
   				&& !className.startsWith("org.apache.hadoop.mapred.") 
