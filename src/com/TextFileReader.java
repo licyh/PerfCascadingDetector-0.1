@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,6 +15,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+
 
 public class TextFileReader {
 
@@ -24,6 +28,10 @@ public class TextFileReader {
 	// split line by split line 
 	public List<String[]> splitstrs = new ArrayList<String[]>();
 	
+	
+	/**
+	 * For a common file
+	 */
 	public TextFileReader(String filestr) {
 		this( Paths.get(filestr) );
 	}
@@ -40,6 +48,32 @@ public class TextFileReader {
 		}
 	}
 	
+	/**
+	 * For a file inside a jar package 
+	 * @param class - like "MapReduceTransformer.class"
+	 * @param filestr - like "resource/looplocations"
+	 */
+	public TextFileReader(Class clazz, String filestr) {
+		this( clazz, Paths.get(filestr) );
+	}
+	
+	public TextFileReader(Class clazz, Path filepath) {
+		this.filepath = filepath;
+		// I don't know how to check if the file exists here?
+		/*
+		if ( !Files.exists(filepath) )
+			System.out.println("JX - ERROR - !Files.exists @ " + filepath);
+		*/
+		InputStream ins = clazz.getClassLoader().getResourceAsStream( filepath.toString() );
+		try {
+	    	this.bufreader = new BufferedReader( new InputStreamReader(ins) );
+    	} catch (Exception e) {
+    		System.out.println("JX - ERROR - TextFileReader: when reading " + filepath.toString() + " inside a classpath");
+    		e.printStackTrace();
+    	}
+	}
+		
+	
 	public String readLine() {
 	    String tmpline = "";
 	    do {
@@ -49,7 +83,7 @@ public class TextFileReader {
 				e.printStackTrace();
 			} 
 	    } while( tmpline != null && 
-	    		(tmpline.startsWith("//")||tmpline.startsWith("#")||tmpline.length()==0)
+	    		(tmpline.startsWith("//")||tmpline.startsWith("#")||tmpline.trim().length()==0)
 	    	   );
 	    return tmpline;
 	}

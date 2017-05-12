@@ -11,6 +11,7 @@ import javassist.bytecode.*;
 import dm.Util.Bytecode.*;
 import dm.Util.Bytecode.Instruction;
 import dm.Util.Bytecode.InvokeInst;
+import dm.transformers.Transformers;
 import dm.Util.ClassUtil;
 import dm.Util.MethodUtil;
 import com.APIInfo;
@@ -38,7 +39,10 @@ class MapReduceTransformer extends Transformer {
   RPCInfo rpcInfo = new RPCInfo();
   CalleeInfo calleeInfo = new CalleeInfo();
   
-
+  //added by JX
+  Transformers transformers = new Transformers();
+  
+  
   public MapReduceTransformer(String str) {
     super(str);
     //CtClass.debugDump = "/home/hadoop/hadoop/dump";
@@ -65,6 +69,10 @@ class MapReduceTransformer extends Transformer {
     calleeInfo.setInfoFilePath("resource/mr_callee.txt");
     calleeInfo.readFile();
     
+    
+    //added
+    
+    
   }
 
   public boolean speventcreate(String cn){
@@ -75,6 +83,60 @@ class MapReduceTransformer extends Transformer {
   }
 
 
+  	//added by JX
+  	public void transformClass(CtClass cl) {
+  		String className = cl.getName().toString();
+	  
+  		if ( className.startsWith("java.") ||
+  			 className.startsWith("sun.")
+  			 ) {
+  			return; //bypass
+  		}
+	     
+  		CtBehavior[] methods = cl.getDeclaredBehaviors();   
+	  
+	    //Added by JX
+	    //System.out.println("JX - CLASS - " + cl.getName() );
+	    /*
+	    for (CtBehavior method : methods) 
+			System.out.println( method.getName() + " @ " + method.getSignature() 
+	  	  		+ " - constr?" + method.getMethodInfo().isConstructor() + " - cl?" + method.getMethodInfo().isStaticInitializer() + " - meth?" + method.getMethodInfo().isMethod());
+	    */
+	    //end-Added
+	    for (CtBehavior method : methods) {
+	        if (method.isEmpty() == false) {
+	          //Added by JX
+	          /*
+	          if ( cl.getName().contains("BaseContainerTokenSecretManager")
+	        		  || cl.getName().contains("ContainerExecutor") ) {
+	        	  System.out.println( method.getName() + " @ " + method.getSignature() 
+	        	  	+ " - constr?" + method.getMethodInfo().isConstructor() + " - cl?" + method.getMethodInfo().isStaticInitializer() + " - meth?" + method.getMethodInfo().isMethod());
+	          }
+	          */
+	          //end-Added
+	          transformMethod(cl, method);
+	        }
+	    }
+      
+
+	    
+	    // instrument for target codes");
+	    transformers.transformClassForCodeSnippets(cl, methods);
+	    // instrument for (large) loops
+	    transformers.transformClassForLargeLoops(cl, methods);
+
+	    // JX - instrument for all loops
+	    if ( className.startsWith("org.apache.hadoop.hdfs.") )
+	    	return;
+	    try {
+			transformers.transformClassForLoops(cl, methods);
+		} catch (CannotCompileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      
+  	}
+  
   
   public void transformMethod(CtClass cl, CtBehavior method) {
     MethodInfo methodInfo = method.getMethodInfo();
@@ -90,21 +152,19 @@ class MapReduceTransformer extends Transformer {
       return; //these classes are about xml parser.
     }
 
-    if (cl.getName().startsWith("java.") ||
-        cl.getName().startsWith("sun.")) {
-      return; //bypass
-    }
-    	
-    if (className.startsWith("org.apache.hadoop.yarn.") == false
-        && className.startsWith("org.apache.hadoop.mapred.") == false
-        && className.startsWith("org.apache.hadoop.mapreduce.") == false
-        && className.startsWith("org.apache.hadoop.ipc.") == false
-        && className.startsWith("org.apache.hadoop.util.RunJar") == false
-        && className.startsWith("org.apache.hadoop.util.Shell") == false
- //The CodeAttribute of some methods in util is empty. ignore them.
-       ) {
-      return;
-    }
+		if ( !className.startsWith("org.apache.hadoop.yarn.")
+  				&& !className.startsWith("org.apache.hadoop.mapred.") 
+  				&& !className.startsWith("org.apache.hadoop.mapreduce.")
+	            && !className.startsWith("org.apache.hadoop.ipc.")
+	            && !className.startsWith("org.apache.hadoop.util.RunJar")
+	            && !className.startsWith("org.apache.hadoop.util.Shell")
+	            //The CodeAttribute of some methods in util is empty. ignore them.
+	            //added by JX for mr-4576
+	            && !className.startsWith("org.apache.hadoop.filecache.")
+	           ) {
+	          return;
+  		}
+
     if (className.contains("PBClientImpl") ||
         className.contains("PBServiceImpl") ||
 	className.contains("org.apache.hadoop.yarn.event.EventHandler")) {
