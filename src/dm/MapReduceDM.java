@@ -313,6 +313,9 @@ class MapReduceTransformer extends Transformer {
 
     /* lock */
     //Added by JX
+    // added for mr-4576
+    if (className.startsWith("org.apache.hadoop.ipc."))   //jx: coz this has lots of locks useless
+        return; 
     methodUtil.insertSyncMethod(logClass, lockRequireLog, logClass, lockReleaseLog);
     methodUtil.insertMonitorInst(logClass, lockRequireLog, logClass, lockReleaseLog);
     methodUtil.insertRWLock(logClass, rWLockCreateLog);
