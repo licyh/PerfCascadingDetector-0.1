@@ -13,20 +13,23 @@ if [ $? -ne 0 ]; then
 fi
 
 
-# Cleanup - prepare
+# Convert logging dir to xml
+:<<tmp
 if [ -d $1-xml ]; then
   rm -rf $1-xml
 fi
-
-
-# Convert logging dir to xml
 build_path=${project_dir}/build/classes/
 classpath=$build_path
 cd $project_dir
 java -cp $classpath da.convert.TexttoXml $1 null null
+tmp
+
 
 # da
 echo "JX - INFO - da NOW .."
+if [ -d $1-xmlresult ]; then
+  rm -rf $1-xmlresult
+fi
 build_path=${project_dir}/build/classes/
 classpath=$build_path
 cd $project_dir

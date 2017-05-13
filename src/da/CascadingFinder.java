@@ -302,11 +302,43 @@ public class CascadingFinder {
     	while ( curCascadingLevel <= CASCADING_LEVEL ) {
     		// Find affected locks in different threads
     		Set<Integer> nextbatchLocks = findNextbatchLocksInDiffThreads( curbatchLocks, curCascadingLevel );
-    		System.out.println("batch #" + (++tmpbatch) + ":#locks=" + curbatchLocks.size() + " <--- #" + tmpbatch + ".5:#locks=" + nextbatchLocks.size() );
+                System.out.println("batch #" + (++tmpbatch) + ":#locks=" + curbatchLocks.size() + " <--- #" + tmpbatch + ".5:#locks=" + nextbatchLocks.size() );
+
+                // DEBUG
+/*
+                if (curCascadingLevel <= 4) {
+                    for (int x: nextbatchLocks) {
+                        String sig = gb.getWholeIdentity(gb.nList.get(x));
+                        if ( sig.contains("594") || sig.contains("981") || sig.contains("991") || sig.contains("187") )
+                            System.out.println("JX - DEBUG - " + x + ": " + sig);
+                    }
+                }
+
+*/
+
+
+
     		// Find affected locks based on 1 in the same thread
     		curbatchLocks = findNextbatchLocksInSameThread( nextbatchLocks, curCascadingLevel );
     		System.out.println("batch #" + (tmpbatch+1) + ":#intermediate locks=" + curbatchLocks.size()  );
-    		if ( curbatchLocks.size() <= 0 ) {
+    	  
+
+                // DEBUG
+/*
+                if (curCascadingLevel <= 4) {
+    		    for (int x: curbatchLocks) {
+                        String sig = gb.getWholeIdentity(gb.nList.get(x));
+                        if ( sig.contains("594") || sig.contains("981") || sig.contains("991") || sig.contains("187") )
+    			    System.out.println("JX - DEBUG - " + x + ": " + sig);
+    		    }
+                }
+*/
+
+                if (curCascadingLevel >= 4)
+                    return;
+
+
+        	if ( curbatchLocks.size() <= 0 ) {
     			System.out.println( "JX - CascadingBugDetection - finished normally" );
     			break;
     		}
@@ -331,6 +363,17 @@ public class CascadingFinder {
 	                if ( gb.flippedorder(lockindex, index) ) {
 	                	nextbatchLocks.add( index );
 	                	predNodes[curCascadingLevel].put(index, lockindex);
+                                        
+                                        //DEBUG                                                 
+                                        if (curCascadingLevel == 3 && (index == 50428 || index == 50416 || index == 50408)) //checkAndCleanup 981                                                                                                
+                                                System.out.println("JX - DEBUG - level=" + curCascadingLevel +", " + index +":"+ gb.getWholeIdentity(gb.nList.get(index)) + "  lockindex:" + gb.getWholeIdentity(gb.nList.get(lockindex)));  
+      //DEBUG                                                 
+                                        if (curCascadingLevel == 4 && (index == 16395)) //getLocalCache 187                                                                                       
+     
+                                                System.out.println("JX - DEBUG - level=" + curCascadingLevel +", " + index +":"+ gb.getWholeIdentity(gb.nList.get(index)) + "  lockindex:" + gb.getWholeIdentity(gb.nList.get(lockindex)));
+
+
+
 	                }
 	    		}
     		}
@@ -342,6 +385,26 @@ public class CascadingFinder {
     				if ( gb.flippedorder(lockindex, index) ) {
     					nextbatchLocks.add( index );
     					predNodes[curCascadingLevel].put(index, lockindex);
+
+
+
+
+                                //DEBUG                                                 
+                                        if (curCascadingLevel == 3 && (index == 50428 || index == 50416 || index == 50408)) //checkAndCleanup 981                                                                                           
+     
+                                                System.out.println("JX - DEBUG - level=" + curCascadingLevel +", " + index +":"+ gb.getWholeIdentity(gb.nList.get(index)) + "  lockindex:" + gb.getWholeIdentity(gb.nList.get(lockindex)));
+
+      //DEBUG                                                 
+                                        if (curCascadingLevel == 4 && (index == 16395)) //getLocalCache 187                                                                                       
+
+                                                System.out.println("JX - DEBUG - level=" + curCascadingLevel +", " + index +":"+ gb.getWholeIdentity(gb.nList.get(index)) + "  lockindex:" + gb.getWholeIdentity(gb.nList.get(lockindex)));
+
+
+
+
+
+
+
     				}
     			}
     		}
@@ -368,12 +431,28 @@ public class CascadingFinder {
 		    		// add to bug pool
 					upNodes[curCascadingLevel].put(k, index);
 					addToBugPool( k, curCascadingLevel );
+					// DEBUG
+					if (curCascadingLevel == 4 && beginIndex == 16395) //getLocalCache 187
+						System.out.println("JX - DEBUG - level=" + curCascadingLevel + ", " + k +":"+ gb.getWholeIdentity(gb.nList.get(k)) + "  beginIndex:" + gb.getWholeIdentity(gb.nList.get(beginIndex)));
 				}
 				if ( gb.getNodeOPTY(k).equals("LockRequire") ) {
-					if ( !gb.getNodePIDOPVAL0(k).equals(pidopval0) )
+					if ( !gb.getNodePIDOPVAL0(k).equals(pidopval0) ) {
 						nextbatchLocks.add( k );
 						upNodes[curCascadingLevel].put(k, index);
 					//jx: it seems no need to check if the LockReuire has LockRelease or not
+
+
+					// DEBUG                                                                                                                 
+                                        if (curCascadingLevel == 2 && (k == 30254 || k == 30350)) //decRefCount 594
+                                                System.out.println("JX - DEBUG - level=" + curCascadingLevel +", " + k +":"+ gb.getWholeIdentity(gb.nList.get(k)) + "  beginIndex:" + gb.getWholeIdentity(gb.nList.get(beginIndex)));
+
+
+
+                                        // DEBUG                                                                                                                                                                          
+                                        if (curCascadingLevel == 3 && (k == 50429 || k == 50417 || k == 50409)) //checkAndCleanup 991
+                                                System.out.println("JX - DEBUG - level=" + curCascadingLevel +", " + k +":"+ gb.getWholeIdentity(gb.nList.get(k)) + "  beginIndex:" + gb.getWholeIdentity(gb.nList.get(beginIndex)));  
+
+					}
 				}
 			}
 		}
