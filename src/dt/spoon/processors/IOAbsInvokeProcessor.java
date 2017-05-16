@@ -1,8 +1,12 @@
 package dt.spoon.processors;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import dt.spoon.MySpoon;
 import dt.spoon.checkers.Checker;
 import dt.spoon.checkers.CommonChecker;
+import dt.spoon.checkers.RPCChecker;
 import dt.spoon.util.Util;
 import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.CtAbstractInvocation;
@@ -23,12 +27,18 @@ import spoon.reflect.reference.CtExecutableReference;
  */
 public class IOAbsInvokeProcessor extends AbstractProcessor<CtAbstractInvocation> {
 	
+	Path bugConfigDirPath;
 	Checker scopeChecker = null;
 	Checker checker = null;
 	
-	public IOAbsInvokeProcessor() {
-		this.scopeChecker = new CommonChecker( "src/dt/spoon/res/mr-4813/scope.txt" );
-		this.checker = new CommonChecker( "src/dt/spoon/res/mr-4813/io.txt" );
+	public IOAbsInvokeProcessor(String bugConfigDir) {
+		this( Paths.get(bugConfigDir) );
+	}
+	
+	public IOAbsInvokeProcessor(Path bugConfigDirPath) {
+		this.bugConfigDirPath = bugConfigDirPath;
+		this.scopeChecker = new CommonChecker( this.bugConfigDirPath.resolve("scope.txt").toString() );
+		this.checker = new RPCChecker( this.bugConfigDirPath.resolve("io.txt").toString() );
 	}
 		
 	/**

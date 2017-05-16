@@ -12,31 +12,44 @@ import spoon.Launcher;
 
 public class SpoonUtil {
 	
+	Path bugConfigPath;
+
+	//public SpoonUtil() { }
+	
+	public SpoonUtil(String bugConfig) {
+		this( Paths.get(bugConfig) );
+	}
+	
+	public SpoonUtil(Path bugConfigPath) {
+		this.bugConfigPath = bugConfigPath;
+	}
+	
+	
 	/**
 	 * @param inputPath(Str) - input file or directory
 	 * @param srcClasspath - input classpath
 	 * @param outputDirPath(Str) - output directory
 	 */
-	public static void spoon(String inputPathStr, String srcClasspath, String outputDirPathStr) {
+	public void spoon(String inputPathStr, String srcClasspath, String outputDirPathStr) {
 		spoon( Paths.get(inputPathStr), srcClasspath, Paths.get(outputDirPathStr) );
 	}
 	
-	public static void spoon(Path inputPath, String srcClasspath, Path outputDirPath) {
+	public void spoon(Path inputPath, String srcClasspath, Path outputDirPath) {
 		
 		Launcher launcher = new Launcher();
 
 		// Add Processors
 		// for new loops
-		LoopProcessor loopProcessor = new LoopProcessor();
+		LoopProcessor loopProcessor = new LoopProcessor(bugConfigPath);
 		launcher.addProcessor(loopProcessor);
 		// for Loops
 		//MethodProcessor methodProcessor = new MethodProcessor();
 		//launcher.addProcessor(methodProcessor);
 		// for IOs
-		IOAbsInvokeProcessor ioProcessor = new IOAbsInvokeProcessor();
+		IOAbsInvokeProcessor ioProcessor = new IOAbsInvokeProcessor(bugConfigPath);
 		launcher.addProcessor(ioProcessor);
 		// for RPCs
-		RPCInvokeProcessor rpcProcessor = new RPCInvokeProcessor();
+		RPCInvokeProcessor rpcProcessor = new RPCInvokeProcessor(bugConfigPath);
 		launcher.addProcessor(rpcProcessor);
 		
 		// Note: setArgs should be put at first, or will override all args 
@@ -96,11 +109,11 @@ public class SpoonUtil {
 	 * @param inputPath(Str) - input file or directory
 	 * @param outputDirPath(Str) - output directory
 	 */
-	public static void spoon(String inputPathStr, String outputDirPathStr) {
+	public void spoon(String inputPathStr, String outputDirPathStr) {
 		spoon( Paths.get(inputPathStr), Paths.get(outputDirPathStr) );
 	}
 	
-	public static void spoon(Path inputPath, Path outputDirPath) {
+	public void spoon(Path inputPath, Path outputDirPath) {
 		spoon( inputPath, ".", outputDirPath);
 	}
 	
@@ -108,11 +121,11 @@ public class SpoonUtil {
 	/**
 	 * @param inputPath(Str) - input file or directory
 	 */
-	public static void spoon(String inputPathStr) {
+	public void spoon(String inputPathStr) {
 		spoon( Paths.get(inputPathStr) );
 	}
 	
-	public static void spoon(Path inputPath) {
+	public void spoon(Path inputPath) {
 		spoon( inputPath, ".", Paths.get("spooned/") );
 	}	
 	

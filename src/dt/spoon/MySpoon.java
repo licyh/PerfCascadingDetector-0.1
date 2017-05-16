@@ -24,7 +24,7 @@ import spoon.Launcher;
 public class MySpoon {
 
 	// Input Argus
-	Path bugConfigPath;
+	Path bugConfigDirPath;
 	Path srcDirPath;           //INPUT: Source code Dir
 	String srcClasspath;       //Source code's Classpath
 	Path spoonedDirPath;       //OUTPUT: spooned result 
@@ -48,13 +48,13 @@ public class MySpoon {
 	}
 	
 	
-	public MySpoon(String bugConfig, String srcDir, String srcClasspath, String spoonedDir, String dstDir) {	
-		this(Paths.get(bugConfig), Paths.get(srcDir), srcClasspath, Paths.get(spoonedDir), Paths.get(dstDir));
+	public MySpoon(String bugConfigDir, String srcDir, String srcClasspath, String spoonedDir, String dstDir) {	
+		this(Paths.get(bugConfigDir), Paths.get(srcDir), srcClasspath, Paths.get(spoonedDir), Paths.get(dstDir));
 	}
 	
 	
-	public MySpoon(Path bugConfigPath, Path srcDirPath, String srcClasspath, Path spoonedDirPath, Path dstDirPath) {
-		this.bugConfigPath = bugConfigPath;
+	public MySpoon(Path bugConfigDirPath, Path srcDirPath, String srcClasspath, Path spoonedDirPath, Path dstDirPath) {
+		this.bugConfigDirPath = bugConfigDirPath;
 		this.srcDirPath = srcDirPath;
 		this.srcClasspath = srcClasspath;
 		this.spoonedDirPath = spoonedDirPath;
@@ -74,7 +74,9 @@ public class MySpoon {
 	
 	
 	public void doWork() throws IOException {
-		BugId = Benchmarks.resolveBugId( bugConfigPath.toString() );
+		BugId = Benchmarks.resolveBugId( bugConfigDirPath.toString() );
+		SpoonUtil spoonUtil = new SpoonUtil(bugConfigDirPath);
+		
 		if ( BugId.equals("mr-4813") ) {
 			List<Path> javadirs = getJavaDirs(srcDirPath);
 			System.out.println("JX - INFO - #java dirs = " + javadirs.size());
@@ -85,7 +87,7 @@ public class MySpoon {
             num = 0;
 			for (Path javapath: javadirs) {
 				System.out.println("Now Spooning Java Dir("+(++num)+"): " + javapath);
-				SpoonUtil.spoon( javapath, srcClasspath, spoonedDirPath );
+				spoonUtil.spoon( javapath, srcClasspath, spoonedDirPath );
 				copySpooned( javapath );
 			}
 		}
@@ -98,7 +100,7 @@ public class MySpoon {
             num = 0;
 			for (Path javapath: javadirs) {
 				System.out.println("Now Spooning Java Dir("+(++num)+"): " + javapath);
-				SpoonUtil.spoon( javapath, srcClasspath, spoonedDirPath );
+				spoonUtil.spoon( javapath, srcClasspath, spoonedDirPath );
 				copySpooned( javapath );
 			}
 		}

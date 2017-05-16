@@ -1,5 +1,8 @@
 package dt.spoon.processors;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import dt.spoon.MySpoon;
 import dt.spoon.checkers.Checker;
 import dt.spoon.checkers.CommonChecker;
@@ -25,12 +28,19 @@ import spoon.reflect.reference.CtExecutableReference;
  */
 public class RPCInvokeProcessor extends AbstractProcessor<CtInvocation> {
 	
+	Path bugConfigDirPath;
 	Checker scopeChecker = null;
 	Checker checker = null;
 	
-	public RPCInvokeProcessor() {
-		this.scopeChecker = new CommonChecker( "src/dt/spoon/res/mr-4813/scope.txt" );
-		this.checker = new RPCChecker( "src/dt/spoon/res/mr-4813/rpc.txt" );
+	
+	public RPCInvokeProcessor(String bugConfigDir) {
+		this( Paths.get(bugConfigDir) );
+	}
+	
+	public RPCInvokeProcessor(Path bugConfigDirPath) {
+		this.bugConfigDirPath = bugConfigDirPath;
+		this.scopeChecker = new CommonChecker( this.bugConfigDirPath.resolve("scope.txt").toString() );
+		this.checker = new RPCChecker( this.bugConfigDirPath.resolve("rpc.txt").toString() );
 	}
 		
 	

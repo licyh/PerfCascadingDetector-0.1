@@ -16,6 +16,10 @@ import spoon.reflect.visitor.Filter;
 import spoon.reflect.visitor.filter.ReturnOrThrowFilter;
 import spoon.support.reflect.code.CtCommentImpl;
 import spoon.support.reflect.code.CtLocalVariableImpl;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import dt.spoon.MySpoon;
 import dt.spoon.checkers.Checker;
 import dt.spoon.checkers.CommonChecker;
@@ -24,10 +28,16 @@ import spoon.Launcher;
 
 public class LoopProcessor extends AbstractProcessor<CtLoop> {
 	
+	Path bugConfigDirPath;
 	Checker scopeChecker = null;
 	
-	public LoopProcessor() {
-		this.scopeChecker = new CommonChecker( "src/dt/spoon/res/mr-4813/scope.txt" );
+	public LoopProcessor(String bugConfigDir) {
+		this( Paths.get(bugConfigDir) );
+	}
+	
+	public LoopProcessor(Path bugConfigDirPath) {
+		this.bugConfigDirPath = bugConfigDirPath;
+		this.scopeChecker = new CommonChecker( this.bugConfigDirPath.resolve("scope.txt").toString() );
 	}
 	
 	public void process(CtLoop loop) {
