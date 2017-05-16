@@ -30,7 +30,7 @@ public class RPCInvokeProcessor extends AbstractProcessor<CtInvocation> {
 	
 	Path bugConfigDirPath;
 	Checker scopeChecker = null;
-	Checker checker = null;
+	com.benchmark.Checker checker = null;
 	
 	
 	public RPCInvokeProcessor(String bugConfigDir) {
@@ -40,7 +40,10 @@ public class RPCInvokeProcessor extends AbstractProcessor<CtInvocation> {
 	public RPCInvokeProcessor(Path bugConfigDirPath) {
 		this.bugConfigDirPath = bugConfigDirPath;
 		this.scopeChecker = new CommonChecker( this.bugConfigDirPath.resolve("scope.txt").toString() );
-		this.checker = new RPCChecker( this.bugConfigDirPath.resolve("rpc.txt").toString() );
+		//only for mr-4813
+		//this.checker = new RPCChecker( this.bugConfigDirPath.resolve("rpc.txt").toString() );
+		this.checker = new com.benchmark.Checker();
+		this.checker.addCheckFile( this.bugConfigDirPath.resolve("rpc.txt") );
 	}
 		
 	
@@ -51,9 +54,10 @@ public class RPCInvokeProcessor extends AbstractProcessor<CtInvocation> {
 		String invokeclass = executable.getDeclaringType().getQualifiedName();
 		String invokemethod = executable.getSimpleName();
 		
+		//only for mr-4813
+		//if (checker != null && !checker.isTarget(invokesig)) return;
+		if (checker != null && checker.isSplitTarget(1, invokeclass, 2, invokemethod) ) return;
 		
-		if (checker != null && !checker.isTarget(invokesig)) return;
-
 
         CtMethod method = Util.getMethod(invoke);
         if (method != null) {
