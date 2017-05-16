@@ -2,14 +2,15 @@
 project_dir=/home/vagrant/JXCascading-detector             #JX - NO "/" at the end
 
 # Set the bug variables
-bug_id="mr-4813_spoon"
+bug_id=mr-4813
+bug_config_dir=$project_dir/src/dt/spoon/res/mr-4813
 app_src=/home/vagrant/spoonspace/hadoop-0.23.3-src         #JX - NO "/" at the end
 app_lib=/home/vagrant/spoonspace/hadoop-jars
 #proto_src=/home/vagrant/spoonspace/proto                   
-tmp_dir=/tmp/$bug_id
-in_dir=/tmp/$bug_id/in/hadoop-0.23.3-src
-spooned_dir=/tmp/$bug_id/spooned
-out_dir=/tmp/$bug_id/out/hadoop-0.23.3-src
+tmp_dir=/tmp/mr-4813_spoon
+in_dir=$tmp_dir/in/hadoop-0.23.3-src
+spooned_dir=$tmp_dir/spooned
+out_dir=$tmp_dir/out/hadoop-0.23.3-src
 
 
 
@@ -49,8 +50,8 @@ echo "JX - INFO - Call Spoon for running"
 alljars=`find $app_lib -name "*.jar" | tr '\n' ':'`
 allJars=$alljars`find $JAVA_HOME/lib -name "*.jar" | tr '\n' ':'`
 #allJar=$allJar${in_dir}/hadoop-tools/hadoop-distcp/target/lib/zookeeper-3.4.2.jar
-cd $project_dir/src/dt/spoon/res
-./pre_dm_run.sh $in_dir $alljars $spooned_dir $out_dir
+cd $project_dir/src/dt/spoon
+./myspoon.sh $bug_cofig_dir $in_dir $alljars $spooned_dir $out_dir
 
 
 # 5. copy modified *.java to out-folder

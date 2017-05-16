@@ -39,8 +39,8 @@ public class MySpoon {
 	
 	public static void main(String[] args) throws Exception {
 			
-		if (args.length != 4) {
-			System.err.println("JX - ERROR - args.length != 4");
+		if (args.length != 5) {
+			System.err.println("JX - ERROR - args.length != 5");
 			return;
 		}                            //jx: args[0] is newly added
 		MySpoon myspoon = new MySpoon(args[0], args[1], args[2], args[3], args[4]);
@@ -208,8 +208,8 @@ public class MySpoon {
 		final List<Path> dirs = new ArrayList<Path>();
 		//if want to use filters, can filter "tools/benchmarks/contrib/c++/test/packages/native/ant/docs/examples/webapps/hdfs"
 		//only focus on "src/"
-		dirs.add( srcDirPath.resolve("src/core") );   	//including org/apache/hadoop/io
-		dirs.add( srcDirPath.resolve("src/mapred") );	//including org/apache/hadoop/mapreduce, org/apache/hadoop/filecache, org/apache/hadoop/mapred, 
+		dirs.add( dirpath.resolve("src/core") );   	//including org/apache/hadoop/io
+		dirs.add( dirpath.resolve("src/mapred") );	//including org/apache/hadoop/mapreduce, org/apache/hadoop/filecache, org/apache/hadoop/mapred, 
 		return dirs;
 	}
 	

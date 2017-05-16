@@ -15,6 +15,7 @@ public class Benchmarks {
 		Path path = Paths.get( pathStr );
 		for (int i = 0; i < path.getNameCount(); i++) {
 			String ele = path.getName(i).toString();
+			//System.out.println("JX - DEBUG - ele:" + ele);
 			if ( ele.matches( "[a-z]{2}-[0-9]*" ) ) {  //ie, mr-4576
 				return ele;
 			}
