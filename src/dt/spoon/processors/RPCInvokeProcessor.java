@@ -56,7 +56,7 @@ public class RPCInvokeProcessor extends AbstractProcessor<CtInvocation> {
 		
 		//only for mr-4813
 		//if (checker != null && !checker.isTarget(invokesig)) return;
-		if (checker != null && checker.isSplitTarget(1, invokeclass, 2, invokemethod) ) return;
+		if (checker != null && !checker.isSplitTarget(1, invokeclass, 2, invokemethod) ) return;
 		
 
         CtMethod method = Util.getMethod(invoke);

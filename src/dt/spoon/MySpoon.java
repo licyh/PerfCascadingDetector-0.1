@@ -210,7 +210,7 @@ public class MySpoon {
 		final List<Path> dirs = new ArrayList<Path>();
 		//if want to use filters, can filter "tools/benchmarks/contrib/c++/test/packages/native/ant/docs/examples/webapps/hdfs"
 		//only focus on "src/"
-		dirs.add( dirpath.resolve("src/core") );   	//including org/apache/hadoop/io
+		//dirs.add( dirpath.resolve("src/core") );   	//including org/apache/hadoop/io
 		dirs.add( dirpath.resolve("src/mapred") );	//including org/apache/hadoop/mapreduce, org/apache/hadoop/filecache, org/apache/hadoop/mapred, 
 		return dirs;
 	}
