@@ -38,7 +38,7 @@ public class IOAbsInvokeProcessor extends AbstractProcessor<CtAbstractInvocation
 	public IOAbsInvokeProcessor(Path bugConfigDirPath) {
 		this.bugConfigDirPath = bugConfigDirPath;
 		this.scopeChecker = new CommonChecker( this.bugConfigDirPath.resolve("scope.txt").toString() );
-		this.checker = new RPCChecker( this.bugConfigDirPath.resolve("io.txt").toString() );
+		this.checker = new CommonChecker( this.bugConfigDirPath.resolve("io.txt").toString() );
 	}
 		
 	/**
