@@ -4,7 +4,7 @@
 # $3 - classpath
 # $4 - spooned dir
 # $5 - output dir
-echo $1 $2 $3 $4 $5
+#echo $1 $2 $3 $4 $5
 
 # Please set the project home directory
 project_dir=/home/vagrant/JXCascading-detector                                #JX - NO "/" at the end

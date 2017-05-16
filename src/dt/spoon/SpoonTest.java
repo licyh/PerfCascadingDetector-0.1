@@ -14,7 +14,7 @@ public class SpoonTest {
 		System.out.println("JX - INFO - Under Spoon Testing !!!");
 		
 		SpoonUtil.guiSpoon( "src/dt/spoon/test/Outer.java" );
-		SpoonUtil.spoon( "src/dt/spoon/test/Outer.java" );
+		//SpoonUtil.spoon( "src/dt/spoon/test/Outer.java" );
 		
 		System.out.println("JX - INFO - finished !!!");
 	}
