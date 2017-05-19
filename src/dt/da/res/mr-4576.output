@@ -1,0 +1,100 @@
+JX - INFO - loop analysis ...
+JX - INFO - XMLNodeList: #nodes=28602
+JX - WARN - !stack.isEmpty(), that should be the beginning of the thread without exiting correctly, maybe all of them are 'while(xx){ wait; }', I varified the most
+JX - WARN - !stack.isEmpty(), that should be the beginning of the thread without exiting correctly, maybe all of them are 'while(xx){ wait; }', I varified the most
+JX - WARN - !stack.isEmpty(), that should be the beginning of the thread without exiting correctly, maybe all of them are 'while(xx){ wait; }', I varified the most
+JX - WARN - !stack.isEmpty(), that should be the beginning of the thread without exiting correctly, maybe all of them are 'while(xx){ wait; }', I varified the most
+JX - WARN - !stack.isEmpty(), that should be the beginning of the thread without exiting correctly, maybe all of them are 'while(xx){ wait; }', I varified the most
+JX - WARN - !stack.isEmpty(), that should be the beginning of the thread without exiting correctly, maybe all of them are 'while(xx){ wait; }', I varified the most
+JX - WARN - !stack.isEmpty(), that should be the beginning of the thread without exiting correctly, maybe all of them are 'while(xx){ wait; }', I varified the most
+JX - WARN - !stack.isEmpty(), that should be the beginning of the thread without exiting correctly, maybe all of them are 'while(xx){ wait; }', I varified the most
+JX - WARN - !stack.isEmpty(), that should be the beginning of the thread without exiting correctly, maybe all of them are 'while(xx){ wait; }', I varified the most
+JX - WARN - !stack.isEmpty(), that should be the beginning of the thread without exiting correctly, maybe all of them are 'while(xx){ wait; }', I varified the most
+JX - WARN - !stack.isEmpty(), that should be the beginning of the thread without exiting correctly, maybe all of them are 'while(xx){ wait; }', I varified the most
+JX - WARN - !stack.isEmpty(), that should be the beginning of the thread without exiting correctly, maybe all of them are 'while(xx){ wait; }', I varified the most
+JX - WARN - !stack.isEmpty(), that should be the beginning of the thread without exiting correctly, maybe all of them are 'while(xx){ wait; }', I varified the most
+JX - INFO - num of loop instances = 5952
+JX - INFO - num of loops(physical) = 246
+IO/RPC Loop - org.apache.hadoop.filecache.TaskDistributedCacheManager.setupCache_loop8_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/filecache/TaskDistributedCacheManager.java:176)
+IO/RPC Loop - org.apache.hadoop.filecache.TrackerDistributedCacheManager.createAllSymlink_loop14_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/filecache/TrackerDistributedCacheManager.java:532)
+IO/RPC Loop - org.apache.hadoop.filecache.TrackerDistributedCacheManager.getDelegationTokens_loop22_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/filecache/TrackerDistributedCacheManager.java:827)
+IO/RPC Loop - org.apache.hadoop.filecache.TrackerDistributedCacheManager.isPublic_loop13_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/filecache/TrackerDistributedCacheManager.java:329)
+IO/RPC Loop - org.apache.hadoop.mapred.Counters$Group.readFields_loop225_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/Counters.java:357)
+IO/RPC Loop - org.apache.hadoop.mapred.Counters$Group.write_loop224_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/Counters.java:348)
+IO/RPC Loop - org.apache.hadoop.mapred.Counters.readFields_loop230_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/Counters.java:572)
+IO/RPC Loop - org.apache.hadoop.mapred.Counters.write_loop229_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/Counters.java:560)
+IO/RPC Loop - org.apache.hadoop.mapred.DefaultTaskController.deleteAsUser_loop242_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/DefaultTaskController.java:226)
+IO/RPC Loop - org.apache.hadoop.mapred.HeartbeatResponse.readFields_loop266_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/HeartbeatResponse.java:119)
+IO/RPC Loop - org.apache.hadoop.mapred.HeartbeatResponse.write_loop264_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/HeartbeatResponse.java:101)
+IO/RPC Loop - org.apache.hadoop.mapred.IFile$Reader.readData_loop280_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/IFile.java:327)
+IO/RPC Loop - org.apache.hadoop.mapred.JobClient.copyAndConfigureFiles_loop295_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobClient.java:705)
+IO/RPC Loop - org.apache.hadoop.mapred.JobClient.monitorAndPrintJob_loop304_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobClient.java:1294)
+IO/RPC Loop - org.apache.hadoop.mapred.JobConf.deleteLocalFiles_loop314_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobConf.java:445)
+IO/RPC Loop - org.apache.hadoop.mapred.JobConf.findContainingJar_loop315_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobConf.java:1792)
+IO/RPC Loop - org.apache.hadoop.mapred.JobHistory$HistoryCleaner.run_loop334_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobHistory.java:2591)
+IO/RPC Loop - org.apache.hadoop.mapred.JobHistory$JobHistoryFilesManager$1.run_loop318_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobHistory.java:300)
+IO/RPC Loop - org.apache.hadoop.mapred.JobHistory.filteredStat2Paths_loop324_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobHistory.java:943)
+JX - ERROR - realIterations != iterations, 2 != 1
+JX - ERROR - realIterations != iterations, 3 != 1
+JX - ERROR - realIterations != iterations, 2 != 1
+JX - ERROR - realIterations != iterations, 3 != 1
+JX - ERROR - realIterations != iterations, 8 != 2
+IO/RPC Loop - org.apache.hadoop.mapred.JobHistory.localGlobber_loop325_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobHistory.java:1006)
+IO/RPC Loop - org.apache.hadoop.mapred.JobHistory.log_loop323_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobHistory.java:826)
+IO/RPC Loop - org.apache.hadoop.mapred.JobLocalizer.createJobDirs_loop376_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobLocalizer.java:212)
+IO/RPC Loop - org.apache.hadoop.mapred.JobLocalizer.createLocalDirs_loop374_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobLocalizer.java:141)
+IO/RPC Loop - org.apache.hadoop.mapred.JobLocalizer.createPaths_loop373_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobLocalizer.java:130)
+IO/RPC Loop - org.apache.hadoop.mapred.JobLocalizer.createUserDirs_loop375_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobLocalizer.java:171)
+IO/RPC Loop - org.apache.hadoop.mapred.JobQueueTaskScheduler.assignTasks_loop383_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobQueueTaskScheduler.java:162)
+IO/RPC Loop - org.apache.hadoop.mapred.JobQueueTaskScheduler.assignTasks_loop384_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobQueueTaskScheduler.java:160)
+IO/RPC Loop - org.apache.hadoop.mapred.JobQueueTaskScheduler.assignTasks_loop385_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobQueueTaskScheduler.java:221)
+IO/RPC Loop - org.apache.hadoop.mapred.JobTracker.getSetupAndCleanupTasks_loop436_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobTracker.java:3816)
+IO/RPC Loop - org.apache.hadoop.mapred.JobTracker.getSetupAndCleanupTasks_loop438_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobTracker.java:3833)
+IO/RPC Loop - org.apache.hadoop.mapred.JobTracker.updateTaskStatuses_loop452_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/JobTracker.java:4690)
+IO/RPC Loop - org.apache.hadoop.mapred.MapTask$MapOutputBuffer.mergeParts_loop489_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/MapTask.java:1613)
+IO/RPC Loop - org.apache.hadoop.mapred.MapTask$MapOutputBuffer.sortAndSpill_loop487_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/MapTask.java:1403)
+IO/RPC Loop - org.apache.hadoop.mapred.MapTaskCompletionEventsUpdate.readFields_loop496_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/MapTaskCompletionEventsUpdate.java:62)
+IO/RPC Loop - org.apache.hadoop.mapred.MapTaskCompletionEventsUpdate.write_loop495_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/MapTaskCompletionEventsUpdate.java:54)
+IO/RPC Loop - org.apache.hadoop.mapred.Merger$MergeQueue.merge_loop499_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/Merger.java:415)
+IO/RPC Loop - org.apache.hadoop.mapred.Merger.writeFile_loop497_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/Merger.java:156)
+IO/RPC Loop - org.apache.hadoop.mapred.ReduceTask$ReduceCopier$GetMapEventsThread.getMapCompletionEvents_loop550_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/ReduceTask.java:2872)
+IO/RPC Loop - org.apache.hadoop.mapred.ReduceTask$ReduceCopier$GetMapEventsThread.run_loop549_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/ReduceTask.java:2808)
+IO/RPC Loop - org.apache.hadoop.mapred.ReduceTask$ReduceCopier$MapOutputCopier.shuffleInMemory_loop529_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/ReduceTask.java:1693)
+IO/RPC Loop - org.apache.hadoop.mapred.ReduceTask$ReduceCopier.createKVIterator_loop543_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/ReduceTask.java:2479)
+IO/RPC Loop - org.apache.hadoop.mapred.ReduceTask.getMapFiles_loop522_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/ReduceTask.java:224)
+IO/RPC Loop - org.apache.hadoop.mapred.Task$TaskReporter.run_loop571_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/Task.java:646)
+IO/RPC Loop - org.apache.hadoop.mapred.Task.commit_loop574_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/Task.java:978)
+IO/RPC Loop - org.apache.hadoop.mapred.Task.getFsStatistics_loop575_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/Task.java:1100)
+IO/RPC Loop - org.apache.hadoop.mapred.Task.updateCounters_loop573_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/Task.java:820)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskLog.addCommand_loop599_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskLog.java:690)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskLog.getAllLogsFileDetails_loop593_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskLog.java:211)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskLog.writeToIndexFile_loop594_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskLog.java:308)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskLogsTruncater.getAllLogsFileDetails_loop607_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskLogsTruncater.java:340)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskLogsTruncater.shouldTruncateLogs_loop602_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskLogsTruncater.java:102)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskLogsTruncater.truncateLogs_loop605_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskLogsTruncater.java:158)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskRunner.setupWorkDir_loop630_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskRunner.java:749)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread.run_loop642_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskTracker.java:962)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskTracker$MapOutputServlet.doGet_loop677_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskTracker.java:3866)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskTracker.deleteUserDirectories_loop633_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskTracker.java:664)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskTracker.deleteUserDirectories_loop634_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskTracker.java:663)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskTracker.getFreeSpace_loop661_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskTracker.java:2195)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskTracker.initialize_loop635_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskTracker.java:713)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskTracker.initialize_loop636_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskTracker.java:718)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskTracker.initialize_loop637_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskTracker.java:723)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskTracker.initialize_loop638_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskTracker.java:727)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskTracker.removeJobFiles_loop659_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskTracker.java:2072)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskTrackerStatus.readFields_loop686_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskTrackerStatus.java:678)
+IO/RPC Loop - org.apache.hadoop.mapred.TaskTrackerStatus.write_loop685_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/TaskTrackerStatus.java:661)
+IO/RPC Loop - org.apache.hadoop.mapred.UserLogCleaner.clearOldUserLogs_loop689_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapred/UserLogCleaner.java:168)
+IO/RPC Loop - org.apache.hadoop.mapreduce.Mapper.run_loop737_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapreduce/Mapper.java:143)
+IO/RPC Loop - org.apache.hadoop.mapreduce.Reducer.run_loop740_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapreduce/Reducer.java:175)
+IO/RPC Loop - org.apache.hadoop.mapreduce.lib.input.FileInputFormat$MultiPathFilter.accept_loop691_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapreduce/lib/input/FileInputFormat.java:84)
+IO/RPC Loop - org.apache.hadoop.mapreduce.lib.input.FileInputFormat.getInputPaths_loop701_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapreduce/lib/input/FileInputFormat.java:427)
+IO/RPC Loop - org.apache.hadoop.mapreduce.lib.input.FileInputFormat.getSplits_loop696_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapreduce/lib/input/FileInputFormat.java:253)
+IO/RPC Loop - org.apache.hadoop.mapreduce.lib.input.FileInputFormat.listStatus_loop693_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapreduce/lib/input/FileInputFormat.java:221)
+IO/RPC Loop - org.apache.hadoop.mapreduce.lib.input.FileInputFormat.listStatus_loop694_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapreduce/lib/input/FileInputFormat.java:212)
+IO/RPC Loop - org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter.moveTaskOutputs_loop708_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapreduce/lib/output/FileOutputCommitter.java:213)
+IO/RPC Loop - org.apache.hadoop.mapreduce.server.tasktracker.Localizer.initializeAttemptDirs_loop718_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapreduce/server/tasktracker/Localizer.java:187)
+IO/RPC Loop - org.apache.hadoop.mapreduce.split.JobSplitWriter.writeNewSplits_loop722_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapreduce/split/JobSplitWriter.java:120)
+IO/RPC Loop - org.apache.hadoop.mapreduce.split.SplitMetaInfoReader.readSplitMetaInfo_loop725_(/tmp/mr-4576_spoon/in/hadoop-1.0.0/src/mapred/org/apache/hadoop/mapreduce/split/SplitMetaInfoReader.java:67)
+JX - INFO - num of loops(physical) including IO/RPC = 77
