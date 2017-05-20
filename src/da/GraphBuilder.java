@@ -1443,6 +1443,12 @@ CL5~10: org.apache.hadoop.io.IOUtils-copyBytes-69;|org.apache.hadoop.filecache.T
                         System.out.println("JX - DEBUG - " + i + " : " + nodeLastCallStr + " " + getNodePID(i)+":"+getNodeTID(i) );
                 }
 
+/*
+               CL6: org.apache.hadoop.io.IOUtils-copyBytes-69;|org.apache.hadoop.filecache.TrackerDistributedCacheManager-getLocalCache-187;|org.apache.hadoop.filecache.TrackerDistributedCacheManager$BaseDirManager-checkAndCleanup-993;|org.apache.hadoop.filecache.TrackerDistributedCacheManager$BaseDirManager-checkAndCleanup-981;|org.apache.hadoop.filecache.TrackerDistributedCacheManager$CacheStatus-decRefCount-594;|org.apache.hadoop.mapred.TaskTracker-purgeJob-2017;|org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496;|org.apache.hadoop.mapred.TaskTracker-addTaskToJob-487;|org.apache.hadoop.mapred.TaskTracker-getMapCompletionEvents-3498;|sun.reflect.NativeMethodAccessorImpl-invoke-57;|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1821;|
+*/
+               if ( nodeLastCallStr.equals("org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496;") ) 
+                       System.out.println("JX - DEBUG - " + i + " : " + nodeLastCallStr + " " + getNodePID(i)+":"+getNodeTID(i) );
+
 
     	}
 /*
@@ -1469,7 +1475,6 @@ JX - DEBUG - 40436 : org.apache.hadoop.mapred.TaskTracker-getMapCompletionEvents
 
 
 /*
-JX - DEBUG - 39982 : ThdExit 9644:29
 JX - DEBUG - 38460 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
 JX - DEBUG - 38465 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
 JX - DEBUG - 38470 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
@@ -1485,7 +1490,23 @@ JX - DEBUG - 38617 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread
 JX - DEBUG - 38636 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
 JX - DEBUG - 38655 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
 */
-      addedge(39982, 29320);
+      	addedge(38655, 29320);
+
+
+
+/*
+JX - DEBUG - 21680 : org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496; 9822:66
+JX - DEBUG - 26109 : org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496; 9822:39
+JX - DEBUG - 34013 : org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496; 9822:57
+JX - DEBUG - 34802 : org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496; 9822:48
+*/
+
+        addedge(21680, 29320);
+        addedge(26109, 29320);
+        addedge(34013, 29320);
+        addedge(34802, 29320);
+        
+
 
     //	while(true);
     }
