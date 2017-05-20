@@ -1448,7 +1448,8 @@ JX - DEBUG - 40436 : org.apache.hadoop.mapred.TaskTracker-getMapCompletionEvents
        addedge(40293, 29320);
        addedge(40421, 29320);
        addedge(40436, 29320);
-
+       addedge(3642, 29320);
+       addedge(3655, 29320);
 
     	//while(true);
     }
