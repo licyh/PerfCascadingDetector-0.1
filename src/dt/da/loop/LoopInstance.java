@@ -1,6 +1,6 @@
 package dt.da.loop;
 
-import dt.da.xml.XMLNodeList;
+import com.xml.XMLNodeList;
 
 import java.util.ArrayList;
 import java.util.HashSet;

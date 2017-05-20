@@ -611,6 +611,104 @@ public class GraphBuilder {
 	
 	}
 
+	/*
+	    public void buildtreepic() {
+	
+	        String gexfile = xmldir+".gexf";
+	
+	        try {
+	            PrintWriter writer = new PrintWriter(gexfile, "UTF-8");
+	            writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+	            writer.println("<gexf xmlns:viz=\"http:///www.gexf.net/1.1draft/viz\" version=\"1.1\" xmlns=\"http://www.gexf.net/1.1draft\">");
+	            writer.println("<meta lastmodifieddate=\"2010-03-03+23:44\">");
+	            writer.println("<creator>Gephi 0.9</creator>");
+	            writer.println("</meta>");
+	            writer.println("<graph defaultedgetype=\"directed\" idtype=\"string\" type=\"static\">");
+	            writer.println("<nodes count=\""+nList.size()+"\">");
+	            for (int i = 0 ; i < nList.size(); i++){
+	                Node node = nList.get(i);
+	                Element eElement = (Element) node;
+	                writer.println("<node id=\"" + i + "\" label=\"" + eElement.getElementsByTagName("OPTY").item(0).getTextContent() + "\"/>");
+	            }
+	            writer.println("</nodes>");
+	            writer.println("<edges count=\""+ esum +"\">");
+	            int eindex = 0;
+	            for (int i = 0; i < nList.size(); i++){
+	                ArrayList<Pair> list = edge.get(i);
+	                //for(int j = 0 ; j < list.size(); j++){
+	                for (Pair tj : list){
+	                    //System.out.println("gexf : " + i + " j = "+ j);
+	                    //Pair tj = list.get(j);
+	                    writer.println("<edge id=\""+ eindex +"\" source=\""+ i +"\" target=\""+ tj.destination +"\" weight=\""+ tj.otype+"\"/>");
+	                    eindex ++;
+	                }
+	            }
+	            writer.println("</edges>");
+	            writer.println("</graph>");
+	            writer.println("</gexf>");
+	            writer.close();
+	        } catch (Exception e){
+	            e.printStackTrace();
+	        }
+	    }
+	*/
+	    
+	    
+	    //Added by JX
+	    public String getNodeOPTY(int index) {
+	    	Node node = nList.get( index );
+	    	Element e = (Element) node;
+	    	String opty = e.getElementsByTagName("OPTY").item(0).getTextContent();
+	    	return opty;
+	    }
+
+	public String getNodePID(int index) {
+		Node node = nList.get( index );
+		Element e = (Element) node;
+		String pid = e.getElementsByTagName("PID").item(0).getTextContent();
+		return pid;
+	}
+
+	public String getNodePIDTID(int index) {
+		Node node = nList.get( index );
+		Element e = (Element) node;
+		String pid = e.getElementsByTagName("PID").item(0).getTextContent();
+		String tid = e.getElementsByTagName("TID").item(0).getTextContent();
+		return pid+tid;
+	}
+
+	public String getNodeOPVAL(int index) {
+		Node node = nList.get( index );
+		Element e = (Element) node;
+		String opval = e.getElementsByTagName("OPVAL").item(0).getTextContent();
+		return opval;
+	}
+
+	// return "PID"+"OPVAL0" for 'lock' nodes, especially for r/w locks
+	public String getNodePIDOPVAL0(int index) {   
+		Node node = nList.get( index );
+		Element e = (Element) node;
+		String pid = e.getElementsByTagName("PID").item(0).getTextContent();
+		String opval = e.getElementsByTagName("OPVAL").item(0).getTextContent();
+		return pid + opval.split("_")[0]; 
+	}
+
+	public String isReadOrWriteLock(int index) {
+		String pidhashcode = getNodePIDOPVAL0(index);
+		if ( rwlockmatch.containsKey(pidhashcode) ) {
+			return rwlockmatch.get(pidhashcode)[0];   // [0] means "R" or "W"
+		}
+		else {
+			return "null";
+		}
+	}
+
+	public boolean isRelatedLocks(int index1, int index2) {
+		String pidhashcode1 = getNodePIDOPVAL0(index1);
+		String pidhashcode2 = getNodePIDOPVAL0(index2);
+		return rwlockmatch.get(pidhashcode1)[2].equals( rwlockmatch.get(pidhashcode2)[2] );         // [1] means "pid"+"superobjhashcode"
+	}
+
 	public boolean goodnode(Node node){
         Element ex = (Element) node;
 		try {
@@ -741,6 +839,7 @@ public class GraphBuilder {
             hashMsgSending.get(e1.getElementsByTagName("OPVAL").item(0).getTextContent()).add(x);
         }
     }
+    
     
     public void buildsyncgraph() {
     	System.out.println("\nJX - buildsyncgraph - Adding edges to build Happen-Before graph");
@@ -1301,6 +1400,23 @@ public class GraphBuilder {
     } //End-buildsyncgraph
     
     
+    
+    //jx: for DEBUGGING and Cascading project
+    public void addEdgesManually() {
+    	
+    	for (int i = 0; i < nList.size(); i++) {
+    		String nodeLastCallStr = lastCallstack(i);
+    		if ( nodeLastCallStr.equals("org.apache.hadoop.filecache.TrackerDistributedCacheManager-getLocalCache-187;") 
+    				|| nodeLastCallStr.equals("org.apache.hadoop.filecache.TrackerDistributedCacheManager$CacheStatus-decRefCount-595;")
+    				) {
+    			System.out.println("JX - DEBUG - " + i + " : " + nodeLastCallStr);
+    		}
+    	}
+    	while(true);
+    }
+    
+    
+    
     public String [] ZKSplit(String st){
 	int i;
 	String [] s = new String[3];
@@ -1446,62 +1562,6 @@ public class GraphBuilder {
     }
 */
     
-    
-    //Added by JX
-    public String getNodeOPTY(int index) {
-    	Node node = nList.get( index );
-    	Element e = (Element) node;
-    	String opty = e.getElementsByTagName("OPTY").item(0).getTextContent();
-    	return opty;
-    }
-    
-    public String getNodePID(int index) {
-    	Node node = nList.get( index );
-    	Element e = (Element) node;
-    	String pid = e.getElementsByTagName("PID").item(0).getTextContent();
-    	return pid;
-    }
-    
-    public String getNodePIDTID(int index) {
-    	Node node = nList.get( index );
-    	Element e = (Element) node;
-    	String pid = e.getElementsByTagName("PID").item(0).getTextContent();
-    	String tid = e.getElementsByTagName("TID").item(0).getTextContent();
-    	return pid+tid;
-    }
-    
-    public String getNodeOPVAL(int index) {
-    	Node node = nList.get( index );
-    	Element e = (Element) node;
-    	String opval = e.getElementsByTagName("OPVAL").item(0).getTextContent();
-    	return opval;
-    }
-
-    // return "PID"+"OPVAL0" for 'lock' nodes, especially for r/w locks
-    public String getNodePIDOPVAL0(int index) {   
-    	Node node = nList.get( index );
-    	Element e = (Element) node;
-    	String pid = e.getElementsByTagName("PID").item(0).getTextContent();
-    	String opval = e.getElementsByTagName("OPVAL").item(0).getTextContent();
-    	return pid + opval.split("_")[0]; 
-    }
-    
-    public String isReadOrWriteLock(int index) {
-    	String pidhashcode = getNodePIDOPVAL0(index);
-    	if ( rwlockmatch.containsKey(pidhashcode) ) {
-    		return rwlockmatch.get(pidhashcode)[0];   // [0] means "R" or "W"
-    	}
-    	else {
-    		return "null";
-    	}
-    }
-    
-    public boolean isRelatedLocks(int index1, int index2) {
-    	String pidhashcode1 = getNodePIDOPVAL0(index1);
-    	String pidhashcode2 = getNodePIDOPVAL0(index2);
-    	return rwlockmatch.get(pidhashcode1)[2].equals( rwlockmatch.get(pidhashcode2)[2] );         // [1] means "pid"+"superobjhashcode"
-    }
-    //end-Added
     
     //Added by JX - analyze all locks
     public void buildlockmemref() {

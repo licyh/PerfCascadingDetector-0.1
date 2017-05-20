@@ -1,6 +1,6 @@
 package dt.da;
 
-import dt.da.xml.TexttoXml;
+import com.xml.TexttoXml;
 
 public class Analysis {
 	

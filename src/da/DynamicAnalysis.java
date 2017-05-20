@@ -20,20 +20,24 @@ public class DynamicAnalysis {
 		//init and get 'base' file
 		GraphBuilder graphBuilder = new GraphBuilder( argv[1] );
     	//GraphBuilder graphBuilder = new GraphBuilder("input/MR-4813-xml"); //"input/JX-MR-xml" //Test-HB-4729-v6-3-xml");   "Test-HB-4729-v6-3-xml"
-    	
 		System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
 		
     	graphBuilder.buildsyncgraph();
     	//graphBuilder.buildmemref();
-    	
     	System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
     	
+    	
+    	//jx: Add Edges manually for DEBUGGING
+    	graphBuilder.addEdgesManually();
+    	
+    	
     	graphBuilder.buildlockmemref(); 
-		
 		System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
+		
 		
 		// build ReachSet
 		graphBuilder.buildReachSet();
+		
 		
 		// Cascading Analysis
 		CascadingFinder cascadingFinder = new CascadingFinder( argv[0], graphBuilder);

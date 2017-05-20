@@ -20,8 +20,8 @@ import org.w3c.dom.NodeList;
 
 import dt.da.loop.LoopInfo;
 import dt.da.loop.LoopInstance;
-import dt.da.xml.XMLNodeList;
-import dt.da.xml.XMLUtil;
+import com.xml.XMLNodeList;
+import com.xml.XMLUtil;
 
 public class LoopAnalyzer {
 	

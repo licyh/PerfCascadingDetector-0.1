@@ -7,7 +7,7 @@ import java.util.TreeSet;
 
 import org.w3c.dom.Node;
 
-import dt.da.xml.XMLNodeList;
+import com.xml.XMLNodeList;
 
 
 public class LoopInfo {

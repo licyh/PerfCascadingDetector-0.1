@@ -21,7 +21,7 @@ fi
 build_path=${project_dir}/build/classes/
 classpath=$build_path
 cd $project_dir
-java -cp $classpath da.convert.TexttoXml $1 null null
+java -cp $classpath com.xml.TexttoXml $1 null null
 tmp
 
 
