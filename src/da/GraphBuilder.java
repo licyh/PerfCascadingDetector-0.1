@@ -489,7 +489,7 @@ public class GraphBuilder {
 	    int stackLength = esi.getElementsByTagName("Stack").getLength();
 	    for (int i = 0; i < stackLength; i++) {
 	        Element si  = (Element) esi.getElementsByTagName("Stack").item(i);
-	        if (si.getElementsByTagName("Line").item(0).getTextContent().equals("-1"))
+	        if (si.getElementsByTagName("Line").item(0).getTextContent().equals("-1") || si.getElementsByTagName("Line").item(0).getTextContent().equals("-2"))
 	            continue;
 	        // Modified by JX
 	        sti = si.getElementsByTagName("Class").item(0).getTextContent() + "-"       //jx-modified: " "->"-"
@@ -1408,14 +1408,46 @@ public class GraphBuilder {
     	for (int i = 0; i < nList.size(); i++) {
     		String nodeLastCallStr = lastCallstack(i);
                 if (nodeLastCallStr == null) continue;
+
+
+                /*
+                CL3: org.apache.hadoop.io.IOUtils-copyBytes-69;|org.apache.hadoop.filecache.TrackerDistributedCacheManager-getLocalCache-187;|org.apache.hadoop.filecache.TrackerDistributedCacheManager$CacheStatus-decRefCount-595;|org.apache.hadoop.mapred.TaskTracker$1-run-430;|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1821;|
+                */
     		if ( nodeLastCallStr.equals("org.apache.hadoop.filecache.TrackerDistributedCacheManager-getLocalCache-187;") 
     				|| nodeLastCallStr.equals("org.apache.hadoop.filecache.TrackerDistributedCacheManager$CacheStatus-decRefCount-595;")
     				) {
     			System.out.println("JX - DEBUG - " + i + " : " + nodeLastCallStr);
     		}
-    	}
+               /*JX - rjob: purgeJob after all map/reduce tasks
+CL5~10: org.apache.hadoop.io.IOUtils-copyBytes-69;|org.apache.hadoop.filecache.TrackerDistributedCacheManager-getLocalCache-187;|org.apache.hadoop.filecache.TrackerDistributedCacheManager$BaseDirManager-checkAndCleanup-993;|org.apache.hadoop.filecache.TrackerDistributedCacheManager$BaseDirManager-checkAndCleanup-981;|org.apache.hadoop.filecache.TrackerDistributedCacheManager$CacheStatus-decRefCount-594;|org.apache.hadoop.mapred.TaskTracker-purgeJob-2017;|org.apache.hadoop.mapred.TaskTracker-getMapCompletionEvents-3501;|sun.reflect.NativeMethodAccessorImpl-invoke-57;|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1821;|
+               */
+                if ( nodeLastCallStr.equals("org.apache.hadoop.mapred.TaskTracker-purgeJob-2017;") 
+                                || nodeLastCallStr.equals("org.apache.hadoop.mapred.TaskTracker-getMapCompletionEvents-3501;")
+                                ) {
+                        System.out.println("JX - DEBUG - " + i + " : " + nodeLastCallStr);
+                }
 
+
+    	}
+/*
+JX - DEBUG - 26244 : org.apache.hadoop.filecache.TrackerDistributedCacheManager-getLocalCache-187;
+JX - DEBUG - 29322 : org.apache.hadoop.filecache.TrackerDistributedCacheManager$CacheStatus-decRefCount-595;
+*/
         addedge(26244, 29322);
+
+/*
+JX - DEBUG - 3642 : org.apache.hadoop.mapred.TaskTracker-getMapCompletionEvents-3501;
+JX - DEBUG - 3655 : org.apache.hadoop.mapred.TaskTracker-getMapCompletionEvents-3501;
+JX - DEBUG - 29320 : org.apache.hadoop.mapred.TaskTracker-purgeJob-2017;
+JX - DEBUG - 40278 : org.apache.hadoop.mapred.TaskTracker-getMapCompletionEvents-3501;
+JX - DEBUG - 40293 : org.apache.hadoop.mapred.TaskTracker-getMapCompletionEvents-3501;
+JX - DEBUG - 40421 : org.apache.hadoop.mapred.TaskTracker-getMapCompletionEvents-3501;
+JX - DEBUG - 40436 : org.apache.hadoop.mapred.TaskTracker-getMapCompletionEvents-3501;
+*/
+       addedge(40278, 29320);
+       addedge(40293, 29320);
+       addedge(40421, 29320);
+       addedge(40436, 29320);
 
 
     	//while(true);
