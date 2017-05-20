@@ -670,6 +670,13 @@ public class GraphBuilder {
 		return pid;
 	}
 
+        public String getNodeTID(int index) {
+                Node node = nList.get( index );
+                Element e = (Element) node;
+                String tid = e.getElementsByTagName("TID").item(0).getTextContent();
+                return tid;
+        }
+
 	public String getNodePIDTID(int index) {
 		Node node = nList.get( index );
 		Element e = (Element) node;
@@ -1404,6 +1411,14 @@ public class GraphBuilder {
     
     //jx: for DEBUGGING and Cascading project
     public void addEdgesManually() {
+
+
+        for (int i = 0; i < nList.size(); i++) {
+             if ( getNodeOPTY(i).equals("ThdExit") ) {
+                 System.out.println("JX - DEBUG - " + i + " : " + getNodeOPTY(i) + " " + getNodePID(i)+":"+getNodeTID(i) );
+             }
+        }
+
     	
     	for (int i = 0; i < nList.size(); i++) {
     		String nodeLastCallStr = lastCallstack(i);
@@ -1416,15 +1431,16 @@ public class GraphBuilder {
     		if ( nodeLastCallStr.equals("org.apache.hadoop.filecache.TrackerDistributedCacheManager-getLocalCache-187;") 
     				|| nodeLastCallStr.equals("org.apache.hadoop.filecache.TrackerDistributedCacheManager$CacheStatus-decRefCount-595;")
     				) {
-    			System.out.println("JX - DEBUG - " + i + " : " + nodeLastCallStr);
+    			System.out.println("JX - DEBUG - " + i + " : " + nodeLastCallStr + " " + getNodePID(i)+":"+getNodeTID(i)  );
     		}
                /*JX - rjob: purgeJob after all map/reduce tasks
 CL5~10: org.apache.hadoop.io.IOUtils-copyBytes-69;|org.apache.hadoop.filecache.TrackerDistributedCacheManager-getLocalCache-187;|org.apache.hadoop.filecache.TrackerDistributedCacheManager$BaseDirManager-checkAndCleanup-993;|org.apache.hadoop.filecache.TrackerDistributedCacheManager$BaseDirManager-checkAndCleanup-981;|org.apache.hadoop.filecache.TrackerDistributedCacheManager$CacheStatus-decRefCount-594;|org.apache.hadoop.mapred.TaskTracker-purgeJob-2017;|org.apache.hadoop.mapred.TaskTracker-getMapCompletionEvents-3501;|sun.reflect.NativeMethodAccessorImpl-invoke-57;|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1821;|
                */
                 if ( nodeLastCallStr.equals("org.apache.hadoop.mapred.TaskTracker-purgeJob-2017;") 
                                 || nodeLastCallStr.equals("org.apache.hadoop.mapred.TaskTracker-getMapCompletionEvents-3501;")
+                                || nodeLastCallStr.equals("org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914;")
                                 ) {
-                        System.out.println("JX - DEBUG - " + i + " : " + nodeLastCallStr);
+                        System.out.println("JX - DEBUG - " + i + " : " + nodeLastCallStr + " " + getNodePID(i)+":"+getNodeTID(i) );
                 }
 
 
@@ -1451,7 +1467,27 @@ JX - DEBUG - 40436 : org.apache.hadoop.mapred.TaskTracker-getMapCompletionEvents
        addedge(3642, 29320);
        addedge(3655, 29320);
 
-    	//while(true);
+
+/*
+JX - DEBUG - 39982 : ThdExit 9644:29
+JX - DEBUG - 38460 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
+JX - DEBUG - 38465 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
+JX - DEBUG - 38470 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
+JX - DEBUG - 38489 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
+JX - DEBUG - 38508 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
+JX - DEBUG - 38527 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
+JX - DEBUG - 38546 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
+JX - DEBUG - 38559 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
+JX - DEBUG - 38572 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
+JX - DEBUG - 38585 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
+JX - DEBUG - 38604 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
+JX - DEBUG - 38617 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
+JX - DEBUG - 38636 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
+JX - DEBUG - 38655 : org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-914; 9822:29
+*/
+      addedge(39982, 29320);
+
+    //	while(true);
     }
     
     
