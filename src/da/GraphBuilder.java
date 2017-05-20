@@ -478,28 +478,29 @@ public class GraphBuilder {
 		return id;
     }
     
-    public String lastCallstack(int i){
-	    Node ni = nList.get(i);
+
+
+    public String lastCallstack(int index) {
+	    Node ni = nList.get(index);
 	    Element ei = (Element) ni;
 	    String sti = "";
 	    int ind = 0;
-	    Element esi = (Element) ei.getElementsByTagName("Stacks").item(0);
-	    while (true){
-	        Element si  = (Element) esi.getElementsByTagName("Stack").item(ind);
-	        if (si.getElementsByTagName("Line").item(0).getTextContent().equals("-1")){
-	            ind++;
+	    Element esi = (Element) ei.getElementsByTagName("Stacks").item(0);  
+	    int stackLength = esi.getElementsByTagName("Stack").getLength();
+	    for (int i = 0; i < stackLength; i++) {
+	        Element si  = (Element) esi.getElementsByTagName("Stack").item(i);
+	        if (si.getElementsByTagName("Line").item(0).getTextContent().equals("-1"))
 	            continue;
-	        }
 	        // Modified by JX
-	        //sti = "@" + i + ":" + 
-	        sti = 
-	        	si.getElementsByTagName("Class").item(0).getTextContent() + "-"       //jx-modified: " "->"-"
-	            + si.getElementsByTagName("Method").item(0).getTextContent() + "-"     //jx-modified: " "->"-"
-	            + si.getElementsByTagName("Line").item(0).getTextContent() + ";";
+	        sti = si.getElementsByTagName("Class").item(0).getTextContent() + "-"       //jx-modified: " "->"-"
+	        		+ si.getElementsByTagName("Method").item(0).getTextContent() + "-"     //jx-modified: " "->"-"
+	        		+ si.getElementsByTagName("Line").item(0).getTextContent() + ";";
 	        break;
 	    }
 	    return sti;		
-	}
+    }
+
+
 
 	public String fullCallstack(int i){
 	    Node ni = nList.get(i);
@@ -1406,13 +1407,18 @@ public class GraphBuilder {
     	
     	for (int i = 0; i < nList.size(); i++) {
     		String nodeLastCallStr = lastCallstack(i);
+                if (nodeLastCallStr == null) continue;
     		if ( nodeLastCallStr.equals("org.apache.hadoop.filecache.TrackerDistributedCacheManager-getLocalCache-187;") 
     				|| nodeLastCallStr.equals("org.apache.hadoop.filecache.TrackerDistributedCacheManager$CacheStatus-decRefCount-595;")
     				) {
     			System.out.println("JX - DEBUG - " + i + " : " + nodeLastCallStr);
     		}
     	}
-    	while(true);
+
+        addedge(26244, 29322);
+
+
+    	//while(true);
     }
     
     
