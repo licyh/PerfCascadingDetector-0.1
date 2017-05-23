@@ -53,7 +53,7 @@ public class Transformer implements ClassFileTransformer {
     return b;
   }
   
-  // modifiedd by JX for mr-4576
+  // modifiedd by JX for mr-4576 & ha-4584
   public void transformClass(CtClass cl) {}
   //public void transformMethod(CtClass cl, CtBehavior method) {} //implement in difficult application
 

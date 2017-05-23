@@ -151,8 +151,9 @@ public class Transformers {
 		  //end-Added
 		  
 		  //Added by JX
-		  public void transformClassForCodeSnippets(CtClass cl, CtBehavior[] methods) {
+		  public void transformClassForCodeSnippets(CtClass cl) {
 			  if ( !classesForInst.contains(cl.getName()) ) return;
+			  CtBehavior[] methods = cl.getDeclaredBehaviors();
 			  //System.out.println("JX - @1 - " + cl.getName());
 		      for (CtBehavior method : methods) {
 		          if ( method.isEmpty() ) continue;
@@ -190,8 +191,9 @@ public class Transformers {
 		  }
 		  
 		  
-		  public void transformClassForLargeLoops(CtClass cl, CtBehavior[] methods) {
+		  public void transformClassForLargeLoops(CtClass cl) {
 			  if ( !largeloop_classesForInst.contains(cl.getName()) ) return;
+			  CtBehavior[] methods = cl.getDeclaredBehaviors();
 			  //System.out.println("JX - @1 - " + cl.getName());
 		      for (CtBehavior method : methods) {
 		          if ( method.isEmpty() ) continue;
@@ -232,8 +234,8 @@ public class Transformers {
 		  }
 		  //end-Added
 		  
-		  public void transformClassForLoops(CtClass cl, CtBehavior[] methods) throws CannotCompileException {
-			  
+		  public void transformClassForLoops(CtClass cl) throws CannotCompileException {
+			  CtBehavior[] methods = cl.getDeclaredBehaviors();
 		      for (CtBehavior method : methods) {
 		          if ( method.isEmpty() ) continue; 
 		          String methodsig = cl.getName() + "." + method.getName() + method.getSignature();  //full signature, like wala's signature

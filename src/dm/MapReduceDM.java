@@ -128,9 +128,9 @@ class MapReduceTransformer extends Transformer {
 
 	    
 	    // instrument for target codes");
-	    transformers.transformClassForCodeSnippets(cl, methods);
+	    transformers.transformClassForCodeSnippets( cl );
 	    // instrument for (large) loops
-	    transformers.transformClassForLargeLoops(cl, methods);
+	    transformers.transformClassForLargeLoops( cl );
 
 	    // JX - instrument for all loops
 		if ( !className.startsWith("org.apache.hadoop.yarn.")
@@ -145,7 +145,7 @@ class MapReduceTransformer extends Transformer {
   		}
 	    
 	    try {
-			transformers.transformClassForLoops(cl, methods);
+			transformers.transformClassForLoops( cl );
 		} catch (CannotCompileException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
