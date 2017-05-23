@@ -33,6 +33,9 @@ public class Benchmarks {
 			systemName = HD;
 		else if ( lowerPathStr.contains("hb") || lowerPathStr.contains("hbase") )
 			systemName = HB;
+		//added
+		else if ( lowerPathStr.contains("ha") )
+			systemName = HD;
 		return systemName;
 	}
 			
