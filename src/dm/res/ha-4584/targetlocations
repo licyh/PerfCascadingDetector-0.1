@@ -1,2 +1,2 @@
-org.apache.hadoop.mapred.TaskTracker offerService 1606				TargetCodeBegin
-org.apache.hadoop.mapred.TaskTracker offerService 1610				TargetCodeEnd 
+org.apache.hadoop.hdfs.server.datanode.DataXceiver run 107				TargetCodeBegin
+org.apache.hadoop.hdfs.server.datanode.DataXceiver run 108				TargetCodeEnd 
