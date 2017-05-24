@@ -10,7 +10,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="sa.JXLocks"/>          
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" 
 
-value="-projectDir ${workspace_loc}/JXCascading-detector/ -appJarDir ${workspace_loc}/JXCascading-detector/src/sa/res/mr-4576"/>
+value="-projectDir ${workspace_loc}/JXCascading-detector/ -appJarDir ${workspace_loc}/JXCascading-detector/src/sa/res/ha-4584"/>
                                     
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="JXCascading-detector"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx8G"/>                  #-Xmx800M
