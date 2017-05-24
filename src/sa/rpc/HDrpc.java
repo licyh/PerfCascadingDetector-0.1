@@ -100,13 +100,12 @@ public class HDrpc {
 	    }
 	    */
 	    
-	    TextFileWriter writer = new TextFileWriter( Paths.get(parentDir, rpcfilepath), true );
+	    TextFileWriter writer = new TextFileWriter( Paths.get(parentDir, rpcfilepath) );
 	    writer.writeLine("//format: 1.implementation class name  2.interface class name  3. method name  4. count of args  5+: args' class names ");
 	    for (String str: results_2) {
 	    	writer.writeLine(str);
 	    }
 	    writer.close();
-	    
 	    
 	}
   
