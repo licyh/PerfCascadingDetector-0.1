@@ -476,8 +476,33 @@ public class GraphBuilder {
 		    id = id +"-"+ xclass +"-"+ xmethod +"-"+ xline;
 	  	}
 		return id;
-    }
-    
+    }    
+
+
+        public String fullCallstack(int i){
+            Node ni = nList.get(i);
+            Element ei = (Element) ni;
+            String sti = "";
+            int ind = 0;
+            Element esi = (Element) ei.getElementsByTagName("Stacks").item(0);
+            int slenx = Integer.parseInt(esi.getAttribute("Len"));
+            while (ind < slenx){                                                                                                                                                                                          
+                Element si  = (Element) esi.getElementsByTagName("Stack").item(ind);                                                                                                                                      
+                // commented by JX                                                                                                                                                                                        
+                /*                                                                                                                                                                                                        
+                if (si.getElementsByTagName("Line").item(0).getTextContent().equals("-1")){                                                                                                                               
+                    ind++;                                                                                                                                                                                                
+                    continue;                                                                                                                                                                                             
+                }                                                                                                                                                                                                         
+                */                                                                                                                                                                                                        
+                sti = sti                                                                                                                                                                                                 
+                    + si.getElementsByTagName("Class").item(0).getTextContent()  + "-"                                                                                                                                    
+                    + si.getElementsByTagName("Method").item(0).getTextContent() + "-"                                                                                                                                    
+                    + si.getElementsByTagName("Line").item(0).getTextContent() + ";";                                                                                                                                     
+                ind++;                                                                                                                                                                                                    
+            }                                                                                                                                                                                                             
+            return sti;                                                                                                                                                                                                   
+        }
 
 
     public String lastCallstack(int index) {
@@ -489,6 +514,7 @@ public class GraphBuilder {
 	    int stackLength = esi.getElementsByTagName("Stack").getLength();
 	    for (int i = 0; i < stackLength; i++) {
 	        Element si  = (Element) esi.getElementsByTagName("Stack").item(i);
+                // commented by JX
 	        if (si.getElementsByTagName("Line").item(0).getTextContent().equals("-1") || si.getElementsByTagName("Line").item(0).getTextContent().equals("-2"))
 	            continue;
 	        // Modified by JX
@@ -502,27 +528,25 @@ public class GraphBuilder {
 
 
 
-	public String fullCallstack(int i){
-	    Node ni = nList.get(i);
-	    Element ei = (Element) ni;
-	    String sti = "";
-	    int ind = 0;
-	    Element esi = (Element) ei.getElementsByTagName("Stacks").item(0);
-	    int slenx = Integer.parseInt(esi.getAttribute("Len"));
-	    while (ind < slenx){
-	        Element si  = (Element) esi.getElementsByTagName("Stack").item(ind);
-	        if (si.getElementsByTagName("Line").item(0).getTextContent().equals("-1")){
-	            ind++;
-	            continue;
-	        }
-	        sti = sti
-	            + si.getElementsByTagName("Class").item(0).getTextContent()  + "-"
-	            + si.getElementsByTagName("Method").item(0).getTextContent() + "-"
-	            + si.getElementsByTagName("Line").item(0).getTextContent() + ";";
-	        ind++;
-	    }
-	    return sti;
-	}
+    public String lastCallstack_2(int index) {
+            Node ni = nList.get(index);
+            Element ei = (Element) ni;
+            String sti = "";
+            int ind = 0;
+            Element esi = (Element) ei.getElementsByTagName("Stacks").item(0);
+            int stackLength = esi.getElementsByTagName("Stack").getLength();
+            for (int i = 0; i < Math.min(2, stackLength); i++) {
+                Element si  = (Element) esi.getElementsByTagName("Stack").item(i);
+                sti += si.getElementsByTagName("Class").item(0).getTextContent() + "-"       //jx-modified: " "->"-"
+                                + si.getElementsByTagName("Method").item(0).getTextContent() + "-"     //jx-modified: " "->"-"
+                                + si.getElementsByTagName("Line").item(0).getTextContent() + ";";
+            }
+            return sti;
+    }
+
+
+
+
 
 	//JX - compare whole call stacks of two nodes/operations
 	public boolean lastCallstackEqual(int x, int y){
@@ -682,7 +706,7 @@ public class GraphBuilder {
 		Element e = (Element) node;
 		String pid = e.getElementsByTagName("PID").item(0).getTextContent();
 		String tid = e.getElementsByTagName("TID").item(0).getTextContent();
-		return pid+tid;
+		return pid+"-"+tid;
 	}
 
 	public String getNodeOPVAL(int index) {
