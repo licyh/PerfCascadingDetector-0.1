@@ -28,7 +28,7 @@ public class HDFSDM {
 
 class HDFSTransformer extends Transformer {
 	
-	BugConfig bugConfig = new BugConfig("resource/bugconfig");
+	BugConfig bugConfig = new BugConfig("resource/bugconfig", true);
 	
 	ClassUtil classUtil;
 	RPCInfo rpcInfo = new RPCInfo();	

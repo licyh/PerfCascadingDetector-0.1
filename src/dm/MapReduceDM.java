@@ -31,7 +31,7 @@ public class MapReduceDM {
 }
 
 class MapReduceTransformer extends Transformer {
-	BugConfig bugConfig = new BugConfig("resource/bugconfig");
+	BugConfig bugConfig = new BugConfig("resource/bugconfig", true);
 	
 	ClassUtil classUtil;
 	APIInfo apiInfo = new APIInfo();

@@ -28,7 +28,8 @@ public class DynamicAnalysis {
     	
     	
     	//jx: Add Edges manually for DEBUGGING
-    	graphBuilder.addEdgesManually();
+        //this is for mr-4576
+    	//graphBuilder.addEdgesManually();
     	
     	
     	graphBuilder.buildlockmemref(); 

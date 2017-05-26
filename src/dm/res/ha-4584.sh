@@ -9,7 +9,7 @@ dm_dir=/tmp/${bug_id}_dm    #like "/tmp/mr-4576_dm"
 
 # Stop hadoop so that NOT under logging
 echo "JX - INFO - stop hadoop .."
-stop-all.sh
+stop-dfs.sh
 if [ $? -ne 0 ]; then
   echo "stop-all.sh error"
   exit
