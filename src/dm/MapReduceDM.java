@@ -17,6 +17,7 @@ import dm.Util.MethodUtil;
 import com.APIInfo;
 import com.API;
 import com.RPCInfo;
+import com.benchmark.BugConfig;
 import com.CalleeInfo;
 
 
@@ -30,17 +31,19 @@ public class MapReduceDM {
 }
 
 class MapReduceTransformer extends Transformer {
-  ClassUtil classUtil;
-  APIInfo apiInfo = new APIInfo();
-  ArrayList<API> apiRead = new ArrayList<API>();
-  ArrayList<API> apiWrite = new ArrayList<API>();
-  //ArrayList<String> rpcRequest = new ArrayList<String>();
+	BugConfig bugConfig = new BugConfig("resource/bugconfig");
+	
+	ClassUtil classUtil;
+	APIInfo apiInfo = new APIInfo();
+	ArrayList<API> apiRead = new ArrayList<API>();
+	ArrayList<API> apiWrite = new ArrayList<API>();
+	//ArrayList<String> rpcRequest = new ArrayList<String>();
 
-  RPCInfo rpcInfo = new RPCInfo();
-  CalleeInfo calleeInfo = new CalleeInfo();
+	RPCInfo rpcInfo = new RPCInfo();
+	CalleeInfo calleeInfo = new CalleeInfo();
   
-  //added by JX
-  Transformers transformers = new Transformers();
+	//added by JX
+	Transformers transformers = new Transformers();
   
   
   public MapReduceTransformer(String str) {
@@ -73,13 +76,6 @@ class MapReduceTransformer extends Transformer {
     //added
     
     
-  }
-
-  public boolean speventcreate(String cn){
-	if (cn.contains("SchedulerEventDispatcher")) return true;
-	if (cn.contains("ContainerLauncherImpl")) return true;
-	if (cn.contains("TaskCleanerImpl")) return true;
-	return false;
   }
 
 
@@ -232,13 +228,14 @@ class MapReduceTransformer extends Transformer {
      */
     else if (methodName.equals("run") &&
               (classUtil.isThreadClass(className) || classUtil.isRunnableClass(className))
-		&& (!className.contains("EventProcessor"))
+              && (!className.contains("EventProcessor"))
             ) {
     	//insert ThdEnter & ThdExit log
     	methodUtil.insertCallInstBefore(logClass, thdEnterLog, 4);
     	methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
     } else if (methodName.equals("run") && (className.contains("EventProcessor"))) {
     	//Commented by JX - this is a bug
+    	//jx: this is for hadoop2-0.23.3 ("mr-4813")
     	if ( !className.equals("org.apache.hadoop.yarn.server.resourcemanager.ResourceManager$SchedulerEventDispatcher$EventProcessor") ) {
     		methodUtil.insertCallInstBefore(logClass, eventProcEnterLog, 43);
     		methodUtil.insertCallInstAfter(logClass, eventProcExitLog, 43);
@@ -253,16 +250,23 @@ class MapReduceTransformer extends Transformer {
     }
 
     else if (methodName.equals("handle")) {
-	if (!speventcreate(className)){
-          injectFlag = true;
-      //insert eventEnter & eventExit log
-          methodUtil.insertCallInstBefore(logClass, eventProcEnterLog, 1);
-          methodUtil.insertCallInstAfter(logClass, eventProcExitLog, 1);
-
-    	}else
-	methodUtil.insertCallInstBefore(logClass, eventCreateLog, 42);
+    	//jx: eventQueue.put(event)
+    	//jx: this is for hadoop2-0.23.3 ("mr-4813")
+    	if (className.contains("SchedulerEventDispatcher")
+    			|| className.contains("ContainerLauncherImpl")
+    			|| className.contains("TaskCleanerImpl")
+    			) {
+    		methodUtil.insertCallInstBefore(logClass, eventCreateLog, 42);
+    	}
+    	//jx: similar to "run" && "EventProcessor", but this is "handle"
+    	else {
+	          injectFlag = true;
+	          methodUtil.insertCallInstBefore(logClass, eventProcEnterLog, 1);
+	          methodUtil.insertCallInstAfter(logClass, eventProcExitLog, 1);    		
+    	}			
     }
-
+    
+    
     /* RPC function */
     else if (rpcInfo.isRPCMethod(className, methodName) && //is a rpc
              (rpcInfo.getVersion(className, methodName) == 1 || // version 1
@@ -306,8 +310,11 @@ class MapReduceTransformer extends Transformer {
     
     /* for process create */
     if (methodName.equals("runCommand") && className.endsWith("org.apache.hadoop.util.Shell")) {
-      //JX - this is a bug, I've commented it at its subcall
-      methodUtil.insertCallInstAfter(logClass, processCreateLog, 10);
+    	//JX - this is a bug, I've commented it at its subcall
+    	if (bugConfig.getBugId().equals("mr-4813"))
+    		methodUtil.insertCallInstAt(logClass, processCreateLog, 10, 149);
+    	else if (bugConfig.getBugId().equals("mr-4576"))
+    		methodUtil.insertCallInstAt(logClass, processCreateLog, 10, 201);
     }
    
 

@@ -30,6 +30,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.HashMap;
 
+import com.benchmark.Benchmarks;
+
 //import org.eclipse.jface.window.ApplicationWindow;
 
 import com.ibm.wala.analysis.typeInference.TypeInference;
@@ -60,7 +62,8 @@ import com.ibm.wala.util.io.CommandLine;
 
 import sa.tc.HDrpc;
 import sa.tc.MRrpc;
-import sa.util.PDFCallGraph;
+import sa.wala.WalaAnalyzer;
+import sa.wala.util.PDFCallGraph;
 
 
 public class JXLocks {
@@ -71,7 +74,8 @@ public class JXLocks {
   static String dmDir;       
   
   // WALA basis
-  static WalaAnalysis wala;
+  //static WalaAnalysis wala;
+  static WalaAnalyzer wala;
   static ClassHierarchy cha;
   static CallGraph cg;
   static int nPackageFuncs = 0;           // the real functions we focuses  //must satisfy "isApplicationAndNonNativeMethod" first
@@ -198,10 +202,12 @@ public class JXLocks {
   
   public static void doWalaAnalysis() {
 	  System.out.println("JX-doWalaAnalysis");
+	  /*
 	  wala = new WalaAnalysis(appJarDir);
 	  wala.doWork();
+	  
 	  systemname = wala.systemname; 
-			  
+	 
 	  cg = wala.cg;
 	  cha = wala.cha;
 	  nPackageFuncs = wala.nPackageFuncs;
@@ -209,6 +215,18 @@ public class JXLocks {
 	  nApplicationFuncs = wala.nApplicationFuncs;
 	  nPremordialFuncs = wala.nPremordialFuncs;
 	  nOtherFuncs = wala.nOtherFuncs;
+	  */
+	  
+	  wala = new WalaAnalyzer(appJarDir);
+	  systemname = Benchmarks.resolveSystem(appJarDir);
+	  System.out.println("JX - DEBUG - system name = " + systemname);
+	  cg = wala.getCallGrapth();
+	  cha = wala.getClassHierarchy();
+	  nPackageFuncs = wala.getNPackageFuncs();
+	  nTotalFuncs = wala.getNTotalFuncs();
+	  nApplicationFuncs = wala.getNApplicationFuncs();
+	  nPremordialFuncs = wala.getNPremordialFuncs();
+	  nOtherFuncs = wala.getNOtherFuncs();
   }
 
   

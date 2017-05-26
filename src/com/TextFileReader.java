@@ -30,13 +30,33 @@ public class TextFileReader {
 	
 	
 	/**
-	 * For a Common File
+	 * For reading from a common File, NOT in jar
 	 */
 	public TextFileReader(String filestr) {
 		this( Paths.get(filestr) );
 	}
 
 	public TextFileReader(Path filepath) {
+		this( filepath, false );
+	}
+	
+	/**
+	 * For reading from a common file OR a jar-ed file (ie, a file in a jar)
+	 * @param inJar - false:a common file; true: a jar-ed file
+	 */
+	public TextFileReader(String filestr, boolean inJar) {
+		this( Paths.get(filestr), inJar );
+	}
+
+	public TextFileReader(Path filepath, boolean inJar) {
+		if (!inJar)
+			initialize(filepath);
+		else 
+			initializeInJar( filepath );
+	}
+	
+	
+	private void initialize(Path filepath) {
 		this.filepath = filepath;
 		if ( !Files.exists(filepath) )
 			System.out.println("JX - ERROR - !Files.exists @ " + filepath);
@@ -48,15 +68,34 @@ public class TextFileReader {
 		}
 	}
 	
+	private void initializeInJar(Path filepath) {
+		this.filepath = filepath;
+		// I don't know how to check if the file exists here?
+		/*
+		if ( !Files.exists(filepath) )
+			System.out.println("JX - ERROR - !Files.exists @ " + filepath);
+		*/
+		InputStream ins = TextFileReader.class.getClassLoader().getResourceAsStream( filepath.toString() );
+		try {
+	    	this.bufreader = new BufferedReader( new InputStreamReader(ins) );
+    	} catch (Exception e) {
+    		System.out.println("JX - ERROR - TextFileReader: when reading " + filepath.toString() + " inside a classpath");
+    		e.printStackTrace();
+    	}	
+	}
+	
+	
 	/**
 	 * For a file inside a jar package 
 	 * @param class - like "MapReduceTransformer.class"
 	 * @param filestr - like "resource/looplocations"
 	 */
+	@Deprecated
 	public TextFileReader(Class clazz, String filestr) {
 		this( clazz, Paths.get(filestr) );
 	}
 	
+	@Deprecated
 	public TextFileReader(Class clazz, Path filepath) {
 		this.filepath = filepath;
 		// I don't know how to check if the file exists here?

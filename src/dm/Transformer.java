@@ -15,52 +15,55 @@ import javassist.bytecode.*;
 
 import dm.Util.DMOption;
 
+
 public class Transformer implements ClassFileTransformer {
 
-  DMOption option;
+	DMOption option;
 
-  public Transformer(String args) {
-    super();
-    option = new DMOption(args);
-    
-  }
-  
- 
-  //default function in javassist
-  public byte[] transform(ClassLoader loader, String className, Class redefiningClass,
-    ProtectionDomain domain, byte[] bytes) throws IllegalClassFormatException {
-    return transformClass(redefiningClass, bytes);
-  }
+	public Transformer(String args) {
+	    super();
+	    option = new DMOption(args);    
+	}
+	
+	
+	/**
+	 * default function in javassist
+	 */
+	@Override   
+	public byte[] transform(ClassLoader loader, String className, Class<?> redefiningClass,
+	    ProtectionDomain domain, byte[] bytes) throws IllegalClassFormatException {
+	    return transformClass(redefiningClass, bytes);
+	}
 
-  public byte[] transformClass(Class classToTrans, byte[] b) {
-    ClassPool pool = ClassPool.getDefault();
-    pool.importPackage("javax.xml.parsers.DocumentBuilderFactory"); //add for xml
-    CtClass cl = null;
-    try {
-      cl = pool.makeClass(new java.io.ByteArrayInputStream(b));
-      //CtBehavior[] methods = cl.getDeclaredBehaviors();
-      
-      transformClass( cl );
-            
-      b = cl.toBytecode();
-    }
-    catch (Exception e) { e.printStackTrace();}
-    finally {
-      if (cl != null) {
-        cl.detach();
-      }
-    }
-    return b;
-  }
+	
+	public byte[] transformClass(Class<?> classToTrans, byte[] b) {
+	    ClassPool pool = ClassPool.getDefault();
+	    pool.importPackage("javax.xml.parsers.DocumentBuilderFactory"); //add for xml
+	    CtClass cl = null;
+	    try {
+	    	cl = pool.makeClass(new java.io.ByteArrayInputStream(b));
+	    	//CtBehavior[] methods = cl.getDeclaredBehaviors();
+	      
+	    	transformClass( cl );
+	       
+	      	b = cl.toBytecode();
+	    }
+	    catch (Exception e) {
+	    	e.printStackTrace();
+	    }
+	    finally {
+	    	if (cl != null) {
+	    		cl.detach();
+	    	}
+	    }
+	    return b;
+	}
   
-  // modifiedd by JX for mr-4576 & ha-4584
-  public void transformClass(CtClass cl) {}
-  //public void transformMethod(CtClass cl, CtBehavior method) {} //implement in difficult application
+	
+  	// modifiedd by JX for mr-4576 & ha-4584
+  	public void transformClass(CtClass cl) {}
+  	//public void transformMethod(CtClass cl, CtBehavior method) {} //implement in difficult application
 
-  
-  
-  
-  
 }
 
 

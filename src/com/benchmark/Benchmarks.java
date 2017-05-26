@@ -10,7 +10,10 @@ public class Benchmarks {
 	public static final String HB = "HBase";
 	
 	
-	
+	/**
+	 * resolve bug id by a input path. A bug id is like mr-4576, ha-4584
+	 * @param pathStr
+	 */
 	public static String resolveBugId(String pathStr) {
 		Path path = Paths.get( pathStr );
 		for (int i = 0; i < path.getNameCount(); i++) {

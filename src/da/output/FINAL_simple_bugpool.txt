@@ -1,6 +1,5 @@
 CL2: org.apache.hadoop.mapred.Counters$Group-readFields-357;
 CL2: org.apache.hadoop.mapred.Counters-readFields-572;
-CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-2021;
 CL3: org.apache.hadoop.mapred.Counters$Group-readFields-357;
 CL3: org.apache.hadoop.mapred.Counters$Group-write-348;
 CL3: org.apache.hadoop.mapred.Counters-readFields-572;
@@ -16,4 +15,4 @@ CL4: org.apache.hadoop.mapred.Counters-write-560;
 CL4: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-211;
 CL5: org.apache.hadoop.mapred.Counters$Group-readFields-357;
 CL5: org.apache.hadoop.mapred.Counters$Group-write-348;
-summary - 18(#static codepoints=9) from 36 (#static codepoints=19)
+summary - 17(#static codepoints=8) from 36 (#static codepoints=19)

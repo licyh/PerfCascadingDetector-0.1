@@ -63,9 +63,9 @@ import com.ibm.wala.util.strings.StringStuff;
 import com.ibm.wala.viz.DotUtil;
 import com.ibm.wala.viz.PDFViewUtil;
 
-import sa.util.PDFCallGraph;
-import sa.util.PDFTypeHierarchy;
-import sa.util.PDFWalaIR;
+import sa.wala.util.PDFCallGraph;
+import sa.wala.util.PDFTypeHierarchy;
+import sa.wala.util.PDFWalaIR;
 
 
 
@@ -118,8 +118,29 @@ public class WalaAnalyzer {
     	return this.cha;
     }
     
+    public int getNPackageFuncs() {
+    	return nPackageFuncs;
+    }
+    
+    public int getNTotalFuncs() {
+    	return nTotalFuncs;
+    }
+    
+    public int getNApplicationFuncs() {
+    	return nApplicationFuncs;
+    }
+    
+    public int getNPremordialFuncs() {
+    	return nPremordialFuncs;
+    }
+    
+    public int getNOtherFuncs() {
+    	return nOtherFuncs;
+    }
+    
  
-    public void initialize() {
+    
+    private void initialize() {
     	String alljars = getAllJars();
     	try {
     		walaAnalysis(alljars);
@@ -138,7 +159,7 @@ public class WalaAnalyzer {
     }
 
     
-    public String getAllJars() {
+    private String getAllJars() {
 	    // Get all *.jar Files, format like "jarpath1:jarpath2:jarpath3:xxx"
     	String alljars = "";   
 	    if (PDFCallGraph.isDirectory( dirpath.toString() )) {
@@ -157,7 +178,7 @@ public class WalaAnalyzer {
     }
     
  
-    public void walaAnalysis(String alljars) throws IOException, IllegalArgumentException, CallGraphBuilderCancelException, UnsoundGraphException, WalaException {
+    private void walaAnalysis(String alljars) throws IOException, IllegalArgumentException, CallGraphBuilderCancelException, UnsoundGraphException, WalaException {
 		System.out.println("JX - INFO - walaAnalysis...");
 
 	    // Create a Scope                                                                           #"JXJavaRegressionExclusions.txt"
@@ -213,7 +234,7 @@ public class WalaAnalyzer {
 	}
 	
     
-    public void infoWalaAnalysisEnv() {
+    private void infoWalaAnalysisEnv() {
     	System.out.println("\nJX-infoWalaAnalysisEnv");
       
     	int nAppNatives = 0;
@@ -250,7 +271,7 @@ public class WalaAnalyzer {
     }
   
     
-    public void readPackageScope() {
+    private void readPackageScope() {
     	System.out.println("\nJX-readPackageScope");
     	String filepath = Paths.get(dirpath.toString(), "package-scope.txt").toString();
 

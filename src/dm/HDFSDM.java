@@ -12,6 +12,7 @@ import dm.Util.MethodUtil;
 import com.APIInfo;
 import com.API;
 import com.RPCInfo;
+import com.benchmark.BugConfig;
 import com.CalleeInfo;
 
 
@@ -26,18 +27,17 @@ public class HDFSDM {
 
 
 class HDFSTransformer extends Transformer {
+	
+	BugConfig bugConfig = new BugConfig("resource/bugconfig");
+	
 	ClassUtil classUtil;
-	APIInfo apiInfo = new APIInfo();
-	ArrayList<API> apiRead = new ArrayList<API>();
-	ArrayList<API> apiWrite = new ArrayList<API>();
-	//ArrayList<String> rpcRequest = new ArrayList<String>();
-
 	RPCInfo rpcInfo = new RPCInfo();	
 	CalleeInfo calleeInfo = new CalleeInfo();
   
 	//added by JX
 	Transformers transformers = new Transformers();
-  
+
+	
   
 	public HDFSTransformer(String str) {
 	    super(str);
@@ -54,13 +54,6 @@ class HDFSTransformer extends Transformer {
 	    rpcInfo.setInfoFilePath("resource/hd_rpc.txt", 2);
 	    rpcInfo.setInfoFilePath("resource/hd_rpc_v1.txt", 1);
 	    rpcInfo.readFile();
-	}
-
-	public boolean speventcreate(String cn){
-		if (cn.contains("SchedulerEventDispatcher")) return true;
-		if (cn.contains("ContainerLauncherImpl")) return true;
-		if (cn.contains("TaskCleanerImpl")) return true;
-		return false;
 	}
 
 
@@ -91,7 +84,6 @@ class HDFSTransformer extends Transformer {
   		
 		
   		// LIMITS
-  		
   		// instrument for happens-before graph
 		if ( className.startsWith("org.apache.hadoop.hdfs.")
 	            || className.startsWith("org.apache.hadoop.ipc.")
@@ -103,13 +95,12 @@ class HDFSTransformer extends Transformer {
   		
 	    // instrument for target codes
 	    transformers.transformClassForCodeSnippets( cl );
-	    
-	    // instrument for (large) loops
-	    transformers.transformClassForLargeLoops( cl );
 
 	    // instrument for all loops
 		if ( className.startsWith("org.apache.hadoop.hdfs.")
-  				|| className.startsWith("org.apache.hadoop.io.IOUtils")
+				|| className.startsWith("org.apache.hadoop.fs.")
+				//|| className.startsWith("org.apache.hadoop.io.")
+				//|| className.startsWith("org.apache.hadoop.util.")
   				) {
 			try {
 				transformers.transformClassForLoops( cl );
@@ -118,18 +109,15 @@ class HDFSTransformer extends Transformer {
 				e.printStackTrace();
 			}	
 		}
+		
+	    // instrument for (large) loops
+	    //transformers.transformClassForLargeLoops( cl );
 	    
   	}
   
   
 	public void transformClassForHappensBefore(CtClass cl) {
 		String className = cl.getName().toString();
-		
-		if (className.contains("PBClientImpl") ||
-				className.contains("PBServiceImpl") ||
-				className.contains("org.apache.hadoop.yarn.event.EventHandler")) {
-			return;
-		}
 		
 		CtBehavior[] methods = cl.getDeclaredBehaviors();  
 	
@@ -187,8 +175,7 @@ class HDFSTransformer extends Transformer {
 		    	methodUtil.insertCallInstAfter(logClass, thdExitLog, 0);
 		    }
 		    else if (methodName.equals("run") 
-		    		&& (classUtil.isThreadClass(className) || classUtil.isRunnableClass(className))
-		            && !className.contains("EventProcessor")
+		    		&& (classUtil.isThreadClass(className) || classUtil.isRunnableClass(className))  //&& !className.contains("EventProcessor")
 		            ) {
 		    	methodUtil.insertCallInstBefore(logClass, thdEnterLog, 4);
 		    	methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
@@ -204,42 +191,20 @@ class HDFSTransformer extends Transformer {
 		    /**
 		     * EventProcEnter & EventProcExit
 		     * EventCreate
+		     *like methodName.equals("run") && className.contains("EventProcessor") || methodName.equals("handle") 
 		     */
-		    else if (methodName.equals("run") 
-		    		&& className.contains("EventProcessor") 
-		    		) {
-		    	//Commented by JX - this is a bug
-		    	if ( !className.equals("org.apache.hadoop.yarn.server.resourcemanager.ResourceManager$SchedulerEventDispatcher$EventProcessor") ) {
-		    		methodUtil.insertCallInstBefore(logClass, eventProcEnterLog, 43);
-		    		methodUtil.insertCallInstAfter(logClass, eventProcExitLog, 43);
-		    	}
-		        //end-Commented
-		    } 
-		    else if (methodName.equals("handle")) {
-		    	if (!speventcreate(className)){
-		    		injectFlag = true;
-		    		methodUtil.insertCallInstBefore(logClass, eventProcEnterLog, 1);
-		    		methodUtil.insertCallInstAfter(logClass, eventProcExitLog, 1);
-		    	} else
-		    		methodUtil.insertCallInstBefore(logClass, eventCreateLog, 42);
-		    }
+		    // TODO - jx: for now it seems non-exisent  
+		   
 		
 		    /**
 		     * MsgProcEnter & MsgProcExit - for RPC function
+		     * insert RPCEnter & RPCExit log
 		     */
-		    else if (rpcInfo.isRPCMethod(className, methodName) && //is a rpc
-		             (rpcInfo.getVersion(className, methodName) == 1 || // version 1
-		              (rpcInfo.getVersion(className, methodName) == 2 && method.getSignature().endsWith(")V") == false) 
-		              //mainly for refreshServiceAcls method in AdminService.
-		             )
-		            ) {
-		      injectFlag = true;
-		      int rpc_version = rpcInfo.getVersion(className, methodName);
-		      int rpc_flag = rpc_version == 2 ? 2 : 3; //see note in methodUtil.java. flag=2: mrv2 rpc. flag=3: mrv1 rpc.
-		      //insert RPCEnter & RPCExit log
-		      methodUtil.insertCallInstBefore(logClass, msgProcEnterLog, rpc_flag);
-		      methodUtil.insertCallInstAfter(logClass, msgProcExitLog, rpc_flag);
-		
+		    else if (rpcInfo.isRPCMethod(className, methodName)
+		    		&& javassist.Modifier.isPublic(method.getModifiers()) ) {
+		    	int rpc_flag = 3; //flag=3: mrv1 rpc. flag=2: mrv2 rpc. 
+		    	methodUtil.insertCallInstBefore(logClass, msgProcEnterLog, rpc_flag);
+		    	methodUtil.insertCallInstAfter(logClass, msgProcExitLog, rpc_flag);
 		    }
 		    
 		    /**
@@ -263,14 +228,17 @@ class HDFSTransformer extends Transformer {
 		     * MsgSending - for rpc calling
 		     */
 		    methodUtil.insertRPCCallInst(logClass, msgSendingLog, rpcInfo);
-		    methodUtil.insertRPCInvoke(logClass, msgSendingLog);
+		    //methodUtil.insertRPCInvoke(logClass, msgSendingLog);
 		
 		    /**
 		     * ProcessCreate - for process create
 		     */
 		    if (methodName.equals("runCommand") && className.endsWith("org.apache.hadoop.util.Shell")) {
 		      //JX - this is a bug, I've commented it at its subcall
-		      methodUtil.insertCallInstAfter(logClass, processCreateLog, 10);
+		    	if (bugConfig.getBugId().equals("ha-4584"))
+		    		methodUtil.insertCallInstAt(logClass, processCreateLog, 10, 201);
+		    	else if (bugConfig.getBugId().equals("xxx")) {
+		    	}
 		    }
 		   
 		
