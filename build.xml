@@ -3,11 +3,11 @@
 <project name="JXCascading-detector" default="help" basedir=".">
 		<!--src dir-->
         <property name="src.dir" value="src/"/>
-		<property name="src.sa.dir" value = "${src.dir}/sa/"/>
-		<property name="src.dt.dir" value = "${src.dir}/dt/"/>
 		<property name="src.com.dir" value="${src.dir}/com/"/>
+		<property name="src.sa.dir" value = "${src.dir}/sa/"/>
         <property name="src.dm.dir" value="${src.dir}/dm/"/>
 		<property name="src.da.dir" value="${src.dir}/da/"/>
+		<property name="src.dt.dir" value = "${src.dir}/dt/"/>
 		
         <!--build dir-->
         <property name="build.dir" value="build/"/>
@@ -107,11 +107,11 @@
                 <classpath refid="sa.classpath" />
             </javac>
 	    </target>	
+
 	
-	    <!--target compile API&RPC class-->
+	    <!--target compile API&RPC class
         <target name="compile-api-rpc" depends="prepare" description="compile API and RPCInfo class">
                 <javac srcdir="${src.com.dir}" destdir="${build.classes}" includeantruntime="false">
-                        <!-- jx: no need to write following 'includes' actually. & sometimes may failed, need to complile again-->
                         <include name="APIInfo.java" />
                         <include name="API.java" />
                         <include name="RPCInfo.java" />
@@ -119,6 +119,7 @@
                         <classpath refid="classpath" />
                 </javac>
         </target>
+	    -->
 	
         <!--target compile Log class-->
         <target name="compile-log" depends="prepare" description="compile logClass">
@@ -137,14 +138,14 @@
 	
 		<!-- added by JX -->
 		<!--target compile dt, ie, Dynamic testing for all Loops to find large loops-->
-		<target name="compile-dt" depends="prepare, compile-com, compile-api-rpc, compile-dm" description="compile Dynamic testing for all Loops to find large loops">
+		<target name="compile-dt" depends="prepare, compile-com, compile-dm" description="compile Dynamic testing for all Loops to find large loops">
 	        <javac srcdir="${src.dt.dir}" destdir="${build.classes}" includeantruntime="false">
 	                <classpath refid="dt.classpath" />    <!-- <classpath refid="classpath" /> -->
 	        </javac>
 		</target>
 	
         <!--target compile dm (MR) -->
-        <target name="compile-dm" depends="prepare, compile-api-rpc" description="compile dynamic monitor">
+        <target name="compile-dm" depends="prepare, compile-com" description="compile dynamic monitor">
                 <javac srcdir="${src.dm.dir}" destdir="${build.classes}" includeantruntime="false">
                         <classpath refid="classpath" />
                 </javac>
@@ -158,7 +159,7 @@
         </target>
 
         <!--target jar dm-loop-check-->
-        <target name="jar-dm-loop" depends="compile-dm, compile-api-rpc, jar-log" description="generate jar for loop check">
+        <target name="jar-dm-loop" depends="compile-dm, compile-com, jar-log" description="generate jar for loop check">
                 <jar jarfile="${build.lib}/Loop.jar">
                         <fileset dir="${build.classes}" includes="com/dm/**/*.class" />
                         <fileset dir="${build.classes}" includes="com/*.class" />
@@ -224,7 +225,7 @@
         <target name="jar-dm-mr-4813" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
                 <jar jarfile="${build.lib}/MR_DM.jar">
                         <fileset dir="${build.classes}" includes="dm/**/*.class" />
-                        <fileset dir="${build.classes}" includes="com/*.class" />
+                        <fileset dir="${build.classes}" includes="com/**/*.class" />
                         <manifest>
                                 <attribute name="Boot-Class-Path" value="javassist.jar"/>
                                 <attribute name="Premain-Class" value="dm.MapReduceDM" />
@@ -254,7 +255,7 @@
         <target name="jar-dm-mr-4576" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
             <jar jarfile="${build.lib}/MR_DM.jar">
                     <fileset dir="${build.classes}" includes="dm/**/*.class" />
-                    <fileset dir="${build.classes}" includes="com/*.class" />
+                    <fileset dir="${build.classes}" includes="com/**/*.class" />
                     <manifest>
                             <attribute name="Boot-Class-Path" value="javassist.jar"/>
                             <attribute name="Premain-Class" value="dm.MapReduceDM" />
@@ -279,7 +280,7 @@
 	    <target name="jar-dm-ha-4584" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
 	        <jar jarfile="${build.lib}/DM.jar">
 	                <fileset dir="${build.classes}" includes="dm/**/*.class" />
-	                <fileset dir="${build.classes}" includes="com/*.class" />
+	                <fileset dir="${build.classes}" includes="com/**/*.class" />
 	                <manifest>
 	                        <attribute name="Boot-Class-Path" value="javassist.jar"/>
 	                        <attribute name="Premain-Class" value="dm.HDFSDM" />
@@ -299,7 +300,7 @@
         <!--JX - the following are not used for now -->	
         <!--target jar dm-CA-->
 	
-		<target name="jar-dm-CA" depends="compile-dm, compile-api-rpc, jar-log" description="generate jar for CA dynamic monitor">
+		<target name="jar-dm-CA" depends="compile-dm, compile-com, jar-log" description="generate jar for CA dynamic monitor">
                 <jar jarfile="${build.lib}/CA_DM.jar">
                         <fileset dir="${build.classes}" includes="com/dm/**/*.class" />
                         <fileset dir="${build.classes}" includes="com/*.class" />
@@ -314,7 +315,7 @@
                 </jar>
         </target>
         <!--target jar dm-HB-->
-        <target name="jar-dm-HB" depends="compile-dm, compile-api-rpc, jar-log" description="generate jar for HBase dynamic monitor">
+        <target name="jar-dm-HB" depends="compile-dm, compile-com, jar-log" description="generate jar for HBase dynamic monitor">
                 <jar jarfile="${build.lib}/HB_DM.jar">
                         <fileset dir="${build.classes}" includes="com/dm/**/*.class" />
                         <fileset dir="${build.classes}" includes="com/*.class" />
@@ -336,7 +337,7 @@
         </target>
 
         <!--target jar dm-ZK-->
-        <target name="jar-dm-ZK" depends="compile-dm, compile-api-rpc, jar-log" description="generate jar for ZK dynamic monitor">
+        <target name="jar-dm-ZK" depends="compile-dm, compile-com, jar-log" description="generate jar for ZK dynamic monitor">
                 <jar jarfile="${build.lib}/ZK_DM.jar">
                         <fileset dir="${build.classes}" includes="com/dm/**/*.class" />
                         <fileset dir="${build.classes}" includes="com/*.class" />
