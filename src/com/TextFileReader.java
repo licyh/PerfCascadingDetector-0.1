@@ -64,6 +64,7 @@ public class TextFileReader {
 		try {
 			this.bufreader = new BufferedReader( new FileReader( filepath.toString() ) );
 		} catch (FileNotFoundException e) {
+			System.out.println("JX - ERROR - TextFileReader: when reading " + filepath.toString() );
 			e.printStackTrace();
 		}
 	}
@@ -113,6 +114,26 @@ public class TextFileReader {
 	}
 		
 	
+	
+	/**
+	 * For reading all and saving
+	 */
+	public void readFile() {		
+		String tmpline;
+		while ( (tmpline = readLine()) != null ) {
+			strs.add( tmpline );
+			String[] tmpstrs = tmpline.split("\\s+");
+			splitstrs.add( tmpstrs );
+		}
+		try {
+			bufreader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("JX - INFO - successfully read " + strs.size() + " lines in " + filepath.toString());
+	}
+
+	
 	/**
 	 * For people who want to read directly from outside (ie, read file line by line manually) 
 	 * @return - maybe null
@@ -135,21 +156,15 @@ public class TextFileReader {
 	
 	
 	/**
-	 * For reading all and saving
+	 * close() for manually reading line by line
 	 */
-	public void readFile() {		
-		String tmpline;
-		while ( (tmpline = readLine()) != null ) {
-			strs.add( tmpline );
-			String[] tmpstrs = tmpline.split("\\s+");
-			splitstrs.add( tmpstrs );
-		}
+	public void close() {
 		try {
 			bufreader.close();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("JX - INFO - successfully read " + strs.size() + " lines in " + filepath.toString());
 	}
-			
+	
 }

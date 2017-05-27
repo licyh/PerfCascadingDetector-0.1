@@ -1,0 +1,28 @@
+
+
+
+======
+FINAL - static I/O pruning
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;                #reported bug, call the next
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset-getGenerationStampFromFile-70;         #reported bug, called by the above
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;       #same as all above, also affect the normal writes(but different threads) see PS
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset-getGenerationStampFromFile-70;#same as all above,also affect the normal writes(but different threads) see PS
+	PS: 
+	CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-221;org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-221;org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolume-getBlockInfo-519;org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-680;org.apache.hadoop.hdfs.server.datanode.FSDataset-getBlockReport-1637;org.apache.hadoop.hdfs.server.datanode.DataBlockScanner-init-203;org.apache.hadoop.hdfs.server.datanode.DataBlockScanner-run-600;java.lang.Thread-run-745;
+	|org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo--1;org.apache.hadoop.hdfs.server.datanode.FSDataset-getBlockReport-1637;org.apache.hadoop.hdfs.server.datanode.DataBlockScanner-init-203;org.apache.hadoop.hdfs.server.datanode.DataBlockScanner-run-600;java.lang.Thread-run-745;
+	|org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getNextVolume--1;org.apache.hadoop.hdfs.server.datanode.FSDataset-writeToBlock-1386;org.apache.hadoop.hdfs.server.datanode.BlockReceiver-<init>-99;org.apache.hadoop.hdfs.server.datanode.DataXceiver-writeBlock-299;org.apache.hadoop.hdfs.server.datanode.DataXceiver-run-107;java.lang.Thread-run-745;
+	|org.apache.hadoop.hdfs.server.datanode.FSDataset-writeToBlock-1365;org.apache.hadoop.hdfs.server.datanode.BlockReceiver-<init>-99;org.apache.hadoop.hdfs.server.datanode.DataXceiver-writeBlock-299;org.apache.hadoop.hdfs.server.datanode.DataXceiver-run-107;java.lang.Thread-run-745;
+	|org.apache.hadoop.hdfs.server.datanode.FSDataset-finalizeBlockInternal--1;org.apache.hadoop.hdfs.server.datanode.FSDataset-finalizeBlock-1516;org.apache.hadoop.hdfs.server.datanode.BlockReceiver$PacketResponder-run-855;java.lang.Thread-run-745;
+	CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-221;org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-221;org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolume-getBlockInfo-519;org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-680;org.apache.hadoop.hdfs.server.datanode.FSDataset-getBlockReport-1637;org.apache.hadoop.hdfs.server.datanode.DataBlockScanner-init-203;org.apache.hadoop.hdfs.server.datanode.DataBlockScanner-run-600;java.lang.Thread-run-745;
+	|org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo--1;org.apache.hadoop.hdfs.server.datanode.FSDataset-getBlockReport-1637;org.apache.hadoop.hdfs.server.datanode.DataBlockScanner-init-203;org.apache.hadoop.hdfs.server.datanode.DataBlockScanner-run-600;java.lang.Thread-run-745;
+	|org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getNextVolume--1;org.apache.hadoop.hdfs.server.datanode.FSDataset-writeToBlock-1386;org.apache.hadoop.hdfs.server.datanode.BlockReceiver-<init>-99;org.apache.hadoop.hdfs.server.datanode.DataXceiver-writeBlock-299;org.apache.hadoop.hdfs.server.datanode.DataXceiver-run-107;java.lang.Thread-run-745;
+	|org.apache.hadoop.hdfs.server.datanode.FSDataset-writeToBlock-1365;org.apache.hadoop.hdfs.server.datanode.BlockReceiver-<init>-99;org.apache.hadoop.hdfs.server.datanode.DataXceiver-writeBlock-299;org.apache.hadoop.hdfs.server.datanode.DataXceiver-run-107;java.lang.Thread-run-745;
+	|org.apache.hadoop.hdfs.server.datanode.FSDataset-setVisibleLength--1;org.apache.hadoop.hdfs.server.datanode.BlockReceiver-receivePacket-479;org.apache.hadoop.hdfs.server.datanode.BlockReceiver-receiveBlock-532;org.apache.hadoop.hdfs.server.datanode.DataXceiver-writeBlock-398;org.apache.hadoop.hdfs.server.datanode.DataXceiver-run-107;java.lang.Thread-run-745;|
+
+CL2~3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-679;   #small loop - #volumes = 2(from my config)
+CL2~3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getCapacity-664;    #small loop - #volumes = 2(from my config)
+CL2~3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getNextVolume-645;  #small loop - while (true) { return/throw }
+CL2~3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getRemaining-672;   #small loop - #volumes = 2(from my config)
+summary - 12(#static codepoints=6) from 18 (#static codepoints=10)
+
+

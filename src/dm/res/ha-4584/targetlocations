@@ -1,2 +1,6 @@
-org.apache.hadoop.hdfs.server.datanode.DataXceiver run 107				TargetCodeBegin
-org.apache.hadoop.hdfs.server.datanode.DataXceiver run 108				TargetCodeEnd 
+// normal write op
+//org.apache.hadoop.hdfs.server.datanode.DataXceiver run 107				TargetCodeBegin
+//org.apache.hadoop.hdfs.server.datanode.DataXceiver run 108				TargetCodeEnd 
+// heartbeat sending
+org.apache.hadoop.hdfs.server.datanode.DataNode offerService 885				TargetCodeBegin
+org.apache.hadoop.hdfs.server.datanode.DataNode offerService 891				TargetCodeEnd

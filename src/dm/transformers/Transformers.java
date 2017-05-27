@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.TextFileReader;
+
 import dm.Transformer;
 import javassist.CannotCompileException;
 import javassist.CtBehavior;
@@ -38,71 +40,86 @@ public class Transformers {
  
 	
 	public Transformers() {
-	    //read targetlocations & largelooplocations
-	    read();
+	    //read targetlocations 
+	    readTargets();
 	    //read loop locations' file for instrumentation
-	    readLoopLocations();
+	    readLoops();
+	    //read largelooplocations
+	    readLargeLoops();
 	}
 	
 	
-	public void read() {
-	    InputStream ins;
-	    BufferedReader bufreader;
+	public void readTargets() {
+		TextFileReader reader;
 	    String tmpline;
-	    try {
-	    	// Read target code instrumentation infos
-	    	ins = Transformer.class.getClassLoader().getResourceAsStream("resource/targetlocations");
-	    	bufreader = new BufferedReader( new InputStreamReader(ins) );
-	    	//BufferedReader bufreader = new BufferedReader( new FileReader("resource/targetlocations") );
-			while ( (tmpline = bufreader.readLine()) != null ) {
-				String[] strs = tmpline.trim().split("\\s+");
-				if ( tmpline.trim().length() > 0 ) {
-					classesForInst.add( strs[0] );
-					methodsForInst.add( strs[1] );
-					linesForInst.add( strs[2] );
-					typesForInst.add( strs[3] );
-					flagsForInst.add(0);
-				}
-			}
-			bufreader.close();
-	    	ins = Transformer.class.getClassLoader().getResourceAsStream("resource/targetinstructions");
-	    	bufreader = new BufferedReader( new InputStreamReader(ins) );
-			//bufreader = new BufferedReader( new FileReader("resource/targetinstructions") );
-			instBegin = bufreader.readLine();
-			instEnd = bufreader.readLine();
-			bufreader.close();
-			
-			// Read loop instrumentation infos
-			ins = Transformer.class.getClassLoader().getResourceAsStream("resource/largelooplocations");
-	    	bufreader = new BufferedReader( new InputStreamReader(ins) );
-			while ( (tmpline = bufreader.readLine()) != null ) {
-				String[] strs = tmpline.trim().split("\\s+");
-				if ( tmpline.trim().length() > 0 ) {
-					largeloop_classesForInst.add( strs[0] );
-					largeloop_methodsForInst.add( strs[1] );
-					largeloop_linesForInst.add( strs[2] );
-					largeloop_typesForInst.add( strs[3] );
-					largeloop_flagsForInst.add(0);
-				}
-			}
-			bufreader.close();
-	    	ins = Transformer.class.getClassLoader().getResourceAsStream("resource/largeloopinstructions");
-	    	bufreader = new BufferedReader( new InputStreamReader(ins) );
-			largeloop_instBegin = bufreader.readLine();
-			largeloop_instCenter = bufreader.readLine();
-			bufreader.close();
-			
-	    } catch (Exception e) {
-			// TODO Auto-generated catch block
-	    	System.out.println("JX - ERROR - when reading resource/xxxlocations&xxxinstructions at Transformer.java");
-			e.printStackTrace();
+	  
+    	reader = new TextFileReader("resource/targetlocations", true);
+		while ( (tmpline = reader.readLine()) != null ) {
+			String[] strs = tmpline.split("\\s+");
+			classesForInst.add( strs[0] );
+			methodsForInst.add( strs[1] );
+			linesForInst.add( strs[2] );
+			typesForInst.add( strs[3] );
+			flagsForInst.add(0);
 		}
+		reader.close();
 		
+		reader = new TextFileReader("resource/targetinstructions", true);
+		instBegin = reader.readLine();
+		instEnd = reader.readLine();
+		reader.close();
+		
+		// for DEBUG
 		System.out.println("JX - " + classesForInst.size() + " locations are loaded");
 		System.out.println("JX - " + "classesForInst = " + classesForInst);
 		System.out.println("JX - " + "methodsForInst = " + methodsForInst);
 		System.out.println("JX - " + "linesForInst =  " + linesForInst );
 		System.out.println("JX - " + "instructions = " + instBegin + "*" + instEnd + "*");
+	}
+	
+	
+	public void readLoops() {
+		TextFileReader reader;
+	    String tmpline;
+	    
+	    reader = new TextFileReader("resource/looplocations", true);
+    	String[] nums = reader.readLine().split("\\s+");
+    	int num_of_methods = Integer.parseInt( nums[0] );
+    	int num_of_loops = Integer.parseInt( nums[1] );
+		while ( (tmpline = reader.readLine()) != null ) {
+			String[] strs = tmpline.split("\\s+");
+			String methodsig = strs[0];
+			int nloops = Integer.parseInt( strs[1] );
+			Integer[] loops = new Integer[nloops];
+			for (int i = 0; i < nloops; i++)
+				loops[i] = Integer.parseInt( strs[2+i] );
+			looplocations.put(methodsig, loops);
+		}
+		reader.close();
+	    
+		System.out.println("JX - successfully read " + looplocations.size() + " loop locations for instrumentation");      
+	}
+		  
+	
+	public void readLargeLoops() {
+		TextFileReader reader;
+	    String tmpline;
+	  
+	    reader = new TextFileReader("resource/largelooplocations", true);
+		while ( (tmpline = reader.readLine()) != null ) {
+			String[] strs = tmpline.split("\\s+");
+			largeloop_classesForInst.add( strs[0] );
+			largeloop_methodsForInst.add( strs[1] );
+			largeloop_linesForInst.add( strs[2] );
+			largeloop_typesForInst.add( strs[3] );
+			largeloop_flagsForInst.add(0);
+		}
+		reader.close();
+    	
+		reader = new TextFileReader("resource/largeloopinstructions", true);
+		largeloop_instBegin = reader.readLine();
+		largeloop_instCenter = reader.readLine();
+		reader.close();
 		
 		System.out.println("JX - " + largeloop_classesForInst.size() + " locations are loaded");
 		System.out.println("JX - " + "largeloop_classesForInst = " + largeloop_classesForInst);
@@ -110,41 +127,8 @@ public class Transformers {
 		System.out.println("JX - " + "largeloop_linesForInst =  " + largeloop_linesForInst );
 		System.out.println("JX - " + "largeloop_instructions = " + largeloop_instBegin + "*" + largeloop_instCenter + "*");
 	}
-  
 	
-	public void readLoopLocations() {
-		InputStream ins;
-	    BufferedReader bufreader;
-	    String tmpline;
-	    try {
-			// Read loop instrumentation infos
-			ins = Transformer.class.getClassLoader().getResourceAsStream("resource/looplocations");
-	    	bufreader = new BufferedReader( new InputStreamReader(ins) );
-	    	String[] nums = bufreader.readLine().trim().split("\\s+");
-	    	int num_of_methods = Integer.parseInt( nums[0] );
-	    	int num_of_loops = Integer.parseInt( nums[1] );
-	        	
-			while ( (tmpline = bufreader.readLine()) != null ) {
-				String[] strs = tmpline.trim().split("\\s+");
-				if ( tmpline.trim().length() > 0 ) {
-					String methodsig = strs[0];
-					int nloops = Integer.parseInt( strs[1] );
-					Integer[] loops = new Integer[nloops];
-					for (int i = 0; i < nloops; i++)
-						loops[i] = Integer.parseInt( strs[2+i] );
-					looplocations.put(methodsig, loops);
-				}
-			}
-			bufreader.close();
-			
-	    } catch (Exception e) {
-			// TODO Auto-generated catch block
-	    	System.out.println("JX - ERROR - when reading resource/looplocations at Transformer.java");
-			e.printStackTrace();
-		}
-		System.out.println("JX - successfully read " + looplocations.size() + " loop locations for instrumentation");      
-	}
-		  
+	
 		  
 
 	 public void transformClassForCodeSnippets(CtClass cl) {
