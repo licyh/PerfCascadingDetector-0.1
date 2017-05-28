@@ -207,6 +207,12 @@ class HDFSTransformer extends Transformer {
 		    }
 		    
 		    /**
+		     * MsgSending - for rpc calling
+		     */
+		    methodUtil.insertRPCCallInst(logClass, msgSendingLog, rpcInfo);
+		    //methodUtil.insertRPCInvoke(logClass, msgSendingLog);
+		    
+		    /**
 		     * ThdCreate - for thread creation
 		     */
 		    methodUtil.insertCallInst("java.lang.Thread", "start", 0, logClass, thdCreateLog, classUtil);
@@ -222,12 +228,6 @@ class HDFSTransformer extends Transformer {
 		     * ThdJoin - for thread join
 		     */
 		    methodUtil.insertCallInst("java.lang.Thread", "join", 0, logClass, thdJoinLog, classUtil);
-		
-		    /**
-		     * MsgSending - for rpc calling
-		     */
-		    methodUtil.insertRPCCallInst(logClass, msgSendingLog, rpcInfo);
-		    //methodUtil.insertRPCInvoke(logClass, msgSendingLog);
 		
 		    /**
 		     * ProcessCreate - for process create

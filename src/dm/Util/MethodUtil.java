@@ -747,6 +747,12 @@ public void insertRPCInvoke(String logClass, String logMethod) {
               code.addAload(firstParaIndex); //the first parameter. getDMID() in MR.
               code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
             }
+            else if (rpcInfo.isTargetAPP(calledClass, invokeI.calledMethod(), "HD")) {
+                int firstParaIndex = paraLocs.get(1);
+                code.addAload(firstParaIndex); //the first parameter. getDMID() in MR.
+                code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
+            }
+            
 
             if (injectFlag) {
               try {
