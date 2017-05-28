@@ -721,6 +721,8 @@ public void insertRPCInvoke(String logClass, String logMethod) {
           InvokeInst invokeI = new InvokeInst(i);
           String calledClass = invokeI.calledClass();
           if (rpcInfo.isRPCCall(calledClass, invokeI.calledMethod())) {
+        	System.out.println("JX - DEBUG - *" + calledClass + "*" + invokeI.calledMethod() + "*");  
+        	 
             //allocate local variable space.
             Bytecode code = new Bytecode(constPool);
             //int paraNum = rpcInfo.getNumPara(calledClass, invokeI.calledMethod());
@@ -748,11 +750,11 @@ public void insertRPCInvoke(String logClass, String logMethod) {
               code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
             }
             else if (rpcInfo.isTargetAPP(calledClass, invokeI.calledMethod(), "HD")) {
+            	System.out.println("JX - DEBUG - HD*" + calledClass + "*" + invokeI.calledMethod() + "*");
                 int firstParaIndex = paraLocs.get(1);
                 code.addAload(firstParaIndex); //the first parameter. getDMID() in MR.
                 code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
             }
-            
 
             if (injectFlag) {
               try {
