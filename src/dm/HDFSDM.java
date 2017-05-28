@@ -51,8 +51,7 @@ class HDFSTransformer extends Transformer {
 	    classUtil.setSearchScope(option.getValue("s"));
 	
 	    //rpc
-	    rpcInfo.setInfoFilePath("resource/hd_rpc.txt", 2);
-	    rpcInfo.setInfoFilePath("resource/hd_rpc_v1.txt", 1);
+	    rpcInfo.setInfoFilePath("resource/hd_rpc.txt", 1);
 	    rpcInfo.readFile();
 	}
 

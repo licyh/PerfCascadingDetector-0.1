@@ -22,8 +22,12 @@ public class RPCInfo {
     if (str.contains("mr_rpc")) {
       rpcAPP.put(str, "MR");
     }
-    else if (str.contains("hbase_rpc")) {
+    else if (str.contains("hb_rpc")) {
       rpcAPP.put(str, "HB");
+    }
+    //added by JX
+    else if (str.contains("hd_rpc")) {
+        rpcAPP.put(str, "HD");
     }
   }
 
