@@ -42,12 +42,21 @@ public class Transformer implements ClassFileTransformer {
 	    CtClass cl = null;
 	    try {
 	    	cl = pool.makeClass(new java.io.ByteArrayInputStream(b));    //may + CtBehavior[] methods = cl.getDeclaredBehaviors();
-	    	System.out.println("JX - DEBUG - Class: " + cl.getName().toString());
-	    	
-	    	System.out.println("JX - DEBUG - -1");
-	    	transformClass( cl );
-	       
-	    	System.out.println("JX - DEBUG - 12");
+	    	String className = cl.getName().toString();
+	    	// Top Filters - bypass jdk
+	  		if ( className.startsWith("java.")
+	  				|| className.startsWith("sun.")
+	  			 ) {
+	  			//NONE
+	  		}
+	  		else {
+		    	System.out.println("JX - DEBUG - Class: " + cl.getName().toString());
+		    	System.out.println("JX - DEBUG - -1");
+		    	
+		    	transformClass( cl );
+		       
+		    	System.out.println("JX - DEBUG - +1");
+	  		}
 	      	b = cl.toBytecode();
 	    }
 	    catch (Exception e) {

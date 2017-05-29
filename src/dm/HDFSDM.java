@@ -65,12 +65,6 @@ class HDFSTransformer extends Transformer {
   	    		) {
   	        return; //these classes are about xml parser.
   	    }
-  	    
-  		if ( className.startsWith("java.")
-  				|| className.startsWith("sun.")
-  			 ) {
-  			return; //bypass jdk
-  		}
 	    
   		// FILTERS
 		if ( className.startsWith("org.apache.hadoop.xxx.")
@@ -217,7 +211,7 @@ class HDFSTransformer extends Transformer {
 		     * MsgSending - for rpc calling
 		     */
 		    System.out.println("JX - DEBUG - DM - 2");
-		    methodUtil.insertRPCCallInst(logClass, msgSendingLog, rpcInfo);
+		    //methodUtil.insertRPCCallInst(logClass, msgSendingLog, rpcInfo);
 		    //methodUtil.insertRPCInvoke(logClass, msgSendingLog);
 		    
 		    /**
