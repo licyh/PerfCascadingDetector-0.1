@@ -49,7 +49,7 @@ public class RPCInfo {
           if (line.startsWith("//")) {
             continue;
           }
-          //System.out.println("JX - rpc00 - " + line);  
+          System.out.println("JX - DEBUG - hd_rpc: " + line);  
           words = line.split(" ");
           /*System.out.println("Debug >> : " + words[0]);
           System.out.println("Debug >> : " + words[1]);
@@ -110,6 +110,7 @@ public class RPCInfo {
     }
     return rt;
   }
+  
   public boolean isTargetAPP(String iface, String method, String app) {
     //is target app? check iface and method
     boolean rt = false;
