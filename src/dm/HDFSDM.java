@@ -171,21 +171,22 @@ class HDFSTransformer extends Transformer {
 		    if (methodName.equals("main")
 		    		&& Modifier.toString(method.getModifiers()).contains("static")
 		    		) {
+		    	System.out.println("JX - DEBUG - DM - 1.1");
 		    	methodUtil.insertCallInstBefore(logClass, thdEnterLog, 0);
 		    	methodUtil.insertCallInstAfter(logClass, thdExitLog, 0);
 		    }
-		    System.out.println("JX - DEBUG - DM - 2");
 		    else if (methodName.equals("run") 
 		    		&& (classUtil.isThreadClass(className) || classUtil.isRunnableClass(className))  //&& !className.contains("EventProcessor")
 		            ) {
+		    	System.out.println("JX - DEBUG - DM - 1.2");
 		    	methodUtil.insertCallInstBefore(logClass, thdEnterLog, 4);
 		    	methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
 		    }
-		    System.out.println("JX - DEBUG - DM - 3");
 		    else if (methodName.equals("call")
 		    		&& classUtil.isTargetClass(className, "java.util.concurrent.Callable")
 		    		&& method.getSignature().endsWith("Ljava/lang/Object;")==false
 		    		) {
+		    	System.out.println("JX - DEBUG - DM - 1.3");
 			    methodUtil.insertCallInstBefore(logClass, thdEnterLog, 4);
 			    methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
 			}
@@ -202,9 +203,9 @@ class HDFSTransformer extends Transformer {
 		     * MsgProcEnter & MsgProcExit - for RPC function
 		     * insert RPCEnter & RPCExit log
 		     */
-		    System.out.println("JX - DEBUG - DM - 4");
 		    else if (rpcInfo.isRPCMethod(className, methodName)
 		    		&& javassist.Modifier.isPublic(method.getModifiers()) ) {
+		    	System.out.println("JX - DEBUG - DM - 1.4");
 		    	int rpc_flag = 3; //flag=3: mrv1 rpc. flag=2: mrv2 rpc. 
 		    	methodUtil.insertCallInstBefore(logClass, msgProcEnterLog, rpc_flag);
 		    	methodUtil.insertCallInstAfter(logClass, msgProcExitLog, rpc_flag);
@@ -213,14 +214,14 @@ class HDFSTransformer extends Transformer {
 		    /**
 		     * MsgSending - for rpc calling
 		     */
-		    System.out.println("JX - DEBUG - DM - 5");
+		    System.out.println("JX - DEBUG - DM - 2");
 		    methodUtil.insertRPCCallInst(logClass, msgSendingLog, rpcInfo);
 		    //methodUtil.insertRPCInvoke(logClass, msgSendingLog);
 		    
 		    /**
 		     * ThdCreate - for thread creation
 		     */
-		    System.out.println("JX - DEBUG - DM - 6");
+		    System.out.println("JX - DEBUG - DM - 3");
 		    methodUtil.insertCallInst("java.lang.Thread", "start", 0, logClass, thdCreateLog, classUtil);
 		    methodUtil.insertCallInst("java.util.concurrent.ThreadPoolExecutor", "execute", 1, logClass, thdCreateLog, classUtil);
 		    methodUtil.insertCallInst("java.util.concurrent.ThreadPoolExecutor", "submit", 1, logClass, thdCreateLog, classUtil);
@@ -233,13 +234,13 @@ class HDFSTransformer extends Transformer {
 		    /**
 		     * ThdJoin - for thread join
 		     */
-		    System.out.println("JX - DEBUG - DM - 7");
+		    System.out.println("JX - DEBUG - DM - 4");
 		    methodUtil.insertCallInst("java.lang.Thread", "join", 0, logClass, thdJoinLog, classUtil);
 		
 		    /**
 		     * ProcessCreate - for process create
 		     */
-		    System.out.println("JX - DEBUG - DM - 8");
+		    System.out.println("JX - DEBUG - DM - 5");
 		    if (methodName.equals("runCommand") && className.endsWith("org.apache.hadoop.util.Shell")) {
 		      //JX - this is a bug, I've commented it at its subcall
 		    	if (bugConfig.getBugId().equals("ha-4584"))
@@ -253,7 +254,7 @@ class HDFSTransformer extends Transformer {
 		     * lockRequire & lockRelease - for lock accesses
 		     */
 		    // added for mr-4576
-		    System.out.println("JX - DEBUG - DM - 9");
+		    System.out.println("JX - DEBUG - DM - 6");
 		    if (className.startsWith("org.apache.hadoop.ipc."))   //jx: coz this has lots of locks useless
 		        return; 
 		    methodUtil.insertSyncMethod(logClass, lockRequireLog, logClass, lockReleaseLog);
