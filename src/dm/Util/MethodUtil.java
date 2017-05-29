@@ -65,6 +65,7 @@ public class MethodUtil {
     }
   }
 
+  
   public ArrayList<Integer> storePara(Bytecode code, int paraNum, ArrayList<String> paras, int reqStack) {
     int allocLen = paraNum + 1; // +1 for the object instance
     for (int j = 0; j < paraNum; j++) {
@@ -723,10 +724,12 @@ public void insertRPCInvoke(String logClass, String logMethod) {
 		        InvokeInst invokeI = new InvokeInst(i);
 		        String calledClass = invokeI.calledClass();
 		        // jx - DEBUG
+		        /*
 		        if (calledClass.equals("org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol") && invokeI.calledMethod().equals("sendHeartbeat")) {
 		        	  System.out.println("JX - DEBUG - insertRPCCallInst:" + calledClass + "*" + invokeI.calledMethod() + "*");
 		        	  System.out.println("JX - DEBUG - insertRPCCallInst:" + rpcInfo.isRPCCall(calledClass, invokeI.calledMethod()) );
 		        }
+		        */
 		        // end - DEBUG
 		        if (rpcInfo.isRPCCall(calledClass, invokeI.calledMethod())) {
 		        	System.out.println("JX - DEBUG - *" + calledClass + "*" + invokeI.calledMethod() + "*");  
@@ -735,6 +738,8 @@ public void insertRPCInvoke(String logClass, String logMethod) {
 		            Bytecode code = new Bytecode(constPool);
 		            //int paraNum = rpcInfo.getNumPara(calledClass, invokeI.calledMethod());
 		            int paraNum = invokeI.paraNum();
+		            System.out.println("JX - DEBUG - paraNum = " + paraNum);
+		            System.out.println("JX - DEBUG - paraArray() = " + invokeI.paraArray());
 		            //paraNum >0; filter when read rpc.txt in RPCInfo class.
 		            ArrayList<Integer> paraLocs = storePara(code, paraNum, invokeI.paraArray(), 1);
 		
@@ -765,15 +770,15 @@ public void insertRPCInvoke(String logClass, String logMethod) {
 		            }
 		
 		            if (injectFlag) {
-		              try {
-		                int loc = codeIter.insertExAt(cur, code.get());
-		                codeIter.insert(code.getExceptionTable(), loc);
-		                methodInfo.rebuildStackMapIf6(method.getDeclaringClass().getClassPool(),
-		                                method.getDeclaringClass().getClassFile2());
-		              } catch (BadBytecode e) {
-		                System.out.println("Debug: m: " + method.getName() + " in cc: " + method.getDeclaringClass().getName());
-		                e.printStackTrace();
-		              }
+			            try {
+			                int loc = codeIter.insertExAt(cur, code.get());
+			                codeIter.insert(code.getExceptionTable(), loc);
+			                methodInfo.rebuildStackMapIf6(method.getDeclaringClass().getClassPool(),
+			                                method.getDeclaringClass().getClassFile2());
+			            } catch (BadBytecode e) {
+			                System.out.println("Debug: m: " + method.getName() + " in cc: " + method.getDeclaringClass().getName());
+			                e.printStackTrace();
+			            }
 		            }
 			        
 		        }

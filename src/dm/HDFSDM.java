@@ -118,11 +118,14 @@ class HDFSTransformer extends Transformer {
 	
 	    
 	    for (CtBehavior method : methods) {
-	        if ( method.isEmpty() )
-	        	continue;
-	        //System.out.println("JX - DEBUG - DM - 0");
+	        if ( method.isEmpty() ) continue;
+	       
 		    MethodInfo methodInfo = method.getMethodInfo();
 		    String methodName = method.getName().toString();
+		    System.out.println("JX - DEBUG - method: " + methodName);
+	        
+	        //System.out.println("JX - DEBUG - DM - 0");
+
 		    /*if (methodInfo.isConstructor() || methodInfo.isStaticInitializer()) {
 		      return; //bypass all constructors.
 		    }*/
