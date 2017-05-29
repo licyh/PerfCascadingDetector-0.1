@@ -44,18 +44,24 @@ public class Transformer implements ClassFileTransformer {
 	    	cl = pool.makeClass(new java.io.ByteArrayInputStream(b));
 	    	//CtBehavior[] methods = cl.getDeclaredBehaviors();
 	      
+	    	System.out.println("JX - DEBUG - -1");
 	    	transformClass( cl );
 	       
+	    	System.out.println("JX - DEBUG - 12");
 	      	b = cl.toBytecode();
+	      	System.out.println("JX - DEBUG - 13");
 	    }
 	    catch (Exception e) {
+	    	System.out.println("JX - DEBUG - 14");
 	    	e.printStackTrace();
 	    }
 	    finally {
+	    	System.out.println("JX - DEBUG - 15");
 	    	if (cl != null) {
 	    		cl.detach();
 	    	}
 	    }
+	    System.out.println("JX - DEBUG - 16");
 	    return b;
 	}
   
