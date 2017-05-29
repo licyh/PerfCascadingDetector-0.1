@@ -70,9 +70,13 @@ public class RPCInfo {
           
           //System.out.println("JX - rpc000 - *" + words[ind] + "*");
           rpcI.paraNum = Integer.parseInt(words[ind++]);
+          // commented by JX
+          /*
           if (rpcI.paraNum == 0) { //useless rpc
             continue;
           }
+          */
+          // end - commented
           for (int j=0; j < rpcI.paraNum; j++) {
             rpcI.paraType.add(words[ind++]);
           }
@@ -155,6 +159,7 @@ public class RPCInfo {
     }
   }
 }
+
 
 
 class RPC {
