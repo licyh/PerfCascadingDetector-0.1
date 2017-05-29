@@ -93,6 +93,7 @@ class HDFSTransformer extends Transformer {
   		}
   		
 	    // instrument for target codes
+		System.out.println("JX - DEBUG - DM - 10");
 	    transformers.transformClassForCodeSnippets( cl );
 
 	    // instrument for all loops
@@ -102,6 +103,7 @@ class HDFSTransformer extends Transformer {
 				//|| className.startsWith("org.apache.hadoop.util.")
   				) {
 			try {
+				System.out.println("JX - DEBUG - DM - 11");
 				transformers.transformClassForLoops( cl );
 			} catch (CannotCompileException e) {
 				// TODO Auto-generated catch block
@@ -124,7 +126,7 @@ class HDFSTransformer extends Transformer {
 	    for (CtBehavior method : methods) {
 	        if ( method.isEmpty() )
 	        	continue;
-		
+	        System.out.println("JX - DEBUG - DM - 0");
 		    MethodInfo methodInfo = method.getMethodInfo();
 		    String methodName = method.getName().toString();
 		    /*if (methodInfo.isConstructor() || methodInfo.isStaticInitializer()) {
@@ -258,7 +260,9 @@ class HDFSTransformer extends Transformer {
 		    if (className.startsWith("org.apache.hadoop.ipc."))   //jx: coz this has lots of locks useless
 		        return; 
 		    methodUtil.insertSyncMethod(logClass, lockRequireLog, logClass, lockReleaseLog);
+		    System.out.println("JX - DEBUG - DM - 7");
 		    methodUtil.insertMonitorInst(logClass, lockRequireLog, logClass, lockReleaseLog);
+		    System.out.println("JX - DEBUG - DM - 8");
 		    methodUtil.insertRWLock(logClass, rWLockCreateLog);
 		    //end-Added
 		}
