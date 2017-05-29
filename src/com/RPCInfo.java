@@ -99,17 +99,21 @@ public class RPCInfo {
     return rt;
   }
 
-  public boolean isRPCCall(String iface, String method) {
-    //is a RPC call? check iface and method
-    boolean rt = false;
-    for (RPC rpcI : rpcList) {
-      if (rpcI.ifaceName.equals(iface) &&
-          rpcI.methodName.equals(method)) {
-        rt = true;
-      }
-    }
-    return rt;
-  }
+  	public boolean isRPCCall(String iface, String method) {
+  		//is a RPC call? check iface and method
+  		if ( method.equals("sendHeartbeat") ) {
+  			System.out.println("JX - DEBUG - isRPCCall: *" + iface + "*" + method + "*" );
+  			System.out.println("JX - DEBUG - rpcList: " + rpcList );
+  		}
+	    boolean rt = false;
+	    for (RPC rpcI : rpcList) {
+		    if (rpcI.ifaceName.equals(iface) &&
+		        rpcI.methodName.equals(method)) {
+		        rt = true;
+		    }
+	    }
+	    return rt;
+  	}
   
   public boolean isTargetAPP(String iface, String method, String app) {
     //is target app? check iface and method
@@ -154,14 +158,17 @@ public class RPCInfo {
 
 
 class RPC {
-  String className;
-  String ifaceName;
-  String methodName;
-  int version; //mrv1 or mrv2
-  String app; //MR, HB
+	String className;
+	String ifaceName;
+	String methodName;
+	int version; //mrv1 or mrv2
+	String app; //MR, HB
 
-  int paraNum;
-  ArrayList<String> paraType = new ArrayList<String>();
-
+	int paraNum;
+	ArrayList<String> paraType = new ArrayList<String>();
+	
+	public String toString() {
+		return "RPC: " + className + " " + ifaceName + " " + methodName;
+	}
 }
 
