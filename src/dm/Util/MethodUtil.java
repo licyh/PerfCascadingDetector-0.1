@@ -711,7 +711,7 @@ public void insertRPCInvoke(String logClass, String logMethod) {
     Instruction i = new Instruction();
     i.setMethod(method);
     String curClass = method.getDeclaringClass().getName();
-    System.out.println("JX - DEBUG - insertRPCCallInst:" + calledClass + "*" + invokeI.calledMethod() + "*");  
+      
     int cur;
     try {
       while (codeIter.hasNext()) {
@@ -720,6 +720,7 @@ public void insertRPCInvoke(String logClass, String logMethod) {
         if (i.isInvokeinterface() == true) {
           InvokeInst invokeI = new InvokeInst(i);
           String calledClass = invokeI.calledClass();
+          System.out.println("JX - DEBUG - insertRPCCallInst:" + calledClass + "*" + invokeI.calledMethod() + "*");
           if (rpcInfo.isRPCCall(calledClass, invokeI.calledMethod())) {
         	System.out.println("JX - DEBUG - *" + calledClass + "*" + invokeI.calledMethod() + "*");  
         	 
