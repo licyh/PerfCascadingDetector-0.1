@@ -706,78 +706,82 @@ public void insertRPCInvoke(String logClass, String logMethod) {
     }
   }
 
-  public void insertRPCCallInst(String logClass, String logMethod, RPCInfo rpcInfo) {
-    codeIter = codeAttr.iterator();
-    Instruction i = new Instruction();
-    i.setMethod(method);
-    String curClass = method.getDeclaringClass().getName();
-      
-    int cur;
-    try {
-      while (codeIter.hasNext()) {
-        cur = codeIter.next();
-        i.setPos(cur);
-        if (i.isInvokeinterface() == true) {
-          InvokeInst invokeI = new InvokeInst(i);
-          String calledClass = invokeI.calledClass();
-          if (calledClass.equals("org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol") && invokeI.calledMethod().equals("sendHeartbeat")) {
-        	  System.out.println("JX - DEBUG - insertRPCCallInst:" + calledClass + "*" + invokeI.calledMethod() + "*");
-        	  System.out.println("JX - DEBUG - insertRPCCallInst:" + rpcInfo.isRPCCall(calledClass, invokeI.calledMethod()) );
-          }
-          if (rpcInfo.isRPCCall(calledClass, invokeI.calledMethod())) {
-        	System.out.println("JX - DEBUG - *" + calledClass + "*" + invokeI.calledMethod() + "*");  
-        	 
-            //allocate local variable space.
-            Bytecode code = new Bytecode(constPool);
-            //int paraNum = rpcInfo.getNumPara(calledClass, invokeI.calledMethod());
-            int paraNum = invokeI.paraNum();
-            //paraNum >0; filter when read rpc.txt in RPCInfo class.
-            ArrayList<Integer> paraLocs = storePara(code, paraNum, invokeI.paraArray(), 1);
 
-            if (rpcInfo.getVersion(calledClass, invokeI.calledMethod()) == 2 &&
-                rpcInfo.isTargetAPP(calledClass, invokeI.calledMethod(), "MR")) {
-              //paraNum = 1
-              int firstParaIndex = paraLocs.get(1); //0: the obj
-              code.addAload(firstParaIndex); // for identityHashCode()
-              code.addInvokeinterface(invokeI.paraI(0), "getDMID", "()Ljava/lang/String;", 1);
-              code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
-            }
-            else if (rpcInfo.getVersion(calledClass, invokeI.calledMethod()) == 1 &&
-                     rpcInfo.isTargetAPP(calledClass, invokeI.calledMethod(), "MR")) { //mrv1
-              int lastParaIndex = paraLocs.get(paraNum);
-              code.addAload(lastParaIndex); //the last parameter. getDMID() in MR.
-              code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
-            }
-            else if (rpcInfo.isTargetAPP(calledClass, invokeI.calledMethod(), "HB")) {
-              int firstParaIndex = paraLocs.get(1);
-              code.addAload(firstParaIndex); //the first parameter. getDMID() in MR.
-              code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
-            }
-            else if (rpcInfo.isTargetAPP(calledClass, invokeI.calledMethod(), "HD")) {
-            	System.out.println("JX - DEBUG - HD*" + calledClass + "*" + invokeI.calledMethod() + "*");
-                int firstParaIndex = paraLocs.get(1);
-                code.addAload(firstParaIndex); //the first parameter. getDMID() in MR.
-                code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
-            }
-
-            if (injectFlag) {
-              try {
-                int loc = codeIter.insertExAt(cur, code.get());
-                codeIter.insert(code.getExceptionTable(), loc);
-                methodInfo.rebuildStackMapIf6(method.getDeclaringClass().getClassPool(),
-                                method.getDeclaringClass().getClassFile2());
-              } catch (BadBytecode e) {
-                System.out.println("Debug: m: " + method.getName() + " in cc: " + method.getDeclaringClass().getName());
-                e.printStackTrace();
-              }
-            }
-          }
-        }
-      }
-   } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
+	public void insertRPCCallInst(String logClass, String logMethod, RPCInfo rpcInfo) {
+	    codeIter = codeAttr.iterator();
+	    Instruction i = new Instruction();
+	    i.setMethod(method);
+	    String curClass = method.getDeclaringClass().getName();
+	      
+	    int cur;
+	    try {
+		    while (codeIter.hasNext()) {
+		        cur = codeIter.next();
+		        i.setPos(cur);
+		        if ( !i.isInvokeinterface() ) continue;
+		        
+		        InvokeInst invokeI = new InvokeInst(i);
+		        String calledClass = invokeI.calledClass();
+		        // jx - DEBUG
+		        if (calledClass.equals("org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol") && invokeI.calledMethod().equals("sendHeartbeat")) {
+		        	  System.out.println("JX - DEBUG - insertRPCCallInst:" + calledClass + "*" + invokeI.calledMethod() + "*");
+		        	  System.out.println("JX - DEBUG - insertRPCCallInst:" + rpcInfo.isRPCCall(calledClass, invokeI.calledMethod()) );
+		        }
+		        // end - DEBUG
+		        if (rpcInfo.isRPCCall(calledClass, invokeI.calledMethod())) {
+		        	System.out.println("JX - DEBUG - *" + calledClass + "*" + invokeI.calledMethod() + "*");  
+		        	 
+		            //allocate local variable space.
+		            Bytecode code = new Bytecode(constPool);
+		            //int paraNum = rpcInfo.getNumPara(calledClass, invokeI.calledMethod());
+		            int paraNum = invokeI.paraNum();
+		            //paraNum >0; filter when read rpc.txt in RPCInfo class.
+		            ArrayList<Integer> paraLocs = storePara(code, paraNum, invokeI.paraArray(), 1);
+		
+		            if (rpcInfo.getVersion(calledClass, invokeI.calledMethod()) == 2 &&
+		                rpcInfo.isTargetAPP(calledClass, invokeI.calledMethod(), "MR")) {
+		              //paraNum = 1
+		              int firstParaIndex = paraLocs.get(1); //0: the obj
+		              code.addAload(firstParaIndex); // for identityHashCode()
+		              code.addInvokeinterface(invokeI.paraI(0), "getDMID", "()Ljava/lang/String;", 1);
+		              code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
+		            }
+		            else if (rpcInfo.getVersion(calledClass, invokeI.calledMethod()) == 1 &&
+		                     rpcInfo.isTargetAPP(calledClass, invokeI.calledMethod(), "MR")) { //mrv1
+		              int lastParaIndex = paraLocs.get(paraNum);
+		              code.addAload(lastParaIndex); //the last parameter. getDMID() in MR.
+		              code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
+		            }
+		            else if (rpcInfo.isTargetAPP(calledClass, invokeI.calledMethod(), "HB")) {
+		              int firstParaIndex = paraLocs.get(1);
+		              code.addAload(firstParaIndex); //the first parameter. getDMID() in MR.
+		              code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
+		            }
+		            else if (rpcInfo.isTargetAPP(calledClass, invokeI.calledMethod(), "HD")) {
+		            	System.out.println("JX - DEBUG - HD*" + calledClass + "*" + invokeI.calledMethod() + "*");
+		                int firstParaIndex = paraLocs.get(1);
+		                code.addAload(firstParaIndex); //the first parameter. getDMID() in MR.
+		                code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
+		            }
+		
+		            if (injectFlag) {
+		              try {
+		                int loc = codeIter.insertExAt(cur, code.get());
+		                codeIter.insert(code.getExceptionTable(), loc);
+		                methodInfo.rebuildStackMapIf6(method.getDeclaringClass().getClassPool(),
+		                                method.getDeclaringClass().getClassFile2());
+		              } catch (BadBytecode e) {
+		                System.out.println("Debug: m: " + method.getName() + " in cc: " + method.getDeclaringClass().getName());
+		                e.printStackTrace();
+		              }
+		            }
+			        
+		        }
+		    }
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    }
+	}
   
   
   	//Added by JX
