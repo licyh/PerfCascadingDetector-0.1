@@ -483,19 +483,21 @@ public class CascadingFinder {
     
     public String fullCallstacksOfCascadingChain(LoopBug loopbug) {
     	String result = "";
-    	for (int nodeindex: loopbug.cascadingChain)
+    	for (int nodeindex: loopbug.cascadingChain) {
     		//result += gb.fullCallstack(nodeindex) + "|";
     		// for DEBUG
-    		result += gb.getNodePIDTID(nodeindex) + "(" + nodeindex + "):" + gb.fullCallstack(nodeindex) + "|";
+    		result += gb.getNodePIDTID(nodeindex) + ":" + gb.fullCallstack(nodeindex) + "|";
+    	}
     	return result;
     }
     
     public String lastCallstacksOfCascadingChain(LoopBug loopbug) {
     	String result = "";
-    	for (int nodeindex: loopbug.cascadingChain)
+    	for (int nodeindex: loopbug.cascadingChain) {
     		//result += gb.lastCallstack(nodeindex) + "|";
     		// for DEBUG
-    		result += gb.getNodePIDTID(nodeindex) + "(" + nodeindex + "):" + gb.lastCallstack(nodeindex) + "|";
+    		result += gb.getNodePIDTID(nodeindex) + ":" + gb.lastCallstack(nodeindex) + "|";
+    	}
     	return result;
     }
     
