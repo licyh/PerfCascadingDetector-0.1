@@ -140,6 +140,7 @@ public class GraphBuilder {
     int uni4=0;
     boolean mr = false;
     boolean hb = false;	
+    boolean hd = false;
     
     boolean samethread(int x, int y) {
     	IdPair ipx = idplist.get(x);
@@ -154,6 +155,7 @@ public class GraphBuilder {
         //System.out.println(xmldir);
 	    if (xmldir.contains("MR") || xmldir.contains("mr")) mr = true;
 	    if (xmldir.contains("HB") || xmldir.contains("hb")) hb = true;
+	    if (xmldir.contains("HD") || xmldir.contains("hd")) hd = true;
         esum = 0;
         nList = new ArrayList<Node>();
         edge  = new ArrayList<ArrayList<Pair>>();
@@ -317,6 +319,7 @@ public class GraphBuilder {
 						    	//System.out.println("set mheader = "+index);
 						    }
 			            }
+                        
 						if (tp.equals("MsgProcEnter")){
 						    mflag = -1;
 						    if (curmsg >-1)
@@ -1093,14 +1096,17 @@ public class GraphBuilder {
         }
         System.out.println(notfound +" in "+genevent+ " is not found in event part");
 	
-        /***** JX - 3. find out MsgSending->MsgProcEnter. Ie, build the Msg caller and callee relation *****/
-        
+        /**
+         * JX - 3. find out MsgSending->MsgProcEnter. 
+         * Ie, build the Msg caller and callee relation
+         */
         notfound = 0;
         int genmsg = 0;
         HashMap<IdPair,ArrayList<Integer>> count = new HashMap<IdPair, ArrayList<Integer>>();
         IdPair sender;
         ArrayList<IdPair> receiver = new ArrayList<IdPair>();
         for (String st : hashMsgSending.keySet()) {
+        	// jx - multi senders for a same hashcode - not use for now
             if (hashMsgSending.get(st).size() > 1) {
                 System.out.println(st+" has multi senders");
                 count.clear();
@@ -1197,8 +1203,9 @@ public class GraphBuilder {
                     genmsg++;
                     loop ++;
                 }
-            }  // no use for now 
-            else{
+            }
+            // jx - single sender(msg sending) - normal situation
+            else {
                 int xx = hashMsgSending.get(st).get(0);
                 int sum = 0;
                 int yy =-1;
@@ -1209,7 +1216,7 @@ public class GraphBuilder {
 	                    if (element.getElementsByTagName("OPVAL").item(0).getTextContent().equals(st)){
         	                if (sum == 0) {
                 	            yy = y;
-				    if (y == 36) System.out.println("36 is matched to "+xx);
+                	            if (y == 36) System.out.println("36 is matched to "+xx);
                         	    sum ++;
 	                        }else {
         	                    System.out.println(st + " more than one receiver : " + yy + " " + y);
@@ -1217,38 +1224,40 @@ public class GraphBuilder {
                        		}
 	                    }
         	        }
+	                // jx: have matched msg enter
     	            if (sum > 0) {
         	            genmsg++;
                 	    addedge(xx, yy, 3);
                     	//System.out.println(st +" : "+xx+"->"+yy);
-					    if (mr || hb){
+                	    // commented by JX
+					    //if (mr || hb){
 						int xt = xx+1;
 						int yt = -1;
 						int sumt =0;
 						if (samethread(xt,xx)){
-						for (int y : typeref.get("MsgProcExit")){
-			                            Node node = nList.get(y);
-		        	                    Element element = (Element) node;
-		                	            if (element.getElementsByTagName("OPVAL").item(0).getTextContent().equals(st)){
-		                        	        if (sumt == 0) {
-		                                	    yt = y;
-		                               	 	    sumt ++;
-		                                	}else {
-		                              // 		     System.out.println(st + " more than one exit: " + yt+ " " + y);
-		                                    		continue;
-		                                	}
-		                            	    }
-						}
-						if (sumt > 0){
-							addedge(yt, xt, 3);
-							genmsg++;
-		                               	//	System.out.println(st + " exit " + yt + " to "+ xt);
-						}
-		                        }
-					}
-		                	}else {
+							for (int y : typeref.get("MsgProcExit")){
+				                            Node node = nList.get(y);
+			        	                    Element element = (Element) node;
+			                	            if (element.getElementsByTagName("OPVAL").item(0).getTextContent().equals(st)){
+			                        	        if (sumt == 0) {
+			                                	    yt = y;
+			                               	 	    sumt ++;
+			                                	}else {
+			                              // 		     System.out.println(st + " more than one exit: " + yt+ " " + y);
+			                                    		continue;
+			                                	}
+			                            	    }
+							}
+							if (sumt > 0){
+								addedge(yt, xt, 3);
+								genmsg++;
+			                               	//	System.out.println(st + " exit " + yt + " to "+ xt);
+							}
+		                }
+					    //}
+		            } else {
 		                    	//System.out.println(st + " message has no receiver ");
-		                	}
+		            }
 				} else {
 				    /*
 				    System.out.println(xx+" Processing "+st);
@@ -1565,6 +1574,7 @@ JX - DEBUG - 34802 : org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496; 9822
 	}
 	return s;
     }
+    
     public boolean buildMsgSync(int xx, int yy){
         if (xx == yy) return true;
         int f = 0;
@@ -1614,6 +1624,7 @@ JX - DEBUG - 34802 : org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496; 9822
         return true;
     }
     
+    
     public void addedge(int from , int to){
         Pair p1 = new Pair(from,2);
         Pair p2 = new Pair(to,2);
@@ -1622,10 +1633,11 @@ JX - DEBUG - 34802 : org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496; 9822
         esum ++;
     }
     
+    
     public void addedge(int from , int to, int type){
-        // type:  1 -> thread creation and enter,10 -> thread join, 
-    	//        2 -> Eventhandle caller and callee,20 -> event call back (no use) 
-    	//        3 -> Msgsender and Msgreceiver,30 -> rpc call back
+        // type:  1 -> thread creation and enter,		10 -> thread join, 
+    	//        2 -> Eventhandle caller and callee,	20 -> event call back (no use) 
+    	//        3 -> Msgsender and Msgreceiver,		30 -> rpc call back
         if ((type == 1)||(type == 2)||(type == 3)){
             //if (emlink.get(to ) != -1)
         	//System.out.println(to + " has msg/event/thd parent already: " + emlink.get(to) + " , be set to " + from);
@@ -2908,23 +2920,23 @@ public void stasticalana(int x, int y, int freq) {
                     String yclass = sy.getElementsByTagName("Class").item(0).getTextContent();
                     if (!xclass.equals(yclass)) continue;
 		    if (reachbitset.get(sendi).get(sendj)){
-			addedge(exiti,j);
-			change++;mc++;medgesum++;
+		    	addedge(exiti,j);
+		    	change++;mc++;medgesum++;
 		    }
-                    if (reachbitset.get(sendj).get(sendi)){
-                        addedge(exitj,i);
-                        change++;mc++;medgesum++;
-                    }
+            if (reachbitset.get(sendj).get(sendi)){
+                addedge(exitj,i);
+                change++;mc++;medgesum++;
+            }
 		}
 		else{
 		    if (reachbitset.get(sendi).get(sendj)){
-                        addedge(exiti,j);
-                        change++;mc++;medgesum++;
-                    }
-                    if (reachbitset.get(sendj).get(sendi)){
-                        addedge(exitj,i);
-                        change++;mc++;medgesum++;
-                    }
+                addedge(exiti,j);
+                change++;mc++;medgesum++;
+            }
+            if (reachbitset.get(sendj).get(sendi)){
+                addedge(exitj,i);
+                change++;mc++;medgesum++;
+            }
 		}
 	}
 	System.out.println("msg change = "+mc + "; event change = "+ec);

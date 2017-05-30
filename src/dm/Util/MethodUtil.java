@@ -719,18 +719,10 @@ public void insertRPCInvoke(String logClass, String logMethod) {
 		    while (codeIter.hasNext()) {
 		        cur = codeIter.next();
 		        i.setPos(cur);
-		        if ( !i.isInvokeinterface() ) continue;
-		        
+		        if ( !i.isInvokeinterface() ) continue;   
+	
 		        InvokeInst invokeI = new InvokeInst(i);
 		        String calledClass = invokeI.calledClass();
-		        // jx - DEBUG
-		        /*
-		        if (calledClass.equals("org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol") && invokeI.calledMethod().equals("sendHeartbeat")) {
-		        	  System.out.println("JX - DEBUG - insertRPCCallInst:" + calledClass + "*" + invokeI.calledMethod() + "*");
-		        	  System.out.println("JX - DEBUG - insertRPCCallInst:" + rpcInfo.isRPCCall(calledClass, invokeI.calledMethod()) );
-		        }
-		        */
-		        // end - DEBUG
 		        if (rpcInfo.isRPCCall(calledClass, invokeI.calledMethod())) {
 		        	System.out.println("JX - DEBUG - *" + calledClass + "*" + invokeI.calledMethod() + "*");  
 		        	 
