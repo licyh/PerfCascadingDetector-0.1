@@ -1,19 +1,7 @@
-18 (#static codepoints=10)
-CL2: org.apache.hadoop.hdfs.server.datanode.BlockReceiver$PacketResponder-close-747;
-CL2: org.apache.hadoop.hdfs.server.datanode.BlockReceiver$PacketResponder-run-787;
-CL2: org.apache.hadoop.hdfs.server.datanode.DataNode-offerService-922;
+6 (#static codepoints=6)
+CL2: org.apache.hadoop.hdfs.server.common.UpgradeObjectCollection-getDistributedUpgrades-117;
 CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;
 CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;
 CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-679;
-CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getCapacity-664;
 CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getNextVolume-645;
-CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getRemaining-672;
-CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset-getGenerationStampFromFile-70;
-CL3: org.apache.hadoop.hdfs.server.datanode.DataNode-offerService-922;
-CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;
-CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;
-CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-679;
-CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getCapacity-664;
-CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getNextVolume-645;
-CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getRemaining-672;
-CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset-getGenerationStampFromFile-70;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-heartbeatCheck-3281;
