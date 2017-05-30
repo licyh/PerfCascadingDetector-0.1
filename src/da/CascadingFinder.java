@@ -234,6 +234,7 @@ public class CascadingFinder {
     
     
     // 1. findImmediateBugs
+    
     int tmpflag = 0;  //just for test
     public void findImmediateBugs(int beginIndex, int endIndex) {
     	if ( !gb.reachbitset.get(beginIndex).get(endIndex) ) {
@@ -286,6 +287,7 @@ public class CascadingFinder {
     
     
     // 2. findLockRelatedBugs
+    
     /** JX - findLockRelatedBugs - */    
     public void findLockRelatedBugs( List<Integer> firstbatchLocks ) {
     	System.out.println( "JX - findLockRelatedBugs" );
@@ -482,14 +484,18 @@ public class CascadingFinder {
     public String fullCallstacksOfCascadingChain(LoopBug loopbug) {
     	String result = "";
     	for (int nodeindex: loopbug.cascadingChain)
-    		result += gb.fullCallstack(nodeindex) + "|";
+    		//result += gb.fullCallstack(nodeindex) + "|";
+    		// for DEBUG
+    		result += gb.getNodePIDTID(nodeindex) + "(" + nodeindex + "):" + gb.fullCallstack(nodeindex) + "|";
     	return result;
     }
     
     public String lastCallstacksOfCascadingChain(LoopBug loopbug) {
     	String result = "";
     	for (int nodeindex: loopbug.cascadingChain)
-    		result += gb.lastCallstack(nodeindex) + "|";
+    		//result += gb.lastCallstack(nodeindex) + "|";
+    		// for DEBUG
+    		result += gb.getNodePIDTID(nodeindex) + "(" + nodeindex + "):" + gb.lastCallstack(nodeindex) + "|";
     	return result;
     }
     

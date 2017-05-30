@@ -122,7 +122,7 @@ class HDFSTransformer extends Transformer {
 	       
 		    MethodInfo methodInfo = method.getMethodInfo();
 		    String methodName = method.getName().toString();
-		    System.out.println("JX - DEBUG - method: " + methodName);
+		    //System.out.println("JX - DEBUG - method: " + methodName);
 	        
 	        //System.out.println("JX - DEBUG - DM - 0");
 
@@ -213,7 +213,7 @@ class HDFSTransformer extends Transformer {
 		    /**
 		     * MsgSending - for rpc calling
 		     */
-		    System.out.println("JX - DEBUG - DM - 2");
+		    //System.out.println("JX - DEBUG - DM - 2");
 		    methodUtil.insertRPCCallInst(logClass, msgSendingLog, rpcInfo);
 		    //methodUtil.insertRPCInvoke(logClass, msgSendingLog);
 		    

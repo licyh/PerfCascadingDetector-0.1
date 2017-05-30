@@ -1,0 +1,9 @@
+Target Code Snippet #15: (2981 to 2991)
+including lock - 18393-31:2982:org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getCapacity--1;org.apache.hadoop.hdfs.server.datanode.FSDataset-getCapacity-978;
+including lock - 18393-31:2986:org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getRemaining--1;org.apache.hadoop.hdfs.server.datanode.FSDataset-getRemaining-985;
+including lock - 18256-32:4924:org.apache.hadoop.hdfs.server.namenode.FSNamesystem-handleHeartbeat-2546;org.apache.hadoop.hdfs.server.namenode.NameNode-sendHeartbeat-979;
+including lock - 18256-32:4925:org.apache.hadoop.hdfs.server.namenode.FSNamesystem-handleHeartbeat-2547;org.apache.hadoop.hdfs.server.namenode.NameNode-sendHeartbeat-979;
+including lock - 18256-32:4926:org.apache.hadoop.hdfs.server.namenode.DatanodeDescriptor$BlockQueue-poll--1;org.apache.hadoop.hdfs.server.namenode.DatanodeDescriptor-getLeaseRecoveryCommand-330;
+including lock - 18256-32:4928:org.apache.hadoop.hdfs.server.namenode.DatanodeDescriptor$BlockQueue-poll--1;org.apache.hadoop.hdfs.server.namenode.DatanodeDescriptor-getReplicationCommand-324;
+including lock - 18256-32:4930:org.apache.hadoop.hdfs.server.namenode.DatanodeDescriptor-getBlockArray-346;org.apache.hadoop.hdfs.server.namenode.DatanodeDescriptor-getInvalidateBlocks-339;
+including lock - 18256-32:4934:org.apache.hadoop.hdfs.server.common.UpgradeManager-getBroadcastCommand--1;org.apache.hadoop.hdfs.server.namenode.FSNamesystem-getDistributedUpgradeCommand-5103;
