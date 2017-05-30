@@ -122,7 +122,9 @@ class HDFSTransformer extends Transformer {
 	       
 		    MethodInfo methodInfo = method.getMethodInfo();
 		    String methodName = method.getName().toString();
-		    //System.out.println("JX - DEBUG - method: " + methodName);
+		    
+		    if (className.contains("ipc.Server"))
+		    System.out.println("JX - DEBUG - method: " + className + "." + methodName);
 	        
 	        //System.out.println("JX - DEBUG - DM - 0");
 
