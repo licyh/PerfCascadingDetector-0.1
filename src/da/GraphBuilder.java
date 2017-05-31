@@ -920,36 +920,26 @@ public class GraphBuilder {
 
         /***** JX - 1. find out relation of Thread Creation -> Thread Enter *****/
         
-        //for (int i = 0 ; i < nList.size(); i++){
         int threadcreaterel = 0;                            //relation number
-        for( int i : typeref.get("ThdCreate") ) {           //create thread
+        for( int i: typeref.get("ThdCreate") ) {            //create thread
             // introducing rule
-            Node node = nList.get(i);
-            Element e1 = (Element) node;
-            //if (e1.getElementsByTagName("OPTY").item(0).getTextContent().equals("ThdCreate")){
-            String tid = e1.getElementsByTagName("OPVAL").item(0).getTextContent();
+            String tid = getNodeOPVAL( i );
             int f = 0;
-            //for (int j = 0 ; j <nList.size(); j++){
-            for (int j : typeref.get("ThdEnter")) {
-                Node node2 = nList.get(j);
-                Element e2 = (Element) node2;
-                //System.out.println(idplist.get(j).pid+"-"+idplist.get(j).tid+" "+e2.getElementsByTagName("OPVAL").item(0).getTextContent());
-                if (e2.getElementsByTagName("OPVAL").item(0).getTextContent().equals("-"))  //JX - so enter can have a value? 
-                	continue;
-                String [] opval = e2.getElementsByTagName("OPVAL").item(0).getTextContent().split("/");
-                //System.out.println(opval[0] + " "+ opval[1]);
-                //if ( (e2.getElementsByTagName("OPTY").item(0).getTextContent().equals("ThdEnter"))&&
-                if (( opval[1].equals(tid) || opval[0].equals(tid) )
-                        &&(idplist.get(i).pid == idplist.get(j).pid)) {
+            for (int j: typeref.get("ThdEnter")) {
+            	String opvalstr = getNodeOPVAL( j );
+                if ( opvalstr.equals("-") ) continue;   //jx: main threads 
+                String [] opval = opvalstr.split("/");
+                if ( (opval[0].equals(tid) || opval[1].equals(tid))
+                        && (idplist.get(i).pid == idplist.get(j).pid) ) {
 				    if (f > 0 ) {
 						System.out.println("INFO - "+tid+" find multi children");
 						break;
 					} 
                     threadcreaterel ++;
+                    f++;
                     //System.out.println("Thread owner relation " + i +":" + idplist.get(i).pid+"-"+idplist.get(i).tid + " create " + j +":"+idplist.get(j).pid+"-"+idplist.get(j).tid);
                     addedge(i,j,1);
-                    //System.out.println(i + " creates "+ j + "thread");
-                    f++;			
+                    System.out.println("JX - DEBUG - thread: " + getNodePIDTID(i)+":"+i + " creates "+ getNodePIDTID(j)+":"+j + "thread");
                 }
             } //end-inner-for
         } //end-outer-for
