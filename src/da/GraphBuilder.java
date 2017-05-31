@@ -251,8 +251,8 @@ public class GraphBuilder {
                 //System.out.println("Root element :" + document.getDocumentElement().getNodeName());
 
                 NodeList NList = inputdoc.getElementsByTagName("Operation");   //get all operations/nodes at a thread
-                int mheader = -1;
-                int mflag   = 1;
+                int msgheader = -1;   
+                int msgflag   = 1;
                 int curmsg = -1;
                 
                 // JX - deal with a single thread file's operations
@@ -310,28 +310,39 @@ public class GraphBuilder {
                         idplist.add(idPair);
                         edge.add(new ArrayList<Pair>());
                         backedge.add(new ArrayList<Pair>());
+                        
+                        // Modified by JX
+                        if ( !tp.equals("MsgProcEnter")               //not msg/rpc handler enter 
+                        	&& !tp.equals("EventProcEnter") ) {       //not event handler enter 
+                        	if ( i > 0 )
+                        		addedge(index-1, index);			  //ie, 0->1->2->3->4->5
+                        	if ( msgflag > 0 )
+                        		msgheader = index;
+                        }
+                        /*
                         if ((i > 0) && (!tp.equals("ThdEnter"))                      //not enter thread          
                         			&& (!tp.equals("MsgProcEnter"))                  //not msg handler enter    
                     				&& (!tp.equals("EventProcEnter")) ) {             //not event handler enter   
 			                addedge(index-1,index);                                 //ie, 0->1->2->3->4->5
-						    if (mflag > 0) {
+						    if (msgflag > 0) {
 						    	mheader = index;                                    //how to determine the mheader?
 						    	//System.out.println("set mheader = "+index);
 						    }
 			            }
+			            */
                         
 						if (tp.equals("MsgProcEnter")){
-						    mflag = -1;
-						    if (curmsg >-1)
-							mexit.set(curmsg,index-1);
+						    msgflag = -1;
+						    if (curmsg > -1)
+						    	mexit.set(curmsg,index-1);
 						    //System.out.println("Form "+curmsg + " to "+ index+"-1 is a msg");
 						    curmsg = index;
 						    //System.out.println("set mflag = -1");
-						    if (mheader > -1) {
-							addedge(mheader,index);
-							//System.out.println(index+ "is pluged to "+ mheader);
-						    }else {
-						    //System.out.println(index+ "is a no program header msg from "+ptid[0]+"-"+ptid[1]);
+						    if (msgheader > -1) {
+						    	addedge(msgheader,index);
+						    	//System.out.println(index+ "is pluged to "+ mheader);
+						    } else {
+						    	//System.out.println(index+ "is a no program header msg from "+ptid[0]+"-"+ptid[1]);
 						    }
 						}
 						
