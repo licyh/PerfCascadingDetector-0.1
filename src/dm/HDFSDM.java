@@ -58,13 +58,6 @@ class HDFSTransformer extends Transformer {
 
   	public void transformClass(CtClass cl) {
   		String className = cl.getName().toString();
-	  
-  	    if ( cl.getName().contains("xerces")
-  	    		|| cl.getName().contains("xml") 
-  	    		|| cl.getName().contains("xalan")
-  	    		) {
-  	        return; //these classes are about xml parser.
-  	    }
 	    
   		// FILTERS
 		if ( className.startsWith("org.apache.hadoop.xxx.")
@@ -114,19 +107,20 @@ class HDFSTransformer extends Transformer {
 	public void transformClassForHappensBefore(CtClass cl) {
 		String className = cl.getName().toString();
 		
-		CtBehavior[] methods = cl.getDeclaredBehaviors();  
-	
-	    
+		CtBehavior[] methods = cl.getDeclaredBehaviors(); 	
+
+    
 	    for (CtBehavior method : methods) {
 	        if ( method.isEmpty() ) continue;
+
+                if ( className.contains("ipc.Server") ) {
+                     System.out.println("JX - DEBUG - method: " + className + "#" + method.getName().toString());
+                }
 	       
 		    MethodInfo methodInfo = method.getMethodInfo();
 		    String methodName = method.getName().toString();
 		    
-		    if (className.contains("ipc.Server"))
-		    System.out.println("JX - DEBUG - method: " + className + "." + methodName);
-	        
-	        //System.out.println("JX - DEBUG - DM - 0");
+		    System.out.println("JX - DEBUG - DM - 0");
 
 		    /*if (methodInfo.isConstructor() || methodInfo.isStaticInitializer()) {
 		      return; //bypass all constructors.
@@ -168,7 +162,7 @@ class HDFSTransformer extends Transformer {
 		     * 1. main function
 		     * 2. child thread function
 		     */
-		    //System.out.println("JX - DEBUG - DM - 1");
+		    System.out.println("JX - DEBUG - DM - 1");
 		    if (methodName.equals("main")
 		    		&& Modifier.toString(method.getModifiers()).contains("static")
 		    		) {
@@ -215,14 +209,14 @@ class HDFSTransformer extends Transformer {
 		    /**
 		     * MsgSending - for rpc calling
 		     */
-		    //System.out.println("JX - DEBUG - DM - 2");
+		    System.out.println("JX - DEBUG - DM - 2");
 		    methodUtil.insertRPCCallInst(logClass, msgSendingLog, rpcInfo);
 		    //methodUtil.insertRPCInvoke(logClass, msgSendingLog);
 		    
 		    /**
 		     * ThdCreate - for thread creation
 		     */
-		    //System.out.println("JX - DEBUG - DM - 3");
+		    System.out.println("JX - DEBUG - DM - 3");
 		    methodUtil.insertCallInst("java.lang.Thread", "start", 0, logClass, thdCreateLog, classUtil);
 		    methodUtil.insertCallInst("java.util.concurrent.ThreadPoolExecutor", "execute", 1, logClass, thdCreateLog, classUtil);
 		    methodUtil.insertCallInst("java.util.concurrent.ThreadPoolExecutor", "submit", 1, logClass, thdCreateLog, classUtil);
@@ -235,13 +229,13 @@ class HDFSTransformer extends Transformer {
 		    /**
 		     * ThdJoin - for thread join
 		     */
-		    //System.out.println("JX - DEBUG - DM - 4");
+		    System.out.println("JX - DEBUG - DM - 4");
 		    methodUtil.insertCallInst("java.lang.Thread", "join", 0, logClass, thdJoinLog, classUtil);
 		
 		    /**
 		     * ProcessCreate - for process create
 		     */
-		    //System.out.println("JX - DEBUG - DM - 5");
+		    System.out.println("JX - DEBUG - DM - 5");
 		    if (methodName.equals("runCommand") && className.endsWith("org.apache.hadoop.util.Shell")) {
 		      //JX - this is a bug, I've commented it at its subcall
 		    	if (bugConfig.getBugId().equals("ha-4584"))
@@ -254,15 +248,15 @@ class HDFSTransformer extends Transformer {
 		    /**
 		     * lockRequire & lockRelease - for lock accesses
 		     */
-		    // added for mr-4576
-		    //System.out.println("JX - DEBUG - DM - 6");
-		    if (className.startsWith("org.apache.hadoop.ipc."))   //jx: coz this has lots of locks useless
-		        return; 
-		    methodUtil.insertSyncMethod(logClass, lockRequireLog, logClass, lockReleaseLog);
-		    //System.out.println("JX - DEBUG - DM - 7");
-		    methodUtil.insertMonitorInst(logClass, lockRequireLog, logClass, lockReleaseLog);
-		    //System.out.println("JX - DEBUG - DM - 8");
-		    methodUtil.insertRWLock(logClass, rWLockCreateLog);
+		    // added for mr-4576 & ha-4584
+		    if ( !className.startsWith("org.apache.hadoop.ipc.") ) {   //jx: coz this has lots of locks useless 
+                        System.out.println("JX - DEBUG - DM - 6");      
+		    	methodUtil.insertSyncMethod(logClass, lockRequireLog, logClass, lockReleaseLog);
+		    	System.out.println("JX - DEBUG - DM - 7");
+		    	methodUtil.insertMonitorInst(logClass, lockRequireLog, logClass, lockReleaseLog);
+		    	System.out.println("JX - DEBUG - DM - 8");
+		    	methodUtil.insertRWLock(logClass, rWLockCreateLog);
+                    }
 		    //end-Added
 		}
 	}

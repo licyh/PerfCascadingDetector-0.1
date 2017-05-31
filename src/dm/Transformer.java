@@ -48,7 +48,7 @@ public class Transformer implements ClassFileTransformer {
 	  				|| className.startsWith("sun.")
 	  				// or
 	  				|| className.startsWith("javax.")
-	  				|| className.contains("xerces")
+	  				|| className.contains("xerces")  //these 3 kinds of classes are about xml parser.
 	  	    		|| className.contains("xml") 
 	  	    		|| className.contains("xalan")
 	  			 ) {

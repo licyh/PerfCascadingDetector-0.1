@@ -486,7 +486,8 @@ public class CascadingFinder {
     	for (int nodeindex: loopbug.cascadingChain) {
     		//result += gb.fullCallstack(nodeindex) + "|";
     		// for DEBUG
-    		result += gb.getNodePIDTID(nodeindex) + ":" + gb.fullCallstack(nodeindex) + "|";
+    		//result += gb.getNodePIDTID(nodeindex) + ":" + gb.fullCallstack(nodeindex) + "|";
+	        result += gb.getNodePIDTID(nodeindex)+":"+nodeindex + ":" + gb.fullCallstack(nodeindex) + "|";
     	}
     	return result;
     }
