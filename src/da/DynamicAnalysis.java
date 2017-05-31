@@ -37,19 +37,13 @@ public class DynamicAnalysis {
 		gb.buildReachSet();
 		
 		// for DEBUGGING
+                /*
 		System.out.println("JX - DEBUG - happens-before graph test");
-		System.out.println("JX - DEBUG - 16992-32-ThdEnter:164 vs lock176" + gb.isFlippedorder(164, 176) + "\t" + gb.reachbitset.get(164).get(176) );
-		System.out.println("JX - DEBUG - 16992-32-ThdEnter:164 vs lock246" + gb.isFlippedorder(164, 246) + "\t" + gb.reachbitset.get(164).get(246) );
-		System.out.println("JX - DEBUG - 16992-32-ThdEnter:164 vs lock260" + gb.isFlippedorder(164, 260) + "\t" + gb.reachbitset.get(164).get(260) );
-		System.out.println("JX - DEBUG - 16992-32- (176, 246)" + gb.isFlippedorder(176, 246) + "\t" + gb.reachbitset.get(176).get(246) );
-		System.out.println("JX - DEBUG - 16992-32- (176, 260)" + gb.isFlippedorder(176, 260) + "\t" + gb.reachbitset.get(176).get(260) );
-		System.out.println("JX - DEBUG - 16992-32- (246, 260)" + gb.isFlippedorder(246, 260) + "\t" + gb.reachbitset.get(246).get(260) );
-		System.out.println("JX - DEBUG - 16992-1-ThdCreate:1781 vs 16992-32-ThdEnter:164" + gb.isFlippedorder(1781, 164) + "\t" + gb.reachbitset.get(1781).get(164) );
-		System.out.println("JX - DEBUG - 16992-1-lock1741 vs ThdCreate:1781" + gb.isFlippedorder(1741, 1781) + "\t" + gb.reachbitset.get(1741).get(1781) );
-		System.out.println("JX - DEBUG - 16992-1-lock1741 vs 16992-32-ThdEnter:164" + gb.isFlippedorder(1741, 164) + "\t" + gb.reachbitset.get(1741).get(164) );
-		System.out.println("JX - DEBUG - 16992-1-lock1741 vs 16992-32-lock176" + gb.isFlippedorder(1741, 176) + "\t" + gb.reachbitset.get(1741).get(176) );
-		System.out.println("JX - DEBUG - 16992-1-lock1741 vs 16992-32-lock246" + gb.isFlippedorder(1741, 246) + "\t" + gb.reachbitset.get(1741).get(246) );
-		System.out.println("JX - DEBUG - 16992-1-lock1741 vs 16992-32-lock260" + gb.isFlippedorder(1741, 260) + "\t" + gb.reachbitset.get(1741).get(260) );
+		System.out.println("JX - DEBUG - 16992-1-lock1741 vs 16992-32-lock176" + gb.reachbitset.get(1741).get(176) );
+		System.out.println("JX - DEBUG - 16992-1-lock1741 vs ThdCreate:1781" + gb.reachbitset.get(1741).get(1781) );
+                System.out.println("JX - DEBUG - 16992-1-ThdCreate:1781 vs 16992-32-ThdEnter:164" + gb.reachbitset.get(1781).get(164) );
+		System.out.println("JX - DEBUG - 16992-32-ThdEnter:164 vs lock176" + gb.reachbitset.get(164).get(176) );
+                */
 		
 		// Cascading Analysis
 		CascadingFinder cascadingFinder = new CascadingFinder( argv[0], gb);

@@ -484,10 +484,10 @@ public class CascadingFinder {
     public String fullCallstacksOfCascadingChain(LoopBug loopbug) {
     	String result = "";
     	for (int nodeindex: loopbug.cascadingChain) {
-    		//result += gb.fullCallstack(nodeindex) + "|";
+    		result += gb.fullCallstack(nodeindex) + "|";
     		// for DEBUG
-    		//result += gb.getNodePIDTID(nodeindex) + ":" + gb.fullCallstack(nodeindex) + "|";
-	        result += gb.getNodePIDTID(nodeindex)+":"+nodeindex + ":" + gb.fullCallstack(nodeindex) + "|";
+    		result += gb.getNodePIDTID(nodeindex) + ":" + gb.fullCallstack(nodeindex) + "|";
+	        //result += gb.getNodePIDTID(nodeindex)+":"+nodeindex + ":" + gb.fullCallstack(nodeindex) + "|";
     	}
     	return result;
     }
