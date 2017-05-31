@@ -18,34 +18,45 @@ public class DynamicAnalysis {
 		long start_time = System.currentTimeMillis();         
 		
 		//init and get 'base' file
-		GraphBuilder graphBuilder = new GraphBuilder( argv[1] );
+		GraphBuilder gb = new GraphBuilder( argv[1] );
     	//GraphBuilder graphBuilder = new GraphBuilder("input/MR-4813-xml"); //"input/JX-MR-xml" //Test-HB-4729-v6-3-xml");   "Test-HB-4729-v6-3-xml"
 		System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
 		
-    	graphBuilder.buildsyncgraph();
+		gb.buildsyncgraph();
     	//graphBuilder.buildmemref();
     	System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
-    	
     	
     	//jx: Add Edges manually for DEBUGGING
         //this is for mr-4576
     	//graphBuilder.addEdgesManually();
     	
-    	
-    	graphBuilder.buildlockmemref(); 
+    	gb.buildlockmemref(); 
 		System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
 		
-		
 		// build ReachSet
-		graphBuilder.buildReachSet();
+		gb.buildReachSet();
 		
+		// for DEBUGGING
+		System.out.println("JX - DEBUG - happens-before graph test");
+		System.out.println("JX - DEBUG - 16992-32-ThdEnter:164 vs lock176" + gb.isFlippedorder(164, 176) );
+		System.out.println("JX - DEBUG - 16992-32-ThdEnter:164 vs lock246" + gb.isFlippedorder(164, 246) );
+		System.out.println("JX - DEBUG - 16992-32-ThdEnter:164 vs lock260" + gb.isFlippedorder(164, 260) );
+		System.out.println("JX - DEBUG - 16992-32- (176, 246)" + gb.isFlippedorder(176, 246) );
+		System.out.println("JX - DEBUG - 16992-32- (176, 260)" + gb.isFlippedorder(176, 260) );
+		System.out.println("JX - DEBUG - 16992-32- (246, 260)" + gb.isFlippedorder(246, 260) );
+		System.out.println("JX - DEBUG - 16992-1-ThdCreate:1781 vs 16992-32-ThdEnter:164" + gb.isFlippedorder(1781, 164) );
+		System.out.println("JX - DEBUG - 16992-1-lock1741 vs ThdCreate:1781" + gb.isFlippedorder(1741, 1781) );
+		System.out.println("JX - DEBUG - 16992-1-lock1741 vs 16992-32-ThdEnter:164" + gb.isFlippedorder(1741, 164) );
+		System.out.println("JX - DEBUG - 16992-1-lock1741 vs 16992-32-lock176" + gb.isFlippedorder(1741, 176) );
+		System.out.println("JX - DEBUG - 16992-1-lock1741 vs 16992-32-lock246" + gb.isFlippedorder(1741, 246) );
+		System.out.println("JX - DEBUG - 16992-1-lock1741 vs 16992-32-lock260" + gb.isFlippedorder(1741, 260) );
 		
 		// Cascading Analysis
-		CascadingFinder cascadingFinder = new CascadingFinder( argv[0], graphBuilder);
+		CascadingFinder cascadingFinder = new CascadingFinder( argv[0], gb);
 		cascadingFinder.doWork();
 		
 		// find out 1.flipped order 2.lock relationship graph by the same locks
-		graphBuilder.findflippedorder();  
+		gb.findflippedorder();  
 		// build lock relationship between different locks
 		// TODO
     	//end-Added

@@ -2201,7 +2201,33 @@ JX - DEBUG - 34802 : org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496; 9822
     }
     
     
-
+    //Modified by JX
+    /**
+     * isFlippedorder - ie, concurrent or not? 
+     */
+    public boolean isFlippedorder(int x, int y) {
+		IdPair ip1 = idplist.get(x);
+		IdPair ip2 = idplist.get(y);
+		if ( ip1.pid != ip2.pid ) return false;         //JX- don't consider diff processes
+		if ( ip1.tid == ip2.tid ) return false;         //should be IMPO
+	    if (reachbitset.get(x).get(y)) return false;    //JX- can reach
+	    if (reachbitset.get(y).get(x)) return false;    //JX- can reach
+	    return true;
+    }
+    //End-Added
+    
+    /** Commented out by JX
+    public boolean flippedorder(int x, int y, String st) {
+		IdPair ip1 = idplist.get(x);
+		IdPair ip2 = idplist.get(y);
+		//if (! ((ip1.pid == ip2.pid) && (ip1.tid != ip2.tid))) return false;  
+		if ((ip1.pid != ip2.pid) && (!st.contains("hbase")) ) return false;  //JX- don't consider diff processes  
+	    if (reachbitset.get(x).get(y)) return false;    //JX- can reach
+	    if (reachbitset.get(y).get(x)) return false;    //JX- can reach
+	    return true;
+    }
+    */
+    
     
     /**
      * JX - Core
@@ -2259,7 +2285,7 @@ JX - DEBUG - 34802 : org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496; 9822
         	        			// related ReadLock & WriteLock
         	        			if ( isRelatedLocks(index1, index2) ) {
         	        				// is flippedorder?
-        	        				if ( flippedorder(index1, index2) ) {
+        	        				if ( isFlippedorder(index1, index2) ) {
         	        					totalsum++;
         	        					writeaddrlist(index1, index2);    //JX - for simple
         	                            writeaddrlist2(index1, index2);   //JX - for median
@@ -2807,30 +2833,6 @@ public void stasticalana(int x, int y, int freq) {
         //System.out.println("Find new pair");
     }
 
-    //Added by JX
-    public boolean flippedorder(int x, int y) {
-		IdPair ip1 = idplist.get(x);
-		IdPair ip2 = idplist.get(y);
-		if ( ip1.pid != ip2.pid ) return false;         //JX- don't consider diff processes
-		if ( ip1.tid == ip2.tid ) return false;         //should be IMPO
-	    if (reachbitset.get(x).get(y)) return false;    //JX- can reach
-	    if (reachbitset.get(y).get(x)) return false;    //JX- can reach
-	    
-	    return true;
-    }
-    //End-Added
-    
-    /** Commented out by JX
-    public boolean flippedorder(int x, int y, String st) {
-		IdPair ip1 = idplist.get(x);
-		IdPair ip2 = idplist.get(y);
-		//if (! ((ip1.pid == ip2.pid) && (ip1.tid != ip2.tid))) return false;  
-		if ((ip1.pid != ip2.pid) && (!st.contains("hbase")) ) return false;  //JX- don't consider diff processes  
-	    if (reachbitset.get(x).get(y)) return false;    //JX- can reach
-	    if (reachbitset.get(y).get(x)) return false;    //JX- can reach
-	    return true;
-    }
-    */
     
     public boolean addeventatomicedge(){
         int change = 0;

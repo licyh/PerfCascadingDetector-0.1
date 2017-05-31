@@ -335,7 +335,7 @@ public class CascadingFinder {
     			ArrayList<Integer> list = gb.accurateLockmemref.get( pidopval0 );
 	    		for (int index: list) {
 	    			if (lockindex == index) continue;
-	                if ( gb.flippedorder(lockindex, index) ) {
+	                if ( gb.isFlippedorder(lockindex, index) ) {
 	                	nextbatchLocks.add( index );
 	                	predNodes[curCascadingLevel].put(index, lockindex); 
 	                }
@@ -346,7 +346,7 @@ public class CascadingFinder {
     			String correspondingPidopval0 = gb.rwlockmatch.get( pidopval0 )[1];
     			ArrayList<Integer> list = gb.accurateLockmemref.get( correspondingPidopval0 );   //or using dotlockmemref.get( xx )
     			for (int index: list) {
-    				if ( gb.flippedorder(lockindex, index) ) {
+    				if ( gb.isFlippedorder(lockindex, index) ) {
     					nextbatchLocks.add( index );
     					predNodes[curCascadingLevel].put(index, lockindex);
     				}
