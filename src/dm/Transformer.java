@@ -46,6 +46,11 @@ public class Transformer implements ClassFileTransformer {
 	    	// Top Filters - bypass jdk
 	  		if ( className.startsWith("java.")
 	  				|| className.startsWith("sun.")
+	  				// or
+	  				|| className.startsWith("javax.")
+	  				|| className.contains("xerces")
+	  	    		|| className.contains("xml") 
+	  	    		|| className.contains("xalan")
 	  			 ) {
 	  			//NONE
 	  		}
