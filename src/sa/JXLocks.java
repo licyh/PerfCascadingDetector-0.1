@@ -202,21 +202,6 @@ public class JXLocks {
   
   public static void doWalaAnalysis() {
 	  System.out.println("JX-doWalaAnalysis");
-	  /*
-	  wala = new WalaAnalysis(appJarDir);
-	  wala.doWork();
-	  
-	  systemname = wala.systemname; 
-	 
-	  cg = wala.cg;
-	  cha = wala.cha;
-	  nPackageFuncs = wala.nPackageFuncs;
-	  nTotalFuncs = wala.nTotalFuncs;
-	  nApplicationFuncs = wala.nApplicationFuncs;
-	  nPremordialFuncs = wala.nPremordialFuncs;
-	  nOtherFuncs = wala.nOtherFuncs;
-	  */
-	  
 	  wala = new WalaAnalyzer(appJarDir);
 	  systemname = Benchmarks.resolveSystem(appJarDir);
 	  System.out.println("JX - DEBUG - system name = " + systemname);

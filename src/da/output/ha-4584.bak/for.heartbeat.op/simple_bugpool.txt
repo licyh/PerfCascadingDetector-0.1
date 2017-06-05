@@ -1,5 +1,4 @@
-6 (#static codepoints=6)
-CL2: org.apache.hadoop.hdfs.server.common.UpgradeObjectCollection-getDistributedUpgrades-117;
+5 (#static codepoints=5)
 CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;
 CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;
 CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-679;

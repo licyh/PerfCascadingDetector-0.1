@@ -1,5 +1,4 @@
-6 (#static codepoints=6)
-CL2: org.apache.hadoop.hdfs.server.common.UpgradeObjectCollection-getDistributedUpgrades-117;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-startDistributedUpgradeIfNeeded-5115;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-getDistributedUpgradeCommand-5103;|
+5 (#static codepoints=5)
 CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;|org.apache.hadoop.hdfs.server.datanode.FSDataset-getBlockReport-1637;|org.apache.hadoop.hdfs.server.datanode.FSDataset-getRemaining-985;|
 CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;|org.apache.hadoop.hdfs.server.datanode.FSDataset-getBlockReport-1637;|org.apache.hadoop.hdfs.server.datanode.FSDataset-getRemaining-985;|
 CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-679;|org.apache.hadoop.hdfs.server.datanode.FSDataset-getBlockReport-1637;|org.apache.hadoop.hdfs.server.datanode.FSDataset-getRemaining-985;|
