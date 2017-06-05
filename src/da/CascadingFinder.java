@@ -253,7 +253,7 @@ public class CascadingFinder {
     		setofinvolvingthreads.add( gb.getNodePIDTID(index) );
     		// for test, print all locks' names
     		if (tmpflag == 0 ) {
-    			System.out.println( "including lock - " + gb.getNodePIDTID(index) + ":" + index + ":" + gb.lastCallstack_2(index) );
+    			System.out.println( "including lock - " + "Node"+index + ":" + gb.getNodePIDTID(index) + ":" + gb.getNodeOPVAL(index) + gb.lastCallstack_2(index) );
     		}
     	}
     	tmpflag = 1;

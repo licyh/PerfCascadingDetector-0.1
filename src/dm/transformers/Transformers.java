@@ -150,13 +150,13 @@ public class Transformers {
 	    				  }
 	    				  */
 		    			  if ( typesForInst.get(i).equals("TargetCodeBegin") ) {
-		    				  System.out.println( "JX - TargetCodeBegin: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, instBegin) );
+		    				  System.out.println( "JX - DEBUG - TargetCode: Begin: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, instBegin) );
 		    				  method.insertAt(linenumber, true, instBegin);
 		    				  flagsForInst.set(i, flagsForInst.get(i)+1);
 		    				  System.out.println( "JX - " + "this is the " + flagsForInst.get(i) + " st/nd/rd/th time for location " + i );
 		    			  }
 		    			  else { //this is "TargetCodeEnd"
-		    				  System.out.println( "JX - TargetCodeEnd: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, instEnd) );
+		    				  System.out.println( "JX - DEBUG - TargetCode: End: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, instEnd) );
 		    				  method.insertAt(linenumber, true, instEnd);
 		    				  flagsForInst.set(i, flagsForInst.get(i)+1);
 		    				  System.out.println( "JX - " + "this is the " + flagsForInst.get(i) + " st/nd/rd/th time for location " + i );
