@@ -10,6 +10,7 @@ import java.util.List;
 import com.TextFileReader;
 
 import dm.Transformer;
+import dm.util.MethodUtil;
 import javassist.CannotCompileException;
 import javassist.CtBehavior;
 import javassist.CtClass;
@@ -128,51 +129,35 @@ public class Transformers {
 		System.out.println("JX - " + "largeloop_instructions = " + largeloop_instBegin + "*" + largeloop_instCenter + "*");
 	}
 	
-	
-		  
 
-	 public void transformClassForCodeSnippets(CtClass cl) {
-             if ( cl.getName().contains("DataStreamer") ) System.out.println("JX - DEBUG - Targetcode: " + cl.getName() );
-		 if ( !classesForInst.contains(cl.getName()) ) return;
-		 CtBehavior[] methods = cl.getDeclaredBehaviors();
-		 //System.out.println("JX - @1 - " + cl.getName());
-	     for (CtBehavior method : methods) {
-	         if ( method.isEmpty() ) continue;
-	         //System.out.println("JX - @2 - " + method.getName());
-	         // traverse all locations for instrumentation
-	         for (int i = 0; i < classesForInst.size(); i++) {
-	    		 if ( classesForInst.get(i).equals(cl.getName())
-	    			  && methodsForInst.get(i).equals(method.getName()) ) {
-	    			 int linenumber = Integer.parseInt( linesForInst.get(i) );
-	    			 try {
-	    				  /* test
-	    				  for (int k = 224; k <= 248; k++) {
-	    					  System.out.println( "JX - " + "for line " + k + " will insert at " + method.insertAt(k, false, instBegin) );
-	    				  }
-	    				  */
-		    			  if ( typesForInst.get(i).equals("TargetCodeBegin") ) {
-		    				  System.out.println( "JX - DEBUG - TargetCode: Begin: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, instBegin) );
-		    				  method.insertAt(linenumber, true, instBegin);
-		    				  flagsForInst.set(i, flagsForInst.get(i)+1);
-		    				  System.out.println( "JX - " + "this is the " + flagsForInst.get(i) + " st/nd/rd/th time for location " + i );
-		    			  }
-		    			  else { //this is "TargetCodeEnd"
-		    				  System.out.println( "JX - DEBUG - TargetCode: End: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, instEnd) );
-		    				  method.insertAt(linenumber, true, instEnd);
-		    				  flagsForInst.set(i, flagsForInst.get(i)+1);
-		    				  System.out.println( "JX - " + "this is the " + flagsForInst.get(i) + " st/nd/rd/th time for location " + i );
-		    			  }
-	    			 } catch (Exception e) {
-	    				 // TODO Auto-generated catch block
-	    				 e.printStackTrace();
-	    			 }
-	    		 }
-	    	 }
-	     }//end-outer for
-	 }
+	public void transformClassForCodeSnippets(CtClass cl) {
+		String className = cl.getName();
+        if ( className.contains("DataStreamer") ) System.out.println("JX - DEBUG - Targetcode: " + cl.getName() );
+		if ( !classesForInst.contains(className) ) return;
+		
+		CtBehavior[] methods = cl.getDeclaredBehaviors();
+		
+	    for (CtBehavior method : methods) {
+	        if ( method.isEmpty() ) continue;
+	        // traverse all locations for instrumentation
+	        String methodName = method.getName();
+	        MethodUtil methodUtil = new MethodUtil(method);
+	        for (int i = 0; i < classesForInst.size(); i++) {
+	    	    if ( classesForInst.get(i).equals(className) && methodsForInst.get(i).equals(methodName) ) {
+	    			int lineNumber = Integer.parseInt( linesForInst.get(i) );
+	    			if ( typesForInst.get(i).equals("TargetCodeBegin") ) {
+	    				methodUtil.insertAt(lineNumber, instBegin, "TargetCodeBegin");
+	    			}
+	    			else if ( typesForInst.get(i).equals("TargetCodeEnd") ) {
+	    				methodUtil.insertAt(lineNumber, instEnd, "TargetCodeEnd");
+	    			}
+	    		}
+	    	}
+	    }//end-outer for
+	}
 		  
 		  	  
-	 public void transformClassForLoops(CtClass cl) throws CannotCompileException {
+	public void transformClassForLoops(CtClass cl) throws CannotCompileException {
 		 CtBehavior[] methods = cl.getDeclaredBehaviors();
 	     for (CtBehavior method : methods) {
 	         if ( method.isEmpty() ) continue; 

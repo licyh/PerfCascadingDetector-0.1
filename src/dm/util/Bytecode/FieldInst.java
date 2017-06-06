@@ -1,4 +1,4 @@
-package dm.Util.Bytecode;
+package dm.util.Bytecode;
 
 import javassist.*;
 import javassist.bytecode.*;

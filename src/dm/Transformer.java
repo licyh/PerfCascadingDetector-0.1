@@ -13,7 +13,7 @@ import java.lang.instrument.*;
 import javassist.*;
 import javassist.bytecode.*;
 
-import dm.Util.DMOption;
+import dm.util.DMOption;
 
 
 public class Transformer implements ClassFileTransformer {

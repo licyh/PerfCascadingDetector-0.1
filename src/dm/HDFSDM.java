@@ -7,8 +7,8 @@ import javassist.*;
 import javassist.bytecode.*;
 
 import dm.transformers.Transformers;
-import dm.Util.ClassUtil;
-import dm.Util.MethodUtil;
+import dm.util.ClassUtil;
+import dm.util.MethodUtil;
 import com.APIInfo;
 import com.API;
 import com.RPCInfo;

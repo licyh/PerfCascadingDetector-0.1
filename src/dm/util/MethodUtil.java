@@ -1,4 +1,4 @@
-package dm.Util;
+package dm.util;
 
 
 import java.io.*;
@@ -7,37 +7,73 @@ import java.util.*;
 import javassist.*;
 import javassist.bytecode.*;
 
-import dm.Util.Bytecode.*;
+import dm.util.Bytecode.*;
 
 import com.RPCInfo;
 
 public class MethodUtil {
-  CtBehavior method;
-  MethodInfo methodInfo;
-  ConstPool constPool;
-  CodeAttribute codeAttr;
-  CodeIterator codeIter;
+	CtBehavior method;
+	MethodInfo methodInfo;
+	ConstPool constPool;
+	CodeAttribute codeAttr;
+	CodeIterator codeIter;
 
-  int origMaxLocals;
-  int origMaxStack;
+	int origMaxLocals;
+	int origMaxStack;
 
-  SignatureAttribute.MethodSignature methodSig;
-  boolean injectFlag = true; //if false, only analysis not injection
-
-  public void setMethod(CtBehavior m) {
-    method = m;
-    methodInfo = method.getMethodInfo();
-    constPool = methodInfo.getConstPool();
-    codeAttr = methodInfo.getCodeAttribute();
-    codeIter = codeAttr.iterator();
-    origMaxLocals = codeAttr.getMaxLocals();
-    origMaxStack = codeAttr.getMaxStack();
-    try {
-      methodSig = SignatureAttribute.toMethodSignature(method.getSignature());
-    } catch (BadBytecode e) {
-      e.printStackTrace();
-    }
-  }
+	SignatureAttribute.MethodSignature methodSig;
+	boolean injectFlag = true; //if false, only analysis not injection
+  
+	
+	//added by JX
+	public MethodUtil() {
+	}
+	
+	public MethodUtil(CtBehavior m) {
+		setMethod(m);
+	}
+	//end-added
+  
+	public void setMethod(CtBehavior m) {
+	    this.method = m;
+	    this.methodInfo = method.getMethodInfo();
+	    this.constPool = methodInfo.getConstPool();
+	    this.codeAttr = methodInfo.getCodeAttribute();
+	    this.codeIter = codeAttr.iterator();
+	    this.origMaxLocals = codeAttr.getMaxLocals();
+	    this.origMaxStack = codeAttr.getMaxStack();
+	    try {
+	    	this.methodSig = SignatureAttribute.toMethodSignature(method.getSignature());
+	    } catch (BadBytecode e) {
+	      e.printStackTrace();
+	    }
+	}
+	
+	//added by JX
+	/**
+	 * it will not insert if it couldn't
+	 */
+	public boolean insertAt(int lineNumber, String codeSnippet) {
+		return insertAt(lineNumber, codeSnippet, "");
+	}
+	
+	public boolean insertAt(int lineNumber, String codeSnippet, String debugMsgType) {
+		//String tmpsig = method.getDeclaringClass().getName() + "." + method.getName();
+		try {
+			int actualLineNumber = method.insertAt(lineNumber, false, codeSnippet);
+			if (lineNumber != actualLineNumber) {
+				System.out.println( "JX - DEBUG - " + debugMsgType + ": expected line nmber = " + lineNumber + ", but only can insert at " + actualLineNumber + "so give up." );
+				return false;
+			}
+			method.insertAt(lineNumber, true, codeSnippet);
+			System.out.println( "JX - DEBUG - " + debugMsgType + ": insert successfully at line nmber = " + lineNumber );
+		} catch (CannotCompileException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
+	
 
   public int paraNum() {
     return methodSig.getParameterTypes().length;

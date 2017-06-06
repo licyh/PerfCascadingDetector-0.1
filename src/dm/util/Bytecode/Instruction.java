@@ -1,4 +1,4 @@
-package dm.Util.Bytecode;
+package dm.util.Bytecode;
 
 import java.io.*;
 import java.util.*;

@@ -8,12 +8,12 @@ import java.lang.instrument.*;
 import javassist.*;
 import javassist.bytecode.*;
 
-import dm.Util.Bytecode.*;
-import dm.Util.Bytecode.Instruction;
-import dm.Util.Bytecode.InvokeInst;
+import dm.util.Bytecode.*;
+import dm.util.Bytecode.Instruction;
+import dm.util.Bytecode.InvokeInst;
 import dm.transformers.Transformers;
-import dm.Util.ClassUtil;
-import dm.Util.MethodUtil;
+import dm.util.ClassUtil;
+import dm.util.MethodUtil;
 import com.APIInfo;
 import com.API;
 import com.RPCInfo;

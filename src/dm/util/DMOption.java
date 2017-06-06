@@ -1,4 +1,4 @@
-package dm.Util;
+package dm.util;
 
 import java.io.*;
 import java.util.*;
