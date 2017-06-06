@@ -62,11 +62,11 @@ public class MethodUtil {
 		try {
 			int actualLineNumber = method.insertAt(lineNumber, false, codeSnippet);
 			if (lineNumber != actualLineNumber) {
-				System.out.println( "JX - DEBUG - " + debugMsgType + ": expected line nmber = " + lineNumber + ", but only can insert at " + actualLineNumber + "so give up." );
+				System.out.println( "JX - DEBUG - " + debugMsgType + ": expected line nmber = " + lineNumber + ", but only can insert at " + actualLineNumber + ", so give up." );
 				return false;
 			}
 			method.insertAt(lineNumber, true, codeSnippet);
-			System.out.println( "JX - DEBUG - " + debugMsgType + ": insert successfully at line nmber = " + lineNumber );
+			System.out.println( "JX - DEBUG - " + debugMsgType + ": insert successfully at line number = " + lineNumber );
 		} catch (CannotCompileException e) {
 			e.printStackTrace();
 		}
