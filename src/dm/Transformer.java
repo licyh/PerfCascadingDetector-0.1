@@ -43,6 +43,10 @@ public class Transformer implements ClassFileTransformer {
 	    try {
 	    	cl = pool.makeClass(new java.io.ByteArrayInputStream(b));    //may + CtBehavior[] methods = cl.getDeclaredBehaviors();
 	    	String className = cl.getName().toString();
+                if (className.contains("DFSClient")) {  //DFSClient$DFSOutputStream$DataStreamer
+                     System.out.println( "JX - DEBUG - className=" + className );
+                }
+
 	    	// Top Filters - bypass jdk
 	  		if ( className.startsWith("java.")
 	  				|| className.startsWith("sun.")
@@ -55,7 +59,7 @@ public class Transformer implements ClassFileTransformer {
 	  			//NONE
 	  		}
 	  		else {
-		    	System.out.println("JX - DEBUG - Class: " + cl.getName().toString());
+		    	System.out.println("JX - DEBUG - Class: " + className); 
 		    	System.out.println("JX - DEBUG - -1");
 		    	
 		    	transformClass( cl );

@@ -68,7 +68,10 @@ class HDFSTransformer extends Transformer {
 	          return;
   		}
   		
-		
+
+                if (className.contains("DataStreamer"))	
+                        System.out.println("JX - DEBUG - DM - className=" + className);
+	
   		// LIMITS
   		// instrument for happens-before graph
 		if ( className.startsWith("org.apache.hadoop.hdfs.")
@@ -81,6 +84,9 @@ class HDFSTransformer extends Transformer {
   		
 	    // instrument for target codes
 		System.out.println("JX - DEBUG - DM - 10");
+                                                                                                                                                                                                          
+                if (className.contains("DataStreamer"))                                                  
+                        System.out.println("JX - DEBUG - DM - className=" + className);
 	    transformers.transformClassForCodeSnippets( cl );
 
 	    // instrument for all loops

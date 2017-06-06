@@ -9,6 +9,7 @@
 //org.apache.hadoop.hdfs.server.datanode.DataNode offerService 943				TargetCodeEnd
 
 // normal namenode WRITE op - ie, call NameNode.addBlock
+// jx: these two can't insert because javassist can't reach the classname !!! very strange, turn for hp
 //org.apache.hadoop.hdfs.DFSClient$DFSOutputStream$DataStreamer run 2646                   TargetCodeBegin
 //org.apache.hadoop.hdfs.DFSClient$DFSOutputStream$DataStreamer run 2647                   TargetCodeEnd
 org.apache.hadoop.hdfs.server.namenode.NameNode addBlock 685                             TargetCodeBegin
