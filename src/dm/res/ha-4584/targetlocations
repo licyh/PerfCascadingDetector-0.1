@@ -1,9 +1,17 @@
-// normal WRITE op
+// normal Datanode WRITE op
 //org.apache.hadoop.hdfs.server.datanode.DataXceiver run 107				TargetCodeBegin
 //org.apache.hadoop.hdfs.server.datanode.DataXceiver run 108				TargetCodeEnd 
 // HEARTBEAT rpc sending
 //org.apache.hadoop.hdfs.server.datanode.DataNode offerService 885				TargetCodeBegin
 //org.apache.hadoop.hdfs.server.datanode.DataNode offerService 891				TargetCodeEnd
 // BLOCKREPORT rpc sending
-org.apache.hadoop.hdfs.server.datanode.DataNode offerService 939				TargetCodeBegin
-org.apache.hadoop.hdfs.server.datanode.DataNode offerService 943				TargetCodeEnd
+//org.apache.hadoop.hdfs.server.datanode.DataNode offerService 939				TargetCodeBegin
+//org.apache.hadoop.hdfs.server.datanode.DataNode offerService 943				TargetCodeEnd
+
+// normal namenode WRITE op - ie, call NameNode.addBlock
+//org.apache.hadoop.hdfs.DFSClient$DFSOutputStream$DataStreamer run 2646                   TargetCodeBegin
+//org.apache.hadoop.hdfs.DFSClient$DFSOutputStream$DataStreamer run 2647                   TargetCodeEnd
+org.apache.hadoop.hdfs.server.namenode.NameNode addBlock 685                             TargetCodeBegin
+org.apache.hadoop.hdfs.server.namenode.NameNode addBlock 687                             TargetCodeEnd
+
+

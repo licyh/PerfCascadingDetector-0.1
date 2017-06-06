@@ -70,11 +70,11 @@ public class Transformers {
 		reader.close();
 		
 		// for DEBUG
-		System.out.println("JX - " + classesForInst.size() + " locations are loaded");
-		System.out.println("JX - " + "classesForInst = " + classesForInst);
-		System.out.println("JX - " + "methodsForInst = " + methodsForInst);
-		System.out.println("JX - " + "linesForInst =  " + linesForInst );
-		System.out.println("JX - " + "instructions = " + instBegin + "*" + instEnd + "*");
+		System.out.println("JX - INFO - " + classesForInst.size() + " locations are loaded");
+		System.out.println("JX - INFO - " + "classesForInst = " + classesForInst);
+		System.out.println("JX - INFO - " + "methodsForInst = " + methodsForInst);
+		System.out.println("JX - INFO - " + "linesForInst =  " + linesForInst );
+		System.out.println("JX - INFO - " + "instructions = " + instBegin + "*" + instEnd + "*");
 	}
 	
 	
@@ -132,6 +132,7 @@ public class Transformers {
 		  
 
 	 public void transformClassForCodeSnippets(CtClass cl) {
+             if ( cl.getName().contains("DataStreamer") ) System.out.println("JX - DEBUG - Targetcode: " + cl.getName() );
 		 if ( !classesForInst.contains(cl.getName()) ) return;
 		 CtBehavior[] methods = cl.getDeclaredBehaviors();
 		 //System.out.println("JX - @1 - " + cl.getName());
