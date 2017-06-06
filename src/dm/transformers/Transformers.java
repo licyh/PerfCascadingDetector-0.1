@@ -144,8 +144,7 @@ public class Transformers {
 	        MethodUtil methodUtil = new MethodUtil(method);
 	        for (int i = 0; i < classesForInst.size(); i++) {
 	    	    if ( classesForInst.get(i).equals(className) && methodsForInst.get(i).equals(methodName) ) {
-	    	    	System.out.println("JX - DEBUG - targetcode: " + cl.getName() + "." + method.getName() + method.getSignature());
-	    	    	System.out.println("JX - DEBUG - targetcode: classesForInst.size()=" + classesForInst.size() );
+	    	    	//System.out.println("JX - DEBUG - targetcode: " + cl.getName() + "." + method.getName() + method.getSignature());
 	    			int lineNumber = Integer.parseInt( linesForInst.get(i) );
 	    			if ( typesForInst.get(i).equals("TargetCodeBegin") ) {
 	    				methodUtil.insertAt(lineNumber, instBegin, "TargetCodeBegin");
