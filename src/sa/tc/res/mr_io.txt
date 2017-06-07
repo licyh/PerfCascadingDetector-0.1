@@ -1,2 +1,0 @@
-//prefixes       org.apache.hadoop.fs.  org.apache.hadoop.security.
-org.apache.hadoop.hdfs.

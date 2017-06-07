@@ -1,4 +1,4 @@
-60 (#static codepoints=28)
+52 (#static codepoints=26)
 CL2: org.apache.hadoop.hdfs.DFSUtil-isValidName-48;
 CL2: org.apache.hadoop.hdfs.server.namenode.BlocksMap$BlockInfo-findDatanode-191;
 CL2: org.apache.hadoop.hdfs.server.namenode.BlocksMap$BlockInfo-numNodes-141;
@@ -31,8 +31,6 @@ CL3: org.apache.hadoop.hdfs.server.namenode.FSDirectory-updateCount-862;
 CL3: org.apache.hadoop.hdfs.server.namenode.FSDirectory-verifyQuota-1036;
 CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog$EditLogFileOutputStream-write-154;
 CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-908;
-CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-953;
-CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-975;
 CL3: org.apache.hadoop.hdfs.server.namenode.INode-compareBytes-388;
 CL3: org.apache.hadoop.hdfs.server.namenode.INode-getPathComponents-326;
 CL3: org.apache.hadoop.hdfs.server.namenode.INodeDirectory-getExistingPathINodes-171;
@@ -48,14 +46,8 @@ CL4: org.apache.hadoop.hdfs.server.namenode.FSDirectory-updateCount-862;
 CL4: org.apache.hadoop.hdfs.server.namenode.FSDirectory-verifyQuota-1036;
 CL4: org.apache.hadoop.hdfs.server.namenode.FSEditLog$EditLogFileOutputStream-write-154;
 CL4: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-908;
-CL4: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-953;
-CL4: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-975;
 CL4: org.apache.hadoop.hdfs.server.namenode.INode-compareBytes-388;
 CL4: org.apache.hadoop.hdfs.server.namenode.INode-getPathComponents-326;
 CL4: org.apache.hadoop.hdfs.server.namenode.INodeDirectory-getExistingPathINodes-171;
 CL4: org.apache.hadoop.hdfs.server.namenode.INodeFile-diskspaceConsumed-173;
 CL4: org.apache.hadoop.hdfs.util.LightWeightGSet-get-121;
-CL5: org.apache.hadoop.hdfs.server.namenode.FSEditLog$EditLogFileOutputStream-write-154;
-CL5: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-908;
-CL5: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-953;
-CL5: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-975;

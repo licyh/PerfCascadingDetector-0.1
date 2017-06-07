@@ -17,13 +17,16 @@ public class WalaUtil {
 	    return null;
 	}
 
-	public static String format(String str) {
-		String rt = str;
-		if (rt.startsWith("L")) {
-			rt = rt.substring(1);
-		}
-		rt = rt.replaceAll("/", ".");
-		return rt;
+	
+	/**
+	 * Eg, change "Lorg/apache/hadoop/mapreduce/Mapper$Context" to "org.apache.hadoop.mapreduce.Mapper$Context"
+	 */
+	public static String formatClassName(String className) {
+		String formalClassName = className;
+		if (formalClassName.startsWith("L"))
+			formalClassName = formalClassName.substring(1);
+		formalClassName = formalClassName.replaceAll("/", ".");
+		return formalClassName;
 	}
 	
 }

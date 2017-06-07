@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.TextFileReader;
+import com.text.TextFileReader;
 
 import dm.Transformer;
 import dm.util.MethodUtil;

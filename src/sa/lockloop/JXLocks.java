@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package sa;
+package sa.lockloop;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -60,38 +60,41 @@ import com.ibm.wala.util.intset.IntIterator;
 import com.ibm.wala.util.intset.IntPair;
 import com.ibm.wala.util.io.CommandLine;
 
-import sa.tc.HDrpc;
-import sa.tc.MRrpc;
+import sa.lockloop.tc.IOLoopUtil;
 import sa.wala.WalaAnalyzer;
 import sa.wala.util.PDFCallGraph;
 
 
 public class JXLocks {
   // dir paths
-  static String projectDir;  // read from arguments, like "/root/JXCascading-detector(/)"   #jx: couldn't obtain automatically, because of many scenarios
-  static String appJarDir;   // read from arguments, like "/root/JXCascading-detector/src/sa/res/MapReduce/hadoop-0.23.3(/)"
-  static String dtDir;       //should be "projectDir/src/dt/res/", but couldn't write directly like this
-  static String dmDir;       
+  String projectDir;  // read from arguments, like "/root/JXCascading-detector(/)"   #jx: couldn't obtain automatically, because of many scenarios
+  String jarsDir;   // read from arguments, like "/root/JXCascading-detector/src/sa/res/MapReduce/hadoop-0.23.3(/)"
+  String dtDir;       //should be "projectDir/src/dt/res/", but couldn't write directly like this
+  String dmDir;       
   
   // WALA basis
-  //static WalaAnalysis wala;
-  static WalaAnalyzer wala;
-  static ClassHierarchy cha;
-  static CallGraph cg;
-  static int nPackageFuncs = 0;           // the real functions we focuses  //must satisfy "isApplicationAndNonNativeMethod" first
-  static int nTotalFuncs = 0;
-  static int nApplicationFuncs = 0;       
-  static int nPremordialFuncs = 0;
-  static int nOtherFuncs = 0;
+  //WalaAnalysis wala;
+  WalaAnalyzer wala;
+  ClassHierarchy cha;
+  CallGraph cg;
+  int nPackageFuncs = 0;           // the real functions we focuses  //must satisfy "isApplicationAndNonNativeMethod" first
+  int nTotalFuncs = 0;
+  int nApplicationFuncs = 0;       
+  int nPremordialFuncs = 0;
+  int nOtherFuncs = 0;
   
   // Target System
-  static String systemname = null;   // current system's name  
+  String systemname = null;   // current system's name  
+  
+  //
+  IOLoopUtil iolooputil;
+  
   
   // Lock Names
   static List<String> synchronizedtypes = Arrays.asList("synchronized_method", "synchronized_lock");
   static List<String> locktypes = Arrays.asList("lock", "readLock", "writeLock", "tryLock", "writeLockInterruptibly", "readLockInterruptibly", "lockInterruptibly"); //last two added by myself
   static List<String> unlocktypes = Arrays.asList("unlock", "readUnlock", "writeUnlock");
-  static Map<String,String> mapOfLocktypes = new HashMap<String,String>() {{
+  Map<String,String> mapOfLocktypes = new HashMap<String,String>() {{
     put("lock", "unlock");
     put("readLock", "readUnlock");
     put("writeLock", "writeUnlock");
@@ -101,35 +104,35 @@ public class JXLocks {
     put("lockInterruptibly", "unlock");
   }};
   // map: function CGNode id -> locks, ONLY covers functions that really involve locks 
-  static Map<Integer, List<LockInfo>> functions_with_locks = new HashMap<Integer, List<LockInfo>>();
+  Map<Integer, List<LockInfo>> functions_with_locks = new HashMap<Integer, List<LockInfo>>();
   // map: function CGNode id -> loops, ONLY covers functions that really involve loops  
-  static Map<Integer, List<LoopInfo>> functions_with_loops = new HashMap<Integer, List<LoopInfo>>();
+  Map<Integer, List<LoopInfo>> functions_with_loops = new HashMap<Integer, List<LoopInfo>>();
   // map: function CGNode id -> traversed functions (including looping_locking_functions)
-  static Map<Integer, FunctionInfo> functions = new HashMap<Integer, FunctionInfo>();
+  Map<Integer, FunctionInfo> functions = new HashMap<Integer, FunctionInfo>();
   
   // Statistics
-  static int nLocks = 0;
-  static int nLockingFuncs = 0;
-  static int nLockGroups = 0;
+  int nLocks = 0;
+  int nLockingFuncs = 0;
+  int nLockGroups = 0;
   
-  static int nLoops = 0;                  // unused
-  static int nLoopingFuncs = 0;
+  int nLoops = 0;                  // unused
+  int nLoopingFuncs = 0;
   
-  static int nLoopingLocks = 0;
-  static int nLoopingLockingFuncs = 0;
+  int nLoopingLocks = 0;
+  int nLoopingLockingFuncs = 0;
   
-  static int nHeavyLocks = 0;             // The number of time-consuming looping locks
-  static int nHeavyLockGroups = 0;
+  int nHeavyLocks = 0;             // The number of time-consuming looping locks
+  int nHeavyLockGroups = 0;
   
-  static int nHeartbeatLocks = 0;
-  static int nHeartbeatLockGroups = 0;
+  int nHeartbeatLocks = 0;
+  int nHeartbeatLockGroups = 0;
   
-  static int nSuspectedHeavyLocks = 0;
+  int nSuspectedHeavyLocks = 0;
  
   
   // For test
-  static String functionname_for_test = "org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer$ResponseProcessor.run("; //"RetryCache.waitForCompletion(Lorg/apache/hadoop/ipc/RetryCache$CacheEntry;)"; //"org.apache.hadoop.hdfs.server.balancer.Balancer"; //"Balancer$Source.getBlockList";//"DirectoryScanner.scan"; //"ReadaheadPool.getInstance("; //"BPServiceActor.run("; //"DataNode.runDatanodeDaemon"; //"BPServiceActor.run("; //"BlockPoolManager.startAll"; //"NameNodeRpcServer"; //"BackupNode$BackupNodeRpcServer"; // //".DatanodeProtocolServerSideTranslatorPB"; //"DatanodeProtocolService$BlockingInterface"; //"sendHeartbeat("; //"org.apache.hadoop.hdfs.protocolPB.DatanodeProtocolServerSideTranslatorPB";  //java.util.regex.Matcher.match(";
-  static int which_functionname_for_test = 1;   //1st? 2nd? 3rd?    //TODO - 0 means ALL, 1 to n means which one respectively
+  String functionname_for_test = "org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer$ResponseProcessor.run("; //"RetryCache.waitForCompletion(Lorg/apache/hadoop/ipc/RetryCache$CacheEntry;)"; //"org.apache.hadoop.hdfs.server.balancer.Balancer"; //"Balancer$Source.getBlockList";//"DirectoryScanner.scan"; //"ReadaheadPool.getInstance("; //"BPServiceActor.run("; //"DataNode.runDatanodeDaemon"; //"BPServiceActor.run("; //"BlockPoolManager.startAll"; //"NameNodeRpcServer"; //"BackupNode$BackupNodeRpcServer"; // //".DatanodeProtocolServerSideTranslatorPB"; //"DatanodeProtocolService$BlockingInterface"; //"sendHeartbeat("; //"org.apache.hadoop.hdfs.protocolPB.DatanodeProtocolServerSideTranslatorPB";  //java.util.regex.Matcher.match(";
+  int which_functionname_for_test = 1;   //1st? 2nd? 3rd?    //TODO - 0 means ALL, 1 to n means which one respectively
   
   
   
@@ -137,85 +140,78 @@ public class JXLocks {
   //++++++++++++++++++++++++++++++++++ JXLocks Methods ++++++++++++++++++++++++++++++++++++++++++++
   //===============================================================================================
 
+	public JXLocks(WalaAnalyzer walaAnalyzer) {
+		this(walaAnalyzer, ".");
+	}
+	
+	public JXLocks(WalaAnalyzer walaAnalyzer, String projectDir) {
+		this.wala = walaAnalyzer;
+		this.projectDir = projectDir;
+		this.jarsDir = wala.getTargetDirPath().toString();
+		doWork();
+	}
+	
   
-  public static void main(String[] args) throws WalaException {
-    System.out.println("JX-breakpoint-...");
-    Properties p = CommandLine.parse(args);
-    PDFCallGraph.validateCommandLine(p);
-    new JXLocks().doWork(p);  // or JXLocks.run(p) or run(p) directly
-  }
-
-  
-  public static void doWork(Properties p) {
-    try {
-      // Test Part -
-      //testQuickly();
-      init(p);
-      doWalaAnalysis();
-      
-      // New added - RPC
-      findRPCs();
-      readTimeConsumingOperations();
-      
-      // Phase 1 - find out loops
-      findLockingFunctions();      //JX - can be commented
-      findLoopingFunctions();
-      printLoopingFunctions();     //JX - write to local files. NO necessary, can be commented
-      //findLoopingLockingFunctions();
-      
-      // Phase 2 - deal with loops
-      findNestedLoopsInLoops();
-      
-      
-      // init
-      findTimeConsumingOperationsInLoops();     // for all loops
-      //printTcOperationTypes();                //for test
-      
-      // Static Pruning
-      staticPruningForCriticalLoops();
-
-     
-      
-      // Phase 2 -
-      //analyzeAllLocks();
-      //analyzeLoopingLocks();
-      
-    } catch (Exception e) {
-      System.err.println("JX-StackTrace-run-begin");
-      e.printStackTrace();
-      System.err.println("JX-StackTrace-run-end");
-      return ;
-    }
-  }
-  
-
-  public static void init(Properties p) {
-    // Read external arguments
-    projectDir = p.getProperty("projectDir");
-    appJarDir = p.getProperty("appJarDir");
-    if (!projectDir.endsWith("/")) projectDir += "/";   //actually if we use File(xx, xx) or Path(xx, xx), we won't need this.
-    if (!appJarDir.endsWith("/") )  appJarDir += "/";
-    dtDir = Paths.get(projectDir, "src/dt/").toString();
-    dmDir = Paths.get(projectDir, "src/dm/").toString();
-  }
+	public void doWork() {
+		System.out.println("JX - INFO - JXLocks.doWork");
+	    try {
+	    	// Test Part -
+	    	//testQuickly();
+	     
+	        // Read external arguments
+	        dtDir = Paths.get(projectDir, "src/dt/").toString();
+	        dmDir = Paths.get(projectDir, "src/dm/").toString();
+	      
+			systemname = Benchmarks.resolveSystem(jarsDir);
+			System.out.println("JX - DEBUG - system name = " + systemname);
+			cg = wala.getCallGrapth();
+			cha = wala.getClassHierarchy();
+			nPackageFuncs = wala.getNPackageFuncs();
+			nTotalFuncs = wala.getNTotalFuncs();
+			nApplicationFuncs = wala.getNApplicationFuncs();
+			nPremordialFuncs = wala.getNPremordialFuncs();
+			nOtherFuncs = wala.getNOtherFuncs();
+			//added
+			iolooputil = new IOLoopUtil(jarsDir);
+	      
+			// Phase 1 - find out loops
+			findLockingFunctions();      //JX - can be commented
+			findLoopingFunctions();
+			printLoopingFunctions();     //JX - write to local files. NO necessary, can be commented
+			//findLoopingLockingFunctions();
+	      
+			// Phase 2 - deal with loops
+			findNestedLoopsInLoops();
+	      
+	      
+			// init
+			findTimeConsumingOperationsInLoops();     // for all loops
+			iolooputil.printTcOperationTypes();                //for test
+	      
+			// Static Pruning      
+			/**
+			 * staticPruningForCriticalLoops
+	       	* Note: ONLY for Suspected/Critical loops that are read from da(dynamic analysis)
+	       	*/
+			System.out.println("\nJX - INFO - staticPruningForCriticalLoops"); 
+			StaticPruning printBugLoops = new StaticPruning(functions_with_loops, Paths.get(projectDir, "src/da/").toString());
+			printBugLoops.doWork();
+	     
+			// Phase 2 -
+			//analyzeAllLocks();
+			//analyzeLoopingLocks();
+	      
+	    } catch (Exception e) {
+	      System.err.println("JX-StackTrace-run-begin");
+	      e.printStackTrace();
+	      System.err.println("JX-StackTrace-run-end");
+	      return ;
+	    }
+	}
   
   
-  public static void doWalaAnalysis() {
-	  System.out.println("JX-doWalaAnalysis");
-	  wala = new WalaAnalyzer(appJarDir);
-	  systemname = Benchmarks.resolveSystem(appJarDir);
-	  System.out.println("JX - DEBUG - system name = " + systemname);
-	  cg = wala.getCallGrapth();
-	  cha = wala.getClassHierarchy();
-	  nPackageFuncs = wala.getNPackageFuncs();
-	  nTotalFuncs = wala.getNTotalFuncs();
-	  nApplicationFuncs = wala.getNApplicationFuncs();
-	  nPremordialFuncs = wala.getNPremordialFuncs();
-	  nOtherFuncs = wala.getNOtherFuncs();
-  }
-
   
-  public static void testQuickly() {
+  	public void testQuickly() {
 	    System.err.println("JX-breakpoint-testQuickly");
 	    StackTraceElement[] traces = Thread.currentThread().getStackTrace();
 	    String tmpstr = "";
@@ -226,117 +222,11 @@ public class JXLocks {
 	    System.out.println( new java.util.Date() );
 	    java.text.DateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
 	    System.out.println( sdf.format( new java.util.Date() ) );  
-  }
+  	}
  
   
  
-//===============================================================================================
-//+++++++++++++++++++++++++++++++++++++++++ Find RPCs +++++++++++++++++++++++++++++++++++++++++++
-//===============================================================================================
-  
-  public static void findRPCs() {
-	System.out.println("\nJX-findRPCs");
 
-	switch (systemname) {
-		case "HDFS":
-			HDrpc hdrpc = new HDrpc(cha, projectDir+"src/sa/tc/");  
-			hdrpc.doWork();
-			break;
-		case "MapReduce":
-			MRrpc mrrpc = new MRrpc(cha, projectDir+"src/sa/tc/");
-			mrrpc.doWork();
-			HDrpc hdrpc2 = new HDrpc(cha, projectDir+"src/sa/tc/");  
-			hdrpc2.doWork();
-			break;
-		case "HBase":
-			break;
-		default:
-			break;
-	}
-  }
-  
-  static List<String> rpcMethodSigs = new ArrayList<String>();
-  static List<String> ioMethodPrefixes = new ArrayList<String>();
-  
-  static public void readTimeConsumingOperations() {
-	  System.out.println("\nJX-readTimeConsumingOperations");
-	  String dirpath = projectDir + "src/sa/tc/";
-	  String rpcfile = "";
-	  String iofile = "";
-	  String commonIOfile = dirpath + "res/io.txt";   //jx: io_specific.txt or io.txt
-	  
-	  switch (systemname) {
-	  	case "HDFS":
-	  		rpcfile = dirpath + "output/hd_rpc.txt";
-	  		iofile =  dirpath + "res/hd_io.txt";
-			break;
-	  	case "MapReduce":
-	  		rpcfile = dirpath + "output/mr_rpc.txt";
-	  		iofile =  dirpath + "res/mr_io.txt";
-			break;
-	  	case "HBase":
-	  		rpcfile = dirpath + "output/hb_rpc.txt";
-	  		iofile =  dirpath + "res/hb_io.txt";
-			break;
-	  	default:
-			break;
-	  }  
-	
-	  BufferedReader bufreader;
-	  String tmpline;
-	  
-	  //1. read RPC file
-      int tmpnn = 0;
-	  try {
-		  bufreader = new BufferedReader( new FileReader( rpcfile ) );
-		  tmpline = bufreader.readLine(); // the 1st line is useless
-		  while ( (tmpline = bufreader.readLine()) != null ) {
-			  String[] strs = tmpline.trim().split("\\s+");
-			  if ( tmpline.trim().length() > 0 ) {
-				  tmpnn++;
-				  for (String str: strs)
-					  rpcMethodSigs.add(str);
-			  }
-		  }
-		  bufreader.close();
-		
-	  } catch (Exception e) {
-		  // TODO Auto-generated catch block
-		  System.out.println("JX - ERROR - when reading RPC files");
-		  e.printStackTrace();
-	  }
-	  System.out.println("JX - successfully read " + tmpnn + "(total:" + rpcMethodSigs.size() + ") RPCs as time-consuming operations");
-	  
-	  //2. read IO file
-	  try {
-		  bufreader = new BufferedReader( new FileReader( commonIOfile ) );
-		  tmpline = bufreader.readLine(); // the 1st line is useless
-		  while ( (tmpline = bufreader.readLine()) != null ) {
-			  String[] strs = tmpline.trim().split("\\s+");
-			  if ( tmpline.trim().length() > 0 ) {
-				  ioMethodPrefixes.add( strs[0] );
-			  }
-		  }
-		  bufreader.close();
-		  File f = new File( iofile );
-		  if (f.exists()) {
-			  bufreader = new BufferedReader( new FileReader( f ) );
-			  tmpline = bufreader.readLine(); // the 1st line is useless
-			  while ( (tmpline = bufreader.readLine()) != null ) {
-				  String[] strs = tmpline.trim().split("\\s+");
-				  if ( tmpline.trim().length() > 0 ) {
-					  ioMethodPrefixes.add( strs[0] );
-				  }
-			  }
-		  }
-		  bufreader.close();
-	  } catch (Exception e) {
-		  // TODO Auto-generated catch block
-		  System.out.println("JX - ERROR - when reading IO files");
-		  e.printStackTrace();
-	  }
-	  System.out.println("JX - successfully read " + ioMethodPrefixes.size() + " IO Prefixes as time-consuming operations");
-  }
   
   
 //===============================================================================================
@@ -349,7 +239,7 @@ public class JXLocks {
    */
   
   
-  public static void findLockingFunctions() {
+  public void findLockingFunctions() {
       System.out.println("\nJX-findLockingFunctions");
     
       int nFiltered = 0;
@@ -435,7 +325,7 @@ public class JXLocks {
   /**
    * Not yet filter "synchronized (xx) {}" that located in "catch{}" or "finally{}"
    */
-  public static List<LockInfo> findLocks(CGNode f) {
+  public List<LockInfo> findLocks(CGNode f) {
     
     int id = f.getGraphNodeId();
     IR ir = f.getIR();
@@ -582,12 +472,12 @@ public class JXLocks {
   }
    
 
-  static int print_num = 0;
+  int print_num = 0;
   /**
    * Note: track SSAs Back To Get Precise Lock For SyncCS
    * @param ssa - the monitorenter SSA
    */
-  public static void getPreciseLockForSyncCS(CGNode function, SSAInstruction ssa, LockInfo lock) {
+  public void getPreciseLockForSyncCS(CGNode function, SSAInstruction ssa, LockInfo lock) {
     
     IMethod im = function.getMethod();
     IR ir = function.getIR();
@@ -646,7 +536,7 @@ public class JXLocks {
   }
 
   
-  public static void dfsTrackSSAs(CGNode function, SSAInstruction ssa, SSAInstruction predssa, LockInfo lock) {
+  public void dfsTrackSSAs(CGNode function, SSAInstruction ssa, SSAInstruction predssa, LockInfo lock) {
        
     IMethod im = function.getMethod();
     IR ir = function.getIR();
@@ -865,10 +755,10 @@ public class JXLocks {
   }
   
   /*
-  static List<Integer> current_stack = new ArrayList<Integer>();
-  static Set<Integer> traversed_nodes = new HashSet<Integer>(); 
+  List<Integer> current_stack = new ArrayList<Integer>();
+  Set<Integer> traversed_nodes = new HashSet<Integer>(); 
   
-  public static void dfsToGetBasicBlocksForLock(int layer, ISSABasicBlock bb, SSACFG cfg, LockInfo lock) {
+  public void dfsToGetBasicBlocksForLock(int layer, ISSABasicBlock bb, SSACFG cfg, LockInfo lock) {
   
     if (lock.isMatched(bb)) {
       for (int i = 0; i < layer; i++)
@@ -896,7 +786,7 @@ public class JXLocks {
   */
 
   
-  public static void printFunctionsWithLocks() {
+  public void printFunctionsWithLocks() {
     //print all locks for those functions with locks
     for (Iterator<Integer> it = functions_with_locks.keySet().iterator(); it.hasNext(); ) {
       int id = it.next();
@@ -906,7 +796,7 @@ public class JXLocks {
     }
   }
   
-  public static void printLocks(List<LockInfo> locks) {
+  public void printLocks(List<LockInfo> locks) {
     // Print the function's Locks
     System.out.print("#locks-" + locks.size() + " - ");
     for (Iterator<LockInfo> it = locks.iterator(); it.hasNext(); ) {
@@ -924,7 +814,7 @@ public class JXLocks {
    * @throws IOException 
    **************************************************************************************************
    */
-  public static void findLoopingFunctions() throws IOException {
+  public void findLoopingFunctions() throws IOException {
     System.out.println("\nJX-findLoopingFunctions");
 
     int totalloops = 0;
@@ -965,7 +855,7 @@ public class JXLocks {
   
   
   // Find loops for each function
-  public static List<LoopInfo> findLoops(CGNode f) {
+  public List<LoopInfo> findLoops(CGNode f) {
     IR ir = f.getIR();
     SSACFG cfg = ir.getControlFlowGraph();
     //newly added - for source line number
@@ -1034,9 +924,9 @@ public class JXLocks {
   }
  
   
-  public static void printLoopingFunctions() throws IOException {
+  public void printLoopingFunctions() throws IOException {
 	System.out.println("\nJX-printLoopingFunctions");
-  	File loopfile = new File(appJarDir, "looplocations");
+  	File loopfile = new File(jarsDir, "looplocations");
   	BufferedWriter bufwriter = new BufferedWriter(new FileWriter(loopfile));
   	
     // Print all loops - for test
@@ -1073,7 +963,7 @@ public class JXLocks {
     System.out.println("Successfully write loops into " + loopfile.toString() + " & " + newpath.toString());
   }
   
-  public static void printLoops(List<LoopInfo> loops, BufferedWriter bufwriter) throws IOException {
+  public void printLoops(List<LoopInfo> loops, BufferedWriter bufwriter) throws IOException {
     // Print the function's loops
     //System.err.print("#loops=" + loops.size() + " - ");
     bufwriter.write( loops.size() + " " );
@@ -1089,7 +979,7 @@ public class JXLocks {
   }
  
   // 
-  public static int getSourceLineNumberFromBB(ISSABasicBlock bb, SSAInstruction[] ssas, IBytecodeMethod bytecodemethod) {
+  public int getSourceLineNumberFromBB(ISSABasicBlock bb, SSAInstruction[] ssas, IBytecodeMethod bytecodemethod) {
 	  
       for (Iterator<SSAInstruction> it = bb.iterator(); it.hasNext(); ) {
           SSAInstruction ssa = it.next();
@@ -1112,7 +1002,7 @@ public class JXLocks {
 	  return -1;
   }
   
-  public static int getSourceLineNumberFromSSA(SSAInstruction ssa, SSAInstruction[] ssas, IBytecodeMethod bytecodemethod) {
+  public int getSourceLineNumberFromSSA(SSAInstruction ssa, SSAInstruction[] ssas, IBytecodeMethod bytecodemethod) {
       int index = getSSAIndexBySSA(ssas, ssa); 
       if (index != -1) {
 		try {
@@ -1134,7 +1024,7 @@ public class JXLocks {
   /**************************************************************************
    * New added - JX - just find time-consuming operations    
    **************************************************************************/
-  public static void findTimeConsumingOperationsInLoops() {
+  public void findTimeConsumingOperationsInLoops() {
 	  System.out.println("\nJX-findTimeConsumingOperationsInLoops");
 	  // Initialize Time-consuming operation information by DFS for all looping functions
 	  BitSet traversednodes = new BitSet();
@@ -1160,7 +1050,7 @@ public class JXLocks {
   }
   
   
-  public static int dfsToGetTimeConsumingOperations(CGNode f, int depth, BitSet traversednodes) {
+  public int dfsToGetTimeConsumingOperations(CGNode f, int depth, BitSet traversednodes) {
     
 	// for test - the depth can reach 58
     /*
@@ -1198,14 +1088,14 @@ public class JXLocks {
       if (ssa == null)
     	  continue;
 
-      if ( checkTimeConsumingSSA(ssa) ) {
+      if ( iolooputil.isTimeConsumingSSA(ssa) ) {
     	  function.tcOperations.add( ssa );
     	  numOfTcOperations ++;
     	  numOfTcOperations_recusively ++;
     	  continue;
       }
       // filter the rest I/Os
-      if ( isIO(ssa) )
+      if ( iolooputil.isIOSSA(ssa) )
     	  continue;
       
       // if meeting a normal call(NOT RPC and I/O), Go into the call targets
@@ -1230,72 +1120,10 @@ public class JXLocks {
   }
   
   
-  static Set<String> tmpTcOps = new TreeSet<String>();
-  
-  public static boolean checkTimeConsumingSSA(SSAInstruction ssa) {
-	  // if a invoke instruction
-      if (ssa instanceof SSAInvokeInstruction) {  //SSAAbstractInvokeInstruction
-    	  SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;
-    	  String classname = invokessa.getDeclaredTarget().getDeclaringClass().getName().toString();
-		  String methodname = invokessa.getDeclaredTarget().getName().toString();
-		  
-    	  // identify RPC
-		  String signature = invokessa.getDeclaredTarget().getSignature().toString();
-		  if ( invokessa.isDispatch() 
-	    	   || invokessa.isSpecial() 
-	    	   || invokessa.isStatic() 
-				  ) {
-			  //  !!!!tmp, have a problem
-			  if (rpcMethodSigs.contains(signature)) {
-		      	  tmpTcOps.add( "RPC Call: " + signature );
-				  return true;
-			  }
-			  
-		  }
-    	  // identify I/O
-    	  if ( invokessa.isDispatch() 
-    		   || invokessa.isSpecial() 
-    		   || invokessa.isStatic() 
-    			  ) {
-    		  if ( !methodname.equals("<init>") )
-    		  if ( isInIoMethodPrefixes(signature) ) {     		  
-    			  tmpTcOps.add( invokessa.getDeclaredTarget().getSignature().toString() );
-    			  return true;
-    		  }	 
-    	  }
-      }
-      else {
-    	  //TODO - if need be
-      }
-      return false;
-  }
-  
-  public static boolean isInIoMethodPrefixes(String signature) {
-	  for (String str: ioMethodPrefixes)
-		  if (signature.startsWith(str))
-			  return true;
-	  return false;
-  }
+
   
   
-  public static boolean isIO(SSAInstruction ssa) {
-	  //filter rest I/Os that are not time-consuming for avoiding to get into,   #this is also can be removed
-	  if (ssa instanceof SSAInvokeInstruction) {
-		  SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;
-		  String sig = invokessa.getDeclaredTarget().getSignature().toString();
-		  if ( sig.startsWith("java.io.")
-			   || sig.startsWith("java.nio.")
-			   || sig.startsWith("java.net.")
-			   || sig.startsWith("java.rmi.")
-			   || sig.startsWith("java.sql.")
-			   )
-			  return true;
-	  }
-	  return false;
-  }
-  
-  
-  public static void findTimeConsumingOperationsForALoop(LoopInfo loop) {
+  public void findTimeConsumingOperationsForALoop(LoopInfo loop) {
 	  
 	  CGNode f = loop.function;
 	  int id = f.getGraphNodeId();
@@ -1337,7 +1165,7 @@ public class JXLocks {
         		continue;
         	}
         	// filter the rest I/Os
-            if ( isIO(ssa) )
+            if ( iolooputil.isIOSSA(ssa) )
           	  continue;
             if (ssa instanceof SSAInvokeInstruction) {  
           	  SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;
@@ -1353,7 +1181,7 @@ public class JXLocks {
   
 
   
-  public static void dfsToGetTimeConsumingOperationsForSSA(CGNode f, int depth, BitSet traversednodes, LoopInfo loop, String callpath) {
+  public void dfsToGetTimeConsumingOperationsForSSA(CGNode f, int depth, BitSet traversednodes, LoopInfo loop, String callpath) {
 	/* jx: if want to add this, then for MapReduce we need to more hadoop-common&hdfs like "org.apache.hadoop.conf" not juse 'fs/security' for it
 	if ( !isInPackageScope(f) )
 		return ;
@@ -1402,7 +1230,7 @@ public class JXLocks {
       if ( function.tcOperations.contains( ssa ) )
     	  continue;
       // filter the rest I/Os
-      if ( isIO(ssa) )
+      if ( iolooputil.isIOSSA(ssa) )
     	  continue;
       if (ssa instanceof SSAInvokeInstruction) {  
     	  SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;
@@ -1416,21 +1244,13 @@ public class JXLocks {
   }
   
   
-  public static void printTcOperationTypes() {
-	  System.out.println("\nJX-printTcOperationTypes");
-	  System.out.println("#types = " + tmpTcOps.size());
-	  // test
-	  for (String str: tmpTcOps) {
-		  System.out.println(str);
-	  }
-  }
-  
+
   
   
   /*********************************************************
    * New added - JX - just find nested loops                 
    ********************************************************/
-  public static void findNestedLoopsInLoops() {
+  public void findNestedLoopsInLoops() {
 	  System.out.println("\nJX-findNestedLoops");
 	  
 	  // Initialize nested loop information by DFS for all looping functions
@@ -1466,7 +1286,7 @@ public class JXLocks {
   }
   
   
-  public static void findNested(CGNode f) {
+  public void findNested(CGNode f) {
 	  
     int id = f.getGraphNodeId();
     IR ir = f.getIR();
@@ -1540,7 +1360,7 @@ public class JXLocks {
    * Find Locks with Loops
    ***********************************************************************************************************
    */
-  public static void findLoopingLockingFunctions() {
+  public void findLoopingLockingFunctions() {
       System.out.println("\nJX-findLoopingLockingFunctions");
     
       // Initialization by DFS for locking functions
@@ -1607,9 +1427,9 @@ public class JXLocks {
   }
   
   
-  static int MAXN_DEPTH = 100;   //default: 1000    for ha-1.0.0, using 100 get the same results
+  int MAXN_DEPTH = 100;   //default: 1000    for ha-1.0.0, using 100 get the same results
   
-  public static void dfsToGetFunctionInfos(CGNode f, int depth) {
+  public void dfsToGetFunctionInfos(CGNode f, int depth) {
     
       FunctionInfo function = new FunctionInfo();
       function.max_depthOfLoops = 0;
@@ -1734,7 +1554,7 @@ public class JXLocks {
   }
   
   
-  public static void findForLockingFunction(CGNode f) {
+  public void findForLockingFunction(CGNode f) {
     
     int id = f.getGraphNodeId();
     IR ir = f.getIR();
@@ -1819,21 +1639,8 @@ public class JXLocks {
   }
   
   
-  
-  /***********************************************************************************
-   * staticPruningForCriticalLoops
-   * Note: ONLY for Suspected/Critical loops that are read from da(dynamic analysis)
-   **********************************************************************************/
-  public static void staticPruningForCriticalLoops() {
-	  System.out.println("\nJX-staticPruningForCriticalLoops"); 
-	  StaticPruning printBugLoops = new StaticPruning(functions_with_loops, Paths.get(projectDir, "src/da/").toString());
-	  printBugLoops.doWork();
-  }
-  
-  
-  
-  
-  public static void analyzeAllLocks() {
+ 
+  public void analyzeAllLocks() {
     System.out.println("\nJX-analyzeAllLocks");
 
     //for test
@@ -1855,10 +1662,10 @@ public class JXLocks {
   }
  
   
-  static List<LoopingLockInfo> heavylocks = new ArrayList<LoopingLockInfo>();  // ie, Time-consuming Looping Locks
-  static Set<String> set_of_heavylocks = new TreeSet<String>();   
+  List<LoopingLockInfo> heavylocks = new ArrayList<LoopingLockInfo>();  // ie, Time-consuming Looping Locks
+  Set<String> set_of_heavylocks = new TreeSet<String>();   
   
-  public static void analyzeLoopingLocks() {
+  public void analyzeLoopingLocks() {
     System.out.println("\nJX-analyzeLoopingLocks-5");
  
     int requiredDepth = 2;

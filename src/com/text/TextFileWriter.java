@@ -1,4 +1,4 @@
-package com;
+package com.text;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

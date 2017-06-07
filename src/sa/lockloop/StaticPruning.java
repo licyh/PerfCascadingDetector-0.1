@@ -1,4 +1,4 @@
-package sa;
+package sa.lockloop;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import sa.tc.MRrpc;
+import sa.wala.WalaUtil;
 
 
 // time-consuming loop pruning/identifying
@@ -100,7 +100,7 @@ public class StaticPruning {
 		for (List<LoopInfo> loops: functions_with_loops.values() )
 			for (LoopInfo loop: loops)
 				if (loop.numOfTcOperations_recusively > 0) {
-					String classname = MRrpc.format( loop.function.getMethod().getDeclaringClass().getName().toString() );
+					String classname = WalaUtil.formatClassName( loop.function.getMethod().getDeclaringClass().getName().toString() );
 					String methodname = loop.function.getMethod().getName().toString();
 					int linenumber = loop.line_number;
 					if (classname.equals(loopclass) && methodname.equals(loopmethod) && Math.abs(linenumber-loopline)<=2 ) { //!!!!

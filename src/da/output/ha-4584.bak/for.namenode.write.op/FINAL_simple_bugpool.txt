@@ -6,8 +6,7 @@ CL3: org.apache.hadoop.hdfs.server.namenode.FSDirectory-mkdirs-947;
 CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog$EditLogFileOutputStream-write-154;
 CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-908;
 CL3: org.apache.hadoop.hdfs.server.namenode.LeaseManager-checkLeases-380;
+CL4: org.apache.hadoop.hdfs.server.namenode.FSDirectory-mkdirs-947;
 CL4: org.apache.hadoop.hdfs.server.namenode.FSEditLog$EditLogFileOutputStream-write-154;
 CL4: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-908;
-CL5: org.apache.hadoop.hdfs.server.namenode.FSEditLog$EditLogFileOutputStream-write-154;
-CL5: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-908;
-summary - 12(#static codepoints=4) from 57 (#static codepoints=28)
+summary - 11(#static codepoints=4) from 52 (#static codepoints=26)

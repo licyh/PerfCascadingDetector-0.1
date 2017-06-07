@@ -4,7 +4,10 @@ import java.io.*;
 import java.nio.file.Paths;
 import java.util.*;
 import com.ibm.wala.ipa.cha.ClassHierarchy;
-import com.TextFileWriter;
+import com.text.TextFileWriter;
+
+import sa.wala.WalaUtil;
+
 import com.ibm.wala.classLoader.IClass;
 import com.ibm.wala.classLoader.IMethod;
 
@@ -12,12 +15,12 @@ import com.ibm.wala.classLoader.IMethod;
 public class HDrpc { 
  
 	ClassHierarchy cha;
-	String parentDir;
-	String rpcfilepath = "hd_rpc.txt";
+	String outputDir;
+	String rpcfile = "hd_rpc.txt";  //can be "dirxx/dirxx/hd_rpc.txt"
 	
-	public HDrpc(ClassHierarchy cha, String parentDir) {
+	public HDrpc(ClassHierarchy cha, String outputDir) {
 		this.cha = cha;
-		this.parentDir = parentDir;
+		this.outputDir = outputDir;
 	}
   
 	// JX - main method
@@ -56,53 +59,32 @@ public class HDrpc {
 	    System.out.println( "mrv1Class(length=" + mrv1Class.size() + "): " + mrv1Class );
 	    System.out.println( "mrv1Iface(length=" + mrv1Iface.size() + "): " + mrv1Iface );
 	
+	    
 	    ArrayList<String> results = new ArrayList<String>();
-	    ArrayList<String> results_2 = new ArrayList<String>();
 	    
 	    // 2. Get RPC methods that included in RPC
 	    for (IClass c : mrv1Class) {
-	      for (IMethod m : c.getDeclaredMethods()) { 
-	    	  String str = m.getSignature() + "\t";
-	    	  String str_2 = MRrpc.format( m.getDeclaringClass().getName().toString() ) + " ";
-	    	  boolean find = false;
-		      for (IClass iface : c.getAllImplementedInterfaces())
-		    	// only find out RPC interfaces   #one RPC class <- many (RPC or non-RPC) interfaces
-		        if ( mrv1Iface.contains(iface) ) {
-		        	String ifacemethodsig = MRrpc.containMethod(iface, m.getSelector().toString());
-		        	if (ifacemethodsig != null) {
-		        		str += ifacemethodsig + "\t";
-		        		str_2 += MRrpc.format( iface.getName().toString() ) + " "
-		        				+ m.getName().toString() + " "
-		        				+ "0";
-		        		find = true;
-		        	}
-		        }
-		      if (find) {
-		 	     results.add(str);
-		 	     results_2.add(str_2);
-		      }
-	      }
+	    	for (IMethod m : c.getDeclaredMethods()) { 
+	    		
+	    		String className = WalaUtil.formatClassName( m.getDeclaringClass().getName().toString() );
+	    		for (IClass iface : c.getAllImplementedInterfaces()) {
+	    			if ( mrv1Iface.contains(iface) ) { // only find out RPC interfaces   #one RPC class <- many (RPC or non-RPC) interfaces
+	    				String ifacemethodsig = WalaUtil.containMethod(iface, m.getSelector().toString());
+	    				if (ifacemethodsig != null) {
+	    					String line = className + " "
+	    								+ WalaUtil.formatClassName( iface.getName().toString() ) + " "
+	    								+ m.getName().toString() + " "
+	    								+ "0";
+	    					results.add(line);
+	    				}
+	    			}
+	    		}
+	    	}
 	    }//outer-for 
 	    
-
-	    // write to file
-	    /*
-	    String filepath = Paths.get(parentDir, rpcfilepath).toString();
-	    try {
-	      PrintWriter outFile = new PrintWriter(filepath, "UTF-8");
-	      outFile.println("//format: implementation method's signature  \t  interface method's signature1  ..2 .. if any");
-	      for (String str : results) {
-	        outFile.println(str);
-	      }
-	      outFile.close();
-	    } catch (Exception e) {
-	      e.printStackTrace();
-	    }
-	    */
-	    
-	    TextFileWriter writer = new TextFileWriter( Paths.get(parentDir, rpcfilepath) );
+	    TextFileWriter writer = new TextFileWriter( Paths.get(outputDir, rpcfile) );
 	    writer.writeLine("//format: 1.implementation class name  2.interface class name  3. method name  4. count of args  5+: args' class names ");
-	    for (String str: results_2) {
+	    for (String str: results) {
 	    	writer.writeLine(str);
 	    }
 	    writer.close();

@@ -1,3 +1,0 @@
-Target Code Snippet #1: (1653 to 1657)
-including lock - 20979-31:4051:org.apache.hadoop.hdfs.server.namenode.FSNamesystem-processReport--1;org.apache.hadoop.hdfs.server.namenode.NameNode-blockReport-990;
-including lock - 20979-31:4052:org.apache.hadoop.hdfs.server.namenode.FSNamesystem-isInStartupSafeMode--1;org.apache.hadoop.hdfs.server.namenode.FSNamesystem-processReport-3424;

@@ -71,7 +71,7 @@ import sa.wala.util.PDFWalaIR;
 
 public class WalaAnalyzer {   
 
-	Path dirpath;            // Should also support single *.jar file, But for now NOT NOT NOT 
+	Path dirpath;            // Target dir. Should also support single *.jar file, But for now NOT NOT NOT 
   
     // WALA basis
     AnalysisScope scope;
@@ -107,7 +107,11 @@ public class WalaAnalyzer {
     		return;
     	}
     	this.dirpath = dirpath;
-    	initialize();
+    	doWork();
+    }
+    
+    public Path getTargetDirPath() {
+    	return this.dirpath;
     }
     
     public CallGraph getCallGrapth() {
@@ -140,7 +144,8 @@ public class WalaAnalyzer {
     
  
     
-    private void initialize() {
+    private void doWork() {
+    	System.out.println("JX - INFO - WalaAnalyzer.doWork");
     	String alljars = getAllJars();
     	try {
     		walaAnalysis(alljars);

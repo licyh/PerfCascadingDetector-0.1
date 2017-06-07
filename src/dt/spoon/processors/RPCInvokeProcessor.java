@@ -30,7 +30,7 @@ public class RPCInvokeProcessor extends AbstractProcessor<CtInvocation> {
 	
 	Path bugConfigDirPath;
 	Checker scopeChecker = null;
-	com.benchmark.Checker checker = null;
+	com.text.Checker checker = null;
 	
 	
 	public RPCInvokeProcessor(String bugConfigDir) {
@@ -42,7 +42,7 @@ public class RPCInvokeProcessor extends AbstractProcessor<CtInvocation> {
 		this.scopeChecker = new CommonChecker( this.bugConfigDirPath.resolve("scope.txt").toString() );
 		//only for mr-4813
 		//this.checker = new RPCChecker( this.bugConfigDirPath.resolve("rpc.txt").toString() );
-		this.checker = new com.benchmark.Checker();
+		this.checker = new com.text.Checker();
 		this.checker.addCheckFile( this.bugConfigDirPath.resolve("rpc.txt") );
 	}
 		

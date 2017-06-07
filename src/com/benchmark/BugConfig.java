@@ -3,7 +3,7 @@ package com.benchmark;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import com.TextFileReader;
+import com.text.TextFileReader;
 
 
 public class BugConfig {

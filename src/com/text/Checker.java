@@ -1,11 +1,9 @@
-package com.benchmark;
+package com.text;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.TextFileReader;
 
 
 public class Checker {
@@ -63,6 +61,27 @@ public class Checker {
 		return false;
 	}
 	
+	// isSplitTarget_n(str)
+	public boolean isSplitTarget_0(String sig) {  // same as isSplitTarget(argu1)
+		return isSplitTarget(sig);
+	}
+	
+	public boolean isSplitTarget_1(String sig) {  // Note: couldn't use like "isSplitTarget_1(xx) && isSplitTarget_2(yy)"
+		for (String[] strs: splitTargetStrs) {
+			if (sig.equals(strs[1]))
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean isSplitTarget_2(String sig) {
+		for (String[] strs: splitTargetStrs) {
+			if (sig.equals(strs[2]))
+				return true;
+		}
+		return false;
+	}
+	
 	public boolean isSplitTarget(String sig1, String sig2) {
 		for (String[] strs: splitTargetStrs) {
 			if (sig1.equals(strs[0]) && sig2.equals(strs[1]))
@@ -74,27 +93,6 @@ public class Checker {
 	public boolean isSplitTarget(String sig1, String sig2, String sig3) {
 		for (String[] strs: splitTargetStrs) {
 			if (sig1.equals(strs[0]) && sig2.equals(strs[1]) && sig3.equals(strs[2]))
-				return true;
-		}
-		return false;
-	}
-	
-	// isSplitTarget_n(str)
-	public boolean isSplitTarget_0(String sig) {  // same as isSplitTarget(argu1)
-		return isSplitTarget(sig);
-	}
-	
-	public boolean isSplitTarget_1(String sig) {
-		for (String[] strs: splitTargetStrs) {
-			if (sig.equals(strs[1]))
-				return true;
-		}
-		return false;
-	}
-	
-	public boolean isSplitTarget_2(String sig) {
-		for (String[] strs: splitTargetStrs) {
-			if (sig.equals(strs[2]))
 				return true;
 		}
 		return false;

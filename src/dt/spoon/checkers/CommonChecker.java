@@ -1,6 +1,6 @@
 package dt.spoon.checkers;
 
-import com.TextFileReader;
+import com.text.TextFileReader;
 
 
 public class CommonChecker implements Checker {

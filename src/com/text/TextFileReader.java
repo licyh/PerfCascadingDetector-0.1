@@ -1,4 +1,4 @@
-package com;
+package com.text;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -58,9 +58,10 @@ public class TextFileReader {
 	
 	private void initialize(Path filepath) {
 		this.filepath = filepath;
-		if ( !Files.exists(filepath) )
+		if ( !Files.exists(filepath) ) {
 			System.out.println("JX - ERROR - !Files.exists @ " + filepath);
-		
+			return;
+		}
 		try {
 			this.bufreader = new BufferedReader( new FileReader( filepath.toString() ) );
 		} catch (FileNotFoundException e) {
