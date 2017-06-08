@@ -22,8 +22,6 @@ import sa.wala.WalaUtil;
 
 public class IOLoopUtil {
 	
-	List<String> rpcMethodSigs = new ArrayList<String>();
-	//List<String> ioMethodPrefixes = new ArrayList<String>();
 	Set<String> tmpTcOps = new TreeSet<String>();
 	
 	Path jarsDirPath;               //ie, xxx/JXCascading-detector/src/sa/res/ha-4584

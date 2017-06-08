@@ -68,7 +68,9 @@ public class HDrpc {
 	    		
 	    		String className = WalaUtil.formatClassName( m.getDeclaringClass().getName().toString() );
 	    		for (IClass iface : c.getAllImplementedInterfaces()) {
-	    			if ( mrv1Iface.contains(iface) ) { // only find out RPC interfaces   #one RPC class <- many (RPC or non-RPC) interfaces
+	    			// only find out RPC interfaces   #one RPC class <- many (RPC or non-RPC) interfaces
+	    			// jx: because one may have multiple interfaces, I don't know if it's mistaken made by human or not
+	    			if ( mrv1Iface.contains(iface) ) { 
 	    				String ifacemethodsig = WalaUtil.containMethod(iface, m.getSelector().toString());
 	    				if (ifacemethodsig != null) {
 	    					String line = className + " "

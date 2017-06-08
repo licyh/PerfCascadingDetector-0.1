@@ -11,7 +11,7 @@ public class StaticAnalysis {
 	
 	
 	public static void main(String[] args) {
-		new StaticAnalysis(args).doWork();
+		new StaticAnalysis(args);
 	}
 	
 	/**
@@ -22,12 +22,14 @@ public class StaticAnalysis {
 	public StaticAnalysis(String[] args) {
 		projectDir = args[0];
 		jarsDir = args[1];
+		doWork();
 	}
 	
 	
 	public void doWork() {
 		System.out.println("JX - INFO - StaticAnalysis.doWork");
 		WalaAnalyzer walaAnalyzer = new WalaAnalyzer(jarsDir);
+		
 		JXLocks jxLocks = new JXLocks(walaAnalyzer, projectDir);
 	}
 	
