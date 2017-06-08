@@ -308,11 +308,10 @@ public class CascadingFinder {
     		Set<Integer> nextbatchLocks = findNextbatchLocksInDiffThreads( curbatchLocks, curCascadingLevel );
                 System.out.println("batch #" + (++tmpbatch) + ":#locks=" + curbatchLocks.size() + " <--- #" + tmpbatch + ".5:#locks=" + nextbatchLocks.size() );
    
- 		// Find affected locks based on 1 in the same thread
+            // Find affected locks based on 1 in the same thread
     		curbatchLocks = findNextbatchLocksInSameThread( nextbatchLocks, curCascadingLevel );
     		System.out.println("batch #" + (tmpbatch+1) + ":#intermediate locks=" + curbatchLocks.size()  );
    
-
         	if ( curbatchLocks.size() <= 0 ) {
     			System.out.println( "JX - CascadingBugDetection - finished normally" );
     			break;
@@ -408,7 +407,8 @@ public class CascadingFinder {
     			loopbug.cascadingChain.add( tmp );
     		}
     	}
-    	System.out.println( loopbug );
+    	//jx: had better commented this when #targetcode is large or #loopbug is large
+    	//System.out.println( loopbug );
     }
     
 	
