@@ -31,13 +31,13 @@ public class RPCFinder {
 	}
 	
 	public void doWork() {
+		System.out.println("JX - INFO - RPCFinder.doWork");
 		findRPCs();
 	}
 	
 
 		
 	public void findRPCs() {
-		System.out.println("JX - INFO - findRPCs...");
 		ClassHierarchy cha = walaAnalyzer.getClassHierarchy();
 		
 		switch ( systemName ) {
