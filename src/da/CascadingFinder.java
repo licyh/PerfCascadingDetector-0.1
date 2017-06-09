@@ -22,6 +22,8 @@ public class CascadingFinder {
 	String projectDir;
 	String packageDir = "src/da";
 	GraphBuilder gb;
+	AccidentalGraph ag;
+	
     //In .traverseTargetCodes()
     ArrayList<Integer> alltargetitems;    				//all nodes of all TargetCodeBegin & TargetCodeEnd snippets
     //ArrayList<Integer> targetcodeLoops;  				//never used, just ps for time-consuming loops?
@@ -54,9 +56,10 @@ public class CascadingFinder {
 	Set<String> medianchainbugpool = new TreeSet<String>();
 	
 	
-	CascadingFinder(String projectDir, GraphBuilder graphBuilder) {
+	CascadingFinder(String projectDir, GraphBuilder graphBuilder, AccidentalGraph ag) {
 		this.projectDir = projectDir;
 		this.gb = graphBuilder;
+		this.ag = ag;
 		
         this.alltargetitems = new ArrayList<Integer>();    //all nodes of all TargetCodeBegin & TargetCodeEnd snippets
         //targetcodeLoops = new ArrayList<Integer>();                              //never used, just ps for time-consuming loops?
@@ -352,8 +355,8 @@ public class CascadingFinder {
     	for (int lockindex: batchLocks) {
     		String pidopval0 = gb.getNodePIDOPVAL0(lockindex);
     		// 1. if not R lock; cuz R will not affect R, but a general obj.lock can affect the obj itself
-    		if ( !gb.isReadOrWriteLock(lockindex).equals("R") ) {
-    			ArrayList<Integer> list = gb.accurateLockmemref.get( pidopval0 );
+    		if ( !ag.isReadOrWriteLock(lockindex).equals("R") ) {
+    			ArrayList<Integer> list = ag.accurateLockmemref.get( pidopval0 );
 	    		for (int index: list) {
 	    			if (lockindex == index) continue;
 	                if ( gb.isFlippedorder(lockindex, index) ) {
@@ -363,9 +366,9 @@ public class CascadingFinder {
 	    		}
     		}
     		// 2. if R/W lock
-    		if ( !gb.isReadOrWriteLock(lockindex).equals("null") ) {
-    			String correspondingPidopval0 = gb.rwlockmatch.get( pidopval0 )[1];
-    			ArrayList<Integer> list = gb.accurateLockmemref.get( correspondingPidopval0 );   //or using dotlockmemref.get( xx )
+    		if ( !ag.isReadOrWriteLock(lockindex).equals("null") ) {
+    			String correspondingPidopval0 = ag.rwlockmatch.get( pidopval0 )[1];
+    			ArrayList<Integer> list = ag.accurateLockmemref.get( correspondingPidopval0 );   //or using dotlockmemref.get( xx )
     			for (int index: list) {
     				if ( gb.isFlippedorder(lockindex, index) ) {
     					nextbatchLocks.add( index );

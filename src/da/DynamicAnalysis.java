@@ -43,11 +43,12 @@ public class DynamicAnalysis {
 		}
 		
 		
-    	gb.buildLockmemref(); 
+		AccidentalGraph ag = new AccidentalGraph( gb );
+    	ag.buildLockmemref(); 
 		System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
 		
 		// Cascading Analysis
-		CascadingFinder cascadingFinder = new CascadingFinder( argv[0], gb );
+		CascadingFinder cascadingFinder = new CascadingFinder( argv[0], gb, ag );
 		cascadingFinder.doWork();
 		
 		// find out 1.flipped order 2.lock relationship graph by the same locks
