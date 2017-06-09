@@ -110,11 +110,9 @@ public class CascadingFinder {
     			int reenter = 1;
     			for (int j = i+1; j < gb.nList.size(); j++) {
     				if ( !gb.getNodePIDTID(j).equals(pidtid) ) break;
-    				// added: bug fix
+    				// modified: bug fix
     				if ( gb.getNodeOPTY(j).equals("LockRequire") && gb.getNodeOPVAL(j).equals(opval) )  
     					reenter ++;
-    				// end - added
-    				// modified: bug fix
     				if ( gb.getNodeOPTY(j).equals("LockRelease") && gb.getNodeOPVAL(j).equals(opval) ) {
     					reenter --;
     					if (reenter == 0) {
@@ -400,7 +398,7 @@ public class CascadingFinder {
 					addToBugPool( k, curCascadingLevel );
 				}
 				if ( gb.getNodeOPTY(k).equals("LockRequire") ) {
-					if ( !gb.getNodePIDOPVAL0(k).equals(pidopval0) ) {
+					if ( !gb.getNodePIDOPVAL0(k).equals(pidopval0) ) {  // yes, it's right
 						nextbatchLocks.add( k );
 						upNodes[curCascadingLevel].put(k, index);
 						//jx: it seems no need to check if the LockReuire has LockRelease or not

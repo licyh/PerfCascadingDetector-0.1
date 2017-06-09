@@ -3,9 +3,6 @@
  */
 package da;
 import java.io.*;
-import java.io.InterruptedIOException;
-import java.io.PrintWriter;
-
 import java.util.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -1697,7 +1694,7 @@ JX - DEBUG - 34802 : org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496; 9822
     
     
     //Added by JX - analyze all locks
-    public void buildlockmemref() {
+    public void buildLockmemref() {
     	System.out.println("\nJX - lock memory address analysis");
     	
     	int totalLockRequires = 0;
@@ -2212,7 +2209,64 @@ JX - DEBUG - 34802 : org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496; 9822
     }
     
     
-    //Modified by JX
+	public void queryHappensBeforeRelations(String path) {
+		try {
+		File file = new File(xmldir + "result/suggestion");
+		file.mkdir();
+		BufferedReader br = new BufferedReader(new FileReader(path));
+		    String line = "";
+		    while ((line = br.readLine())!=null){
+			String [] eles = line.split(" ");
+			int x = Integer.parseInt(eles[0]);
+			int y = Integer.parseInt(eles[1]);
+			if ((!reachbitset.get(x).get(y)) && (!reachbitset.get(y).get(x))) {
+			    String str = suggestion(x,y);
+			    writesuggestion(x,y,str);
+			    String [] strs = str.split("!");
+	    		    String [] basic = strs[0].split("@");
+			    String [] adv   = strs[1].split("@");
+	                    System.out.println("str = "+str);
+	                    System.out.println("Basic x : " + basic[0]);
+	                    System.out.println("Basic y : " + basic[1]);
+	                    System.out.println("Advance x : " + adv[0]);
+	                    System.out.println("Advance y : " + adv[1]);
+			    System.out.println(x + " & " + y + " have no HB relation");
+			    continue;
+		        }
+			if (reachbitset.get(x).get(y))
+				System.out.println(x + " -> "+ y );
+			if (reachbitset.get(y).get(x))
+				System.out.println(x + " <- "+ y );
+		}
+		} catch (Exception e){
+			System.out.println("Query file open error");
+			e.printStackTrace();
+		}
+	}
+
+    public void writesuggestion(int x, int y, String str){
+        try{
+            File file = new File(xmldir + "result/suggestion"+"/"+x+"-"+y);
+		    BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+		    String s1 = str.split("!")[0];
+	            String []s2 = s1.split("@");
+		    String []s21 = s2[0].split("&");
+		    String []s22 = s2[1].split("&");
+		    bw.write(s21[0] + "\n");
+		    bw.write(s21[1] + "\n");
+		    bw.write("java.lang.Thread-getStackTrace-1589;" + s21[2] + "\n");
+		    bw.write(s22[0] + "\n");
+		    bw.write(s22[1] + "\n");
+		    bw.write("java.lang.Thread-getStackTrace-1589;" + s22[2] + "\n");
+	            //bw.write(str);
+		    bw.close();
+	    }catch (Exception e){
+		    e.printStackTrace();
+        }
+   }
+	
+	
+	//Modified by JX
     /**
      * isFlippedorder - ie, concurrent or not? 
      */
@@ -2986,64 +3040,7 @@ public void stasticalana(int x, int y, int freq) {
         //System.out.println(x + " is passed");
     }
     
-    public void writesuggestion(int x, int y, String str){
-        try{
-            File file = new File(xmldir + "result/suggestion"+"/"+x+"-"+y);
-	    BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-	    String s1 = str.split("!")[0];
-            String []s2 = s1.split("@");
-	    String []s21 = s2[0].split("&");
-	    String []s22 = s2[1].split("&");
-	    bw.write(s21[0] + "\n");
-	    bw.write(s21[1] + "\n");
-	    bw.write("java.lang.Thread-getStackTrace-1589;" + s21[2] + "\n");
-	    bw.write(s22[0] + "\n");
-	    bw.write(s22[1] + "\n");
-	    bw.write("java.lang.Thread-getStackTrace-1589;" + s22[2] + "\n");
-            //bw.write(str);
-	    bw.close();
-        }catch (Exception e){
-	    e.printStackTrace();
-	}
-	
-   }
-   public void queryhbrelation(String path){
-	try {
-	File file = new File(xmldir + "result/suggestion");
-	file.mkdir();
-	BufferedReader br = new BufferedReader(new FileReader(path));
-	    String line = "";
-	    while ((line = br.readLine())!=null){
-		String [] eles = line.split(" ");
-		int x = Integer.parseInt(eles[0]);
-		int y = Integer.parseInt(eles[1]);
-		if ((!reachbitset.get(x).get(y)) && (!reachbitset.get(y).get(x))) {
-		    String str = suggestion(x,y);
-		    writesuggestion(x,y,str);
-		    String [] strs = str.split("!");
-    		    String [] basic = strs[0].split("@");
-		    String [] adv   = strs[1].split("@");
-                    System.out.println("str = "+str);
-                    System.out.println("Basic x : " + basic[0]);
-                    System.out.println("Basic y : " + basic[1]);
-                    System.out.println("Advance x : " + adv[0]);
-                    System.out.println("Advance y : " + adv[1]);
-		    System.out.println(x + " & " + y + " have no HB relation");
-		    continue;
-	        }
-		if (reachbitset.get(x).get(y))
-			System.out.println(x + " -> "+ y );
-		if (reachbitset.get(y).get(x))
-			System.out.println(x + " <- "+ y );
-		
-	}
-	} catch (Exception e){
-		System.out.println("Query file open error");
-		e.printStackTrace();
-	}
-   } 
-
-   public void addspecialedges(String fin){
+    public void addspecialedges(String fin){
 	try{
 	    BufferedReader bf = new BufferedReader(new FileReader(new File(fin)));
 	    String st;
