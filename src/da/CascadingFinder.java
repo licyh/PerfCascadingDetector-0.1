@@ -450,7 +450,7 @@ public class CascadingFinder {
     	System.out.println("\nmedianchainbugpool(whole chain's fullcallstacks) - " + "has " + medianchainbugpool.size() + " loops (#static codepoints=" + tmpset.size() + ")" );
     	mcWriter.writeLine( medianchainbugpool.size() + " (#static codepoints=" + tmpset.size() + ")" );
     	for (String chainfullcallstacks: medianchainbugpool) {
-    		System.out.println( chainfullcallstacks );
+    		//System.out.println( chainfullcallstacks );
     		mcWriter.writeLine( chainfullcallstacks );
     	}
     	
@@ -464,7 +464,7 @@ public class CascadingFinder {
     	System.out.println("\nmedianbugpool(loop's fullcallstack) - " + "has " + medianbugpool.size() + " loops (#static codepoints=" + tmpset.size() + ")" );
     	mWriter.writeLine( medianbugpool.size() + " (#static codepoints=" + tmpset.size() + ")" );
     	for (String fullcallstack: medianbugpool) {
-    		System.out.println( fullcallstack );
+    		//System.out.println( fullcallstack );
     		mWriter.writeLine( fullcallstack );
     	}
     	
