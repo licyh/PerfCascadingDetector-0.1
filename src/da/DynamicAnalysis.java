@@ -44,6 +44,9 @@ public class DynamicAnalysis {
                 System.out.println("JX - DEBUG - 16992-1-ThdCreate:1781 vs 16992-32-ThdEnter:164" + gb.reachbitset.get(1781).get(164) );
 		System.out.println("JX - DEBUG - 16992-32-ThdEnter:164 vs lock176" + gb.reachbitset.get(164).get(176) );
                 */
+		//System.out.println("JX - DEBUG - happens-before graph test");
+		//System.out.println("JX - DEBUG - 16992-1-lock1741 vs 16992-32-lock176" + gb.reachbitset.get(1741).get(176) );
+		
 		
 		// Cascading Analysis
 		CascadingFinder cascadingFinder = new CascadingFinder( argv[0], gb);

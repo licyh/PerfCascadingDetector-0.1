@@ -235,7 +235,6 @@ public class CascadingFinder {
     
     // 1. findImmediateBugs
     
-    int tmpflag = 0;  //just for test
     public void findImmediateBugs(int beginIndex, int endIndex) {
     	if ( !gb.reachbitset.get(beginIndex).get(endIndex) ) {
     		System.out.println("JX - ERROR - " + "couldn't reach from " + beginIndex + " to " + endIndex);
@@ -251,12 +250,7 @@ public class CascadingFinder {
     	Set<String> setofinvolvingthreads = new HashSet<String>();
     	for (int index: targetcodeLocks) {
     		setofinvolvingthreads.add( gb.getNodePIDTID(index) );
-    		// for test, print all locks' names
-    		if (tmpflag == 0 ) {
-    			System.out.println( "including lock - " + "Node"+index + ":" + gb.getNodePIDTID(index) + ":" + gb.getNodeOPVAL(index) + gb.lastCallstack_2(index) );
-    		}
     	}
-    	tmpflag = 1;
     	System.out.println("this snippet includes " + traversedNodes.cardinality()
     						+ " nodes, #firstbatchLocks = " + targetcodeLocks.size() + ", #involving threads = " + setofinvolvingthreads);
     }
@@ -287,7 +281,7 @@ public class CascadingFinder {
     
     
     // 2. findLockRelatedBugs
-    
+    int tmpflag = 0;  //just for test
     /** JX - findLockRelatedBugs - */    
     public void findLockRelatedBugs( List<Integer> firstbatchLocks ) {
     	System.out.println( "JX - findLockRelatedBugs" );
@@ -295,6 +289,14 @@ public class CascadingFinder {
     		System.out.println( "JX - CascadingBugDetection - there is no first batch of locks, finished normally!" );
     		return;
     	}
+		// Debugging - print all firt batch of locks' names
+		if (tmpflag == 0 ) {
+			for (int index: firstbatchLocks)
+				System.out.println( "including lock - " 
+						+ "Node"+index + ":" + gb.getNodePIDTID(index) + ":" + gb.getNodeOPVAL(index) + gb.lastCallstack_2(index) );
+			tmpflag = 1;
+		}
+		
     	Set<Integer> curbatchLocks = new TreeSet<Integer>( firstbatchLocks );
     	int curCascadingLevel = 2;   //this is the minimum level for lock-related cascading bugs
         for (int i = 1; i <= CASCADING_LEVEL; i++) {
@@ -307,11 +309,23 @@ public class CascadingFinder {
     		// Find affected locks in different threads
     		Set<Integer> nextbatchLocks = findNextbatchLocksInDiffThreads( curbatchLocks, curCascadingLevel );
                 System.out.println("batch #" + (++tmpbatch) + ":#locks=" + curbatchLocks.size() + " <--- #" + tmpbatch + ".5:#locks=" + nextbatchLocks.size() );
-   
+            // Debugging
+            if ( curCascadingLevel == 2 ) {
+    			for (int index: nextbatchLocks)
+    				System.out.println( "including lock - " 
+    						+ "Node"+index + ":" + gb.getNodePIDTID(index) + ":" + gb.getNodeOPVAL(index) + gb.lastCallstack_2(index) );
+            }
+                
             // Find affected locks based on 1 in the same thread
     		curbatchLocks = findNextbatchLocksInSameThread( nextbatchLocks, curCascadingLevel );
     		System.out.println("batch #" + (tmpbatch+1) + ":#intermediate locks=" + curbatchLocks.size()  );
-   
+    		// Debugging
+            if ( curCascadingLevel == 2 ) {
+    			for (int index: curbatchLocks)
+    				System.out.println( "including lock - " 
+    						+ "Node"+index + ":" + gb.getNodePIDTID(index) + ":" + gb.getNodeOPVAL(index) + gb.lastCallstack_2(index) );
+            }
+    		
         	if ( curbatchLocks.size() <= 0 ) {
     			System.out.println( "JX - CascadingBugDetection - finished normally" );
     			break;
