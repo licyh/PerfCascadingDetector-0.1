@@ -37,24 +37,27 @@ public class DynamicAnalysis {
 		gb.buildReachSet();
 		
 		// for DEBUGGING
-                /*
+        /*
 		System.out.println("JX - DEBUG - happens-before graph test");
-		System.out.println("JX - DEBUG - 16992-1-lock1741 vs 16992-32-lock176" + gb.reachbitset.get(1741).get(176) );
-		System.out.println("JX - DEBUG - 16992-1-lock1741 vs ThdCreate:1781" + gb.reachbitset.get(1741).get(1781) );
-                System.out.println("JX - DEBUG - 16992-1-ThdCreate:1781 vs 16992-32-ThdEnter:164" + gb.reachbitset.get(1781).get(164) );
-		System.out.println("JX - DEBUG - 16992-32-ThdEnter:164 vs lock176" + gb.reachbitset.get(164).get(176) );
-                */
+		System.out.println("JX - DEBUG - 16992-1-lock1741 vs 16992-32-lock176 " + gb.reachbitset.get(1741).get(176) );
+		System.out.println("JX - DEBUG - 16992-1-lock1741 vs ThdCreate:1781 " + gb.reachbitset.get(1741).get(1781) );
+        System.out.println("JX - DEBUG - 16992-1-ThdCreate:1781 vs 16992-32-ThdEnter:164 " + gb.reachbitset.get(1781).get(164) );
+		System.out.println("JX - DEBUG - 16992-32-ThdEnter:164 vs lock176 " + gb.reachbitset.get(164).get(176) );
+        */
 		System.out.println("JX - DEBUG - happens-before graph test");
-		System.out.println("JX - DEBUG - Node31:2777-33:145503012_1 vs 219" + gb.isFlippedorder(31, 219) );
-		System.out.println("JX - DEBUG - Node31:2777-33:145503012_1 -> 219" + gb.reachbitset.get(31).get(219) );
-		System.out.println("JX - DEBUG - Node31:2777-33:145503012_1 <- 219" + gb.reachbitset.get(219).get(31) );
-		System.out.println("JX - DEBUG - Node57:2777-33:145503012_1 vs 219" + gb.isFlippedorder(57, 219) );
-		System.out.println("JX - DEBUG - Node57:2777-33:145503012_1 -> 219" + gb.reachbitset.get(57).get(219) );
-		System.out.println("JX - DEBUG - Node57:2777-33:145503012_1 <- 219" + gb.reachbitset.get(219).get(57) );
+		System.out.println("JX - DEBUG - Node31:2777-33:145503012_1 vs 219 " + gb.isFlippedorder(31, 219) );
+		System.out.println("JX - DEBUG - Node31:2777-33:145503012_1 -> 219 " + gb.reachbitset.get(31).get(219) );
+		System.out.println("JX - DEBUG - Node31:2777-33:145503012_1 <- 219 " + gb.reachbitset.get(219).get(31) );
+		System.out.println("JX - DEBUG - Node57:2777-33:145503012_1 vs 219 " + gb.isFlippedorder(57, 219) );
+		System.out.println("JX - DEBUG - Node57:2777-33:145503012_1 -> 219 " + gb.reachbitset.get(57).get(219) );
+		System.out.println("JX - DEBUG - Node57:2777-33:145503012_1 <- 219 " + gb.reachbitset.get(219).get(57) );
+		
+	    gb.queryhbrelation("/tmp/rela.txt");
+		
 		
 		
 		// Cascading Analysis
-		CascadingFinder cascadingFinder = new CascadingFinder( argv[0], gb);
+		CascadingFinder cascadingFinder = new CascadingFinder( argv[0], gb );
 		cascadingFinder.doWork();
 		
 		// find out 1.flipped order 2.lock relationship graph by the same locks
