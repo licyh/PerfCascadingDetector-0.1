@@ -10,6 +10,6 @@ org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.pr
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol errorReport 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol versionRequest 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol processUpgradeCommand 0
-// for client -> namenode write, haven't add rpc manually
+// for client -> namenode write, if put here, then we have to add rpc manually
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol addBlock 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol addBlock 0

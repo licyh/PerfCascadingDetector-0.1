@@ -106,13 +106,23 @@ public class CascadingFinder {
     		// find out all Lock code blocks
     		else if ( opty.equals("LockRequire") ) {
     			String pidtid = gb.getNodePIDTID(i);
-    			String pidopval0 = gb.getNodePIDOPVAL0(i);
+    			String opval = gb.getNodeOPVAL(i);
+    			int reenter = 1;
     			for (int j = i+1; j < gb.nList.size(); j++) {
     				if ( !gb.getNodePIDTID(j).equals(pidtid) ) break;
-    				if ( gb.getNodeOPTY(j).equals("LockRelease") && gb.getNodePIDOPVAL0(j).equals(pidopval0) ) {
-    					lockblocks.put(i, j);
-    					break;
+    				// added: bug fix
+    				if ( gb.getNodeOPTY(j).equals("LockRequire") && gb.getNodeOPVAL(j).equals(opval) )  
+    					reenter ++;
+    				// end - added
+    				// modified: bug fix
+    				if ( gb.getNodeOPTY(j).equals("LockRelease") && gb.getNodeOPVAL(j).equals(opval) ) {
+    					reenter --;
+    					if (reenter == 0) {
+    						lockblocks.put(i, j);
+    						break;
+    					}
     				}
+    				// end - modified
     			}
     			if ( !lockblocks.containsKey(i) ) 
     				lockblocks.put(i, null);
