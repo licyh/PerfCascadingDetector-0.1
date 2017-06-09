@@ -17,8 +17,6 @@ org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol setReplication 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol setPermission 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol setOwner 0
-org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol addBlock 0
-org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol addBlock 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol abandonBlock 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol complete 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol reportBadBlocks 0
@@ -48,6 +46,9 @@ org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.pr
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.protocol.NamenodeProtocol rollEditLog 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.protocol.NamenodeProtocol rollFsImage 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.protocol.NamenodeProtocol getBlockKeys 0
+
+org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol addBlock 0
+org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol addBlock 0
 
 //modified by JX  - String DMID
 //org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol reportBadBlocks 0
