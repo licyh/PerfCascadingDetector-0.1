@@ -290,11 +290,10 @@ public class CascadingFinder {
     		return;
     	}
 		// Debugging - print all firt batch of locks' names
-		if (tmpflag == 0 ) {
+		if (tmpflag == 0) {
 			for (int index: firstbatchLocks)
 				System.out.println( "including lock - " 
 						+ "Node"+index + ":" + gb.getNodePIDTID(index) + ":" + gb.getNodeOPVAL(index) + gb.lastCallstack_2(index) );
-			tmpflag = 1;
 		}
 		
     	Set<Integer> curbatchLocks = new TreeSet<Integer>( firstbatchLocks );
@@ -310,7 +309,7 @@ public class CascadingFinder {
     		Set<Integer> nextbatchLocks = findNextbatchLocksInDiffThreads( curbatchLocks, curCascadingLevel );
                 System.out.println("batch #" + (++tmpbatch) + ":#locks=" + curbatchLocks.size() + " <--- #" + tmpbatch + ".5:#locks=" + nextbatchLocks.size() );
             // Debugging
-            if ( curCascadingLevel == 2 ) {
+            if ( tmpflag == 0 && curCascadingLevel == 2 ) {
     			for (int index: nextbatchLocks)
     				System.out.println( "including lock - " 
     						+ "Node"+index + ":" + gb.getNodePIDTID(index) + ":" + gb.getNodeOPVAL(index) + gb.lastCallstack_2(index) );
@@ -320,10 +319,11 @@ public class CascadingFinder {
     		curbatchLocks = findNextbatchLocksInSameThread( nextbatchLocks, curCascadingLevel );
     		System.out.println("batch #" + (tmpbatch+1) + ":#intermediate locks=" + curbatchLocks.size()  );
     		// Debugging
-            if ( curCascadingLevel == 2 ) {
+            if ( tmpflag == 0 && curCascadingLevel == 2 ) {
     			for (int index: curbatchLocks)
     				System.out.println( "including lock - " 
     						+ "Node"+index + ":" + gb.getNodePIDTID(index) + ":" + gb.getNodeOPVAL(index) + gb.lastCallstack_2(index) );
+    			tmpflag = 1;
             }
     		
         	if ( curbatchLocks.size() <= 0 ) {
