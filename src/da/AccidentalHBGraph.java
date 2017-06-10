@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 
-public class AccidentalGraph {
+public class AccidentalHBGraph {
 	
-	HappensBeforeGraph gb;
+	HappensBeforeGraph hbg;
     //Added by JX
     HashMap<String, ArrayList<Integer> > accurateLockmemref;  	//New: pid+opval0 -> set of nodes
     
@@ -25,8 +25,8 @@ public class AccidentalGraph {
     //ArrayList<ArrayList<Pair>> lockrelationbackedge;  //adjcent list of backward edges for tracing back
     
 	
-	AccidentalGraph(HappensBeforeGraph graphBuilder) {
-		this.gb = graphBuilder;
+	AccidentalHBGraph(HappensBeforeGraph graphBuilder) {
+		this.hbg = graphBuilder;
         this.accurateLockmemref = new HashMap<String, ArrayList<Integer> >();
         
         this.lockmemref = new HashMap<String , ArrayList<Integer>>();
@@ -37,7 +37,7 @@ public class AccidentalGraph {
 
 	
 	public String isReadOrWriteLock(int index) {
-		String pidhashcode = gb.getNodePIDOPVAL0(index);
+		String pidhashcode = hbg.getNodePIDOPVAL0(index);
 		if ( rwlockmatch.containsKey(pidhashcode) ) {
 			return rwlockmatch.get(pidhashcode)[0];   // [0] means "R" or "W"
 		}
@@ -47,8 +47,8 @@ public class AccidentalGraph {
 	}
 
 	public boolean isRelatedLocks(int index1, int index2) {
-		String pidhashcode1 = gb.getNodePIDOPVAL0(index1);
-		String pidhashcode2 = gb.getNodePIDOPVAL0(index2);
+		String pidhashcode1 = hbg.getNodePIDOPVAL0(index1);
+		String pidhashcode2 = hbg.getNodePIDOPVAL0(index2);
 		return rwlockmatch.get(pidhashcode1)[2].equals( rwlockmatch.get(pidhashcode2)[2] );         // [1] means "pid"+"superobjhashcode"
 	}
 	
@@ -61,10 +61,10 @@ public class AccidentalGraph {
     	int totalRWLockCreates = 0;
     	
     	// traverse all nodes to find 'lock-related' nodes
-    	for ( int i = 0; i < gb.nList.size(); i++) { 		
-    		String opty = gb.getNodeOPTY( i );
-    		String opval = gb.getNodeOPVAL( i );
-    		String pid = gb.getNodePID( i );
+    	for ( int i = 0; i < hbg.nList.size(); i++) { 		
+    		String opty = hbg.getNodeOPTY( i );
+    		String opval = hbg.getNodeOPVAL( i );
+    		String pid = hbg.getNodePID( i );
 
     		// get all lock memory addresses
     		if ( opty.equals("LockRequire") 
@@ -78,7 +78,7 @@ public class AccidentalGraph {
     			typesOfTotalLockRequires[ locktype ] ++;
     			
     			// build accurateLockmemref: all locks, use the key of 'pid+opval0'
-    			String pidopval0 = gb.getNodePIDOPVAL0( i );
+    			String pidopval0 = hbg.getNodePIDOPVAL0( i );
     			if (accurateLockmemref.get(pidopval0) == null) {
     				ArrayList<Integer> list = new ArrayList<Integer>();
     				accurateLockmemref.put(pidopval0, list);
@@ -91,7 +91,7 @@ public class AccidentalGraph {
     			
     			// build lockmemref: all locks, including 3 types
     			if (lockmemref.get(memaddr) == null) {
-    				ArrayList<Integer> list = new ArrayList<Integer>(gb.nList.size());
+    				ArrayList<Integer> list = new ArrayList<Integer>(hbg.nList.size());
     				lockmemref.put(memaddr, list);
     			} 
     			lockmemref.get(memaddr).add( i );
@@ -155,7 +155,7 @@ public class AccidentalGraph {
 		for (Map.Entry<String, ArrayList<Integer>> entry: tmplist) {
 			newAccurateLockmemref.put(entry.getKey(), entry.getValue());
 			if (++tmpi <= 10)
-			System.out.println("JX - freq - " + entry.getKey() + " : " + entry.getValue().size() + " - " + gb.lastCallstack(entry.getValue().get(0)));
+			System.out.println("JX - freq - " + entry.getKey() + " : " + entry.getValue().size() + " - " + hbg.lastCallstack(entry.getValue().get(0)));
 		}
 		// traverse newAccurateLockmemref
 		//for (String memaddr: newAccurateLockmemref.keySet()) {
@@ -163,11 +163,11 @@ public class AccidentalGraph {
 		
 		for (String memaddr: dotlockmemref.keySet()) { 
 			ArrayList<Integer> list = dotlockmemref.get(memaddr);
-			System.out.println("JX - dotlock - " + memaddr + " : " + list.size() + " : " + gb.lastCallstack(list.get(0)) );
+			System.out.println("JX - dotlock - " + memaddr + " : " + list.size() + " : " + hbg.lastCallstack(list.get(0)) );
 			
 			for (int index: list) {
         		if ( isReadOrWriteLock(index).equals("null") )
-        			System.out.println("JX - ERROR???(that's FINE if generalobj.lock()) - " + gb.lastCallstack(index) ); 
+        			System.out.println("JX - ERROR???(that's FINE if generalobj.lock()) - " + hbg.lastCallstack(index) ); 
 			}
 		}
 		
@@ -200,7 +200,7 @@ public class AccidentalGraph {
         		N23++;
         		System.out.println("--------------------------------------------------------------------------------------------------------------" );
         		for (int i = 0; i < list.size(); i++) {
-        			System.out.println( gb.lastCallstack( list.get(i) ) );
+        			System.out.println( hbg.lastCallstack( list.get(i) ) );
         		}
         	}
             

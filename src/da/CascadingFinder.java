@@ -21,8 +21,8 @@ public class CascadingFinder {
 
 	String projectDir;
 	String packageDir = "src/da";
-	HappensBeforeGraph gb;
-	AccidentalGraph ag;
+	HappensBeforeGraph hbg;
+	AccidentalHBGraph ag;
 	
     //In .traverseTargetCodes()
     ArrayList<Integer> alltargetitems;    				//all nodes of all TargetCodeBegin & TargetCodeEnd snippets
@@ -56,9 +56,9 @@ public class CascadingFinder {
 	Set<String> medianchainbugpool = new TreeSet<String>();
 	
 	
-	CascadingFinder(String projectDir, HappensBeforeGraph graphBuilder, AccidentalGraph ag) {
+	CascadingFinder(String projectDir, HappensBeforeGraph graphBuilder, AccidentalHBGraph ag) {
 		this.projectDir = projectDir;
-		this.gb = graphBuilder;
+		this.hbg = graphBuilder;
 		this.ag = ag;
 		
         this.alltargetitems = new ArrayList<Integer>();    //all nodes of all TargetCodeBegin & TargetCodeEnd snippets
@@ -100,23 +100,23 @@ public class CascadingFinder {
     	loopblocks.clear();
     	
     	// scan all nodes
-    	for (int i = 0; i < gb.nList.size(); i++) {
-    		String opty = gb.getNodeOPTY(i);
+    	for (int i = 0; i < hbg.nList.size(); i++) {
+    		String opty = hbg.getNodeOPTY(i);
     		// find out all Target Code nodes/blocks
     		if ( opty.equals("TargetCodeBegin") || opty.equals("TargetCodeEnd") ) {
     			alltargetitems.add( i );
     		}
     		// find out all Lock code blocks
     		else if ( opty.equals("LockRequire") ) {
-    			String pidtid = gb.getNodePIDTID(i);
-    			String opval = gb.getNodeOPVAL(i);
+    			String pidtid = hbg.getNodePIDTID(i);
+    			String opval = hbg.getNodeOPVAL(i);
     			int reenter = 1;
-    			for (int j = i+1; j < gb.nList.size(); j++) {
-    				if ( !gb.getNodePIDTID(j).equals(pidtid) ) break;
+    			for (int j = i+1; j < hbg.nList.size(); j++) {
+    				if ( !hbg.getNodePIDTID(j).equals(pidtid) ) break;
     				// modified: bug fix
-    				if ( gb.getNodeOPTY(j).equals("LockRequire") && gb.getNodeOPVAL(j).equals(opval) )  
+    				if ( hbg.getNodeOPTY(j).equals("LockRequire") && hbg.getNodeOPVAL(j).equals(opval) )  
     					reenter ++;
-    				if ( gb.getNodeOPTY(j).equals("LockRelease") && gb.getNodeOPVAL(j).equals(opval) ) {
+    				if ( hbg.getNodeOPTY(j).equals("LockRelease") && hbg.getNodeOPVAL(j).equals(opval) ) {
     					reenter --;
     					if (reenter == 0) {
     						lockblocks.put(i, j);
@@ -138,19 +138,19 @@ public class CascadingFinder {
     	// Handle target codes: alltargetitems -> targetblocks: get targetblocks by TargetCodeBegin & TargetCodeEnd    	
     	for (int i = 0; i < alltargetitems.size(); i++) {
     		//print for debug
-    		System.out.println("JX - i=" + i + " - index=" + alltargetitems.get(i) + " - " + gb.getNodeOPTY(alltargetitems.get(i)));
+    		System.out.println("JX - i=" + i + " - index=" + alltargetitems.get(i) + " - " + hbg.getNodeOPTY(alltargetitems.get(i)));
     		//end-print
     		int iindex = alltargetitems.get(i);
-    		if ( gb.getNodeOPTY( iindex ).equals("TargetCodeBegin") ) {
-    			String pidtid = gb.getNodePIDTID( iindex );
+    		if ( hbg.getNodeOPTY( iindex ).equals("TargetCodeBegin") ) {
+    			String pidtid = hbg.getNodePIDTID( iindex );
     			int flag = 1;
     			for (int j = i+1; j < alltargetitems.size(); j++) {
     				int jindex = alltargetitems.get(j);
-    				if ( !gb.getNodePIDTID( jindex ).equals(pidtid) ) {
+    				if ( !hbg.getNodePIDTID( jindex ).equals(pidtid) ) {
     					System.out.println("JX - WARN - " + "couldn't find TargetCodeEND for TargetCodeBegin " + i + " its index = " + iindex);
     					break;
     				}
-    				if ( gb.getNodeOPTY( jindex ).equals("TargetCodeBegin") ) flag ++;
+    				if ( hbg.getNodeOPTY( jindex ).equals("TargetCodeBegin") ) flag ++;
     				else flag --;
     				if (flag == 0) {
     					targetblocks.put( iindex, jindex );
@@ -167,16 +167,16 @@ public class CascadingFinder {
     	// Handle loop codes
     	for (int i = 0; i < allloopitems.size(); i++) {
     		int iindex = allloopitems.get(i);
-    		if ( gb.getNodeOPTY( iindex ).equals("LoopBegin") ) {
-    			String pidtid = gb.getNodePIDTID( iindex );
+    		if ( hbg.getNodeOPTY( iindex ).equals("LoopBegin") ) {
+    			String pidtid = hbg.getNodePIDTID( iindex );
     			int flag = 1;
     			for (int j = i+1; j < allloopitems.size(); j++) {
     				int jindex = allloopitems.get(j);
-    				if ( !gb.getNodePIDTID( jindex ).equals(pidtid) ) {
+    				if ( !hbg.getNodePIDTID( jindex ).equals(pidtid) ) {
     					// System.out.println("JX - WARN - " + "couldn't find LoopEND for LoopBegin " + i + " its index = " + iindex);
     					break;
     				}
-    				if ( gb.getNodeOPTY( jindex ).equals("LoopBegin") ) flag ++;
+    				if ( hbg.getNodeOPTY( jindex ).equals("LoopBegin") ) flag ++;
     				else flag --;
     				if (flag == 0) {
     					loopblocks.put( iindex, jindex );
@@ -196,17 +196,17 @@ public class CascadingFinder {
     	
     	tmpset.clear();
     	for (Integer index: targetblocks.keySet()) {
-    		tmpset.add( gb.lastCallstack(index) );
+    		tmpset.add( hbg.lastCallstack(index) );
     	}
     	ntargetsInSourceCode = tmpset.size();
     	tmpset.clear();
     	for (Integer index: lockblocks.keySet()) {
-    		tmpset.add( gb.lastCallstack(index) );
+    		tmpset.add( hbg.lastCallstack(index) );
     	}
     	nlocksInSourceCode = tmpset.size();
     	tmpset.clear();
     	for (Integer index: loopblocks.keySet()) {
-    		tmpset.add( gb.lastCallstack(index) );
+    		tmpset.add( hbg.lastCallstack(index) );
     	}
     	nloopsInSourceCode = tmpset.size();
     			
@@ -247,7 +247,7 @@ public class CascadingFinder {
     // 1. findImmediateBugs
     
     public void findImmediateBugs(int beginIndex, int endIndex) {
-    	if ( !gb.reachbitset.get(beginIndex).get(endIndex) ) {
+    	if ( !hbg.reachbitset.get(beginIndex).get(endIndex) ) {
     		System.out.println("JX - ERROR - " + "couldn't reach from " + beginIndex + " to " + endIndex);
     		return;
     	}
@@ -260,7 +260,7 @@ public class CascadingFinder {
     	// analyzing Locks that are inside the executed code
     	Set<String> setofinvolvingthreads = new HashSet<String>();
     	for (int index: targetcodeLocks) {
-    		setofinvolvingthreads.add( gb.getNodePIDTID(index) );
+    		setofinvolvingthreads.add( hbg.getNodePIDTID(index) );
     	}
     	System.out.println("this snippet includes " + traversedNodes.cardinality()
     						+ " nodes, #firstbatchLocks = " + targetcodeLocks.size() + ", #involving threads = " + setofinvolvingthreads);
@@ -269,11 +269,11 @@ public class CascadingFinder {
     
     public void dfsTraversing( int x, int endIndex ) {
     	traversedNodes.set( x );
-    	if ( gb.getNodeOPTY(x).equals("LockRequire") ) {
+    	if ( hbg.getNodeOPTY(x).equals("LockRequire") ) {
     		targetcodeLocks.add( x );
     	}
     	// TODO - for Loop - suspected bugs
-    	if ( gb.getNodeOPTY(x).equals("LoopBegin") ) {
+    	if ( hbg.getNodeOPTY(x).equals("LoopBegin") ) {
     		// add to bug pool
     		if ( ONLY_LOCK_RELATED_BUGS ) {
     			//Do Nothing
@@ -282,10 +282,10 @@ public class CascadingFinder {
     		}
     	}
 
-        List<Pair> list = gb.edge.get(x);
+        List<Pair> list = hbg.edge.get(x);
         for (Pair pair: list) {
         	int y = pair.destination;
-        	if ( !traversedNodes.get(y) && gb.reachbitset.get(y).get(endIndex) )
+        	if ( !traversedNodes.get(y) && hbg.reachbitset.get(y).get(endIndex) )
         		dfsTraversing( y, endIndex );
         }
     }
@@ -304,7 +304,7 @@ public class CascadingFinder {
 		if (tmpflag == 0) {
 			for (int index: firstbatchLocks)
 				System.out.println( "including lock - " 
-						+ "Node"+index + ":" + gb.getNodePIDTID(index) + ":" + gb.getNodeOPVAL(index) + gb.lastCallstack_2(index) );
+						+ "Node"+index + ":" + hbg.getNodePIDTID(index) + ":" + hbg.getNodeOPVAL(index) + hbg.lastCallstack_2(index) );
 		}
 		
     	Set<Integer> curbatchLocks = new TreeSet<Integer>( firstbatchLocks );
@@ -323,7 +323,7 @@ public class CascadingFinder {
             if ( tmpflag == 0 && curCascadingLevel == 2 ) {
     			for (int index: nextbatchLocks)
     				System.out.println( "including lock - " 
-    						+ "Node"+index + ":" + gb.getNodePIDTID(index) + ":" + gb.getNodeOPVAL(index) + gb.lastCallstack_2(index) );
+    						+ "Node"+index + ":" + hbg.getNodePIDTID(index) + ":" + hbg.getNodeOPVAL(index) + hbg.lastCallstack_2(index) );
             }
                 
             // Find affected locks based on 1 in the same thread
@@ -333,7 +333,7 @@ public class CascadingFinder {
             if ( tmpflag == 0 && curCascadingLevel == 2 ) {
     			for (int index: curbatchLocks)
     				System.out.println( "including lock - " 
-    						+ "Node"+index + ":" + gb.getNodePIDTID(index) + ":" + gb.getNodeOPVAL(index) + gb.lastCallstack_2(index) );
+    						+ "Node"+index + ":" + hbg.getNodePIDTID(index) + ":" + hbg.getNodeOPVAL(index) + hbg.lastCallstack_2(index) );
     			tmpflag = 1;
             }
     		
@@ -353,13 +353,13 @@ public class CascadingFinder {
     	//ArrayList<Integer> nextbatchLocks = new ArrayList<Integer>();
     	Set<Integer> nextbatchLocks = new TreeSet<Integer>();
     	for (int lockindex: batchLocks) {
-    		String pidopval0 = gb.getNodePIDOPVAL0(lockindex);
+    		String pidopval0 = hbg.getNodePIDOPVAL0(lockindex);
     		// 1. if not R lock; cuz R will not affect R, but a general obj.lock can affect the obj itself
     		if ( !ag.isReadOrWriteLock(lockindex).equals("R") ) {
     			ArrayList<Integer> list = ag.accurateLockmemref.get( pidopval0 );
 	    		for (int index: list) {
 	    			if (lockindex == index) continue;
-	                if ( gb.isFlippedorder(lockindex, index) ) {
+	                if ( hbg.isFlippedorder(lockindex, index) ) {
 	                	nextbatchLocks.add( index );
 	                	predNodes[curCascadingLevel].put(index, lockindex); 
 	                }
@@ -370,7 +370,7 @@ public class CascadingFinder {
     			String correspondingPidopval0 = ag.rwlockmatch.get( pidopval0 )[1];
     			ArrayList<Integer> list = ag.accurateLockmemref.get( correspondingPidopval0 );   //or using dotlockmemref.get( xx )
     			for (int index: list) {
-    				if ( gb.isFlippedorder(lockindex, index) ) {
+    				if ( hbg.isFlippedorder(lockindex, index) ) {
     					nextbatchLocks.add( index );
     					predNodes[curCascadingLevel].put(index, lockindex);
     				}
@@ -390,18 +390,18 @@ public class CascadingFinder {
 				continue;
 			int endIndex = lockblocks.get( beginIndex );
 			
-			String pidopval0 = gb.getNodePIDOPVAL0( index );
+			String pidopval0 = hbg.getNodePIDOPVAL0( index );
 			int loopflag = 0;
 			for (int k = beginIndex; k <= endIndex; k++) {         /////////JXXXXXXXXXXX - here seems a big bug, I didn't find into RPC or method call
 				// TODO
-				if ( gb.getNodeOPTY(k).equals("LoopBegin") ) {
+				if ( hbg.getNodeOPTY(k).equals("LoopBegin") ) {
 					loopflag = 1;
 		    		// add to bug pool
 					upNodes[curCascadingLevel].put(k, index);
 					addToBugPool( k, curCascadingLevel );
 				}
-				if ( gb.getNodeOPTY(k).equals("LockRequire") ) {
-					if ( !gb.getNodePIDOPVAL0(k).equals(pidopval0) ) {  // yes, it's right
+				if ( hbg.getNodeOPTY(k).equals("LockRequire") ) {
+					if ( !hbg.getNodePIDOPVAL0(k).equals(pidopval0) ) {  // yes, it's right
 						nextbatchLocks.add( k );
 						upNodes[curCascadingLevel].put(k, index);
 						//jx: it seems no need to check if the LockReuire has LockRelease or not
@@ -449,11 +449,11 @@ public class CascadingFinder {
     		bugnodeset.add( nodeIndex );
     		medianchainbugpool.add( "CL" + cascadingLevel + ": " + fullCallstacksOfCascadingChain(loopbug) );
     		simplechainbugpool.add( "CL" + cascadingLevel + ": " + lastCallstacksOfCascadingChain(loopbug) );
-    		medianbugpool.add( "CL" + cascadingLevel + ": " + gb.fullCallstack(nodeIndex) );
-    		simplebugpool.add( "CL" + cascadingLevel + ": " + gb.lastCallstack(nodeIndex) );
-    		tmpset.add( gb.lastCallstack(nodeIndex) );
+    		medianbugpool.add( "CL" + cascadingLevel + ": " + hbg.fullCallstack(nodeIndex) );
+    		simplebugpool.add( "CL" + cascadingLevel + ": " + hbg.lastCallstack(nodeIndex) );
+    		tmpset.add( hbg.lastCallstack(nodeIndex) );
     	}
-    	System.out.println(", ie, representing " + bugnodeset.size() + " nodes out of total " + gb.nList.size() + " nodes");
+    	System.out.println(", ie, representing " + bugnodeset.size() + " nodes out of total " + hbg.nList.size() + " nodes");
 
     	// bug pools - 
         // write to file & print
@@ -509,10 +509,10 @@ public class CascadingFinder {
     public String fullCallstacksOfCascadingChain(LoopBug loopbug) {
     	String result = "";
     	for (int nodeindex: loopbug.cascadingChain) {
-    		result += gb.fullCallstack(nodeindex) + "|";
+    		result += hbg.fullCallstack(nodeindex) + "|";
     		// for DEBUG
-    		//result += gb.getNodePIDTID(nodeindex) + ":" + gb.fullCallstack(nodeindex) + "|";
-	        //result += gb.getNodePIDTID(nodeindex)+":"+nodeindex + ":" + gb.fullCallstack(nodeindex) + "|";
+    		//result += hbg.getNodePIDTID(nodeindex) + ":" + hbg.fullCallstack(nodeindex) + "|";
+	        //result += hbg.getNodePIDTID(nodeindex)+":"+nodeindex + ":" + hbg.fullCallstack(nodeindex) + "|";
     	}
     	return result;
     }
@@ -520,9 +520,9 @@ public class CascadingFinder {
     public String lastCallstacksOfCascadingChain(LoopBug loopbug) {
     	String result = "";
     	for (int nodeindex: loopbug.cascadingChain) {
-    		result += gb.lastCallstack(nodeindex) + "|";
+    		result += hbg.lastCallstack(nodeindex) + "|";
     		// for DEBUG
-    		//result += gb.getNodePIDTID(nodeindex) + ":" + gb.lastCallstack(nodeindex) + "|";
+    		//result += hbg.getNodePIDTID(nodeindex) + ":" + hbg.lastCallstack(nodeindex) + "|";
     	}
     	return result;
     }
@@ -582,7 +582,7 @@ public class CascadingFinder {
     	
     	@Override
     	public String toString() {
-    		String str = "BugLoop - cascadingLevel=" + cascadingLevel + " - " + gb.lastCallstack(nodeIndex);
+    		String str = "BugLoop - cascadingLevel=" + cascadingLevel + " - " + hbg.lastCallstack(nodeIndex);
     		return str;
     	}
 

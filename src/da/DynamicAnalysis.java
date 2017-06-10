@@ -21,12 +21,12 @@ public class DynamicAnalysis {
 		long start_time = System.currentTimeMillis();         
 		
 		//init and get 'base' file
-		HappensBeforeGraph gb = new HappensBeforeGraph( argv[1] );
+		HappensBeforeGraph g = new HappensBeforeGraph( argv[1] );
     	//HappensBeforeGraph graphBuilder = new HappensBeforeGraph("input/MR-4813-xml"); //"input/JX-MR-xml" //Test-HB-4729-v6-3-xml");   "Test-HB-4729-v6-3-xml"
 		System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
 		
-		gb.buildsyncgraph();
-    	//gb.buildmemref();
+		g.buildsyncgraph();
+    	//hbg.buildmemref();
     	System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
     	
     	//jx: Add Edges manually for DEBUGGING
@@ -34,25 +34,25 @@ public class DynamicAnalysis {
     	//graphBuilder.addEdgesManually();
     		
 		// build ReachSet
-		gb.buildReachSet();
+		g.buildReachSet();
 		
 		// for DEBUGGING
 		if (Files.exists(Paths.get("/tmp/relations.txt"))) {
 			System.out.println("JX - DEBUG - happens-before graph test");
-			gb.queryHappensBeforeRelations("/tmp/relations.txt");
+			g.queryHappensBeforeRelations("/tmp/relations.txt");
 		}
 		
 		
-		AccidentalGraph ag = new AccidentalGraph( gb );
+		AccidentalHBGraph ag = new AccidentalHBGraph( g );
     	ag.buildLockmemref(); 
 		System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
 		
 		// Cascading Analysis
-		CascadingFinder cascadingFinder = new CascadingFinder( argv[0], gb, ag );
+		CascadingFinder cascadingFinder = new CascadingFinder( argv[0], g, ag );
 		cascadingFinder.doWork();
 		
 		// find out 1.flipped order 2.lock relationship graph by the same locks
-		gb.findflippedorder();  
+		g.findflippedorder();  
 		// build lock relationship between different locks
 		// TODO
     	//end-Added
