@@ -88,10 +88,6 @@ org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.hdfs.
 org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol errorReport 0
 org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol versionRequest 0
 org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.hdfs.server.protocol.NamenodeProtocol versionRequest 0
-org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.security.authorize.RefreshAuthorizationPolicyProtocol refreshServiceAcl 0
-org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.security.RefreshUserMappingsProtocol refreshUserToGroupsMappings 0
-org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.security.RefreshUserMappingsProtocol refreshSuperUserGroupsConfiguration 0
-org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.tools.GetUserMappingsProtocol getGroupsForUser 0
 org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.ha.HAServiceProtocol monitorHealth 0
 org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.ha.HAServiceProtocol transitionToActive 0
 org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.ha.HAServiceProtocol transitionToStandby 0
