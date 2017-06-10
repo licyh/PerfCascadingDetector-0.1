@@ -31,8 +31,9 @@ public class HDrpc {
 	
 	public void findRPC() {
 	    System.out.println("\nJX - HDFS RPC, seems like MRv1 RPC");
-	    ArrayList<IClass> mrv1Class = new ArrayList<IClass>();
-	    ArrayList<IClass> mrv1Iface = new ArrayList<IClass>();
+	    
+	    Set<IClass> mrv1Class = new TreeSet<IClass>();
+	    Set<IClass> mrv1Iface = new TreeSet<IClass>();
 	    
 	    // 1. Get RPC classes and their RPC interfaces that include RPC methods we WANTED
 	    // Architecture: Get RPC class(1) <- RPC interfaces(1..*) [<- org.apache.hadoop.ipc.VersionedProtocol]
@@ -57,11 +58,12 @@ public class HDrpc {
 	    	// for hadoop-2.3.0 (hd-5153)
     		for (IClass cc : c.getAllImplementedInterfaces()) {
     			if (cc.getName().toString().endsWith("Protocol") || cc.getName().toString().endsWith("Protocols")) {
-	    			if (c.isInterface()) 
+	    			if (cc.isInterface()) {
 	    				mrv1Iface.add(c);
-	    			else
-	    				mrv1Class.add(c);
-	    			break;
+	    				if ( !(c.isInterface() || c.isAbstract() || c.isArrayClass()) ) { //ie, a concrete class
+	    					mrv1Class.add(c);
+	    				}
+	    			}
     			}
     		}
 	    }//outer-for
@@ -73,9 +75,8 @@ public class HDrpc {
 	    ArrayList<String> results = new ArrayList<String>();
 	    
 	    // 2. Get RPC methods that included in RPC
-	    for (IClass c : mrv1Class) {
+	    for (IClass c: mrv1Class) {
 	    	for (IMethod m : c.getDeclaredMethods()) { 
-	    		
 	    		String className = WalaUtil.formatClassName( m.getDeclaringClass().getName().toString() );
 	    		for (IClass iface : c.getAllImplementedInterfaces()) {
 	    			// only find out RPC interfaces   #one RPC class <- many (RPC or non-RPC) interfaces
