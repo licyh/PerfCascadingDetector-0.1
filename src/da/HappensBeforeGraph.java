@@ -42,7 +42,7 @@ public enum OPTYPE {
 */
 
 
-public class GraphBuilder {
+public class HappensBeforeGraph {
 
 	//Class - thread ID
     class IdPair implements Comparable<IdPair>{
@@ -136,7 +136,7 @@ public class GraphBuilder {
     	return true;
     }
     
-    public GraphBuilder(String xmldirctory) {
+    public HappensBeforeGraph(String xmldirctory) {
         xmldir = xmldirctory;
         //System.out.println(xmldir);
 	    if (xmldir.contains("MR") || xmldir.contains("mr")) mr = true;

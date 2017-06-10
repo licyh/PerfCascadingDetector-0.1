@@ -21,7 +21,7 @@ public class CascadingFinder {
 
 	String projectDir;
 	String packageDir = "src/da";
-	GraphBuilder gb;
+	HappensBeforeGraph gb;
 	AccidentalGraph ag;
 	
     //In .traverseTargetCodes()
@@ -43,7 +43,7 @@ public class CascadingFinder {
     @SuppressWarnings("unchecked")
 	HashMap<Integer, Integer>[] upNodes   = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for the same thread
     Set<LoopBug> bugpool = new HashSet<LoopBug>();          //dynamic loop instances, only one bug pool for whole code snippets
-    Set<Integer> bugnodeset = new HashSet<Integer>();       //GraphBuilder's node index set for bugpool 
+    Set<Integer> bugnodeset = new HashSet<Integer>();       //HappensBeforeGraph's node index set for bugpool 
     
     // for output
     String simplebugpoolFilename = "output/simple_bugpool.txt";
@@ -56,7 +56,7 @@ public class CascadingFinder {
 	Set<String> medianchainbugpool = new TreeSet<String>();
 	
 	
-	CascadingFinder(String projectDir, GraphBuilder graphBuilder, AccidentalGraph ag) {
+	CascadingFinder(String projectDir, HappensBeforeGraph graphBuilder, AccidentalGraph ag) {
 		this.projectDir = projectDir;
 		this.gb = graphBuilder;
 		this.ag = ag;

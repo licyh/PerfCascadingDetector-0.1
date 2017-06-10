@@ -1,8 +1,5 @@
 package da;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,11 +9,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import da.GraphBuilder.IdPair;
 
 public class AccidentalGraph {
 	
-	GraphBuilder gb;
+	HappensBeforeGraph gb;
     //Added by JX
     HashMap<String, ArrayList<Integer> > accurateLockmemref;  	//New: pid+opval0 -> set of nodes
     
@@ -29,16 +25,17 @@ public class AccidentalGraph {
     //ArrayList<ArrayList<Pair>> lockrelationbackedge;  //adjcent list of backward edges for tracing back
     
 	
-	AccidentalGraph(GraphBuilder graphBuilder) {
+	AccidentalGraph(HappensBeforeGraph graphBuilder) {
 		this.gb = graphBuilder;
-        accurateLockmemref = new HashMap<String, ArrayList<Integer> >();
+        this.accurateLockmemref = new HashMap<String, ArrayList<Integer> >();
         
-        lockmemref = new HashMap<String , ArrayList<Integer>>();
-        lockmemrefType = new HashMap<String , ArrayList<Integer>>();
-        dotlockmemref = new HashMap<String, ArrayList<Integer> >();  
-        rwlockmatch = new HashMap<String, String[]>();               
+        this.lockmemref = new HashMap<String , ArrayList<Integer>>();
+        this.lockmemrefType = new HashMap<String , ArrayList<Integer>>();
+        this.dotlockmemref = new HashMap<String, ArrayList<Integer> >();  
+        this.rwlockmatch = new HashMap<String, String[]>();               
 	}
 
+	
 	public String isReadOrWriteLock(int index) {
 		String pidhashcode = gb.getNodePIDOPVAL0(index);
 		if ( rwlockmatch.containsKey(pidhashcode) ) {
@@ -216,10 +213,7 @@ public class AccidentalGraph {
         System.out.println("N12 = " + N12 + " N13 = " + N13 + "  N23 = " + N23);
     }
     
-    //end-Added
 	
-    
-
     
 	
 }

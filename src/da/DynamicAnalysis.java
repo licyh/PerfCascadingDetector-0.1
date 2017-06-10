@@ -21,8 +21,8 @@ public class DynamicAnalysis {
 		long start_time = System.currentTimeMillis();         
 		
 		//init and get 'base' file
-		GraphBuilder gb = new GraphBuilder( argv[1] );
-    	//GraphBuilder graphBuilder = new GraphBuilder("input/MR-4813-xml"); //"input/JX-MR-xml" //Test-HB-4729-v6-3-xml");   "Test-HB-4729-v6-3-xml"
+		HappensBeforeGraph gb = new HappensBeforeGraph( argv[1] );
+    	//HappensBeforeGraph graphBuilder = new HappensBeforeGraph("input/MR-4813-xml"); //"input/JX-MR-xml" //Test-HB-4729-v6-3-xml");   "Test-HB-4729-v6-3-xml"
 		System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
 		
 		gb.buildsyncgraph();
@@ -61,7 +61,7 @@ public class DynamicAnalysis {
 		if (argv.length == 0){
             System.out.println("Please specify the xml file, dynamic analysis fails");
         }
-        GraphBuilder graphBuilder = new GraphBuilder(argv[0]);
+        HappensBeforeGraph graphBuilder = new HappensBeforeGraph(argv[0]);
         graphBuilder.buildsyncgraph();    // build relation across threads based on xml file information
         
         //graphBuilder.buildtreepic();    // build a graphic view of the xml tree
