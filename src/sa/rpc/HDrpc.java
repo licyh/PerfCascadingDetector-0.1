@@ -60,7 +60,8 @@ public class HDrpc {
     			if (cc.getName().toString().endsWith("Protocol") || cc.getName().toString().endsWith("Protocols")) {
 	    			if (cc.isInterface()) {
 	    				mrv1Iface.add(cc);
-	    				if ( !(c.isInterface() || c.isAbstract() || c.isArrayClass()) ) { //ie, a concrete class
+	    				if ( !(c.isInterface() || c.isAbstract() || c.isArrayClass()) 
+	    						&& !c.getName().toString().toLowerCase().contains("protocol") ) { //ie, a concrete class
 	    					mrv1Class.add(c);
 	    				}
 	    			}

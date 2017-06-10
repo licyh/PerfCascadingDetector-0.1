@@ -4,7 +4,8 @@ org.apache.hadoop.hdfs.server.datanode.DataNode org.apache.hadoop.hdfs.server.pr
 org.apache.hadoop.hdfs.server.datanode.DataNode org.apache.hadoop.hdfs.server.protocol.InterDatanodeProtocol updateBlock 0
 org.apache.hadoop.hdfs.server.datanode.DataNode org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocol recoverBlock 0
 org.apache.hadoop.hdfs.server.datanode.DataNode org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocol getBlockInfo 0
-org.apache.hadoop.hdfs.server.datanode.DataNode org.apache.hadoop.hdfs.server.protocol.InterDatanodeProtocol <clinit> 0org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocol <clinit> 0
+org.apache.hadoop.hdfs.server.datanode.DataNode org.apache.hadoop.hdfs.server.protocol.InterDatanodeProtocol <clinit> 0
+org.apache.hadoop.hdfs.server.datanode.DataNode org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocol <clinit> 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.protocol.NamenodeProtocol getBlocks 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol getDelegationToken 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol renewDelegationToken 0
@@ -20,7 +21,8 @@ org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol addBlock 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol abandonBlock 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol complete 0
-org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol reportBadBlocks 0org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol reportBadBlocks 0
+org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol reportBadBlocks 0
+org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol reportBadBlocks 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol nextGenerationStamp 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol commitBlockSynchronization 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol getPreferredBlockSize 0
