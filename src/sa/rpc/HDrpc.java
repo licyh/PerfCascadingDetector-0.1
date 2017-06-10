@@ -40,9 +40,23 @@ public class HDrpc {
 	    for (IClass c : cha) {
 	    	String className = c.getName().toString();
 	    	if ( !className.startsWith("Lorg/apache/hadoop/hdfs/") ) continue; // only focus on PACKAGEs of 'hdfs'
-	      
-	    	// General
-	    	/*
+	     
+    		for (IClass cc : c.getAllImplementedInterfaces()) {  // for hadoop-2.3.0 (hd-5153), seems also good for ha-4584
+    			String superClassName = cc.getName().toString();
+    			if ( !superClassName.startsWith("Lorg/apache/hadoop/hdfs/")
+    					&& !superClassName.startsWith("Lorg/apache/hadoop/ha/") )
+    				continue;
+    			if (superClassName.endsWith("Protocol") || superClassName.endsWith("Protocols")) {
+	    			if (cc.isInterface()) {
+	    				mrv1Iface.add(cc);
+	    				if ( !(c.isInterface() || c.isAbstract() || c.isArrayClass())             //ie, a concrete class
+	    						&& !c.getName().toString().toLowerCase().contains("protocol") ) { 
+	    					mrv1Class.add(c);
+	    				}
+	    			}
+    			}
+    		}
+	    	/*  only good for some
 	    	for (IClass cc : c.getAllImplementedInterfaces() ) {
 		    	// Get RPC classes (ie, server-side rpc implementation) - based on that all v1 rpc classes implements "org.apache.hadoop.ipc.VersionedProtocol"
 		    	// for a class, get its all interfaces, including its all ancestors'.
@@ -55,18 +69,6 @@ public class HDrpc {
 	    		}
 	    	}
 	    	*/
-	    	// for hadoop-2.3.0 (hd-5153)
-    		for (IClass cc : c.getAllImplementedInterfaces()) {
-    			if (cc.getName().toString().endsWith("Protocol") || cc.getName().toString().endsWith("Protocols")) {
-	    			if (cc.isInterface()) {
-	    				mrv1Iface.add(cc);
-	    				if ( !(c.isInterface() || c.isAbstract() || c.isArrayClass()) 
-	    						&& !c.getName().toString().toLowerCase().contains("protocol") ) { //ie, a concrete class
-	    					mrv1Class.add(c);
-	    				}
-	    			}
-    			}
-    		}
 	    }//outer-for
 	
 	    System.out.println( "mrv1Class(length=" + mrv1Class.size() + "): " + mrv1Class );
