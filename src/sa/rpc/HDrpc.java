@@ -59,7 +59,7 @@ public class HDrpc {
     		for (IClass cc : c.getAllImplementedInterfaces()) {
     			if (cc.getName().toString().endsWith("Protocol") || cc.getName().toString().endsWith("Protocols")) {
 	    			if (cc.isInterface()) {
-	    				mrv1Iface.add(c);
+	    				mrv1Iface.add(cc);
 	    				if ( !(c.isInterface() || c.isAbstract() || c.isArrayClass()) ) { //ie, a concrete class
 	    					mrv1Class.add(c);
 	    				}

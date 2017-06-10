@@ -58,3 +58,4 @@ org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.pr
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol errorReport 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol versionRequest 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol processUpgradeCommand 0
+//MR-v2 format: 1.implementation class name  2.interface class name  3. method name  4. count of args  5+: args' class names 
