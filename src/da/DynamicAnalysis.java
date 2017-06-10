@@ -7,6 +7,10 @@ package da;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import da.graph.AccidentalHBGraph;
+import da.graph.CascadingFinder;
+import da.graph.HappensBeforeGraph;
+
 public class DynamicAnalysis {
 	
     public static void main (String [] argv) {

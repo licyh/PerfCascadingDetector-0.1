@@ -1,4 +1,4 @@
-package da;
+package da.graph;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +25,7 @@ public class AccidentalHBGraph {
     //ArrayList<ArrayList<Pair>> lockrelationbackedge;  //adjcent list of backward edges for tracing back
     
 	
-	AccidentalHBGraph(HappensBeforeGraph graphBuilder) {
+	public AccidentalHBGraph(HappensBeforeGraph graphBuilder) {
 		this.hbg = graphBuilder;
         this.accurateLockmemref = new HashMap<String, ArrayList<Integer> >();
         

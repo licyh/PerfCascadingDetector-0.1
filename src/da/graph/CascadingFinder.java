@@ -1,4 +1,4 @@
-package da;
+package da.graph;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -56,7 +56,7 @@ public class CascadingFinder {
 	Set<String> medianchainbugpool = new TreeSet<String>();
 	
 	
-	CascadingFinder(String projectDir, HappensBeforeGraph graphBuilder, AccidentalHBGraph ag) {
+	public CascadingFinder(String projectDir, HappensBeforeGraph graphBuilder, AccidentalHBGraph ag) {
 		this.projectDir = projectDir;
 		this.hbg = graphBuilder;
 		this.ag = ag;

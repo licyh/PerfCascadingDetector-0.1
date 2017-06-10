@@ -1,7 +1,7 @@
 /**
  * Created by guangpu on 3/21/16.
  */
-package da;
+package da.graph;
 
 public class Pair {
     public int destination;
