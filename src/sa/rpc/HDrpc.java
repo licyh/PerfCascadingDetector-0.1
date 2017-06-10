@@ -32,8 +32,8 @@ public class HDrpc {
 	public void findRPC() {
 	    System.out.println("\nJX - HDFS RPC, seems like MRv1 RPC");
 	    
-	    Set<IClass> mrv1Class = new TreeSet<IClass>();
-	    Set<IClass> mrv1Iface = new TreeSet<IClass>();
+	    Set<IClass> mrv1Class = new HashSet<IClass>();
+	    Set<IClass> mrv1Iface = new HashSet<IClass>();
 	    
 	    // 1. Get RPC classes and their RPC interfaces that include RPC methods we WANTED
 	    // Architecture: Get RPC class(1) <- RPC interfaces(1..*) [<- org.apache.hadoop.ipc.VersionedProtocol]
