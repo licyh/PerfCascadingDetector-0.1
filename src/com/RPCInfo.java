@@ -3,6 +3,8 @@ package com;
 import java.io.*;
 import java.util.*;
 
+import com.text.TextFileReader;
+
 public class RPCInfo {
   ArrayList<String> filePaths;
   HashMap<String, Integer> rpcVersion;
@@ -40,9 +42,13 @@ public class RPCInfo {
       for (String i : filePaths) {
     	//System.out.println("JX - rpc0 - " + i);  
     	  
-        InputStream rpcIn = RPCInfo.class.getClassLoader().getResourceAsStream(i);
-        Reader rpcReader = new InputStreamReader(rpcIn);
-        BufferedReader buf = new BufferedReader(rpcReader);
+    	  
+    	//modified by JX
+        //InputStream rpcIn = RPCInfo.class.getClassLoader().getResourceAsStream(i);
+        //Reader rpcReader = new InputStreamReader(rpcIn);
+        //BufferedReader buf = new BufferedReader(rpcReader);
+        TextFileReader buf = new TextFileReader(i);
+        
         String line;
         String[] words;
         while ((line = buf.readLine()) != null) {
