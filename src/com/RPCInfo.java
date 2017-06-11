@@ -34,7 +34,7 @@ public class RPCInfo {
   }
 
   public void readFile() {
-	System.out.println("JX-readFile");
+	System.out.println("JX - DEBUG - RPCInfo: readFile");
     try {
       /*ArrayList<String> path = new ArrayList<String>();
       path.add("resource/mr_rpc.txt");
@@ -47,7 +47,8 @@ public class RPCInfo {
         //InputStream rpcIn = RPCInfo.class.getClassLoader().getResourceAsStream(i);
         //Reader rpcReader = new InputStreamReader(rpcIn);
         //BufferedReader buf = new BufferedReader(rpcReader);
-        TextFileReader buf = new TextFileReader(i);
+    	System.out.println("JX - DEBUG - RPCInfo: readFile - " + i);
+        TextFileReader buf = new TextFileReader(i, true);
         
         String line;
         String[] words;
