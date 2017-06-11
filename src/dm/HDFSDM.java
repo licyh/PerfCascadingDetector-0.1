@@ -68,9 +68,9 @@ class HDFSTransformer extends Transformer {
 	          return;
   		}
   		
-
-                if (className.contains("DataStreamer"))	
-                        System.out.println("JX - DEBUG - DM - className=" + className);
+		// DEBUG
+        //if (className.contains("DataStreamer"))	
+        //	System.out.println("JX - DEBUG - DM - className=" + className);
 	
   		// LIMITS
   		// instrument for happens-before graph
@@ -84,9 +84,6 @@ class HDFSTransformer extends Transformer {
   		
 	    // instrument for target codes
 		System.out.println("JX - DEBUG - DM - 10");
-                                                                                                                                                                                                          
-                if (className.contains("DataStreamer"))                                                  
-                        System.out.println("JX - DEBUG - DM - className=" + className);
 	    transformers.transformClassForCodeSnippets( cl );
 
 	    // instrument for all loops
@@ -111,17 +108,11 @@ class HDFSTransformer extends Transformer {
   
   
 	public void transformClassForHappensBefore(CtClass cl) {
-		String className = cl.getName().toString();
-		
+		String className = cl.getName().toString();		
 		CtBehavior[] methods = cl.getDeclaredBehaviors(); 	
-
-    
+  
 	    for (CtBehavior method : methods) {
 	        if ( method.isEmpty() ) continue;
-
-                if ( className.contains("ipc.Server") ) {
-                     System.out.println("JX - DEBUG - method: " + className + "#" + method.getName().toString());
-                }
 	       
 		    MethodInfo methodInfo = method.getMethodInfo();
 		    String methodName = method.getName().toString();
@@ -245,8 +236,11 @@ class HDFSTransformer extends Transformer {
 		    if (methodName.equals("runCommand") && className.endsWith("org.apache.hadoop.util.Shell")) {
 		      //JX - this is a bug, I've commented it at its subcall
 		    	if (bugConfig.getBugId().equals("ha-4584"))
-		    		methodUtil.insertCallInstAt(logClass, processCreateLog, 10, 201);
-		    	else if (bugConfig.getBugId().equals("xxx")) {
+		    		methodUtil.insertCallInstAt(logClass, processCreateLog, 10, 201); //hadoop-0.20.??
+		    	else if (bugConfig.getBugId().equals("hd-5153")) {
+		    		methodUtil.insertCallInstAt(logClass, processCreateLog, 10, 451); //hadoop-2.3.0
+		    	} else {
+		    		//please added manually
 		    	}
 		    }
 		   
@@ -254,7 +248,7 @@ class HDFSTransformer extends Transformer {
 		    /**
 		     * lockRequire & lockRelease - for lock accesses
 		     */
-		    // added for mr-4576 & ha-4584
+		    // added for mr-4576 & ha-4584 & hd-5153
 		    if ( !className.startsWith("org.apache.hadoop.ipc.") ) {   //jx: coz this has lots of locks useless 
                         System.out.println("JX - DEBUG - DM - 6");      
 		    	methodUtil.insertSyncMethod(logClass, lockRequireLog, logClass, lockReleaseLog);
@@ -262,7 +256,7 @@ class HDFSTransformer extends Transformer {
 		    	methodUtil.insertMonitorInst(logClass, lockRequireLog, logClass, lockReleaseLog);
 		    	System.out.println("JX - DEBUG - DM - 8");
 		    	methodUtil.insertRWLock(logClass, rWLockCreateLog);
-                    }
+            }
 		    //end-Added
 		}
 	}
