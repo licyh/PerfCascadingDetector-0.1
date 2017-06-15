@@ -138,10 +138,10 @@ public class HappensBeforeGraph {
     
     public HappensBeforeGraph(String xmldirctory) {
         xmldir = xmldirctory;
-        //System.out.println(xmldir);
+        System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 1");
 	    if (xmldir.contains("MR") || xmldir.contains("mr")) mr = true;
 	    if (xmldir.contains("HB") || xmldir.contains("hb")) hb = true;
-	    if (xmldir.contains("HD") || xmldir.contains("hd")) hd = true;
+	    if (xmldir.contains("HD") || xmldir.contains("hd") || xmldir.contains("HA") || xmldir.contains("ha")) hd = true;
         esum = 0;
         nList = new ArrayList<Node>();
         edge  = new ArrayList<ArrayList<Pair>>();
@@ -156,6 +156,8 @@ public class HappensBeforeGraph {
         hashMsgSending = new HashMap<String, ArrayList<Integer>>();
         hashMsgProcEnter = new HashMap<String, ArrayList<Integer>>();
         syncedges = new ArrayList<ArrayList<EgPair>>(50);
+        
+        System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 1.1");
         /*
         syncedges.add(new ArrayList<EgPair>());
         syncedges.add(new ArrayList<EgPair>());
@@ -189,7 +191,7 @@ public class HappensBeforeGraph {
        	    }
         });
         //Collections.sort(xmlfiles);
-       
+        System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 1.2");
 		msender = new ArrayList<Integer>();
 		mexit = new ArrayList<Integer>();
 		eexit = new ArrayList<Integer>();
@@ -385,6 +387,7 @@ public class HappensBeforeGraph {
                 }*/
             } //End-for-all thread files
         
+        System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 1.3");
         	//JX - just added - maybe need 'LockReqire' and 'LockRelease'        #this is moved out from above loop
         	if (typeref.get("LockRequire") == null)                                             
         		typeref.put("LockRequire", new ArrayList<Integer>());
