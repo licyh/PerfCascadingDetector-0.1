@@ -207,7 +207,7 @@ public class HappensBeforeGraph {
         	
     	// JX - traverse all thread files
         for (File xml : xmlfiles) {
-        	System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 1.1");
+        	System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 1.1: " + xml.toString());
         	Stack<Integer> stack = new Stack<Integer>();
         	Stack<Integer> lockstack = new Stack<Integer>();
             String xmlfilename = xml.getName();
@@ -231,12 +231,12 @@ public class HappensBeforeGraph {
             inputdoc.getDocumentElement().normalize();
             //System.out.println("Root element :" + document.getDocumentElement().getNodeName());
 
-            System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 1.2");
             NodeList NList = inputdoc.getElementsByTagName("Operation");   //get all operations/nodes at a thread
             int msgheader = -1;   
             int msgflag   = 1;
             int curmsg = -1;
-            
+
+            System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 1.2: NList.length=" + NList.getLength());
             // JX - deal with a single thread file's operations
             for (int i = 0; i < NList.getLength(); i++) {
             	System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 2.1");
@@ -358,10 +358,12 @@ public class HappensBeforeGraph {
 					    lockstack.push(index);
 					}
 		
+					System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 2.4");
 					if (tp.equals("LockRelease")){                                         //JX - ????? a mistake??
 					    lockstack.pop();
 					    //Actually the structure should not be a stack.
 					}
+					System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 2.5");
 					/*if (index == 2985) {
 					    System.out.println("2985's lock = "+lockstack);
 					    System.out.println("2985's type = "+tp);
@@ -382,10 +384,11 @@ public class HappensBeforeGraph {
                     index ++;  //jx - should be each node/operation's ID
 		            //System.out.println("Author : " + eElement.getElementsByTagName("author").item(0).getTextContent());
 	            }
+                System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 3");
 			    if (curmsg > -1) mexit.set(curmsg,index-1);
             } //end-for-each thread file's-nodes
             
-            System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 3.1");
+            System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 4");
             //JX - still for each thread file
             ptidref.put(idPair,idlist);                      //JX - only nodes/operations belonging to this thread
             ptideventref.put(idPair,ideventlist);
