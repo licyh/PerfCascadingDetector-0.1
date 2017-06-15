@@ -138,7 +138,7 @@ public class HappensBeforeGraph {
     
     public HappensBeforeGraph(String xmldirctory) {
         xmldir = xmldirctory;
-        System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 1");
+        
 	    if (xmldir.contains("MR") || xmldir.contains("mr")) mr = true;
 	    if (xmldir.contains("HB") || xmldir.contains("hb")) hb = true;
 	    if (xmldir.contains("HD") || xmldir.contains("hd") || xmldir.contains("HA") || xmldir.contains("ha")) hd = true;
@@ -157,7 +157,7 @@ public class HappensBeforeGraph {
         hashMsgProcEnter = new HashMap<String, ArrayList<Integer>>();
         syncedges = new ArrayList<ArrayList<EgPair>>(50);
         
-        System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 1.1");
+        
         /*
         syncedges.add(new ArrayList<EgPair>());
         syncedges.add(new ArrayList<EgPair>());
@@ -175,7 +175,10 @@ public class HappensBeforeGraph {
         
         // Get all threads' log files
         File [] xmlfiles = new File(xmldir).listFiles();
-        if (xmlfiles == null) System.out.println("JX - ERROR - None of log files to handle");
+        if (xmlfiles == null) {
+        	System.out.println("JX - ERROR - None of log files to handle");
+        	return;
+        }
         // Nothing, just sort files by filename
         Arrays.sort(xmlfiles, new Comparator(){
 	    	@Override
@@ -191,7 +194,7 @@ public class HappensBeforeGraph {
        	    }
         });
         //Collections.sort(xmlfiles);
-        System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 1.2");
+        
 		msender = new ArrayList<Integer>();
 		mexit = new ArrayList<Integer>();
 		eexit = new ArrayList<Integer>();
@@ -201,237 +204,242 @@ public class HappensBeforeGraph {
 		
         int index = 0;
         IdPair idPair;
-        if (xmlfiles != null)
         	
-        	// JX - traverse all thread files
-            for (File xml : xmlfiles) {
-            	Stack<Integer> stack = new Stack<Integer>();
-            	Stack<Integer> lockstack = new Stack<Integer>();
-                String xmlfilename = xml.getName();
-                //System.out.println(xmlfilename);
-                String [] ptid = xmlfilename.split("-");
-                idPair = new IdPair(Integer.parseInt(ptid[0]), Integer.parseInt(ptid[1]));  //JX - get file's pid and tid
-                ArrayList<Integer> idlist = new ArrayList<Integer>();        //JX - pid/tid for a thread's nodes; for all nodes across all threads, see 'idplist' 
-                ArrayList<Integer> ideventlist = new ArrayList<Integer>();   //?ideventlist
-                //System.out.println(ptid[0] + " ~ " + ptid[1]);
-                //File xml = new File(xmlfile);
-                //System.out.println(xml.toString());
-                try {
-                    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-                    DocumentBuilder db = dbf.newDocumentBuilder();
-                    inputdoc = db.parse(xml);
-                    //System.out.println(document);
-                } catch (Exception e) {
-                    System.out.println("XML file load error, graphbuilder construction failed");
-                    e.printStackTrace();
-                }
-                inputdoc.getDocumentElement().normalize();
-                //System.out.println("Root element :" + document.getDocumentElement().getNodeName());
+    	// JX - traverse all thread files
+        for (File xml : xmlfiles) {
+        	System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 1.1");
+        	Stack<Integer> stack = new Stack<Integer>();
+        	Stack<Integer> lockstack = new Stack<Integer>();
+            String xmlfilename = xml.getName();
+            //System.out.println(xmlfilename);
+            String [] ptid = xmlfilename.split("-");
+            idPair = new IdPair(Integer.parseInt(ptid[0]), Integer.parseInt(ptid[1]));  //JX - get file's pid and tid
+            ArrayList<Integer> idlist = new ArrayList<Integer>();        //JX - pid/tid for a thread's nodes; for all nodes across all threads, see 'idplist' 
+            ArrayList<Integer> ideventlist = new ArrayList<Integer>();   //?ideventlist
+            //System.out.println(ptid[0] + " ~ " + ptid[1]);
+            //File xml = new File(xmlfile);
+            //System.out.println(xml.toString());
+            try {
+                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                DocumentBuilder db = dbf.newDocumentBuilder();
+                inputdoc = db.parse(xml);
+                //System.out.println(document);
+            } catch (Exception e) {
+                System.out.println("XML file load error, graphbuilder construction failed");
+                e.printStackTrace();
+            }
+            inputdoc.getDocumentElement().normalize();
+            //System.out.println("Root element :" + document.getDocumentElement().getNodeName());
 
-                NodeList NList = inputdoc.getElementsByTagName("Operation");   //get all operations/nodes at a thread
-                int msgheader = -1;   
-                int msgflag   = 1;
-                int curmsg = -1;
-                
-                // JX - deal with a single thread file's operations
-                for (int i = 0; i < NList.getLength(); i++) {
-                    Node nNode = NList.item(i);        //get a node/operation
-                    //System.out.println("\nCurrent Element :" + nNode.getNodeName());
-                    //	    System.out.println(ptid[0]+"-"+ptid[1]+" mheader = "+mheader+ " mflag = "+ mflag);
-                    if ( goodnode(nNode) == false ) continue;  //JX - little filter
-                    if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                        //System.out.println("++++ index=" + index + " "+ nNode);
-                        Element eElement = (Element) nNode;
-                        String tp = eElement.getElementsByTagName("OPTY").item(0).getTextContent();
-                        String tval = eElement.getElementsByTagName("OPVAL").item(0).getTextContent();
-                        /*	
-						if (i > 0){
-						    Node pn = nList.get(index-1);
-						    Element pe = (Element) pn;
-						    String ptp = pe.getElementsByTagName("OPTY").item(0).getTextContent();
-			                            String pval = pe.getElementsByTagName("OPVAL").item(0).getTextContent();        
-						    if (ptp.equals(tp) && pval.equals(tval)) continue;
-						    if (i > 2){
-							 
-			                        //	System.out.println("++++ i =" + i + " i>2");
-				      		        pn = nList.get(index-2);
-			                                pe = (Element) pn;
-			                                ptp = pe.getElementsByTagName("OPTY").item(0).getTextContent();
-			                                pval = pe.getElementsByTagName("OPVAL").item(0).getTextContent();
-			                                if (ptp.equals(tp) && pval.equals(tval)) continue;
-						    }
-						}
-						*/
-                        //System.out.println("++++ index=" + index + " "+ nNode);
-                        nList.add(nNode);                   //JX - Node, will be <OPINFO>/<Operation> at 'base' file 
-						String idstr = getIdentity(nNode);  //id/signature for an node/operation, not IdPair-pid/tid
-						if (identity.keySet().contains(idstr)){
-						    int freq = identity.get(idstr);
-						    identity.put(idstr,freq+1);
-						}else
-						    identity.put(idstr,1);
-						emlink.add(-1);  //?
-						mexit.add(-1);   //?
-						eexit.add(-1);   //?
-						msender.add(-1); //?
-						if (stack.empty()){
-						    emlink2.add(-1);
-						} else{
-						    emlink2.add(stack.peek());
-						}
-						//if (index == 2994) System.out.println("2994's lock = "+lockstack.peek());
-						if (lockstack.empty()){
-						    locktrace.add(-1);
-						}  else {
-						    locktrace.add(lockstack.peek());
-						}
-                        idplist.add(idPair);
-                        edge.add(new ArrayList<Pair>());
-                        backedge.add(new ArrayList<Pair>());
-                        
-                        // Modified by JX
-                        if ( !tp.equals("MsgProcEnter")               //not msg/rpc handler enter 
-                        	&& !tp.equals("EventProcEnter") ) {       //not event handler enter 
-                        	if ( i > 0 )
-                        		addedge(index-1, index);			  //ie, 0->1->2->3->4->5
-                        	if ( msgflag > 0 )
-                        		msgheader = index;
-                        }
-                        /*
-                        if ((i > 0) && (!tp.equals("ThdEnter"))                      //not enter thread          
-                        			&& (!tp.equals("MsgProcEnter"))                  //not msg handler enter    
-                    				&& (!tp.equals("EventProcEnter")) ) {             //not event handler enter   
-			                addedge(index-1,index);                                 //ie, 0->1->2->3->4->5
-						    if (msgflag > 0) {
-						    	mheader = index;                                    //how to determine the mheader?
-						    	//System.out.println("set mheader = "+index);
-						    }
-			            }
-			            */
-                        
-						if (tp.equals("MsgProcEnter")){
-						    msgflag = -1;
-						    if (curmsg > -1)
-						    	mexit.set(curmsg,index-1);
-						    //System.out.println("Form "+curmsg + " to "+ index+"-1 is a msg");
-						    curmsg = index;
-						    //System.out.println("set mflag = -1");
-						    if (msgheader > -1) {
-						    	addedge(msgheader,index);
-						    	//System.out.println(index+ "is pluged to "+ mheader);
-						    } else {
-						    	//System.out.println(index+ "is a no program header msg from "+ptid[0]+"-"+ptid[1]);
-						    }
-						}
-						
-                        if (typeref.get(tp) == null)                          //JX - summarize types
-                            typeref.put(tp,new ArrayList<Integer>());
-                        typeref.get(tp).add(index);
-                        idlist.add(index);
-			
-						//////////////////////////////////////////////
-                        if (tp.equals("EventProcEnter")){
-                        	//stack.push(index);
-                            String val = eElement.getElementsByTagName("OPVAL").item(0).getTextContent();
-                            if (!val.contains("GenericEventHandler")){  //JX - normal EventProcEnter 
-                                ideventlist.add(index);
-						        stack.push(index);
-						    }                              
-						    else addedge(index-1,index); //JX - special EventProcEnter, actually it is only for MapReduce's "handle()", this put/submit is 'Enter(maybe many)' not 'create'
-                        }
-						if (tp.equals("EventProcExit")){
-						    String val = eElement.getElementsByTagName("OPVAL").item(0).getTextContent();
-						    if (!val.contains("GenericEventHandler"))
-						    stack.pop();
-						}
-						//////////////////////////////////////////////
-			
-						//////////////////////////////////////////////
-						if (tp.equals("LockRequire")){
-						    lockstack.push(index);
-						}
-			
-						if (tp.equals("LockRelease")){                                         //JX - ????? a mistake??
-						    lockstack.pop();
-						    //Actually the structure should not be a stack.
-						}
-						/*if (index == 2985) {
-						    System.out.println("2985's lock = "+lockstack);
-						    System.out.println("2985's type = "+tp);
-						}
-						if (index == 2994) System.out.println("2994's lock = "+lockstack);*/
-						//////////////////////////////////////////////			
-						if (tp.equals("HeapWrite")){
-			   			    Element esx = (Element) eElement.getElementsByTagName("Stacks").item(0);
-						    Element sx = (Element) esx.getElementsByTagName("Stack").item(0);
-						    String xmethod = sx.getElementsByTagName("Method").item(0).getTextContent();
-						    if (xmethod.equals("createNonSequential"))
-							zkcreatelist.add(index);
-						}			                        
-                        /*if (index == 18686) {
-                            System.out.println("18686 eventput = "+ stack.peek());
-                           //System.out.println("pid = " + idPair.pid +" tid = " +idPair.tid);
-                        }*/
-                        index ++;  //jx - should be each node/operation's ID
-			            //System.out.println("Author : " + eElement.getElementsByTagName("author").item(0).getTextContent());
+            System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 1.2");
+            NodeList NList = inputdoc.getElementsByTagName("Operation");   //get all operations/nodes at a thread
+            int msgheader = -1;   
+            int msgflag   = 1;
+            int curmsg = -1;
+            
+            // JX - deal with a single thread file's operations
+            for (int i = 0; i < NList.getLength(); i++) {
+            	System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 2.1");
+                Node nNode = NList.item(i);        //get a node/operation
+                //System.out.println("\nCurrent Element :" + nNode.getNodeName());
+                //	    System.out.println(ptid[0]+"-"+ptid[1]+" mheader = "+mheader+ " mflag = "+ mflag);
+                if ( goodnode(nNode) == false ) continue;  //JX - little filter
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    //System.out.println("++++ index=" + index + " "+ nNode);
+                    Element eElement = (Element) nNode;
+                    String tp = eElement.getElementsByTagName("OPTY").item(0).getTextContent();
+                    String tval = eElement.getElementsByTagName("OPVAL").item(0).getTextContent();
+                    /*	
+					if (i > 0){
+					    Node pn = nList.get(index-1);
+					    Element pe = (Element) pn;
+					    String ptp = pe.getElementsByTagName("OPTY").item(0).getTextContent();
+		                            String pval = pe.getElementsByTagName("OPVAL").item(0).getTextContent();        
+					    if (ptp.equals(tp) && pval.equals(tval)) continue;
+					    if (i > 2){
+						 
+		                        //	System.out.println("++++ i =" + i + " i>2");
+			      		        pn = nList.get(index-2);
+		                                pe = (Element) pn;
+		                                ptp = pe.getElementsByTagName("OPTY").item(0).getTextContent();
+		                                pval = pe.getElementsByTagName("OPVAL").item(0).getTextContent();
+		                                if (ptp.equals(tp) && pval.equals(tval)) continue;
+					    }
+					}
+					*/
+                    //System.out.println("++++ index=" + index + " "+ nNode);
+                    nList.add(nNode);                   //JX - Node, will be <OPINFO>/<Operation> at 'base' file 
+					String idstr = getIdentity(nNode);  //id/signature for an node/operation, not IdPair-pid/tid
+					if (identity.keySet().contains(idstr)){
+					    int freq = identity.get(idstr);
+					    identity.put(idstr,freq+1);
+					}else
+					    identity.put(idstr,1);
+					emlink.add(-1);  //?
+					mexit.add(-1);   //?
+					eexit.add(-1);   //?
+					msender.add(-1); //?
+					if (stack.empty()){
+					    emlink2.add(-1);
+					} else{
+					    emlink2.add(stack.peek());
+					}
+					//if (index == 2994) System.out.println("2994's lock = "+lockstack.peek());
+					if (lockstack.empty()){
+					    locktrace.add(-1);
+					}  else {
+					    locktrace.add(lockstack.peek());
+					}
+                    idplist.add(idPair);
+                    edge.add(new ArrayList<Pair>());
+                    backedge.add(new ArrayList<Pair>());
+                    
+                    System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 2.2");
+                    // Modified by JX
+                    if ( !tp.equals("MsgProcEnter")               //not msg/rpc handler enter 
+                    	&& !tp.equals("EventProcEnter") ) {       //not event handler enter 
+                    	if ( i > 0 )
+                    		addedge(index-1, index);			  //ie, 0->1->2->3->4->5
+                    	if ( msgflag > 0 )
+                    		msgheader = index;
+                    }
+                    /*
+                    if ((i > 0) && (!tp.equals("ThdEnter"))                      //not enter thread          
+                    			&& (!tp.equals("MsgProcEnter"))                  //not msg handler enter    
+                				&& (!tp.equals("EventProcEnter")) ) {             //not event handler enter   
+		                addedge(index-1,index);                                 //ie, 0->1->2->3->4->5
+					    if (msgflag > 0) {
+					    	mheader = index;                                    //how to determine the mheader?
+					    	//System.out.println("set mheader = "+index);
+					    }
 		            }
-				    if (curmsg > -1) mexit.set(curmsg,index-1);
-                } //end-for-each thread file's-nodes
-                
-                //JX - still for each thread file
-                ptidref.put(idPair,idlist);                      //JX - only nodes/operations belonging to this thread
-                ptideventref.put(idPair,ideventlist);
-                /*if ((idPair.pid == 31943) &&(idPair.tid == 49)) {
-                    System.out.println("####"+ ptidref.get(new IdPair(31943,49)));
-                    gSendingystem.out.println("####"+ ptidref.get(idPair));
-                }*/
-            } //End-for-all thread files
+		            */
+                    
+					if (tp.equals("MsgProcEnter")){
+					    msgflag = -1;
+					    if (curmsg > -1)
+					    	mexit.set(curmsg,index-1);
+					    //System.out.println("Form "+curmsg + " to "+ index+"-1 is a msg");
+					    curmsg = index;
+					    //System.out.println("set mflag = -1");
+					    if (msgheader > -1) {
+					    	addedge(msgheader,index);
+					    	//System.out.println(index+ "is pluged to "+ mheader);
+					    } else {
+					    	//System.out.println(index+ "is a no program header msg from "+ptid[0]+"-"+ptid[1]);
+					    }
+					}
+					
+                    if (typeref.get(tp) == null)                          //JX - summarize types
+                        typeref.put(tp,new ArrayList<Integer>());
+                    typeref.get(tp).add(index);
+                    idlist.add(index);
+		
+					//////////////////////////////////////////////
+                    if (tp.equals("EventProcEnter")){
+                    	//stack.push(index);
+                        String val = eElement.getElementsByTagName("OPVAL").item(0).getTextContent();
+                        if (!val.contains("GenericEventHandler")){  //JX - normal EventProcEnter 
+                            ideventlist.add(index);
+					        stack.push(index);
+					    }                              
+					    else addedge(index-1,index); //JX - special EventProcEnter, actually it is only for MapReduce's "handle()", this put/submit is 'Enter(maybe many)' not 'create'
+                    }
+					if (tp.equals("EventProcExit")){
+					    String val = eElement.getElementsByTagName("OPVAL").item(0).getTextContent();
+					    if (!val.contains("GenericEventHandler"))
+					    stack.pop();
+					}
+					//////////////////////////////////////////////
+		
+					System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 2.3");
+					//////////////////////////////////////////////
+					if (tp.equals("LockRequire")){
+					    lockstack.push(index);
+					}
+		
+					if (tp.equals("LockRelease")){                                         //JX - ????? a mistake??
+					    lockstack.pop();
+					    //Actually the structure should not be a stack.
+					}
+					/*if (index == 2985) {
+					    System.out.println("2985's lock = "+lockstack);
+					    System.out.println("2985's type = "+tp);
+					}
+					if (index == 2994) System.out.println("2994's lock = "+lockstack);*/
+					//////////////////////////////////////////////			
+					if (tp.equals("HeapWrite")){
+		   			    Element esx = (Element) eElement.getElementsByTagName("Stacks").item(0);
+					    Element sx = (Element) esx.getElementsByTagName("Stack").item(0);
+					    String xmethod = sx.getElementsByTagName("Method").item(0).getTextContent();
+					    if (xmethod.equals("createNonSequential"))
+						zkcreatelist.add(index);
+					}			                        
+                    /*if (index == 18686) {
+                        System.out.println("18686 eventput = "+ stack.peek());
+                       //System.out.println("pid = " + idPair.pid +" tid = " +idPair.tid);
+                    }*/
+                    index ++;  //jx - should be each node/operation's ID
+		            //System.out.println("Author : " + eElement.getElementsByTagName("author").item(0).getTextContent());
+	            }
+			    if (curmsg > -1) mexit.set(curmsg,index-1);
+            } //end-for-each thread file's-nodes
+            
+            System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 3.1");
+            //JX - still for each thread file
+            ptidref.put(idPair,idlist);                      //JX - only nodes/operations belonging to this thread
+            ptideventref.put(idPair,ideventlist);
+            /*if ((idPair.pid == 31943) &&(idPair.tid == 49)) {
+                System.out.println("####"+ ptidref.get(new IdPair(31943,49)));
+                gSendingystem.out.println("####"+ ptidref.get(idPair));
+            }*/
+        } //End-for-all thread files
         
         System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 1.3");
-        	//JX - just added - maybe need 'LockReqire' and 'LockRelease'        #this is moved out from above loop
-        	if (typeref.get("LockRequire") == null)                                             
-        		typeref.put("LockRequire", new ArrayList<Integer>());
-        	if (typeref.get("LockRelease") == null)
-        		typeref.put("LockRelease", new ArrayList<Integer>());
-        	if (typeref.get("RWLockCreate") == null)
-        		typeref.put("RWLockCreate", new ArrayList<Integer>());
-        	if (typeref.get("MsgSending") == null)                                             
-	            typeref.put("MsgSending",new ArrayList<Integer>());
-	        if (typeref.get("MsgProcEnter") == null)
-	            typeref.put("MsgProcEnter",new ArrayList<Integer>());
-	        if (typeref.get("ThdCreate") == null)
-	            typeref.put("ThdCreate",new ArrayList<Integer>());
-	        if (typeref.get("ThdEnter") == null)
-	            typeref.put("ThdEnter",new ArrayList<Integer>());
-	        if (typeref.get("ThdJoin") == null)
-	            typeref.put("ThdJoin",new ArrayList<Integer>());
-	        if (typeref.get("ThdExit") == null)
-	            typeref.put("ThdExit",new ArrayList<Integer>());
-	        if (typeref.get("MsgProcExit") == null)
-	            typeref.put("MsgProcExit",new ArrayList<Integer>());
-	        if (typeref.get("EventProcEnter") == null)
-	            typeref.put("EventProcEnter",new ArrayList<Integer>());
-	        if (typeref.get("EventProcExit") == null)
-	            typeref.put("EventProcExit",new ArrayList<Integer>());
-	        if (typeref.get("ProcessCreate") == null)	
-	            typeref.put("ProcessCreate",new ArrayList<Integer>());
-	        if (typeref.get("EventCreate") == null)	
-	            typeref.put("EventCreate",new ArrayList<Integer>());
-        
-	        System.out.println("JX - initialization");
-	        System.out.println("#totalNodes = " + nList.size() + ", including the following");  //JX: verified, equal to $index
-	        System.out.println("LockRequire: " + typeref.get("LockRequire").size());
-	        System.out.println("LockRelease: " + typeref.get("LockRelease").size());
-	        System.out.println("RWLockCreate: " + typeref.get("RWLockCreate").size());
-		    for (String type : typeref.keySet())    
-		    	if ( !type.equals("LockRequire") && !type.equals("LockRelease") && !type.equals("RWLockCreate"))
-                	System.out.println(type + " : " + typeref.get(type).size());
-	        System.out.println( esum + " basic edges are added in the initialization.");
-		    
-		    //System.out.print("zkcreate = ");
-		    //System.out.println(zkcreatelist);
-            createbasexml(); //JX - generate the 'base' file including all nodes/operations
-            createemlink();  //?
+    	//JX - just added - maybe need 'LockReqire' and 'LockRelease'        #this is moved out from above loop
+    	if (typeref.get("LockRequire") == null)                                             
+    		typeref.put("LockRequire", new ArrayList<Integer>());
+    	if (typeref.get("LockRelease") == null)
+    		typeref.put("LockRelease", new ArrayList<Integer>());
+    	if (typeref.get("RWLockCreate") == null)
+    		typeref.put("RWLockCreate", new ArrayList<Integer>());
+    	if (typeref.get("MsgSending") == null)                                             
+            typeref.put("MsgSending",new ArrayList<Integer>());
+        if (typeref.get("MsgProcEnter") == null)
+            typeref.put("MsgProcEnter",new ArrayList<Integer>());
+        if (typeref.get("ThdCreate") == null)
+            typeref.put("ThdCreate",new ArrayList<Integer>());
+        if (typeref.get("ThdEnter") == null)
+            typeref.put("ThdEnter",new ArrayList<Integer>());
+        if (typeref.get("ThdJoin") == null)
+            typeref.put("ThdJoin",new ArrayList<Integer>());
+        if (typeref.get("ThdExit") == null)
+            typeref.put("ThdExit",new ArrayList<Integer>());
+        if (typeref.get("MsgProcExit") == null)
+            typeref.put("MsgProcExit",new ArrayList<Integer>());
+        if (typeref.get("EventProcEnter") == null)
+            typeref.put("EventProcEnter",new ArrayList<Integer>());
+        if (typeref.get("EventProcExit") == null)
+            typeref.put("EventProcExit",new ArrayList<Integer>());
+        if (typeref.get("ProcessCreate") == null)	
+            typeref.put("ProcessCreate",new ArrayList<Integer>());
+        if (typeref.get("EventCreate") == null)	
+            typeref.put("EventCreate",new ArrayList<Integer>());
+    
+        System.out.println("JX - initialization");
+        System.out.println("#totalNodes = " + nList.size() + ", including the following");  //JX: verified, equal to $index
+        System.out.println("LockRequire: " + typeref.get("LockRequire").size());
+        System.out.println("LockRelease: " + typeref.get("LockRelease").size());
+        System.out.println("RWLockCreate: " + typeref.get("RWLockCreate").size());
+	    for (String type : typeref.keySet())    
+	    	if ( !type.equals("LockRequire") && !type.equals("LockRelease") && !type.equals("RWLockCreate"))
+            	System.out.println(type + " : " + typeref.get(type).size());
+        System.out.println( esum + " basic edges are added in the initialization.");
+	    
+	    //System.out.print("zkcreate = ");
+	    //System.out.println(zkcreatelist);
+        createbasexml(); //JX - generate the 'base' file including all nodes/operations
+        createemlink();  //?
     } //end-for-Construction
     
     
