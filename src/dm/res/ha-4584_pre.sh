@@ -7,7 +7,7 @@ dm_dir=/tmp/${bug_id}_dm    #like "/tmp/mr-4576_dm"
 
 
 
-# Stop hadoop so that NOT under logging
+# Start hadoop to clean up data
 echo "JX - INFO - clean up HDFS data (need ensure started)"
 start-dfs.sh
 sleep 5s
@@ -20,6 +20,7 @@ sleep 1s
 hadoop fs -lsr /
 sleep 5s
 
+# Stop hadoop so that NOT under logging
 echo "JX - INFO - stop hadoop .."
 stop-dfs.sh
 if [ $? -ne 0 ]; then

@@ -62,12 +62,12 @@ public class Transformer implements ClassFileTransformer {
 	  			//NONE
 	  		}
 	  		else {
-		    	System.out.println("JX - DEBUG - Class: " + className); 
-		    	System.out.println("JX - DEBUG - -1");
+		    	//System.out.println("JX - DEBUG - Class: " + className); 
+		    	//System.out.println("JX - DEBUG - -1");
 		    	
 		    	transformClass( cl );
 		       
-		    	System.out.println("JX - DEBUG - +1");
+		    	//System.out.println("JX - DEBUG - +1");
 	  		}
 	      	b = cl.toBytecode();
 	    }
@@ -79,7 +79,7 @@ public class Transformer implements ClassFileTransformer {
 	    		cl.detach();
 	    	}
 	    }
-	    System.out.println("JX - DEBUG - last");
+	    //System.out.println("JX - DEBUG - last");
 	    return b;
 	}
   

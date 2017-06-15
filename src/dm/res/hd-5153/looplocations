@@ -1431,7 +1431,8 @@ org.apache.hadoop.hdfs.server.datanode.DataNode.parseArguments([Ljava/lang/Strin
 org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyDefault.chooseTarget(ILorg/apache/hadoop/net/Node;Ljava/util/Set;JILjava/util/List;ZLorg/apache/hadoop/hdfs/StorageType;)Lorg/apache/hadoop/net/Node; 1 319 
 org.apache.hadoop.hdfs.qjournal.client.QuorumJournalManager.recoverUnfinalizedSegments()V 1 433 
 org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager.removeDecomNodeFromList(Ljava/util/List;)V 1 685 
-org.apache.hadoop.hdfs.server.namenode.FSEditLogOp$Reader.verifyTerminator()V 2 3519 3515 
+// JX - I delete a loop at the method at Line 3519
+org.apache.hadoop.hdfs.server.namenode.FSEditLogOp$Reader.verifyTerminator()V 1 3515 
 org.apache.hadoop.io.ArrayPrimitiveWritable.readBooleanArray(Ljava/io/DataInput;)V 1 302 
 org.apache.hadoop.io.ArrayPrimitiveWritable.readCharArray(Ljava/io/DataInput;)V 1 308 
 org.apache.hadoop.io.ArrayPrimitiveWritable.readLongArray(Ljava/io/DataInput;)V 1 330 
