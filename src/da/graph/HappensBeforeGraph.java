@@ -207,7 +207,6 @@ public class HappensBeforeGraph {
         	
     	// JX - traverse all thread files
         for (File xml : xmlfiles) {
-        	System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 1.1: " + xml.toString());
         	Stack<Integer> stack = new Stack<Integer>();
         	Stack<Integer> lockstack = new Stack<Integer>();
             String xmlfilename = xml.getName();
@@ -236,10 +235,8 @@ public class HappensBeforeGraph {
             int msgflag   = 1;
             int curmsg = -1;
 
-            System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 1.2: NList.length=" + NList.getLength());
             // JX - deal with a single thread file's operations
             for (int i = 0; i < NList.getLength(); i++) {
-            	System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 2.1");
                 Node nNode = NList.item(i);        //get a node/operation
                 //System.out.println("\nCurrent Element :" + nNode.getNodeName());
                 //	    System.out.println(ptid[0]+"-"+ptid[1]+" mheader = "+mheader+ " mflag = "+ mflag);
@@ -285,16 +282,18 @@ public class HappensBeforeGraph {
 					    emlink2.add(stack.peek());
 					}
 					//if (index == 2994) System.out.println("2994's lock = "+lockstack.peek());
+					/* commented by JX
 					if (lockstack.empty()){
 					    locktrace.add(-1);
 					}  else {
 					    locktrace.add(lockstack.peek());
 					}
+					*/
+					
                     idplist.add(idPair);
                     edge.add(new ArrayList<Pair>());
                     backedge.add(new ArrayList<Pair>());
                     
-                    System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 2.2");
                     // Modified by JX
                     if ( !tp.equals("MsgProcEnter")               //not msg/rpc handler enter 
                     	&& !tp.equals("EventProcEnter") ) {       //not event handler enter 
@@ -352,18 +351,18 @@ public class HappensBeforeGraph {
 					}
 					//////////////////////////////////////////////
 		
-					System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 2.3");
+					
 					//////////////////////////////////////////////
+					/* commented by JX
 					if (tp.equals("LockRequire")){
 					    lockstack.push(index);
 					}
-		
-					System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 2.4");
 					if (tp.equals("LockRelease")){                                         //JX - ????? a mistake??
 					    lockstack.pop();
 					    //Actually the structure should not be a stack.
 					}
-					System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 2.5");
+					*/
+					
 					/*if (index == 2985) {
 					    System.out.println("2985's lock = "+lockstack);
 					    System.out.println("2985's type = "+tp);
@@ -384,11 +383,11 @@ public class HappensBeforeGraph {
                     index ++;  //jx - should be each node/operation's ID
 		            //System.out.println("Author : " + eElement.getElementsByTagName("author").item(0).getTextContent());
 	            }
-                System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 3");
+                
 			    if (curmsg > -1) mexit.set(curmsg,index-1);
             } //end-for-each thread file's-nodes
             
-            System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 4");
+            
             //JX - still for each thread file
             ptidref.put(idPair,idlist);                      //JX - only nodes/operations belonging to this thread
             ptideventref.put(idPair,ideventlist);
@@ -398,7 +397,7 @@ public class HappensBeforeGraph {
             }*/
         } //End-for-all thread files
         
-        System.out.println("JX - DEBUG - HappensBeforeGraph.<init> - 1.3");
+        
     	//JX - just added - maybe need 'LockReqire' and 'LockRelease'        #this is moved out from above loop
     	if (typeref.get("LockRequire") == null)                                             
     		typeref.put("LockRequire", new ArrayList<Integer>());
