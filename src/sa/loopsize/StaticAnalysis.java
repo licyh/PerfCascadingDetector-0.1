@@ -7,7 +7,7 @@ public class StaticAnalysis {
 	WalaAnalyzer walaAnalyzer;
 	
 	public StaticAnalysis() {
-		this.walaAnalyzer = new WalaAnalyzer("src/sa/res/ha-4584");
+		this.walaAnalyzer = new WalaAnalyzer("src/sa/res/JLex");
 		
 	}
 	

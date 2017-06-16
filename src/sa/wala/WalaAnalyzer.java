@@ -161,7 +161,7 @@ public class WalaAnalyzer {
     		//testTypeHierarchy();
     		//testCGNode();
     		//testPartialCallGraph();
-    		testIR();         		 //JX - need to configurate Dot and PDFViewer
+    		//testIR();         		 //JX - need to configurate Dot and PDFViewer
     		//testWalaAPI();
     	} catch (IllegalArgumentException | CallGraphBuilderCancelException | IOException | UnsoundGraphException
 			| WalaException e) {
