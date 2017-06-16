@@ -11,5 +11,7 @@ org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.pr
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol versionRequest 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol processUpgradeCommand 0
 // for client -> namenode write, if put here, then we have to add rpc manually
+// Normally, we don't need, because this is target code, and will not in MsgEnter&MsgExit, 
+//     so it will cause some HB graph problem: Thread{ MsgEnter-MsgExit<-xx<-xx<-xx  MsgEnter-MsgExit  MsgEnter-MsgExit } 
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol addBlock 0
 org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.protocol.ClientProtocol addBlock 0
