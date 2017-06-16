@@ -99,8 +99,8 @@ public class WalaAnalyzer {
     // for testIR()
     String dotExe = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";  //like "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe"
     String pdfExe = "C:\\Program Files (x86)\\Foxit Software\\Foxit Reader\\FoxitReader.exe";  //like "C:\\Program Files (x86)\\Foxit Software\\Foxit Reader\\FoxitReader.exe"
-    String dotFile = "Z:\\walaspace\\temp.dt";  //like "Z:\\JXCascading-detector\\temp.dt"
-    String pdfFile = "Z:\\walaspace\\ir.pdf";  //"Z:\\JXCascading-detector\\ir.pdf"
+    String dotFile = "Z:\\walaspace\\temp.dt";  //like "Z:\\walaspace\\temp.dt". ps: all parent dirs should exist. 
+    String pdfFile = "Z:\\walaspace\\ir.pdf";  //like "Z:\\walaspace\\ir.pdf". ps: all parent dirs should exist.
     
     
     public WalaAnalyzer(String dirstr) {
