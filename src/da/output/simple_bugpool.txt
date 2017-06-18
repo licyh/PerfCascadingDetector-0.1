@@ -1,4 +1,4 @@
-682 (#static codepoints=78)
+673 (#static codepoints=77)
 CL10: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfo-findDatanode-250;
 CL10: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfo-findStorageInfo-266;
 CL10: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfo-findStorageInfo-283;
@@ -8,7 +8,6 @@ CL10: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-a
 CL10: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setExpectedLocations-192;
 CL10: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setGenerationStampAndVerifyReplicas-245;
 CL10: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-checkReplication-3035;
-CL10: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-completeBlock-625;
 CL10: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1212;
 CL10: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1213;
 CL10: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1288;
@@ -84,7 +83,6 @@ CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-ap
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setExpectedLocations-192;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setGenerationStampAndVerifyReplicas-245;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-checkReplication-3035;
-CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-completeBlock-625;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1212;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1213;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1288;
@@ -158,7 +156,6 @@ CL3: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-ap
 CL3: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setExpectedLocations-192;
 CL3: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setGenerationStampAndVerifyReplicas-245;
 CL3: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-checkReplication-3035;
-CL3: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-completeBlock-625;
 CL3: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1212;
 CL3: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1213;
 CL3: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1288;
@@ -234,7 +231,6 @@ CL4: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-ap
 CL4: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setExpectedLocations-192;
 CL4: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setGenerationStampAndVerifyReplicas-245;
 CL4: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-checkReplication-3035;
-CL4: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-completeBlock-625;
 CL4: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1212;
 CL4: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1213;
 CL4: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1288;
@@ -310,7 +306,6 @@ CL5: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-ap
 CL5: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setExpectedLocations-192;
 CL5: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setGenerationStampAndVerifyReplicas-245;
 CL5: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-checkReplication-3035;
-CL5: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-completeBlock-625;
 CL5: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1212;
 CL5: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1213;
 CL5: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1288;
@@ -386,7 +381,6 @@ CL6: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-ap
 CL6: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setExpectedLocations-192;
 CL6: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setGenerationStampAndVerifyReplicas-245;
 CL6: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-checkReplication-3035;
-CL6: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-completeBlock-625;
 CL6: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1212;
 CL6: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1213;
 CL6: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1288;
@@ -462,7 +456,6 @@ CL7: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-ap
 CL7: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setExpectedLocations-192;
 CL7: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setGenerationStampAndVerifyReplicas-245;
 CL7: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-checkReplication-3035;
-CL7: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-completeBlock-625;
 CL7: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1212;
 CL7: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1213;
 CL7: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1288;
@@ -538,7 +531,6 @@ CL8: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-ap
 CL8: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setExpectedLocations-192;
 CL8: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setGenerationStampAndVerifyReplicas-245;
 CL8: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-checkReplication-3035;
-CL8: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-completeBlock-625;
 CL8: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1212;
 CL8: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1213;
 CL8: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1288;
@@ -614,7 +606,6 @@ CL9: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-ap
 CL9: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setExpectedLocations-192;
 CL9: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setGenerationStampAndVerifyReplicas-245;
 CL9: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-checkReplication-3035;
-CL9: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-completeBlock-625;
 CL9: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1212;
 CL9: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1213;
 CL9: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1288;
