@@ -36,21 +36,57 @@ public class AccidentalHBGraph {
 	}
 
 	
-	public String isReadOrWriteLock(int index) {
+	public boolean isReadLock(int index) {
 		String pidhashcode = hbg.getNodePIDOPVAL0(index);
-		if ( rwlockmatch.containsKey(pidhashcode) ) {
-			return rwlockmatch.get(pidhashcode)[0];   // [0] means "R" or "W"
-		}
-		else {
-			return "null";
-		}
+		if ( !rwlockmatch.containsKey(pidhashcode) )
+			return false;
+		String rwType = rwlockmatch.get(pidhashcode)[0];   // [0] means "R" or "W"
+		if (rwType.equals("R"))
+			return true;
+		return false;
 	}
 
-	public boolean isRelatedLocks(int index1, int index2) {
+	
+	public boolean isWriteLock(int index) {
+		String pidhashcode = hbg.getNodePIDOPVAL0(index);
+		if ( !rwlockmatch.containsKey(pidhashcode) )
+			return false;
+		String rwType = rwlockmatch.get(pidhashcode)[0];   // [0] means "R" or "W"
+		if (rwType.equals("W"))
+			return true;
+		return false;
+	}
+	
+	
+	public boolean isReadOrWriteLock(int index) {
+		if (isReadLock(index) || isWriteLock(index))
+			return true;
+		return false;
+	}
+
+	
+	public boolean isRWLockPair(int index1, int index2) {
+		if (isReadLock(index1) && isWriteLock(index2)
+				|| isWriteLock(index1) && isReadLock(index2) ) {
+			String pidhashcode1 = hbg.getNodePIDOPVAL0(index1);
+			String pidhashcode2 = hbg.getNodePIDOPVAL0(index2);
+			return rwlockmatch.get(pidhashcode1)[2].equals( rwlockmatch.get(pidhashcode2)[2] );         // [2] means "pid"+"superobjhashcode"	
+		}
+		else
+			return false;
+	}
+	
+    public boolean isSameLock(int index1, int index2) {
 		String pidhashcode1 = hbg.getNodePIDOPVAL0(index1);
 		String pidhashcode2 = hbg.getNodePIDOPVAL0(index2);
-		return rwlockmatch.get(pidhashcode1)[2].equals( rwlockmatch.get(pidhashcode2)[2] );         // [1] means "pid"+"superobjhashcode"
-	}
+		// same hashcode: include single lock, R/R, W/W
+    	if ( pidhashcode1.equals(pidhashcode2) )
+    		return true;
+    	// R/W
+    	if ( isRWLockPair(index1, index2) )
+    		return true;
+    	return false;
+    }
 	
     //Added by JX - analyze all locks
     public void buildLockmemref() {
@@ -166,7 +202,7 @@ public class AccidentalHBGraph {
 			System.out.println("JX - dotlock - " + memaddr + " : " + list.size() + " : " + hbg.lastCallstack(list.get(0)) );
 			
 			for (int index: list) {
-        		if ( isReadOrWriteLock(index).equals("null") )
+        		if ( !isReadOrWriteLock(index) )
         			System.out.println("JX - ERROR???(that's FINE if generalobj.lock()) - " + hbg.lastCallstack(index) ); 
 			}
 		}

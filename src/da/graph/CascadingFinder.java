@@ -355,7 +355,7 @@ public class CascadingFinder {
     	for (int lockindex: batchLocks) {
     		String pidopval0 = hbg.getNodePIDOPVAL0(lockindex);
     		// 1. if not R lock; cuz R will not affect R, but a general obj.lock can affect the obj itself
-    		if ( !ag.isReadOrWriteLock(lockindex).equals("R") ) {
+    		if ( !ag.isReadLock(lockindex) ) {
     			ArrayList<Integer> list = ag.accurateLockmemref.get( pidopval0 );
 	    		for (int index: list) {
 	    			if (lockindex == index) continue;
@@ -366,7 +366,7 @@ public class CascadingFinder {
 	    		}
     		}
     		// 2. if R/W lock
-    		if ( !ag.isReadOrWriteLock(lockindex).equals("null") ) {
+    		if ( ag.isReadOrWriteLock(lockindex) ) {
     			String correspondingPidopval0 = ag.rwlockmatch.get( pidopval0 )[1];
     			ArrayList<Integer> list = ag.accurateLockmemref.get( correspondingPidopval0 );   //or using dotlockmemref.get( xx )
     			for (int index: list) {
@@ -401,7 +401,7 @@ public class CascadingFinder {
 					addToBugPool( k, curCascadingLevel );
 				}
 				if ( hbg.getNodeOPTY(k).equals("LockRequire") ) {
-					if ( !hbg.getNodePIDOPVAL0(k).equals(pidopval0) ) {  // yes, it's right
+					if ( !ag.isSameLock(index, k) ) {  // yes, it's right
 						nextbatchLocks.add( k );
 						upNodes[curCascadingLevel].put(k, index);
 						//jx: it seems no need to check if the LockReuire has LockRelease or not
@@ -412,7 +412,7 @@ public class CascadingFinder {
 		}
 		return nextbatchLocks;
     }
-    
+      
     
     public void addToBugPool( int nodeIndex, int cascadingLevel ) {
     	// add to bug pool

@@ -1,0 +1,20 @@
+Target Code Snippet #1: (970 to 1076)
+this snippet includes 107 nodes, #firstbatchLocks = 17, #involving threads = [3591-28]
+JX - findLockRelatedBugs
+including lock - Node971:3591-28:1598048069_3org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;org.apache.hadoop.hdfs.server.namenode.FSNamesystem-getAdditionalBlock-2568;
+including lock - Node982:3591-28:1598048069_3org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;org.apache.hadoop.hdfs.server.namenode.FSNamesystem-checkFileProgress-2989;
+including lock - Node987:3591-28:785795341_1org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor-getStorageInfos-256;org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyDefault-chooseLocalStorage-354;
+including lock - Node990:3591-28:804395912_2org.apache.hadoop.hdfs.protocol.DatanodeInfo-getNetworkLocation--1;org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyDefault-isGoodTarget-649;
+including lock - Node993:3591-28:1946969947_1org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyDefault-getPipeline-676;org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyDefault-chooseTarget-219;
+including lock - Node998:3591-28:1963406301_3org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;org.apache.hadoop.hdfs.server.namenode.FSNamesystem-getAdditionalBlock-2604;
+including lock - Node1009:3591-28:1598048069_3org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;org.apache.hadoop.hdfs.server.namenode.FSNamesystem-checkFileProgress-2989;
+including lock - Node1026:3591-28:1791390284_1org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-390;org.apache.hadoop.hdfs.server.namenode.FSEditLog-logAllocateBlockId-860;
+including lock - Node1027:3591-28:1791390284_2org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled--1;org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-395;
+including lock - Node1030:3591-28:274691175_2org.apache.hadoop.hdfs.server.namenode.FSEditLog$2-initialValue--1;org.apache.hadoop.hdfs.server.namenode.FSEditLog$2-initialValue-193;
+including lock - Node1036:3591-28:1791390284_1org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-390;org.apache.hadoop.hdfs.server.namenode.FSEditLog-logGenerationStampV2-851;
+including lock - Node1037:3591-28:1791390284_2org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled--1;org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-395;
+including lock - Node1049:3591-28:1791390284_1org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-390;org.apache.hadoop.hdfs.server.namenode.FSEditLog-logAddBlock-722;
+including lock - Node1050:3591-28:1791390284_2org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled--1;org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-395;
+including lock - Node1060:3591-28:1791390284_1org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-560;org.apache.hadoop.hdfs.server.namenode.FSNamesystem-getAdditionalBlock-2643;
+including lock - Node1065:3591-28:1791390284_2org.apache.hadoop.hdfs.server.namenode.FSEditLog-doneWithAutoSyncScheduling--1;org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-606;
+including lock - Node1071:3591-28:1791390284_1org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;org.apache.hadoop.hdfs.server.namenode.FSNamesystem-getAdditionalBlock-2643;
