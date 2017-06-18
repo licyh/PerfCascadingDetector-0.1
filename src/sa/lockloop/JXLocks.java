@@ -164,7 +164,7 @@ public class JXLocks {
 	      
 			systemname = Benchmarks.resolveSystem(jarsDir);
 			System.out.println("JX - DEBUG - system name = " + systemname);
-			cg = wala.getCallGrapth();
+			cg = wala.getCallGraph();
 			cha = wala.getClassHierarchy();
 			nPackageFuncs = wala.getNPackageFuncs();
 			nTotalFuncs = wala.getNTotalFuncs();

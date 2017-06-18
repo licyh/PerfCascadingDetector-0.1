@@ -91,10 +91,16 @@ public class WalaAnalyzer {
     private final static boolean CHECK_GRAPH = false;
     final public static String CG_PDF_FILE = "cg.pdf";
   
-    // For test
-    String functionname_for_test = "org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer$ResponseProcessor.run("; //"RetryCache.waitForCompletion(Lorg/apache/hadoop/ipc/RetryCache$CacheEntry;)"; //"org.apache.hadoop.hdfs.server.balancer.Balancer"; //"Balancer$Source.getBlockList";//"DirectoryScanner.scan"; //"ReadaheadPool.getInstance("; //"BPServiceActor.run("; //"DataNode.runDatanodeDaemon"; //"BPServiceActor.run("; //"BlockPoolManager.startAll"; //"NameNodeRpcServer"; //"BackupNode$BackupNodeRpcServer"; // //".DatanodeProtocolServerSideTranslatorPB"; //"DatanodeProtocolService$BlockingInterface"; //"sendHeartbeat("; //"org.apache.hadoop.hdfs.protocolPB.DatanodeProtocolServerSideTranslatorPB";  //java.util.regex.Matcher.match(";
+
+    // Configuration For tests
+    // for all
+    String functionname_for_test = "org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir.getBlockInfo("; //"RetryCache.waitForCompletion(Lorg/apache/hadoop/ipc/RetryCache$CacheEntry;)"; //"org.apache.hadoop.hdfs.server.balancer.Balancer"; //"Balancer$Source.getBlockList";//"DirectoryScanner.scan"; //"ReadaheadPool.getInstance("; //"BPServiceActor.run("; //"DataNode.runDatanodeDaemon"; //"BPServiceActor.run("; //"BlockPoolManager.startAll"; //"NameNodeRpcServer"; //"BackupNode$BackupNodeRpcServer"; // //".DatanodeProtocolServerSideTranslatorPB"; //"DatanodeProtocolService$BlockingInterface"; //"sendHeartbeat("; //"org.apache.hadoop.hdfs.protocolPB.DatanodeProtocolServerSideTranslatorPB";  //java.util.regex.Matcher.match(";
     int which_functionname_for_test = 1;   //1st? 2nd? 3rd?    //TODO - 0 means ALL, 1 to n means which one respectively
-  
+    // for testIR()
+    String dotExe = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";  //like "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe"
+    String pdfExe = "C:\\Program Files (x86)\\Foxit Software\\Foxit Reader\\FoxitReader.exe";  //like "C:\\Program Files (x86)\\Foxit Software\\Foxit Reader\\FoxitReader.exe"
+    String dotFile = "Z:\\walaspace\\temp.dt";  //like "Z:\\walaspace\\temp.dt". ps: all parent dirs should exist. 
+    String pdfFile = "Z:\\walaspace\\ir.pdf";  //like "Z:\\walaspace\\ir.pdf". ps: all parent dirs should exist.
     
     
     public WalaAnalyzer(String dirstr) {
@@ -114,7 +120,7 @@ public class WalaAnalyzer {
     	return this.dirpath;
     }
     
-    public CallGraph getCallGrapth() {
+    public CallGraph getCallGraph() {
     	return this.cg;
     }
     
@@ -389,13 +395,12 @@ public class WalaAnalyzer {
 	    }
 	    
 	    // View the whole Type Hierarchy SWT if needed
-	    /*
 	    Graph<IClass> g = typeHierarchy2Graph(cha);
 	    g = pruneForAppLoader(g);
 	    viewTypeHierarchySWT(g);
-	    */
 	    
 	    // Print some related Type Hierarchy
+	    /*
 	    Graph<IClass> result = SlowSparseNumberedGraph.make();
 	    for (IClass c : cha) {   //JX: this step should ensure including all needed nodes used below
 	      //if (c.getName().toString().indexOf(functionname_for_test) >= 0) {
@@ -418,6 +423,7 @@ public class WalaAnalyzer {
 	    }
 	    result = pruneForAppLoader(result);
 	    viewTypeHierarchySWT(result);
+	    */
     }
   
   
@@ -553,20 +559,20 @@ public class WalaAnalyzer {
 	    // Get IR
 	    int num_of_ircgnode = 0;
 	    for (Iterator<? extends CGNode> it = cg.iterator(); it.hasNext();) {
-	      CGNode tmp_n = it.next();
-	      IMethod tmp_m = tmp_n.getMethod();
-	      if (tmp_m.getSignature().indexOf(functionname_for_test)>=0) {  //TODO - can't find "loopbackAddress(" at "InetAddress.getAllByName("&whichone=2, this ia s example for advanced pointer analysis
-	        num_of_ircgnode ++;
-	        if (++currentone==which_functionname_for_test) {
-	          n = tmp_n;
-	          m = tmp_m;
-	          ir = n.getIR();
-	          viewIR(ir);  
-	          System.out.println(m.getSignature());
-	          //findLocks(n);
-	          //findLoops(n);  //add find var_name??????????????????????????????????????????????
-	        } 
-	      }
+	    	CGNode tmp_n = it.next();
+	    	IMethod tmp_m = tmp_n.getMethod();
+	    	if (tmp_m.getSignature().indexOf(functionname_for_test)>=0) {  //TODO - can't find "loopbackAddress(" at "InetAddress.getAllByName("&whichone=2, this ia s example for advanced pointer analysis
+	    		num_of_ircgnode ++;
+	    		if (++currentone==which_functionname_for_test) {
+	    			n = tmp_n;
+	    			m = tmp_m;
+	    			ir = n.getIR();
+	    			viewIR(ir);  
+	    			System.out.println(m.getSignature());
+	    			//findLocks(n);
+	    			//findLoops(n);  //add find var_name??????????????????????????????????????????????
+	    		} 
+	    	}
 	    }//for
 	    if (ir != null) {
 	      System.err.println( "Totally find " + num_of_ircgnode + " IR(s) for " + functionname_for_test );
@@ -862,16 +868,20 @@ public class WalaAnalyzer {
 	      e.printStackTrace();
 	      Assertions.UNREACHABLE();
 	    }
-	    String psFile = wp.getProperty(WalaProperties.OUTPUT_DIR) + File.separatorChar + PDFWalaIR.PDF_FILE;
-	    String dotFile = wp.getProperty(WalaProperties.OUTPUT_DIR) + File.separatorChar + PDFTypeHierarchy.DOT_FILE;
-	    String dotExe = wp.getProperty(WalaExamplesProperties.DOT_EXE);
-	    String gvExe = wp.getProperty(WalaExamplesProperties.PDFVIEW_EXE);
+	    //String psFile = wp.getProperty(WalaProperties.OUTPUT_DIR) + File.separatorChar + PDFWalaIR.PDF_FILE;
+	    //String dotFile = wp.getProperty(WalaProperties.OUTPUT_DIR) + File.separatorChar + PDFTypeHierarchy.DOT_FILE;
+	    //String dotExe = wp.getProperty(WalaExamplesProperties.DOT_EXE);
+	    //String gvExe = wp.getProperty(WalaExamplesProperties.PDFVIEW_EXE);
+	    if ( !Files.exists( Paths.get(dotExe)) ) 
+	    	System.out.println("JX - ERROR - the software location of 'dot' is wrong");
+	    if ( !Files.exists( Paths.get(pdfExe)) )
+	    	System.out.println("JX - ERROR - the software location of 'pdfviewer' is wrong");
 	   
 	    // Generate IR ControlFlowGraph's SWT viewer
 	    //SSACFG cfg = ir.getControlFlowGraph();
 	    
 	    // Generate IR PDF viewer
-	    PDFViewUtil.ghostviewIR(cha, ir, psFile, dotFile, dotExe, gvExe);
+	    PDFViewUtil.ghostviewIR(cha, ir, pdfFile, dotFile, dotExe, pdfExe); //that is, psFile, dotFile, dotExe, gvExe, originally
 	}	  
 	  
 	  
