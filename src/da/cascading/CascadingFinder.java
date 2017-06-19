@@ -394,17 +394,8 @@ public class CascadingFinder {
 				continue;
 			int endIndex = lockblocks.get( beginIndex );
 			
-			//get its outer locks
-			Set<String> outerlocks = new HashSet<String>();
-			String pidtid = hbg.getNodePIDTID(index);
-			for (int i = index-1; i >= 0; i--) {
-				if ( !hbg.getNodePIDTID(i).equals(pidtid) ) break;
-				if ( hbg.getNodeOPTY(i).equals("LockRequire") ) {
-					if (lockblocks.get(i) != null && lockblocks.get(i) > endIndex) {
-						outerlocks.add( hbg.getNodePIDOPVAL0(i) );
-					}
-				}
-			}
+			// for obtainning outerlocks
+			Set<String> outerlocks = null;
 			
 			String pidopval0 = hbg.getNodePIDOPVAL0( index );
 			int loopflag = 0;
@@ -417,16 +408,40 @@ public class CascadingFinder {
 					addToBugPool( k, curCascadingLevel );
 				}
 				if ( hbg.getNodeOPTY(k).equals("LockRequire") ) {
-					if ( !ag.isRelevantLock(index, k) && !outerlocks.contains(hbg.getNodePIDOPVAL0(k)) ) {  // yes, it's right
-						nextbatchLocks.add( k );
-						upNodes[curCascadingLevel].put(k, index);
-						//jx: it seems no need to check if the LockReuire has LockRelease or not
+					if ( !ag.isRelevantLock(index, k) ) {  // yes, it's right
+						if (outerlocks == null) outerlocks = obtainOuterLocks(beginIndex, endIndex);
+						if ( !outerlocks.contains(hbg.getNodePIDOPVAL0(k)) ) {   
+							nextbatchLocks.add( k );
+							upNodes[curCascadingLevel].put(k, index);
+							//jx: it seems no need to check if the LockReuire has LockRelease or not
+						}
 					}
 				}
 			}
 
 		}
 		return nextbatchLocks;
+    }
+    
+    
+    /**
+     * obtain all of outer-layer locks for the current lock block of (beginIndex,endIndex)
+     * Return - Set<"PIDOPVAL0">
+     */
+    public Set<String> obtainOuterLocks(int beginIndex, int endIndex) {
+		// Note: if this part takes much time, then change to "for (int i = index-1; i >= index-20; i--) {"
+		//get its outer locks, to avoid "(lockA - )lockB<index> - lockA<k> - uA-uB-uA"
+		Set<String> outerlocks = new HashSet<String>();
+		String pidtid = hbg.getNodePIDTID(beginIndex);
+		for (int i = beginIndex-1; i >= 0; i--) {
+			if ( !hbg.getNodePIDTID(i).equals(pidtid) ) break;
+			if ( hbg.getNodeOPTY(i).equals("LockRequire") ) {
+				if (lockblocks.get(i) != null && lockblocks.get(i) > endIndex) {
+					outerlocks.add( hbg.getNodePIDOPVAL0(i) );
+				}
+			}
+		}
+		return outerlocks;
     }
       
     
