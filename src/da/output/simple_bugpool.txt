@@ -1,7 +1,4 @@
-123 (#static codepoints=77)
-CL10: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor-updateHeartbeat-359;
-CL10: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-resetLastCachingDirectiveSentTime-1434;
-CL10: org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager-heartbeatCheck-248;
+104 (#static codepoints=77)
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfo-findDatanode-250;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfo-findStorageInfo-266;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfo-findStorageInfo-283;
@@ -104,21 +101,5 @@ CL3: org.apache.hadoop.hdfs.server.protocol.RemoteEditLogManifest-checkState-51;
 CL3: org.apache.hadoop.hdfs.util.ReadOnlyList$Util-binarySearch-70;
 CL4: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor-updateHeartbeat-359;
 CL4: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-resetLastCachingDirectiveSentTime-1434;
-CL4: org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager-heartbeatCheck-248;
 CL4: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-addStreamsToCollectionFromFiles-262;
 CL4: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-matchEditLogs-216;
-CL5: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor-updateHeartbeat-359;
-CL5: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-resetLastCachingDirectiveSentTime-1434;
-CL5: org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager-heartbeatCheck-248;
-CL6: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor-updateHeartbeat-359;
-CL6: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-resetLastCachingDirectiveSentTime-1434;
-CL6: org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager-heartbeatCheck-248;
-CL7: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor-updateHeartbeat-359;
-CL7: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-resetLastCachingDirectiveSentTime-1434;
-CL7: org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager-heartbeatCheck-248;
-CL8: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor-updateHeartbeat-359;
-CL8: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-resetLastCachingDirectiveSentTime-1434;
-CL8: org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager-heartbeatCheck-248;
-CL9: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor-updateHeartbeat-359;
-CL9: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-resetLastCachingDirectiveSentTime-1434;
-CL9: org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager-heartbeatCheck-248;
