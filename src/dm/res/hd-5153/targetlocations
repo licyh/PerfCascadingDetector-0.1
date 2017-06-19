@@ -1,7 +1,7 @@
 // HDFS namenode WRITE op - ie, call NameNode.addBlock
 // client-side
-org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer run 522              TargetCodeBegin
-org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer run 523              TargetCodeEnd
+//org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer run 522              TargetCodeBegin
+//org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer run 523              TargetCodeEnd
 // server-side
-//org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer addBlock 563      TargetCodeBegin
-//org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer addBlock 565      TargetCodeEnd
+org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer addBlock 563      TargetCodeBegin
+org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer addBlock 565      TargetCodeEnd

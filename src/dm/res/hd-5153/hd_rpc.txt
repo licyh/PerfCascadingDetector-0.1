@@ -1,11 +1,12 @@
 //format: 1.implementation class name  2.interface class name  3. method name  4. count of args  5+: args' class names 
 
-//org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.hdfs.protocol.ClientProtocol addBlock 0
-//org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol sendHeartbeat 0
-//org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol blockReport 0
-//org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol cacheReport 0
-//org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol blockReceivedAndDeleted 0
+org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.hdfs.protocol.ClientProtocol addBlock 0
+org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol sendHeartbeat 0
+org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol blockReport 0
+org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol cacheReport 0
+org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol blockReceivedAndDeleted 0
 
+// without
 //org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol registerDatanode 0
 //org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol errorReport 0
 //org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol versionRequest 0
