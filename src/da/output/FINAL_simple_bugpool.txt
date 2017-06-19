@@ -16,4 +16,4 @@ CL3: org.apache.hadoop.hdfs.server.namenode.EditLogFileOutputStream-preallocate-
 CL3: org.apache.hadoop.hdfs.server.namenode.FSImageSerialization-writeCompactBlockArray-459;
 CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;
 CL3: org.apache.hadoop.hdfs.server.namenode.LeaseManager-checkLeases-457;
-summary - 18(#static codepoints=15) from 104 (#static codepoints=77)
+summary - 18(#static codepoints=15) from 105 (#static codepoints=78)

@@ -96,20 +96,34 @@ public class RPCInfo {
     }
   }
 
-  public boolean isRPCMethod(String cc, String method) {
-    //is a RPC function? check class and method
-    boolean rt = false;
-    for (RPC rpcI : rpcList) {
-      if (rpcI.className.equals(cc) &&
-          rpcI.methodName.equals(method)) {
-        //if (rpcI.version == 2) {
-          rt = true;
-        //}
-      }
-    }
-    return rt;
-  }
+  
+  	/**
+  	 * jx - real RPC implemented method
+  	 * //is a RPC function? check class and method
+  	 */
+	public boolean isRPCMethod(String cc, String method) {
+	    // for Debugging
+		if ( method.equals("addBlock") ) {
+  			System.out.println("JX - DEBUG - isRPCMethod: *" + cc + "*" + method + "*" );
+  			System.out.println("JX - DEBUG - rpcList: " + rpcList );
+  		}
+		
+	    boolean rt = false;
+	    for (RPC rpcI : rpcList) {
+	      if (rpcI.className.equals(cc) &&
+	          rpcI.methodName.equals(method)) {
+	        //if (rpcI.version == 2) {
+	          rt = true;
+	        //}
+	      }
+	    }
+	    return rt;
+	}
 
+	
+	/**
+	 * 
+	 */
   	public boolean isRPCCall(String iface, String method) {
   		//is a RPC call? check iface and method
   		if ( method.equals("sendHeartbeat") ) {
@@ -126,6 +140,7 @@ public class RPCInfo {
 	    return rt;
   	}
   
+  	
   public boolean isTargetAPP(String iface, String method, String app) {
     //is target app? check iface and method
     boolean rt = false;

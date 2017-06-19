@@ -197,7 +197,7 @@ class HDFSTransformer extends Transformer {
 		     */
 		    else if (rpcInfo.isRPCMethod(className, methodName)
 		    		&& javassist.Modifier.isPublic(method.getModifiers()) ) {
-		    	//System.out.println("JX - DEBUG - DM - 1.4");
+		    	System.out.println("JX - DEBUG - isRPCMethod - in - " + className + " " + methodName);
 		    	int rpc_flag = 3; //flag=3: mrv1 rpc. flag=2: mrv2 rpc. 
 		    	methodUtil.insertCallInstBefore(logClass, msgProcEnterLog, rpc_flag);
 		    	methodUtil.insertCallInstAfter(logClass, msgProcExitLog, rpc_flag);
