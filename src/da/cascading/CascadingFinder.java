@@ -1,4 +1,4 @@
-package da.graph;
+package da.cascading;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -16,6 +16,10 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import com.text.TextFileWriter;
+
+import da.graph.AccidentalHBGraph;
+import da.graph.HappensBeforeGraph;
+import da.graph.Pair;
 
 public class CascadingFinder {
 
@@ -100,7 +104,7 @@ public class CascadingFinder {
     	loopblocks.clear();
     	
     	// scan all nodes
-    	for (int i = 0; i < hbg.nList.size(); i++) {
+    	for (int i = 0; i < hbg.getNodeList().size(); i++) {
     		String opty = hbg.getNodeOPTY(i);
     		// find out all Target Code nodes/blocks
     		if ( opty.equals("TargetCodeBegin") || opty.equals("TargetCodeEnd") ) {
@@ -111,7 +115,7 @@ public class CascadingFinder {
     			String pidtid = hbg.getNodePIDTID(i);
     			String opval = hbg.getNodeOPVAL(i);
     			int reenter = 1;
-    			for (int j = i+1; j < hbg.nList.size(); j++) {
+    			for (int j = i+1; j < hbg.getNodeList().size(); j++) {
     				if ( !hbg.getNodePIDTID(j).equals(pidtid) ) break;
     				// modified: bug fix
     				if ( hbg.getNodeOPTY(j).equals("LockRequire") && hbg.getNodeOPVAL(j).equals(opval) )  
@@ -247,7 +251,7 @@ public class CascadingFinder {
     // 1. findImmediateBugs
     
     public void findImmediateBugs(int beginIndex, int endIndex) {
-    	if ( !hbg.reachbitset.get(beginIndex).get(endIndex) ) {
+    	if ( !hbg.getReachSet().get(beginIndex).get(endIndex) ) {
     		System.out.println("JX - ERROR - " + "couldn't reach from " + beginIndex + " to " + endIndex);
     		return;
     	}
@@ -282,10 +286,10 @@ public class CascadingFinder {
     		}
     	}
 
-        List<Pair> list = hbg.edge.get(x);
+        List<Pair> list = hbg.getEdge().get(x);
         for (Pair pair: list) {
         	int y = pair.destination;
-        	if ( !traversedNodes.get(y) && hbg.reachbitset.get(y).get(endIndex) )
+        	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) )
         		dfsTraversing( y, endIndex );
         }
     }
@@ -390,6 +394,18 @@ public class CascadingFinder {
 				continue;
 			int endIndex = lockblocks.get( beginIndex );
 			
+			//get its outer locks
+			Set<String> outerlocks = new HashSet<String>();
+			String pidtid = hbg.getNodePIDTID(index);
+			for (int i = index-1; i >= 0; i--) {
+				if ( !hbg.getNodePIDTID(i).equals(pidtid) ) break;
+				if ( hbg.getNodeOPTY(i).equals("LockRequire") ) {
+					if (lockblocks.get(i) != null && lockblocks.get(i) > endIndex) {
+						outerlocks.add( hbg.getNodePIDOPVAL0(i) );
+					}
+				}
+			}
+			
 			String pidopval0 = hbg.getNodePIDOPVAL0( index );
 			int loopflag = 0;
 			for (int k = beginIndex; k <= endIndex; k++) {         /////////JXXXXXXXXXXX - here seems a big bug, I didn't find into RPC or method call
@@ -401,7 +417,7 @@ public class CascadingFinder {
 					addToBugPool( k, curCascadingLevel );
 				}
 				if ( hbg.getNodeOPTY(k).equals("LockRequire") ) {
-					if ( !ag.isSameLock(index, k) ) {  // yes, it's right
+					if ( !ag.isRelevantLock(index, k) && !outerlocks.contains(hbg.getNodePIDOPVAL0(k)) ) {  // yes, it's right
 						nextbatchLocks.add( k );
 						upNodes[curCascadingLevel].put(k, index);
 						//jx: it seems no need to check if the LockReuire has LockRelease or not
@@ -453,7 +469,7 @@ public class CascadingFinder {
     		simplebugpool.add( "CL" + cascadingLevel + ": " + hbg.lastCallstack(nodeIndex) );
     		tmpset.add( hbg.lastCallstack(nodeIndex) );
     	}
-    	System.out.println(", ie, representing " + bugnodeset.size() + " nodes out of total " + hbg.nList.size() + " nodes");
+    	System.out.println(", ie, representing " + bugnodeset.size() + " nodes out of total " + hbg.getNodeList().size() + " nodes");
 
     	// bug pools - 
         // write to file & print

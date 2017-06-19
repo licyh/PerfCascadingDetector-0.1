@@ -14,12 +14,12 @@ public class AccidentalHBGraph {
 	
 	HappensBeforeGraph hbg;
     //Added by JX
-    HashMap<String, ArrayList<Integer> > accurateLockmemref;  	//New: pid+opval0 -> set of nodes
+    public HashMap<String, ArrayList<Integer> > accurateLockmemref;  	//New: pid+opval0 -> set of nodes
     
     HashMap<String, ArrayList<Integer> > lockmemref;     	  	//JX: record all LockRequire/LockRelease. 
     HashMap<String, ArrayList<Integer> > lockmemrefType;  		//for test: lock mem addr -> [_1sync(ojb), _2sync method, _3lock];   the number of every kind of lock
     HashMap<String, ArrayList<Integer> > dotlockmemref;   		// same as above, but only type "_3" ie, xxx.lock
-    HashMap<String, String[]> rwlockmatch;               		// "pid"+"hashcode" -> "R/W", "pid"+"correspondinghashcode", "pid"+"superobjhashcode" 
+    public HashMap<String, String[]> rwlockmatch;               		// "pid"+"hashcode" -> "R/W", "pid"+"correspondinghashcode", "pid"+"superobjhashcode" 
     
     //ArrayList<ArrayList<Pair>> lockrelationedge;      //adjcent list of edges for lock relationship graph
     //ArrayList<ArrayList<Pair>> lockrelationbackedge;  //adjcent list of backward edges for tracing back
@@ -76,7 +76,17 @@ public class AccidentalHBGraph {
 			return false;
 	}
 	
-    public boolean isSameLock(int index1, int index2) {
+	
+	public boolean isSameLock(int index1, int index2) {
+		String pidhashcode1 = hbg.getNodePIDOPVAL0(index1);
+		String pidhashcode2 = hbg.getNodePIDOPVAL0(index2);
+    	if ( pidhashcode1.equals(pidhashcode2) )
+    		return true;
+    	return false;
+    }
+	
+	
+    public boolean isRelevantLock(int index1, int index2) {
 		String pidhashcode1 = hbg.getNodePIDOPVAL0(index1);
 		String pidhashcode2 = hbg.getNodePIDOPVAL0(index2);
 		// same hashcode: include single lock, R/R, W/W

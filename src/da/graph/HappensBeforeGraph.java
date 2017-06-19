@@ -445,6 +445,20 @@ public class HappensBeforeGraph {
     } //end-for-Construction
     
     
+    //added by JX
+    public ArrayList<Node> getNodeList() {
+    	return this.nList;
+    }
+    
+    public ArrayList<ArrayList<Pair>> getEdge() {
+    	return this.edge;
+    }
+    
+    public ArrayList<BitSet> getReachSet() {
+    	return this.reachbitset;
+    }
+    
+    
     public String getIdentity(Node node){
     	Element ex = (Element) node;
         String optyx = ex.getElementsByTagName("OPTY").item(0).getTextContent();
