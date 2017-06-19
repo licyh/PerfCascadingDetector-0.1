@@ -1,4 +1,4 @@
-104 (#static codepoints=77)
+105 (#static codepoints=78)
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfo-findDatanode-250;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfo-findStorageInfo-266;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfo-findStorageInfo-283;
@@ -8,6 +8,7 @@ CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-ap
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setExpectedLocations-192;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoUnderConstruction-setGenerationStampAndVerifyReplicas-245;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-checkReplication-3035;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-completeBlock-625;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1212;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1213;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-computeReplicationWorkForBlocks-1288;
