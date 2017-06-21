@@ -250,11 +250,6 @@ class MapReduceTransformer extends Transformer {
 		
 		    }
 		
-		    if (injectFlag == false && calleeInfo.isCallee(className, methodName, method.getSignature())) {
-		    //  if (injectFlag == false && methodName.contains("init") == false && methodInfo.isConstructor() == false &&  methodInfo.isStaticInitializer() == false) {
-		      injectFlag = true;
-		
-		    }
 		
 		    /* for thread creation */
 		    methodUtil.insertCallInst("java.lang.Thread", "start", 0, logClass, thdCreateLog, classUtil);
