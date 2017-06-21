@@ -32,7 +32,6 @@ class HDFSTransformer extends Transformer {
 	
 	ClassUtil classUtil;
 	RPCInfo rpcInfo = new RPCInfo();	
-	CalleeInfo calleeInfo = new CalleeInfo();
   
 	//added by JX
 	Transformers transformers = new Transformers();
@@ -92,13 +91,8 @@ class HDFSTransformer extends Transformer {
 				//|| className.startsWith("org.apache.hadoop.io.")
 				//|| className.startsWith("org.apache.hadoop.util.")
   				) {
-			try {
 				//System.out.println("JX - DEBUG - DM - 11");
-				transformers.transformClassForLoops( cl );
-			} catch (CannotCompileException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}	
+			transformers.transformClassForLoops( cl );
 		}
 		
 	    // instrument for (large) loops
