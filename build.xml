@@ -145,7 +145,7 @@
 		</target>
 	
         <!--target compile dm (MR) -->
-        <target name="compile-dm" depends="prepare, compile-com" description="compile dynamic monitor">
+        <target name="compile-dm" depends="prepare, compile-com, compile-log" description="compile dynamic monitor">
                 <javac srcdir="${src.dm.dir}" destdir="${build.classes}" includeantruntime="false">
                         <classpath refid="classpath" />
                 </javac>
