@@ -226,9 +226,10 @@ class MapReduceTransformer extends Transformer {
 		    	}
 		    	//jx: similar to "run" && "EventProcessor", but this is "handle"
 		    	else {
-			          injectFlag = true;
-			          methodUtil.insertCallInstBefore(logClass, eventProcEnterLog, 1);
-			          methodUtil.insertCallInstAfter(logClass, eventProcExitLog, 1);    		
+		    		System.out.println("JX - DEBUG - handle: " + className + "#" + methodName);
+			        injectFlag = true;
+			        methodUtil.insertCallInstBefore(logClass, eventProcEnterLog, 1);
+			        methodUtil.insertCallInstAfter(logClass, eventProcExitLog, 1);    		
 		    	}			
 		    }
 		    
