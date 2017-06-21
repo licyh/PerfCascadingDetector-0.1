@@ -173,108 +173,6 @@ public class MethodUtil {
 
   
 
-  /* flag:
-   * 0: thd enter/exit. opValue = "-"
-   * 1: MapReduce event enter/exit. opValue = "$1.hashcode"
-   * 2: MapReduce rpc (V2) enter/exit. opValue = $1.toString().hashcode"
-   * 3: MapReduce rpc (V1) enter/exit. opValue = the last parameter"
-   * 4: MapReduce run/call. opValue = "$0.hashcode"
-   *
-   * 5: HBase event process enter/exit. opValue = $0.hashcode
-   * 6. HBase rpc process enter/exit. opValue = the first parameter."
-   * 7. HBase: watchedevent process function enter/exit. opValue = "ZK + event.type() + event.path()
-   *    Id conflict.
-   *
-   * 8. ZK serialize function. send msg. value = $0.get_DM_ID()
-   * 9. ZK request process function: value = $0.hashcode
-   *
-   * 10. MR launch container (start process.)
-   */
-  public String callStrInstBA (String logClass, String logFunc, int flag) {
-    String str = "";
-    if (flag == 0) {
-      str = logClass + "." + logFunc + "(\"-\");";
-    }
-    else if (flag == 1) {
-      String ccName = method.getDeclaringClass().getName().toString();
-      if (ccName.endsWith(".TaskImpl") || ccName.endsWith(".TaskAttemptImpl") ||
-          ccName.endsWith(".JobImpl") || ccName.endsWith(".RMNodeImpl") ||
-          ccName.endsWith(".ApplicationImpl") || ccName.endsWith(".RMContainerImpl") ||
-          ccName.endsWith(".ContainerImpl") || ccName.endsWith(".LocalizedResource") ||
-          ccName.endsWith(".RMAppAttemptImpl")) {
-        str = "String opValue = Integer.toString(System.identityHashCode($1)) + $1.getType() + \"!\" + stateMachine.getCurrentState() +\"!\" + $0.getClass().getSimpleName();";
-      }
-      else {
-        str = "String opValue = Integer.toString(System.identityHashCode($1)) + $1.getType() + $0.getClass().getSimpleName();";
-      }
-      str += logClass + "." + logFunc + "(opValue);";
-    }
-    else if (flag == 2) {
-      str = "String opValue = $1.getDMID();";
-      str += logClass + "." + logFunc + "(opValue);";
-    }
-    else if (flag == 3) {
-      str = "String opValue = $args[$args.length-1].toString();";
-      str += logClass + "." + logFunc + "(opValue);";
-    }
-    else if (flag == 4) {
-      str = "String opValue = Long.toString(Thread.currentThread().getId()) + \"/\" + Integer.toString(System.identityHashCode($0));";
-      str += logClass + "." + logFunc + "(opValue);";
-    }
-    else if (flag == 5) {
-      str = "String opValue = Integer.toString(System.identityHashCode($0));";
-      str += logClass + "." + logFunc + "(opValue);";
-    }
-    else if (flag == 6) {
-      str = "String opValue = $1.toString();";
-      str += logClass + "." + logFunc + "(opValue);";
-    }
-    else if (flag == 7) {
-      str = "String opValue = \"ZK\" + Long.toString(new java.sql.Timestamp(new java.util.Date().getTime()).getTime()) + $1.getType() + $1.getPath();";
-      str += logClass + "." + logFunc + "(opValue);";
-    }
-
-    else if (flag == 8) {
-      str = "String opValue = $0.get_DM_ID();";
-      str += logClass + "." + logFunc + "(opValue);";
-    }
-    else if (flag == 9) {
-      //str = "String opValue = Integer.toString(System.identityHashCode($1)) + \"|\" + Long.toString(new java.sql.Timestamp(new java.util.Date().getTime()).getTime());";
-      str = "String opValue = Integer.toString(System.identityHashCode($1)) + \"|\" + Long.toString(System.nanoTime());";
-      str += logClass + "." + logFunc + "(opValue);";
-    }
-
-    else if (flag == 10) {
-      //Modified by JX
-      str = "int _pid;";
-      str += "try {";
-      str += "java.lang.reflect.Field f = process.getClass().getDeclaredField(\"pid\");";
-      str += "f.setAccessible(true);";
-      str += "_pid = f.getInt(process);";
-      str += "}";
-      str += "String opValue = Integer.toString(_pid);";
-      str += logClass + "." + logFunc + "(opValue);";
-      //end-Modified
-    }
-
-    else if (flag == 41){
-      //str = "String opValue = Integer.toString(System.identityHashCode($1)) + \"_\"+ $2;";
-      //CA-Handler-doVerb
-      str = "String opValue = $1.getMessageSpecId();";
-      //str = "String opValue = $2;";
-      str += logClass + "." + logFunc + "(opValue);";
-    }
-    else if (flag == 42){
-      str = "String opValue = Integer.toString(System.identityHashCode($1));";
-      str += logClass + "." + logFunc + "(opValue);";
-    }
-    else if (flag == 43){
-      str = "String opValue = Integer.toString(System.identityHashCode(this.event));";
-      str += logClass + "." + logFunc + "(opValue);";
-    }
-    return str;
-  }
-  
   public void insertCallInstBefore(String logClass, String logFunc, int flag) {
     try {
       method.insertBefore(callStrInstBA(logClass, logFunc, flag));
@@ -1223,6 +1121,111 @@ public void insertRPCInvoke(String logClass, String logMethod) {
 	  InstructionPrinter printer = new InstructionPrinter(System.out);
     	printer.print((CtMethod)method);
   	}
+
+  	
+  	
+  	/**
+  	 * flags:
+	 * 0: thd enter/exit. opValue = "-"
+	 * 1: MapReduce event enter/exit. opValue = "$1.hashcode"
+	 * 2: MapReduce rpc (V2) enter/exit. opValue = $1.toString().hashcode"
+	 * 3: MapReduce rpc (V1) enter/exit. opValue = the last parameter"
+	 * 4: MapReduce run/call. opValue = "$0.hashcode"
+	 *
+	 * 5: HBase event process enter/exit. opValue = $0.hashcode
+	 * 6. HBase rpc process enter/exit. opValue = the first parameter."
+	 * 7. HBase: watchedevent process function enter/exit. opValue = "ZK + event.type() + event.path()
+	 *    Id conflict.
+	 *
+	 * 8. ZK serialize function. send msg. value = $0.get_DM_ID()
+	 * 9. ZK request process function: value = $0.hashcode
+	 *
+	 * 10. MR launch container (start process.)
+  	 */
+	public String callStrInstBA (String logClass, String logFunc, int flag) {
+	    String str = "";
+	    if (flag == 0) {
+	      str = logClass + "." + logFunc + "(\"-\");";
+	    }
+	    else if (flag == 1) {
+	      String ccName = method.getDeclaringClass().getName().toString();
+	      if (ccName.endsWith(".TaskImpl") || ccName.endsWith(".TaskAttemptImpl") ||
+	          ccName.endsWith(".JobImpl") || ccName.endsWith(".RMNodeImpl") ||
+	          ccName.endsWith(".ApplicationImpl") || ccName.endsWith(".RMContainerImpl") ||
+	          ccName.endsWith(".ContainerImpl") || ccName.endsWith(".LocalizedResource") ||
+	          ccName.endsWith(".RMAppAttemptImpl")) {
+	        str = "String opValue = Integer.toString(System.identityHashCode($1)) + $1.getType() + \"!\" + stateMachine.getCurrentState() +\"!\" + $0.getClass().getSimpleName();";
+	      }
+	      else {
+	        str = "String opValue = Integer.toString(System.identityHashCode($1)) + $1.getType() + $0.getClass().getSimpleName();";
+	      }
+	      str += logClass + "." + logFunc + "(opValue);";
+	    }
+	    else if (flag == 2) {
+	      str = "String opValue = $1.getDMID();";
+	      str += logClass + "." + logFunc + "(opValue);";
+	    }
+	    else if (flag == 3) {
+	      str = "String opValue = $args[$args.length-1].toString();";
+	      str += logClass + "." + logFunc + "(opValue);";
+	    }
+	    else if (flag == 4) {
+	      str = "String opValue = Long.toString(Thread.currentThread().getId()) + \"/\" + Integer.toString(System.identityHashCode($0));";
+	      str += logClass + "." + logFunc + "(opValue);";
+	    }
+	    else if (flag == 5) {
+	      str = "String opValue = Integer.toString(System.identityHashCode($0));";
+	      str += logClass + "." + logFunc + "(opValue);";
+	    }
+	    else if (flag == 6) {
+	      str = "String opValue = $1.toString();";
+	      str += logClass + "." + logFunc + "(opValue);";
+	    }
+	    else if (flag == 7) {
+	      str = "String opValue = \"ZK\" + Long.toString(new java.sql.Timestamp(new java.util.Date().getTime()).getTime()) + $1.getType() + $1.getPath();";
+	      str += logClass + "." + logFunc + "(opValue);";
+	    }
+	
+	    else if (flag == 8) {
+	      str = "String opValue = $0.get_DM_ID();";
+	      str += logClass + "." + logFunc + "(opValue);";
+	    }
+	    else if (flag == 9) {
+	      //str = "String opValue = Integer.toString(System.identityHashCode($1)) + \"|\" + Long.toString(new java.sql.Timestamp(new java.util.Date().getTime()).getTime());";
+	      str = "String opValue = Integer.toString(System.identityHashCode($1)) + \"|\" + Long.toString(System.nanoTime());";
+	      str += logClass + "." + logFunc + "(opValue);";
+	    }
+	
+	    else if (flag == 10) {
+	      //Modified by JX
+	      str = "int _pid;";
+	      str += "try {";
+	      str += "java.lang.reflect.Field f = process.getClass().getDeclaredField(\"pid\");";
+	      str += "f.setAccessible(true);";
+	      str += "_pid = f.getInt(process);";
+	      str += "}";
+	      str += "String opValue = Integer.toString(_pid);";
+	      str += logClass + "." + logFunc + "(opValue);";
+	      //end-Modified
+	    }
+	
+	    else if (flag == 41){
+	      //str = "String opValue = Integer.toString(System.identityHashCode($1)) + \"_\"+ $2;";
+	      //CA-Handler-doVerb
+	      str = "String opValue = $1.getMessageSpecId();";
+	      //str = "String opValue = $2;";
+	      str += logClass + "." + logFunc + "(opValue);";
+	    }
+	    else if (flag == 42){
+	      str = "String opValue = Integer.toString(System.identityHashCode($1));";
+	      str += logClass + "." + logFunc + "(opValue);";
+	    }
+	    else if (flag == 43){
+	      str = "String opValue = Integer.toString(System.identityHashCode(this.event));";
+	      str += logClass + "." + logFunc + "(opValue);";
+	    }
+	    return str;
+	}
 
 }
 

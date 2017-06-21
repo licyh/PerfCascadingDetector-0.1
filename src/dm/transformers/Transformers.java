@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.text.TextFileReader;
 
+import LogClass.LogType;
 import dm.Transformer;
 import dm.util.MethodUtil;
 import javassist.CannotCompileException;
@@ -18,13 +19,18 @@ import javassist.CtClass;
 public class Transformers {
 	
 	// For target code instrumentation
+	List<String> eventhandler_classesForInst = new ArrayList<String>();
+	List<String> eventhandler_methodsForInst = new ArrayList<String>();
+	List<String> eventhandler_linesForInst  = new ArrayList<String>();
+	List<String> eventhandler_typesForInst  = new ArrayList<String>();
+	List<Integer> eventhandler_flagsForInst = new ArrayList<Integer>();
+	
+	// For target code instrumentation
 	List<String> classesForInst = new ArrayList<String>();
 	List<String> methodsForInst = new ArrayList<String>();
 	List<String> linesForInst  = new ArrayList<String>();
 	List<String> typesForInst  = new ArrayList<String>();
 	List<Integer> flagsForInst = new ArrayList<Integer>();
-	String instBegin = "";
-	String instEnd = "";
   
 	// For all loop instrumentation
 	HashMap<String, Integer[]> looplocations = new HashMap<String, Integer[]>();
@@ -35,18 +41,40 @@ public class Transformers {
 	List<String> largeloop_linesForInst  = new ArrayList<String>();
 	List<String> largeloop_typesForInst  = new ArrayList<String>();
 	List<Integer> largeloop_flagsForInst = new ArrayList<Integer>();
-	String largeloop_instBegin = "";
-	String largeloop_instCenter = "";
-	//String largeloop_instEnd = "";  
  
 	
 	public Transformers() {
+		//read eventhandler locations
+		//readEventHandlers();
 	    //read targetlocations 
 	    readTargets();
 	    //read loop locations' file for instrumentation
 	    readLoops();
 	    //read largelooplocations
 	    readLargeLoops();
+	}
+	
+	
+	public void readEventHandlers() {
+		TextFileReader reader;
+	    String tmpline;
+	  
+    	reader = new TextFileReader("resource/eventhandler_locations", true);
+		while ( (tmpline = reader.readLine()) != null ) {
+			String[] strs = tmpline.split("\\s+");
+			eventhandler_classesForInst.add( strs[0] );
+			eventhandler_methodsForInst.add( strs[1] );
+			eventhandler_linesForInst.add( strs[2] );
+			eventhandler_typesForInst.add( strs[3] );
+			eventhandler_flagsForInst.add(0);
+		}
+		reader.close();
+		
+		// for DEBUG
+		System.out.println("JX - INFO - " + eventhandler_classesForInst.size() + " locations are loaded");
+		System.out.println("JX - INFO - " + "eventhandler_classesForInst = " + eventhandler_classesForInst);
+		System.out.println("JX - INFO - " + "eventhandler_methodsForInst = " + eventhandler_methodsForInst);
+		System.out.println("JX - INFO - " + "eventhandler_linesForInst =  " + eventhandler_linesForInst );
 	}
 	
 	
@@ -65,17 +93,11 @@ public class Transformers {
 		}
 		reader.close();
 		
-		reader = new TextFileReader("resource/targetinstructions", true);
-		instBegin = reader.readLine();
-		instEnd = reader.readLine();
-		reader.close();
-		
 		// for DEBUG
 		System.out.println("JX - INFO - " + classesForInst.size() + " locations are loaded");
 		System.out.println("JX - INFO - " + "classesForInst = " + classesForInst);
 		System.out.println("JX - INFO - " + "methodsForInst = " + methodsForInst);
 		System.out.println("JX - INFO - " + "linesForInst =  " + linesForInst );
-		System.out.println("JX - INFO - " + "instructions = " + instBegin + "*" + instEnd + "*");
 	}
 	
 	
@@ -116,17 +138,40 @@ public class Transformers {
 			largeloop_flagsForInst.add(0);
 		}
 		reader.close();
-    	
-		reader = new TextFileReader("resource/largeloopinstructions", true);
-		largeloop_instBegin = reader.readLine();
-		largeloop_instCenter = reader.readLine();
-		reader.close();
 		
 		System.out.println("JX - " + largeloop_classesForInst.size() + " locations are loaded");
 		System.out.println("JX - " + "largeloop_classesForInst = " + largeloop_classesForInst);
 		System.out.println("JX - " + "largeloop_methodsForInst = " + largeloop_methodsForInst);
 		System.out.println("JX - " + "largeloop_linesForInst =  " + largeloop_linesForInst );
-		System.out.println("JX - " + "largeloop_instructions = " + largeloop_instBegin + "*" + largeloop_instCenter + "*");
+	}
+	
+	
+	
+	public void transformClassForEventHandlers(CtClass cl) {
+		String className = cl.getName();
+        if ( className.contains("DataStreamer") ) System.out.println("JX - DEBUG - EventHandlers: " + cl.getName() );
+		if ( !eventhandler_classesForInst.contains(className) ) return;
+		
+		CtBehavior[] methods = cl.getDeclaredBehaviors();
+		
+	    for (CtBehavior method : methods) {
+	        if ( method.isEmpty() ) continue;
+	        // traverse all locations for instrumentation
+	        String methodName = method.getName();
+	        MethodUtil methodUtil = new MethodUtil(method);
+	        for (int i = 0; i < eventhandler_classesForInst.size(); i++) {
+	    	    if ( eventhandler_classesForInst.get(i).equals(className) && eventhandler_methodsForInst.get(i).equals(methodName) ) {
+	    	    	//System.out.println("JX - DEBUG - targetcode: " + cl.getName() + "." + method.getName() + method.getSignature());
+	    			int lineNumber = Integer.parseInt( eventhandler_linesForInst.get(i) );
+	    			if ( eventhandler_typesForInst.get(i).equals(LogType.EventHandlerBegin.name()) ) {
+	    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.EventHandlerBegin), LogType.EventHandlerBegin.name());
+	    			}
+	    			else if ( eventhandler_typesForInst.get(i).equals(LogType.EventHandlerEnd.name()) ) {
+	    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.EventHandlerEnd), LogType.EventHandlerEnd.name());
+	    			}
+	    		}
+	    	}
+	    }//end-outer for
 	}
 	
 
@@ -146,11 +191,11 @@ public class Transformers {
 	    	    if ( classesForInst.get(i).equals(className) && methodsForInst.get(i).equals(methodName) ) {
 	    	    	//System.out.println("JX - DEBUG - targetcode: " + cl.getName() + "." + method.getName() + method.getSignature());
 	    			int lineNumber = Integer.parseInt( linesForInst.get(i) );
-	    			if ( typesForInst.get(i).equals("TargetCodeBegin") ) {
-	    				methodUtil.insertAt(lineNumber, instBegin, "TargetCodeBegin");
+	    			if ( typesForInst.get(i).equals(LogType.TargetCodeBegin.name()) ) {
+	    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.TargetCodeBegin), LogType.TargetCodeBegin.name());
 	    			}
-	    			else if ( typesForInst.get(i).equals("TargetCodeEnd") ) {
-	    				methodUtil.insertAt(lineNumber, instEnd, "TargetCodeEnd");
+	    			else if ( typesForInst.get(i).equals(LogType.TargetCodeEnd.name()) ) {
+	    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.TargetCodeEnd), LogType.TargetCodeEnd.name());
 	    			}
 	    		}
 	    	}
@@ -249,17 +294,19 @@ public class Transformers {
     					if ( largeloop_typesForInst.get(i).equals("LargeLoopBegin") ) {
     						// JX - only one time for a method
     						method.addLocalVariable("jxloop", CtClass.intType); 
-    						System.out.println( "JX - LargeLoopBegin: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, largeloop_instBegin) );
-    						method.insertAt(linenumber, true, largeloop_instBegin);
+    						System.out.println( "JX - LargeLoopBegin: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, getInstCodeStr(LogType.LargeLoopBegin)) );
+    						method.insertAt(linenumber, true, getInstCodeStr(LogType.LargeLoopBegin));
     						largeloop_flagsForInst.set(i, largeloop_flagsForInst.get(i)+1);
     						System.out.println( "JX - " + "this is the " + largeloop_flagsForInst.get(i) + " st/nd/rd/th time for location " + i );
     					}
+    					/*
     					else if ( largeloop_typesForInst.get(i).equals("LargeLoopCenter") ) { //this is "TargetCodeEnd"
     						System.out.println( "JX - LargeLoopCenter: expected linenumber = " + linenumber + ", will insert at " + method.insertAt(linenumber, false, largeloop_instCenter) );
     						method.insertAt(linenumber, true, largeloop_instCenter);
     						largeloop_flagsForInst.set(i, largeloop_flagsForInst.get(i)+1);
     						System.out.println( "JX - " + "this is the " + largeloop_flagsForInst.get(i) + " st/nd/rd/th time for location " + i );
     					}
+    					*/
     				} catch (Exception e) {
     					// TODO Auto-generated catch block
     					e.printStackTrace();
@@ -268,5 +315,52 @@ public class Transformers {
     		}
     	}//end-outer for
     }
+    
+    
+    
+    
+    public String getInstCodeStr(LogType logType) {
+    	return getInstCodeStr(logType, 0);
+    }
+    
+    public String getInstCodeStr(LogType logType, int flag) {
+    	String codestr = "";
+    	
+    	if (logType == LogType.EventHandlerBegin) {
+    		codestr = "LogClass._DM_Log.log_EventHandlerBegin("
+    				+ "\"xx\"" 
+    				+ ");";
+    	}
+    	else if (logType == LogType.EventHandlerEnd) {
+    		codestr = "LogClass._DM_Log.log_EventHandlerEnd("
+    				+ "\"xx\"" 
+    				+ ");";
+    	}
+    	else if (logType == LogType.TargetCodeBegin) {
+    		codestr = "LogClass._DM_Log.log_TargetCodeBegin("
+    				+ "\"xx\"" 
+    				+ ");";
+    	}
+    	else if (logType == LogType.TargetCodeEnd) {
+    		codestr = "LogClass._DM_Log.log_TargetCodeEnd("
+    				+ "\"xx\"" 
+    				+ ");";
+    	}
+    	else if (logType == LogType.LargeLoopBegin) {
+    		codestr = "LogClass._DM_Log.log_LargeLoopBegin("
+    				+ "\"xx\"" 
+    				+ ");";
+        	/*
+        	//for large loops 
+        	_DM_Log.log_LargeLoopBegin( "xx" ); jxloop = 0;
+    		jxloop++; System.out.println("JX - jxloop++ - jxloop = " + jxloop);
+        	*/
+    	} else {
+    		
+    	}
+    
+    	return codestr;
+    }
+    
   
 }

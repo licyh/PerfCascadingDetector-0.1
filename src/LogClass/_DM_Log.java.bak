@@ -1,0 +1,258 @@
+//package dm.Util.LogClass; //performance overhead... 1min --> 2min
+package LogClass;              //jx: new changed
+
+import java.io.*;
+import java.util.*;
+
+
+
+public class _DM_Log {
+
+	//copy from LogFunc.java
+	public enum OPTYPE {
+		//Process
+		ProcessCreate, 	//process create
+		//Thread
+		ThdCreate,  	//create thread
+	    ThdEnter,   	//enter thread
+	    ThdExit,    	//exit thread
+	    ThdJoin,    	//join thread
+	    //model RPC
+	    MsgProcEnter, 	//msg handler enter
+	    MsgProcExit, 	//msg handler exit
+	    MsgSending, 	//msg sending (rpc or sendSocket)
+	    //model EventHandler
+	    EventCreate, 	//event create
+	    EventProcEnter, //event handler enter
+	    EventProcExit, 	//event handler exit
+	    
+	    // heap R/W - no use in my project
+	    HeapRead,   	//read a heap var
+	    HeapWrite,  	//write a heap var
+	    //log Locks
+	    LockRequire, 	//require lock
+	    LockRelease, 	//release lock
+	    
+	    //Added by JX
+	    EventHandlerBegin,
+	    EventHandlerEnd,
+	    //Added by JX
+	    RWLockCreate,   	//jx - for creating ReentrantReadWriteLock
+	    TargetCodeBegin,
+	    TargetCodeEnd,
+	    LargeLoopBegin,
+	    //LargeLoopCenter,         //tmp
+	    //end-Added
+	    LoopBegin,               //also for spoon
+	    
+	    //only for dt
+	    LoopCenter,
+	    LoopPrint,     //only for javassist
+	    LoopEnd,       //only for spoon
+	    IO,
+	    RPC,
+	};
+
+	
+	public static void log_Base(String opType, String opValue) {
+	    /*try {
+	      BufferedReader reader = new BufferedReader(new FileReader("/mnt/storage/haopeng/workstation/java-ws/DC-Detector/hbase_test_multinodes/logging_flag"));
+	      String flag = reader.readLine();
+	      reader.close();
+	      if (flag.equals("0")) { return; }
+	    } catch (Exception e) { }*/
+	
+	    int logCallStackFlag = 1; //0: no call stack; 1: full call stack; 2: the last one call in stack.
+	    String tid = Long.toString(java.lang.Thread.currentThread().getId());
+	    String strProc = java.lang.management.ManagementFactory.getRuntimeMXBean().getName();
+	    String pid = Long.toString(Long.parseLong(strProc.split("@")[0]));
+	
+	    String logDir = System.getProperty("_DM_Log_DIR");
+	    String logFile = logDir + "/" + pid +"-" + tid;
+	    try {
+	      File file = new File(logFile);
+	      if (!file.exists()) {
+	        file.createNewFile();
+	      }
+	      //FileWriter writer = new FileWriter(file, true);
+	      BufferedWriter writer = new BufferedWriter( new FileWriter(file, true) );
+	      writer.write(tid + " " + pid + " " + opType + " " + opValue + " " + "\n");
+	      
+	      //DataOutputStream writer = new DataOutputStream(new FileOutputStream(file, true));
+	      //writer.writeBytes(tid + " " + pid + " " + opType + " " + opValue + " " + "\n");
+	
+	      if (logCallStackFlag != 0) { //log call stack
+	        java.lang.StackTraceElement[] ST = java.lang.Thread.currentThread().getStackTrace();
+	        int i = logCallStackFlag == 1 ? 3 : ST.length-1;
+	        for (; i < ST.length; i++) {
+	          writer.write(ST[i].getClassName() + " " + ST[i].getMethodName() + " " + ST[i].getLineNumber() + "\n");
+	          //writer.writeBytes(ST[i].getClassName() + " " + ST[i].getMethodName() + " " + ST[i].getLineNumber() + "\n");
+	        }
+	      }
+	
+	      writer.flush();
+	      writer.close();
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	    }
+	}
+
+	
+	public static void log_ProcessCreate(String opValue) {
+		log_Base(OPTYPE.ProcessCreate.name(), opValue);
+	}
+
+	
+	public static void log_ThdCreate(String opValue) {
+	    log_Base(OPTYPE.ThdCreate.name(), opValue);
+	}
+	
+	public static void log_ThdEnter(String opValue) {
+	    log_Base(OPTYPE.ThdEnter.name(), opValue);
+	}
+	
+	public static void log_ThdExit(String opValue) {
+	    log_Base(OPTYPE.ThdExit.name(), opValue);
+	}
+
+	public static void log_ThdJoin(String opValue) {
+	    log_Base(OPTYPE.ThdJoin.name(), opValue);
+	}
+
+
+	public static void log_MsgSending(String opValue) {
+		log_Base(OPTYPE.MsgSending.name(), opValue);
+	}
+  
+	public static void log_MsgProcEnter(String opValue) {
+		String opType = OPTYPE.MsgProcEnter.name();
+		log_Base(opType, opValue);
+	}
+  
+	public static void log_MsgProcExit(String opValue) {
+		String opType = OPTYPE.MsgProcExit.name();
+		log_Base(opType, opValue);
+	}
+
+
+	public static void log_EventCreate(String opValue) {
+	    String opType = OPTYPE.EventCreate.name();
+	    log_Base(opType, opValue);
+	}
+	
+	public static void log_EventProcEnter(String opValue) {
+	    String opType = OPTYPE.EventProcEnter.name();
+	    log_Base(opType, opValue);
+	}
+	
+	public static void log_EventProcExit(String opValue) {
+	    String opType = OPTYPE.EventProcExit.name();
+	    log_Base(opType, opValue);
+	}
+	  
+
+	public static void log_HeapRead(String opValue) {
+	    String opType = OPTYPE.HeapRead.name();
+	    log_Base(opType, opValue);
+	}
+	
+	public static void log_HeapWrite(String opValue) {
+	    String opType = OPTYPE.HeapWrite.name();
+	    log_Base(opType, opValue);
+	}
+  
+	
+	public static void log_LockRequire(String opValue) {
+	    String opType = OPTYPE.LockRequire.name();
+	    log_Base(opType, opValue);
+	}
+	
+	public static void log_LockRelease(String opValue) {
+	    String opType = OPTYPE.LockRelease.name();
+	    log_Base(opType, opValue);
+	}
+  
+	
+	//added by JX
+	public static void log_EventHandlerBegin(String opValue) {
+		String opType = OPTYPE.EventHandlerBegin.name();
+		log_Base(opType, opValue);
+	}
+	
+	public static void log_EventHandlerEnd(String opValue) {
+		String opType = OPTYPE.EventHandlerEnd.name();
+		log_Base(opType, opValue);
+	}
+	
+	
+	//Added by JX
+	public static void log_RWLockCreate(String opValue) {
+		String opType = OPTYPE.RWLockCreate.name();
+		log_Base(opType, opValue);
+	}
+	  
+	  
+	public static void log_TargetCodeBegin(String opValue) {
+		String opType = OPTYPE.TargetCodeBegin.name();
+		log_Base(opType, opValue);
+	}
+	
+	    
+	public static void log_TargetCodeEnd(String opValue) {
+		String opType = OPTYPE.TargetCodeEnd.name();
+		log_Base(opType, opValue);
+	}
+	  
+	    
+	public static void log_LargeLoopBegin(String opValue) {
+		String opType = OPTYPE.LargeLoopBegin.name();
+		log_Base(opType, opValue);
+	}
+  
+  
+	/*
+	//Added by JX
+	public static void log_LoopCenter(String opValue) {
+		String opType = OPTYPE.LoopCenter.name();
+		_DM_Log.log_Base(opType, opValue);
+	}
+	//end-Added
+	*/
+	  
+	public static void log_LoopBegin(String opValue) {
+		String opType = OPTYPE.LoopBegin.name();
+		log_Base(opType, opValue);
+	}  
+  
+
+    ///////////////////////////////////////////////////////////////
+  	// ONLY for dt
+  	///////////////////////////////////////////////////////////////
+ 
+	public static void log_LoopCenter(String opValue) {
+		String opType = OPTYPE.LoopCenter.name();
+		log_Base(opType, opValue);
+	}
+	
+	public static void log_LoopPrint(String opValue) {
+  		String opType = OPTYPE.LoopPrint.name();
+  		log_Base(opType, opValue);
+  	}
+	
+	public static void log_LoopEnd(String opValue) {
+  		String opType = OPTYPE.LoopEnd.name();
+  		log_Base(opType, opValue);
+  	}
+	
+	public static void log_IO(String opValue) {
+  		String opType = OPTYPE.IO.name();
+  		log_Base(opType, opValue);
+  	}  
+
+	public static void log_RPC(String opValue) {     //same as log_MsgSending
+  		String opType = OPTYPE.RPC.name();
+  		log_Base(opType, opValue);
+  	}  
+	
+}
+

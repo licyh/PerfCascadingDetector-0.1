@@ -25,10 +25,11 @@ public class HDrpc {
   
 	
 	public void doWork() {
+		// for hd-5153
+		//findRPCv2();
+		
 		// for ha-4584 hd-5153
 		findRPC();
-		// for hd-5153
-		findRPCv2();
 	}
   
 	

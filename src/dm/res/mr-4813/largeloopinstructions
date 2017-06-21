@@ -1,2 +1,0 @@
-_DM_Log.log_LargeLoopBegin( "xx" ); jxloop = 0;
-jxloop++; System.out.println("JX - jxloop++ - jxloop = " + jxloop);
