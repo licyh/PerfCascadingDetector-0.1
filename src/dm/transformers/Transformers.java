@@ -203,7 +203,7 @@ public class Transformers {
 	}
 		  
 		  	  
-	public void transformClassForLoops(CtClass cl) throws CannotCompileException {
+	public void transformClassForLoops(CtClass cl) {
 		 CtBehavior[] methods = cl.getDeclaredBehaviors();
 	     for (CtBehavior method : methods) {
 	         if ( method.isEmpty() ) continue; 
@@ -224,13 +224,19 @@ public class Transformers {
 	         // end-test
 	         for (int i = 0; i < loops.length; i++) {
 	        	 int linenumber = loops[i];         //jx: some particular examples: "do { .." OR "while (true) ( .." would became insert inside
-	        	 int actualline = method.insertAt(linenumber, false, "LogClass._DM_Log.log_LoopBegin( \"xx\" );");
-	        	 if ( linenumber == actualline )    //some particular examples: "do { .." OR "while (true) ( .." would became insert at next line than normal
-	        		 method.insertAt( linenumber, "LogClass._DM_Log.log_LoopBegin( \"xx\" );" );
-	        	 else {
-	        		 // TODO - please see
-	        		 System.err.println( "JX - WARN - cannot insert at " + loops[i] + " (actual:" + actualline + ") for " + methodsig );
-	        	 }    
+	        	 int actualline;
+	        	 try {
+	        		 actualline = method.insertAt(linenumber, false, getInstCodeStr(LogType.LoopBegin));
+		        	 if ( linenumber == actualline )    //some particular examples: "do { .." OR "while (true) ( .." would became insert at next line than normal
+		        		 method.insertAt( linenumber, getInstCodeStr(LogType.LoopBegin) );
+		        	 else {
+		        		 // TODO - please see
+		        		 System.err.println( "JX - WARN - cannot insert at " + loops[i] + " (actual:" + actualline + ") for " + methodsig );
+		        	 }    
+	        	 } catch (CannotCompileException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+	        	 }
 	         }
 	          
 	         /*
@@ -343,6 +349,11 @@ public class Transformers {
     	}
     	else if (logType == LogType.TargetCodeEnd) {
     		codestr = "LogClass._DM_Log.log_TargetCodeEnd("
+    				+ "\"xx\"" 
+    				+ ");";
+    	}
+    	else if (logType == LogType.LoopBegin) {
+    		codestr = "LogClass._DM_Log.log_LoopBegin("
     				+ "\"xx\"" 
     				+ ");";
     	}
