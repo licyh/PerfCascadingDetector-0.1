@@ -56,6 +56,11 @@ class MapReduceTransformer extends Transformer {
 	    rpcInfo.setInfoFilePath("resource/mr_rpc.txt", 2);
 	    rpcInfo.setInfoFilePath("resource/mr_rpc_v1.txt", 1);
 	    rpcInfo.readFile();
+	    
+	    // 
+	    if ( bugConfig.getBugId().equals("mr-4088") ) {
+	    	transformers.readEventHandlers();
+	    }
 	}
 
 
@@ -78,6 +83,10 @@ class MapReduceTransformer extends Transformer {
 		
 		
 	    // LIMITS
+	    if ( bugConfig.getBugId().equals("mr-4088") ) {
+	    	transformers.transformClassForEventHandlers( cl );
+	    }
+	    
 		if ( className.startsWith("org.apache.hadoop.yarn.")
   				|| className.startsWith("org.apache.hadoop.mapred.") 
   				|| className.startsWith("org.apache.hadoop.mapreduce.")

@@ -45,7 +45,7 @@ public class Transformers {
 	
 	public Transformers() {
 		//read eventhandler locations
-		//readEventHandlers();
+		//readEventHandlers();   //called when needed for now
 	    //read targetlocations 
 	    readTargets();
 	    //read loop locations' file for instrumentation
