@@ -216,21 +216,26 @@ class MapReduceTransformer extends Transformer {
 		    }
 		
 		    else if (methodName.equals("handle")) {
-		    	//jx: eventQueue.put(event)
-		    	//jx: this is for hadoop2-0.23.3 ("mr-4813")
-		    	if (className.contains("SchedulerEventDispatcher")
-		    			|| className.contains("ContainerLauncherImpl")
-		    			|| className.contains("TaskCleanerImpl")
-		    			) {
-		    		methodUtil.insertCallInstBefore(logClass, eventCreateLog, 42);
+		    	if ( !className.contains("org.apache.hadoop.mapred.JobHistory") ) {   //for mr-4088  filter
+			    	//jx: eventQueue.put(event)
+			    	//jx: this is for hadoop2-0.23.3 ("mr-4813")
+			    	if (className.contains("SchedulerEventDispatcher")
+			    			|| className.contains("ContainerLauncherImpl")
+			    			|| className.contains("TaskCleanerImpl")
+			    			) {
+			    		methodUtil.insertCallInstBefore(logClass, eventCreateLog, 42);
+			    	}
+			    	//jx: similar to "run" && "EventProcessor", but this is "handle"
+			    	else {
+			    		
+				        injectFlag = true;
+				        methodUtil.insertCallInstBefore(logClass, eventProcEnterLog, 1);
+				        methodUtil.insertCallInstAfter(logClass, eventProcExitLog, 1);    		
+			    	}
 		    	}
-		    	//jx: similar to "run" && "EventProcessor", but this is "handle"
 		    	else {
-		    		System.out.println("JX - DEBUG - handle: " + className + "#" + methodName);
-			        injectFlag = true;
-			        methodUtil.insertCallInstBefore(logClass, eventProcEnterLog, 1);
-			        methodUtil.insertCallInstAfter(logClass, eventProcExitLog, 1);    		
-		    	}			
+		    		System.out.println("JX - DEBUG - handle: " + className + " #" + methodName);
+		    	}
 		    }
 		    
 		    
