@@ -341,11 +341,11 @@ public class Transformers {
     		switch (flag) {
 			case 1:
 	            codestr = "String opValue_tmp1;"
-	            		+ "if (action instanceof KillJobAction) {"
-	            		+ "    opValue_tmp1 = ((KillJobAction) action).getJobID().toString();"
+	            		+ "if (action instanceof org.apache.hadoop.mapred.KillJobAction) {"
+	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillJobAction) action).getJobID().toString();"
 	            		+ "}"
-	            		+ "else if (action instanceof KillTaskAction) {"
-	            		+ "    opValue_tmp1 = ((KillTaskAction) action).taskId.getJobID().toString();"
+	            		+ "else if (action instanceof org.apache.hadoop.mapred.KillTaskAction) {"
+	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillTaskAction) action).taskId.getJobID().toString();"
 	            		+ "}"
 	            		+ logMethod + "(opValue_tmp1);";
 				break;
@@ -359,11 +359,11 @@ public class Transformers {
     		switch (flag) {
 			case 1:
 	            codestr = "String opValue_tmp2;"
-	            		+ "if (action instanceof KillJobAction) {"
-	            		+ "    opValue_tmp2 = ((KillJobAction) action).getJobID().toString();"
+	            		+ "if (action instanceof org.apache.hadoop.mapred.KillJobAction) {"
+	            		+ "    opValue_tmp2 = ((org.apache.hadoop.mapred.KillJobAction) action).getJobID().toString();"
 	            		+ "}"
-	            		+ "else if (action instanceof KillTaskAction) {"
-	            		+ "    opValue_tmp2 = ((KillTaskAction) action).taskId.getJobID().toString();"
+	            		+ "else if (action instanceof org.apache.hadoop.mapred.KillTaskAction) {"
+	            		+ "    opValue_tmp2 = ((org.apache.hadoop.mapred.KillTaskAction) action).taskId.getJobID().toString();"
 	            		+ "}"
 	            		+ logMethod + "(opValue_tmp2);";
 				break;
