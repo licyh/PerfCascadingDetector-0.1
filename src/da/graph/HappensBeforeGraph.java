@@ -696,6 +696,19 @@ public class HappensBeforeGraph {
 	*/
 	    
 	    
+	
+	
+	public boolean isSameThread(int index1, int index2) {
+		return getNodePIDTID(index1).equals( getNodePIDTID(index2) );
+	}
+	
+	public boolean isSameValue(int index1, int index2) {
+		return getNodeOPVAL(index1).equals( getNodeOPVAL(index2) );
+	}
+	
+	
+	
+	
 	    //Added by JX
 	    public String getNodeOPTY(int index) {
 	    	Node node = nList.get( index );

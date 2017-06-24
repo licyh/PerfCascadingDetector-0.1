@@ -7,7 +7,7 @@ package da;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import da.cascading.CascadingFinder;
+import da.cascading.CascadingAnalyzer;
 import da.graph.AccidentalHBGraph;
 import da.graph.HappensBeforeGraph;
 
@@ -52,8 +52,8 @@ public class DynamicAnalysis {
 		System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
 		
 		// Cascading Analysis
-		CascadingFinder cascadingFinder = new CascadingFinder( argv[0], g, ag );
-		cascadingFinder.doWork();
+		CascadingAnalyzer cascadingAnalyzer = new CascadingAnalyzer( argv[0], g, ag );
+		cascadingAnalyzer.doWork();
 		
 		// find out 1.flipped order 2.lock relationship graph by the same locks
 		g.findflippedorder();  

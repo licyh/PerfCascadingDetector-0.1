@@ -79,7 +79,7 @@ public class CascadingFinder {
 	
 	
 	public void doWork() {
-		// extract Target, Lock, Loop logs
+		// extract Target, (EventHandler), Lock, Loop logs
 		extractTargetLockLoopInfo();
         // traverseTargetCodes
 		traverseTargetCodes();
