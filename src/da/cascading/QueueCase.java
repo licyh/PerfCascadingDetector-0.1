@@ -1,5 +1,6 @@
 package da.cascading;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.LinkedHashMap;
@@ -39,6 +40,12 @@ public class QueueCase {
 	public void doWork() {
         // Traverse event handlers
 		traverseEventHandlers();
+		try {
+			bugPool.printResultsOfTraverseTargetCodes();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
