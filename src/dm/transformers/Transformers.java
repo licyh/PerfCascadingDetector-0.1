@@ -161,18 +161,22 @@ public class Transformers {
 	        MethodUtil methodUtil = new MethodUtil(method);
 	        for (int i = 0; i < eventhandler_classesForInst.size(); i++) {
 	    	    if ( eventhandler_classesForInst.get(i).equals(className) && eventhandler_methodsForInst.get(i).equals(methodName) ) {
+	
 	    	    	//System.out.println("JX - DEBUG - targetcode: " + cl.getName() + "." + method.getName() + method.getSignature());
 	    			int lineNumber = Integer.parseInt( eventhandler_linesForInst.get(i) );
 	    			if ( eventhandler_typesForInst.get(i).equals(LogType.EventHandlerBegin.name()) ) {
-	    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.EventHandlerBegin), LogType.EventHandlerBegin.name());
+	    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.EventHandlerBegin, 1), LogType.EventHandlerBegin.name());
 	    			}
 	    			else if ( eventhandler_typesForInst.get(i).equals(LogType.EventHandlerEnd.name()) ) {
-	    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.EventHandlerEnd), LogType.EventHandlerEnd.name());
+	    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.EventHandlerEnd, 1), LogType.EventHandlerEnd.name());
 	    			}
+	    			
 	    		}
 	    	}
 	    }//end-outer for
 	}
+	
+	
 	
 
 	public void transformClassForCodeSnippets(CtClass cl) {
@@ -331,16 +335,43 @@ public class Transformers {
     
     public String getInstCodeStr(LogType logType, int flag) {
     	String codestr = "";
+    	String logMethod = "LogClass._DM_Log.log_" + logType.name();
     	
     	if (logType == LogType.EventHandlerBegin) {
-    		codestr = "LogClass._DM_Log.log_EventHandlerBegin("
-    				+ "\"xx\"" 
-    				+ ");";
+    		switch (flag) {
+			case 1:
+	            codestr = "String opValue_tmp1;"
+	            		+ "if (action instanceof KillJobAction) {"
+	            		+ "    opValue_tmp1 = ((KillJobAction) action).getJobID().toString();"
+	            		+ "}"
+	            		+ "else if (action instanceof KillTaskAction) {"
+	            		+ "    opValue_tmp1 = ((KillTaskAction) action).taskId.getJobID().toString();"
+	            		+ "}"
+	            		+ logMethod + "(opValue_tmp1);";
+				break;
+			default:
+	    		codestr = "LogClass._DM_Log.log_EventHandlerBegin("
+	    				+ "\"xx\"" 
+	    				+ ");";
+    		}
     	}
     	else if (logType == LogType.EventHandlerEnd) {
+    		switch (flag) {
+			case 1:
+	            codestr = "String opValue_tmp2;"
+	            		+ "if (action instanceof KillJobAction) {"
+	            		+ "    opValue_tmp2 = ((KillJobAction) action).getJobID().toString();"
+	            		+ "}"
+	            		+ "else if (action instanceof KillTaskAction) {"
+	            		+ "    opValue_tmp2 = ((KillTaskAction) action).taskId.getJobID().toString();"
+	            		+ "}"
+	            		+ logMethod + "(opValue_tmp2);";
+				break;
+			default:
     		codestr = "LogClass._DM_Log.log_EventHandlerEnd("
     				+ "\"xx\"" 
     				+ ");";
+    		}
     	}
     	else if (logType == LogType.TargetCodeBegin) {
     		codestr = "LogClass._DM_Log.log_TargetCodeBegin("

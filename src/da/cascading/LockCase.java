@@ -19,6 +19,7 @@ import com.text.TextFileWriter;
 
 import da.graph.AccidentalHBGraph;
 import da.graph.HappensBeforeGraph;
+import da.graph.LogInfoExtractor;
 import da.graph.Pair;
 
 public class LockCase {

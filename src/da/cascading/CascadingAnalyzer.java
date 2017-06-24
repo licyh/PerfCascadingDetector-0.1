@@ -2,6 +2,7 @@ package da.cascading;
 
 import da.graph.AccidentalHBGraph;
 import da.graph.HappensBeforeGraph;
+import da.graph.LogInfoExtractor;
 
 public class CascadingAnalyzer {
 
