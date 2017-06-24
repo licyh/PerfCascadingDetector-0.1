@@ -15,8 +15,8 @@ public class BugPool {
 	String projectDir;
 	String packageDir = "src/da";
 	
-    Set<LoopBug> loopBugs = new HashSet<LoopBug>();          //dynamic loop instances, only one bug pool for whole code snippets
-    Set<Integer> bugnodeset = new HashSet<Integer>();       //HappensBeforeGraph's node index set for loopBugs 
+    Set<LoopBug> bugs = new HashSet<LoopBug>();          //dynamic loop instances, only one bug pool for whole code snippets
+    Set<Integer> bugnodeset = new HashSet<Integer>();       //HappensBeforeGraph's node index set for bugs 
     
     int CASCADING_LEVEL = 10;                               //minimum:2; default:3;
     @SuppressWarnings("unchecked")
@@ -53,7 +53,7 @@ public class BugPool {
     public void addLoopBug( int nodeIndex, int cascadingLevel ) {
     	// add to bug pool
     	LoopBug loopbug = new LoopBug( nodeIndex, cascadingLevel );
-    	loopBugs.add( loopbug );	
+    	bugs.add( loopbug );	
     	// get cascading lock chain
     	if ( cascadingLevel == 1 ) { // Immediate loop bug
     		loopbug.cascadingChain.add( nodeIndex );
@@ -77,9 +77,9 @@ public class BugPool {
     	System.out.println("\nJX - Results of traverseTargetCodes");
     	
     	// real bug pool
-    	System.out.print("\nbugpool - " + "has " + loopBugs.size() + " dynamic loop instances");
+    	System.out.print("\nbugpool - " + "has " + bugs.size() + " dynamic loop instances");
     	Set<String> tmpset = new HashSet<String>();
-    	for (LoopBug loopbug: loopBugs) {
+    	for (LoopBug loopbug: bugs) {
     		int nodeIndex = loopbug.nodeIndex;
     		int cascadingLevel = loopbug.cascadingLevel;
     		bugnodeset.add( nodeIndex );

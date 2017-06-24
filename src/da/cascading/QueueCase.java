@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 
 import LogClass.LogType;
 import da.graph.HappensBeforeGraph;
+import da.graph.LogInfoExtractor;
 import da.graph.Pair;
 
 
@@ -17,15 +18,17 @@ public class QueueCase {
 	String projectDir;
 	
 	HappensBeforeGraph hbg;
-	// from LogInfoExtractor
-    //LinkedHashMap<Integer, Integer> targetCodeBlocks;   // beginIndex -> endIndex
+	
+	// Queue-related Info
     LinkedHashMap<Integer, Integer> eventHandlerBlocks;   // beginIndex -> endIndex
-    //LinkedHashMap<Integer, Integer> lockBlocks;   // beginIndex -> endIndex
     LinkedHashMap<Integer, Integer> loopBlocks;   // beginIndex -> endIndex
 	
+    // results
+    BugPool bugPool;
+    
     // tmp vars
     BitSet traversedNodes = new BitSet();  	//tmp var. set of traversed nodes for a single code snippet, e.g, event handler
-    BugPool bugPool;
+    
     
 	
 	public QueueCase(String projectDir, HappensBeforeGraph hbg, LogInfoExtractor logInfo) {
@@ -65,7 +68,7 @@ public class QueueCase {
 			    int jEndIndex = jEntry.getValue();
 			    if ( !hbg.isSameThread(iBeginIndex, jBeginIndex) ) break;
 			    // tmp - should be !=
-			    if ( hbg.isSameValue(iBeginIndex, jBeginIndex) ) {
+			    if ( !hbg.isSameValue(iBeginIndex, jBeginIndex) ) {
 			    	findBugLoops(jBeginIndex, jEndIndex);
 			    }
 		    }
