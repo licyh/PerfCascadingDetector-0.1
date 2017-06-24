@@ -152,7 +152,7 @@
         </target>
         	
         <!--target compile da-->
-        <target name="compile-da" depends="prepare, compile-com" description="compile dynamic analysiser">
+        <target name="compile-da" depends="prepare, compile-com, compile-log" description="compile dynamic analysiser">
                 <javac srcdir="${src.da.dir}" destdir="${build.classes}" includeantruntime="false">
                         <classpath refid="classpath" />
                 </javac>
