@@ -341,7 +341,7 @@ public class Transformers {
     		switch (flag) {
 			case 1:
 	            codestr = "String opValue_tmp1 = \"xx\";"
-	            		+ "if (action instanceof KillJobAction) {"
+	            		+ "if (action instanceof org.apache.hadoop.mapred.KillJobAction) {"
 	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillJobAction) action).getJobID().toString();"
 	            		+ "}"
 	            		+ "else if (action instanceof org.apache.hadoop.mapred.KillTaskAction) {"
@@ -368,9 +368,9 @@ public class Transformers {
 	            		+ logMethod + "(opValue_tmp2);";
 				break;
 			default:
-    		codestr = "LogClass._DM_Log.log_EventHandlerEnd("
-    				+ "\"xx\"" 
-    				+ ");";
+	    		codestr = "LogClass._DM_Log.log_EventHandlerEnd("
+	    				+ "\"xx\"" 
+	    				+ ");";
     		}
     	}
     	else if (logType == LogType.TargetCodeBegin) {
