@@ -353,11 +353,11 @@ class MapReduceTransformer extends Transformer {
     		switch (flag) {
 			case 1:
 	            codestr = "String opValue_tmp1 = \"xx\";"
-	            		+ "if (action instanceof org.apache.hadoop.mapred.KillJobAction) {"
-	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillJobAction) action).getJobID().toString();"
+	            		+ "if ($1 instanceof org.apache.hadoop.mapred.KillJobAction) {"
+	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillJobAction) $1).getJobID().toString();"
 	            		+ "}"
-	            		+ "else if (action instanceof org.apache.hadoop.mapred.KillTaskAction) {"
-	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillTaskAction) action).taskId.getJobID().toString();"
+	            		+ "else if ($1 instanceof org.apache.hadoop.mapred.KillTaskAction) {"
+	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillTaskAction) $1).taskId.getJobID().toString();"
 	            		+ "}"
 	            		+ logMethod + "(opValue_tmp1);";
 				break;
