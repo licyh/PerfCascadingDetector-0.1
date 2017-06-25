@@ -347,6 +347,9 @@ public class Transformers {
 	            		+ "else if (action instanceof org.apache.hadoop.mapred.KillTaskAction) {"
 	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillTaskAction) action).taskId.getJobID().toString();"
 	            		+ "}"
+	            		+ "else {"
+	            		+ "    opValue_tmp1 = \"xx\";"
+	            		+ "}"
 	            		+ logMethod + "(opValue_tmp1);";
 				break;
 			default:
@@ -364,6 +367,9 @@ public class Transformers {
 	            		+ "}"
 	            		+ "else if (action instanceof org.apache.hadoop.mapred.KillTaskAction) {"
 	            		+ "    opValue_tmp2 = ((org.apache.hadoop.mapred.KillTaskAction) action).taskId.getJobID().toString();"
+	            		+ "}"
+	            		+ "else {"
+	            		+ "    opValue_tmp2 = \"xx\";"
 	            		+ "}"
 	            		+ logMethod + "(opValue_tmp2);";
 				break;
