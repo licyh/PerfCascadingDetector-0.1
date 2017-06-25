@@ -18,6 +18,7 @@ import com.APIInfo;
 import com.API;
 import com.RPCInfo;
 import com.benchmark.BugConfig;
+import com.text.Logger;
 import com.CalleeInfo;
 
 
@@ -209,6 +210,7 @@ class MapReduceTransformer extends Transformer {
 		    	methodUtil.insertCallInstBefore(logClass, thdEnterLog, 4);
 		    	methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
 		    } else if (methodName.equals("run") && (className.contains("EventProcessor"))) {
+		    	Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName);
 		    	//Commented by JX - this is a bug
 		    	//jx: this is for hadoop2-0.23.3 ("mr-4813")
 		    	if ( !className.equals("org.apache.hadoop.yarn.server.resourcemanager.ResourceManager$SchedulerEventDispatcher$EventProcessor") ) {
@@ -225,6 +227,7 @@ class MapReduceTransformer extends Transformer {
 		    }
 		
 		    else if (methodName.equals("handle")) {
+		    	Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName);
 		    	if ( !className.contains("org.apache.hadoop.mapred.JobHistory") ) {   //for mr-4088  filter
 			    	//jx: eventQueue.put(event)
 			    	//jx: this is for hadoop2-0.23.3 ("mr-4813")
@@ -236,7 +239,7 @@ class MapReduceTransformer extends Transformer {
 			    	}
 			    	//jx: similar to "run" && "EventProcessor", but this is "handle"
 			    	else {
-			    		
+			    		Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler:(in) " + className + " " + methodName);
 				        injectFlag = true;
 				        methodUtil.insertCallInstBefore(logClass, eventProcEnterLog, 1);
 				        methodUtil.insertCallInstAfter(logClass, eventProcExitLog, 1);    		
