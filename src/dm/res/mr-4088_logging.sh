@@ -7,6 +7,7 @@ sleep 3s
 jps
 sleep 2s
 
+nohup hadoop jar ~/hadoop/install/hadoop-0.20.205.0/hadoop-examples-0.20.205.0.jar wordcount input/1K.file output/1K.file &
 hadoop jar ~/hadoop/install/hadoop-0.20.205.0/hadoop-examples-0.20.205.0.jar wordcount input/10K.file output/10K.file
 
 echo "waiting for 2s to end"
