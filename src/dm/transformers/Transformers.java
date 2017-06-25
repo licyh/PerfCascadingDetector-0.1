@@ -340,15 +340,12 @@ public class Transformers {
     	if (logType == LogType.EventHandlerBegin) {
     		switch (flag) {
 			case 1:
-	            codestr = "String opValue_tmp1;"
+	            codestr = "String opValue_tmp1 = \"xx\";"
 	            		+ "if (action instanceof org.apache.hadoop.mapred.KillJobAction) {"
 	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillJobAction) action).getJobID().toString();"
 	            		+ "}"
 	            		+ "else if (action instanceof org.apache.hadoop.mapred.KillTaskAction) {"
 	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillTaskAction) action).taskId.getJobID().toString();"
-	            		+ "}"
-	            		+ "else {"
-	            		+ "    opValue_tmp1 = \"xx\";"
 	            		+ "}"
 	            		+ logMethod + "(opValue_tmp1);";
 				break;
@@ -361,15 +358,12 @@ public class Transformers {
     	else if (logType == LogType.EventHandlerEnd) {
     		switch (flag) {
 			case 1:
-	            codestr = "String opValue_tmp2;"
+	            codestr = "String opValue_tmp2 = \"xx\";"
 	            		+ "if (action instanceof org.apache.hadoop.mapred.KillJobAction) {"
 	            		+ "    opValue_tmp2 = ((org.apache.hadoop.mapred.KillJobAction) action).getJobID().toString();"
 	            		+ "}"
 	            		+ "else if (action instanceof org.apache.hadoop.mapred.KillTaskAction) {"
 	            		+ "    opValue_tmp2 = ((org.apache.hadoop.mapred.KillTaskAction) action).taskId.getJobID().toString();"
-	            		+ "}"
-	            		+ "else {"
-	            		+ "    opValue_tmp2 = \"xx\";"
 	            		+ "}"
 	            		+ logMethod + "(opValue_tmp2);";
 				break;
