@@ -20,6 +20,9 @@ import com.API;
 import com.RPCInfo;
 import com.benchmark.BugConfig;
 import com.text.Logger;
+
+import LogClass.LogType;
+
 import com.CalleeInfo;
 
 
@@ -85,9 +88,11 @@ class MapReduceTransformer extends Transformer {
 		
 		
 	    // LIMITS
+		/*
 	    if ( bugConfig.getBugId().equals("mr-4088") ) {
 	    	transformers.transformClassForEventHandlers( cl );
 	    }
+	    */
 	    
 		if ( className.startsWith("org.apache.hadoop.yarn.")
   				|| className.startsWith("org.apache.hadoop.mapred.") 
@@ -214,9 +219,14 @@ class MapReduceTransformer extends Transformer {
 		    	try {
 					method.instrument(
 							new ExprEditor() {
-								public void edit(MethodCall m) {
+								public void edit(MethodCall m) throws CannotCompileException {
 									if (m.getMethodName().equals("take")) {
 										Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName + "  **" + m.getSignature() + "**" + m.getLineNumber());
+										m.replace( "{"
+												+ getInstCodeStr(LogType.EventHandlerEnd)
+												+ "$_ = $proceed($$);" 
+												+ getInstCodeStr(LogType.EventHandlerBegin, 1)
+												+ "}" );
 									}
 								}
 							}
@@ -328,5 +338,58 @@ class MapReduceTransformer extends Transformer {
 		    }
 	    }
 	}
+	
+	
+	
+    public String getInstCodeStr(LogType logType) {
+    	return getInstCodeStr(logType, 0);
+    }
+    
+    public String getInstCodeStr(LogType logType, int flag) {
+    	String codestr = "";
+    	String logMethod = "LogClass._DM_Log.log_" + logType.name();
+    	
+    	if (logType == LogType.EventHandlerBegin) {
+    		switch (flag) {
+			case 1:
+	            codestr = "String opValue_tmp1 = \"xx\";"
+	            		+ "if (action instanceof org.apache.hadoop.mapred.KillJobAction) {"
+	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillJobAction) action).getJobID().toString();"
+	            		+ "}"
+	            		+ "else if (action instanceof org.apache.hadoop.mapred.KillTaskAction) {"
+	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillTaskAction) action).taskId.getJobID().toString();"
+	            		+ "}"
+	            		+ logMethod + "(opValue_tmp1);";
+				break;
+			default:
+	    		codestr = logMethod + "(\"xx\");";
+    		}
+    	}
+    	else if (logType == LogType.EventHandlerEnd) {
+    		codestr = logMethod + "(\"xx\");";
+    	}
+    	else if (logType == LogType.TargetCodeBegin) {
+    		codestr = logMethod + "(\"xx\");";
+    	}
+    	else if (logType == LogType.TargetCodeEnd) {
+    		codestr = logMethod + "(\"xx\");";
+    	}
+    	else if (logType == LogType.LoopBegin) {
+    		codestr = logMethod + "(\"xx\");";
+    	}
+    	else if (logType == LogType.LargeLoopBegin) {
+    		codestr = logMethod + "(\"xx\");";
+        	/*
+        	//for large loops 
+        	_DM_Log.log_LargeLoopBegin( "xx" ); jxloop = 0;
+    		jxloop++; System.out.println("JX - jxloop++ - jxloop = " + jxloop);
+        	*/
+    	} else {
+    		
+    	}
+    
+    	return codestr;
+    }
+    
 
 }
