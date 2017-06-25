@@ -216,6 +216,8 @@ class MapReduceTransformer extends Transformer {
 		    	methodUtil.insertCallInstBefore(logClass, thdEnterLog, 4);
 		    	methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
 		    	
+		    	if (className.equals("org.apache.hadoop.mapred.TaskTracker$1"))
+		    	
 		    	try {
 					method.instrument(
 							new ExprEditor() {
@@ -225,7 +227,7 @@ class MapReduceTransformer extends Transformer {
 										m.replace( "{"
 												+ getInstCodeStr(LogType.EventHandlerEnd)
 												+ "$_ = $proceed($$);" 
-												+ getInstCodeStr(LogType.EventHandlerBegin, 1)
+												//+ getInstCodeStr(LogType.EventHandlerBegin, 1)
 												+ "}" );
 									}
 								}
