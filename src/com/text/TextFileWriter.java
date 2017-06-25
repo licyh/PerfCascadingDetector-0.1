@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -33,6 +34,15 @@ public class TextFileWriter {
 	
 	public TextFileWriter(Path filepath, boolean append) {
 		this.filepath = filepath;
+		// create the parent path (ie, dirs) if not exist  
+		if (!Files.exists( filepath.getParent() )) {
+			try {
+				Files.createDirectories(filepath.getParent());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		// core
 		try {
 			this.bufwriter = new BufferedWriter( new FileWriter(filepath.toString(), append) );
 		} catch (IOException e) {

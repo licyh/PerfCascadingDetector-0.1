@@ -22,13 +22,6 @@ public class Logger {
 	}
 	public void setLogDir(Path logDir) {
 		this.logDir = logDir;
-		if ( !Files.exists(this.logDir) ) {
-			try {
-				Files.createDirectories(this.logDir);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	
