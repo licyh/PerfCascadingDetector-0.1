@@ -341,7 +341,7 @@ public class Transformers {
     		switch (flag) {
 			case 1:
 	            codestr = "String opValue_tmp1 = \"xx\";"
-	            		+ "if (action instanceof org.apache.hadoop.mapred.KillJobAction) {"
+	            		+ "if (action instanceof KillJobAction) {"
 	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillJobAction) action).getJobID().toString();"
 	            		+ "}"
 	            		+ "else if (action instanceof org.apache.hadoop.mapred.KillTaskAction) {"
