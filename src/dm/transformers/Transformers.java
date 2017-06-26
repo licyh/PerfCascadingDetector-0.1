@@ -19,13 +19,6 @@ import javassist.CtClass;
 public class Transformers {
 	
 	// For target code instrumentation
-	List<String> eventhandler_classesForInst = new ArrayList<String>();
-	List<String> eventhandler_methodsForInst = new ArrayList<String>();
-	List<String> eventhandler_linesForInst  = new ArrayList<String>();
-	List<String> eventhandler_typesForInst  = new ArrayList<String>();
-	List<Integer> eventhandler_flagsForInst = new ArrayList<Integer>();
-	
-	// For target code instrumentation
 	List<String> classesForInst = new ArrayList<String>();
 	List<String> methodsForInst = new ArrayList<String>();
 	List<String> linesForInst  = new ArrayList<String>();
@@ -44,37 +37,12 @@ public class Transformers {
  
 	
 	public Transformers() {
-		//read eventhandler locations
-		//readEventHandlers();   //called when needed for now
 	    //read targetlocations 
 	    readTargets();
 	    //read loop locations' file for instrumentation
 	    readLoops();
 	    //read largelooplocations
 	    readLargeLoops();
-	}
-	
-	
-	public void readEventHandlers() {
-		TextFileReader reader;
-	    String tmpline;
-	  
-    	reader = new TextFileReader("resource/eventhandler_locations", true);
-		while ( (tmpline = reader.readLine()) != null ) {
-			String[] strs = tmpline.split("\\s+");
-			eventhandler_classesForInst.add( strs[0] );
-			eventhandler_methodsForInst.add( strs[1] );
-			eventhandler_linesForInst.add( strs[2] );
-			eventhandler_typesForInst.add( strs[3] );
-			eventhandler_flagsForInst.add(0);
-		}
-		reader.close();
-		
-		// for DEBUG
-		System.out.println("JX - INFO - " + eventhandler_classesForInst.size() + " locations are loaded");
-		System.out.println("JX - INFO - " + "eventhandler_classesForInst = " + eventhandler_classesForInst);
-		System.out.println("JX - INFO - " + "eventhandler_methodsForInst = " + eventhandler_methodsForInst);
-		System.out.println("JX - INFO - " + "eventhandler_linesForInst =  " + eventhandler_linesForInst );
 	}
 	
 	
@@ -144,40 +112,7 @@ public class Transformers {
 		System.out.println("JX - " + "largeloop_methodsForInst = " + largeloop_methodsForInst);
 		System.out.println("JX - " + "largeloop_linesForInst =  " + largeloop_linesForInst );
 	}
-	
-	
-	
-	public void transformClassForEventHandlers(CtClass cl) {
-		String className = cl.getName();
-        if ( className.contains("DataStreamer") ) System.out.println("JX - DEBUG - EventHandlers: " + cl.getName() );
-		if ( !eventhandler_classesForInst.contains(className) ) return;
 		
-		CtBehavior[] methods = cl.getDeclaredBehaviors();
-		
-	    for (CtBehavior method : methods) {
-	        if ( method.isEmpty() ) continue;
-	        // traverse all locations for instrumentation
-	        String methodName = method.getName();
-	        MethodUtil methodUtil = new MethodUtil(method);
-	        for (int i = 0; i < eventhandler_classesForInst.size(); i++) {
-	    	    if ( eventhandler_classesForInst.get(i).equals(className) && eventhandler_methodsForInst.get(i).equals(methodName) ) {
-	
-	    	    	//System.out.println("JX - DEBUG - targetcode: " + cl.getName() + "." + method.getName() + method.getSignature());
-	    			int lineNumber = Integer.parseInt( eventhandler_linesForInst.get(i) );
-	    			if ( eventhandler_typesForInst.get(i).equals(LogType.EventHandlerBegin.name()) ) {
-	    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.EventHandlerBegin, 1), LogType.EventHandlerBegin.name());
-	    			}
-	    			else if ( eventhandler_typesForInst.get(i).equals(LogType.EventHandlerEnd.name()) ) {
-	    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.EventHandlerEnd, 1), LogType.EventHandlerEnd.name());
-	    			}
-	    			
-	    		}
-	    	}
-	    }//end-outer for
-	}
-	
-	
-	
 
 	public void transformClassForCodeSnippets(CtClass cl) {
 		String className = cl.getName();
@@ -337,61 +272,17 @@ public class Transformers {
     	String codestr = "";
     	String logMethod = "LogClass._DM_Log.log_" + logType.name();
     	
-    	if (logType == LogType.EventHandlerBegin) {
-    		switch (flag) {
-			case 1:
-	            codestr = "String opValue_tmp1 = \"xx\";"
-	            		+ "if (action instanceof org.apache.hadoop.mapred.KillJobAction) {"
-	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillJobAction) action).getJobID().toString();"
-	            		+ "}"
-	            		+ "else if (action instanceof org.apache.hadoop.mapred.KillTaskAction) {"
-	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillTaskAction) action).taskId.getJobID().toString();"
-	            		+ "}"
-	            		+ logMethod + "(opValue_tmp1);";
-				break;
-			default:
-	    		codestr = "LogClass._DM_Log.log_EventHandlerBegin("
-	    				+ "\"xx\"" 
-	    				+ ");";
-    		}
-    	}
-    	else if (logType == LogType.EventHandlerEnd) {
-    		switch (flag) {
-			case 1:
-	            codestr = "String opValue_tmp2 = \"xx\";"
-	            		+ "if (action instanceof org.apache.hadoop.mapred.KillJobAction) {"
-	            		+ "    opValue_tmp2 = ((org.apache.hadoop.mapred.KillJobAction) action).getJobID().toString();"
-	            		+ "}"
-	            		+ "else if (action instanceof org.apache.hadoop.mapred.KillTaskAction) {"
-	            		+ "    opValue_tmp2 = ((org.apache.hadoop.mapred.KillTaskAction) action).taskId.getJobID().toString();"
-	            		+ "}"
-	            		+ logMethod + "(opValue_tmp2);";
-				break;
-			default:
-	    		codestr = "LogClass._DM_Log.log_EventHandlerEnd("
-	    				+ "\"xx\"" 
-	    				+ ");";
-    		}
-    	}
-    	else if (logType == LogType.TargetCodeBegin) {
-    		codestr = "LogClass._DM_Log.log_TargetCodeBegin("
-    				+ "\"xx\"" 
-    				+ ");";
+    	if (logType == LogType.TargetCodeBegin) {
+    		codestr = logMethod + "(\"xx\");";
     	}
     	else if (logType == LogType.TargetCodeEnd) {
-    		codestr = "LogClass._DM_Log.log_TargetCodeEnd("
-    				+ "\"xx\"" 
-    				+ ");";
+    		codestr = logMethod + "(\"xx\");";
     	}
     	else if (logType == LogType.LoopBegin) {
-    		codestr = "LogClass._DM_Log.log_LoopBegin("
-    				+ "\"xx\"" 
-    				+ ");";
+    		codestr = logMethod + "(\"xx\");";
     	}
     	else if (logType == LogType.LargeLoopBegin) {
-    		codestr = "LogClass._DM_Log.log_LargeLoopBegin("
-    				+ "\"xx\"" 
-    				+ ");";
+    		codestr = logMethod + "(\"xx\");";
         	/*
         	//for large loops 
         	_DM_Log.log_LargeLoopBegin( "xx" ); jxloop = 0;
@@ -402,7 +293,97 @@ public class Transformers {
     	}
     
     	return codestr;
-    }
+    }    
     
   
 }
+
+
+
+
+
+/**
+ *  WAITING FOR DELETION
+ */
+
+
+/*
+// For target code instrumentation
+List<String> eventhandler_classesForInst = new ArrayList<String>();
+List<String> eventhandler_methodsForInst = new ArrayList<String>();
+List<String> eventhandler_linesForInst  = new ArrayList<String>();
+List<String> eventhandler_typesForInst  = new ArrayList<String>();
+List<Integer> eventhandler_flagsForInst = new ArrayList<Integer>();
+
+//read eventhandler locations
+//readEventHandlers();   //called when needed for now
+
+
+public void readEventHandlers() {
+	TextFileReader reader;
+    String tmpline;
+  
+	reader = new TextFileReader("resource/eventhandler_locations", true);
+	while ( (tmpline = reader.readLine()) != null ) {
+		String[] strs = tmpline.split("\\s+");
+		eventhandler_classesForInst.add( strs[0] );
+		eventhandler_methodsForInst.add( strs[1] );
+		eventhandler_linesForInst.add( strs[2] );
+		eventhandler_typesForInst.add( strs[3] );
+		eventhandler_flagsForInst.add(0);
+	}
+	reader.close();
+	
+	// for DEBUG
+	System.out.println("JX - INFO - " + eventhandler_classesForInst.size() + " locations are loaded");
+	System.out.println("JX - INFO - " + "eventhandler_classesForInst = " + eventhandler_classesForInst);
+	System.out.println("JX - INFO - " + "eventhandler_methodsForInst = " + eventhandler_methodsForInst);
+	System.out.println("JX - INFO - " + "eventhandler_linesForInst =  " + eventhandler_linesForInst );
+}
+
+public void transformClassForEventHandlers(CtClass cl) {
+	String className = cl.getName();
+    if ( className.contains("DataStreamer") ) System.out.println("JX - DEBUG - EventHandlers: " + cl.getName() );
+	if ( !eventhandler_classesForInst.contains(className) ) return;
+	
+	CtBehavior[] methods = cl.getDeclaredBehaviors();
+	
+    for (CtBehavior method : methods) {
+        if ( method.isEmpty() ) continue;
+        // traverse all locations for instrumentation
+        String methodName = method.getName();
+        MethodUtil methodUtil = new MethodUtil(method);
+        for (int i = 0; i < eventhandler_classesForInst.size(); i++) {
+    	    if ( eventhandler_classesForInst.get(i).equals(className) && eventhandler_methodsForInst.get(i).equals(methodName) ) {
+
+    	    	//System.out.println("JX - DEBUG - targetcode: " + cl.getName() + "." + method.getName() + method.getSignature());
+    			int lineNumber = Integer.parseInt( eventhandler_linesForInst.get(i) );
+    			if ( eventhandler_typesForInst.get(i).equals(LogType.EventHandlerBegin.name()) ) {
+    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.EventHandlerBegin, 1), LogType.EventHandlerBegin.name());
+    			}
+    			else if ( eventhandler_typesForInst.get(i).equals(LogType.EventHandlerEnd.name()) ) {
+    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.EventHandlerEnd, 1), LogType.EventHandlerEnd.name());
+    			}
+    			
+    		}
+    	}
+    }//end-outer for
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

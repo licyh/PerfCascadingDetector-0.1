@@ -62,10 +62,6 @@ class MapReduceTransformer extends Transformer {
 	    rpcInfo.setInfoFilePath("resource/mr_rpc_v1.txt", 1);
 	    rpcInfo.readFile();
 	    
-	    // 
-	    if ( bugConfig.getBugId().equals("mr-4088") ) {
-	    	transformers.readEventHandlers();
-	    }
 	}
 
 
@@ -88,11 +84,6 @@ class MapReduceTransformer extends Transformer {
 		
 		
 	    // LIMITS
-		/*
-	    if ( bugConfig.getBugId().equals("mr-4088") ) {
-	    	transformers.transformClassForEventHandlers( cl );
-	    }
-	    */
 	    
 		if ( className.startsWith("org.apache.hadoop.yarn.")
   				|| className.startsWith("org.apache.hadoop.mapred.") 
@@ -216,8 +207,9 @@ class MapReduceTransformer extends Transformer {
 		    	methodUtil.insertCallInstBefore(logClass, thdEnterLog, 4);
 		    	methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
 		    	
-		    	if (className.equals("org.apache.hadoop.mapred.TaskTracker$1"))
 		    	
+		    	// for mr-4088
+		    	if (className.equals("org.apache.hadoop.mapred.TaskTracker$1"))
 		    	try {
 					method.instrument(
 							new ExprEditor() {
@@ -369,23 +361,6 @@ class MapReduceTransformer extends Transformer {
     	}
     	else if (logType == LogType.EventHandlerEnd) {
     		codestr = logMethod + "(\"xx\");";
-    	}
-    	else if (logType == LogType.TargetCodeBegin) {
-    		codestr = logMethod + "(\"xx\");";
-    	}
-    	else if (logType == LogType.TargetCodeEnd) {
-    		codestr = logMethod + "(\"xx\");";
-    	}
-    	else if (logType == LogType.LoopBegin) {
-    		codestr = logMethod + "(\"xx\");";
-    	}
-    	else if (logType == LogType.LargeLoopBegin) {
-    		codestr = logMethod + "(\"xx\");";
-        	/*
-        	//for large loops 
-        	_DM_Log.log_LargeLoopBegin( "xx" ); jxloop = 0;
-    		jxloop++; System.out.println("JX - jxloop++ - jxloop = " + jxloop);
-        	*/
     	} else {
     		
     	}
