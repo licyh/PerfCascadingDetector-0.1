@@ -326,15 +326,32 @@
 	        		<zipfileset dir="${src.dm.dir}" includes="res/mr-4088/bugconfig" fullpath="resource/bugconfig"/>
 	                <zipfileset dir="${src.dm.dir}" includes="res/mr-4088/mr_rpc.txt" fullpath="resource/mr_rpc.txt"/>
 	        		<zipfileset dir="${src.dm.dir}" includes="res/mr-4088/mr_rpc_v1.txt" fullpath="resource/mr_rpc_v1.txt"/>
-	        		<zipfileset dir="${src.dm.dir}" includes="res/mr-4088/eventhandler_locations" fullpath="resource/eventhandler_locations"/>
 	                <zipfileset dir="${src.dm.dir}" includes="res/mr-4088/targetlocations" fullpath="resource/targetlocations"/>
 	        	    <zipfileset dir="${src.dm.dir}" includes="res/mr-4088/looplocations" fullpath="resource/looplocations"/>
 					<zipfileset dir="${src.dm.dir}" includes="res/mr-4088/largelooplocations" fullpath="resource/largelooplocations"/>
 	        </jar>
 		</target>	
 	
-	
-	
+	    <!--tmp jar-dm for mr-2705 -->
+	    <target name="jar-dm-mr-2705" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
+	        <jar jarfile="${build.lib}/DM.jar">
+	                <fileset dir="${build.classes}" includes="dm/**/*.class" />
+	                <fileset dir="${build.classes}" includes="com/**/*.class" />
+	        		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
+	                <manifest>
+	                        <attribute name="Boot-Class-Path" value="javassist.jar"/>
+	                        <attribute name="Premain-Class" value="dm.MapReduceDM" />
+	                </manifest>
+	                <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
+	                <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
+	        		<zipfileset dir="${src.dm.dir}" includes="res/mr-2705/bugconfig" fullpath="resource/bugconfig"/>
+	                <zipfileset dir="${src.dm.dir}" includes="res/mr-2705/mr_rpc.txt" fullpath="resource/mr_rpc.txt"/>
+	        		<zipfileset dir="${src.dm.dir}" includes="res/mr-2705/mr_rpc_v1.txt" fullpath="resource/mr_rpc_v1.txt"/>
+	                <zipfileset dir="${src.dm.dir}" includes="res/mr-2705/targetlocations" fullpath="resource/targetlocations"/>
+	        	    <zipfileset dir="${src.dm.dir}" includes="res/mr-2705/looplocations" fullpath="resource/looplocations"/>
+					<zipfileset dir="${src.dm.dir}" includes="res/mr-2705/largelooplocations" fullpath="resource/largelooplocations"/>
+	        </jar>
+		</target>	
 	
 	
 	

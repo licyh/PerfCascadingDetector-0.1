@@ -1,3 +1,0 @@
-// org.apache.hadoop.mapred.TaskTracker's taskCleanupThread
-org.apache.hadoop.mapred.TaskTracker$1 run 423           EventHandlerBegin
-org.apache.hadoop.mapred.TaskTracker$1 run 424           EventHandlerEnd

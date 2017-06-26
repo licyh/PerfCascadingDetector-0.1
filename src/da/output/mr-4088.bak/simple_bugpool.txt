@@ -1,0 +1,4 @@
+3 (#static codepoints=3)
+CL1: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
+CL1: org.apache.hadoop.mapred.TaskTracker$1-run-422;
+CL1: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-464;

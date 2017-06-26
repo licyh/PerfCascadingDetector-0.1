@@ -1,0 +1,8 @@
+Queue-related
+
+SIMPLE:
+
+3 (#static codepoints=3)
+CL1: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;       #pruned out by NOT-I/O,RPC inside
+CL1: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-464;               #reported bug,  include "await()"
+//CL1: org.apache.hadoop.mapred.TaskTracker$1-run-422;                             #deleted, NOT a loop, that while (true) { insert LOOP here! .. EventHanlderBegin xx.take() EventHandlerEnd                          

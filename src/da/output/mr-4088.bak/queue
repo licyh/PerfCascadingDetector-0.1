@@ -1,7 +1,11 @@
 JX - DEBUG - eventhandler: org.apache.hadoop.mapred.TaskTracker$1 run  **()Ljava/lang/Object;**422
 
 
+
+
+
+
 // ps - I didn't deal with
 JX - DEBUG - eventhandler: org.apache.hadoop.ipc.Server$Handler run  **()Ljava/lang/Object;**1364
-JX - DEBUG - eventhandler: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread run  **()Ljava/lang/Object;**130
+JX - DEBUG - eventhandler: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread run  **()Ljava/lang/Object;**130   // #seems not need to differentialzie 
 JX - DEBUG - eventhandler: org.apache.hadoop.mapred.JobEndNotifier$1 run  **()Ljava/lang/Object;**50                  // #deleted, should no have bugs
