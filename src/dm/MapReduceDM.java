@@ -215,7 +215,7 @@ class MapReduceTransformer extends Transformer {
 							new ExprEditor() {
 								public void edit(MethodCall m) throws CannotCompileException {
 									if (m.getMethodName().equals("take")) {
-										Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName + "  **" + m.getClassName() + " " + m.getMethodName() +  m.getLineNumber() + "**");
+										Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName + "  **" + m.getClassName() + " " + m.getMethodName() + " " +  m.getLineNumber() + "**");
 										m.replace( "{"
 												+ getInstCodeStr(LogType.EventHandlerEnd)
 												+ "$_ = $proceed($$);" 
@@ -238,7 +238,7 @@ class MapReduceTransformer extends Transformer {
 							new ExprEditor() {
 								public void edit(MethodCall m) throws CannotCompileException {
 									if (m.getMethodName().equals("remove")) {
-										Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName + "  **" + m.getClassName() + " " + m.getMethodName() +  m.getLineNumber() + "**");
+										Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName + "  **" + m.getClassName() + " " + m.getMethodName() + " " +  m.getLineNumber() + "**");
 										/*
 										m.replace( "{"
 												+ getInstCodeStr(LogType.EventHandlerEnd)
