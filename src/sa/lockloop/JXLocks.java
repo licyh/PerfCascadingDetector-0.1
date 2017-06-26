@@ -171,8 +171,7 @@ public class JXLocks {
 			nApplicationFuncs = wala.getNApplicationFuncs();
 			nPremordialFuncs = wala.getNPremordialFuncs();
 			nOtherFuncs = wala.getNOtherFuncs();
-			//added
-			iolooputil = new IOLoopUtil(jarsDir);
+			
 	      
 			// Phase 1 - find out loops
 			findLockingFunctions();      //JX - can be commented
@@ -184,6 +183,8 @@ public class JXLocks {
 			findNestedLoopsInLoops();
 	      
 	      
+			//added
+			iolooputil = new IOLoopUtil(jarsDir);
 			// init
 			findTimeConsumingOperationsInLoops();     // for all loops
 			iolooputil.printTcOperationTypes();                //for test
