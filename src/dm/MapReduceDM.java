@@ -239,7 +239,7 @@ class MapReduceTransformer extends Transformer {
 								public void edit(MethodCall m) throws CannotCompileException {
 									if (m.getMethodName().equals("remove")) {
 										Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName + "  **" + m.getClassName() + " " + m.getMethodName() + " " +  m.getLineNumber() + "**");
-										/*
+										/* 
 										m.replace( "{"
 												+ getInstCodeStr(LogType.EventHandlerEnd)
 												+ "$_ = $proceed($$);" 
