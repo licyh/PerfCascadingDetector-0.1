@@ -231,6 +231,31 @@ class MapReduceTransformer extends Transformer {
 				}
 		    	
 		    	
+		    	// for mr-2705
+		    	
+		    	try {
+					method.instrument(
+							new ExprEditor() {
+								public void edit(MethodCall m) throws CannotCompileException {
+									if (m.getMethodName().equals("remove")) {
+										Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName + "  **" + m.getSignature() + "**" + m.getLineNumber());
+										/*
+										m.replace( "{"
+												+ getInstCodeStr(LogType.EventHandlerEnd)
+												+ "$_ = $proceed($$);" 
+												+ getInstCodeStr(LogType.EventHandlerBegin, 2)
+												+ "}" );
+										*/
+									}
+								}
+							}
+							);
+				} catch (CannotCompileException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    	
+		    	
 		    } else if (methodName.equals("run") && (className.contains("EventProcessor"))) {
 		    	//Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName);
 		    	//Commented by JX - this is a bug
@@ -353,6 +378,10 @@ class MapReduceTransformer extends Transformer {
 	            		+ "else if ($_ instanceof org.apache.hadoop.mapred.KillTaskAction) {"
 	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillTaskAction) $_).taskId.getJobID().toString();"
 	            		+ "}"
+	            		+ logMethod + "(opValue_tmp1);";
+			case 2:
+				codestr = "String opValue_tmp1 = \"xx\";"
+	            		+ "opValue_tmp1 = $_.getTask().getJobID().toString();"
 	            		+ logMethod + "(opValue_tmp1);";
 				break;
 			default:
