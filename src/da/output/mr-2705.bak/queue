@@ -1,36 +1,33 @@
 
+JX - DEBUG - eventhandler: org.apache.hadoop.mapred.TaskTracker$TaskLauncher run  **java.util.List remove 2215**
+// - Queue.take()
+JX - DEBUG - eventhandler: org.apache.hadoop.mapred.TaskTracker$1 run  **java.util.concurrent.BlockingQueue take 447**
 
 
 
 
-JX - DEBUG - eventhandler: org.apache.hadoop.mapred.JobTracker$ExpireTrackers run  **java.util.TreeSet remove480**
-JX - DEBUG - eventhandler: org.apache.hadoop.mapred.JobTracker$ExpireTrackers run  **java.util.Set remove495**
-JX - DEBUG - eventhandler: org.apache.hadoop.mapred.JobTracker$RetireJobs run  **java.util.Iterator remove636**
-JX - DEBUG - eventhandler: org.apache.hadoop.mapred.JobTracker$RetireJobs run  **java.util.Iterator remove641**
-JX - DEBUG - eventhandler: org.apache.hadoop.mapred.JobTracker$RetireJobs run  **java.util.Iterator remove645**
-JX - DEBUG - eventhandler: org.apache.hadoop.mapred.JobTracker$RetireJobs run  **java.util.Map remove655**
-JX - DEBUG - eventhandler: org.apache.hadoop.mapred.JobTracker$ExpireLaunchingTasks run  **java.util.Iterator remove406**
-JX - DEBUG - eventhandler: org.apache.hadoop.mapred.EagerTaskInitializationListener$JobInitManager run  **java.util.List remove57**
-JX - DEBUG - eventhandler: org.apache.hadoop.ipc.Server$Listener run  **java.util.Iterator remove443**
-JX - DEBUG - eventhandler: org.apache.hadoop.ipc.Server$Listener run  **java.util.List remove479**
-JX - DEBUG - eventhandler: org.apache.hadoop.ipc.Server$Listener$Reader run  **java.util.Iterator remove341**
-JX - DEBUG - eventhandler: org.apache.hadoop.ipc.Server$Responder run  **java.util.Iterator remove609**
+
+ps - 
+
+JX - DEBUG - eventhandler: org.apache.hadoop.mapred.JobTracker$ExpireTrackers run  **java.util.TreeSet remove 480**
+JX - DEBUG - eventhandler: org.apache.hadoop.mapred.JobTracker$ExpireTrackers run  **java.util.Set remove 495**
+JX - DEBUG - eventhandler: org.apache.hadoop.mapred.JobTracker$RetireJobs run  **java.util.Iterator remove 636**
+JX - DEBUG - eventhandler: org.apache.hadoop.mapred.JobTracker$RetireJobs run  **java.util.Iterator remove 641**
+JX - DEBUG - eventhandler: org.apache.hadoop.mapred.JobTracker$RetireJobs run  **java.util.Iterator remove 645**
+JX - DEBUG - eventhandler: org.apache.hadoop.mapred.JobTracker$RetireJobs run  **java.util.Map remove 655**
+JX - DEBUG - eventhandler: org.apache.hadoop.mapred.JobTracker$ExpireLaunchingTasks run  **java.util.Iterator remove 406**
+JX - DEBUG - eventhandler: org.apache.hadoop.mapred.EagerTaskInitializationListener$JobInitManager run  **java.util.List remove 57**
 JX - DEBUG - eventhandler: org.apache.hadoop.mapred.JobHistory$HistoryCleaner run  **java.util.Set remove2647**
 JX - DEBUG - eventhandler: org.apache.hadoop.mapred.JobHistory$HistoryCleaner run  **java.util.Iterator remove2666**
 JX - DEBUG - eventhandler: org.apache.hadoop.mapred.TaskMemoryManagerThread run  **java.util.Map remove161**
 JX - DEBUG - eventhandler: org.apache.hadoop.mapred.TaskMemoryManagerThread run  **java.util.Iterator remove233**
-JX - DEBUG - eventhandler: org.apache.hadoop.ipc.Server$Listener run  **java.util.Iterator remove443**
-JX - DEBUG - eventhandler: org.apache.hadoop.ipc.Server$Listener run  **java.util.List remove479**
-JX - DEBUG - eventhandler: org.apache.hadoop.ipc.Server$Listener$Reader run  **java.util.Iterator remove341**
-JX - DEBUG - eventhandler: org.apache.hadoop.ipc.Server$Responder run  **java.util.Iterator remove609**
-JX - DEBUG - eventhandler: org.apache.hadoop.mapred.TaskTracker$TaskLauncher run  **java.util.List remove2215**
-JX - DEBUG - eventhandler: org.apache.hadoop.ipc.Server$Listener run  **java.util.Iterator remove443**
-JX - DEBUG - eventhandler: org.apache.hadoop.ipc.Server$Listener run  **java.util.List remove479**
-JX - DEBUG - eventhandler: org.apache.hadoop.ipc.Server$Listener run  **java.util.Iterator remove443**
-JX - DEBUG - eventhandler: org.apache.hadoop.ipc.Server$Listener run  **java.util.List remove479**
+
+JX - DEBUG - eventhandler: org.apache.hadoop.ipc.Server$Listener run  **java.util.Iterator remove 443**
+JX - DEBUG - eventhandler: org.apache.hadoop.ipc.Server$Listener run  **java.util.List remove 479**
+JX - DEBUG - eventhandler: org.apache.hadoop.ipc.Server$Listener$Reader run  **java.util.Iterator remove 341**
+JX - DEBUG - eventhandler: org.apache.hadoop.ipc.Server$Responder run  **java.util.Iterator remove 609**
 
 
 
 
-// - Queue.take()
-JX - DEBUG - eventhandler: org.apache.hadoop.mapred.TaskTracker$1 run  **java.util.concurrent.BlockingQueue take447**
+

@@ -209,7 +209,7 @@ class MapReduceTransformer extends Transformer {
 		    	
 		    	
 		    	// for mr-4088
-                        if (bugConfig.getBugId().equals("mr-4088"))
+                if (bugConfig.getBugId().equals("mr-4088"))
 		    	if (className.equals("org.apache.hadoop.mapred.TaskTracker$1"))
 		    	try {
 					method.instrument(
@@ -235,8 +235,8 @@ class MapReduceTransformer extends Transformer {
 		    	
 		    	
 		    	// for mr-2705
-                        if (bugConfig.getBugId().equals("mr-2705"))
-                        if (className.equals("org.apache.hadoop.mapred.TaskTracker$TaskLauncher"))		    	
+                if (bugConfig.getBugId().equals("mr-2705"))
+                if (className.equals("org.apache.hadoop.mapred.TaskTracker$TaskLauncher"))		    	
       		    	try {
 					method.instrument(
 							new ExprEditor() {
@@ -381,10 +381,10 @@ class MapReduceTransformer extends Transformer {
 	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillTaskAction) $_).taskId.getJobID().toString();"
 	            		+ "}"
 	            		+ logMethod + "(opValue_tmp1);";
-                               break;
+                break;
 			case 2:
 				codestr = "String opValue_tmp1 = \"xx\";"
-	            		+ "opValue_tmp1 = $_.getTask().getJobID().toString();"
+	            		+ "opValue_tmp1 = ($_).getTask().getJobID().toString();"
 	            		+ logMethod + "(opValue_tmp1);";
 				break;
 			default:

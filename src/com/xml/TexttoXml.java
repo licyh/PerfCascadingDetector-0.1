@@ -24,7 +24,7 @@ public class TexttoXml {
 
     public static void main (String[] argv){
 
-    System.out.println("JX - begin ...");
+    System.out.println("JX - INFO - TexttoXml begin ...");
 	// argv[1] [2] = null? Event? Msg? => EmptyNode
 	if (argv.length < 3) {
            System.out.println("Too less argv:dir n/m/e n/m/e ");
@@ -76,7 +76,8 @@ public class TexttoXml {
                             }
                             stacklen = 0;
                             root.appendChild(element);
-                            System.out.println(element + " added");
+                            // jx: commented by JX
+                            //System.out.println(element + " added");
                         }
                         element = doc.createElement("Operation");
                         Element tid = doc.createElement("TID");
@@ -141,7 +142,8 @@ public class TexttoXml {
                         element.appendChild(stacks);
                     }
                     root.appendChild(element);
-                    System.out.println(element + " added");
+                    // jx: commented by JX
+                    //System.out.println(element + " added");
                 }
             }catch (Exception e){
 		e.printStackTrace();
