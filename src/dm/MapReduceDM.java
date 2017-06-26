@@ -209,6 +209,7 @@ class MapReduceTransformer extends Transformer {
 		    	
 		    	
 		    	// for mr-4088
+                        if (bugConfig.getBugId().equals("mr-4088"))
 		    	if (className.equals("org.apache.hadoop.mapred.TaskTracker$1"))
 		    	try {
 					method.instrument(
@@ -216,13 +217,13 @@ class MapReduceTransformer extends Transformer {
 								public void edit(MethodCall m) throws CannotCompileException {
 									if (m.getMethodName().equals("take")) {
 										Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName + "  **" + m.getClassName() + " " + m.getMethodName() + " " +  m.getLineNumber() + "**");
-										/*
+										
 										m.replace( "{"
 												+ getInstCodeStr(LogType.EventHandlerEnd)
 												+ "$_ = $proceed($$);" 
 												+ getInstCodeStr(LogType.EventHandlerBegin, 1)
 												+ "}" );
-												*/
+												
 									}
 								}
 							}
@@ -234,20 +235,19 @@ class MapReduceTransformer extends Transformer {
 		    	
 		    	
 		    	// for mr-2705
-		    	
-		    	try {
+                        if (bugConfig.getBugId().equals("mr-2705"))
+                        if (className.equals("org.apache.hadoop.mapred.TaskTracker$TaskLauncher"))		    	
+      		    	try {
 					method.instrument(
 							new ExprEditor() {
 								public void edit(MethodCall m) throws CannotCompileException {
 									if (m.getMethodName().equals("remove")) {
 										Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName + "  **" + m.getClassName() + " " + m.getMethodName() + " " +  m.getLineNumber() + "**");
-										/* 
 										m.replace( "{"
 												+ getInstCodeStr(LogType.EventHandlerEnd)
 												+ "$_ = $proceed($$);" 
 												+ getInstCodeStr(LogType.EventHandlerBegin, 2)
 												+ "}" );
-										*/
 									}
 								}
 							}
@@ -381,6 +381,7 @@ class MapReduceTransformer extends Transformer {
 	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillTaskAction) $_).taskId.getJobID().toString();"
 	            		+ "}"
 	            		+ logMethod + "(opValue_tmp1);";
+                               break;
 			case 2:
 				codestr = "String opValue_tmp1 = \"xx\";"
 	            		+ "opValue_tmp1 = $_.getTask().getJobID().toString();"

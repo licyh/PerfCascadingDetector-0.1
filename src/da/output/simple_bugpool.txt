@@ -1,4 +1,6 @@
-3 (#static codepoints=3)
+5 (#static codepoints=5)
 CL1: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
-CL1: org.apache.hadoop.mapred.TaskTracker$1-run-422;
-CL1: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-464;
+CL1: org.apache.hadoop.mapred.TaskTracker$1-run-447;
+CL1: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-489;
+CL1: org.apache.hadoop.mapred.TaskTracker-purgeJob-1946;
+CL1: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-1997;
