@@ -384,7 +384,7 @@ class MapReduceTransformer extends Transformer {
                 break;
 			case 2:
 				codestr = "String opValue_tmp1 = \"xx\";"
-	            		+ "opValue_tmp1 = ($_).getTask().getJobID().toString();"
+	            		+ "opValue_tmp1 = ((org.apache.hadoop.mapred.TaskTracker$TaskInProgress) $_).getTask().getJobID().toString();"
 	            		+ logMethod + "(opValue_tmp1);";
 				break;
 			default:
