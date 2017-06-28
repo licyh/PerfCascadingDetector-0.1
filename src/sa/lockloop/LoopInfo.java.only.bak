@@ -1,0 +1,130 @@
+package sa.lockloop;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+import com.ibm.wala.ipa.callgraph.CGNode;
+import com.ibm.wala.ssa.ISSABasicBlock;
+import com.ibm.wala.ssa.SSACFG;
+import com.ibm.wala.ssa.SSAInstruction;
+import com.ibm.wala.ssa.SSAInvokeInstruction;
+import com.ibm.wala.ssa.SSAMonitorInstruction;
+
+
+
+
+public class LoopInfo {
+  // where
+  CGNode function;
+  int line_number;
+  
+  // its Basic Block info
+  Set<Integer> bbs;
+  int begin_bb;         // bb - basic block in WALA
+  int end_bb;
+  Set<Integer> succbbs; //used as a temporary variable
+  Set<Integer> predbbs; //used as a temporary variable
+  
+  // included time-consuming operation info
+  int numOfTcOperations_recusively;
+  List<SSAInstruction> tcOperations_recusively;
+  List<TcOperationInfo> tcOperations_recusively_info;
+  
+  // nested loop info
+  int max_depthOfLoops;  //ie, nested loops inside the loop
+  List<Integer> function_chain_for_max_depthOfLoops;
+  List<Integer> hasLoops_in_current_function_for_max_depthOfLoops;
+  
+  String var_name;
+  
+  LoopInfo() {
+	this.function = null;
+	this.line_number = 0;
+	  
+    this.bbs = new TreeSet<Integer>();
+    this.succbbs = new HashSet<Integer>();
+    this.predbbs = new HashSet<Integer>();
+    
+    this.numOfTcOperations_recusively = 0;    //jx: yes
+    this.tcOperations_recusively = new ArrayList<SSAInstruction>();
+    this.tcOperations_recusively_info = new ArrayList<TcOperationInfo>();
+    
+    this.max_depthOfLoops = 0;
+    this.function_chain_for_max_depthOfLoops = new ArrayList<Integer>();
+    this.hasLoops_in_current_function_for_max_depthOfLoops = new ArrayList<Integer>();
+  }
+  
+  public void dfsFromEnter(ISSABasicBlock bb, SSACFG cfg) {
+    for (Iterator<ISSABasicBlock> it = cfg.getSuccNodes(bb); it.hasNext(); ) {
+      ISSABasicBlock succ = it.next();
+      int succnum = succ.getNumber();
+      if (!this.succbbs.contains(succnum)) {
+        this.succbbs.add(succnum);
+        dfsFromEnter(succ, cfg);
+      }
+    } 
+  }
+  
+  public void dfsFromExit(ISSABasicBlock bb, SSACFG cfg) {
+    if (bb.equals(cfg.getNode(this.begin_bb)))
+      return;
+    for (Iterator<ISSABasicBlock> it = cfg.getPredNodes(bb); it.hasNext(); ) {
+      ISSABasicBlock pred = it.next();
+      int prednum = pred.getNumber();
+      if (!this.predbbs.contains(prednum)) {
+        this.predbbs.add(prednum);
+        dfsFromExit(pred, cfg);
+      }
+    } 
+  }
+  
+  public void mergeLoop() {
+    this.predbbs.retainAll(this.succbbs);
+    this.bbs.addAll(this.predbbs);
+  }
+  
+  @Override
+  public String toString() {
+    return "LOOP - " + function.getMethod().getSignature() + ":" + line_number + ", "
+    		+ "Time-consumingOps(" + numOfTcOperations_recusively + "):" + tcOperations_recusively + ", " 
+    		+ "{begin:" + begin_bb + " end:" + end_bb + " var_name:" + var_name + " bbs:" + bbs + "}";
+  }
+  
+  //tmp for loop's Time-consuming operations
+  public String toString_detail() {
+	    return "LOOP - " + function.getMethod().getSignature() + ":" + line_number + ", "
+	    		+ "Time-consumingOps(" + numOfTcOperations_recusively + "):" + tcOperations_recusively_info;
+	  }
+  
+}
+
+
+class TcOperationInfo {
+	CGNode function;
+		String callpath;
+	int line_number;
+	
+	SSAInstruction ssa;   //this is the core, the tc operation
+	
+	TcOperationInfo() {
+		this.function = null;
+			this.callpath = "";
+		this.line_number = 0;
+		this.ssa = null;
+	}
+	
+    @Override
+    public String toString() { 
+        //return function.getMethod().getSignature().substring(0, function.getMethod().getSignature().indexOf('('))
+        	//	+ ":" + line_number + ":" + ((SSAInvokeInstruction)ssa).getDeclaredTarget(); 
+        return line_number + ":" + callpath + "@" + ((SSAInvokeInstruction)ssa).getDeclaredTarget(); 
+    }
+}
+
+

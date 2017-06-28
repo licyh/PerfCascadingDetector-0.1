@@ -67,9 +67,14 @@ public class QueueCase {
 		    	int jBeginIndex = jEntry.getKey();
 			    int jEndIndex = jEntry.getValue();
 			    if ( !hbg.isSameThread(iBeginIndex, jBeginIndex) ) break;
-			    // tmp - should be !=
-			    if ( !hbg.isSameValue(iBeginIndex, jBeginIndex) ) {
+			    //
+			    if ( !hbg.getNodeOPVAL(iBeginIndex).equals("xx")
+			    		|| !hbg.getNodeOPVAL(jBeginIndex).equals("xx")
+			    		|| !hbg.isSameValue(iBeginIndex, jBeginIndex) 
+			    		) {
 			    	findBugLoops(jBeginIndex, jEndIndex);
+			    	// do we need to consider the reverse case?
+			    	//findBugLoops(iBeginIndex, iEndIndex);
 			    }
 		    }
 		    

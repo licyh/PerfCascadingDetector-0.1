@@ -1,3 +1,4 @@
+//#functions containing loops In Scope     #loops totally
 1473 2121
 org.apache.hadoop.hdfs.security.token.block.BlockTokenSelector.selectToken(Lorg/apache/hadoop/io/Text;Ljava/util/Collection;)Lorg/apache/hadoop/security/token/Token; 1 38 
 org.apache.hadoop.mapred.JobQueueClient.displayQueueAclsInfoForCurrentUser()V 2 170 166 

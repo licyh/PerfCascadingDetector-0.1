@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import sa.loop.LoopInfo;
 import sa.wala.WalaUtil;
 
 
@@ -100,8 +101,8 @@ public class StaticPruning {
 		for (List<LoopInfo> loops: functions_with_loops.values() )
 			for (LoopInfo loop: loops)
 				if (loop.numOfTcOperations_recusively > 0) {
-					String classname = WalaUtil.formatClassName( loop.function.getMethod().getDeclaringClass().getName().toString() );
-					String methodname = loop.function.getMethod().getName().toString();
+					String classname = WalaUtil.formatClassName( loop.cgNode.getMethod().getDeclaringClass().getName().toString() );
+					String methodname = loop.cgNode.getMethod().getName().toString();
 					int linenumber = loop.line_number;
 					if (classname.equals(loopclass) && methodname.equals(loopmethod) && Math.abs(linenumber-loopline)<=2 ) { //!!!!
 						System.out.println( loop.toString_detail() );

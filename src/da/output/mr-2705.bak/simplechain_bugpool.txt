@@ -1,0 +1,12 @@
+11 (#static codepoints=11)
+CL1: org.apache.hadoop.mapred.JobLocalizer-createJobDirs-213;|
+CL1: org.apache.hadoop.mapred.JobLocalizer-createLocalDirs-142;|
+CL1: org.apache.hadoop.mapred.JobLocalizer-createPaths-131;|
+CL1: org.apache.hadoop.mapred.JobLocalizer-createUserDirs-172;|
+CL1: org.apache.hadoop.mapred.JobLocalizer-downloadPrivateCacheObjects-321;|
+CL1: org.apache.hadoop.mapred.TaskTracker$LocalStorage-getGoodLocalDirsString-200;|
+CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2206;|
+CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2211;|
+CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2223;|
+CL1: org.apache.hadoop.mapred.TaskTracker-initializeJob-1187;|
+CL1: org.apache.hadoop.mapred.TaskTracker-localizeJob-1109;|

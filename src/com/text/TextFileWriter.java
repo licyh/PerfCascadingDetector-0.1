@@ -62,12 +62,24 @@ public class TextFileWriter {
 		}
 	}
 	
+	
+	public void write(String str) {
+		try {
+			bufwriter.write( str );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 	/**
 	 * TODO
 	 */
 	public void writeFile() {
 		System.out.println("JX - successfully write " + "xxx" + " lines into " + filepath.toString());
 	}
+	
 	
 	public void close() {
 		try {

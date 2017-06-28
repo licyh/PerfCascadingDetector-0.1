@@ -151,7 +151,7 @@ public class WalaAnalyzer {
  
     
     private void doWork() {
-    	System.out.println("JX - INFO - WalaAnalyzer.doWork");
+    	System.out.println("JX - INFO - WalaAnalyzer: doWork...");
     	String alljars = getAllJars();
     	try {
     		walaAnalysis(alljars);
@@ -190,7 +190,7 @@ public class WalaAnalyzer {
     
  
     private void walaAnalysis(String alljars) throws IOException, IllegalArgumentException, CallGraphBuilderCancelException, UnsoundGraphException, WalaException {
-		System.out.println("JX - INFO - walaAnalysis...");
+		System.out.println("JX - INFO - WalaAnalyzer: walaAnalysis...");
 
 	    // Create a Scope                                                                           #"JXJavaRegressionExclusions.txt"
 	    scope = AnalysisScopeReader.makeJavaBinaryAnalysisScope(alljars, (new FileProvider()).getFile(CallGraphTestUtil.REGRESSION_EXCLUSIONS)); //default: CallGraphTestUtil.REGRESSION_EXCLUSIONS
@@ -246,7 +246,7 @@ public class WalaAnalyzer {
 	
     
     private void infoWalaAnalysisEnv() {
-    	System.out.println("\nJX-infoWalaAnalysisEnv");
+    	System.out.println("JX - INFO - WalaAnalyzer: infoWalaAnalysisEnv");
       
     	int nAppNatives = 0;
     	int nPriNatives = 0;
@@ -283,7 +283,7 @@ public class WalaAnalyzer {
   
     
     private void readPackageScope() {
-    	System.out.println("\nJX-readPackageScope");
+    	System.out.println("JX - INFO - WalaAnalyzer: readPackageScope");
     	String filepath = Paths.get(dirpath.toString(), "package-scope.txt").toString();
 
     	BufferedReader bufreader;
