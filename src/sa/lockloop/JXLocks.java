@@ -339,7 +339,7 @@ public class JXLocks {
   
   public void findTimeConsumingOperationsForALoop(LoopInfo loop) {
 	  
-	  CGNode f = loop.cgNode;
+	  CGNode f = loop.getCGNode();
 	  int id = f.getGraphNodeId();
 	  IR ir = f.getIR();
 	  SSACFG cfg = ir.getControlFlowGraph();
@@ -358,7 +358,7 @@ public class JXLocks {
 	  //for debug
 	  String callpath = f.getMethod().getSignature().substring(0, f.getMethod().getSignature().indexOf('('));
 	  
-	  for (int bbnum: loop.bbs) {
+	  for (int bbnum: loop.getBasicBlockNumbers()) {
         int first_index = cfg.getBasicBlock(bbnum).getFirstInstructionIndex();
         int last_index = cfg.getBasicBlock(bbnum).getLastInstructionIndex();
         for (int i = first_index; i <= last_index; i++) {
@@ -373,7 +373,7 @@ public class JXLocks {
         		tcOperation.ssa = ssa;
         		tcOperation.function = f;
         		tcOperation.callpath = callpath;
-        		tcOperation.line_number = IRUtil.getSourceLineNumberFromSSA(ssa, instructions, (IBytecodeMethod)f.getMethod());
+        		tcOperation.line_number = IRUtil.getSourceLineNumberFromSSA(f, ssa);
         		loop.tcOperations_recusively_info.add( tcOperation );
         		//end
         		continue;
@@ -431,7 +431,7 @@ public class JXLocks {
   		tcOperation.ssa = ssa;
   		tcOperation.function = f;
   		tcOperation.callpath = curCallpath;
-  		tcOperation.line_number = IRUtil.getSourceLineNumberFromSSA(ssa, instructions, (IBytecodeMethod)f.getMethod());
+  		tcOperation.line_number = IRUtil.getSourceLineNumberFromSSA(f, ssa);
   		loop.tcOperations_recusively_info.add( tcOperation );
       }
   	//end
@@ -516,7 +516,7 @@ public class JXLocks {
       InstructionInfo max_instruction = null;
       int max_depthOfLoops_in_current_function = 0;
       // end-tmp
-      for (Iterator<Integer> it = loop.bbs.iterator(); it.hasNext(); ) {
+      for (Iterator<Integer> it = loop.getBasicBlockNumbers().iterator(); it.hasNext(); ) {
         int bbnum = it.next();
         int first_index = cfg.getBasicBlock(bbnum).getFirstInstructionIndex();
         int last_index = cfg.getBasicBlock(bbnum).getLastInstructionIndex();
@@ -529,7 +529,7 @@ public class JXLocks {
           if (instruction.numOfSurroundingLoops_in_current_function > 0) {
             for (int j = 0; j < instruction.surroundingLoops_in_current_function.size(); j ++) {
               LoopInfo loop2 = loops.get( instruction.surroundingLoops_in_current_function.get(j) );
-              if (loop.bbs.containsAll(loop2.bbs))
+              if (loop.getBasicBlockNumbers().containsAll(loop2.getBasicBlockNumbers()))
                 numOfSurroundingLoops_in_current_function ++;
             }
           }
@@ -686,7 +686,7 @@ public class JXLocks {
 	        if (loops != null) {
 	          instruction.numOfSurroundingLoops_in_current_function = 0;
 	          for (int j = 0; j < loops.size(); j++)
-	            if (loops.get(j).bbs.contains(bb)) {
+	            if (loops.get(j).getBasicBlockNumbers().contains(bb)) {
 	              instruction.numOfSurroundingLoops_in_current_function ++;
 	              instruction.surroundingLoops_in_current_function.add(j);
 	            }
@@ -802,7 +802,7 @@ public class JXLocks {
           if (instruction.numOfSurroundingLoops_in_current_function > 0) {
             for (int j = 0; j < instruction.surroundingLoops_in_current_function.size(); j ++) {
               LoopInfo loop = loops.get( instruction.surroundingLoops_in_current_function.get(j) );
-              if (lock.bbs.containsAll(loop.bbs))
+              if (lock.bbs.containsAll(loop.getBasicBlockNumbers()))
                 numOfSurroundingLoops_in_current_function ++;
             }
           }

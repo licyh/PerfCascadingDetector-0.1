@@ -101,9 +101,9 @@ public class StaticPruning {
 		for (List<LoopInfo> loops: functions_with_loops.values() )
 			for (LoopInfo loop: loops)
 				if (loop.numOfTcOperations_recusively > 0) {
-					String classname = WalaUtil.formatClassName( loop.cgNode.getMethod().getDeclaringClass().getName().toString() );
-					String methodname = loop.cgNode.getMethod().getName().toString();
-					int linenumber = loop.line_number;
+					String classname = WalaUtil.formatClassName( loop.getCGNode().getMethod().getDeclaringClass().getName().toString() );
+					String methodname = loop.getCGNode().getMethod().getName().toString();
+					int linenumber = loop.getLineNumber();
 					if (classname.equals(loopclass) && methodname.equals(loopmethod) && Math.abs(linenumber-loopline)<=2 ) { //!!!!
 						System.out.println( loop.toString_detail() );
 						return true;

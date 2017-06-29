@@ -363,7 +363,7 @@ public class LockAnalyzer {
 	    
 	    // 2. synchronized (argu), agru from method parameters        
 	    if ( isPrimordialVn(function, lock.lock_name_vn) ) {  //vn in ([par1=this,] par2, par3, par4 ...)
-	      int index = IRUtil.getSSAIndexBySSA(ssas, ssa); 
+	      int index = IRUtil.getSSAIndex(function, ssa); 
 	      if (index == -1) {
 	        System.err.println("ERROR - sync(argu) - (index = -1)");
 	        return;
@@ -460,7 +460,7 @@ public class LockAnalyzer {
 	        lock.lock_name += "-InvokeVirtual/InvokeInterface-" + invokessa.getDeclaredTarget().toString() + " in ";
 	        int usevn = invokessa.getUse(0);
 	        if ( isPrimordialVn(function, usevn) ) {
-	          lock.lock_name += "-ARGU-" + ir.getLocalNames(IRUtil.getSSAIndexBySSA(ssas, ssa), usevn)[0];  //should be found for this particular situation  #only for this kind of synchronized_lock now
+	          lock.lock_name += "-ARGU-" + ir.getLocalNames(IRUtil.getSSAIndex(function, ssa), usevn)[0];  //should be found for this particular situation  #only for this kind of synchronized_lock now
 	          return ;
 	        }
 	        int index = getSSAIndexByDefvn(ssas, usevn, "sync(object coming from invokevitural)");
@@ -532,7 +532,7 @@ public class LockAnalyzer {
 	      lock.lock_name += "-CheckCast-";
 	      int usevn = checkcastssa.getUse(0); 
 	      if ( isPrimordialVn(function, usevn) ) {
-	        lock.lock_name += "-ARGU-" + ir.getLocalNames(IRUtil.getSSAIndexBySSA(ssas, ssa), usevn)[0];  //should be found for this particular situation  #only for this kind of synchronized_lock now
+	        lock.lock_name += "-ARGU-" + ir.getLocalNames(IRUtil.getSSAIndex(function, ssa), usevn)[0];  //should be found for this particular situation  #only for this kind of synchronized_lock now
 	        return ;
 	      }
 	      int index = getSSAIndexByDefvn(ssas, usevn, "sync(object coming from chestcast<+invokevitural>)");
@@ -547,7 +547,7 @@ public class LockAnalyzer {
 	      lock.lock_name += "-ArrayReference-" + "ELEMENT in "; //ps-ELEMENT=arrayrefssa.getElementType();  //jx - "getDeclaredTarget" is part of getCallSite
 	      int usevn = arrayrefssa.getUse(0);      
 	      if ( isPrimordialVn(function, usevn) ) {
-	        lock.lock_name += "-ARGU-" + ir.getLocalNames(IRUtil.getSSAIndexBySSA(ssas, ssa), usevn)[0];  //should be found for this particular situation  #only for this kind of synchronized_lock now
+	        lock.lock_name += "-ARGU-" + ir.getLocalNames(IRUtil.getSSAIndex(function, ssa), usevn)[0];  //should be found for this particular situation  #only for this kind of synchronized_lock now
 	        return ;
 	      }
 	      int index = getSSAIndexByDefvn(ssas, usevn, "sync(object from ArrayReference + GetField)");
@@ -562,7 +562,7 @@ public class LockAnalyzer {
 	      lock.lock_class = im.getDeclaringClass().toString();    //??
 	      //int usevn = newssa.getUse(0);
 	      //if (usevn == -1) {
-	      lock.lock_name += "-New-" + "LOCALVAR-" + ir.getLocalNames(IRUtil.getSSAIndexBySSA(ssas, predssa), newssa.getDef())[0] + " in " + im.getSignature();
+	      lock.lock_name += "-New-" + "LOCALVAR-" + ir.getLocalNames(IRUtil.getSSAIndex(function, predssa), newssa.getDef())[0] + " in " + im.getSignature();
 	      /*
 	      } else {    // should be non-existing
 	        if ( isPrimordialVn(function, usevn) ) {

@@ -143,32 +143,20 @@ public class LoopAnalyzer {
 		        	//if (cfg.getSuccNodeCount(bb) != 1) System.err.println("for-exit basic block: cfg.getSuccNodeCount(bb) != 1" + "  how many:" + cfg.getSuccNodeCount(bb));  //for Test
 		        	int existed = -1;
 		        	for (int i = 0; i < loops.size(); i++)
-		        		if (loops.get(i).begin_bb == succ) {
+		        		if (loops.get(i).getBeginBasicBlockNumber() == succ) {
 		        			existed = i;
 		        			break;
 		        		}
 		        	if (existed == -1) { //the for hasn't yet been recorded  
-		        		LoopInfo loop = new LoopInfo();   
-		        		loop.begin_bb = succ;
-		        		loop.end_bb = bbnum;
-		        		loop.cgNode = f;  //for the future
-		        		loop.line_number = IRUtil.getSourceLineNumberFromBB( cfg.getBasicBlock(loop.begin_bb), ssas, bytecodemethod );
+		        		int begin_bb = succ;
+		        		int end_bb = bbnum;
+		        		LoopInfo loop = new LoopInfo(f, begin_bb, end_bb);   
 		        		//loop.var_name = ???
-		        		// Get the basic block set for this loop
-		        		loop.succbbs.add(loop.begin_bb);
-		        		loop.dfsFromEnter(cfg.getNode(loop.begin_bb), cfg);
-		        		loop.predbbs.add(loop.end_bb);
-		        		loop.dfsFromExit(cfg.getNode(loop.end_bb), cfg);
-		        		loop.mergeLoop();
 		        		loops.add(loop);
 		        	} else {            //the for has been recorded 
 		        		LoopInfo loop = loops.get(existed);
-		        		if (bbnum > loop.end_bb)
-		        			loop.end_bb = bbnum;  //is it right? yes for now
-		        		loop.predbbs.clear(); 
-		        		loop.predbbs.add(bbnum);
-		        		loop.dfsFromExit(cfg.getNode(bbnum), cfg);
-		        		loop.mergeLoop();
+		        		if (bbnum > loop.getEndBasicBlockNumber())
+		        			loop.setEndBasicBlock( bbnum );  //is it right? yes for now
 		        	}
 		        }
 		    } //for-it_2
