@@ -92,7 +92,7 @@ class MapReduceTransformer extends Transformer {
 	            || className.startsWith("org.apache.hadoop.util.RunJar")
 	            || className.startsWith("org.apache.hadoop.util.Shell")
 	            //The CodeAttribute of some methods in util is empty. ignore them.
-	            //added by JX for mr-4576
+	            //added by JX for mr-4576 & mr-2705
 	            || className.startsWith("org.apache.hadoop.filecache.")
 	           ) {
 			if (className.contains("PBClientImpl") ||
@@ -111,6 +111,7 @@ class MapReduceTransformer extends Transformer {
 	    // instrument for all loops
 	    switch ( bugConfig.getBugId() ) {
 	    case "mr-4576":
+	    case "mr-2705":
 			if ( className.startsWith("org.apache.hadoop.yarn.")
 	  				|| className.startsWith("org.apache.hadoop.mapred.") 
 	  				|| className.startsWith("org.apache.hadoop.mapreduce.")

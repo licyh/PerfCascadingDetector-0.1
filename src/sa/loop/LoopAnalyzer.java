@@ -122,12 +122,9 @@ public class LoopAnalyzer {
 	/**
 	 * Find loops for a CGNode/Method/Function
 	 */
-	public List<LoopInfo> findLoopsForCGNode(CGNode f) {
-	    IR ir = f.getIR();
+	public List<LoopInfo> findLoopsForCGNode(CGNode cgNode) {
+	    IR ir = cgNode.getIR();
 	    SSACFG cfg = ir.getControlFlowGraph();
-	    //newly added - for source line number
-	    SSAInstruction[] ssas = ir.getInstructions();
-	    IBytecodeMethod bytecodemethod = (IBytecodeMethod) ir.getMethod();
 	    
 	    List<LoopInfo> loops = new ArrayList<LoopInfo>();
 	    int n_backedges = 0; //for Test
@@ -150,7 +147,7 @@ public class LoopAnalyzer {
 		        	if (existed == -1) { //the for hasn't yet been recorded  
 		        		int begin_bb = succ;
 		        		int end_bb = bbnum;
-		        		LoopInfo loop = new LoopInfo(f, begin_bb, end_bb);   
+		        		LoopInfo loop = new LoopInfo(cgNode, begin_bb, end_bb);   
 		        		//loop.var_name = ???
 		        		loops.add(loop);
 		        	} else {            //the for has been recorded 
@@ -170,7 +167,7 @@ public class LoopAnalyzer {
 	    	if (ip.getX() != ip.getY()) total ++;
 	    } 
 	    if (total != n_backedges) {  //for Test
-	    	System.err.println("total != n_backedges  #backedges:" + total + " #real backedges:" + n_backedges + " Method:" + f.getMethod().getSignature());
+	    	System.err.println("total != n_backedges  #backedges:" + total + " #real backedges:" + n_backedges + " Method:" + cgNode.getMethod().getSignature());
 	    }
 	   
 	    //printLoops(loops);
