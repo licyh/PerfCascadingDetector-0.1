@@ -50,8 +50,8 @@ public class Timer {
 		if (msg.length() > 0) MSG = ", MSG: " + msg;
 		// core
 		long currentTime = System.currentTimeMillis();
-		String log = "JX - INFO - Timer(toc->toc): " + (currentTime-this.lastStopTime)/1000 + "s"
-				   + ", (tic->toc): " + (currentTime-this.startTime)/1000 + "s"
+		String log = "JX - INFO - Timer(toc->toc): " + (double)(currentTime-this.lastStopTime)/1000 + "s"
+				   + ", (tic->toc): " + (double)(currentTime-this.startTime)/1000 + "s"
 				   + MSG;
 		this.lastStopTime = currentTime;
 		System.out.println( log );
@@ -97,7 +97,7 @@ public class Timer {
 	public static void globalToc(String msg) {
 		String MSG = "";
 		if (msg.length() > 0) MSG = ", MSG: " + msg;
-		System.out.println( "JX - INFO - Timer(toc): " + (System.currentTimeMillis()-global_start_time)/1000 + "s" + MSG );	
+		System.out.println( "JX - INFO - Timer(toc): " + (double)(System.currentTimeMillis()-global_start_time)/1000 + "s" + MSG );	
 	}
 	
 }

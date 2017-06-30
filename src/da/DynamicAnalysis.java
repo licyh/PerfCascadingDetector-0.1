@@ -15,19 +15,26 @@ import da.graph.HappensBeforeGraph;
 
 public class DynamicAnalysis {
 	
+	/**
+	 * @param argv
+	 * 		  argv[0] - project dir str
+	 *        argv[1] - like "/tmp/mr-4576_dm-xml" dir
+	 */
     public static void main (String [] argv) {
-    	System.out.println("JX - INFO - DynamicAnalysis: main... (da begin)");
-    	// start Timer
-    	Timer timer = new Timer( Paths.get(argv[0], "src/da", "output/timer.txt") );
-    	timer.tic("da begin");
-    			
-    	//Added by JX
-		if (argv.length != 2){
-            System.out.println( "Please specify a correct project dir or a xml file dir!! (argv.lenth=" + argv.length + ")" );
+    	if (argv.length != 2){
+            System.out.println( "JX - INFO - DynamicAnalysis: main - Please specify a correct project dir or a xml file dir!! (argv.lenth=" + argv.length + ")" );
             return;
         }
+    	String projectDir = argv[0];
+    	String xmlDir = argv[1];
+    	
+    	
+    	System.out.println("JX - INFO - DynamicAnalysis: main... (da begin)");
+    	Timer timer = new Timer( Paths.get(projectDir, "src/da/output/timer.txt") );
+    	timer.tic("da begin");
+ 
 		
-		HappensBeforeGraph g = new HappensBeforeGraph( argv[1] );
+		HappensBeforeGraph g = new HappensBeforeGraph( xmlDir );
 		g.buildsyncgraph();
     	
     	//jx: Add Edges manually for DEBUGGING
@@ -52,7 +59,7 @@ public class DynamicAnalysis {
     	timer.toc("end Accidental Happens before analysis");
 		
 		// Cascading Analysis
-		CascadingAnalyzer cascadingAnalyzer = new CascadingAnalyzer( argv[0], g, ag );
+		CascadingAnalyzer cascadingAnalyzer = new CascadingAnalyzer( projectDir, g, ag );
 		cascadingAnalyzer.doWork();
 		
 		timer.toc("end cacading analysis");
