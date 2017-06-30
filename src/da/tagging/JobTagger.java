@@ -63,7 +63,6 @@ public class JobTagger {
     			|| hbg.getNodeOPTY(index).equals( LogType.MsgProcEnter.name() )
     			|| hbg.getNodeOPTY(index).equals( LogType.ThdEnter.name() )
     			) {
-    		System.out.println("JX - INFO - ");
     		return true;
     	}
     	return false;
