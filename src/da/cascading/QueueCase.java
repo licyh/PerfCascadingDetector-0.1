@@ -43,12 +43,7 @@ public class QueueCase {
 	public void doWork() {
         // Traverse event handlers
 		traverseEventHandlers();
-		try {
-			bugPool.printResultsOfTraverseTargetCodes();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		bugPool.printResults(true);
 	}
 	
 	

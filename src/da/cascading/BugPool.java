@@ -37,6 +37,7 @@ public class BugPool {
 	Set<String> medianbugpool = new TreeSet<String>();
 	Set<String> simplechainbugpool = new TreeSet<String>();
 	Set<String> medianchainbugpool = new TreeSet<String>();
+	Set<String> tmpset = new HashSet<String>();
 	
 	
 	public BugPool(String projectDir, HappensBeforeGraph hbg) {
@@ -73,12 +74,9 @@ public class BugPool {
     }
     
 	
-    public void printResultsOfTraverseTargetCodes() throws IOException {
-    	System.out.println("\nJX - Results of traverseTargetCodes");
-    	
+    public void mergeResults() {
     	// real bug pool
     	System.out.print("\nbugpool - " + "has " + bugs.size() + " dynamic loop instances");
-    	Set<String> tmpset = new HashSet<String>();
     	for (LoopBug loopbug: bugs) {
     		int nodeIndex = loopbug.nodeIndex;
     		int cascadingLevel = loopbug.cascadingLevel;
@@ -90,6 +88,41 @@ public class BugPool {
     		tmpset.add( hbg.lastCallstack(nodeIndex) );
     	}
     	System.out.println(", ie, representing " + bugnodeset.size() + " nodes out of total " + hbg.getNodeList().size() + " nodes");
+    }
+    
+    
+    public String fullCallstacksOfCascadingChain(LoopBug loopbug) {
+    	String result = "";
+    	for (int nodeindex: loopbug.cascadingChain) {
+    		result += hbg.fullCallstack(nodeindex) + "|";
+    		// for DEBUG
+    		//result += hbg.getNodePIDTID(nodeindex) + ":" + hbg.fullCallstack(nodeindex) + "|";
+	        //result += hbg.getNodePIDTID(nodeindex)+":"+nodeindex + ":" + hbg.fullCallstack(nodeindex) + "|";
+    	}
+    	return result;
+    }
+    
+    
+    public String lastCallstacksOfCascadingChain(LoopBug loopbug) {
+    	String result = "";
+    	for (int nodeindex: loopbug.cascadingChain) {
+    		result += hbg.lastCallstack(nodeindex) + "|";
+    		// for DEBUG
+    		//result += hbg.getNodePIDTID(nodeindex) + ":" + hbg.lastCallstack(nodeindex) + "|";
+    	}
+    	return result;
+    }
+    
+    
+    
+    public void printResults() {
+    	printResults(false);
+    }
+    
+    public void printResults(boolean appendToFile) {
+    	System.out.println("\nJX - INFO - Results of bug pool");
+    	
+    	mergeResults();
 
     	// bug pools - 
         // write to file & print
@@ -103,10 +136,18 @@ public class BugPool {
     	System.out.println( "\t" + medianbugpoolFilename );
     	System.out.println( "\t" + simplebugpoolFilename );
 		
-    	TextFileWriter mcWriter = new TextFileWriter( medianchainbugpoolFilename );
-    	TextFileWriter scWriter = new TextFileWriter( simplechainbugpoolFilename );
-    	TextFileWriter mWriter = new TextFileWriter( medianbugpoolFilename );
-    	TextFileWriter sWriter = new TextFileWriter( simplebugpoolFilename );
+    	TextFileWriter mcWriter = new TextFileWriter( medianchainbugpoolFilename, appendToFile );
+    	if (appendToFile)
+    		mcWriter.writeLine("\n\n\nQueue-related Bugs\n");
+    	TextFileWriter scWriter = new TextFileWriter( simplechainbugpoolFilename, appendToFile );
+    	if (appendToFile)
+    		scWriter.writeLine("\n\n\nQueue-related Bugs\n");
+    	TextFileWriter mWriter = new TextFileWriter( medianbugpoolFilename, appendToFile );
+    	if (appendToFile)
+    		mWriter.writeLine("\n\n\nQueue-related Bugs\n");
+    	TextFileWriter sWriter = new TextFileWriter( simplebugpoolFilename, appendToFile );
+    	if (appendToFile)
+    		sWriter.writeLine("\n\n\nQueue-related Bugs\n");
 
     	System.out.println("\nmedianchainbugpool(whole chain's fullcallstacks) - " + "has " + medianchainbugpool.size() + " loops (#static codepoints=" + tmpset.size() + ")" );
     	mcWriter.writeLine( medianchainbugpool.size() + " (#static codepoints=" + tmpset.size() + ")" );
@@ -142,25 +183,6 @@ public class BugPool {
     	sWriter.close();
     }
     
-    public String fullCallstacksOfCascadingChain(LoopBug loopbug) {
-    	String result = "";
-    	for (int nodeindex: loopbug.cascadingChain) {
-    		result += hbg.fullCallstack(nodeindex) + "|";
-    		// for DEBUG
-    		//result += hbg.getNodePIDTID(nodeindex) + ":" + hbg.fullCallstack(nodeindex) + "|";
-	        //result += hbg.getNodePIDTID(nodeindex)+":"+nodeindex + ":" + hbg.fullCallstack(nodeindex) + "|";
-    	}
-    	return result;
-    }
-    
-    public String lastCallstacksOfCascadingChain(LoopBug loopbug) {
-    	String result = "";
-    	for (int nodeindex: loopbug.cascadingChain) {
-    		result += hbg.lastCallstack(nodeindex) + "|";
-    		// for DEBUG
-    		//result += hbg.getNodePIDTID(nodeindex) + ":" + hbg.lastCallstack(nodeindex) + "|";
-    	}
-    	return result;
-    }
+
 	
 }

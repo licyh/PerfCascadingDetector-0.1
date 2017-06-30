@@ -1,3 +1,4 @@
+//#functions containing loops In Scope     #loops totally
 1508 2160
 org.apache.hadoop.hdfs.security.token.block.BlockTokenSelector.selectToken(Lorg/apache/hadoop/io/Text;Ljava/util/Collection;)Lorg/apache/hadoop/security/token/Token; 1 38 
 org.apache.hadoop.mapred.SortedRanges.readFields(Ljava/io/DataInput;)V 1 192 

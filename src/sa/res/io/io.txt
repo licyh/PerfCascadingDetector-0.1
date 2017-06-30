@@ -6,6 +6,10 @@
 //java.sql.
 
 
+//added for mr-4088 "queue"
+java.lang.Object.wait(
+
+
 //prefixes   #types < 953
 java.io.BufferedReader.read
 java.io.ByteArrayOutputStream.write([BII)V

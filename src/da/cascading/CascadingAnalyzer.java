@@ -20,13 +20,14 @@ public class CascadingAnalyzer {
 	public void doWork() {
 		// extract Target, (EventHandler), Lock, Loop logs
 		LogInfoExtractor logInfo = new LogInfoExtractor( hbg );
+	
+	    //Lock
+	    LockCase lockCase = new LockCase(this.projectDir, this.hbg, this.ag, logInfo);
+	    lockCase.doWork();
 		
 	    //Queue
 	    QueueCase queueCase = new QueueCase(this.projectDir, this.hbg, logInfo);
 	    queueCase.doWork();
 		
-	    //Lock
-	    //LockCase lockCase = new LockCase(this.projectDir, this.hbg, this.ag, logInfo);
-	    //lockCase.doWork();
 	}
 }

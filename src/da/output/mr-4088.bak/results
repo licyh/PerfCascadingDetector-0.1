@@ -1,10 +1,9 @@
 Queue-related
-????????
-
-
-SIMPLE:       have new results, please drop this
+FINAL:       have new results, please drop this
 
 3 (#static codepoints=3)
-CL1: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;       #pruned out by NOT-I/O,RPC inside
-CL1: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-464;               #reported bug,  include "await()"
-//CL1: org.apache.hadoop.mapred.TaskTracker$1-run-422;                             #deleted, NOT a loop, that while (true) { insert LOOP here! .. EventHanlderBegin xx.take() EventHandlerEnd                          
+CL1: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-464;                 #reported bug,  include "await()"
+CL1: org.apache.hadoop.mapred.TaskTracker-purgeJob-1999;                             #tasks, checked by users
+CL1: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2050;                       #small loop, from "mapred.local.dir", usually is one, also can 2 or 3 by conf
+////CL1: org.apache.hadoop.mapred.TaskTracker$1-run-422;                             #deleted, NOT a loop, that while (true) { insert LOOP here! .. EventHanlderBegin xx.take() EventHandlerEnd                          
+summary - 4(#static codepoints=4) from 5 (#static codepoints=5)

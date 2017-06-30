@@ -70,12 +70,7 @@ public class LockCase {
         // traverseTargetCodes
 		traverseTargetCodes();
     	// print the results
-		try {
-			bugPool.printResultsOfTraverseTargetCodes();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		bugPool.printResults();
 	}
 	
  
