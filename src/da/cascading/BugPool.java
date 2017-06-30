@@ -10,12 +10,13 @@ import java.util.TreeSet;
 import com.text.TextFileWriter;
 
 import da.graph.HappensBeforeGraph;
+import da.tagging.JobTagger;
 
 public class BugPool {
 	String projectDir;
 	String packageDir = "src/da";
 	
-    Set<LoopBug> bugs = new HashSet<LoopBug>();          //dynamic loop instances, only one bug pool for whole code snippets
+    Set<LoopBug> bugs = new HashSet<LoopBug>();          	//dynamic loop instances, only one bug pool for whole code snippets
     Set<Integer> bugnodeset = new HashSet<Integer>();       //HappensBeforeGraph's node index set for bugs 
     
     int CASCADING_LEVEL = 10;                               //minimum:2; default:3;
@@ -76,7 +77,7 @@ public class BugPool {
 	
     public void mergeResults() {
     	// real bug pool
-    	System.out.print("\nbugpool - " + "has " + bugs.size() + " dynamic loop instances");
+    	System.out.print("\nbugpool - " + "has " + bugs.size() + "(fake) dynamic loop instances");
     	for (LoopBug loopbug: bugs) {
     		int nodeIndex = loopbug.nodeIndex;
     		int cascadingLevel = loopbug.cascadingLevel;
@@ -87,7 +88,7 @@ public class BugPool {
     		simplebugpool.add( "CL" + cascadingLevel + ": " + hbg.lastCallstack(nodeIndex) );
     		tmpset.add( hbg.lastCallstack(nodeIndex) );
     	}
-    	System.out.println(", ie, representing " + bugnodeset.size() + " nodes out of total " + hbg.getNodeList().size() + " nodes");
+    	System.out.println(", ie, representing " + bugnodeset.size() + "(real) loop nodes out of total " + hbg.getNodeList().size() + " happens-before nodes");
     }
     
     
@@ -115,6 +116,16 @@ public class BugPool {
     
     
     
+    
+    public void printJobIdentity() {
+    	JobTagger jobTagger = new JobTagger( this.hbg );
+    	for (int index: bugnodeset) {
+    		jobTagger.findJobIdentity(index);
+    		System.out.println("\n");
+    	}
+    }
+    
+    
     public void printResults() {
     	printResults(false);
     }
@@ -123,6 +134,7 @@ public class BugPool {
     	System.out.println("\nJX - INFO - Results of bug pool");
     	
     	mergeResults();
+    	printJobIdentity();
 
     	// bug pools - 
         // write to file & print

@@ -1,5 +1,8 @@
 package LogClass;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum LogType {
 	
 	//Process
@@ -26,6 +29,7 @@ public enum LogType {
     LockRelease, 	//release lock
     
     //Added by JX
+    EventHandlerCreate,   //no use now
     EventHandlerBegin,
     EventHandlerEnd,
     //Added by JX
@@ -42,6 +46,13 @@ public enum LogType {
     LoopPrint,     //only for javassist
     LoopEnd,       //only for spoon
     IO,
-    RPC,
+    RPC;
 
+    
+	static Map<LogType,LogType> logTypeMapping = new HashMap<LogType,LogType>() {{
+		put(EventHandlerBegin, EventHandlerCreate);
+		put(EventProcEnter, EventCreate);
+		put(MsgProcEnter, MsgSending);
+		put(ThdEnter, ThdCreate);  // or ProcessCreate
+	}};
 }

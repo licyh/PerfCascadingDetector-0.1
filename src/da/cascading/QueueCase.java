@@ -26,10 +26,6 @@ public class QueueCase {
     // results
     BugPool bugPool;
     
-    // tmp vars
-    BitSet traversedNodes = new BitSet();  	//tmp var. set of traversed nodes for a single code snippet, e.g, event handler
-    
-    
 	
 	public QueueCase(String projectDir, HappensBeforeGraph hbg, LogInfoExtractor logInfo) {
 		this.projectDir = projectDir;
@@ -81,12 +77,14 @@ public class QueueCase {
 	 * find bug loops between (beginIndex, endIndex)
 	 */
 	public void findBugLoops(int beginIndex, int endIndex) {
+	    // tmp vars
+	    BitSet traversedNodes = new BitSet();  	//tmp var. set of traversed nodes for a single code snippet, e.g, event handler
 		traversedNodes.clear();
-		dfsTraversing(beginIndex, endIndex);
+		dfsTraversing(beginIndex, endIndex, traversedNodes);
 	}
 	
 	
-    public void dfsTraversing( int x, int endIndex ) {
+    public void dfsTraversing( int x, int endIndex, BitSet traversedNodes ) {
     	traversedNodes.set( x );
     	// find the bug loop
     	if ( hbg.getNodeOPTY(x).equals(LogType.LoopBegin.name()) ) {
@@ -97,7 +95,7 @@ public class QueueCase {
         for (Pair pair: list) {
         	int y = pair.destination;
         	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) )
-        		dfsTraversing( y, endIndex );
+        		dfsTraversing( y, endIndex, traversedNodes );
         }
     }
     

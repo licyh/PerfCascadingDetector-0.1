@@ -454,6 +454,10 @@ public class HappensBeforeGraph {
     	return this.edge;
     }
     
+    public ArrayList<ArrayList<Pair>> getBackEdge() {
+    	return this.backedge;
+    }
+    
     public ArrayList<BitSet> getReachSet() {
     	return this.reachbitset;
     }
@@ -495,6 +499,13 @@ public class HappensBeforeGraph {
 		return id;
     }    
 
+    //added by JX
+    // only for printing or debugging
+    public String getPrintedIdentity(int index) {
+    	return index + " " + getNodeOPTY(index) + " " + getNodeOPVAL(index) + " " + getNodePIDTID(index) + " "
+    		   + lastCallstack_2(index);
+    }
+    
 
         public String fullCallstack(int i){
             Node ni = nList.get(i);
@@ -709,30 +720,38 @@ public class HappensBeforeGraph {
 	
 	
 	
-	    //Added by JX
-	    public String getNodeOPTY(int index) {
-	    	Node node = nList.get( index );
-	    	Element e = (Element) node;
-	    	String opty = e.getElementsByTagName("OPTY").item(0).getTextContent();
-	    	return opty;
-	    }
+    //Added by JX
+    public String getNodeOPTY(int index) {
+    	return getNodeOPTY( nList.get(index) );
+    }
+    public String getNodeOPTY(Node node) {
+    	Element e = (Element) node;
+    	String opty = e.getElementsByTagName("OPTY").item(0).getTextContent();
+    	return opty;
+    }
 
 	public String getNodePID(int index) {
-		Node node = nList.get( index );
+		return getNodePID( nList.get(index) );
+	}
+	public String getNodePID(Node node) {
 		Element e = (Element) node;
 		String pid = e.getElementsByTagName("PID").item(0).getTextContent();
 		return pid;
 	}
 
-        public String getNodeTID(int index) {
-                Node node = nList.get( index );
-                Element e = (Element) node;
-                String tid = e.getElementsByTagName("TID").item(0).getTextContent();
-                return tid;
-        }
+    public String getNodeTID(int index) {
+        return getNodeTID( nList.get(index) );
+    }
+    public String getNodeTID(Node node) {
+        Element e = (Element) node;
+        String tid = e.getElementsByTagName("TID").item(0).getTextContent();
+        return tid;
+    }
 
 	public String getNodePIDTID(int index) {
-		Node node = nList.get( index );
+		return getNodePIDTID( nList.get(index) );
+	}
+	public String getNodePIDTID(Node node) {
 		Element e = (Element) node;
 		String pid = e.getElementsByTagName("PID").item(0).getTextContent();
 		String tid = e.getElementsByTagName("TID").item(0).getTextContent();
@@ -740,15 +759,20 @@ public class HappensBeforeGraph {
 	}
 
 	public String getNodeOPVAL(int index) {
-		Node node = nList.get( index );
+		return getNodeOPVAL( nList.get(index) );
+	}
+	public String getNodeOPVAL(Node node) {
 		Element e = (Element) node;
 		String opval = e.getElementsByTagName("OPVAL").item(0).getTextContent();
 		return opval;
 	}
+	
 
 	// return "PID"+"OPVAL0" for 'lock' nodes, especially for r/w locks
 	public String getNodePIDOPVAL0(int index) {   
-		Node node = nList.get( index );
+		return getNodePIDOPVAL0( nList.get(index) ); 
+	}
+	public String getNodePIDOPVAL0(Node node) {   
 		Element e = (Element) node;
 		String pid = e.getElementsByTagName("PID").item(0).getTextContent();
 		String opval = e.getElementsByTagName("OPVAL").item(0).getTextContent();
