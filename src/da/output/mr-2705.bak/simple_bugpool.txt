@@ -1,4 +1,7 @@
-11 (#static codepoints=11)
+14 (#static codepoints=14)
+CL1: org.apache.hadoop.io.IOUtils-cleanup-145;
+CL1: org.apache.hadoop.io.IOUtils-copyBytes-67;
+CL1: org.apache.hadoop.io.IOUtils-readFully-112;
 CL1: org.apache.hadoop.mapred.JobLocalizer-createJobDirs-213;
 CL1: org.apache.hadoop.mapred.JobLocalizer-createLocalDirs-142;
 CL1: org.apache.hadoop.mapred.JobLocalizer-createPaths-131;

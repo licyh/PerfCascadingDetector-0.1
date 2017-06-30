@@ -7,6 +7,8 @@ package da;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import com.system.Timer;
+
 import da.cascading.CascadingAnalyzer;
 import da.graph.AccidentalHBGraph;
 import da.graph.HappensBeforeGraph;
@@ -14,24 +16,19 @@ import da.graph.HappensBeforeGraph;
 public class DynamicAnalysis {
 	
     public static void main (String [] argv) {
-        
+    	System.out.println("JX - INFO - DynamicAnalysis: main... (da begin)");
+    	// start Timer
+    	Timer timer = new Timer( Paths.get(argv[0], "src/da", "output/timer.txt") );
+    	timer.tic("da begin");
+    			
     	//Added by JX
 		if (argv.length != 2){
             System.out.println( "Please specify a correct project dir or a xml file dir!! (argv.lenth=" + argv.length + ")" );
             return;
         }
 		
-		System.out.println("JX - da begin ...");
-		long start_time = System.currentTimeMillis();         
-		
-		//init and get 'base' file
 		HappensBeforeGraph g = new HappensBeforeGraph( argv[1] );
-    	//HappensBeforeGraph graphBuilder = new HappensBeforeGraph("input/MR-4813-xml"); //"input/JX-MR-xml" //Test-HB-4729-v6-3-xml");   "Test-HB-4729-v6-3-xml"
-		System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
-		
 		g.buildsyncgraph();
-    	//hbg.buildmemref();
-    	System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
     	
     	//jx: Add Edges manually for DEBUGGING
         //this is for mr-4576
@@ -46,14 +43,19 @@ public class DynamicAnalysis {
 			g.queryHappensBeforeRelations("/tmp/relations.txt");
 		}
 		
+				
+		timer.toc("end Happens before analysis");
 		
 		AccidentalHBGraph ag = new AccidentalHBGraph( g );
     	ag.buildLockmemref(); 
-		System.out.println("Completion Time: " + (System.currentTimeMillis()-start_time)/1000 + "s"); 
+		
+    	timer.toc("end Accidental Happens before analysis");
 		
 		// Cascading Analysis
 		CascadingAnalyzer cascadingAnalyzer = new CascadingAnalyzer( argv[0], g, ag );
 		cascadingAnalyzer.doWork();
+		
+		timer.toc("end cacading analysis");
 		
 		// find out 1.flipped order 2.lock relationship graph by the same locks
 		g.findflippedorder();  

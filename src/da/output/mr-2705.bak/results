@@ -1,6 +1,9 @@
 
 
 
+FINAL - 
+CL1: org.apache.hadoop.io.IOUtils-copyBytes-67;                                           #reported bug
+CL1: org.apache.hadoop.io.IOUtils-readFully-112;
 //CL1: org.apache.hadoop.mapred.JobLocalizer-createJobDirs-213;                           #small loop, <= below one, good example for ".add"
 CL1: org.apache.hadoop.mapred.JobLocalizer-createPaths-131;                               #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
 CL1: org.apache.hadoop.mapred.JobLocalizer-createUserDirs-172;                            #small loop, the same variable as above's above	
