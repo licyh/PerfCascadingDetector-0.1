@@ -36,7 +36,7 @@ public class JobTagger {
 	
 	
     public void dfsTraversing( int x, BitSet traversedNodes ) {
-    	traversedNodes.set( x );
+    	//traversedNodes.set( x );
     	
     	if ( !isJob(x) ) {
     		int y = x-1;
