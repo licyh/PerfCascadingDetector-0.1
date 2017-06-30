@@ -56,6 +56,7 @@ public class DynamicAnalysis {
 		cascadingAnalyzer.doWork();
 		
 		timer.toc("end cacading analysis");
+		timer.close();
 		
 		// find out 1.flipped order 2.lock relationship graph by the same locks
 		g.findflippedorder();  
