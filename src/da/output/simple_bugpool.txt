@@ -1,6 +1,65 @@
-5 (#static codepoints=5)
-CL1: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
-CL1: org.apache.hadoop.mapred.TaskTracker$1-run-422;
-CL1: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-464;
-CL1: org.apache.hadoop.mapred.TaskTracker-purgeJob-1999;
-CL1: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2050;
+58 (#static codepoints=31)
+CL2: org.apache.hadoop.hdfs.DFSUtil-isValidName-48;
+CL2: org.apache.hadoop.hdfs.server.namenode.BlocksMap$BlockInfo-findDatanode-191;
+CL2: org.apache.hadoop.hdfs.server.namenode.BlocksMap$BlockInfo-numNodes-141;
+CL2: org.apache.hadoop.hdfs.server.namenode.DatanodeDescriptor-reportDiff-399;
+CL2: org.apache.hadoop.hdfs.server.namenode.DatanodeDescriptor-reportDiff-441;
+CL2: org.apache.hadoop.hdfs.server.namenode.DecommissionManager$Monitor-check-75;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSDirectory-mkdirs-938;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSDirectory-mkdirs-947;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSDirectory-replaceNode-686;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSDirectory-updateCount-862;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSDirectory-verifyQuota-1036;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog$EditLogFileOutputStream-write-154;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-908;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-checkFileProgress-1723;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-checkReplicationFactor-1680;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-chooseUnderReplicatedBlocks-2863;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-countNodes-4313;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-heartbeatCheck-3281;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-processReport-3440;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-processReport-3443;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-processReport-3446;
+CL2: org.apache.hadoop.hdfs.server.namenode.INode-compareBytes-388;
+CL2: org.apache.hadoop.hdfs.server.namenode.INode-getPathComponents-326;
+CL2: org.apache.hadoop.hdfs.server.namenode.INodeDirectory-getExistingPathINodes-171;
+CL2: org.apache.hadoop.hdfs.server.namenode.INodeFile-diskspaceConsumed-173;
+CL2: org.apache.hadoop.hdfs.server.namenode.INodeFileUnderConstruction-addTarget-110;
+CL2: org.apache.hadoop.hdfs.server.namenode.LeaseManager$Lease-findPath-229;
+CL2: org.apache.hadoop.hdfs.server.namenode.LeaseManager-checkLeases-380;
+CL2: org.apache.hadoop.hdfs.server.namenode.UnderReplicatedBlocks-size-51;
+CL2: org.apache.hadoop.hdfs.util.LightWeightGSet-get-121;
+CL3: org.apache.hadoop.hdfs.server.namenode.FSDirectory-mkdirs-938;
+CL3: org.apache.hadoop.hdfs.server.namenode.FSDirectory-mkdirs-947;
+CL3: org.apache.hadoop.hdfs.server.namenode.FSDirectory-replaceNode-686;
+CL3: org.apache.hadoop.hdfs.server.namenode.FSDirectory-updateCount-862;
+CL3: org.apache.hadoop.hdfs.server.namenode.FSDirectory-verifyQuota-1036;
+CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog$EditLogFileOutputStream-write-154;
+CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-908;
+CL3: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-heartbeatCheck-3281;
+CL3: org.apache.hadoop.hdfs.server.namenode.INode-compareBytes-388;
+CL3: org.apache.hadoop.hdfs.server.namenode.INode-getPathComponents-326;
+CL3: org.apache.hadoop.hdfs.server.namenode.INodeDirectory-getExistingPathINodes-171;
+CL3: org.apache.hadoop.hdfs.server.namenode.INodeFile-diskspaceConsumed-173;
+CL3: org.apache.hadoop.hdfs.server.namenode.LeaseManager$Lease-findPath-229;
+CL3: org.apache.hadoop.hdfs.server.namenode.LeaseManager-checkLeases-380;
+CL3: org.apache.hadoop.hdfs.server.namenode.PendingReplicationBlocks$PendingReplicationMonitor-pendingReplicationCheck-202;
+CL3: org.apache.hadoop.hdfs.util.LightWeightGSet-get-121;
+CL4: org.apache.hadoop.hdfs.server.namenode.FSDirectory-mkdirs-938;
+CL4: org.apache.hadoop.hdfs.server.namenode.FSDirectory-mkdirs-947;
+CL4: org.apache.hadoop.hdfs.server.namenode.FSDirectory-replaceNode-686;
+CL4: org.apache.hadoop.hdfs.server.namenode.FSDirectory-updateCount-862;
+CL4: org.apache.hadoop.hdfs.server.namenode.FSDirectory-verifyQuota-1036;
+CL4: org.apache.hadoop.hdfs.server.namenode.FSEditLog$EditLogFileOutputStream-write-154;
+CL4: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-908;
+CL4: org.apache.hadoop.hdfs.server.namenode.INode-compareBytes-388;
+CL4: org.apache.hadoop.hdfs.server.namenode.INode-getPathComponents-326;
+CL4: org.apache.hadoop.hdfs.server.namenode.INodeDirectory-getExistingPathINodes-171;
+CL4: org.apache.hadoop.hdfs.server.namenode.INodeFile-diskspaceConsumed-173;
+CL4: org.apache.hadoop.hdfs.util.LightWeightGSet-get-121;
+
+
+
+Queue-related Bugs
+
+0 (#static codepoints=0)
