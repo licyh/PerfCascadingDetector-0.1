@@ -502,7 +502,7 @@ public class HappensBeforeGraph {
     //added by JX
     // only for printing or debugging
     public String getPrintedIdentity(int index) {
-    	return index + " " + getNodeOPTY(index) + " " + getNodeOPVAL(index) + " " + getNodePIDTID(index) + " "
+    	return "Node" + index + " " + getNodeOPTY(index) + " " + getNodeOPVAL(index) + " " + getNodePIDTID(index) + " "
     		   + lastCallstack_2(index);
     }
     

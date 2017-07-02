@@ -18,6 +18,10 @@ public class TextFileWriter {
 
 	Path filepath;
 	BufferedWriter bufwriter;
+	
+	// all valid line number
+	int validNumberOfLines = 0;
+	// no use now
 	List<String> strs = new ArrayList<String>();
 	
 	public TextFileWriter(String filestr) {
@@ -53,9 +57,19 @@ public class TextFileWriter {
 	
 	
 	
+	// all valid line number
+	public int getValidNumberOfLines() {
+		return this.validNumberOfLines;
+	}
+	
+	
 	public void writeLine(String line) {
 		try {
 			bufwriter.write( line + "\n" );
+			if ( line.startsWith("//") || line.startsWith("#") || line.trim().length()==0) {
+			} else {
+				validNumberOfLines ++;
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

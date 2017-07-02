@@ -23,6 +23,8 @@ public class TextFileReader {
 	Path filepath;
 	BufferedReader bufreader;
 	
+	// all valid line number
+	int validNumberOfLines = 0;
 	// line by line
 	public List<String> strs = new ArrayList<String>();
 	// split line by split line 
@@ -55,7 +57,7 @@ public class TextFileReader {
 			initializeInJar( filepath );
 	}
 	
-	
+
 	private void initialize(Path filepath) {
 		this.filepath = filepath;
 		if ( !Files.exists(filepath) ) {
@@ -116,6 +118,18 @@ public class TextFileReader {
 		
 	
 	
+	
+	
+	
+	
+	
+	
+	// all valid line number
+	public int getValidNumberOfLines() {
+		return this.validNumberOfLines;
+	}
+	
+	
 	/**
 	 * For reading all and saving
 	 */
@@ -131,7 +145,7 @@ public class TextFileReader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("JX - INFO - successfully read " + strs.size() + " lines in " + filepath.toString());
+		System.out.println("JX - INFO - TextFileReader: successfully read " + strs.size() + " lines in " + filepath.toString());
 	}
 
 	
@@ -152,6 +166,7 @@ public class TextFileReader {
 	    	   );
 	    if ( tmpline == null )
 	    	return null;
+	    validNumberOfLines ++;  // all valid line number
 	    return tmpline.trim();
 	}
 	

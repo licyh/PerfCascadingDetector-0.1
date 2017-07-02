@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -146,20 +147,19 @@ public class LockCase {
     
     
     // 2. findLockRelatedBugs
+    
     int tmpflag = 0;  //just for test
     /** JX - findLockRelatedBugs - */    
     public void findLockRelatedBugs( List<Integer> firstbatchLocks ) {
-    	System.out.println( "JX - findLockRelatedBugs" );
+    	System.out.println( "JX - INFO - findLockRelatedBugs" );
     	if ( firstbatchLocks.size() <= 0 ) {
-    		System.out.println( "JX - CascadingBugDetection - there is no first batch of locks, finished normally!" );
+    		System.out.println( "JX - INFO - CascadingBugDetection - there is no first batch of locks, finished normally!" );
     		return;
     	}
+    	
 		// Debugging - print all firt batch of locks' names
-		if (tmpflag == 0) {
-			for (int index: firstbatchLocks)
-				System.out.println( "including lock - " 
-						+ "Node"+index + ":" + hbg.getNodePIDTID(index) + ":" + hbg.getNodeOPVAL(index) + hbg.lastCallstack_2(index) );
-		}
+		if (tmpflag == 0)
+			printLocks(firstbatchLocks);
 		
     	Set<Integer> curbatchLocks = new TreeSet<Integer>( firstbatchLocks );
     	int curCascadingLevel = 2;   //this is the minimum level for lock-related cascading bugs
@@ -172,34 +172,43 @@ public class LockCase {
     	while ( curCascadingLevel <= CASCADING_LEVEL ) {
     		// Find affected locks in different threads
     		Set<Integer> nextbatchLocks = findNextbatchLocksInDiffThreads( curbatchLocks, curCascadingLevel );
-                System.out.println("batch #" + (++tmpbatch) + ":#locks=" + curbatchLocks.size() + " <--- #" + tmpbatch + ".5:#locks=" + nextbatchLocks.size() );
+            System.out.println("batch #" + (++tmpbatch) + ":#locks=" + curbatchLocks.size() + " <--- #" + tmpbatch + ".5:#locks=" + nextbatchLocks.size() );
+        
             // Debugging
-            if ( tmpflag == 0 && curCascadingLevel == 2 ) {
-    			for (int index: nextbatchLocks)
-    				System.out.println( "including lock - " 
-    						+ "Node"+index + ":" + hbg.getNodePIDTID(index) + ":" + hbg.getNodeOPVAL(index) + hbg.lastCallstack_2(index) );
-            }
+            /*
+            if ( tmpflag == 0 && curCascadingLevel == 2 )
+    			printLocks(nextbatchLocks);
+            */
                 
             // Find affected locks based on 1 in the same thread
     		curbatchLocks = findNextbatchLocksInSameThread( nextbatchLocks, curCascadingLevel );
     		System.out.println("batch #" + (tmpbatch+1) + ":#intermediate locks=" + curbatchLocks.size()  );
+    		
     		// Debugging
+    		/*
             if ( tmpflag == 0 && curCascadingLevel == 2 ) {
-    			for (int index: curbatchLocks)
-    				System.out.println( "including lock - " 
-    						+ "Node"+index + ":" + hbg.getNodePIDTID(index) + ":" + hbg.getNodeOPVAL(index) + hbg.lastCallstack_2(index) );
+            	printLocks(curbatchLocks);
     			tmpflag = 1;
             }
+            */
     		
         	if ( curbatchLocks.size() <= 0 ) {
-    			System.out.println( "JX - CascadingBugDetection - finished normally" );
+    			System.out.println( "JX - INFO - CascadingBugDetection - finished normally" );
     			break;
     		}
     		curCascadingLevel ++;
     	}
     	
-    	System.out.println( "JX - CascadingBugDetection - finished with CASCADING_LEVEL = " + CASCADING_LEVEL );
+    	System.out.println( "JX - INFO - CascadingBugDetection - finished with CASCADING_LEVEL = " + CASCADING_LEVEL );
     }
+    
+    
+    // for Debugging
+    public void printLocks(Collection<Integer> locks) { 
+		for (int index: locks)
+			System.out.println( "including lock - " + hbg.getPrintedIdentity(index) );
+    }
+    
     
     
     // JX - Find affected locks in different threads

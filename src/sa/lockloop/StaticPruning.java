@@ -14,6 +14,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.text.TextFileReader;
+import com.text.TextFileWriter;
+
 import sa.loop.LoopInfo;
 import sa.wala.WalaUtil;
 
@@ -56,40 +59,33 @@ public class StaticPruning {
 	}
 
 	public void findTimeConsumingLoopsForAFile(String infile, String outfile) throws IOException {
-		System.out.println("\nJX-findTimeConsumingLoopsForAFile:" + outfile);
+		System.out.println("\nJX - INFO - findTimeConsumingLoopsForAFile:" + outfile);
 		List<String> loopClasses = new ArrayList<String>();
         List<String> loopMethods = new ArrayList<String>();
 		List<String> loopLinenumbers = new ArrayList<String>();
 		  
 		String infilepath = Paths.get(daDir, infile).toString();
 		String outfilepath = Paths.get(daDir, outfile).toString(); 
-		BufferedReader bufreader = new BufferedReader( new FileReader( infilepath ) );
-		BufferedWriter bufwriter = new BufferedWriter( new FileWriter( outfilepath ) );
+		TextFileReader reader = new TextFileReader(infilepath);
+		TextFileWriter writer = new TextFileWriter(outfilepath);
+		
 		String tmpline;
-		String firstline = bufreader.readLine(); // the 1st line is useless
-		int total = 0;
-		int count = 0;
 		Set<String> tmpset = new HashSet<String>();
 		
-		while ( (tmpline = bufreader.readLine()) != null ) {
-			String[] strs = tmpline.trim().split("\\s+");
-			if ( tmpline.trim().length() > 0 ) {
-				total ++;
-				int cascadingLevel = Integer.parseInt( strs[0].substring(2, strs[0].indexOf(':')) );  //useless now
-				String codepoint = strs[1].substring(0, strs[1].indexOf(';'));   // looks like "xx.ClassName-MethodName-LineNumber"
-				if ( isTimeConsumingLoop(codepoint) ) {
-					bufwriter.write( tmpline + "\n" );
-					count ++;
-					tmpset.add( codepoint );
-				}
+		while ( (tmpline = reader.readLine()) != null ) {
+			String[] strs = tmpline.split("\\s+");
+			int cascadingLevel = Integer.parseInt( strs[0].substring(2, strs[0].indexOf(':')) );  //useless now
+			String codepoint = strs[1].substring(0, strs[1].indexOf(';'));   // looks like "xx.ClassName-MethodName-LineNumber"
+			if ( isTimeConsumingLoop(codepoint) ) {
+				writer.writeLine( tmpline );
+				tmpset.add( codepoint );
 			}
 		}
-		bufwriter.write( "summary - " + count + "(#static codepoints=" + tmpset.size() + ") from " + firstline);
-		bufreader.close();
-		bufwriter.flush();
-    	bufwriter.close();
-		System.out.println("JX - successfully read " + firstline + " Suspected/Critical Bug Loops from " + infilepath);
-    	System.out.println("JX - successfully write " + count + " (#static codepoints=" + tmpset.size() + ") time-consuming Bug Loops into " + outfilepath);
+		writer.write( "//summary - " + writer.getValidNumberOfLines() + "(#static codepoints=" + tmpset.size() + ") from " + reader.getValidNumberOfLines());
+		reader.close();
+    	writer.close();
+		System.out.println("JX - successfully read " + reader.getValidNumberOfLines() + " Suspected/Critical Bug Loops from " + infilepath);
+    	System.out.println("JX - successfully write " + writer.getValidNumberOfLines() + " (#static codepoints=" + tmpset.size() + ") time-consuming Bug Loops into " + outfilepath);
 	}
 	
 	public boolean isTimeConsumingLoop(String codepoint) {

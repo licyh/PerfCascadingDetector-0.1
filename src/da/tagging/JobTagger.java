@@ -57,6 +57,8 @@ public class JobTagger {
     }
     
    
+    
+    
     public boolean isJob(int index) {
     	if ( hbg.getNodeOPTY(index).equals( LogType.EventHandlerBegin.name() )
     			|| hbg.getNodeOPTY(index).equals( LogType.EventProcEnter.name() )

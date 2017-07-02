@@ -1,4 +1,4 @@
-58 (#static codepoints=31)
+//58 (#static codepoints=31)
 CL2: org.apache.hadoop.hdfs.DFSUtil-isValidName-48;
 CL2: org.apache.hadoop.hdfs.server.namenode.BlocksMap$BlockInfo-findDatanode-191;
 CL2: org.apache.hadoop.hdfs.server.namenode.BlocksMap$BlockInfo-numNodes-141;
@@ -60,6 +60,6 @@ CL4: org.apache.hadoop.hdfs.util.LightWeightGSet-get-121;
 
 
 
-Queue-related Bugs
+//Queue-related Bugs
 
-0 (#static codepoints=0)
+//0 (#static codepoints=0)

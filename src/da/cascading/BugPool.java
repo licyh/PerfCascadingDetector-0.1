@@ -150,40 +150,40 @@ public class BugPool {
 		
     	TextFileWriter mcWriter = new TextFileWriter( medianchainbugpoolFilename, appendToFile );
     	if (appendToFile)
-    		mcWriter.writeLine("\n\n\nQueue-related Bugs\n");
+    		mcWriter.writeLine("\n\n\n//Queue-related Bugs\n");
     	TextFileWriter scWriter = new TextFileWriter( simplechainbugpoolFilename, appendToFile );
     	if (appendToFile)
-    		scWriter.writeLine("\n\n\nQueue-related Bugs\n");
+    		scWriter.writeLine("\n\n\n//Queue-related Bugs\n");
     	TextFileWriter mWriter = new TextFileWriter( medianbugpoolFilename, appendToFile );
     	if (appendToFile)
-    		mWriter.writeLine("\n\n\nQueue-related Bugs\n");
+    		mWriter.writeLine("\n\n\n//Queue-related Bugs\n");
     	TextFileWriter sWriter = new TextFileWriter( simplebugpoolFilename, appendToFile );
     	if (appendToFile)
-    		sWriter.writeLine("\n\n\nQueue-related Bugs\n");
+    		sWriter.writeLine("\n\n\n//Queue-related Bugs\n");
 
     	System.out.println("\nmedianchainbugpool(whole chain's fullcallstacks) - " + "has " + medianchainbugpool.size() + " loops (#static codepoints=" + tmpset.size() + ")" );
-    	mcWriter.writeLine( medianchainbugpool.size() + " (#static codepoints=" + tmpset.size() + ")" );
+    	mcWriter.writeLine( "//" + medianchainbugpool.size() + " (#static codepoints=" + tmpset.size() + ")" );
     	for (String chainfullcallstacks: medianchainbugpool) {
     		//System.out.println( chainfullcallstacks );
     		mcWriter.writeLine( chainfullcallstacks );
     	}
     	
     	System.out.println("\nsimplechainbugpool(whole chain's lastcallstacks) - " + "has " + simplechainbugpool.size() + " loops (#static codepoints=" + tmpset.size() + ")" );
-    	scWriter.writeLine( simplechainbugpool.size() + " (#static codepoints=" + tmpset.size() + ")" );
+    	scWriter.writeLine( "//" + simplechainbugpool.size() + " (#static codepoints=" + tmpset.size() + ")" );
     	for (String chainfullcallstacks: simplechainbugpool) {
     		System.out.println( chainfullcallstacks );
     		scWriter.writeLine( chainfullcallstacks );
     	}
     	
     	System.out.println("\nmedianbugpool(loop's fullcallstack) - " + "has " + medianbugpool.size() + " loops (#static codepoints=" + tmpset.size() + ")" );
-    	mWriter.writeLine( medianbugpool.size() + " (#static codepoints=" + tmpset.size() + ")" );
+    	mWriter.writeLine( "//" + medianbugpool.size() + " (#static codepoints=" + tmpset.size() + ")" );
     	for (String fullcallstack: medianbugpool) {
     		//System.out.println( fullcallstack );
     		mWriter.writeLine( fullcallstack );
     	}
     	
     	System.out.println("\nsimplebugpool(loop's lastcallstack) - " + "has " + simplebugpool.size() + " loops (#static codepoints=" + tmpset.size() + ")");
-    	sWriter.writeLine( simplebugpool.size() + " (#static codepoints=" + tmpset.size() + ")" );
+    	sWriter.writeLine( "//" + simplebugpool.size() + " (#static codepoints=" + tmpset.size() + ")" );
     	for (String lastcallstack: simplebugpool) {
     		System.out.println( lastcallstack );
     		sWriter.writeLine( lastcallstack );
