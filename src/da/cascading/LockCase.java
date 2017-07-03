@@ -299,6 +299,11 @@ public class LockCase {
     public void dfsForInnerLoopsAndLocks( int x,  int beginIndex, int endIndex, Set<String> outerlocks, int curCascadingLevel, Set<Integer> nextbatchLocks ) {
     	traversedNodes.set( x );
     	
+    	//for testing
+		if (hbg.getNodeOPTY(x).equals(LogType.MsgSending.name())) {
+			System.out.println("JX - DEBUG - MsgSending: " + hbg.getPrintedIdentity(x));
+		}
+    	
     	// check Lock
     	if ( hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()) ) {
 			if ( !ag.isRelevantLock(beginIndex, x) ) {  // yes, it's right
@@ -321,8 +326,9 @@ public class LockCase {
         List<Pair> list = hbg.getEdge().get(x);
         for (Pair pair: list) {
         	int y = pair.destination;
-        	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) )
+        	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) ) {
         		dfsForInnerLoopsAndLocks( y,  beginIndex, endIndex, outerlocks, curCascadingLevel, nextbatchLocks  );
+        	}
         }
     }
     
