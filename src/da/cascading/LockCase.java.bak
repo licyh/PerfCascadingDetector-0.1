@@ -18,7 +18,6 @@ import java.util.TreeSet;
 
 import com.text.TextFileWriter;
 
-import LogClass.LogType;
 import da.graph.AccidentalHBGraph;
 import da.graph.HappensBeforeGraph;
 import da.graph.LogInfoExtractor;
@@ -246,29 +245,28 @@ public class LockCase {
     
     
     // JX - Find affected locks based on 'findNextbatchLocksInDiffThreads' in the same thread
-    // New: find inner (bug) loops and locks, may across multiple threads
     public Set<Integer> findNextbatchLocksInSameThread( Set<Integer> batchLocks, int curCascadingLevel ) {
     	Set<Integer> nextbatchLocks = new TreeSet<Integer>();
 		for (int index: batchLocks) {
 			int beginIndex = index;
-			if ( lockBlocks.get(beginIndex) == null ) continue;
+			if ( lockBlocks.get(beginIndex) == null ) 
+				continue;
 			int endIndex = lockBlocks.get( beginIndex );
 			
 			// for obtainning outerlocks
 			Set<String> outerlocks = null;
 			
-			// tmp // tmp, for replaceing the followings
-	    	traversedNodes.clear();
-			dfsForInnerLoopsAndLocks(beginIndex,  beginIndex, endIndex, outerlocks, curCascadingLevel, nextbatchLocks);
-			
-			
-			//String pidopval0 = hbg.getNodePIDOPVAL0( index );
-			//int loopflag = 0;
-			/*
+			String pidopval0 = hbg.getNodePIDOPVAL0( index );
+			int loopflag = 0;
 			for (int k = beginIndex; k <= endIndex; k++) {         /////////JXXXXXXXXXXX - here seems a big bug, I didn't find into RPC or method call
-				
-				// check Lock
-				if ( hbg.getNodeOPTY(k).equals(LogType.LockRequire.name()) ) {
+				// TODO
+				if ( hbg.getNodeOPTY(k).equals("LoopBegin") ) {
+					loopflag = 1;
+		    		// add to bug pool
+					bugPool.upNodes[curCascadingLevel].put(k, index);
+					bugPool.addLoopBug( k, curCascadingLevel );
+				}
+				if ( hbg.getNodeOPTY(k).equals("LockRequire") ) {
 					if ( !ag.isRelevantLock(index, k) ) {  // yes, it's right
 						if (outerlocks == null) outerlocks = obtainOuterLocks(beginIndex, endIndex);
 						if ( !outerlocks.contains(hbg.getNodePIDOPVAL0(k)) ) {   
@@ -278,55 +276,11 @@ public class LockCase {
 						}
 					}
 				}
-				
-				// check Loop
-				if ( hbg.getNodeOPTY(k).equals(LogType.LoopBegin.name()) ) {
-					//loopflag = 1;
-		    		// add to bug pool
-					bugPool.upNodes[curCascadingLevel].put(k, index);
-					bugPool.addLoopBug( k, curCascadingLevel );
-				}
-				
 			}
-			*/
+
 		}
 		return nextbatchLocks;
     }
-    
-    
-    public void dfsForInnerLoopsAndLocks( int x,  int beginIndex, int endIndex, Set<String> outerlocks, int curCascadingLevel, Set<Integer> nextbatchLocks ) {
-    	traversedNodes.set( x );
-    	
-    	// check Lock
-    	if ( hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()) ) {
-			if ( !ag.isRelevantLock(beginIndex, x) ) {  // yes, it's right
-				if (outerlocks == null) outerlocks = obtainOuterLocks(beginIndex, endIndex);
-				if ( !outerlocks.contains(hbg.getNodePIDOPVAL0(x)) ) {   
-					nextbatchLocks.add( x );
-					bugPool.upNodes[curCascadingLevel].put(x, beginIndex);
-					//jx: it seems no need to check if the LockReuire has LockRelease or not
-				}
-			}
-    	}
-    	
-    	// check Loop
-    	if ( hbg.getNodeOPTY(x).equals(LogType.LoopBegin.name()) ) {
-    		// add to bug pool
-			bugPool.upNodes[curCascadingLevel].put(x, beginIndex);
-			bugPool.addLoopBug( x, curCascadingLevel );
-    	}
-
-        List<Pair> list = hbg.getEdge().get(x);
-        for (Pair pair: list) {
-        	int y = pair.destination;
-        	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) )
-        		dfsTraversing( y, endIndex );
-        }
-    }
-    
-    
-    
-    
     
     
     /**
