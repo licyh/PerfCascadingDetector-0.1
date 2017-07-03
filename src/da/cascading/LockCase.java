@@ -258,13 +258,14 @@ public class LockCase {
 			Set<String> outerlocks = null;
 			
 			// tmp // tmp, for replaceing the followings
+			/*
 	    	traversedNodes.clear();
 			dfsForInnerLoopsAndLocks(beginIndex,  beginIndex, endIndex, outerlocks, curCascadingLevel, nextbatchLocks);
-			
+			*/
 			
 			//String pidopval0 = hbg.getNodePIDOPVAL0( index );
 			//int loopflag = 0;
-			/*
+			
 			for (int k = beginIndex; k <= endIndex; k++) {         /////////JXXXXXXXXXXX - here seems a big bug, I didn't find into RPC or method call
 				
 				// check Lock
@@ -288,7 +289,7 @@ public class LockCase {
 				}
 				
 			}
-			*/
+			
 		}
 		return nextbatchLocks;
     }
