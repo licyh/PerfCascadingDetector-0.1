@@ -108,7 +108,7 @@ public class LogInfoExtractor {
     	// Handle target codes: alltargetitems -> targetCodeBlocks: get targetCodeBlocks by TargetCodeBegin & TargetCodeEnd    	
     	for (int i = 0; i < items.size(); i++) {
     		//print for debug
-    		System.out.println("JX - i=" + i + " - index=" + items.get(i) + " - " + hbg.getNodeOPTY(items.get(i)));
+    		//System.out.println("JX - INFO - i=" + i + " - index=" + items.get(i) + " - " + hbg.getNodeOPTY(items.get(i)));
     		//end-print
     		int iindex = items.get(i);
     		if ( hbg.getNodeOPTY( iindex ).equals("TargetCodeBegin") ) {

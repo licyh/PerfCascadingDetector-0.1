@@ -320,6 +320,7 @@ public class LockCase {
     	if ( hbg.getNodeOPTY(x).equals(LogType.LoopBegin.name()) ) {
     		// add to bug pool
 			bugPool.upNodes[curCascadingLevel].put(x, beginIndex);
+			System.out.println("JX - DEBUG - addLoopBug..");
 			bugPool.addLoopBug( x, curCascadingLevel );
     	}
 
