@@ -1,4 +1,29 @@
 
+I tested 3 deadline-sensitive statements for the 3rd benchmark of HA-4584.
+
+1. HDFS datanode write
+    6 suspicious loops
+- 2: reported bug
+- 4: false positives - small loops
+
+2. heartbeat from datanode to namenode
+    5 suspicious loops
+- 2: one new bug
+- 3: false positives - small loops
+
+3. HDFS namenode write (ie, General write)
+    6 suspicious loops
+- 2: one new bug - PS: This is almost same as the 4th benchmark I am doing, so I am very sure this is a new bug, it is caused by large numbers of block reports waiting for NameNode's handling.
+- 4: false positives 
+- 3: small loops
+- 1: asynchronous write
+
+
+
+
+
+
+
 
 
 ======
