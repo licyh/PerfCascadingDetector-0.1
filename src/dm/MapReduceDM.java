@@ -95,10 +95,10 @@ class MapReduceTransformer extends Transformer {
 	            //added by JX for mr-4576 & mr-2705
 	            || className.startsWith("org.apache.hadoop.filecache.")
 	           ) {
-			if (className.contains("PBClientImpl") ||
-			        className.contains("PBServiceImpl") ||
-				className.contains("org.apache.hadoop.yarn.event.EventHandler")) {
-			      
+			if ( className.contains("PBClientImpl") 
+					|| className.contains("PBServiceImpl") 
+					|| className.contains("org.apache.hadoop.yarn.event.EventHandler") 
+					) {
 			    }
 			else {
 				transformClassForHappensBefore(cl);
@@ -353,7 +353,7 @@ class MapReduceTransformer extends Transformer {
 		
 		    /* lock */   //Added by JX
 		    // added for MR/HDFS   //jx: coz this has lots of locks useless
-		    if (className.startsWith("org.apache.hadoop.ipc.")) {  
+		    if ( !className.startsWith("org.apache.hadoop.ipc.") ) {  
 		    	methodUtil.insertSyncMethod(logClass, lockRequireLog, logClass, lockReleaseLog);
 		    	methodUtil.insertMonitorInst(logClass, lockRequireLog, logClass, lockReleaseLog);
 		    	methodUtil.insertRWLock(logClass, rWLockCreateLog);
