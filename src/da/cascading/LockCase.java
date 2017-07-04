@@ -43,7 +43,7 @@ public class LockCase {
     
 
     // for results
-    boolean ONLY_LOCK_RELATED_BUGS = true;                  //default
+    boolean ONLY_LOCK_RELATED_BUGS = false;                  //default
     int CASCADING_LEVEL = 10;                               //minimum:2; default:3;
 
     BugPool bugPool;
@@ -176,22 +176,18 @@ public class LockCase {
             System.out.println("batch #" + (++tmpbatch) + ":#locks=" + curbatchLocks.size() + " <--- #" + tmpbatch + ".5:#locks=" + nextbatchLocks.size() );
         
             // Debugging
-            /*
             if ( tmpflag == 0 && curCascadingLevel == 2 )
     			printLocks(nextbatchLocks);
-            */
                 
             // Find affected locks based on 1 in the same thread
     		curbatchLocks = findNextbatchLocksInSameThread( nextbatchLocks, curCascadingLevel );
     		System.out.println("batch #" + (tmpbatch+1) + ":#intermediate locks=" + curbatchLocks.size()  );
     		
     		// Debugging
-    		/*
             if ( tmpflag == 0 && curCascadingLevel == 2 ) {
             	printLocks(curbatchLocks);
     			tmpflag = 1;
             }
-            */
     		
         	if ( curbatchLocks.size() <= 0 ) {
     			System.out.println( "JX - INFO - CascadingBugDetection - finished normally" );
