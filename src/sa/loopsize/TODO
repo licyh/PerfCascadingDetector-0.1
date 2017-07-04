@@ -1,0 +1,5 @@
+#1.getstatic 
+3 v3 = getstatic < Application, LB, b, <Primordial,I> >
+4 conditional branch(ge, to iindex=13) v9,v3
+
+#2.derived class and its parent, method override 
