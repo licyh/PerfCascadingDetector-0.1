@@ -1,14 +1,8 @@
-CL2: org.apache.hadoop.hdfs.server.namenode.FSDirectory-mkdirs-947;
-CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog$EditLogFileOutputStream-write-154;
-CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-908;
-CL2: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-processReport-3440;
-CL2: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-processReport-3443;
-CL2: org.apache.hadoop.hdfs.server.namenode.LeaseManager-checkLeases-380;
-CL3: org.apache.hadoop.hdfs.server.namenode.FSDirectory-mkdirs-947;
-CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog$EditLogFileOutputStream-write-154;
-CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-908;
-CL3: org.apache.hadoop.hdfs.server.namenode.LeaseManager-checkLeases-380;
-CL4: org.apache.hadoop.hdfs.server.namenode.FSDirectory-mkdirs-947;
-CL4: org.apache.hadoop.hdfs.server.namenode.FSEditLog$EditLogFileOutputStream-write-154;
-CL4: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-908;
-//summary - 13(#static codepoints=6) from 58
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-resolveHosts-1145;
+CL2: org.apache.hadoop.yarn.server.resourcemanager.scheduler.SchedulerApp-pullNewlyAllocatedContainers-269;
+CL2: org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler-assignContainer-530;
+CL2: org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler-assignContainers-353;
+CL2: org.apache.hadoop.yarn.service.AbstractService-changeState-113;
+CL3: org.apache.hadoop.yarn.service.AbstractService-changeState-113;
+CL4: org.apache.hadoop.yarn.service.AbstractService-changeState-113;
+//summary - 7(#static codepoints=5) from 52

@@ -17,6 +17,7 @@ import java.util.TreeSet;
 import com.text.TextFileReader;
 import com.text.TextFileWriter;
 
+import sa.loop.LoopAnalyzer;
 import sa.loop.LoopInfo;
 import sa.wala.WalaUtil;
 
@@ -24,19 +25,24 @@ import sa.wala.WalaUtil;
 // time-consuming loop pruning/identifying
 public class StaticPruning {
 	
-	Map<Integer, List<LoopInfo>> functions_with_loops;  // map: function CGNode id -> loops, ONLY covers functions that really involve loops
+	LoopAnalyzer loopAnalyzer;
+	
 	String daDir;
+	// input
 	String medianchain = "output/medianchain_bugpool.txt";      //read
 	String simplechain = "output/simplechain_bugpool.txt";      //read
 	String median = "output/median_bugpool.txt";                //read
 	String simple = "output/simple_bugpool.txt";                //read   
+	// output
 	String FINALmedianchain = "output/FINAL_medianchain_bugpool.txt";      //output
 	String FINALsimplechain = "output/FINAL_simplechain_bugpool.txt";      //output
 	String FINALmedian = "output/FINAL_median_bugpool.txt";                //output
 	String FINALsimple = "output/FINAL_simple_bugpool.txt";                //output
     
-    StaticPruning(Map<Integer, List<LoopInfo>> functions_with_loops, String daDir) {
-		this.functions_with_loops = functions_with_loops;
+	
+	
+    StaticPruning(LoopAnalyzer loopAnalyzer, String daDir) {
+    	this.loopAnalyzer = loopAnalyzer;
 		this.daDir = daDir;
 	}
 	
@@ -51,6 +57,7 @@ public class StaticPruning {
 	
 	
 	
+	
 	public void findTimeConsumingLoops() throws IOException {
 		findTimeConsumingLoopsForAFile(medianchain, FINALmedianchain);
 		findTimeConsumingLoopsForAFile(simplechain, FINALsimplechain);
@@ -58,6 +65,7 @@ public class StaticPruning {
 		findTimeConsumingLoopsForAFile(simple, FINALsimple);
 	}
 
+	
 	public void findTimeConsumingLoopsForAFile(String infile, String outfile) throws IOException {
 		System.out.println("\nJX - INFO - findTimeConsumingLoopsForAFile:" + outfile);
 		List<String> loopClasses = new ArrayList<String>();
@@ -88,14 +96,16 @@ public class StaticPruning {
     	System.out.println("JX - successfully write " + writer.getValidNumberOfLines() + " (#static codepoints=" + tmpset.size() + ") time-consuming Bug Loops into " + outfilepath);
 	}
 	
+	
 	public boolean isTimeConsumingLoop(String codepoint) {
 		String[] strs = codepoint.trim().split("-");
 		String loopclass = strs[0];
 		String loopmethod = strs[1];
 		int loopline = Integer.parseInt(strs[2]);
 		//System.out.println("****" + loopclass + "**" + loopmethod + "**" + loopline + "****");
-		for (List<LoopInfo> loops: functions_with_loops.values() )
-			for (LoopInfo loop: loops)
+		
+		for (CGNodeInfo cgNodeInfo: loopAnalyzer.getLoopCGNodes())
+			for (LoopInfo loop: cgNodeInfo.getLoops()) {
 				if (loop.numOfTcOperations_recusively > 0) {
 					String classname = WalaUtil.formatClassName( loop.getCGNode().getMethod().getDeclaringClass().getName().toString() );
 					String methodname = loop.getCGNode().getMethod().getName().toString();
@@ -105,6 +115,8 @@ public class StaticPruning {
 						return true;
 					}
 				}
+			}
+		
 		return false;
 	}
 	

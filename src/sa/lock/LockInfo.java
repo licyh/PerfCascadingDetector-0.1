@@ -12,7 +12,6 @@ import com.ibm.wala.ssa.SSAInstruction;
 import com.ibm.wala.ssa.SSAInvokeInstruction;
 import com.ibm.wala.ssa.SSAMonitorInstruction;
 
-import sa.lockloop.JXLocks;
 
 
 

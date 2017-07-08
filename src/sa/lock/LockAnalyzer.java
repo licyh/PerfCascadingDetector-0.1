@@ -2,6 +2,7 @@ package sa.lock;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,6 +30,8 @@ import com.ibm.wala.ssa.SSALoadMetadataInstruction;
 import com.ibm.wala.ssa.SSAMonitorInstruction;
 import com.ibm.wala.ssa.SSANewInstruction;
 
+import sa.lockloop.CGNodeInfo;
+import sa.lockloop.CGNodeList;
 import sa.loop.LoopInfo;
 import sa.wala.IRUtil;
 import sa.wala.WalaAnalyzer;
@@ -37,9 +40,22 @@ import sa.wala.WalaAnalyzer;
 
 public class LockAnalyzer {
 	
+	// wala
 	WalaAnalyzer walaAnalyzer;
 	CallGraph cg;
 	Path outputDir;
+	// database
+	CGNodeList cgNodeList = null;  	//from outside
+	
+	// results - couldn't use cgNodeList directly, because we maybe need to modify cgNodeList when using it
+	ArrayList<CGNodeInfo> lockCGNodes = new ArrayList<CGNodeInfo>();   //entry in CGNodeList
+	int nLocks = 0;
+	int nLockingCGNodes = 0;
+	int nLockGroups = 0; 
+	//tmp
+	int nFiltered = 0;
+	
+	
 	
 	// Lock Names
 	public static List<String> synchronizedtypes = Arrays.asList("synchronized_method", "synchronized_lock");
@@ -54,43 +70,70 @@ public class LockAnalyzer {
 		put("readLockInterruptibly", "readUnlock");
 		put("lockInterruptibly", "unlock");
 	}};
-	
-	// Results
-	// map: function CGNode id -> locks, ONLY covers functions that really involve locks 
-	Map<Integer, List<LockInfo>> functions_with_locks = new HashMap<Integer, List<LockInfo>>();
-	int nLocks = 0;
-	int nLockingFuncs = 0;
-	
-	//tmp
-	int nFiltered = 0;
+
 	
 	
-	public LockAnalyzer(WalaAnalyzer walaAnalyzer) {
+
+	
+	public LockAnalyzer(WalaAnalyzer walaAnalyzer, CGNodeList cgNodeList) {
 		this.walaAnalyzer = walaAnalyzer;
 		this.cg = this.walaAnalyzer.getCallGraph();
 		this.outputDir = this.walaAnalyzer.getTargetDirPath();
+		this.cgNodeList = cgNodeList;
+	}
+	
+	/** ONLY used for independently call 'findLocksForCGNode(CGNode f)' */
+	public LockAnalyzer(WalaAnalyzer walaAnalyzer) {
+		this(walaAnalyzer, null);
 	}
 	
 	// Please call doWork() manually
 	public void doWork() {
 		System.out.println("\nJX - INFO - LockAnalyzer: doWork...");
+		if (this.cgNodeList == null) {
+			System.out.println("\nJX - ERROR - LockAnalyzer: doWork - " + "this.cgNodeList == null");
+			return;
+		}
+		
 		findLocksForAllCGNodes();      //JX - can be commented    
-		printStatusOfResults();
+		printResultStatus();
+		analyzeAllLocks();
 	}
 	
 	
-	
-	public Map<Integer, List<LockInfo>> getResults() {
-		return this.functions_with_locks;
+	public ArrayList<CGNodeInfo> getLockCGNodes() { 
+		return this.lockCGNodes;
 	}
+	
 	
 	public int getNLocks() {
 		return this.nLocks;
 	}
 	
-	public int getNLockingFuncs() {
-		return this.nLockingFuncs;
+	
+	public int getNLockingCGNodes() {
+		return this.nLockingCGNodes;
 	}
+	
+	
+	public int getNLockGroups() {
+		return this.nLockGroups;
+	}
+	
+	
+	//
+	public Path getOutputDir(Path outputDir) {
+		return this.outputDir;
+	}
+	
+	public void setOutputDir(String outputDirStr) {
+		setOutputDir( Paths.get(outputDirStr) );
+	}
+	public void setOutputDir(Path outputDir) {
+		this.outputDir = outputDir;
+	}
+	
+	
 	
 	//===============================================================================================
 	//++++++++++++++++++++++++++++++++++++++++ Find Locks +++++++++++++++++++++++++++++++++++++++++++
@@ -104,19 +147,19 @@ public class LockAnalyzer {
 		System.out.println("JX - INFO - LockAnalyzer: findLocksForAllCGNodes");
     
 		for (Iterator<? extends CGNode> it = cg.iterator(); it.hasNext(); ) {
-			CGNode f = it.next();
-			if ( !walaAnalyzer.isInPackageScope(f) ) continue;
+			CGNode cgNode = it.next();
+			if ( !walaAnalyzer.isInPackageScope(cgNode) ) continue;
 	      
-			int id = f.getGraphNodeId();    
-			String short_funcname = f.getMethod().getName().toString();
+			int id = cgNode.getGraphNodeId();    
+			String short_funcname = cgNode.getMethod().getName().toString();
 			if (locktypes.contains(short_funcname) || unlocktypes.contains(short_funcname)) //filter lock/unlock functions
 				continue;
-			List<LockInfo> locks = findLocksForCGNode(f);
+			List<LockInfo> locks = findLocksForCGNode(cgNode);
 			if (locks.size() > 0) {
 				boolean verified = true;               //filter those functions cannot be figured out, ie, including "LockInfo.end_bb == -1", eg, readLock - NO readUnlock
 				for (Iterator<LockInfo> it_lock = locks.iterator(); it_lock.hasNext(); ) {
 					if (it_lock.next().end_bb == -1) {
-						System.err.println("Filtered function: " + f.getMethod().getSignature());
+						System.err.println("Filtered function: " + cgNode.getMethod().getSignature());
 						nFiltered++;
 						verified = false;
 						break;
@@ -124,10 +167,17 @@ public class LockAnalyzer {
 				}
 				if (!verified)
 					continue;
-				functions_with_locks.put(id, locks);
+				cgNodeList.forceGet(id).setLocks(locks);
 			}
 		}//for
-		nLockingFuncs = functions_with_locks.size();
+	
+		// Get nLocks & nLockingCGNodes
+		for (CGNodeInfo cgNodeInfo: cgNodeList.values() ) {
+	    	if ( !cgNodeInfo.hasLocks() ) continue;
+	    	lockCGNodes.add( cgNodeInfo );
+	    	nLocks += cgNodeInfo.getLocks().size();
+	    	nLockingCGNodes ++;
+		}
 	}
 	  
 	  
@@ -280,9 +330,9 @@ public class LockAnalyzer {
 	    return locks;
 	}
 	   
+	
 	  
-	  
-	public void printStatusOfResults() {
+	public void printResultStatus() {
 	    // Print the status
 		System.out.println("JX - INFO - LockAnalyzer: The status of results");
 		int nPackageFuncs = walaAnalyzer.getNPackageFuncs();
@@ -293,25 +343,25 @@ public class LockAnalyzer {
 		
 	    int N_LOCKS = 20;
 	    int[] count = new int[N_LOCKS];
-	    count[0] = nPackageFuncs - nLockingFuncs;
-	    for (Iterator<Integer> it = functions_with_locks.keySet().iterator(); it.hasNext(); ) {
-		      int id = it.next();
-		      List<LockInfo> locks = functions_with_locks.get(id);
-		      int size = locks.size();
-		      nLocks += size;
-		      //System.out.println(cg.getNode(id).getMethod().getSignature()); 
-		      if (size < N_LOCKS) count[size]++;
-		      /*
-		      if (size == 5) {
+	    count[0] = nPackageFuncs - nLockingCGNodes;
+	    
+	    for (CGNodeInfo cgNodeInfo: lockCGNodes ) {
+	    	List<LockInfo> locks = cgNodeInfo.getLocks();
+		    int size = locks.size();
+		    //System.out.println(cg.getNode(id).getMethod().getSignature()); 
+		    if (size < N_LOCKS) count[size]++;
+		    /*
+		    if (size == 5) {
 		        System.out.println(cg.getNode(id).getMethod().getSignature());
 		        System.out.println(locks);
-		      }
-		      */
+		    }
+		    */
 	    }
+	    
 	    System.out.println("The Status of Locks in All Functions:\n" 
 	        + "#scanned functions: " + nPackageFuncs 
 	        + " out of #Total:" + nTotalFuncs + "(#AppFuncs:" + nApplicationFuncs + "+#PremFuncs:" + nPremordialFuncs +")");
-	    System.out.println("#functions with locks: " + nLockingFuncs + "(" + nLocks + "locks)" + " (excluding " + nFiltered + " filtered functions that have locks)");
+	    System.out.println("#functions with locks: " + nLockingCGNodes + "(" + nLocks + "locks)" + " (excluding " + nFiltered + " filtered functions that have locks)");
 	    // distribution of #locks
 	    System.out.println("//distribution of #locks");
 	    for (int i = 0; i < N_LOCKS; i++)
@@ -319,15 +369,14 @@ public class LockAnalyzer {
 	    System.out.println();
 	    // distribution of lock types
 	    Map<String, Integer> numOfLockTypes = new HashMap<String, Integer>();
-	    for (Iterator<Integer> it = functions_with_locks.keySet().iterator(); it.hasNext(); ) {
-		    int id = it.next();
-		    List<LockInfo> locks = functions_with_locks.get(id);
-		    for (Iterator<LockInfo> it_2 = locks.iterator(); it_2.hasNext(); ) {
-			     LockInfo lock = it_2.next();
-			     if (!numOfLockTypes.containsKey(lock.lock_type))
-			          numOfLockTypes.put(lock.lock_type, 1);
-			     else
-			          numOfLockTypes.put(lock.lock_type, numOfLockTypes.get(lock.lock_type)+1);
+	    
+	    for (CGNodeInfo cgNodeInfo: lockCGNodes ) {
+	    	List<LockInfo> locks = cgNodeInfo.getLocks();
+	    	for (LockInfo lock: locks) {
+			    if (!numOfLockTypes.containsKey(lock.lock_type))
+			         numOfLockTypes.put(lock.lock_type, 1);
+			    else
+			         numOfLockTypes.put(lock.lock_type, numOfLockTypes.get(lock.lock_type)+1);
 		    }
 	    }
 	    System.out.println("//distribution of lock types");
@@ -340,6 +389,8 @@ public class LockAnalyzer {
 	}
 	  
 
+	
+	
 	  int print_num = 0;
 	  /**
 	   * Note: track SSAs Back To Get Precise Lock For SyncCS
@@ -647,9 +698,10 @@ public class LockAnalyzer {
 	  
 	  public void printFunctionsWithLocks() {
 	    //print all locks for those functions with locks
-	    for (Iterator<Integer> it = functions_with_locks.keySet().iterator(); it.hasNext(); ) {
+	    for (Iterator<Integer> it = cgNodeList.keySet().iterator(); it.hasNext(); ) {
 	      int id = it.next();
-	      List<LockInfo> locks = functions_with_locks.get(id);
+	      if ( !cgNodeList.get(id).hasLocks() ) continue;
+	      List<LockInfo> locks = cgNodeList.get(id).getLocks();
 	      System.out.println(cg.getNode(id).getMethod().getSignature()); 
 	      printLocks(locks);
 	    }
@@ -665,6 +717,30 @@ public class LockAnalyzer {
 	  }
 	  
 	  
+	
+	  
+	public void analyzeAllLocks() {
+	    System.out.println("JX - INFO - LockAnalyzer: analyzeAllLocks");
+
+	    //for test
+	    Set<String> set_of_locks = new TreeSet<String>();    // for test, TreeSet is ordered by Java
+	    
+	    for (CGNodeInfo cgNodeInfo: lockCGNodes) {
+	    	for (LockInfo lock: cgNodeInfo.getLocks()) {
+	    		lock.lock_identity = "ClassName- " + lock.lock_class + " LockName- " + lock.lock_name;
+	    		set_of_locks.add( lock.lock_identity );
+	    	}
+	    }
+	    nLockGroups = set_of_locks.size();
+	    
+	    //Get results
+	    System.out.println("#Total Locks = " + nLocks);
+	    System.out.println("#Groups of total Locks (ie, real number): " + nLockGroups);
+	    //for (String str: set_of_locks)
+	    //  System.err.println( str );
+	    System.out.println();
+	}
+		 
 	 
 	  
 }

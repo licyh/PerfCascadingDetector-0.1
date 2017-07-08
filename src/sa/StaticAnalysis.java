@@ -1,6 +1,6 @@
 package sa;
 
-import sa.lockloop.JXLocks;
+import sa.lockloop.LLAnalysis;
 import sa.wala.WalaAnalyzer;
 
 public class StaticAnalysis {
@@ -30,7 +30,7 @@ public class StaticAnalysis {
 		System.out.println("JX - INFO - StaticAnalysis.doWork");
 		WalaAnalyzer walaAnalyzer = new WalaAnalyzer(jarsDir);
 		
-		JXLocks jxLocks = new JXLocks(walaAnalyzer, projectDir);
+		LLAnalysis jxLocks = new LLAnalysis(walaAnalyzer, projectDir);
 	}
 	
 	

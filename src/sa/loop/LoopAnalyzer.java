@@ -28,6 +28,8 @@ import com.ibm.wala.util.intset.IntIterator;
 import com.ibm.wala.util.intset.IntPair;
 import com.text.TextFileWriter;
 
+import sa.lockloop.CGNodeInfo;
+import sa.lockloop.CGNodeList;
 import sa.loop.LoopInfo;
 import sa.wala.IRUtil;
 import sa.wala.WalaAnalyzer;
@@ -37,30 +39,44 @@ import sa.wala.WalaAnalyzer;
 
 public class LoopAnalyzer {
 
+	// wala
 	WalaAnalyzer walaAnalyzer;
 	CallGraph cg;
-	Path outputDir;
-	  
-	// Results
-	// map: function CGNode id -> loops, ONLY covers functions that really involve loops  
-	Map<Integer, List<LoopInfo>> functions_with_loops = new HashMap<Integer, List<LoopInfo>>();
+	Path outputDir;	  
+	// database
+	CGNodeList cgNodeList = null;   // from outside
+	
+	// resulsts
+	ArrayList<CGNodeInfo> loopCGNodes = new ArrayList<CGNodeInfo>();   //entry in CGNodeList
 	int nLoops = 0;                 //the total number of loops
-	int nLoopingFuncs = 0;          //how many functions that contain loops
+	int nLoopingCGNodes = 0;          //how many functions that contain loops
 	
 	
-	
-	public LoopAnalyzer(WalaAnalyzer walaAnalyzer) {
+
+
+	public LoopAnalyzer(WalaAnalyzer walaAnalyzer, CGNodeList cgNodeList) {
 		this.walaAnalyzer = walaAnalyzer;
 		this.cg = this.walaAnalyzer.getCallGraph();
 		this.outputDir = this.walaAnalyzer.getTargetDirPath();
+		this.cgNodeList = cgNodeList;
+	}
+	
+	/** ONLY used for independently calling 'findLoopsForCGNode(xx)' */
+	public LoopAnalyzer(WalaAnalyzer walaAnalyzer) {
+		this(walaAnalyzer, null);
 	}
 	
 	// Please call doWork() manually
 	public void doWork() {
 		System.out.println("\nJX - INFO - LoopAnalyzer: doWork...");
+		if (this.cgNodeList == null) {
+			System.out.println("\nJX - ERROR - LoopAnalyzer: doWork - " + "this.cgNodeList == null");
+			return;
+		}
+		
 		try {
 			findLoopsForAllCGNodes();
-			printStatusOfResults();
+			printResultStatus();
 			writeResultsToFile();   //JX - write to local files. NO necessary, can be commented
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -68,17 +84,17 @@ public class LoopAnalyzer {
 	}
 	
 	
-	
-	public Map<Integer, List<LoopInfo>> getResults() {
-		return this.functions_with_loops;
+	public ArrayList<CGNodeInfo> getLoopCGNodes() { 
+		return this.loopCGNodes;
 	}
+	
 	
 	public int getNLoops() {
 		return this.nLoops;
 	}
 	
-	public int getNLoopingFuncs() {
-		return this.nLoopingFuncs;
+	public int getNLoopingCGNodes() {
+		return this.nLoopingCGNodes;
 	}
 
 	public Path getOutputDir(Path outputDir) {
@@ -111,11 +127,16 @@ public class LoopAnalyzer {
 	        List<LoopInfo> loops = findLoopsForCGNode(f);
 	        if (loops.size() > 0) {
 	        	int id = f.getGraphNodeId();
-	        	functions_with_loops.put(id, loops);
-	        	this.nLoops += loops.size();
+	        	cgNodeList.forceGet(id).setLoops(loops);
 	        }
 	    }
-	    nLoopingFuncs = functions_with_loops.size();
+	    
+		for (CGNodeInfo cgNodeInfo: cgNodeList.values() ) {
+	    	if ( !cgNodeInfo.hasLoops() ) continue;
+	    	loopCGNodes.add( cgNodeInfo );
+	    	nLoops += cgNodeInfo.getLoops().size();
+	    	nLoopingCGNodes ++;
+		}
 	}
 	  
 	  
@@ -176,7 +197,7 @@ public class LoopAnalyzer {
 	}
 	 
 	
-	public void printStatusOfResults() {
+	public void printResultStatus() {
 	    // Print the status
 		System.out.println("JX - INFO - LoopAnalyzer: The status of results");
 		int nPackageFuncs = walaAnalyzer.getNPackageFuncs();
@@ -187,15 +208,17 @@ public class LoopAnalyzer {
 	    
 	    int N_LOOPS = 20;
 	    int[] count = new int[N_LOOPS];
-	    count[0] = nPackageFuncs - nLoopingFuncs;
-	    for (Iterator<List<LoopInfo>> it = functions_with_loops.values().iterator(); it.hasNext(); ) {
-	    	int size = it.next().size();
+	    count[0] = nPackageFuncs - nLoopingCGNodes;
+	    for (CGNodeInfo cgNodeInfo: cgNodeList.values()) {
+	    	if ( !cgNodeInfo.hasLoops() ) continue;
+	    	List<LoopInfo> loops = cgNodeInfo.getLoops();
+	    	int size = loops.size();
 	    	if (size < N_LOOPS) count[size]++;
 	    }
 	    System.out.println("The Status of Loops in All Functions:\n" 
 	        + "#scanned functions: " + nPackageFuncs 
 	        + " out of #Total:" + nTotalFuncs + "(#AppFuncs:" + nApplicationFuncs + "+#PremFuncs:" + nPremordialFuncs +")");    
-	    System.out.println("#functions with loops: " + nLoopingFuncs + " (#loops:" + nLoops + ")");
+	    System.out.println("#functions with loops: " + nLoopingCGNodes + " (#loops:" + nLoops + ")");
 	    System.out.println("//distribution of #loops");
 	    for (int i = 0; i < N_LOOPS; i++)
 	      System.out.print("#" + i + ":" + count[i] + ", ");
@@ -203,7 +226,7 @@ public class LoopAnalyzer {
 	    // Print all result loops for test
 	    // Print all loops - for test
 	  	/*
-	  	bufwriter.write( nLoopingFuncs + " " + nLoops + "\n" );
+	  	bufwriter.write( nLoopingCGNodes + " " + nLoops + "\n" );
 	    for (List<LoopInfo> loops: functions_with_loops.values()) {
 	      //System.err.println(loops.get(0).function.getMethod().getSignature());
 	      bufwriter.write( loops.get(0).function.getMethod().getSignature() + " " );
@@ -235,21 +258,27 @@ public class LoopAnalyzer {
 	    // ps: it will print ALL if without 'package-scope.txt'
 	    int nfuncsInScope = 0;
 	    int nloopsInScope = 0;
-	    for (List<LoopInfo> loops: functions_with_loops.values())
-	    	if ( walaAnalyzer.isInPackageScope(loops.get(0).cgNode) ) {
-	    		nfuncsInScope ++;
-	    		nloopsInScope += loops.size();
-	    	}
+	    for (CGNodeInfo cgNodeInfo: cgNodeList.values()) {
+	    	if ( !cgNodeInfo.hasLoops() ) continue;
+	    	List<LoopInfo> loops = cgNodeInfo.getLoops();
+	    	if ( !walaAnalyzer.isInPackageScope(loops.get(0).cgNode) ) continue;
+	    	nfuncsInScope ++;
+	    	nloopsInScope += loops.size();
+    	}
 	    writer.writeLine("//#functions containing loops In Scope     #loops totally");
 	    writer.writeLine( nfuncsInScope + " " + nloopsInScope );
-	    for (List<LoopInfo> loops: functions_with_loops.values())
-	    	if ( walaAnalyzer.isInPackageScope(loops.get(0).cgNode) ) {
-	    		writer.write( loops.get(0).cgNode.getMethod().getSignature() + " " );
-	    		writer.write( loops.size() + " " );
-	    	    for (LoopInfo loop: loops)
-	    	    	writer.write( loop.line_number + " " );
-	    	    writer.write( "\n" );
-	    	}
+	    
+	    for (CGNodeInfo cgNodeInfo: cgNodeList.values()) {
+	    	if ( !cgNodeInfo.hasLoops() ) continue;
+	    	List<LoopInfo> loops = cgNodeInfo.getLoops();
+	    	if ( !walaAnalyzer.isInPackageScope(loops.get(0).cgNode) ) continue;
+	    	
+    		writer.write( loops.get(0).cgNode.getMethod().getSignature() + " " );
+    		writer.write( loops.size() + " " );
+    	    for (LoopInfo loop: loops)
+    	    	writer.write( loop.line_number + " " );
+    	    writer.write( "\n" );
+    	}
 	    writer.close();
 	    
         System.out.println( "JX - INFO - Successfully write " + nLoops + " loops into " + loopfile.toString() );

@@ -1,4 +1,4 @@
-package sa.lockloop.tc;
+package sa.loop;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,8 +32,12 @@ public class IOLoopUtil {
 	
 	
 	public IOLoopUtil(String jarsDir) {
-		this.jarsDirPath = Paths.get(jarsDir);
-		this.systemName = Benchmarks.resolveSystem(jarsDir);
+		this( Paths.get(jarsDir) );
+	}
+	
+	public IOLoopUtil(Path jarsDirPath) {
+		this.jarsDirPath = jarsDirPath;
+		this.systemName = Benchmarks.resolveSystem( jarsDirPath.toString() );
 		doWork();
 	}
 	

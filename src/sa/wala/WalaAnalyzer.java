@@ -62,6 +62,7 @@ import com.ibm.wala.util.io.FileProvider;
 import com.ibm.wala.util.strings.StringStuff;
 import com.ibm.wala.viz.DotUtil;
 import com.ibm.wala.viz.PDFViewUtil;
+import com.text.TextFileReader;
 
 import sa.wala.util.PDFCallGraph;
 import sa.wala.util.PDFTypeHierarchy;
@@ -169,6 +170,12 @@ public class WalaAnalyzer {
     	}
     }
 
+    
+    
+    
+    /********************************************************************************
+     * JX - Functions Region
+     *******************************************************************************/
     
     private String getAllJars() {
 	    // Get all *.jar Files, format like "jarpath1:jarpath2:jarpath3:xxx"
@@ -286,46 +293,44 @@ public class WalaAnalyzer {
     	System.out.println("JX - INFO - WalaAnalyzer: readPackageScope");
     	String filepath = Paths.get(dirpath.toString(), "package-scope.txt").toString();
 
-    	BufferedReader bufreader;
-    	String tmpline;
     	File f = new File( filepath );
 	  
-    	if (f.exists()) {
-    		try {
-    			bufreader = new BufferedReader( new FileReader( f ) );
-    			tmpline = bufreader.readLine();    // the 1st line is useless
-    			while ( (tmpline = bufreader.readLine()) != null ) {
-    				String[] strs = tmpline.trim().split("\\s+");
-    				if ( tmpline.trim().length() > 0 ) {
-    					packageScopePrefixes.add( strs[0] );
-    				}
-    			}
-    			bufreader.close();
-    		} catch (Exception e) {
-    			// TODO Auto-generated catch block
-    			System.out.println("JX - ERROR - when reading package-scpoe.txt files");
-    			e.printStackTrace();
-    		}
-    		System.out.print("NOTICE - successfully read the 'package-scope.txt' file as SCOPE, including:");
-    		for (String str: packageScopePrefixes)
-    			System.out.print( " " + str );
-    		System.out.println();
-    	}
-    	else {
+    	if ( !f.exists() ) {
     		System.out.println("NOTICE - not find the 'package-scope.txt' file, so SCOPE is ALL methods!!");
+    		return;
     	}
+
+    	TextFileReader reader;
+    	String tmpline;
+		try {
+			reader = new TextFileReader(filepath);
+			while ( (tmpline = reader.readLine()) != null ) {
+				String[] strs = tmpline.split("\\s+");
+				packageScopePrefixes.add( strs[0] );
+			}
+			reader.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("JX - ERROR - when reading package-scpoe.txt files");
+			e.printStackTrace();
+		}
+		System.out.print("NOTICE - successfully read the 'package-scope.txt' file as SCOPE, including:");
+		for (String str: packageScopePrefixes)
+			System.out.print( " " + str );
+		System.out.println();
+	
     }
   
     
     // must satisfy "isApplicationAndNonNativeMethod" first
-    public boolean isInPackageScope(CGNode f) {
+    public boolean isInPackageScope(CGNode cgNode) {
     	// added 
-    	if ( !isApplicationAndNonNativeMethod(f) )
+    	if ( !isApplicationAndNonNativeMethod(cgNode) )
     		return false;
     	// if without 'package-scope.txt'
     	if (packageScopePrefixes.size() == 0)
     		return true;
-    	String signature = f.getMethod().getSignature();
+    	String signature = cgNode.getMethod().getSignature();
     	for (String str: packageScopePrefixes)
     		if (signature.startsWith(str))
     			return true;

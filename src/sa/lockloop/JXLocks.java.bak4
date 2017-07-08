@@ -177,7 +177,7 @@ public class JXLocks {
 			loopAnalyzer.doWork();
 			functions_with_loops = loopAnalyzer.getResults();
 			
-			//findLoopingLockingFunctions();
+			findLoopingLockingFunctions();
 	      
 			// Phase 2 - deal with loops
 			findNestedLoopsInLoops();

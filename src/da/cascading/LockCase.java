@@ -250,42 +250,12 @@ public class LockCase {
 			if ( lockBlocks.get(beginIndex) == null ) continue;
 			int endIndex = lockBlocks.get( beginIndex );
 			
-			// for obtainning outerlocks
+			// for obtaining outerlocks & dfs
 			Set<String> outerlocks = null;
-			
-			// tmp // tmp, for replaceing the followings
 	    	traversedNodes.clear();
+	    	
+	    	// dfs from beginIndex
 			dfsForInnerLoopsAndLocks(beginIndex,  beginIndex, endIndex, outerlocks, curCascadingLevel, nextbatchLocks);
-			
-			
-			//String pidopval0 = hbg.getNodePIDOPVAL0( index );
-			//int loopflag = 0;
-			
-			/*
-			for (int k = beginIndex; k <= endIndex; k++) {         /////////JXXXXXXXXXXX - here seems a big bug, I didn't find into RPC or method call
-				
-				// check Lock
-				if ( hbg.getNodeOPTY(k).equals(LogType.LockRequire.name()) ) {
-					if ( !ag.isRelevantLock(index, k) ) {  // yes, it's right
-						if (outerlocks == null) outerlocks = obtainOuterLocks(beginIndex, endIndex);
-						if ( !outerlocks.contains(hbg.getNodePIDOPVAL0(k)) ) {   
-							nextbatchLocks.add( k );
-							bugPool.upNodes[curCascadingLevel].put(k, index);
-							//jx: it seems no need to check if the LockReuire has LockRelease or not
-						}
-					}
-				}
-				
-				// check Loop
-				if ( hbg.getNodeOPTY(k).equals(LogType.LoopBegin.name()) ) {
-					//loopflag = 1;
-		    		// add to bug pool
-					bugPool.upNodes[curCascadingLevel].put(k, index);
-					bugPool.addLoopBug( k, curCascadingLevel );
-				}
-				
-			}
-			*/
 		}
 		return nextbatchLocks;
     }
@@ -331,8 +301,6 @@ public class LockCase {
     
     
     
-    
-    
     /**
      * obtain all of outer-layer locks for the current lock block of (beginIndex,endIndex)
      * Return - Set<"PIDOPVAL0">
@@ -364,7 +332,34 @@ public class LockCase {
 
 
 
+//String pidopval0 = hbg.getNodePIDOPVAL0( index );
+//int loopflag = 0;
 
+/*
+for (int k = beginIndex; k <= endIndex; k++) {         /////////JXXXXXXXXXXX - here seems a big bug, I didn't find into RPC or method call
+	
+	// check Lock
+	if ( hbg.getNodeOPTY(k).equals(LogType.LockRequire.name()) ) {
+		if ( !ag.isRelevantLock(index, k) ) {  // yes, it's right
+			if (outerlocks == null) outerlocks = obtainOuterLocks(beginIndex, endIndex);
+			if ( !outerlocks.contains(hbg.getNodePIDOPVAL0(k)) ) {   
+				nextbatchLocks.add( k );
+				bugPool.upNodes[curCascadingLevel].put(k, index);
+				//jx: it seems no need to check if the LockReuire has LockRelease or not
+			}
+		}
+	}
+	
+	// check Loop
+	if ( hbg.getNodeOPTY(k).equals(LogType.LoopBegin.name()) ) {
+		//loopflag = 1;
+		// add to bug pool
+		bugPool.upNodes[curCascadingLevel].put(k, index);
+		bugPool.addLoopBug( k, curCascadingLevel );
+	}
+	
+}
+*/
 
 
 
