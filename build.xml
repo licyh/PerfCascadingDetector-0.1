@@ -105,6 +105,7 @@
 	    <target name="compile-sa" depends="prepare, compile-com" description="compile static analysiser">
             <javac srcdir="${src.sa.dir}" destdir="${build.classes}" includeantruntime="false">
                 <classpath refid="sa.classpath" />
+                <exclude name="loopsize/" />
             </javac>
 	    </target>	
 
