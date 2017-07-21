@@ -1,0 +1,37 @@
+===========================
+jx - 
+2 real bugs
+
+============================
+CL2: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-commitJob-302;              #real bug
+CL2: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-commitJob-304;         		(jx: delete - this is added by myself)
+CL2: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-mergePaths-353;             #real bug
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl-scheduleTasks-650;                                       #NO runtime contain real I/Os
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl$RequestContainerTransition-transition-1132;      #small loop)
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-createContainerLaunchContext-737;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-resolveHosts-1145;                               #small loop
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl$AttemptSucceededTransition-transition-770;              #small loop
+CL2: org.apache.hadoop.yarn.api.records.impl.pb.ContainerLaunchContextPBImpl-initServiceData-321;
+CL2: org.apache.hadoop.yarn.server.resourcemanager.scheduler.AppSchedulingInfo-updateResourceRequests-129;        #may be new bug, but NO runtime I/O? 
+
+for (ResourceRequest request : requests) {
+}
+
+CL2: org.apache.hadoop.yarn.server.resourcemanager.scheduler.SchedulerApp-pullNewlyAllocatedContainers-269;       #NO runtime contain real I/Os
+CL2: org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler-assignContainer-530;
+CL2: org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler-assignContainers-353;
+CL2: org.apache.hadoop.yarn.service.AbstractService-changeState-113;
+CL2: org.apache.hadoop.yarn.util.AbstractLivelinessMonitor$PingChecker-run-106;
+CL3: org.apache.hadoop.yarn.server.resourcemanager.scheduler.AppSchedulingInfo-stop-353;
+CL3: org.apache.hadoop.yarn.server.resourcemanager.scheduler.AppSchedulingInfo-updateResourceRequests-129;
+CL3: org.apache.hadoop.yarn.service.AbstractService-changeState-113;
+CL3: org.apache.hadoop.yarn.util.AbstractLivelinessMonitor$PingChecker-run-106;
+CL4: org.apache.hadoop.yarn.service.AbstractService-changeState-113;
+CL4: org.apache.hadoop.yarn.util.AbstractLivelinessMonitor$PingChecker-run-106;
+summary - 21(#static codepoints=16) from 53 (#static codepoints=47)
+~                                          
+
+
+
+
+                     

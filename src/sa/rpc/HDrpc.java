@@ -16,7 +16,7 @@ public class HDrpc {
  
 	ClassHierarchy cha;
 	String outputDir;
-	String rpcfile = "hd_rpc.txt";  //can be "dirxx/dirxx/hd_rpc.txt"
+	String rpcfile = "hd_rpc.txt.draft";  //can be "dirxx/dirxx/hd_rpc.txt"
 	
 	public HDrpc(ClassHierarchy cha, String outputDir) {
 		this.cha = cha;

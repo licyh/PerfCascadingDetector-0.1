@@ -20,7 +20,7 @@ import sa.rpc.RPCFinder;
 import sa.wala.WalaAnalyzer;
 import sa.wala.WalaUtil;
 
-public class IOLoopUtil {
+public class TCOpUtil {
 	
 	Set<String> tmpTcOps = new TreeSet<String>();
 	
@@ -31,11 +31,11 @@ public class IOLoopUtil {
 	
 	
 	
-	public IOLoopUtil(String jarsDir) {
+	public TCOpUtil(String jarsDir) {
 		this( Paths.get(jarsDir) );
 	}
 	
-	public IOLoopUtil(Path jarsDirPath) {
+	public TCOpUtil(Path jarsDirPath) {
 		this.jarsDirPath = jarsDirPath;
 		this.systemName = Benchmarks.resolveSystem( jarsDirPath.toString() );
 		doWork();
@@ -76,59 +76,67 @@ public class IOLoopUtil {
 	
 	
 	
-	/**
-	 * is TimeConsuming SSA or not
-	 */
 	public boolean isTimeConsumingSSA(SSAInstruction ssa) {
+		return isRPCSSA(ssa) || isCustomizedIOSSA(ssa);
+	}
+	
+	
+	public boolean isRPCSSA(SSAInstruction ssa) {
+		// it must be a invoke ssa. for other SSAs - TODO
+		if (!(ssa instanceof SSAInvokeInstruction)) return false;
 		
-		// it must be a invoke instruction
-	    if (ssa instanceof SSAInvokeInstruction) {  //SSAAbstractInvokeInstruction
-	    	SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;
-	    	String className = WalaUtil.formatClassName( invokessa.getDeclaredTarget().getDeclaringClass().getName().toString() );
-			String methodName = invokessa.getDeclaredTarget().getName().toString();
-			String signature = invokessa.getDeclaredTarget().getSignature().toString();
-			//System.out.println("JX - DEBUG - className: " + className);
-			//System.out.println("JX - DEBUG - methodName: " + methodName);
-			//System.out.println("JX - DEBUG - signature: " + signature);
-			
-	    	// is RPC or not?
-			if ( invokessa.isDispatch() 
-		    	 || invokessa.isSpecial() 
-		    	 || invokessa.isStatic() 
+    	SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;
+    	String signature = invokessa.getDeclaredTarget().getSignature().toString();
+    	String className = WalaUtil.formatClassName( invokessa.getDeclaredTarget().getDeclaringClass().getName().toString() );
+		String methodName = invokessa.getDeclaredTarget().getName().toString();
+		
+    	// is RPC or not?
+		if ( invokessa.isDispatch() 
+	    	 || invokessa.isSpecial() 
+	    	 || invokessa.isStatic()
+				) {
+			if ( rpcChecker.isSplitTarget(1, className, 2, methodName) 
+					//|| rpcChecker.isSplitTarget(0, className, 2, methodName)  //may bring in some not rpc just at server -> server
 					) {
-				if ( rpcChecker.isSplitTarget(1, className, 2, methodName) 
-						//|| rpcChecker.isSplitTarget(0, className, 2, methodName)  //may bring in some not rpc just at server -> server
-						) {
-			      	tmpTcOps.add( "RPC Call: " + signature );
-					return true;
-				}
-				  
+		      	tmpTcOps.add( "RPC Call: " + signature );
+				return true;
 			}
+		}
+		
+		return false;
+	}
+	
+	
+	public boolean isCustomizedIOSSA(SSAInstruction ssa) {
+		// it must be a invoke ssa. for other SSAs - TODO
+		if (!(ssa instanceof SSAInvokeInstruction)) return false;
+		
+    	SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;
+    	String className = WalaUtil.formatClassName( invokessa.getDeclaredTarget().getDeclaringClass().getName().toString() );
+		String methodName = invokessa.getDeclaredTarget().getName().toString();
+		String signature = invokessa.getDeclaredTarget().getSignature().toString();
 			
-	    	// is I/O or not?
-	    	if ( invokessa.isDispatch() 
-	    		 || invokessa.isSpecial() 
-	    		 || invokessa.isStatic() 
-	    			) {
-	    		if ( !methodName.equals("<init>") 
-	    			 && ioChecker.isTarget(signature) ) {     		  
-	    				tmpTcOps.add( signature );
-	    				return true;
-	    			}	 
-	    	}
-	    }
-	    else {
-	    	//TODO - if need be
-	    }
-	    
+    	// is I/O or not?
+    	if ( invokessa.isDispatch() 
+    		 || invokessa.isSpecial() 
+    		 || invokessa.isStatic() 
+    			) {
+    		if ( !methodName.equals("<init>") 
+    			 && ioChecker.isTarget(signature) ) {     		  
+    				tmpTcOps.add( signature );
+    				return true;
+    			}	 
+    	}
+
 	    return false;
 	}
-	  
+	
+	
 	
 	/**
 	 * is Real IO SSA or not
 	 */
-	public boolean isIOSSA(SSAInstruction ssa) {
+	public boolean isJavaIOSSA(SSAInstruction ssa) {
 		//filter rest I/Os that are not time-consuming for avoiding to get into,   #this is also can be removed
 		if (ssa instanceof SSAInvokeInstruction) {
 			SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;

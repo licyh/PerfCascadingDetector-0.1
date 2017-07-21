@@ -1,8 +1,23 @@
-CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-resolveHosts-1145;
-CL2: org.apache.hadoop.yarn.server.resourcemanager.scheduler.SchedulerApp-pullNewlyAllocatedContainers-269;
-CL2: org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler-assignContainer-530;
-CL2: org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler-assignContainers-353;
-CL2: org.apache.hadoop.yarn.service.AbstractService-changeState-113;
-CL3: org.apache.hadoop.yarn.service.AbstractService-changeState-113;
-CL4: org.apache.hadoop.yarn.service.AbstractService-changeState-113;
-//summary - 7(#static codepoints=5) from 52
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processAndHandleReportedBlock-2712;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processAndHandleReportedBlock-2716;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processAndHandleReportedBlock-2730;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processFirstBlockReport-1775;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processIncrementalBlockReport-2759;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processReport-1730;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processReport-1733;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processReport-1737;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processReport-1751;
+CL2: org.apache.hadoop.hdfs.server.namenode.EditLogFileOutputStream-preallocate-228;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSDirectory-mkdirs-2011;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-565;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled-425;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSImageSerialization-writeCompactBlockArray-459;
+CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;
+CL2: org.apache.hadoop.hdfs.server.namenode.NNStorage-writeTransactionIdFileToStorage-473;
+CL3: org.apache.hadoop.hdfs.server.namenode.EditLogFileOutputStream-preallocate-228;
+CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-565;
+CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled-425;
+CL3: org.apache.hadoop.hdfs.server.namenode.FSImageSerialization-writeCompactBlockArray-459;
+CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;
+CL3: org.apache.hadoop.hdfs.server.namenode.LeaseManager-checkLeases-457;
+//summary - 22(#static codepoints=17) from 104

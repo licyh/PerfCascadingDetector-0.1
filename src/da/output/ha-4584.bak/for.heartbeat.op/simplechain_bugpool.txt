@@ -1,4 +1,4 @@
-5 (#static codepoints=5)
+//5 (#static codepoints=5)
 CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;|org.apache.hadoop.hdfs.server.datanode.FSDataset-getBlockReport-1637;|org.apache.hadoop.hdfs.server.datanode.FSDataset-getRemaining-985;|
 CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;|org.apache.hadoop.hdfs.server.datanode.FSDataset-getBlockReport-1637;|org.apache.hadoop.hdfs.server.datanode.FSDataset-getRemaining-985;|
 CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-679;|org.apache.hadoop.hdfs.server.datanode.FSDataset-getBlockReport-1637;|org.apache.hadoop.hdfs.server.datanode.FSDataset-getRemaining-985;|

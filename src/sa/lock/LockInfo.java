@@ -16,10 +16,18 @@ import com.ibm.wala.ssa.SSAMonitorInstruction;
 
 
 public class LockInfo {
-	CGNode func;
-	int func_id;       //ie, func.getGraphNodeId()  
-	String func_name;  //ie, func.getMethod().getSignature();
+	CGNode cgNode;
+	int cgNode_id;       //ie, cgNode.getGraphNodeId()  
+	String cgNode_name;  //ie, cgNode.getMethod().getSignature();
+
+	public Set<Integer> bbs;
+	int begin_bb;         // bb - basic block in WALA
+	int end_bb;
+	//tmp
+	Set<Integer> succbbs; //used as a temporary variable
+	Set<Integer> predbbs; //used as a temporary variable
 	  
+	
 	public String lock_identity;   //only be used in & after the phase of "analyzeAllLocks"
 	  
 	public String lock_type;  //for now: "synchronized_method", "synchronized_lock" + "lock", "readLock", "writeLock", "tryLock", "writeLockInterruptibly", "readLockInterruptibly", "lockInterruptibly"
@@ -27,15 +35,13 @@ public class LockInfo {
 	public String lock_class; //only for "class.lock()/readLock()/writeLock()"    #will not just like this
 	public String lock_name;  //useless now
 	  
-	int begin_bb;         // bb - basic block in WALA
-	int end_bb;  
-	public Set<Integer> bbs;
-	Set<Integer> succbbs; //used as a temporary variable
-	Set<Integer> predbbs; //used as a temporary variable
-	  
-	LockInfo() {  
-	    this.func_id = -1;
-	    this.func_name = "";
+
+	
+	
+	
+	public LockInfo() {  
+	    this.cgNode_id = -1;
+	    this.cgNode_name = "";
 	    
 	    this.lock_type = "";
 	    this.lock_name_vn = -1;
@@ -49,6 +55,38 @@ public class LockInfo {
 	    this.predbbs = new HashSet<Integer>();
 	}
 	 
+	
+	//APIs
+	public CGNode getCGNode() {
+		return this.cgNode;
+	}
+	
+	/*
+	public int getLineNumber() {
+		return this.line_number;
+	}
+	*/
+	
+	public Set<Integer> getBasicBlockNumbers() {
+		return this.bbs;
+	}
+	
+	public int getBeginBasicBlockNumber() {
+		return this.begin_bb;
+	}
+	
+	public int getEndBasicBlockNumber() {
+		return this.end_bb;
+	}
+	
+	/*
+	public void setEndBasicBlock(int end_bb) {
+		this.end_bb = end_bb;
+		computeBasicBlocks();
+	}
+	*/
+	
+	
 	  /*
 	  public void dfsFromEnter(ISSABasicBlock bb, SSACFG cfg) {
 	    if (isMatched(bb))
@@ -124,7 +162,7 @@ public class LockInfo {
 	  
 	  @Override
 	  public String toString() {
-	    return "{function:" + func_name + "\t" 
+	    return "{function:" + cgNode_name + "\t" 
 	      + " lock_class:" + lock_class + "\t" + " lock_type:" + lock_type + "\t" 
 	      + " lock_name:" + lock_name + "\t" + " lock_name_vn:" + lock_name_vn + "\t" 
 	      + " begin:" + begin_bb + " end:" + end_bb + " bbs:" + bbs + "}";

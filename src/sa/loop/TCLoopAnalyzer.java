@@ -28,7 +28,7 @@ public class TCLoopAnalyzer {
 	CGNodeList cgNodeList = null;	
 	// loop
 	LoopAnalyzer loopAnalyzer;
-	IOLoopUtil iolooputil;
+	TCOpUtil iolooputil;
 	
 	// results
 	int nTCLoops = 0;
@@ -43,7 +43,7 @@ public class TCLoopAnalyzer {
 		this.loopAnalyzer = loopAnalyzer;
 		this.cgNodeList = cgNodeList;
 		//others
-		this.iolooputil = new IOLoopUtil( this.walaAnalyzer.getTargetDirPath() );
+		this.iolooputil = new TCOpUtil( this.walaAnalyzer.getTargetDirPath() );
 	}
 	
 	// Please call doWork() manually
@@ -126,8 +126,7 @@ public class TCLoopAnalyzer {
  
 		for (int i = 0; i < instructions.length; i++) {
 			SSAInstruction ssa = instructions[i];
-			if (ssa == null)
-				continue;
+			if (ssa == null) continue;
 
 			if ( iolooputil.isTimeConsumingSSA(ssa) ) {
 				cgNodeInfo.tcOperations.add( ssa );
@@ -136,7 +135,7 @@ public class TCLoopAnalyzer {
 				continue;
 			}
 			// filter the rest I/Os
-			if ( iolooputil.isIOSSA(ssa) )
+			if ( iolooputil.isJavaIOSSA(ssa) )
 				continue;
       
 			// if meeting a normal call(NOT RPC and I/O), Go into the call targets
@@ -160,6 +159,7 @@ public class TCLoopAnalyzer {
 	}
   
 	  	  
+	
 	/**
 	 * for single loop
 	 */
@@ -189,8 +189,8 @@ public class TCLoopAnalyzer {
 			int last_index = cfg.getBasicBlock(bbnum).getLastInstructionIndex();
 			for (int i = first_index; i <= last_index; i++) {
 				SSAInstruction ssa = instructions[i];
-				if (ssa == null)
-					continue;
+				if (ssa == null) continue;
+				
 				if ( cgNodeInfo.tcOperations.contains( ssa ) ) {
 					loop.numOfTcOperations_recusively ++;
 					loop.tcOperations_recusively.add( ssa );
@@ -205,7 +205,7 @@ public class TCLoopAnalyzer {
 					continue;
 				}
 				// filter the rest I/Os
-				if ( iolooputil.isIOSSA(ssa) )
+				if ( iolooputil.isJavaIOSSA(ssa) )
 					continue;
 				if (ssa instanceof SSAInvokeInstruction) {  
 					SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;
@@ -222,8 +222,10 @@ public class TCLoopAnalyzer {
 	  
 	public void dfsToGetTCOperationsForSSA(CGNode cgNode, int depth, BitSet traversednodes, LoopInfo loop, String callpath) {
 		//jx: if want to add this, then for MapReduce we need to more hadoop-common&hdfs like "org.apache.hadoop.conf" not juse 'fs/security' for it
+		/*
 		if ( !walaAnalyzer.isInPackageScope(cgNode) )
 			return ;
+		*/ 
 		 
 		if ( !cgNode.getMethod().getDeclaringClass().getClassLoader().getReference().equals(ClassLoaderReference.Application) 
 				|| cgNode.getMethod().isNative()) { // IMPO - native - must be
@@ -268,7 +270,7 @@ public class TCLoopAnalyzer {
 			if ( cgNodeInfo.tcOperations.contains( ssa ) )
 				continue;
 			// filter the rest I/Os
-			if ( iolooputil.isIOSSA(ssa) )
+			if ( iolooputil.isJavaIOSSA(ssa) )
 				continue;
 			if (ssa instanceof SSAInvokeInstruction) {  
 				SSAInvokeInstruction invokessa = (SSAInvokeInstruction) ssa;

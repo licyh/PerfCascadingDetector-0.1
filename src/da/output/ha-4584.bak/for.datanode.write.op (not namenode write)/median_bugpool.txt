@@ -1,4 +1,4 @@
-36 (#static codepoints=10)
+//36 (#static codepoints=10)
 CL2: org.apache.hadoop.hdfs.server.datanode.BlockReceiver$PacketResponder-close-747;org.apache.hadoop.hdfs.server.datanode.BlockReceiver-receiveBlock-547;org.apache.hadoop.hdfs.server.datanode.DataXceiver-writeBlock-398;org.apache.hadoop.hdfs.server.datanode.DataXceiver-run-107;java.lang.Thread-run-745;
 CL2: org.apache.hadoop.hdfs.server.datanode.BlockReceiver$PacketResponder-run-787;java.lang.Thread-run-745;
 CL2: org.apache.hadoop.hdfs.server.datanode.DataNode-offerService-922;org.apache.hadoop.hdfs.server.datanode.DataNode-run-1421;java.lang.Thread-run-745;

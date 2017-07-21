@@ -201,11 +201,11 @@ public class LockAnalyzer {
 	    
 	    // Handle "synchronized_method"              //seems I can't deal with locks in sync methods now, right? shall I?
 	    if (im.isSynchronized()) {  
-	    	//if (im.isStatic()) System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!! - im.isStatic() - " + func_name + "   class - " + im.getDeclaringClass().toString());
+	    	//if (im.isStatic()) System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!! - im.isStatic() - " + cgNode_name + "   class - " + im.getDeclaringClass().toString());
 	    	LockInfo lock = new LockInfo();
-	    	lock.func = f;
-	    	lock.func_id = id;
-	    	lock.func_name = func_name;
+	    	lock.cgNode = f;
+	    	lock.cgNode_id = id;
+	    	lock.cgNode_name = func_name;
 	    	lock.lock_type = synchronizedtypes.get(0);
 	    	lock.lock_class = im.getDeclaringClass().toString();
 	    	if (im.isStatic())
@@ -235,9 +235,9 @@ public class LockAnalyzer {
 	    			SSAMonitorInstruction monitorssa = (SSAMonitorInstruction) ssa;  
 	    			if ( monitorssa.isMonitorEnter() ) {   //JX - monitorenter 75
 	    				LockInfo lock = new LockInfo();
-	    				lock.func = f;
-	    				lock.func_id = id;
-	    				lock.func_name = func_name;            
+	    				lock.cgNode = f;
+	    				lock.cgNode_id = id;
+	    				lock.cgNode_name = func_name;            
 	    				lock.lock_type = synchronizedtypes.get(1);
 	    				lock.lock_name_vn = monitorssa.getRef();  //only for synchronized_lock now
 	    				// Get lock.lock_class & lock.lock_name
@@ -280,14 +280,14 @@ public class LockAnalyzer {
 			            	continue;
 			            }
 			            LockInfo lock = new LockInfo();
-			            lock.func = f;
-			            lock.func_id = id;
-			            lock.func_name = func_name;
+			            lock.cgNode = f;
+			            lock.cgNode_id = id;
+			            lock.cgNode_name = func_name;
 			            lock.lock_type = short_funcname;
 			            lock.lock_class = ((SSAInvokeInstruction) ssa).getDeclaredTarget().getDeclaringClass().toString();   // not precise
 			            lock.lock_name = "???";
 			            
-			            //System.err.println("funcname: " + func_name);
+			            //System.err.println("funcname: " + cgNode_name);
 			            ////System.err.println("previous ssa: " + ssa);
 			            ////System.err.println("ssa: " + ssa);
 			            //System.err.println("lock_class: " + lock.lock_class);
@@ -429,7 +429,7 @@ public class LockAnalyzer {
 	    int index = getSSAIndexByDefvn(ssas, lock.lock_name_vn, "3.synchronized(class/object/this.object)");
 	    if (index == -1) { //phi,pi can't be found in ssas,TODO if needed; Eg, phi like v49 = phi v37,v35, eg, sync(block) in Balancer$Source.getBlockList()J
 	      System.err.println("ERROR - the succ SSA of monitor is non-existing!!! - SSA:" + ssa);
-	      //System.err.println("ERROR - " + "funcname: " + func_name);        // TODO - integrate into "dfsTrackSSAs"
+	      //System.err.println("ERROR - " + "funcname: " + cgNode_name);        // TODO - integrate into "dfsTrackSSAs"
 	      //System.err.println("ERROR - " + "ssa: " + ssa);
 	      //System.err.println("ERROR - " + "lock_type: " + lock.lock_type);
 	      lock.lock_class = im.getDeclaringClass().toString(); //!!!!
@@ -444,7 +444,7 @@ public class LockAnalyzer {
 	    if (!(lock.lock_name.indexOf("THIS")==0 || lock.lock_name.indexOf("-GetField-")==0 || lock.lock_name.indexOf("CLASS")==0))
 	    {
 	    System.err.println("---------------------" + (print_num++) + "---------------------");
-	    System.err.println("funcname: " + func_name);
+	    System.err.println("funcname: " + cgNode_name);
 	    System.err.println("ssa: " + ssa);
 	    System.err.println("succssa: " + ssas[index]);
 	    System.err.println("lock_type: " + lock.lock_type);    
@@ -466,7 +466,7 @@ public class LockAnalyzer {
 	      //System.err.println("synchronized (ClassName.class) - " + ssas[index] + " in a static " + im.isStatic() + " method?");
 	      lock.lock_class = loadssa.getToken().toString();    //previous usage should be wrong: im.getDeclaringClass().toString();
 	      lock.lock_name += "CLASS"; //((SSALoadMetadataInstruction)ssas[index]).getType().toString();
-	      //System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!! - synchronized (ClassName.class) - " + func_name + "   class - " + lock.lock_class);
+	      //System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!! - synchronized (ClassName.class) - " + cgNode_name + "   class - " + lock.lock_class);
 	      return ;
 	    }
 	    

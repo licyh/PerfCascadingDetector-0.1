@@ -1,4 +1,4 @@
-104 (#static codepoints=77)
+//104 (#static codepoints=77)
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfo-findDatanode-250;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfo-findStorageInfo-266;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfo-findStorageInfo-283;

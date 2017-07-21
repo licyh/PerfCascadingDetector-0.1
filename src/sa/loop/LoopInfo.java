@@ -96,6 +96,9 @@ public class LoopInfo {
 	}
 	
 	
+	
+	
+	
 	// newly added, haven't been tested
 	public boolean containsSSA(SSAInstruction targetSSA) {
 	    IR ir = cgNode.getIR();

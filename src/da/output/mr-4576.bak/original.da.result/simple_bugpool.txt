@@ -1,4 +1,4 @@
-36 (#static codepoints=19)
+//36 (#static codepoints=19)
 CL2: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
 CL2: org.apache.hadoop.mapred.Counters$Group-readFields-357;
 CL2: org.apache.hadoop.mapred.Counters-readFields-572;

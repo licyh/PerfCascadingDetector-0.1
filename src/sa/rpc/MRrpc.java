@@ -25,7 +25,7 @@ public class MRrpc {
  
 	ClassHierarchy cha;
 	String outputDir;
-	String rpcfile = "mr_rpc.txt";   //including "mr_rpc_v2.txt" & "mr_rpc_v1.txt" 
+	String rpcfile = "mr_rpc.txt.draft";   //including "mr_rpc_v2.txt" & "mr_rpc_v1.txt" 
   
 	
 	public MRrpc(ClassHierarchy cha, String outputDir) {

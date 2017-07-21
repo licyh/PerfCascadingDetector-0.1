@@ -1,2 +1,5 @@
-// prefixes for io or other time-consuming operations, added manually        org.apache.hadoop.fs.  org.apache.hadoop.security.
+// prefixes for io or other time-consuming operations, added manually          org.apache.hadoop.fs.  org.apache.hadoop.security.
+// jx - ps:  .fs./.security. are high-level that .hdfs.
 org.apache.hadoop.hdfs.
+org.apache.hadoop.fs.
+org.apache.hadoop.security.

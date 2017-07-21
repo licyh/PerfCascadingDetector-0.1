@@ -1,3 +1,4 @@
+//#functions containing loops In Scope     #loops totally
 1782 2386
 org.apache.hadoop.fs.s3native.Jets3tNativeFileSystemStore.list(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)Lorg/apache/hadoop/fs/s3native/PartialListing; 1 224 
 org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager.clearPendingQueues()V 1 1422 
@@ -139,10 +140,10 @@ org.apache.hadoop.hdfs.util.LightWeightHashSet$LinkedSetIterator.nextNonemptyEnt
 org.apache.hadoop.hdfs.server.namenode.FSNamesystem.getCorruptFiles()Ljava/lang/String; 1 6717 
 org.apache.hadoop.hdfs.server.datanode.fsdataset.impl.MappableBlock.fillBuffer(Ljava/nio/channels/FileChannel;Ljava/nio/ByteBuffer;)I 1 156 
 org.apache.hadoop.hdfs.tools.DFSck.doWork([Ljava/lang/String;)I 2 268 317 
-org.apache.hadoop.hdfs.DFSInputStream.chooseDataNode(Lorg/apache/hadoop/hdfs/protocol/LocatedBlock;)Lorg/apache/hadoop/hdfs/DFSInputStream$DNAddrPair; 1 871 
 org.apache.hadoop.hdfs.LeaseRenewer.closeClient(Lorg/apache/hadoop/hdfs/DFSClient;)V 1 371 
-org.apache.hadoop.hdfs.DFSInputStream.getBlockReader(Ljava/net/InetSocketAddress;Lorg/apache/hadoop/hdfs/protocol/DatanodeInfo;Ljava/lang/String;Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock;Lorg/apache/hadoop/security/token/Token;JJIZLjava/lang/String;Lorg/apache/hadoop/hdfs/server/datanode/CachingStrategy;)Lorg/apache/hadoop/hdfs/BlockReader; 2 1122 1171 
+org.apache.hadoop.hdfs.DFSInputStream.chooseDataNode(Lorg/apache/hadoop/hdfs/protocol/LocatedBlock;)Lorg/apache/hadoop/hdfs/DFSInputStream$DNAddrPair; 1 871 
 org.apache.hadoop.hdfs.security.token.delegation.DelegationTokenSecretManager.loadCurrentTokens(Ljava/io/DataInput;)V 1 339 
+org.apache.hadoop.hdfs.DFSInputStream.getBlockReader(Ljava/net/InetSocketAddress;Lorg/apache/hadoop/hdfs/protocol/DatanodeInfo;Ljava/lang/String;Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock;Lorg/apache/hadoop/security/token/Token;JJIZLjava/lang/String;Lorg/apache/hadoop/hdfs/server/datanode/CachingStrategy;)Lorg/apache/hadoop/hdfs/BlockReader; 2 1122 1171 
 org.apache.hadoop.record.compiler.generated.RccTokenManager.jjMoveNfa_0(II)I 4 499 529 558 492 
 org.apache.hadoop.conf.Configuration.toString(Ljava/util/List;Ljava/lang/StringBuilder;)V 1 2514 
 org.apache.hadoop.hdfs.util.XMLUtils.unmangleXmlString(Ljava/lang/String;)Ljava/lang/String; 1 153 
@@ -345,8 +346,8 @@ org.apache.hadoop.record.meta.StructTypeID.findStruct(Ljava/lang/String;)Lorg/ap
 org.apache.hadoop.conf.Configuration.get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; 1 1054 
 org.apache.hadoop.http.HtmlQuoting.unquoteHtmlChars(Ljava/lang/String;)Ljava/lang/String; 1 165 
 org.apache.hadoop.hdfs.server.namenode.NNStorage.format()V 1 557 
-org.apache.hadoop.fs.LocalDirAllocator$AllocatorPerContext$PathIterator.advance()V 1 474 
 org.apache.hadoop.hdfs.server.datanode.fsdataset.RoundRobinVolumeChoosingPolicy.chooseVolume(Ljava/util/List;J)Lorg/apache/hadoop/hdfs/server/datanode/fsdataset/FsVolumeSpi; 1 50 
+org.apache.hadoop.fs.LocalDirAllocator$AllocatorPerContext$PathIterator.advance()V 1 474 
 org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyDefault.chooseLocalStorage(Lorg/apache/hadoop/net/Node;Ljava/util/Set;JILjava/util/List;ZLorg/apache/hadoop/hdfs/StorageType;)Lorg/apache/hadoop/hdfs/server/blockmanagement/DatanodeStorageInfo; 1 354 
 org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyDefault.getPipeline(Lorg/apache/hadoop/net/Node;[Lorg/apache/hadoop/hdfs/server/blockmanagement/DatanodeStorageInfo;)[Lorg/apache/hadoop/hdfs/server/blockmanagement/DatanodeStorageInfo; 2 686 681 
 org.apache.hadoop.io.compress.CompressionCodecFactory.<init>(Lorg/apache/hadoop/conf/Configuration;)V 1 180 
@@ -384,8 +385,8 @@ org.apache.hadoop.io.ObjectWritable.readObject(Ljava/io/DataInput;Lorg/apache/ha
 org.apache.hadoop.fs.permission.PermissionParser.applyNormalPattern(Ljava/lang/String;Ljava/util/regex/Matcher;)V 3 83 107 68 
 org.apache.hadoop.net.SocketOutputStream.transferToFully(Ljava/nio/channels/FileChannel;JILorg/apache/hadoop/io/LongWritable;Lorg/apache/hadoop/io/LongWritable;)V 1 208 
 org.apache.hadoop.net.SocketIOWithTimeout.connect(Ljava/nio/channels/SocketChannel;Ljava/net/SocketAddress;I)V 1 203 
-org.apache.hadoop.hdfs.server.namenode.snapshot.SnapshotManager.checkNestedSnapshottable(Lorg/apache/hadoop/hdfs/server/namenode/INodeDirectory;Ljava/lang/String;)V 1 82 
 org.apache.hadoop.hdfs.server.blockmanagement.PendingReplicationBlocks$PendingReplicationMonitor.pendingReplicationCheck()V 1 241 
+org.apache.hadoop.hdfs.server.namenode.snapshot.SnapshotManager.checkNestedSnapshottable(Lorg/apache/hadoop/hdfs/server/namenode/INodeDirectory;Ljava/lang/String;)V 1 82 
 org.apache.hadoop.fs.FileSystem.listStatus([Lorg/apache/hadoop/fs/Path;Lorg/apache/hadoop/fs/PathFilter;)[Lorg/apache/hadoop/fs/FileStatus; 1 1560 
 org.apache.hadoop.hdfs.server.namenode.NamenodeFsck.listCorruptFileBlocks()V 1 281 
 org.apache.hadoop.io.SequenceFile$Metadata.write(Ljava/io/DataOutput;)V 1 742 
@@ -397,16 +398,16 @@ org.apache.hadoop.io.MapFile$Reader.finalKey(Lorg/apache/hadoop/io/WritableCompa
 org.apache.hadoop.io.TwoDArrayWritable.write(Ljava/io/DataOutput;)V 3 88 92 91 
 org.apache.hadoop.fs.FileUtil.copy(Lorg/apache/hadoop/fs/FileSystem;Lorg/apache/hadoop/fs/FileStatus;Ljava/io/File;ZLorg/apache/hadoop/conf/Configuration;)Z 1 478 
 org.apache.hadoop.hdfs.server.namenode.ha.BootstrapStandby.parseArgs([Ljava/lang/String;)V 1 113 
-org.apache.hadoop.hdfs.server.namenode.NamenodeFsck.check(Ljava/lang/String;Lorg/apache/hadoop/hdfs/protocol/HdfsFileStatus;Lorg/apache/hadoop/hdfs/server/namenode/NamenodeFsck$Result;)V 4 317 310 429 372 
 org.apache.hadoop.ipc.Server$Responder.doRunLoop()V 4 795 790 824 833 
+org.apache.hadoop.hdfs.server.namenode.NamenodeFsck.check(Ljava/lang/String;Lorg/apache/hadoop/hdfs/protocol/HdfsFileStatus;Lorg/apache/hadoop/hdfs/server/namenode/NamenodeFsck$Result;)V 4 317 310 429 372 
 org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager.fetchDatanodes(Ljava/util/List;Ljava/util/List;Z)V 1 1045 
 org.apache.hadoop.hdfs.server.namenode.FSEditLogLoader.validateEditLog(Lorg/apache/hadoop/hdfs/server/namenode/EditLogInputStream;)Lorg/apache/hadoop/hdfs/server/namenode/FSEditLogLoader$EditLogValidation; 1 921 
 org.apache.hadoop.ipc.Server$ConnectionManager.closeAll()V 1 2654 
 org.apache.hadoop.record.compiler.generated.RccTokenManager.jjCheckNAddStates(II)V 1 60 
 org.apache.hadoop.ha.ActiveStandbyElector.ensureParentZNode()V 1 291 
 org.apache.hadoop.hdfs.server.datanode.DataNode.transferBlocks(Ljava/lang/String;[Lorg/apache/hadoop/hdfs/protocol/Block;[[Lorg/apache/hadoop/hdfs/protocol/DatanodeInfo;)V 1 1436 
-org.apache.hadoop.io.IOUtils.readFully(Ljava/io/InputStream;[BII)V 1 191 
 org.apache.hadoop.fs.FileContext.processDeleteOnExit()V 2 288 285 
+org.apache.hadoop.io.IOUtils.readFully(Ljava/io/InputStream;[BII)V 1 191 
 org.apache.hadoop.hdfs.server.datanode.BlockSender.verifyChecksum([BIIII)V 1 637 
 org.apache.hadoop.hdfs.server.datanode.BPOfferService.isAlive()Z 1 143 
 org.apache.hadoop.hdfs.server.namenode.ClusterJspHelper$NamenodeMXBeanHelper.getDeadNodeStatus(Ljava/util/Map;Ljava/lang/String;Ljava/lang/String;)V 1 442 
@@ -436,8 +437,8 @@ org.apache.hadoop.security.SaslRpcServer$FastSaslServerFactory.<init>(Ljava/util
 org.apache.hadoop.io.serializer.avro.AvroReflectSerialization.getPackages()V 1 69 
 org.apache.hadoop.metrics2.util.SampleQuantiles.allowableError(I)D 1 93 
 org.apache.hadoop.util.bloom.DynamicBloomFilter.write(Ljava/io/DataOutput;)V 1 253 
-org.apache.hadoop.util.IntrusiveCollection.containsAll(Ljava/util/Collection;)Z 1 319 
 org.apache.hadoop.metrics2.impl.MetricsSystemImpl.configureSinks()V 1 459 
+org.apache.hadoop.util.IntrusiveCollection.containsAll(Ljava/util/Collection;)Z 1 319 
 org.apache.hadoop.ipc.ProtocolSignature.readFields(Ljava/io/DataInput;)V 1 79 
 org.apache.hadoop.util.JvmPauseMonitor.getGcTimes()Ljava/util/Map; 1 122 
 org.apache.hadoop.fs.FileUtil.unZip(Ljava/io/File;Ljava/io/File;)V 2 609 593 
@@ -465,12 +466,12 @@ org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager$Monitor.run()V 2 
 org.apache.hadoop.hdfs.server.common.JspHelper.bestNode(Lorg/apache/hadoop/hdfs/protocol/LocatedBlocks;Lorg/apache/hadoop/conf/Configuration;)Lorg/apache/hadoop/hdfs/protocol/DatanodeInfo; 2 160 158 
 org.apache.hadoop.hdfs.server.blockmanagement.BlockManager.computeInvalidateWork(I)I 1 1165 
 org.apache.hadoop.hdfs.server.datanode.fsdataset.impl.LDir.addBlock(Lorg/apache/hadoop/hdfs/protocol/Block;Ljava/io/File;ZZ)Ljava/io/File; 2 90 107 
-org.apache.hadoop.conf.Configuration.handleDeprecation(Lorg/apache/hadoop/conf/Configuration$DeprecationContext;Ljava/lang/String;)[Ljava/lang/String; 2 573 582 
 org.apache.hadoop.hdfs.DFSInputStream.getFinalizedBlockRange(JJ)Ljava/util/List; 1 516 
+org.apache.hadoop.conf.Configuration.handleDeprecation(Lorg/apache/hadoop/conf/Configuration$DeprecationContext;Ljava/lang/String;)[Ljava/lang/String; 2 573 582 
 org.apache.hadoop.conf.Configuration.getProps()Ljava/util/Properties; 1 2092 
 org.apache.hadoop.hdfs.server.namenode.FSNamesystem.renameTo(Ljava/lang/String;Ljava/lang/String;[Lorg/apache/hadoop/fs/Options$Rename;)V 1 3157 
-org.apache.hadoop.conf.Configuration.substituteVars(Ljava/lang/String;)Ljava/lang/String; 1 796 
 org.apache.hadoop.hdfs.server.blockmanagement.CacheReplicationMonitor.run()V 2 166 163 
+org.apache.hadoop.conf.Configuration.substituteVars(Ljava/lang/String;)Ljava/lang/String; 1 796 
 org.apache.hadoop.hdfs.security.token.delegation.DelegationTokenSecretManager.saveAllKeys(Ljava/io/DataOutputStream;Ljava/lang/String;)V 1 320 
 org.apache.hadoop.hdfs.server.datanode.BPOfferService.reportRemoteBadBlock(Lorg/apache/hadoop/hdfs/protocol/DatanodeInfo;Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock;)V 1 390 
 org.apache.hadoop.hdfs.qjournal.client.QuorumJournalManager.recoverUnclosedSegment(J)V 2 303 320 
@@ -493,8 +494,8 @@ org.apache.hadoop.hdfs.server.namenode.startupprogress.StartupProgressView.<init
 org.apache.hadoop.hdfs.security.token.block.BlockTokenSecretManager.addKeys(Lorg/apache/hadoop/hdfs/security/token/block/ExportedBlockKeys;)V 1 197 
 org.apache.hadoop.hdfs.server.datanode.fsdataset.impl.FsDatasetImpl.cache(Ljava/lang/String;[J)V 1 1297 
 org.apache.hadoop.hdfs.server.datanode.DataNode.getHdfsBlocksMetadata(Ljava/util/List;Ljava/util/List;)Lorg/apache/hadoop/hdfs/protocol/HdfsBlocksMetadata; 1 1190 
-org.apache.hadoop.hdfs.tools.offlineImageViewer.DelimitedImageVisitor.reset()V 1 96 
 org.apache.hadoop.hdfs.server.blockmanagement.InvalidateBlocks.dump(Ljava/io/PrintWriter;)V 1 125 
+org.apache.hadoop.hdfs.tools.offlineImageViewer.DelimitedImageVisitor.reset()V 1 96 
 org.apache.hadoop.ipc.RetryCache.waitForCompletion(Lorg/apache/hadoop/ipc/RetryCache$CacheEntry;)Lorg/apache/hadoop/ipc/RetryCache$CacheEntry; 1 245 
 org.apache.hadoop.hdfs.server.datanode.metrics.DataNodeMetrics.addFlushNanos(J)V 1 235 
 org.apache.hadoop.hdfs.server.namenode.RedundantEditLogInputStream.getName()Ljava/lang/String; 1 134 
@@ -586,8 +587,8 @@ org.apache.hadoop.record.compiler.generated.TokenMgrError.addEscapes(Ljava/lang/
 org.apache.hadoop.hdfs.server.datanode.fsdataset.impl.LDir.<init>(Ljava/io/File;I)V 1 56 
 org.apache.hadoop.hdfs.tools.DelegationTokenFetcher.getDTfromRemote(Lorg/apache/hadoop/hdfs/web/URLConnectionFactory;Ljava/net/URI;Ljava/lang/String;Ljava/lang/String;)Lorg/apache/hadoop/security/Credentials; 1 243 
 org.apache.hadoop.util.DataChecksum.calculateChunkedSums([BII[BI)V 1 406 
-org.apache.hadoop.io.MD5Hash.setDigest(Ljava/lang/String;)V 1 222 
 org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor.addBlocksToBeInvalidated(Ljava/util/List;)V 1 450 
+org.apache.hadoop.io.MD5Hash.setDigest(Ljava/lang/String;)V 1 222 
 org.apache.hadoop.hdfs.server.namenode.CachedBlock.isPresent(Lorg/apache/hadoop/hdfs/server/blockmanagement/DatanodeDescriptor$CachedBlocksList;)Z 1 112 
 org.apache.hadoop.net.ScriptBasedMapping$RawScriptBasedMapping.runResolveCommand(Ljava/util/List;)Ljava/lang/String; 2 229 225 
 org.apache.hadoop.hdfs.server.namenode.INodeDirectory.computeQuotaUsage(Lorg/apache/hadoop/hdfs/server/namenode/Quota$Counts;ZI)Lorg/apache/hadoop/hdfs/server/namenode/Quota$Counts; 1 472 
@@ -639,9 +640,9 @@ org.apache.hadoop.hdfs.protocolPB.PBHelper.convertBlockKeys(Ljava/util/List;)[Lo
 org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor$BlockIterator.<init>([Lorg/apache/hadoop/hdfs/server/blockmanagement/DatanodeStorageInfo;)V 1 387 
 org.apache.hadoop.hdfs.qjournal.server.JournalMetrics.addSync(J)V 1 114 
 org.apache.hadoop.hdfs.server.namenode.FSImageSerialization.writeBlocks([Lorg/apache/hadoop/hdfs/protocol/Block;Ljava/io/DataOutput;)V 1 109 
-org.apache.hadoop.util.Shell$1.run()V 1 473 
 org.apache.hadoop.fs.s3.S3OutputStream.nextBlockOutputStream()V 1 199 
 org.apache.hadoop.hdfs.server.datanode.DirectoryScanner.scan()V 4 443 476 481 427 
+org.apache.hadoop.util.Shell$1.run()V 1 473 
 org.apache.hadoop.fs.permission.FsPermission.valueOf(Ljava/lang/String;)Lorg/apache/hadoop/fs/permission/FsPermission; 1 328 
 org.apache.hadoop.io.ArrayPrimitiveWritable.readIntArray(Ljava/io/DataInput;)V 1 324 
 org.apache.hadoop.conf.Configuration.loadResources(Ljava/util/Properties;Ljava/util/ArrayList;Z)V 2 2171 2181 
@@ -721,8 +722,8 @@ org.apache.hadoop.hdfs.qjournal.client.QuorumCall.create(Ljava/util/Map;)Lorg/ap
 org.apache.hadoop.hdfs.server.blockmanagement.BlockManager.processOverReplicatedBlocksOnReCommission(Lorg/apache/hadoop/hdfs/server/blockmanagement/DatanodeDescriptor;)V 1 2881 
 org.apache.hadoop.io.EnumSetWritable.readFields(Ljava/io/DataInput;)V 1 127 
 org.apache.hadoop.record.compiler.generated.Rcc.ReInit(Ljava/io/InputStream;Ljava/lang/String;)V 1 421 
-org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicy.splitNodesWithRack(Ljava/util/Collection;Ljava/util/Map;Ljava/util/List;Ljava/util/List;)V 2 219 230 
 org.apache.hadoop.hdfs.server.datanode.BlockPoolManager.doRefreshNamenodes(Ljava/util/Map;)V 4 171 196 214 227 
+org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicy.splitNodesWithRack(Ljava/util/Collection;Ljava/util/Map;Ljava/util/List;Ljava/util/List;)V 2 219 230 
 org.apache.hadoop.util.bloom.CountingBloomFilter.or(Lorg/apache/hadoop/util/bloom/Filter;)V 1 258 
 org.apache.hadoop.fs.Globber.getPathComponents(Ljava/lang/String;)Ljava/util/List; 1 103 
 org.apache.hadoop.metrics.spi.CompositeContext.unregisterUpdater(Lorg/apache/hadoop/metrics/Updater;)V 1 162 
@@ -734,14 +735,14 @@ org.apache.hadoop.hdfs.server.namenode.SecondaryNameNode$CheckpointStorage.delet
 org.apache.hadoop.io.WritableUtils.writeVLong(Ljava/io/DataOutput;J)V 2 284 293 
 org.apache.hadoop.hdfs.server.datanode.DataNode.getStorageLocations(Lorg/apache/hadoop/conf/Configuration;)Ljava/util/List; 1 1757 
 org.apache.hadoop.util.bloom.DynamicBloomFilter.readFields(Ljava/io/DataInput;)V 1 265 
-org.apache.hadoop.security.SaslRpcClient.selectSaslClient(Ljava/util/List;)Lorg/apache/hadoop/ipc/protobuf/RpcHeaderProtos$RpcSaslProto$SaslAuth; 2 149 167 
 org.apache.hadoop.ipc.Server$Listener$Reader.doRunLoop()V 3 570 577 564 
+org.apache.hadoop.security.SaslRpcClient.selectSaslClient(Ljava/util/List;)Lorg/apache/hadoop/ipc/protobuf/RpcHeaderProtos$RpcSaslProto$SaslAuth; 2 149 167 
 org.apache.hadoop.hdfs.server.datanode.DirectoryScanner$ReportCompiler.call()Lorg/apache/hadoop/hdfs/server/datanode/DirectoryScanner$ScanInfoPerBlockPool; 1 583 
 org.apache.hadoop.io.MapFile$Reader.readIndex()V 1 470 
 org.apache.hadoop.io.MapFile$Reader.binarySearch(Lorg/apache/hadoop/io/WritableComparable;)I 1 650 
 org.apache.hadoop.hdfs.server.namenode.NamenodeJspHelper.getRollingUpgradeText(Lorg/apache/hadoop/hdfs/server/namenode/FSNamesystem;)Ljava/lang/String; 1 116 
-org.apache.hadoop.hdfs.server.datanode.BPServiceActor.register()V 1 730 
 org.apache.hadoop.util.ReflectionUtils.printThreadInfo(Ljava/io/PrintWriter;Ljava/lang/String;)V 2 190 164 
+org.apache.hadoop.hdfs.server.datanode.BPServiceActor.register()V 1 730 
 org.apache.hadoop.hdfs.server.namenode.snapshot.SnapshotManager.write(Ljava/io/DataOutput;)V 2 283 282 
 org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager.getCacheCommand(Lorg/apache/hadoop/hdfs/server/blockmanagement/DatanodeDescriptor$CachedBlocksList;Lorg/apache/hadoop/hdfs/server/blockmanagement/DatanodeDescriptor;ILjava/lang/String;)Lorg/apache/hadoop/hdfs/server/protocol/DatanodeCommand; 1 1375 
 org.apache.hadoop.hdfs.qjournal.client.QuorumJournalManager.createNewUniqueEpoch()Ljava/util/Map; 1 177 
@@ -777,10 +778,10 @@ org.apache.hadoop.io.compress.bzip2.CBZip2OutputStream.sendMTFValues1(II)I 11 10
 org.apache.hadoop.io.compress.bzip2.CBZip2OutputStream.sendMTFValues2(II)V 3 1150 1159 1154 
 org.apache.hadoop.io.compress.bzip2.CBZip2OutputStream.sendMTFValues3(II)V 2 1179 1175 
 org.apache.hadoop.io.compress.bzip2.CBZip2OutputStream.sendMTFValues4()V 6 1203 1200 1210 1223 1221 1218 
-org.apache.hadoop.io.compress.bzip2.CBZip2OutputStream.sendMTFValues5(II)V 4 1254 1252 1264 1251 
 org.apache.hadoop.hdfs.security.token.block.BlockTokenSecretManager.removeExpiredKeys()V 1 178 
-org.apache.hadoop.io.compress.bzip2.CBZip2OutputStream.sendMTFValues6(II)V 8 1290 1302 1300 1315 1313 1327 1298 1285 
+org.apache.hadoop.io.compress.bzip2.CBZip2OutputStream.sendMTFValues5(II)V 4 1254 1252 1264 1251 
 org.apache.hadoop.hdfs.client.ClientMmapManager.makeEvictable(Lorg/apache/hadoop/hdfs/client/ClientMmap;)V 1 435 
+org.apache.hadoop.io.compress.bzip2.CBZip2OutputStream.sendMTFValues6(II)V 8 1290 1302 1300 1315 1313 1327 1298 1285 
 org.apache.hadoop.io.compress.bzip2.CBZip2OutputStream.sendMTFValues7(I)V 3 1368 1361 1355 
 org.apache.hadoop.security.SaslRpcServer$FastSaslServerFactory.createSaslServer(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Ljavax/security/auth/callback/CallbackHandler;)Ljavax/security/sasl/SaslServer; 1 407 
 org.apache.hadoop.hdfs.server.namenode.FSNamesystem.listCorruptFileBlocks(Ljava/lang/String;[Ljava/lang/String;)Ljava/util/Collection; 2 6094 6098 
@@ -870,16 +871,16 @@ org.apache.hadoop.hdfs.server.blockmanagement.BlockManager.rescanPostponedMisrep
 org.apache.hadoop.hdfs.server.datanode.DataNode.recoverBlock(Lorg/apache/hadoop/hdfs/server/protocol/BlockRecoveryCommand$RecoveringBlock;)V 1 2074 
 org.apache.hadoop.ipc.Client$Connection$PingInputStream.read([BII)I 1 510 
 org.apache.hadoop.io.compress.DecompressorStream.decompress([BII)I 1 91 
-org.apache.hadoop.hdfs.server.datanode.fsdataset.AvailableSpaceVolumeChoosingPolicy$AvailableSpaceVolumeList.getLeastAvailableSpace()J 1 192 
 org.apache.hadoop.hdfs.LeaseRenewer.run(I)V 2 452 437 
+org.apache.hadoop.hdfs.server.datanode.fsdataset.AvailableSpaceVolumeChoosingPolicy$AvailableSpaceVolumeList.getLeastAvailableSpace()J 1 192 
 org.apache.hadoop.ha.HealthMonitor.doHealthChecks()V 1 186 
 org.apache.hadoop.hdfs.server.datanode.metrics.DataNodeMetrics.<init>(Ljava/lang/String;Ljava/lang/String;[I)V 1 109 
 org.apache.hadoop.ipc.WritableRpcEngine$Server.<init>(Ljava/lang/Class;Ljava/lang/Object;Lorg/apache/hadoop/conf/Configuration;Ljava/lang/String;IIIIZLorg/apache/hadoop/security/token/SecretManager;Ljava/lang/String;)V 1 400 
 org.apache.hadoop.security.authorize.ProxyUsers.refreshSuperUserGroupsConfiguration(Lorg/apache/hadoop/conf/Configuration;)V 2 68 76 
 org.apache.hadoop.io.compress.bzip2.CBZip2InputStream.setupBlock()V 2 1028 1033 
 org.apache.hadoop.hdfs.tools.offlineEditsViewer.StatisticsEditsVisitor.getStatisticsString()Ljava/lang/String; 1 114 
-org.apache.hadoop.hdfs.server.namenode.TransferFsImage.getFileServer(Ljavax/servlet/ServletResponse;Ljava/io/File;Ljava/io/FileInputStream;Lorg/apache/hadoop/hdfs/util/DataTransferThrottler;)V 1 223 
 org.apache.hadoop.security.token.delegation.AbstractDelegationTokenSecretManager.removeExpiredKeys()V 1 264 
+org.apache.hadoop.hdfs.server.namenode.TransferFsImage.getFileServer(Ljavax/servlet/ServletResponse;Ljava/io/File;Ljava/io/FileInputStream;Lorg/apache/hadoop/hdfs/util/DataTransferThrottler;)V 1 223 
 org.apache.hadoop.security.UserGroupInformation.getTGT()Ljavax/security/auth/kerberos/KerberosTicket; 1 782 
 org.apache.hadoop.fs.FSInputChecker.readFully(Ljava/io/InputStream;[BII)I 1 435 
 org.apache.hadoop.http.HttpServer2.initializeWebServer(Ljava/lang/String;Ljava/lang/String;Lorg/apache/hadoop/conf/Configuration;[Ljava/lang/String;)V 2 383 391 
@@ -918,8 +919,8 @@ org.apache.hadoop.hdfs.server.namenode.FSImage.saveFSImageInAllDirs(Lorg/apache/
 org.apache.hadoop.hdfs.server.namenode.FSEditLog.waitForSyncToFinish()V 1 1192 
 org.apache.hadoop.hdfs.server.common.Storage.unlockAll()V 1 1030 
 org.apache.hadoop.hdfs.server.protocol.RemoteEditLogManifest.checkState()V 1 51 
-org.apache.hadoop.util.StringUtils.split(Ljava/lang/String;CC)[Ljava/lang/String; 2 404 412 
 org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager.setBalancerBandwidth(J)V 1 1398 
+org.apache.hadoop.util.StringUtils.split(Ljava/lang/String;CC)[Ljava/lang/String; 2 404 412 
 org.apache.hadoop.hdfs.server.datanode.fsdataset.impl.BlockPoolSlice.addToReplicasMap(Lorg/apache/hadoop/hdfs/server/datanode/fsdataset/impl/ReplicaMap;Ljava/io/File;Z)V 1 182 
 org.apache.hadoop.util.bloom.DynamicBloomFilter.addRow()V 1 277 
 org.apache.hadoop.util.bloom.BloomFilter.add(Lorg/apache/hadoop/util/bloom/Key;)V 1 125 
@@ -944,8 +945,8 @@ org.apache.hadoop.hdfs.protocolPB.PBHelper.convert(Lorg/apache/hadoop/hdfs/secur
 org.apache.hadoop.hdfs.server.balancer.Balancer$Source.chooseNextBlockToMove()Lorg/apache/hadoop/hdfs/server/balancer/Balancer$PendingBlockMove; 1 701 
 org.apache.hadoop.hdfs.server.datanode.BPOfferService.blockIdArrayToString([J)Ljava/lang/String; 1 546 
 org.apache.hadoop.hdfs.server.balancer.Balancer$Source.filterMovedBlocks()V 1 729 
-org.apache.hadoop.ipc.ClientId.getMsb([B)J 1 64 
 org.apache.hadoop.hdfs.server.balancer.Balancer$Source.getBlockList()J 2 667 653 
+org.apache.hadoop.ipc.ClientId.getMsb([B)J 1 64 
 org.apache.hadoop.io.MD5Hash.halfDigest()J 1 143 
 org.apache.hadoop.ipc.ClientId.getLsb([B)J 1 72 
 org.apache.hadoop.hdfs.server.datanode.DataStorage.linkBlocks(Ljava/io/File;Ljava/io/File;ILorg/apache/hadoop/fs/HardLink;)V 1 794 
@@ -971,8 +972,8 @@ org.apache.hadoop.hdfs.server.namenode.FSEditLogOp$AddCloseOp.readBlocks(Ljava/i
 org.apache.hadoop.hdfs.server.datanode.fsdataset.impl.FsVolumeList.getAllVolumesMap(Ljava/lang/String;Lorg/apache/hadoop/hdfs/server/datanode/fsdataset/impl/ReplicaMap;)V 1 101 
 org.apache.hadoop.hdfs.server.namenode.startupprogress.StartupProgressView.getPercentComplete(Lorg/apache/hadoop/hdfs/server/namenode/startupprogress/Phase;)F 1 154 
 org.apache.hadoop.hdfs.server.common.Storage.writeAll()V 1 1020 
-org.apache.hadoop.hdfs.server.namenode.snapshot.INodeDirectoryWithSnapshot.destroyDstSubtree(Lorg/apache/hadoop/hdfs/server/namenode/INode;Lorg/apache/hadoop/hdfs/server/namenode/snapshot/Snapshot;Lorg/apache/hadoop/hdfs/server/namenode/snapshot/Snapshot;Lorg/apache/hadoop/hdfs/server/namenode/INode$BlocksMapUpdateInfo;Ljava/util/List;)V 1 969 
 org.apache.hadoop.fs.s3.S3OutputStream.write([BII)V 1 123 
+org.apache.hadoop.hdfs.server.namenode.snapshot.INodeDirectoryWithSnapshot.destroyDstSubtree(Lorg/apache/hadoop/hdfs/server/namenode/INode;Lorg/apache/hadoop/hdfs/server/namenode/snapshot/Snapshot;Lorg/apache/hadoop/hdfs/server/namenode/snapshot/Snapshot;Lorg/apache/hadoop/hdfs/server/namenode/INode$BlocksMapUpdateInfo;Ljava/util/List;)V 1 969 
 org.apache.hadoop.hdfs.server.namenode.NNStorage.readAndInspectDirs()Lorg/apache/hadoop/hdfs/server/namenode/FSImageStorageInspector; 1 980 
 org.apache.hadoop.hdfs.server.namenode.snapshot.SnapshotFSImageFormat.saveSnapshots(Lorg/apache/hadoop/hdfs/server/namenode/snapshot/INodeDirectorySnapshottable;Ljava/io/DataOutput;)V 1 63 
 org.apache.hadoop.hdfs.tools.offlineImageViewer.ImageLoaderCurrent.processDirectoryWithSnapshot(Ljava/io/DataInputStream;Lorg/apache/hadoop/hdfs/tools/offlineImageViewer/ImageVisitor;Z)V 1 525 
@@ -991,8 +992,8 @@ org.apache.hadoop.fs.FileUtil.fullyDeleteContents(Ljava/io/File;Z)Z 1 220
 org.apache.hadoop.record.compiler.CGenerator.genCode(Ljava/lang/String;Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/lang/String;Ljava/util/ArrayList;)V 1 52 
 org.apache.hadoop.hdfs.server.namenode.FSImageSerialization.writeCompactBlockArray([Lorg/apache/hadoop/hdfs/protocol/Block;Ljava/io/DataOutputStream;)V 1 459 
 org.apache.hadoop.io.compress.zlib.BuiltInGzipDecompressor.checkAndSkipBytesUntilNull()Z 1 534 
-org.apache.hadoop.hdfs.protocolPB.PBHelper.convert(Lorg/apache/hadoop/hdfs/protocol/proto/HdfsProtos$LocatedBlockProto;)Lorg/apache/hadoop/hdfs/protocol/LocatedBlock; 2 627 652 
 org.apache.hadoop.hdfs.server.namenode.FSNamesystem.getCompleteBlocksTotal()J 3 5199 5211 5198 
+org.apache.hadoop.hdfs.protocolPB.PBHelper.convert(Lorg/apache/hadoop/hdfs/protocol/proto/HdfsProtos$LocatedBlockProto;)Lorg/apache/hadoop/hdfs/protocol/LocatedBlock; 2 627 652 
 org.apache.hadoop.hdfs.server.datanode.BPOfferService.triggerDeletionReportForTests()V 1 499 
 org.apache.hadoop.hdfs.server.namenode.INodeDirectory.destroyAndCollectBlocks(Lorg/apache/hadoop/hdfs/server/namenode/INode$BlocksMapUpdateInfo;Ljava/util/List;)V 1 579 
 org.apache.hadoop.metrics.spi.CompositeContext$MetricsRecordDelegator.<init>(Ljava/lang/String;Ljava/util/ArrayList;)V 1 183 
@@ -1019,8 +1020,8 @@ org.apache.hadoop.hdfs.server.datanode.fsdataset.impl.FsDatasetAsyncDiskService.
 org.apache.hadoop.io.file.tfile.TFile.main([Ljava/lang/String;)V 1 2353 
 org.apache.hadoop.hdfs.FileInputStreamCache.toString()Ljava/lang/String; 1 271 
 org.apache.hadoop.hdfs.DFSOutputStream.getPipeline()[Lorg/apache/hadoop/hdfs/protocol/DatanodeInfo; 1 1370 
-org.apache.hadoop.hdfs.server.namenode.CacheManager.listCacheDirectives(JLorg/apache/hadoop/hdfs/protocol/CacheDirectiveInfo;Lorg/apache/hadoop/hdfs/server/namenode/FSPermissionChecker;)Lorg/apache/hadoop/fs/BatchedRemoteIterator$BatchedListEntries; 1 685 
 org.apache.hadoop.ipc.Server$Handler.run()V 1 1932 
+org.apache.hadoop.hdfs.server.namenode.CacheManager.listCacheDirectives(JLorg/apache/hadoop/hdfs/protocol/CacheDirectiveInfo;Lorg/apache/hadoop/hdfs/server/namenode/FSPermissionChecker;)Lorg/apache/hadoop/fs/BatchedRemoteIterator$BatchedListEntries; 1 685 
 org.apache.hadoop.hdfs.server.blockmanagement.BlockManager.setReplication(SSLjava/lang/String;[Lorg/apache/hadoop/hdfs/protocol/Block;)V 2 2443 2451 
 org.apache.hadoop.hdfs.client.ClientMmapManager.fetch(Lorg/apache/hadoop/hdfs/protocol/DatanodeID;Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock;Ljava/io/FileInputStream;)Lorg/apache/hadoop/hdfs/client/ClientMmap; 1 394 
 org.apache.hadoop.hdfs.server.namenode.FSEditLogOp$RenameOp.toBytesWritable([Lorg/apache/hadoop/fs/Options$Rename;)Lorg/apache/hadoop/io/BytesWritable; 1 2149 
@@ -1034,8 +1035,8 @@ org.apache.hadoop.util.StringUtils.getStringCollection(Ljava/lang/String;Ljava/l
 org.apache.hadoop.metrics2.lib.MetricsSourceBuilder.initRegistry(Ljava/lang/Object;)Lorg/apache/hadoop/metrics2/lib/MetricsRegistry; 2 92 106 
 org.apache.hadoop.metrics2.lib.MetricsSourceBuilder.add(Ljava/lang/Object;Ljava/lang/reflect/Field;)V 1 121 
 org.apache.hadoop.util.ReflectionUtils.getDeclaredMethodsIncludingInherited(Ljava/lang/Class;)Ljava/util/List; 2 333 332 
-org.apache.hadoop.metrics2.lib.MetricsSourceBuilder.add(Ljava/lang/Object;Ljava/lang/reflect/Method;)V 1 149 
 org.apache.hadoop.hdfs.server.namenode.FSEditLog.findBackupJournal(Lorg/apache/hadoop/hdfs/server/protocol/NamenodeRegistration;)Lorg/apache/hadoop/hdfs/server/namenode/BackupJournalManager; 1 1259 
+org.apache.hadoop.metrics2.lib.MetricsSourceBuilder.add(Ljava/lang/Object;Ljava/lang/reflect/Method;)V 1 149 
 org.apache.hadoop.record.compiler.generated.ParseException.getMessage()Ljava/lang/String; 3 134 130 144 
 org.apache.hadoop.util.GenericOptionsParser.validateFiles(Ljava/lang/String;Lorg/apache/hadoop/conf/Configuration;)Ljava/lang/String; 1 383 
 org.apache.hadoop.hdfs.server.namenode.FSDirectory.getPathComponents(Lorg/apache/hadoop/hdfs/server/namenode/INode;)[[B 1 2763 
@@ -1084,8 +1085,8 @@ org.apache.hadoop.hdfs.BlockReaderUtil.readAll(Lorg/apache/hadoop/hdfs/BlockRead
 org.apache.hadoop.io.file.tfile.BCFile$MetaIndex.<init>(Ljava/io/DataInput;)V 1 776 
 org.apache.hadoop.hdfs.FileInputStreamCache.close()V 1 260 
 org.apache.hadoop.hdfs.DFSClient.getBlockLocations(Ljava/lang/String;JJ)[Lorg/apache/hadoop/fs/BlockLocation; 1 1174 
-org.apache.hadoop.hdfs.protocol.LayoutVersion.getCurrentLayoutVersion()I 1 248 
 org.apache.hadoop.net.NetworkTopology.contains(Lorg/apache/hadoop/net/Node;)Z 1 509 
+org.apache.hadoop.hdfs.protocol.LayoutVersion.getCurrentLayoutVersion()I 1 248 
 org.apache.hadoop.io.DataOutputByteBuffer$Buffer.write([BII)V 1 59 
 org.apache.hadoop.hdfs.server.namenode.NNStorage.getNumStorageDirs(Lorg/apache/hadoop/hdfs/server/namenode/NNStorage$NameNodeDirType;)I 1 379 
 org.apache.hadoop.hdfs.protocolPB.PBHelper.convertLocatedBlock2(Ljava/util/List;)Ljava/util/List; 1 1071 
@@ -1125,8 +1126,8 @@ org.apache.hadoop.io.TwoDArrayWritable.readFields(Ljava/io/DataInput;)V 3 64 70 
 org.apache.hadoop.ipc.Server$Connection.unwrapPacketAndProcessRpcs([B)V 1 1651 
 org.apache.hadoop.util.bloom.CountingBloomFilter.readFields(Ljava/io/DataInput;)V 1 306 
 org.apache.hadoop.hdfs.tools.DFSck.listCorruptFileBlocks(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Integer; 2 186 169 
-org.apache.hadoop.fs.FileContext$Util.getContentSummary(Lorg/apache/hadoop/fs/Path;)Lorg/apache/hadoop/fs/ContentSummary; 1 1598 
 org.apache.hadoop.hdfs.qjournal.client.QuorumCall.waitFor(IIIILjava/lang/String;)V 1 113 
+org.apache.hadoop.fs.FileContext$Util.getContentSummary(Lorg/apache/hadoop/fs/Path;)Lorg/apache/hadoop/fs/ContentSummary; 1 1598 
 org.apache.hadoop.util.bloom.CountingBloomFilter.membershipTest(Lorg/apache/hadoop/util/bloom/Key;)Z 1 187 
 org.apache.hadoop.io.SequenceFile$Sorter$SortPass.run(Z)I 3 2829 2838 2833 
 org.apache.hadoop.hdfs.server.datanode.fsdataset.impl.FsDatasetCache.getCachedBlocks(Ljava/lang/String;)Ljava/util/List; 1 264 
@@ -1197,8 +1198,8 @@ org.apache.hadoop.fs.viewfs.ViewFs.getMountPoints()[Lorg/apache/hadoop/fs/viewfs
 org.apache.hadoop.metrics.jvm.JvmMetrics.doGarbageCollectionUpdates()V 1 126 
 org.apache.hadoop.metrics.ganglia.GangliaContext.emitRecord(Ljava/lang/String;Ljava/lang/String;Lorg/apache/hadoop/metrics/spi/OutputRecord;)V 1 145 
 org.apache.hadoop.fs.FileContext.getDelegationTokens(Lorg/apache/hadoop/fs/Path;Ljava/lang/String;)Ljava/util/List; 1 2216 
-org.apache.hadoop.io.compress.BlockCompressorStream.write([BII)V 3 114 110 131 
 org.apache.hadoop.fs.AbstractFileSystem.printStatistics()V 1 203 
+org.apache.hadoop.io.compress.BlockCompressorStream.write([BII)V 3 114 110 131 
 org.apache.hadoop.util.IntrusiveCollection.toArray([Ljava/lang/Object;)[Ljava/lang/Object; 1 253 
 org.apache.hadoop.util.UTF8ByteArrayUtils.findByte([BIIB)I 1 36 
 org.apache.hadoop.io.file.tfile.Chunk$ChunkDecoder.close()V 1 190 
@@ -1227,15 +1228,15 @@ org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider.close(
 org.apache.hadoop.hdfs.server.datanode.BPOfferService.triggerBlockReportForTests()V 1 489 
 org.apache.hadoop.hdfs.DFSUtil.byteArray2bytes([[B)[B 2 328 336 
 org.apache.hadoop.hdfs.qjournal.client.AsyncLoggerSet.format(Lorg/apache/hadoop/hdfs/server/protocol/NamespaceInfo;)Lorg/apache/hadoop/hdfs/qjournal/client/QuorumCall; 1 304 
+org.apache.hadoop.ipc.Server$ConnectionManager.closeIdle(Z)V 1 2636 
 org.apache.hadoop.hdfs.server.namenode.CachedBlock.isInList(Lorg/apache/hadoop/util/IntrusiveCollection;)Z 1 225 
 org.apache.hadoop.hdfs.util.LightWeightLinkedSet.pollN(I)Ljava/util/List; 1 175 
-org.apache.hadoop.ipc.Server$ConnectionManager.closeIdle(Z)V 1 2636 
 org.apache.hadoop.hdfs.tools.DelegationTokenFetcher$1.run()Ljava/lang/Object; 5 158 168 178 192 201 
 org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream.shouldForceSync()Z 1 497 
 org.apache.hadoop.hdfs.server.blockmanagement.BlocksMap.replaceBlock(Lorg/apache/hadoop/hdfs/server/blockmanagement/BlockInfo;)Lorg/apache/hadoop/hdfs/server/blockmanagement/BlockInfo; 1 186 
 org.apache.hadoop.hdfs.server.datanode.DirectoryScanner.isValid(Lorg/apache/hadoop/hdfs/server/datanode/fsdataset/FsDatasetSpi;Lorg/apache/hadoop/hdfs/server/datanode/fsdataset/FsVolumeSpi;)Z 1 513 
-org.apache.hadoop.ha.ShellCommandFencer.setConfAsEnvVars(Ljava/util/Map;)V 1 180 
 org.apache.hadoop.hdfs.server.datanode.fsdataset.impl.FsDatasetAsyncDiskService.countPendingDeletions()J 1 109 
+org.apache.hadoop.ha.ShellCommandFencer.setConfAsEnvVars(Ljava/util/Map;)V 1 180 
 org.apache.hadoop.hdfs.server.namenode.FSNamesystem.getNodeUsage()Ljava/lang/String; 2 6617 6627 
 org.apache.hadoop.util.bloom.RetouchedBloomFilter.createVector()V 1 398 
 org.apache.hadoop.hdfs.server.datanode.fsdataset.AvailableSpaceVolumeChoosingPolicy$AvailableSpaceVolumeList.areAllVolumesWithinFreeSpaceThreshold()Z 1 179 
@@ -1316,9 +1317,9 @@ org.apache.hadoop.io.file.tfile.Compression.getSupportedAlgorithms()[Ljava/lang/
 org.apache.hadoop.io.WritableUtils.toByteArray([Lorg/apache/hadoop/io/Writable;)[B 1 451 
 org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolTranslatorPB.rename2(Ljava/lang/String;Ljava/lang/String;[Lorg/apache/hadoop/fs/Options$Rename;)V 1 431 
 org.apache.hadoop.hdfs.server.namenode.CacheManager.clearDirectiveStats()V 1 235 
+org.apache.hadoop.hdfs.server.balancer.Balancer.isGoodBlockCandidate(Lorg/apache/hadoop/hdfs/server/balancer/Balancer$Source;Lorg/apache/hadoop/hdfs/server/balancer/Balancer$BalancerDatanode;Lorg/apache/hadoop/hdfs/server/balancer/Balancer$BalancerBlock;)Z 2 1232 1244 
 org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager.clearPendingCachingCommands()V 1 1446 
 org.apache.hadoop.hdfs.server.datanode.fsdataset.impl.FsVolumeImpl.getVolumeMap(Lorg/apache/hadoop/hdfs/server/datanode/fsdataset/impl/ReplicaMap;)V 1 214 
-org.apache.hadoop.hdfs.server.balancer.Balancer.isGoodBlockCandidate(Lorg/apache/hadoop/hdfs/server/balancer/Balancer$Source;Lorg/apache/hadoop/hdfs/server/balancer/Balancer$BalancerDatanode;Lorg/apache/hadoop/hdfs/server/balancer/Balancer$BalancerBlock;)Z 2 1232 1244 
 org.apache.hadoop.util.GenericOptionsParser.preProcessForWindows([Ljava/lang/String;)[Ljava/lang/String; 1 438 
 org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer$ResponseProcessor.run()V 2 733 722 
 org.apache.hadoop.hdfs.server.namenode.INodeFile.concatBlocks([Lorg/apache/hadoop/hdfs/server/namenode/INodeFile;)V 2 240 247 
@@ -1326,15 +1327,15 @@ org.apache.hadoop.hdfs.tools.offlineImageViewer.ImageLoaderCurrent.processDirect
 org.apache.hadoop.hdfs.server.namenode.FSEditLogOp$ConcatDeleteOp.toXml(Lorg/xml/sax/ContentHandler;)V 1 989 
 org.apache.hadoop.hdfs.protocol.LayoutVersion.initMap()V 2 203 195 
 org.apache.hadoop.hdfs.server.datanode.BPOfferService.reportBadBlocks(Lorg/apache/hadoop/hdfs/protocol/ExtendedBlock;Ljava/lang/String;Lorg/apache/hadoop/hdfs/StorageType;)V 1 188 
-org.apache.hadoop.hdfs.server.common.Storage$DirIterator.hasNext()Z 1 143 
 org.apache.hadoop.hdfs.server.datanode.fsdataset.impl.FsDatasetImpl.getFinalizedBlocks(Ljava/lang/String;)Ljava/util/List; 1 1095 
+org.apache.hadoop.hdfs.server.common.Storage$DirIterator.hasNext()Z 1 143 
 org.apache.hadoop.hdfs.server.namenode.NNStorageRetentionManager.purgeOldStorage()V 2 123 130 
 org.apache.hadoop.hdfs.server.namenode.CachedBlock.getNext(Lorg/apache/hadoop/util/IntrusiveCollection;)Lorg/apache/hadoop/util/IntrusiveCollection$Element; 1 214 
-org.apache.hadoop.hdfs.qjournal.client.IPCLoggerChannelMetrics.addWriteRpcLatency(J)V 1 149 
 org.apache.hadoop.hdfs.security.token.delegation.DelegationTokenSecretManager.saveCurrentTokens(Ljava/io/DataOutputStream;Ljava/lang/String;)V 1 298 
+org.apache.hadoop.hdfs.qjournal.client.IPCLoggerChannelMetrics.addWriteRpcLatency(J)V 1 149 
 org.apache.hadoop.hdfs.server.namenode.FSEditLog.waitIfAutoSyncScheduled()V 1 425 
-org.apache.hadoop.security.ssl.ReloadingX509TrustManager.run()V 1 187 
 org.apache.hadoop.hdfs.server.datanode.BlockPoolManager.remove(Lorg/apache/hadoop/hdfs/server/datanode/BPOfferService;)V 1 95 
+org.apache.hadoop.security.ssl.ReloadingX509TrustManager.run()V 1 187 
 org.apache.hadoop.net.ScriptBasedMapping$RawScriptBasedMapping.resolve(Ljava/util/List;)Ljava/util/List; 2 173 182 
 org.apache.hadoop.hdfs.server.namenode.snapshot.INodeDirectoryWithSnapshot$ChildrenDiff.writeDeleted(Ljava/io/DataOutput;Lorg/apache/hadoop/hdfs/server/namenode/snapshot/SnapshotFSImageFormat$ReferenceMap;)V 1 146 
 org.apache.hadoop.hdfs.server.namenode.CachedBlock.setPrev(Lorg/apache/hadoop/util/IntrusiveCollection;Lorg/apache/hadoop/util/IntrusiveCollection$Element;)V 1 163 
@@ -1420,8 +1421,8 @@ org.apache.hadoop.http.HttpServer2.getFilterInitializers(Lorg/apache/hadoop/conf
 org.apache.hadoop.util.ReflectionUtils.getDeclaredFieldsIncludingInherited(Ljava/lang/Class;)Ljava/util/List; 2 317 316 
 org.apache.hadoop.hdfs.server.namenode.FSDirectory.waitForReady()V 1 260 
 org.apache.hadoop.io.AbstractMapWritable.write(Ljava/io/DataOutput;)V 1 190 
-org.apache.hadoop.record.compiler.CppGenerator.genCode(Ljava/lang/String;Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/lang/String;Ljava/util/ArrayList;)V 2 56 63 
 org.apache.hadoop.fs.FSInputChecker.read([BII)I 1 195 
+org.apache.hadoop.record.compiler.CppGenerator.genCode(Ljava/lang/String;Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/lang/String;Ljava/util/ArrayList;)V 2 56 63 
 org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager.sortLocatedBlocks(Ljava/lang/String;Ljava/util/List;)V 1 353 
 org.apache.hadoop.net.NetUtils.addMatchingAddrs(Ljava/net/NetworkInterface;Lorg/apache/commons/net/util/SubnetUtils$SubnetInfo;Ljava/util/List;)V 1 843 
 org.apache.hadoop.record.Buffer.hashCode()I 1 194 
@@ -1527,8 +1528,8 @@ org.apache.hadoop.fs.LocalDirAllocator$AllocatorPerContext.confChanged(Lorg/apac
 org.apache.hadoop.hdfs.server.blockmanagement.Host2NodesMap.toString()Ljava/lang/String; 1 195 
 org.apache.hadoop.fs.ByteBufferUtil.fallbackRead(Ljava/io/InputStream;Lorg/apache/hadoop/io/ByteBufferPool;I)Ljava/nio/ByteBuffer; 1 79 
 org.apache.hadoop.hdfs.DFSClient.getBlockStorageLocations(Ljava/util/List;)[Lorg/apache/hadoop/fs/BlockStorageLocation; 3 1207 1221 1220 
-org.apache.hadoop.fs.s3.S3FileSystem.listStatus(Lorg/apache/hadoop/fs/Path;)[Lorg/apache/hadoop/fs/FileStatus; 1 202 
 org.apache.hadoop.hdfs.server.datanode.fsdataset.impl.FsVolumeList.checkDirs()Ljava/util/List; 1 134 
+org.apache.hadoop.fs.s3.S3FileSystem.listStatus(Lorg/apache/hadoop/fs/Path;)[Lorg/apache/hadoop/fs/FileStatus; 1 202 
 org.apache.hadoop.fs.BlockLocation.toString()Ljava/lang/String; 1 247 
 org.apache.hadoop.hdfs.protocolPB.PBHelper.convert(Lorg/apache/hadoop/hdfs/protocol/proto/HdfsProtos$SnapshotDiffReportProto;)Lorg/apache/hadoop/hdfs/protocol/SnapshotDiffReport; 1 1669 
 org.apache.hadoop.fs.Options$CreateOpts.getOpt(Ljava/lang/Class;[Lorg/apache/hadoop/fs/Options$CreateOpts;)Lorg/apache/hadoop/fs/Options$CreateOpts; 1 163 
@@ -1650,8 +1651,8 @@ org.apache.hadoop.net.DNS.getSubinterfaceInetAddrs(Ljava/net/NetworkInterface;)L
 org.apache.hadoop.http.HttpServer2.addGlobalFilter(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V 1 655 
 org.apache.hadoop.hdfs.server.datanode.BPServiceActor$PerStoragePendingIncrementalBR.putMissingBlockInfos([Lorg/apache/hadoop/hdfs/server/protocol/ReceivedDeletedBlockInfo;)I 1 888 
 org.apache.hadoop.util.GenericsUtil.toArray(Ljava/lang/Class;Ljava/util/List;)[Ljava/lang/Object; 1 58 
-org.apache.hadoop.tools.GetGroupsBase.run([Ljava/lang/String;)I 2 71 68 
 org.apache.hadoop.fs.AbstractFileSystem.clearStatistics()V 1 194 
+org.apache.hadoop.tools.GetGroupsBase.run([Ljava/lang/String;)I 2 71 68 
 org.apache.hadoop.hdfs.server.datanode.BPOfferService.join()V 1 261 
 org.apache.hadoop.metrics2.util.MetricsCache$Record.metrics()Ljava/util/Set; 1 116 
 org.apache.hadoop.hdfs.server.namenode.FSImageTransactionalStorageInspector.inspectDirectory(Lorg/apache/hadoop/hdfs/server/common/Storage$StorageDirectory;)V 1 88 
@@ -1688,8 +1689,8 @@ org.apache.hadoop.hdfs.DFSInputStream.fetchBlockByteRange(Lorg/apache/hadoop/hdf
 org.apache.hadoop.fs.FSInputChecker.checksum2long([B)J 1 339 
 org.apache.hadoop.hdfs.qjournal.client.AsyncLoggerSet.startLogSegment(J)Lorg/apache/hadoop/hdfs/qjournal/client/QuorumCall; 1 237 
 org.apache.hadoop.ha.HealthMonitor.enterState(Lorg/apache/hadoop/ha/HealthMonitor$State;)V 1 227 
-org.apache.hadoop.hdfs.server.blockmanagement.BlocksMap.removeBlock(Lorg/apache/hadoop/hdfs/protocol/Block;)V 1 105 
 org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager.getNumLiveDataNodes()I 1 950 
+org.apache.hadoop.hdfs.server.blockmanagement.BlocksMap.removeBlock(Lorg/apache/hadoop/hdfs/protocol/Block;)V 1 105 
 org.apache.hadoop.fs.GlobPattern.set(Ljava/lang/String;)V 1 81 
 org.apache.hadoop.ipc.WritableRpcEngine$Invocation.readFields(Ljava/io/DataInput;)V 1 156 
 org.apache.hadoop.hdfs.server.blockmanagement.DecommissionManager$Monitor.check()V 1 87 

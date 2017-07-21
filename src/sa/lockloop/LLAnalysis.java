@@ -63,7 +63,7 @@ import com.ibm.wala.util.io.CommandLine;
 import sa.lock.LockAnalyzer;
 import sa.lock.LockInfo;
 import sa.lock.LoopingLockAnalyzer;
-import sa.loop.IOLoopUtil;
+import sa.loop.TCOpUtil;
 import sa.loop.LoopAnalyzer;
 import sa.loop.LoopInfo;
 import sa.loop.NestedLoopAnalyzer;
@@ -87,7 +87,7 @@ public class LLAnalysis {
   
 	LockAnalyzer lockAnalyzer;
 	LoopAnalyzer loopAnalyzer;
-	IOLoopUtil iolooputil;
+	TCOpUtil iolooputil;
 	
 	// results
 	CGNodeList cgNodeList;

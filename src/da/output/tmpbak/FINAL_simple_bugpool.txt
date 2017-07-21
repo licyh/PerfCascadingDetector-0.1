@@ -1,0 +1,19 @@
+CL2: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-commitJob-302;
+CL2: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-commitJob-304;
+CL2: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-mergePaths-353;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl-scheduleTasks-650;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-resolveHosts-1145;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl$AttemptSucceededTransition-transition-770;
+CL2: org.apache.hadoop.yarn.server.resourcemanager.scheduler.AppSchedulingInfo-updateResourceRequests-129;
+CL2: org.apache.hadoop.yarn.server.resourcemanager.scheduler.SchedulerApp-pullNewlyAllocatedContainers-269;
+CL2: org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler-assignContainer-530;
+CL2: org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler-assignContainers-353;
+CL2: org.apache.hadoop.yarn.service.AbstractService-changeState-113;
+CL2: org.apache.hadoop.yarn.util.AbstractLivelinessMonitor$PingChecker-run-106;
+CL3: org.apache.hadoop.yarn.server.resourcemanager.scheduler.AppSchedulingInfo-stop-353;
+CL3: org.apache.hadoop.yarn.server.resourcemanager.scheduler.AppSchedulingInfo-updateResourceRequests-129;
+CL3: org.apache.hadoop.yarn.service.AbstractService-changeState-113;
+CL3: org.apache.hadoop.yarn.util.AbstractLivelinessMonitor$PingChecker-run-106;
+CL4: org.apache.hadoop.yarn.service.AbstractService-changeState-113;
+CL4: org.apache.hadoop.yarn.util.AbstractLivelinessMonitor$PingChecker-run-106;
+//summary - 18(#static codepoints=13) from 52

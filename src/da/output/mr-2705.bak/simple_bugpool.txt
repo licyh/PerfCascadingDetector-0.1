@@ -1,4 +1,4 @@
-14 (#static codepoints=14)
+//14 (#static codepoints=14)
 CL1: org.apache.hadoop.io.IOUtils-cleanup-145;
 CL1: org.apache.hadoop.io.IOUtils-copyBytes-67;
 CL1: org.apache.hadoop.io.IOUtils-readFully-112;
