@@ -8,6 +8,7 @@ public class Benchmarks {
 	public static final String MR = "MapReduce";
 	public static final String HD = "HDFS"; 
 	public static final String HB = "HBase";
+	public static final String CA = "Cassandra";
 	
 	
 	/**
@@ -39,6 +40,9 @@ public class Benchmarks {
 		//added
 		else if ( lowerPathStr.contains("ha") )
 			systemName = HD;
+		else if ( lowerPathStr.contains("ca") || lowerPathStr.contains("cassandra") ) {
+			systemName = CA;
+		}
 		return systemName;
 	}
 			

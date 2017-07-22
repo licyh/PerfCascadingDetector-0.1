@@ -55,21 +55,26 @@ public class TCOpUtil {
 		switch ( systemName ) {
 			case Benchmarks.MR:
 		  		rpcfile = jarsDirPath.resolve("mr_rpc.txt");
-		  		iofile  = jarsDirPath.getParent().resolve("io/mr_io.txt");
+		  		iofile  = jarsDirPath.getParent().resolve("io/customized_io_mr.txt");
 				break;
 		  	case Benchmarks.HD:
 		  		rpcfile = jarsDirPath.resolve("hd_rpc.txt");
-		  		iofile  = jarsDirPath.getParent().resolve("io/hd_io.txt");
+		  		iofile  = jarsDirPath.getParent().resolve("io/customized_io_hd.txt");
 				break;
 		  	case Benchmarks.HB:
 		  		rpcfile = jarsDirPath.resolve("hb_rpc.txt");
-		  		iofile  = jarsDirPath.getParent().resolve("io/hb_io.txt");
+		  		iofile  = jarsDirPath.getParent().resolve("io/customized_io_hb.txt");
+				break;
+		  	case Benchmarks.CA:
+		  		//rpcfile = jarsDirPath.resolve("ca_rpc.txt");
+		  		iofile  = jarsDirPath.getParent().resolve("io/customized_io_ca.txt");
 				break;
 		  	default:
 				break;
 		}  
 		
-		rpcChecker.addCheckFile( rpcfile );
+		if ( rpcfile != null)
+			rpcChecker.addCheckFile( rpcfile );
 		ioChecker.addCheckFile( commonIOfile );
 		ioChecker.addCheckFile( iofile );
 	}
