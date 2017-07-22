@@ -11,7 +11,8 @@ mkdir -p $dm_dir
 
 
 # Start hadoop
-echo "JX - INFO - start HDFS+MR to see if everything is OK"
+:<<note
+echo "JX - INFO - start Cassandra to see if everything is OK"
 start-all.sh
 sleep 5s
 hadoop dfsadmin -safemode leave
@@ -20,20 +21,18 @@ hadoop fs -rmr output
 hadoop fs -lsr /
 jps
 sleep 2s
+note
 
 # Stop hadoop so that NOT under logging
-echo "JX - INFO - stop hadoop .."
-hadoop-daemon.sh stop tasktracker
-hadoop-daemon.sh stop jobtracker
-#stop-dfs.sh
-if [ $? -ne 0 ]; then
-  echo "stop xxx error"
-  exit
-fi
-sleep 2s
+echo "JX - INFO - stop cassandra .."
+jps | grep CassandraDaemon | awk '{print $1}' | xargs kill -9
+sleep 3s
 jps
-sleep 1s
-rm ~/hadoop-0.20.204.0/logs/*
+
+
+sudo rm -rf /var/log/cassandra/*
+sudo rm -rf /var/lib/cassandra/*
+#sudo rm -rf /var/lib/cassandra/data/*
 
 # Clean
 echo "JX - INFO - clean $dm_dir .."

@@ -1,22 +1,20 @@
 
 cd ~
-#start-dfs.sh
-hadoop-daemon.sh start jobtracker 
-hadoop-daemon.sh start tasktracker
+cassandra
+jps
 sleep 3s
 jps
 sleep 2s
 
-nohup hadoop jar ~/hadoop/install/hadoop-0.20.204.0/hadoop-examples-0.20.204.0.jar wordcount -files hdfs://11.11.2.51:9000/sidefiles/1K.sidefile,input/10K.file input/1K.file output/1K.file &
-hadoop jar ~/hadoop/install/hadoop-0.20.204.0/hadoop-examples-0.20.204.0.jar wordcount -files hdfs://11.11.2.51:9000/sidefiles/10K.sidefile,input/1K.file input/10K.file output/10K.file
+#nohup xxxxx &
 
-
-echo "waiting for 2s to end"
-sleep 2s
+echo "waiting for 10s to end"
+sleep 20s
 
 #stop-dfs.sh
-hadoop-daemon.sh stop tasktracker
-hadoop-daemon.sh stop jobtracker
+echo "stoping cassandra node ..."
+jps | grep CassandraDaemon | awk '{print $1}' | xargs kill -9
+#nodetool drain
 sleep 2s
 jps
 
