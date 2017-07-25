@@ -11,7 +11,9 @@ mkdir -p $dm_dir
 
 
 # Stop hadoop so that NOT under logging
-echo "JX - INFO - stop cassandra .."
+echo "JX - INFO - stop cassandra(try nodetool decommission first) .."
+nodetool decommission
+sleep 3s
 jps | grep CassandraDaemon | awk '{print $1}' | xargs kill -9
 sleep 3s
 jps
