@@ -20,7 +20,7 @@ jps
 #remove log & data
 sudo rm -rf /var/log/cassandra/*
 #only delete at the second node
-#sudo rm -rf /var/lib/cassandra/*
+sudo rm -rf /var/lib/cassandra/*
 
 
 # Clean

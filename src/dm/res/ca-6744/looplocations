@@ -787,7 +787,8 @@ org.apache.cassandra.cql3.CFDefinition.<init>(Lorg/apache/cassandra/config/CFMet
 org.apache.cassandra.streaming.compress.CompressedFileStreamTask.stream()V 2 84 78 
 org.apache.cassandra.db.marshal.UUIDType.compare(Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I 1 97 
 org.apache.cassandra.service.CassandraDaemon$2.run()V 3 295 293 291 
-org.apache.cassandra.db.marshal.AbstractCompositeType.compare(Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I 1 74 
+//massive & maybe wrong insert
+//org.apache.cassandra.db.marshal.AbstractCompositeType.compare(Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I 1 74 
 org.apache.cassandra.gms.Gossiper.examineGossiper(Ljava/util/List;Ljava/util/List;Ljava/util/Map;)V 1 944 
 org.apache.cassandra.db.TreeMapBackedSortedColumns.addAllWithSizeDelta(Lorg/apache/cassandra/db/ISortedColumns;Lorg/apache/cassandra/utils/Allocator;Lcom/google/common/base/Function;Lorg/apache/cassandra/db/index/SecondaryIndexManager$Updater;)J 1 135 
 org.apache.cassandra.db.Memtable$4.run()V 1 182 

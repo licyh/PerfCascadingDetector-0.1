@@ -1,1 +1,3 @@
-
+//this is a two-node tracing in Cassandran, so the 2nd node do not need this, should be commented out
+org.apache.cassandra.streaming.FileStreamTask runMayThrow 101      TargetCodeBegin
+org.apache.cassandra.streaming.FileStreamTask runMayThrow 102      TargetCodeEnd

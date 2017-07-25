@@ -59,6 +59,7 @@ class CassandraTransformer extends Transformer {
   		String className = cl.getName().toString();
 	    
   		// FILTERS
+                //no these two in v1.2.0
 		if ( className.equals("org.apache.cassandra.net.Message")
 				|| className.equals("org.apache.cassandra.net.Header")
 				) {
@@ -86,14 +87,23 @@ class CassandraTransformer extends Transformer {
 	    transformers.transformClassForCodeSnippets( cl );
 
 	    // instrument for all loops
-		if ( className.startsWith("org.apache.cassandra.streaming.")
-				|| className.startsWith("org.apache.cassandra.db.")
+		if ( className.startsWith("org.apache.cassandra.db.")
+			  	|| className.startsWith("org.apache.cassandra.streaming.")
 				|| className.startsWith("org.apache.cassandra.service.")
 				|| className.startsWith("org.apache.cassandra.net.")
 			  	|| className.startsWith("org.apache.cassandra.locator.")
 				|| className.startsWith("org.apache.cassandra.gms.")
   				) {
 				//System.out.println("JX - DEBUG - DM - 11");
+                        if ( className.startsWith("org.apache.cassandra.db.filter.")
+                             || className.startsWith("org.apache.cassandra.db.marshal.")
+//|| className.startsWith("org.apache.cassandra.db.columniterator.") 
+//|| className.startsWith("org.apache.cassandra.db.compaction.") 
+//|| className.startsWith("org.apache.cassandra.db.index.") 
+				) {
+				// None
+                        }
+                        else
 			transformers.transformClassForLoops( cl );
 		}
 		
