@@ -746,7 +746,10 @@ public void insertRPCInvoke(String logClass, String logMethod) {
 		        	InvokeInst invokeI = new InvokeInst(i);
 		        	String calledCC = invokeI.calledClass();
 		        	String calledM = invokeI.calledMethod();
-		        	if (calledCC.equals("java.util.concurrent.locks.Lock")) {
+		        	if ( calledCC.equals("java.util.concurrent.locks.Lock")
+					|| calledCC.equals("java.util.concurrent.locks.ReentrantReadWriteLock$ReadLock")
+                                        || calledCC.equals("java.util.concurrent.locks.ReentrantReadWriteLock$WriteLock")
+				) {
 			            if (calledM.equals("lock") || calledM.equals("tryLock")) { isLock = true; }
 			            else if (calledM.equals("unlock")) { isUnlock = true; }
 		        	}
