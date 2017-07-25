@@ -742,7 +742,9 @@ public void insertRPCInvoke(String logClass, String logMethod) {
 		
 		        boolean isLock = false;
 		        boolean isUnlock = false;
-		        if (i.isInvokeinterface()) {
+		        if ( i.isInvokeinterface()
+                                || i.isInvokevirtual()
+                        ) {
 		        	InvokeInst invokeI = new InvokeInst(i);
 		        	String calledCC = invokeI.calledClass();
 		        	String calledM = invokeI.calledMethod();
