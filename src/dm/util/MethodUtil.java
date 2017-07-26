@@ -6,10 +6,14 @@ import java.util.*;
 
 import javassist.*;
 import javassist.bytecode.*;
-
+import javassist.expr.ExprEditor;
+import javassist.expr.MethodCall;
 import dm.util.Bytecode.*;
 
 import com.RPCInfo;
+import com.text.Logger;
+
+import LogClass.LogType;
 
 public class MethodUtil {
 	CtBehavior method;
@@ -102,73 +106,73 @@ public class MethodUtil {
   }
 
   
-  public ArrayList<Integer> storePara(Bytecode code, int paraNum, ArrayList<String> paras, int reqStack) {
-    int allocLen = paraNum + 1; // +1 for the object instance
-    for (int j = 0; j < paraNum; j++) {
-      String type = paras.get(j);
-      if (type.equals("long") || type.equals("double")) {
-        allocLen += 1;
-      }
-    }
-    int localBegin = allocLocal(allocLen);
-    allocStack(reqStack);
+  	public ArrayList<Integer> storePara(Bytecode code, int paraNum, ArrayList<String> paras, int reqStack) {
+  		int allocLen = paraNum + 1; // +1 for the object instance
+  		for (int j = 0; j < paraNum; j++) {
+  			String type = paras.get(j);
+  			if (type.equals("long") || type.equals("double")) {
+  				allocLen += 1;
+  			}
+  		}
+  		int localBegin = allocLocal(allocLen);
+  		allocStack(reqStack);
 
-    ArrayList<Integer> paraLocs = new ArrayList<Integer>();
-    int localPos = localBegin;
-    for (int j = paraNum - 1; j >= 0; j--) {
-      String type = paras.get(j);
-      if (type.equals("int") || type.equals("byte") ||
-          type.equals("short") || type.equals("char") || type.equals("boolean")) {
-        code.addIstore(localPos);
-        paraLocs.add(0, localPos);
-        localPos++;
-      }
-      else if (type.equals("float")) {
-        code.addFstore(localPos);
-        paraLocs.add(0, localPos);
-        localPos++;
-      }
-      else if (type.equals("long")) {
-        code.addLstore(localPos);
-        paraLocs.add(0, localPos);
-        localPos += 2;
-      }
-      else if (type.equals("double")) {
-        code.addDstore(localPos);
-        paraLocs.add(0, localPos);
-        localPos += 2;
-      }
-      else {
-        code.addAstore(localPos);
-        paraLocs.add(0, localPos);
-        localPos++;
-      }
-    }
-    code.addAstore(localPos); //the object instance.
-    paraLocs.add(0, localPos);
-    code.addAload(paraLocs.get(0));
+  		ArrayList<Integer> paraLocs = new ArrayList<Integer>();
+  		int localPos = localBegin;
+  		for (int j = paraNum - 1; j >= 0; j--) {
+  			String type = paras.get(j);
+  			if (type.equals("int") || type.equals("byte") ||
+  					type.equals("short") || type.equals("char") || type.equals("boolean")) {
+  				code.addIstore(localPos);
+  				paraLocs.add(0, localPos);
+  				localPos++;
+  			}
+  			else if (type.equals("float")) {
+  				code.addFstore(localPos);
+  				paraLocs.add(0, localPos);
+  				localPos++;
+  			}
+  			else if (type.equals("long")) {
+  				code.addLstore(localPos);
+  				paraLocs.add(0, localPos);
+  				localPos += 2;
+  			}
+  			else if (type.equals("double")) {
+  				code.addDstore(localPos);
+  				paraLocs.add(0, localPos);
+  				localPos += 2;
+  			}
+  			else {
+  				code.addAstore(localPos);
+  				paraLocs.add(0, localPos);
+  				localPos++;
+  			}
+  		}
+  		code.addAstore(localPos); //the object instance.
+  		paraLocs.add(0, localPos);
+  		code.addAload(paraLocs.get(0));
 
-    for (int j=0; j <= paraNum - 1; j++) {
-      String type = paras.get(j);
-      if (type.equals("int") || type.equals("byte") ||
-          type.equals("short") || type.equals("char") || type.equals("boolean")) {
-        code.addIload(paraLocs.get(j+1));
-      }
-      else if (type.equals("float")) {
-        code.addFload(paraLocs.get(j+1));
-      }
-      else if (type.equals("long")) {
-        code.addLload(paraLocs.get(j+1));
-      }
-      else if (type.equals("double")) {
-        code.addDload(paraLocs.get(j+1));
-      }
-      else {
-        code.addAload(paraLocs.get(j+1));
-      }
-    }
-    return paraLocs;
-  }
+  		for (int j=0; j <= paraNum - 1; j++) {
+  			String type = paras.get(j);
+  			if (type.equals("int") || type.equals("byte") ||
+  					type.equals("short") || type.equals("char") || type.equals("boolean")) {
+  				code.addIload(paraLocs.get(j+1));
+  			}
+  			else if (type.equals("float")) {
+  				code.addFload(paraLocs.get(j+1));
+  			}
+  			else if (type.equals("long")) {
+  				code.addLload(paraLocs.get(j+1));
+  			}
+  			else if (type.equals("double")) {
+  				code.addDload(paraLocs.get(j+1));
+  			}
+  			else {
+  				code.addAload(paraLocs.get(j+1));
+  			}
+  		}
+  		return paraLocs;
+  	}
 
 
   
@@ -217,6 +221,122 @@ public class MethodUtil {
 
   public void insertCallInst(String apiClass, String apiMethod, int paraNum,
                   String logClass, String logMethod, ClassUtil classUtil) {
+	  
+	  //modified for "xx.submit", insert after NOT insertbefore
+      if ( (apiClass.equals("java.util.concurrent.ThreadPoolExecutor") 
+    		  || apiClass.equals("java.util.concurrent.ExecutorService") 
+    		  || apiClass.equals("java.util.concurrent.CompletionService")) 
+    		  && apiMethod.equals("submit")
+    		  ) {  
+	  		try {
+	  			final ClassUtil classUtil2 = classUtil;
+	  			final String apiClass2 = apiClass;
+	  			final String logClass2 = logClass;
+	  			final String logMethod2 = logMethod;
+				method.instrument(
+						new ExprEditor() {
+							public void edit(MethodCall m) throws CannotCompileException {
+								if (classUtil2.isTargetClass(m.getClassName(), apiClass2)
+										&& m.getMethodName().equals("submit")
+										) {
+									Logger.log("/home/vagrant/logs/", "JX - DEBUG - : " 
+										+ method.getDeclaringClass().getName() + " " + method.getName() + " "
+										+ m.getClassName() + " " + m.getMethodName() + " " +  m.getLineNumber() + "**");
+									m.replace( "{"
+											+ "$_ = $proceed($$);" 
+											+ "String tmp = System.identityHashCode($1) + \"_\" + System.identityHashCode($_);" 
+											+ logClass2 + "." + logMethod2 + "(tmp);" 
+											+ "}" );
+								}
+							}
+						}
+						);
+			} catch (CannotCompileException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+      }
+	  
+	  /*
+	  codeIter = codeAttr.iterator();
+	  Instruction i2 = new Instruction();
+	  i2.setMethod(method);
+	  String curClass2 = method.getDeclaringClass().getName(); 
+	  int cur2;
+	  try {
+		  // get 1st instruction
+		  if (codeIter.hasNext()) { 
+		      cur2 = codeIter.next();
+		      i2.setPos(cur2);
+		  }
+		  else {
+			  System.out.println("JX - method's first bytecode instruction doesn't exist!!");
+			  throw new Exception("JX - method's first bytecode instruction doesn't exist!!");
+		  }
+		  
+	      while (codeIter.hasNext()) {
+	    	  cur2 = codeIter.next();
+	    	  
+	    	  if (i2.isInvokevirtual() == true || i2.isInvokeinterface() == true) {
+	    		  InvokeInst invokeI = new InvokeInst(i2);
+	    		  if (invokeI.calledMethod().equals(apiMethod)) {
+	    			  String calledClass = invokeI.calledClass();
+	    			  if (classUtil.isTargetClass(calledClass, apiClass)) {
+	    				  //allocate local variable space.
+	    				  Bytecode code = new Bytecode(constPool);
+	    				  ArrayList<Integer> paraLocs = storePara(code, invokeI.paraNum(), invokeI.paraArray(), 5);
+	              
+	    				  
+	    	              if ( (apiClass.equals("java.util.concurrent.ThreadPoolExecutor") 
+	    	            		  || apiClass.equals("java.util.concurrent.ExecutorService") 
+	    	            		  || apiClass.equals("java.util.concurrent.CompletionService")) 
+	    	            		  && apiMethod.equals("submit")
+	    	            		  ) {      		            		   
+		            		  //for ca-6744, also apply to everywhere actually
+		            		  int firstIndex = paraLocs.get(1);
+		                      code.addNew("java/lang/StringBuilder");
+		                      code.addOpcode(Opcode.DUP);
+		                      code.addInvokespecial("java/lang/StringBuilder", "<init>", "()V");
+		                      // add "thread id??"
+		                      code.addAload(firstIndex); 
+		                      code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
+		                      code.addInvokestatic("java/lang/Integer", "toString", "(I)Ljava/lang/String;");
+		                      code.addInvokevirtual("java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
+		                      // add "_"
+		                      code.addIconst(95);
+		                      code.addInvokevirtual("java/lang/StringBuilder", "append", "(C)Ljava/lang/StringBuilder;");
+		                      // add "object"
+		                      int objIndex = paraLocs.get(0);
+		                      code.addAload(objIndex);
+		                      code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
+		                      code.addInvokestatic("java/lang/Integer", "toString", "(I)Ljava/lang/String;");
+		                      code.addInvokevirtual("java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
+		                      //end-part
+		                      code.addInvokevirtual("java/lang/StringBuilder", "toString", "()Ljava/lang/String;");
+		                      code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
+		              
+              
+			            	  try {
+			            		  int loc = codeIter.insertExAt(cur2, code.get());
+			            		  codeIter.insert(code.getExceptionTable(), loc);
+			            		  methodInfo.rebuildStackMapIf6(method.getDeclaringClass().getClassPool(),
+			                                  method.getDeclaringClass().getClassFile2());
+			            	  } catch (BadBytecode e) {
+			            		  e.printStackTrace();
+			            	  }
+	    	              }
+	    			  }
+	    		  }
+	          }
+	    	  i2.setPos(cur2);
+	      }
+	  }
+	  catch (Exception e) {
+	  	  e.printStackTrace();
+	  }
+	  */
+	
+	 //jx: for inserting before
     codeIter = codeAttr.iterator();
     Instruction i = new Instruction();
     i.setMethod(method);
@@ -276,13 +396,14 @@ public class MethodUtil {
             		  code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
             	  }
             	  else if (apiMethod.equals("submit")) {         
+            		  // haopeng's version
+            		  //int firstIndex = paraLocs.get(1);
+            		  //code.addAload(firstIndex);
+            		  //code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
+            		  //code.addInvokestatic("java/lang/Integer", "toString", "(I)Ljava/lang/String;");
+            		  //code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
+            		   
             		  /*
-            		  int firstIndex = paraLocs.get(1);
-            		  code.addAload(firstIndex);
-            		  code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
-            		  code.addInvokestatic("java/lang/Integer", "toString", "(I)Ljava/lang/String;");
-            		  code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
-            		  */            		  
             		  //for ca-6744, also apply to everywhere actually
             		  int firstIndex = paraLocs.get(1);
                       code.addNew("java/lang/StringBuilder");
@@ -305,6 +426,7 @@ public class MethodUtil {
                       //end-part
                       code.addInvokevirtual("java/lang/StringBuilder", "toString", "()Ljava/lang/String;");
                       code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
+                      */
             	  }
               }
               else if ((apiClass.equals("java.util.concurrent.ScheduledThreadPoolExecutor")||apiClass.equals("java.util.Timer") ) &&
@@ -504,14 +626,14 @@ public class MethodUtil {
               }*/
 
               if (injectFlag) {
-                try {
-                  int loc = codeIter.insertExAt(cur, code.get());
-                  codeIter.insert(code.getExceptionTable(), loc);
-                  methodInfo.rebuildStackMapIf6(method.getDeclaringClass().getClassPool(),
+            	  try {
+            		  int loc = codeIter.insertExAt(cur, code.get());
+            		  codeIter.insert(code.getExceptionTable(), loc);
+            		  methodInfo.rebuildStackMapIf6(method.getDeclaringClass().getClassPool(),
                                   method.getDeclaringClass().getClassFile2());
-                } catch (BadBytecode e) {
-                  e.printStackTrace();
-                }
+            	  } catch (BadBytecode e) {
+            		  e.printStackTrace();
+            	  }
               }
             }
           }
@@ -895,28 +1017,7 @@ public void insertRPCInvoke(String logClass, String logMethod) {
 			            System.out.println( "JX - WARNING - Now the program perhaps cannot deal with multipule RWLokcs in a method!!!" );
 			            throw new Exception("JX - WARNING - Now the program perhaps cannot deal with multipule RWLokcs in a method!!!");
 		        	}
-		        	/* 
-			      	// JX - testcode
-			      	CodeIterator tmpiter = codeAttr.iterator();
-			      	Instruction j = new Instruction();
-			      	Instruction k;
-			      	j.setMethod(method);
-			      	while (tmpiter.hasNext()) {
-			    	  	int pos = tmpiter.next();
-			    	  	//int opindex = tmpiter.byteAt(pos);
-			    	  	//System.out.println("\t" + Mnemonic.OPCODE[opindex]);
-			    	  	j.setPos( pos );
-			    	  	if (j.isInvoke()) 
-			    		  	k = new InvokeInst( j );
-			    	  	else if (j.isField())
-			    		  	k = new FieldInst( j );
-			    	  	else if (j.isLoad())
-			    		  	k = new LoadInst( j );
-			    	  	else 
-			    		  	k = j;
-			    	  	System.out.println("\t" + k.toString());
-			      	}
-		        	*/
+
 		        	Bytecode code = new Bytecode(constPool);
 		        	// prepare stack and local variables
 		        	allocStack(10);
