@@ -1038,7 +1038,9 @@ public class HappensBeforeGraph {
             String opval = getNodeOPVAL(i);            //jx: tid could be tid or future's hashcode
             for (int j : typeref.get("ThdExit")){
                 IdPair idPair = idplist.get(j);
-                String futureHash = futureGet.get( getNodeOPVAL(j).split("/")[1] );
+                String futureHash = null;
+                if (getNodeOPVAL(j).split("/").length > 1) 
+                    futureHash = futureGet.get( getNodeOPVAL(j).split("/")[1] );
                 
                 if ( (pid == idPair.pid)&&( opval.equals(Integer.toString(idPair.tid)) )
                 		|| (pid == idPair.pid)&&(futureHash!=null&&opval.equals(futureHash) )           //added by jx for "future.get"
