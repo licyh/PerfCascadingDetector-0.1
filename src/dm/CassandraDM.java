@@ -228,6 +228,10 @@ class CassandraTransformer extends Transformer {
 		    /* for thread join */
 		    methodUtil.insertCallInst("java.lang.Thread", "join", 0, logClass, thdJoinLog, classUtil);
 		    
+		    /**
+		     * added by JX
+		     */
+		    methodUtil.insertCallInst("java.util.concurrent.Future", "get", 0, logClass, thdJoinLog, classUtil);
 		    
 		    /**
 		     * lockRequire & lockRelease - for lock accesses

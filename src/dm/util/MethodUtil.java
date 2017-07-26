@@ -237,29 +237,75 @@ public class MethodUtil {
               //currentMap requires 2 stack spaces.
               //zk requires 5 stack spaces.
 
-              if (apiClass.equals("java.lang.Thread") &&
-                  (apiMethod.equals("start") || apiMethod.equals("join"))
-                 ) {
-                if (apiMethod.equals("join")) {
-                  if (invokeI.paraNum() > 0) {
-                    continue; //the case that a.join(100) instead of a.join(). It's not a hard happend-before.
-                  }
-                }
-                int objIndex = paraLocs.get(0);
-                code.addAload(objIndex); //for getId()
-                code.addInvokevirtual(calledClass, "getId","()J");
-                code.addInvokestatic("java/lang/Long", "toString", "(J)Ljava/lang/String;");
-                code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
+              //added by JX - Future.get()
+              if ( apiClass.equals("java.util.concurrent.Future")    //for ca-6744
+            		  && apiMethod.equals("get")
+            		  ) {
+        		  if (invokeI.paraNum() > 0) {
+        			  continue; //the case that a.join(100) instead of a.join(). It's not a hard happend-before.
+        		  }
+                  int objIndex = paraLocs.get(0);
+                  code.addAload(objIndex); 
+            	  code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
+                  code.addInvokestatic("java/lang/Integer", "toString", "(I)Ljava/lang/String;");
+                  code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
+              }
+              else if (apiClass.equals("java.lang.Thread") 
+            		  && (apiMethod.equals("start") || apiMethod.equals("join"))
+            		  ) {
+            	  if (apiMethod.equals("join")) {
+            		  if (invokeI.paraNum() > 0) {
+            			  continue; //the case that a.join(100) instead of a.join(). It's not a hard happend-before.
+            		  }
+            	  }
+                  int objIndex = paraLocs.get(0);
+                  code.addAload(objIndex); //for getId()
+                  code.addInvokevirtual(calledClass, "getId","()J");
+                  code.addInvokestatic("java/lang/Long", "toString", "(J)Ljava/lang/String;");
+                  code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
               }
               else if ((apiClass.equals("java.util.concurrent.ThreadPoolExecutor") ||
                         apiClass.equals("java.util.concurrent.ExecutorService") ||
                         apiClass.equals("java.util.concurrent.CompletionService")) &&
                        (apiMethod.equals("execute") || apiMethod.equals("submit"))) {
-                int firstIndex = paraLocs.get(1);
-                code.addAload(firstIndex);
-                code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
-                code.addInvokestatic("java/lang/Integer", "toString", "(I)Ljava/lang/String;");
-                code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
+            	  if (apiMethod.equals("execute")) {
+            		  int firstIndex = paraLocs.get(1);
+            		  code.addAload(firstIndex);
+            		  code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
+            		  code.addInvokestatic("java/lang/Integer", "toString", "(I)Ljava/lang/String;");
+            		  code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
+            	  }
+            	  else if (apiMethod.equals("submit")) {         
+            		  /*
+            		  int firstIndex = paraLocs.get(1);
+            		  code.addAload(firstIndex);
+            		  code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
+            		  code.addInvokestatic("java/lang/Integer", "toString", "(I)Ljava/lang/String;");
+            		  code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
+            		  */            		  
+            		  //for ca-6744, also apply to everywhere actually
+            		  int firstIndex = paraLocs.get(1);
+                      code.addNew("java/lang/StringBuilder");
+                      code.addOpcode(Opcode.DUP);
+                      code.addInvokespecial("java/lang/StringBuilder", "<init>", "()V");
+                      // add "thread id??"
+                      code.addAload(firstIndex); 
+                      code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
+                      code.addInvokestatic("java/lang/Integer", "toString", "(I)Ljava/lang/String;");
+                      code.addInvokevirtual("java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
+                      // add "_"
+                      code.addIconst(95);
+                      code.addInvokevirtual("java/lang/StringBuilder", "append", "(C)Ljava/lang/StringBuilder;");
+                      // add "object"
+                      int objIndex = paraLocs.get(0);
+                      code.addAload(objIndex);
+                      code.addInvokestatic("java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I");
+                      code.addInvokestatic("java/lang/Integer", "toString", "(I)Ljava/lang/String;");
+                      code.addInvokevirtual("java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
+                      //end-part
+                      code.addInvokevirtual("java/lang/StringBuilder", "toString", "()Ljava/lang/String;");
+                      code.addInvokestatic(logClass, logMethod, "(Ljava/lang/String;)V");
+            	  }
               }
               else if ((apiClass.equals("java.util.concurrent.ScheduledThreadPoolExecutor")||apiClass.equals("java.util.Timer") ) &&
                        apiMethod.equals("schedule")) {
