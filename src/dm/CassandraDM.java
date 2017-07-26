@@ -195,6 +195,8 @@ class CassandraTransformer extends Transformer {
 	      	    methodUtil.insertCallInstBefore(logClass, msgProcEnterLog,41);// 41 means 4 an 1 , 4 means CA, 1 means first speciall operation
 	            methodUtil.insertCallInstAfter(logClass, msgProcExitLog, 41);
 	        }
+	        // commented by JX, use the following one instead
+	        /*
 	        else if (methodName.equals("sendOneWay")) {
 			    int plen = 0;
 			    try {
@@ -205,6 +207,18 @@ class CassandraTransformer extends Transformer {
 			    	e.printStackTrace();
 			    }
 	        }
+	        */
+	        else if (className.equals("org.apache.cassandra.net.OutboundTcpConnection") && methodName.equals("write")) {
+			    int plen = 0;
+			    try {
+		            plen = method.getParameterTypes().length;
+			    if (plen == 5) 
+			    	methodUtil.insertCallInstBefore(logClass, msgSendingLog, 41);
+			    } catch (Exception e){
+			    	e.printStackTrace();
+			    }
+	        }
+	        
 	
 		    //if (injectFlag == false && calleeInfo.isCallee(className, methodName, method.getSignature())) {
 		    if (injectFlag == false && methodName.contains("init") == false &&
