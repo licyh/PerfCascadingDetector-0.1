@@ -103,20 +103,20 @@ public class LockCase {
     // 1. findImmediateBugs
     
     public void findImmediateBugs(int beginIndex, int endIndex) {
-    	/*
-    	if ( !hbg.getReachSet().get(beginIndex).get(endIndex) ) {
-    		System.out.println("JX - ERROR - " + "couldn't reach from " + beginIndex + " to " + endIndex);
-    		return;
-    	}
-    	*/
-    	
+    	boolean isClosedCycle = hbg.getReachSet().get(beginIndex).get(endIndex);
+   
     	// traversing for getting ImmediateBugs & Locks inside the executed code 
     	targetcodeLocks.clear();
     	traversedNodes.clear();
-    	dfsTraversing( beginIndex, 1, endIndex );  //modified for ca-6744
-    	//tmply add, only for ca-6744
-    	dfsFromEnd(endIndex, endIndex);
     	
+    	if ( isClosedCycle ) {
+    		dfsTraversing( beginIndex, 1, endIndex );  //modified for ca-6744
+    	}
+    	else {
+    		System.out.println("JX - WARN - " + "couldn't reach from " + beginIndex + " to " + endIndex);
+        	//tmply add, only for ca-6744
+        	scanAndDfs(beginIndex, endIndex);
+    	}
     	
     	// analyzing Locks that are inside the executed code
     	Set<String> setofinvolvingthreads = new HashSet<String>();
@@ -153,6 +153,7 @@ public class LockCase {
         		dfsTraversing( y, direction, endIndex );
         }
         
+    	// for needed in the future
         for (Pair pair: hbg.getBackEdge().get(x)) {
         	int y = pair.destination;
         	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) )
@@ -161,28 +162,13 @@ public class LockCase {
     }
     
     //tmp
-    public void dfsFromEnd( int x, int endIndex ) {
-    	traversedNodes.set( x );
-    	if ( hbg.getNodeOPTY(x).equals("LockRequire") ) {
-    		targetcodeLocks.add( x );
+    public void scanAndDfs( int beginIndex, int endIndex ) {
+    	for (int i = beginIndex; i <= endIndex; i++) {
+    		dfsTraversing(i, 1, i);
     	}
-    	// TODO - for Loop - suspected bugs
-    	if ( hbg.getNodeOPTY(x).equals("LoopBegin") ) {
-    		// add to bug pool
-    		if ( ONLY_LOCK_RELATED_BUGS ) {
-    			//Do Nothing
-    		} else {
-    			bugPool.addLoopBug( x, 1 );
-    		}
-    	}
-        
-        for (Pair pair: hbg.getBackEdge().get(x)) {
-        	int y = pair.destination;
-        	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) )
-        		dfsFromEnd( y, endIndex );
-        }
     }
     
+
     
     
     
