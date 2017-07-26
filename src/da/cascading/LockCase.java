@@ -111,7 +111,7 @@ public class LockCase {
     	// traversing for getting ImmediateBugs & Locks inside the executed code 
     	targetcodeLocks.clear();
     	traversedNodes.clear();
-    	dfsTraversing( beginIndex, endIndex );
+    	dfsTraversing( beginIndex, 1, endIndex );
     	
     	// analyzing Locks that are inside the executed code
     	Set<String> setofinvolvingthreads = new HashSet<String>();
@@ -123,7 +123,10 @@ public class LockCase {
     }
     
     
-    public void dfsTraversing( int x, int endIndex ) {
+    /**
+     * @param direction   1(--->) or -1 (<---)
+     */
+    public void dfsTraversing( int x, int direction, int endIndex ) {
     	traversedNodes.set( x );
     	if ( hbg.getNodeOPTY(x).equals("LockRequire") ) {
     		targetcodeLocks.add( x );
@@ -138,11 +141,17 @@ public class LockCase {
     		}
     	}
 
-        List<Pair> list = hbg.getEdge().get(x);
-        for (Pair pair: list) {
+    	if (direction == 1)
+        for (Pair pair: hbg.getEdge().get(x)) {
         	int y = pair.destination;
         	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) )
-        		dfsTraversing( y, endIndex );
+        		dfsTraversing( y, direction, endIndex );
+        }
+        
+        for (Pair pair: hbg.getBackEdge().get(x)) {
+        	int y = pair.destination;
+        	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) )
+        		dfsTraversing( y, -1, endIndex );
         }
     }
     
