@@ -1,4 +1,4 @@
-//31 (#static codepoints=31)
+//21 (#static codepoints=21)
 CL2: org.apache.cassandra.db.AtomicSortedColumns$Holder-addColumn-362;
 CL2: org.apache.cassandra.db.AtomicSortedColumns-addAllWithSizeDelta-196;
 CL2: org.apache.cassandra.db.AtomicSortedColumns-addAllWithSizeDelta-200;
@@ -20,16 +20,6 @@ CL2: org.apache.cassandra.db.index.SecondaryIndexManager-indexFor-167;
 CL2: org.apache.cassandra.db.index.SecondaryIndexManager-indexRow-433;
 CL2: org.apache.cassandra.db.index.SecondaryIndexManager-indexRow-445;
 CL2: org.apache.cassandra.db.index.composites.CompositesIndex-makeIndexColumnName-65;
-CL2: org.apache.cassandra.locator.TokenMetadata-addBootstrapTokens-317;
-CL2: org.apache.cassandra.locator.TokenMetadata-addBootstrapTokens-330;
-CL2: org.apache.cassandra.locator.TokenMetadata-cloneAfterAllLeft-621;
-CL2: org.apache.cassandra.locator.TokenMetadata-getEndpointToTokenMapForReading-1021;
-CL2: org.apache.cassandra.locator.TokenMetadata-invalidateCaches-974;
-CL2: org.apache.cassandra.locator.TokenMetadata-isMoving-559;
-CL2: org.apache.cassandra.locator.TokenMetadata-pendingRangeChanges-138;
-CL2: org.apache.cassandra.locator.TokenMetadata-removeFromMoving-450;
-CL2: org.apache.cassandra.locator.TokenMetadata-updateNormalTokens-183;
-CL2: org.apache.cassandra.locator.TokenMetadata-updateNormalTokens-195;
 
 
 

@@ -1,4 +1,4 @@
-//41 (#static codepoints=31)
+//25 (#static codepoints=21)
 CL2: org.apache.cassandra.db.AtomicSortedColumns$Holder-addColumn-362;|org.apache.cassandra.db.Table-apply-368;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
 CL2: org.apache.cassandra.db.AtomicSortedColumns$Holder-addColumn-362;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
 CL2: org.apache.cassandra.db.AtomicSortedColumns-addAllWithSizeDelta-196;|org.apache.cassandra.db.Table-apply-368;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
@@ -12,34 +12,18 @@ CL2: org.apache.cassandra.db.ColumnFamilyStore-apply-749;|org.apache.cassandra.d
 CL2: org.apache.cassandra.db.ColumnFamilyStore-apply-749;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
 CL2: org.apache.cassandra.db.ColumnFamilyStore-markReferenced-1297;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
 CL2: org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-606;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
-CL2: org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-606;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|org.apache.cassandra.db.Table-indexRow-414;|
 CL2: org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-613;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
-CL2: org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-613;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|org.apache.cassandra.db.Table-indexRow-414;|
 CL2: org.apache.cassandra.db.DataTracker-switchMemtable-98;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
-CL2: org.apache.cassandra.db.DataTracker-switchMemtable-98;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|org.apache.cassandra.db.Table-indexRow-414;|
 CL2: org.apache.cassandra.db.RangeTombstoneList-addAll-192;|org.apache.cassandra.db.Table-apply-368;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
 CL2: org.apache.cassandra.db.RangeTombstoneList-addAll-205;|org.apache.cassandra.db.Table-apply-368;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
 CL2: org.apache.cassandra.db.Table-apply-378;|org.apache.cassandra.db.Table-apply-368;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
 CL2: org.apache.cassandra.db.Table-indexRow-420;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
 CL2: org.apache.cassandra.db.Table-indexRow-426;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
 CL2: org.apache.cassandra.db.index.SecondaryIndexManager-getIndexesBackedByCfs-369;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
-CL2: org.apache.cassandra.db.index.SecondaryIndexManager-getIndexesBackedByCfs-369;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|org.apache.cassandra.db.Table-indexRow-414;|
 CL2: org.apache.cassandra.db.index.SecondaryIndexManager-indexFor-167;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
 CL2: org.apache.cassandra.db.index.SecondaryIndexManager-indexRow-433;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
 CL2: org.apache.cassandra.db.index.SecondaryIndexManager-indexRow-445;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
 CL2: org.apache.cassandra.db.index.composites.CompositesIndex-makeIndexColumnName-65;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
-CL2: org.apache.cassandra.locator.TokenMetadata-addBootstrapTokens-317;|org.apache.cassandra.locator.TokenMetadata-addBootstrapTokens-311;|org.apache.cassandra.locator.TokenMetadata-isMoving-555;|
-CL2: org.apache.cassandra.locator.TokenMetadata-addBootstrapTokens-330;|org.apache.cassandra.locator.TokenMetadata-addBootstrapTokens-311;|org.apache.cassandra.locator.TokenMetadata-isMoving-555;|
-CL2: org.apache.cassandra.locator.TokenMetadata-cloneAfterAllLeft-621;|org.apache.cassandra.locator.TokenMetadata-cloneAfterAllLeft-616;|org.apache.cassandra.locator.TokenMetadata-removeFromMoving-447;|
-CL2: org.apache.cassandra.locator.TokenMetadata-getEndpointToTokenMapForReading-1021;|org.apache.cassandra.locator.TokenMetadata-getEndpointToTokenMapForReading-1017;|org.apache.cassandra.locator.TokenMetadata-removeFromMoving-447;|
-CL2: org.apache.cassandra.locator.TokenMetadata-invalidateCaches-974;|org.apache.cassandra.locator.TokenMetadata-removeFromMoving-447;|org.apache.cassandra.locator.TokenMetadata-isMoving-555;|
-CL2: org.apache.cassandra.locator.TokenMetadata-invalidateCaches-974;|org.apache.cassandra.locator.TokenMetadata-updateNormalTokens-179;|org.apache.cassandra.locator.TokenMetadata-isMoving-555;|
-CL2: org.apache.cassandra.locator.TokenMetadata-isMoving-559;|org.apache.cassandra.locator.TokenMetadata-isMoving-555;|org.apache.cassandra.locator.TokenMetadata-removeFromMoving-447;|
-CL2: org.apache.cassandra.locator.TokenMetadata-pendingRangeChanges-138;|org.apache.cassandra.locator.TokenMetadata-pendingRangeChanges-135;|org.apache.cassandra.locator.TokenMetadata-removeFromMoving-447;|
-CL2: org.apache.cassandra.locator.TokenMetadata-removeFromMoving-450;|org.apache.cassandra.locator.TokenMetadata-removeFromMoving-447;|org.apache.cassandra.locator.TokenMetadata-isMoving-555;|
-CL2: org.apache.cassandra.locator.TokenMetadata-removeFromMoving-450;|org.apache.cassandra.locator.TokenMetadata-updateNormalTokens-179;|org.apache.cassandra.locator.TokenMetadata-isMoving-555;|
-CL2: org.apache.cassandra.locator.TokenMetadata-updateNormalTokens-183;|org.apache.cassandra.locator.TokenMetadata-updateNormalTokens-179;|org.apache.cassandra.locator.TokenMetadata-isMoving-555;|
-CL2: org.apache.cassandra.locator.TokenMetadata-updateNormalTokens-195;|org.apache.cassandra.locator.TokenMetadata-updateNormalTokens-179;|org.apache.cassandra.locator.TokenMetadata-isMoving-555;|
 
 
 
