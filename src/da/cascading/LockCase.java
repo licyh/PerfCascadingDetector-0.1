@@ -239,30 +239,31 @@ public class LockCase {
     	//ArrayList<Integer> nextbatchLocks = new ArrayList<Integer>();
     	Set<Integer> nextbatchLocks = new TreeSet<Integer>();
     	for (int lockindex: batchLocks) {
-    		String pidopval0 = hbg.getNodePIDOPVAL0(lockindex);
+    		String pidopval0 = hbg.getNodePIDOPVAL0(lockindex); 
     		// 1. if not R lock; cuz R will not affect R, but a general obj.lock can affect the obj itself
-    		if ( !ag.isReadLock(lockindex) ) {
+    		if ( !ag.isReadLock(lockindex) ) {                
     			ArrayList<Integer> list = ag.accurateLockmemref.get( pidopval0 );
 	    		for (int index: list) {
-	    			if (lockindex == index) continue;
+	    			if (lockindex == index) continue;  
 	                if ( hbg.isFlippedorder(lockindex, index) ) {
 	                	nextbatchLocks.add( index );
 	                	bugPool.predNodes[curCascadingLevel].put(index, lockindex); 
 	                }
 	    		}
-    		}
+    		}                                                
     		// 2. if R/W lock
-    		if ( ag.isReadOrWriteLock(lockindex) ) {
+    		if ( ag.isReadOrWriteLock(lockindex) ) {          
     			String correspondingPidopval0 = ag.rwlockmatch.get( pidopval0 )[1];
-    			ArrayList<Integer> list = ag.accurateLockmemref.get( correspondingPidopval0 );   //or using dotlockmemref.get( xx )
-    			for (int index: list) {
-    				if ( hbg.isFlippedorder(lockindex, index) ) {
-    					nextbatchLocks.add( index );
-    					bugPool.predNodes[curCascadingLevel].put(index, lockindex);
-    				}
+    			ArrayList<Integer> list = ag.accurateLockmemref.get( correspondingPidopval0 );  //or using dotlockmemref.get( xx )
+    			if (list != null)  //needed
+			for (int index: list) {                                                                 
+    				if ( hbg.isFlippedorder(lockindex, index) ) {      
+    					nextbatchLocks.add( index );            
+    					bugPool.predNodes[curCascadingLevel].put(index, lockindex); 
+    				}                                    
     			}
-    		}
-    	}
+    		}  
+    	} 
     	return nextbatchLocks;
     }
     

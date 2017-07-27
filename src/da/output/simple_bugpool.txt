@@ -1,4 +1,35 @@
-//0 (#static codepoints=0)
+//31 (#static codepoints=31)
+CL2: org.apache.cassandra.db.AtomicSortedColumns$Holder-addColumn-362;
+CL2: org.apache.cassandra.db.AtomicSortedColumns-addAllWithSizeDelta-196;
+CL2: org.apache.cassandra.db.AtomicSortedColumns-addAllWithSizeDelta-200;
+CL2: org.apache.cassandra.db.AtomicSortedColumns-delete-120;
+CL2: org.apache.cassandra.db.CollationController-collectAllData-240;
+CL2: org.apache.cassandra.db.CollationController-collectAllData-265;
+CL2: org.apache.cassandra.db.ColumnFamilyStore-apply-749;
+CL2: org.apache.cassandra.db.ColumnFamilyStore-markReferenced-1297;
+CL2: org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-606;
+CL2: org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-613;
+CL2: org.apache.cassandra.db.DataTracker-switchMemtable-98;
+CL2: org.apache.cassandra.db.RangeTombstoneList-addAll-192;
+CL2: org.apache.cassandra.db.RangeTombstoneList-addAll-205;
+CL2: org.apache.cassandra.db.Table-apply-378;
+CL2: org.apache.cassandra.db.Table-indexRow-420;
+CL2: org.apache.cassandra.db.Table-indexRow-426;
+CL2: org.apache.cassandra.db.index.SecondaryIndexManager-getIndexesBackedByCfs-369;
+CL2: org.apache.cassandra.db.index.SecondaryIndexManager-indexFor-167;
+CL2: org.apache.cassandra.db.index.SecondaryIndexManager-indexRow-433;
+CL2: org.apache.cassandra.db.index.SecondaryIndexManager-indexRow-445;
+CL2: org.apache.cassandra.db.index.composites.CompositesIndex-makeIndexColumnName-65;
+CL2: org.apache.cassandra.locator.TokenMetadata-addBootstrapTokens-317;
+CL2: org.apache.cassandra.locator.TokenMetadata-addBootstrapTokens-330;
+CL2: org.apache.cassandra.locator.TokenMetadata-cloneAfterAllLeft-621;
+CL2: org.apache.cassandra.locator.TokenMetadata-getEndpointToTokenMapForReading-1021;
+CL2: org.apache.cassandra.locator.TokenMetadata-invalidateCaches-974;
+CL2: org.apache.cassandra.locator.TokenMetadata-isMoving-559;
+CL2: org.apache.cassandra.locator.TokenMetadata-pendingRangeChanges-138;
+CL2: org.apache.cassandra.locator.TokenMetadata-removeFromMoving-450;
+CL2: org.apache.cassandra.locator.TokenMetadata-updateNormalTokens-183;
+CL2: org.apache.cassandra.locator.TokenMetadata-updateNormalTokens-195;
 
 
 
