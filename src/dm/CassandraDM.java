@@ -208,7 +208,7 @@ class CassandraTransformer extends Transformer {
 			    }
 	        }
 	        */
-	        else if (className.equals("org.apache.cassandra.net.OutboundTcpConnection") && methodName.equals("write")) {
+	        else if (className.equals("org.apache.cassandra.net.OutboundTcpConnection") && methodName.equals("write")) {   //more specific than above one
 			    int plen = 0;
 			    try {
 		            plen = method.getParameterTypes().length;
