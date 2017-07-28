@@ -156,6 +156,13 @@ public class LockCase {
     	// for needed in the future
         for (Pair pair: hbg.getBackEdge().get(x)) {
         	int y = pair.destination;
+        	
+        	//debug
+        	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) 
+        			&& hbg.getNodeOPTY(y).equals(LogType.ThdEnter.toString()) ) {
+        		System.out.println("JX - debug - LockCase: ThdEnter " + hbg.getPrintedIdentity(y) );
+        	}
+        	
         	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) 
         			&& !hbg.getNodeOPTY(y).equals(LogType.ThdEnter.toString())
         			)

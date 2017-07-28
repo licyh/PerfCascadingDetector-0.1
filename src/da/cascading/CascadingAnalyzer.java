@@ -22,8 +22,8 @@ public class CascadingAnalyzer {
 		LogInfoExtractor logInfo = new LogInfoExtractor( hbg );
 	
 	    //Lock
-	    //LockCase lockCase = new LockCase(this.projectDir, this.hbg, this.ag, logInfo);
-	    //lockCase.doWork();
+	    LockCase lockCase = new LockCase(this.projectDir, this.hbg, this.ag, logInfo);
+	    lockCase.doWork();
 		
 	    //Queue
 	    QueueCase queueCase = new QueueCase(this.projectDir, this.hbg, logInfo);
