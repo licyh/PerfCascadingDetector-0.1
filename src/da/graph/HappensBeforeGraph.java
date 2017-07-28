@@ -295,7 +295,8 @@ public class HappensBeforeGraph {
                     backedge.add(new ArrayList<Pair>());
                     
                     // Modified by JX
-                    if ( !tp.equals("MsgProcEnter")               //not msg/rpc handler enter 
+                    if ( !tp.equals("ThdEnter")                   // for a reused thread
+                    	&& !tp.equals("MsgProcEnter")               //not msg/rpc handler enter 
                     	&& !tp.equals("EventProcEnter") ) {       //not event handler enter 
                     	if ( i > 0 )
                     		addedge(index-1, index);			  //ie, 0->1->2->3->4->5
