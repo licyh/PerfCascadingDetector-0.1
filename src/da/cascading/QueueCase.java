@@ -76,7 +76,7 @@ public class QueueCase {
 				int iIndex = list.get(i);
 				for (int j = i+1; j <= endPos; j++) {
 					int jIndex = list.get(j);
-					if (hbg.isFlippedorder(iIndex, jIndex))
+					if (!hbg.isFlippedorder(iIndex, jIndex))
 						System.out.println("JX - DEBGU - Queue" + (++tmpN) + ": " 
 											+ "               " + hbg.getPrintedIdentity(iIndex)
 											+ "               " + hbg.getPrintedIdentity(jIndex)
