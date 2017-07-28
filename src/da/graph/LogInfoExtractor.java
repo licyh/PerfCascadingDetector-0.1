@@ -14,11 +14,13 @@ public class LogInfoExtractor {
 	HappensBeforeGraph hbg;
 	
     LinkedHashMap<Integer, Integer> targetCodeBlocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
+    //added for CA
+    LinkedHashMap<Integer, Integer> handlerBlocks = new LinkedHashMap<Integer, Integer>(); 
     LinkedHashMap<Integer, Integer> eventHandlerBlocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
     LinkedHashMap<Integer, Integer> lockBlocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
     LinkedHashMap<Integer, Integer> loopBlocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
+   
     
-	
     
     public LogInfoExtractor(HappensBeforeGraph hbg) {
     	this.hbg = hbg;
@@ -27,13 +29,21 @@ public class LogInfoExtractor {
     
     public void doWork() {
     	System.out.println("JX - INFO - LogInfoExtractor: doWork...");
+    	extractHandlerInfo();
     	extractLogInfo();
     }
     
     
-
+    /**
+     * APIs
+     */
+    
     public LinkedHashMap<Integer, Integer> getTargetCodeBlocks() {
     	return this.targetCodeBlocks;
+    }
+    
+    public LinkedHashMap<Integer, Integer> getHandlerBlocks() {
+    	return this.handlerBlocks;
     }
     
     public LinkedHashMap<Integer, Integer> getEventHandlerBlocks() {
@@ -49,11 +59,21 @@ public class LogInfoExtractor {
     }
     
     
-	
+    
+    
+	/******************************************************************
+	 * Core
+	 *****************************************************************/
+
+
+    
     public void extractLogInfo() {
         
         extractTargetCodeInfo();
+        //added for queue in MR
         extractEventHandlerInfo();
+        //added for threadpool for CA
+        extractHandlerInfo();
         extractLockInfo();
         extractLoopInfo();
     	 	
@@ -95,93 +115,150 @@ public class LogInfoExtractor {
     }
     
     
-    public void extractTargetCodeInfo() {
-    	// find out all Target Code nodes (Beging & End) first
-    	ArrayList<Integer> items = new ArrayList<Integer>();    //all nodes of all TargetCodeBegin & TargetCodeEnd snippets
+    /**
+     * Get nodes with the specified types, like TargetCodeBegin&TargetCodeEnd, LoopBegin&LoopEnd, .. 
+     */
+    public ArrayList<Integer> getTypedNodes(String ... types) {
+    	ArrayList<Integer> items = new ArrayList<Integer>();
+    	// scan all nodes
     	for (int i = 0; i < hbg.getNodeList().size(); i++) {
     		String opty = hbg.getNodeOPTY(i);
-    		if ( opty.equals("TargetCodeBegin") || opty.equals("TargetCodeEnd") ) {
-    			items.add( i );
-    		}
-    	}
-    	
-    	// Handle target codes: alltargetitems -> targetCodeBlocks: get targetCodeBlocks by TargetCodeBegin & TargetCodeEnd    	
-    	for (int i = 0; i < items.size(); i++) {
-    		//print for debug
-    		//System.out.println("JX - INFO - i=" + i + " - index=" + items.get(i) + " - " + hbg.getNodeOPTY(items.get(i)));
-    		//end-print
-    		int iindex = items.get(i);
-    		if ( hbg.getNodeOPTY( iindex ).equals("TargetCodeBegin") ) {
-    			String pidtid = hbg.getNodePIDTID( iindex );
-    			int flag = 1;
-    			for (int j = i+1; j < items.size(); j++) {
-    				int jindex = items.get(j);
-    				if ( !hbg.getNodePIDTID( jindex ).equals(pidtid) ) {
-    					System.out.println("JX - WARN - " + "couldn't find TargetCodeEND for TargetCodeBegin " + i + " its index = " + iindex);
-    					break;
-    				}
-    				if ( hbg.getNodeOPTY( jindex ).equals("TargetCodeBegin") ) flag ++;
-    				else flag --;
-    				if (flag == 0) {
-    					targetCodeBlocks.put( iindex, jindex );
-    					break;
-    				}
+    		for (String type: types)
+    			if (opty.equals(type)) {
+    				items.add( i );
+    				break;
     			}
-    			if ( !targetCodeBlocks.containsKey( iindex ) )
-    				targetCodeBlocks.put( iindex, null );
-    		}
+    	}
+    	return items;
+    }
+    
+    
+    public void extractTargetCodeInfo() {
+    	// Get all TargetCodeBegin&TargetCodeEnd nodes
+    	ArrayList<Integer> items = getTypedNodes(LogType.TargetCodeBegin.name(), LogType.TargetCodeEnd.name());
+    	
+    	// Handle target codes
+    	for (int i = 0; i < items.size(); i++) {
+    		int iIndex = items.get(i);
+    		if ( !hbg.getNodeOPTY( iIndex ).equals(LogType.TargetCodeBegin.name()) ) continue;
+    		
+			int flag = 1;
+			for (int j = i+1; j < items.size(); j++) {
+				int jIndex = items.get(j);
+				if ( !hbg.isSameThread(jIndex, iIndex) ) break;
+				if ( hbg.getNodeOPTY( jIndex ).equals(LogType.TargetCodeBegin.name()) ) flag ++;
+				else flag --;
+				if (flag == 0) {
+					targetCodeBlocks.put( iIndex, jIndex );
+					break;
+				}
+			}
+			if ( !targetCodeBlocks.containsKey( iIndex ) )
+				targetCodeBlocks.put( iIndex, null );
     	}
     }
     
     
     public void extractEventHandlerInfo() {
-    	// scan all nodes
-    	ArrayList<Integer> items = new ArrayList<Integer>();
-    	for (int i = 0; i < hbg.getNodeList().size(); i++) {
-    		String opty = hbg.getNodeOPTY(i);
-    		if ( opty.equals(LogType.EventHandlerBegin.name()) || opty.equals(LogType.EventHandlerEnd.name()) ) {
-    			items.add( i );
-    		}
-    	}
+    	// Get all EventHandlerBegin&EventHandlerEnd nodes
+    	ArrayList<Integer> items = getTypedNodes(LogType.EventHandlerBegin.name(), LogType.EventHandlerEnd.name());
     	
     	// Handle loop codes
     	for (int i = 0; i < items.size(); i++) {
-    		int iindex = items.get(i);
-    		if ( hbg.getNodeOPTY( iindex ).equals(LogType.EventHandlerBegin.name()) ) {
-    			String pidtid = hbg.getNodePIDTID( iindex );
-    			int flag = 1;
-    			for (int j = i+1; j < items.size(); j++) {
-    				int jindex = items.get(j);
-    				if ( !hbg.getNodePIDTID( jindex ).equals(pidtid) ) {
-    					System.out.println("JX - WARN - " + "couldn't find EventHandlerEND for EventHandlerBegin " + i + " its index = " + iindex);
-    					break;
-    				}
-    				if ( hbg.getNodeOPTY( jindex ).equals(LogType.EventHandlerBegin.name()) ) flag ++;
-    				else flag --;
-    				if (flag == 0) {
-    					eventHandlerBlocks.put( iindex, jindex );
-    					break;
-    				}
-    			}
-    			if ( !eventHandlerBlocks.containsKey( iindex ) )
-    				eventHandlerBlocks.put( iindex, null );
-    		}
+    		int iIndex = items.get(i);
+    		if ( !hbg.getNodeOPTY( iIndex ).equals(LogType.EventHandlerBegin.name()) ) continue;
+    			
+			int flag = 1;
+			for (int j = i+1; j < items.size(); j++) {
+				int jIndex = items.get(j);
+				if ( !hbg.isSameThread(jIndex, iIndex) ) break;
+				if ( hbg.getNodeOPTY( jIndex ).equals(LogType.EventHandlerBegin.name()) ) flag ++;
+				else flag --;
+				if (flag == 0) {
+					eventHandlerBlocks.put( iIndex, jIndex );
+					break;
+				}
+			}
+			if ( !eventHandlerBlocks.containsKey( iIndex ) )
+				eventHandlerBlocks.put( iIndex, null );
+    	}
+    }
+    
+    
+    /**
+     * only for threadpool's thread now.
+     */
+    public void extractHandlerInfo() {
+        // threadpool's event - ThdEnter & ThdExit
+    	// Get all ThdEnter&ThdExit nodes
+    	ArrayList<Integer> items = getTypedNodes(LogType.ThdEnter.name(), LogType.ThdExit.name());
+    
+    	// Handle lock codes
+    	for (int i = 0; i < items.size(); i++) {
+    		int iIndex = items.get(i);
+    		if ( !hbg.getNodeOPTY( iIndex ).equals(LogType.ThdEnter.name()) ) continue;
+    		
+    		String opval = hbg.getNodeOPVAL(iIndex);
+			int reenter = 1;
+			for (int j = i+1; j < items.size(); j++) {
+				int jIndex = items.get(j);
+				if ( !hbg.isSameThread(jIndex, iIndex) ) break;
+				// modified: bug fix
+				if ( hbg.getNodeOPTY(jIndex).equals(LogType.ThdEnter.name()) && hbg.getNodeOPVAL(jIndex).equals(opval) )  
+					reenter ++;
+				if ( hbg.getNodeOPTY(jIndex).equals(LogType.ThdExit.name()) && hbg.getNodeOPVAL(jIndex).equals(opval) ) {
+					reenter --;
+					if (reenter == 0) {
+						handlerBlocks.put(iIndex, jIndex);
+						break;
+					}
+				}
+				// end - modified
+			}
+			if ( !handlerBlocks.containsKey(iIndex) ) 
+				handlerBlocks.put(iIndex, null);
     	}
     }
     
     
     public void extractLockInfo() {
-    	// scan all nodes
+    	// Get all EventHandlerBegin&EventHandlerEnd nodes
+    	ArrayList<Integer> items = getTypedNodes(LogType.LockRequire.name(), LogType.LockRelease.name());
+    
+    	// Handle lock codes
+    	for (int i = 0; i < items.size(); i++) {
+    		int iIndex = items.get(i);
+    		if ( !hbg.getNodeOPTY( iIndex ).equals(LogType.LockRequire.name()) ) continue;
+    		
+    		String opval = hbg.getNodeOPVAL(iIndex);
+			int reenter = 1;
+			for (int j = i+1; j < items.size(); j++) {
+				int jIndex = items.get(j);
+				if ( !hbg.isSameThread(jIndex, iIndex) ) break;
+				// modified: bug fix
+				if ( hbg.getNodeOPTY(jIndex).equals(LogType.LockRequire.name()) && hbg.getNodeOPVAL(jIndex).equals(opval) )  
+					reenter ++;
+				if ( hbg.getNodeOPTY(jIndex).equals(LogType.LockRelease.name()) && hbg.getNodeOPVAL(jIndex).equals(opval) ) {
+					reenter --;
+					if (reenter == 0) {
+						lockBlocks.put(iIndex, jIndex);
+						break;
+					}
+				}
+				// end - modified
+			}
+			if ( !lockBlocks.containsKey(iIndex) ) 
+				lockBlocks.put(iIndex, null);
+    	}
+    
+    	/** old method, it is definitely right
     	for (int i = 0; i < hbg.getNodeList().size(); i++) {
-    		String opty = hbg.getNodeOPTY(i);
-
     		// find out all Lock code blocks
-    		if ( opty.equals("LockRequire") ) {
-    			String pidtid = hbg.getNodePIDTID(i);
+    		if ( hbg.getNodeOPTY(i).equals("LockRequire") ) {
     			String opval = hbg.getNodeOPVAL(i);
     			int reenter = 1;
     			for (int j = i+1; j < hbg.getNodeList().size(); j++) {
-    				if ( !hbg.getNodePIDTID(j).equals(pidtid) ) break;
+    				if ( !hbg.isSameThread(j, i) ) break;
     				// modified: bug fix
     				if ( hbg.getNodeOPTY(j).equals("LockRequire") && hbg.getNodeOPVAL(j).equals(opval) )  
     					reenter ++;
@@ -198,42 +275,33 @@ public class LogInfoExtractor {
     				lockBlocks.put(i, null);
     		}
     	}
-  
+    	*/
     }
 
 
     public void extractLoopInfo() {
-    	// scan all nodes
-    	ArrayList<Integer> items = new ArrayList<Integer>();
-    	for (int i = 0; i < hbg.getNodeList().size(); i++) {
-    		String opty = hbg.getNodeOPTY(i);
-    		if ( opty.equals("LoopBegin") || opty.equals("LoopEnd") ) {
-    			items.add( i );
-    		}
-    	}
+    	// Get all LoopBegin&LoopEnd nodes
+    	ArrayList<Integer> items = getTypedNodes(LogType.LoopBegin.name(), LogType.LoopEnd.name());
     	
     	// Handle loop codes
     	for (int i = 0; i < items.size(); i++) {
-    		int iindex = items.get(i);
-    		if ( hbg.getNodeOPTY( iindex ).equals("LoopBegin") ) {
-    			String pidtid = hbg.getNodePIDTID( iindex );
-    			int flag = 1;
-    			for (int j = i+1; j < items.size(); j++) {
-    				int jindex = items.get(j);
-    				if ( !hbg.getNodePIDTID( jindex ).equals(pidtid) ) {
-    					// System.out.println("JX - WARN - " + "couldn't find LoopEND for LoopBegin " + i + " its index = " + iindex);
-    					break;
-    				}
-    				if ( hbg.getNodeOPTY( jindex ).equals("LoopBegin") ) flag ++;
-    				else flag --;
-    				if (flag == 0) {
-    					loopBlocks.put( iindex, jindex );
-    					break;
-    				}
-    			}
-    			if ( !loopBlocks.containsKey( iindex ) )
-    				loopBlocks.put( iindex, null );
-    		}
+    		int iIndex = items.get(i);
+    		if ( !hbg.getNodeOPTY( iIndex ).equals(LogType.LoopBegin.name()) ) continue;
+    		
+			int flag = 1;
+			for (int j = i+1; j < items.size(); j++) {
+				int jIndex = items.get(j);
+				if ( !hbg.isSameThread(jIndex, iIndex) ) break;
+				if ( hbg.getNodeOPTY( jIndex ).equals(LogType.LoopBegin.name()) ) flag ++;
+				else flag --;
+				if (flag == 0) {
+					loopBlocks.put( iIndex, jIndex );
+					break;
+				}
+			}
+			if ( !loopBlocks.containsKey( iIndex ) )
+				loopBlocks.put( iIndex, null );
+		
     	}
     }
 

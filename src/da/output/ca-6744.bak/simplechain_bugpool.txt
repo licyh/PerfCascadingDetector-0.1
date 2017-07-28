@@ -1,0 +1,32 @@
+//25 (#static codepoints=21)
+CL2: org.apache.cassandra.db.AtomicSortedColumns$Holder-addColumn-362;|org.apache.cassandra.db.Table-apply-368;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.AtomicSortedColumns$Holder-addColumn-362;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.AtomicSortedColumns-addAllWithSizeDelta-196;|org.apache.cassandra.db.Table-apply-368;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.AtomicSortedColumns-addAllWithSizeDelta-196;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.AtomicSortedColumns-addAllWithSizeDelta-200;|org.apache.cassandra.db.Table-apply-368;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.AtomicSortedColumns-addAllWithSizeDelta-200;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.AtomicSortedColumns-delete-120;|org.apache.cassandra.db.Table-apply-368;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.CollationController-collectAllData-240;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.CollationController-collectAllData-265;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.ColumnFamilyStore-apply-749;|org.apache.cassandra.db.Table-apply-368;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.ColumnFamilyStore-apply-749;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.ColumnFamilyStore-markReferenced-1297;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-606;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-613;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.DataTracker-switchMemtable-98;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.RangeTombstoneList-addAll-192;|org.apache.cassandra.db.Table-apply-368;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.RangeTombstoneList-addAll-205;|org.apache.cassandra.db.Table-apply-368;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.Table-apply-378;|org.apache.cassandra.db.Table-apply-368;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.Table-indexRow-420;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.Table-indexRow-426;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.index.SecondaryIndexManager-getIndexesBackedByCfs-369;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.index.SecondaryIndexManager-indexFor-167;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.index.SecondaryIndexManager-indexRow-433;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.index.SecondaryIndexManager-indexRow-445;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+CL2: org.apache.cassandra.db.index.composites.CompositesIndex-makeIndexColumnName-65;|org.apache.cassandra.db.Table-indexRow-414;|org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-598;|
+
+
+
+//Queue-related Bugs
+
+//0 (#static codepoints=0)

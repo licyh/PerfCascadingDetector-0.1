@@ -1,0 +1,28 @@
+//21 (#static codepoints=21)
+CL2: org.apache.cassandra.db.AtomicSortedColumns$Holder-addColumn-362;
+CL2: org.apache.cassandra.db.AtomicSortedColumns-addAllWithSizeDelta-196;
+CL2: org.apache.cassandra.db.AtomicSortedColumns-addAllWithSizeDelta-200;
+CL2: org.apache.cassandra.db.AtomicSortedColumns-delete-120;
+CL2: org.apache.cassandra.db.CollationController-collectAllData-240;
+CL2: org.apache.cassandra.db.CollationController-collectAllData-265;
+CL2: org.apache.cassandra.db.ColumnFamilyStore-apply-749;
+CL2: org.apache.cassandra.db.ColumnFamilyStore-markReferenced-1297;
+CL2: org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-606;
+CL2: org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-613;
+CL2: org.apache.cassandra.db.DataTracker-switchMemtable-98;
+CL2: org.apache.cassandra.db.RangeTombstoneList-addAll-192;
+CL2: org.apache.cassandra.db.RangeTombstoneList-addAll-205;
+CL2: org.apache.cassandra.db.Table-apply-378;
+CL2: org.apache.cassandra.db.Table-indexRow-420;
+CL2: org.apache.cassandra.db.Table-indexRow-426;
+CL2: org.apache.cassandra.db.index.SecondaryIndexManager-getIndexesBackedByCfs-369;
+CL2: org.apache.cassandra.db.index.SecondaryIndexManager-indexFor-167;
+CL2: org.apache.cassandra.db.index.SecondaryIndexManager-indexRow-433;
+CL2: org.apache.cassandra.db.index.SecondaryIndexManager-indexRow-445;
+CL2: org.apache.cassandra.db.index.composites.CompositesIndex-makeIndexColumnName-65;
+
+
+
+//Queue-related Bugs
+
+//0 (#static codepoints=0)
