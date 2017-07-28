@@ -42,6 +42,7 @@ public class QueueCase {
 	}
 	
 	public void doWork() {
+		System.out.println("JX - INFO - QueueCase: doWork...");
         // added for CA's thread pool thread
 		traverseHanders();
 		// Traverse event handlers
@@ -65,7 +66,7 @@ public class QueueCase {
 		
 		int numHandlers = 0;
 		for (int i = 0; i < list.size(); i++) {
-			if (handlerBlocks.get(list.get(i)) == null) continue;
+			//if (handlerBlocks.get(list.get(i)) == null) continue;
 			
 			if ( i>0 && !hbg.isSameThread(list.get(i), list.get(i-1)) ) {
 				if (numHandlers > 1) {  //note: we think if there are 2 or more thdenter&thdexit in one thread's log, then it is a handler thread
@@ -80,9 +81,7 @@ public class QueueCase {
 				}
 				numHandlers = 0;
 			}
-			
 			numHandlers ++;
-			
 		}
 	}
 	

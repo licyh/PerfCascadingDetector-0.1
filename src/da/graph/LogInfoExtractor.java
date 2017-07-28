@@ -70,10 +70,10 @@ public class LogInfoExtractor {
     public void extractLogInfo() {
         
         extractTargetCodeInfo();
-        //added for queue in MR
-        extractEventHandlerInfo();
         //added for threadpool for CA
         extractHandlerInfo();
+        //added for queue in MR
+        extractEventHandlerInfo();
         extractLockInfo();
         extractLoopInfo();
     	 	
