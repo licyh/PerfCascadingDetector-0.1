@@ -190,6 +190,14 @@ class CassandraTransformer extends Transformer {
 	            methodUtil.insertCallInstBefore(logClass, thdEnterLog, 4);
 	            methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
 	        }
+	        //added by JX
+		    else if (methodName.equals("call")
+		    		&& classUtil.isCallableClass(className)
+		    		//&& method.getSignature().endsWith("Ljava/lang/Object;")==false
+		    		) {
+			    methodUtil.insertCallInstBefore(logClass, thdEnterLog, 4);
+			    methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
+			}
 	        else if (methodName.equals("doVerb")) {
 	        	System.out.println("---parser--- "+className+"." + methodName);
 	      	    methodUtil.insertCallInstBefore(logClass, msgProcEnterLog,41);// 41 means 4 an 1 , 4 means CA, 1 means first speciall operation

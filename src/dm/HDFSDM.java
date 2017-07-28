@@ -170,7 +170,7 @@ class HDFSTransformer extends Transformer {
 		    	methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
 		    }
 		    else if (methodName.equals("call")
-		    		&& classUtil.isTargetClass(className, "java.util.concurrent.Callable")
+		    		&& classUtil.isCallableClass(className)
 		    		&& method.getSignature().endsWith("Ljava/lang/Object;")==false
 		    		) {
 		    	//System.out.println("JX - DEBUG - DM - 1.3");

@@ -121,12 +121,20 @@ public class ClassUtil {
     }
   }
 
-  public boolean isThreadClass(String className) {
-    return isTargetClass(className, "java.lang.Thread");
-  }
+  
+  	public boolean isThreadClass(String className) {
+  		return isTargetClass(className, "java.lang.Thread");
+  	}
 
-  public boolean isRunnableClass(String className) {
-    return isTargetClass(className, "java.lang.Runnable");
-  }
+  
+  	public boolean isRunnableClass(String className) {
+  		return isTargetClass(className, "java.lang.Runnable");
+  	}
+  
+  
+  	//added by JX
+  	public boolean isCallableClass(String className) {
+	    return isTargetClass(className, "java.util.concurrent.Callable");
+	}
 
 }
