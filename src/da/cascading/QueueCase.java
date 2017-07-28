@@ -68,7 +68,7 @@ public class QueueCase {
 			int endPos = thread.getValue();
 			
 			// for ca-6744, only focus on this thread.
-			if ( !hbg.getNodePIDTID( list.get(beginPos) ).equals("3766-29") ) continue;
+			if ( !hbg.getNodeTID( list.get(beginPos) ).equals("29") ) continue;
 			
 			for (int i = beginPos; i <= endPos; i++) {
 				//for (int j = i+1; j <= endPos; j++) {
