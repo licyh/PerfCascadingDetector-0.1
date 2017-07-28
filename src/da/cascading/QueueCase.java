@@ -20,10 +20,12 @@ public class QueueCase {
 	HappensBeforeGraph hbg;
 	
 	// Queue-related Info
-	LinkedHashMap<Integer, Integer> handlerBlocks;
 	LinkedHashMap<Integer, Integer> eventHandlerBlocks;   // beginIndex -> endIndex
     LinkedHashMap<Integer, Integer> loopBlocks;   // beginIndex -> endIndex
 	
+    LinkedHashMap<Integer, Integer> handlerBlocks;
+    LinkedHashMap<Integer, Integer> handlerThreads;
+    
     
     
     // results
@@ -35,6 +37,7 @@ public class QueueCase {
 		this.hbg = hbg;
 	    //added for CA
 		this.handlerBlocks = logInfo.getHandlerBlocks();
+		this.handlerThreads = logInfo.getHandlerThreads();
 	    this.eventHandlerBlocks = logInfo.getEventHandlerBlocks(); 
 	    this.loopBlocks = logInfo.getLoopBlocks();	    
 	    
@@ -57,32 +60,26 @@ public class QueueCase {
 	 * Core
 	 ********************************************************/
 
-	//added 
-	/**
-	 * //note: we think if there are 2 or more thdenter&thdexit in one thread's log, then it is a handler thread
-	 */
 	public void traverseHanders() {
 		List<Integer> list = new ArrayList<>( handlerBlocks.keySet() );
 		
-		int numHandlers = 0;
-		for (int i = 0; i < list.size(); i++) {
-			//if (handlerBlocks.get(list.get(i)) == null) continue;
+		for (Entry<Integer, Integer> thread: handlerThreads.entrySet()) {
+			int beginPos = thread.getKey();
+			int endPos = thread.getValue();
 			
-			if ( i>0 && !hbg.isSameThread(list.get(i), list.get(i-1)) ) {
-				if (numHandlers > 1) {  //note: we think if there are 2 or more thdenter&thdexit in one thread's log, then it is a handler thread
-					System.out.println("numHandlers = " + numHandlers + ", " + hbg.getNodePIDTID(list.get(i-1)));
-				}
-				numHandlers = 0; 
+			// for ca-6744, only focus on this thread.
+			if ( !hbg.getNodePIDTID( list.get(beginPos) ).equals("3766-29") ) continue;
+			
+			for (int i = beginPos; i <= endPos; i++) {
+				//for (int j = i+1; j <= endPos; j++) {
+					int beginIndex = list.get(i);
+					int endIndex = handlerBlocks.get(beginIndex);
+					findBugLoops(beginIndex, endIndex);
+				//}
 			}
 			
-			if ( i == list.size()-1 ) {
-				if (numHandlers > 1) {  //note: we think if there are 2 or more thdenter&thdexit in one thread's log, then it is a handler thread
-					System.out.println("numHandlers = " + numHandlers + ", " + hbg.getNodePIDTID(list.get(i-1)));
-				}
-				numHandlers = 0;
-			}
-			numHandlers ++;
 		}
+
 	}
 	
 	

@@ -3,6 +3,7 @@ package da.graph;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Set;
 
 import LogClass.LogType;
@@ -20,6 +21,9 @@ public class LogInfoExtractor {
     LinkedHashMap<Integer, Integer> lockBlocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
     LinkedHashMap<Integer, Integer> loopBlocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
    
+    //computed
+    LinkedHashMap<Integer, Integer> handlerThreads = new LinkedHashMap<Integer, Integer>();
+    
     
     
     public LogInfoExtractor(HappensBeforeGraph hbg) {
@@ -29,8 +33,8 @@ public class LogInfoExtractor {
     
     public void doWork() {
     	System.out.println("JX - INFO - LogInfoExtractor: doWork...");
-    	extractHandlerInfo();
     	extractLogInfo();
+    	computeHandlerInfo();
     }
     
     
@@ -59,6 +63,9 @@ public class LogInfoExtractor {
     }
     
     
+    public LinkedHashMap<Integer, Integer> getHandlerThreads() {
+    	return this.handlerThreads;
+    }
     
     
 	/******************************************************************
@@ -305,5 +312,32 @@ public class LogInfoExtractor {
     	}
     }
 
+    
+    
+	/**
+	 * //note: we think if there are 2 or more thdenter&thdexit in one thread's log, then it is a handler thread
+	 */
+	public void computeHandlerInfo() {
+		List<Integer> list = new ArrayList<>( handlerBlocks.keySet() );
+		
+		int numHandlers = 0;
+		for (int i = 0; i < list.size(); i++) {     //note: cann't add "if (handlerBlocks.get(list.get(i)) == null) continue;", this will cause inaccurate
+			if ( i>0 && !hbg.isSameThread(list.get(i), list.get(i-1)) ) {
+				if (numHandlers > 1) {  //note: we think if there are 2 or more thdenter&thdexit in one thread's log, then it is a handler thread
+					handlerThreads.put(i-numHandlers, i-1);
+					System.out.println("numHandlers = " + numHandlers + ", " + hbg.getNodePIDTID(list.get(i-1)));
+				}
+				numHandlers = 0; 
+			}
+			if ( i == list.size()-1 ) {
+				if (numHandlers > 1) {  //note: we think if there are 2 or more thdenter&thdexit in one thread's log, then it is a handler thread
+					handlerThreads.put(i-numHandlers, i-1);
+					System.out.println("numHandlers = " + numHandlers + ", " + hbg.getNodePIDTID(list.get(i-1)));
+				}
+				numHandlers = 0;
+			}
+			numHandlers ++;
+		}
+	}
     
 }
