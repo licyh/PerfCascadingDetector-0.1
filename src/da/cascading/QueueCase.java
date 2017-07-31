@@ -71,6 +71,7 @@ public class QueueCase {
 			if ( !hbg.getNodeTID( list.get(beginPos) ).equals("29") ) continue;
 			
 			//debug
+			/**
 			int tmpN = 0;
 			for (int i = beginPos; i <= endPos; i++) {
 				int iIndex = list.get(i);
@@ -83,6 +84,7 @@ public class QueueCase {
 								);
 				}
 			}
+			*/
 			
 			
 			for (int i = beginPos; i <= endPos; i++) {

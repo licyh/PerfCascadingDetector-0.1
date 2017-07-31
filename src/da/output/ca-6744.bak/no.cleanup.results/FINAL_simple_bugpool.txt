@@ -1,3 +1,13 @@
+CL2: org.apache.cassandra.db.AtomicSortedColumns$Holder-addColumn-362;
+CL2: org.apache.cassandra.db.AtomicSortedColumns-addAllWithSizeDelta-196;
+CL2: org.apache.cassandra.db.AtomicSortedColumns-addAllWithSizeDelta-200;
+CL2: org.apache.cassandra.db.CollationController-collectAllData-265;
+CL2: org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-613;
+CL2: org.apache.cassandra.db.Table-indexRow-420;
+CL2: org.apache.cassandra.db.Table-indexRow-426;
+CL2: org.apache.cassandra.db.index.SecondaryIndexManager-indexRow-433;
+CL2: org.apache.cassandra.db.index.SecondaryIndexManager-indexRow-445;
+
 CL1: org.apache.cassandra.db.AtomicSortedColumns$Holder-addColumn-362;
 CL1: org.apache.cassandra.db.AtomicSortedColumns-addAllWithSizeDelta-196;
 CL1: org.apache.cassandra.db.AtomicSortedColumns-addAllWithSizeDelta-200;
@@ -5,9 +15,6 @@ CL1: org.apache.cassandra.db.CollationController-collectAllData-265;
 CL1: org.apache.cassandra.db.ColumnFamilySerializer-deserializeColumnsFromSSTable-148;
 CL1: org.apache.cassandra.db.ColumnFamilyStore-createCompactionWriter-1984;
 CL1: org.apache.cassandra.db.ColumnFamilyStore-createCompactionWriter-1987;
-
-CL1: org.apache.cassandra.db.ColumnFamilyStore-getExpectedCompactedFileSize-935;          #maybe reported bug. large,  but i/o right or not?
-
 CL1: org.apache.cassandra.db.ColumnFamilyStore-removeDeletedStandard-805;
 CL1: org.apache.cassandra.db.ColumnIndex$Builder-build-126;
 CL1: org.apache.cassandra.db.ColumnIndex$Builder-build-128;
@@ -16,10 +23,6 @@ CL1: org.apache.cassandra.db.DataTracker-notifySSTablesChanged-421;
 CL1: org.apache.cassandra.db.Table-indexRow-420;
 CL1: org.apache.cassandra.db.Table-indexRow-426;
 CL1: org.apache.cassandra.db.compaction.CompactionController-shouldPurge-106;
-
-CL1: org.apache.cassandra.db.compaction.CompactionManager-doCleanupCompaction-563;          #reported bug,  #sstables, can be large
-CL1: org.apache.cassandra.db.compaction.CompactionManager-doCleanupCompaction-598;          #reported bug, like #keys, can be large
-
 CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-145;
 CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-167;
 CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-198;
@@ -27,14 +30,8 @@ CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-232;
 CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-234;
 CL1: org.apache.cassandra.db.compaction.PrecompactedRow-merge-110;
 CL1: org.apache.cassandra.db.index.SecondaryIndexBuilder-build-57;
-
-CL1: org.apache.cassandra.db.index.SecondaryIndexManager-flushIndexesBlocking-328;           #related to reported bug, manually checking, #indexsbycolumns, may be large
-
 CL1: org.apache.cassandra.db.index.SecondaryIndexManager-indexRow-433;
 CL1: org.apache.cassandra.db.index.SecondaryIndexManager-indexRow-445;
 CL1: org.apache.cassandra.gms.Gossiper-doNotifications-971;
-
-CL1: org.apache.cassandra.locator.AbstractReplicationStrategy-getAddressRanges-162;          #reported bug,  real large loop(some metadata) & I/O like InetAddress
-
 CL1: org.apache.cassandra.service.StorageService-getLoad-2037;
-//summary - 31(#static codepoints=31) from 81
+//summary - 35(#static codepoints=27) from 90
