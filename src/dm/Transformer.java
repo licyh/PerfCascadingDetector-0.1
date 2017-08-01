@@ -18,7 +18,7 @@ import dm.util.DMOption;
 
 public class Transformer implements ClassFileTransformer {
 
-	DMOption option;
+	public DMOption option;
 
 	public Transformer(String args) {
 	    super();

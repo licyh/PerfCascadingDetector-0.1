@@ -130,6 +130,14 @@ public class _DM_Log {
   	}  
 	
 	
+	/**
+	 * For dynamic slicing
+	 */
+	public static void log_DynamicPoint(String opValue) {  
+  		log_Base(LogType.DynamicPoint.name(), opValue);
+  	}  
+	
+	
 	
 	/**
 	 * jx - Basic log function

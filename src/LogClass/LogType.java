@@ -46,7 +46,10 @@ public enum LogType {
     LoopPrint,     //only for javassist
     LoopEnd,       //only for spoon
     IO,
-    RPC;
+    RPC,
+   
+    //for dynamic slicing
+    DynamicPoint;
 
     
 	static Map<LogType,LogType> logTypeMapping = new HashMap<LogType,LogType>() {{
