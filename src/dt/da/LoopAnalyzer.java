@@ -146,7 +146,7 @@ public class LoopAnalyzer {
 			if (loop.getIoIdentityStrs().size() > 0) {
 				count ++;
 				System.out.println("IO/RPC Loop - " + loop);
-				//loop.printIoIdentityStrs();
+				loop.printIoIdentityStrs();
 			}
 		}
 		System.out.println("JX - INFO - " + "num of loops(physical) including IO/RPC = " + count);
