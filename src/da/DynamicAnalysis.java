@@ -39,7 +39,7 @@ public class DynamicAnalysis {
     	
     	//jx: Add Edges manually for DEBUGGING
         //this is for mr-4576
-    	//graphBuilder.addEdgesManually();
+    	g.addEdgesManually();
     		
 		// build ReachSet
 		g.buildReachSet();
