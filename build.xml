@@ -224,9 +224,12 @@
     	</target>
 	
 	
+	
+	
+	
         <!--target jar dm-MR-->
         <target name="jar-dm-mr-4813" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
-                <jar jarfile="${build.lib}/MR_DM.jar">
+                <jar jarfile="${build.lib}/DM.jar">
                         <fileset dir="${build.classes}" includes="dm/**/*.class" />
                         <fileset dir="${build.classes}" includes="com/**/*.class" />
                 		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
@@ -253,7 +256,7 @@
 	
 	    <!--tmp jar-dm for mr-4576 -->
         <target name="jar-dm-mr-4576" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
-            <jar jarfile="${build.lib}/MR_DM.jar">
+            <jar jarfile="${build.lib}/DM.jar">
                     <fileset dir="${build.classes}" includes="dm/**/*.class" />
                     <fileset dir="${build.classes}" includes="com/**/*.class" />
             		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
@@ -383,7 +386,7 @@
 	
 		<!-- jar-ds for dynamic slicing instrumentation -->
 	    <target name="jar-ds-mr-4813" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
-	            <jar jarfile="${build.lib}/DS.jar">
+	            <jar jarfile="${build.lib}/DM.jar">
 	                    <fileset dir="${build.classes}" includes="ds/**/*.class" />
 	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
@@ -400,7 +403,7 @@
 	
 		<!-- jar-ds for dynamic slicing instrumentation -->
 	    <target name="jar-ds-mr-4576" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
-	            <jar jarfile="${build.lib}/DS.jar">
+	            <jar jarfile="${build.lib}/DM.jar">
 	                    <fileset dir="${build.classes}" includes="ds/**/*.class" />
 	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
@@ -417,7 +420,7 @@
 		
 		<!-- jar-ds for dynamic slicing instrumentation -->
 	    <target name="jar-ds-mr-4088" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
-	            <jar jarfile="${build.lib}/DS.jar">
+	            <jar jarfile="${build.lib}/DM.jar">
 	                    <fileset dir="${build.classes}" includes="ds/**/*.class" />
 	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
@@ -434,7 +437,7 @@
 		
 		<!-- jar-ds for dynamic slicing instrumentation -->
 	    <target name="jar-ds-mr-2705" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
-	            <jar jarfile="${build.lib}/DS.jar">
+	            <jar jarfile="${build.lib}/DM.jar">
 	                    <fileset dir="${build.classes}" includes="ds/**/*.class" />
 	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
@@ -451,7 +454,7 @@
 	    	
 		<!-- jar-ds for dynamic slicing instrumentation -->
 	    <target name="jar-ds-ha-4584" depends="compile-dm, jar-log" description="generate jar for HDFS dynamic monitor">
-	            <jar jarfile="${build.lib}/DS.jar">
+	            <jar jarfile="${build.lib}/DM.jar">
 	                    <fileset dir="${build.classes}" includes="ds/**/*.class" />
 	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
@@ -468,7 +471,7 @@
 		
 		<!-- jar-ds for dynamic slicing instrumentation -->
 	    <target name="jar-ds-hd-5153" depends="compile-dm, jar-log" description="generate jar for HDFS dynamic monitor">
-	            <jar jarfile="${build.lib}/DS.jar">
+	            <jar jarfile="${build.lib}/DM.jar">
 	                    <fileset dir="${build.classes}" includes="ds/**/*.class" />
 	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
@@ -486,7 +489,7 @@
 	
 		<!-- jar-ds for dynamic slicing instrumentation -->
 	    <target name="jar-ds-ca-6744" depends="compile-dm, jar-log" description="generate jar for HDFS dynamic monitor">
-	            <jar jarfile="${build.lib}/DS.jar">
+	            <jar jarfile="${build.lib}/DM.jar">
 	                    <fileset dir="${build.classes}" includes="ds/**/*.class" />
 	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
