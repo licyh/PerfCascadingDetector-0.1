@@ -46,7 +46,7 @@ public class Transformers {
 			classesForInst.add( strs[0] );
 			methodsForInst.add( strs[1] );
 			linesForInst.add( strs[2] );
-			typesForInst.add( strs[3] );
+			//typesForInst.add( strs[3] );
 			flagsForInst.add(0);
 		}
 		reader.close();
