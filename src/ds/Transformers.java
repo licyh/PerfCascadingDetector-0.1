@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.text.Checker;
 import com.text.TextFileReader;
 
 import LogClass.LogType;
@@ -25,11 +26,13 @@ public class Transformers {
 	List<String> typesForInst  = new ArrayList<String>();
 	List<Integer> flagsForInst = new ArrayList<Integer>();
   
-
+	//Checker checker = new Checker();
+	
 	
 	public Transformers() {
-	    //read targetlocations 
+	    //read dynamic points
 	    readTargets();
+		//checker.addCheckFile("resource/dynamicpoints", true);
 	}
 	
 	
@@ -55,6 +58,7 @@ public class Transformers {
 		System.out.println("JX - INFO - " + "linesForInst =  " + linesForInst );
 	}
 	
+	
 		
 
 	public void transformClassForDynamicPoints(CtClass cl) {
@@ -68,16 +72,14 @@ public class Transformers {
 	        // traverse all locations for instrumentation
 	        String methodName = method.getName();
 	        MethodUtil methodUtil = new MethodUtil(method);
+	        
 	        for (int i = 0; i < classesForInst.size(); i++) {
-	    	    if ( classesForInst.get(i).equals(className) && methodsForInst.get(i).equals(methodName) ) {
+	    	    if ( classesForInst.get(i).equals(className)
+	    	    		&& methodsForInst.get(i).equals(methodName) 
+	    	    		) {
 	    	    	//System.out.println("JX - DEBUG - targetcode: " + cl.getName() + "." + method.getName() + method.getSignature());
 	    			int lineNumber = Integer.parseInt( linesForInst.get(i) );
-	    			if ( typesForInst.get(i).equals(LogType.TargetCodeBegin.name()) ) {
-	    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.TargetCodeBegin), LogType.TargetCodeBegin.name());
-	    			}
-	    			else if ( typesForInst.get(i).equals(LogType.TargetCodeEnd.name()) ) {
-	    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.TargetCodeEnd), LogType.TargetCodeEnd.name());
-	    			}
+	    			methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.DynamicPoint, i), LogType.DynamicPoint.name());
 	    		}
 	    	}
 	    }//end-outer for
@@ -94,7 +96,8 @@ public class Transformers {
     	String logMethod = "LogClass._DM_Log.log_" + logType.name();
     	
     	if (logType == LogType.DynamicPoint) {
-    		codestr = logMethod + "(\"xx\");";
+    		String value = classesForInst.get(flag) + " " + methodsForInst.get(flag) + " " + linesForInst.get(flag);
+    		codestr = logMethod + "(\"" + value + "\");";
     	} else {
     		
     	}

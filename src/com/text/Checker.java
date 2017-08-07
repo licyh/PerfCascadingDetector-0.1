@@ -26,16 +26,26 @@ public class Checker {
 	}
 	
 	
+	
 	public void addCheckFile(String filename) {
 		addCheckFile( Paths.get(filename) );
 	}
 	
 	public void addCheckFile(Path filepath) {
-		TextFileReader reader = new TextFileReader( filepath );
+		addCheckFile( filepath, false );
+	}
+	
+	public void addCheckFile(String filename, boolean inJar) {
+		addCheckFile( Paths.get(filename), inJar );
+	}
+	
+	public void addCheckFile(Path filepath, boolean inJar) {
+		TextFileReader reader = new TextFileReader( filepath, inJar );
 		reader.readFile();
 		targetStrs.addAll( reader.strs );
 		splitTargetStrs.addAll( reader.splitstrs );
 	}
+	
 
 	
 	/**
