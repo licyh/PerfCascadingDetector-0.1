@@ -12,6 +12,7 @@ CL3: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-211;
 CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-949;
 CL3: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2298;
 CL3: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-469;
+CL3: org.apache.hadoop.mapred.TaskTracker-initializeJob-1167;
 CL3: org.apache.hadoop.mapred.TaskTracker-localizeJob-1089;
 CL4: org.apache.hadoop.io.IOUtils-copyBytes-69;
 CL4: org.apache.hadoop.io.IOUtils-readFully-152;
@@ -23,7 +24,8 @@ CL4: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-295;
 CL4: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-211;
 CL4: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2298;
 CL4: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-469;
+CL4: org.apache.hadoop.mapred.TaskTracker-initializeJob-1167;
 CL4: org.apache.hadoop.mapred.TaskTracker-localizeJob-1089;
 CL5: org.apache.hadoop.mapred.Counters$Group-readFields-357;
 CL5: org.apache.hadoop.mapred.Counters$Group-write-348;
-//summary - 28(#static codepoints=15) from 38
+//summary - 30(#static codepoints=16) from 38

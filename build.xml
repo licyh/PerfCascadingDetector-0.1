@@ -8,6 +8,7 @@
         <property name="src.dm.dir" value="${src.dir}/dm/"/>
 		<property name="src.da.dir" value="${src.dir}/da/"/>
 		<property name="src.dt.dir" value = "${src.dir}/dt/"/>
+		<property name="src.ds.dir" value = "${src.dir}/ds/"/>
 		
         <!--build dir-->
         <property name="build.dir" value="build/"/>
@@ -388,12 +389,12 @@
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
 	                    <manifest>
 	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
-	                            <attribute name="Premain-Class" value="dm.MapReduceDS" />
+	                            <attribute name="Premain-Class" value="ds.MapReduceDS" />
 	                    </manifest>
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
 	            		<zipfileset dir="${src.ds.dir}" includes="res/mr-4813/bugconfig" fullpath="resource/bugconfig"/>
-	                    <zipfileset dir="${src.ds.dir}" includes="res/mr-4813/targetlocations" fullpath="resource/dynamicpoints"/>
+	                    <zipfileset dir="${src.ds.dir}" includes="res/mr-4813/dynamicpoints" fullpath="resource/dynamicpoints"/>
 	            </jar>
 	    </target>
 	
@@ -405,12 +406,12 @@
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
 	                    <manifest>
 	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
-	                            <attribute name="Premain-Class" value="dm.MapReduceDS" />
+	                            <attribute name="Premain-Class" value="ds.MapReduceDS" />
 	                    </manifest>
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
 	            		<zipfileset dir="${src.ds.dir}" includes="res/mr-4576/bugconfig" fullpath="resource/bugconfig"/>
-	                    <zipfileset dir="${src.ds.dir}" includes="res/mr-4576/targetlocations" fullpath="resource/dynamicpoints"/>
+	                    <zipfileset dir="${src.ds.dir}" includes="res/mr-4576/dynamicpoints" fullpath="resource/dynamicpoints"/>
 	            </jar>
 	    </target>
 		
@@ -422,12 +423,12 @@
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
 	                    <manifest>
 	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
-	                            <attribute name="Premain-Class" value="dm.MapReduceDS" />
+	                            <attribute name="Premain-Class" value="ds.MapReduceDS" />
 	                    </manifest>
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
 	            		<zipfileset dir="${src.ds.dir}" includes="res/mr-4088/bugconfig" fullpath="resource/bugconfig"/>
-	                    <zipfileset dir="${src.ds.dir}" includes="res/mr-4088/targetlocations" fullpath="resource/dynamicpoints"/>
+	                    <zipfileset dir="${src.ds.dir}" includes="res/mr-4088/dynamicpoints" fullpath="resource/dynamicpoints"/>
 	            </jar>
 	    </target>
 		
@@ -439,12 +440,12 @@
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
 	                    <manifest>
 	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
-	                            <attribute name="Premain-Class" value="dm.MapReduceDS" />
+	                            <attribute name="Premain-Class" value="ds.MapReduceDS" />
 	                    </manifest>
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
 	            		<zipfileset dir="${src.ds.dir}" includes="res/mr-2705/bugconfig" fullpath="resource/bugconfig"/>
-	                    <zipfileset dir="${src.ds.dir}" includes="res/mr-2705/targetlocations" fullpath="resource/dynamicpoints"/>
+	                    <zipfileset dir="${src.ds.dir}" includes="res/mr-2705/dynamicpoints" fullpath="resource/dynamicpoints"/>
 	            </jar>
 	    </target>
 	    	
@@ -456,12 +457,12 @@
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
 	                    <manifest>
 	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
-	                            <attribute name="Premain-Class" value="dm.HDFSDS" />
+	                            <attribute name="Premain-Class" value="ds.HDFSDS" />
 	                    </manifest>
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
 	            		<zipfileset dir="${src.ds.dir}" includes="res/ha-4584/bugconfig" fullpath="resource/bugconfig"/>
-	                    <zipfileset dir="${src.ds.dir}" includes="res/ha-4584/targetlocations" fullpath="resource/dynamicpoints"/>
+	                    <zipfileset dir="${src.ds.dir}" includes="res/ha-4584/dynamicpoints" fullpath="resource/dynamicpoints"/>
 	            </jar>
 	    </target>
 		
@@ -473,12 +474,12 @@
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
 	                    <manifest>
 	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
-	                            <attribute name="Premain-Class" value="dm.HDFSDS" />
+	                            <attribute name="Premain-Class" value="ds.HDFSDS" />
 	                    </manifest>
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
 	            		<zipfileset dir="${src.ds.dir}" includes="res/hd-5153/bugconfig" fullpath="resource/bugconfig"/>
-	                    <zipfileset dir="${src.ds.dir}" includes="res/hd-5153/targetlocations" fullpath="resource/dynamicpoints"/>
+	                    <zipfileset dir="${src.ds.dir}" includes="res/hd-5153/dynamicpoints" fullpath="resource/dynamicpoints"/>
 	            </jar>
 	    </target>
 		
@@ -491,12 +492,12 @@
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
 	                    <manifest>
 	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
-	                            <attribute name="Premain-Class" value="dm.CassandraDS" />
+	                            <attribute name="Premain-Class" value="ds.CassandraDS" />
 	                    </manifest>
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
 	            		<zipfileset dir="${src.ds.dir}" includes="res/ca-6744/bugconfig" fullpath="resource/bugconfig"/>
-	                    <zipfileset dir="${src.ds.dir}" includes="res/ca-6744/targetlocations" fullpath="resource/dynamicpoints"/>
+	                    <zipfileset dir="${src.ds.dir}" includes="res/ca-6744/dynamicpoints" fullpath="resource/dynamicpoints"/>
 	            </jar>
 	    </target>
 	
