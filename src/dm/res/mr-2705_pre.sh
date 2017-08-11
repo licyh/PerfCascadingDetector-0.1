@@ -33,7 +33,9 @@ fi
 sleep 2s
 jps
 sleep 1s
-rm ~/hadoop-0.20.204.0/logs/*
+
+#rm ~/hadoop-0.20.204.0/logs/*
+rm ~/hadoop-0.21.0/logs/*
 
 # Clean
 echo "JX - INFO - clean $dm_dir .."
