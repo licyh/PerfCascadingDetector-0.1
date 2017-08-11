@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -29,6 +30,7 @@ public class LockCase {
 	String projectDir;
 	HappensBeforeGraph hbg;
 	AccidentalHBGraph ag;
+	LogInfoExtractor logInfo;
 	
 	// from LogInfoExtractor
     LinkedHashMap<Integer, Integer> targetCodeBlocks;   // beginIndex -> endIndex
@@ -40,19 +42,30 @@ public class LockCase {
     //ArrayList<Integer> targetcodeLoops;  				//never used, just ps for time-consuming loops?
     ArrayList<Integer> targetcodeLocks;   				//set of lock nodes for a single target code snippet
     BitSet traversedNodes;                      		//tmp var. set of all nodes for a single target code snippet
+
+    //used for pruning 
+    //HashMap<Integer, Integer>[] curNodes = new HashMap[ CASCADING_LEVEL + 1 ];
+    HashMap<Integer, HashSet<String>> outerLocks = new HashMap<Integer, HashSet<String>>(); // lock -> ourter locks
     
 
-    // for results
+    //Results
+    BugPool bugPool;
+    
     boolean ONLY_LOCK_RELATED_BUGS = true;                  //default
     int CASCADING_LEVEL = 10;                               //minimum:2; default:3;
+    // for cascading chains
+    @SuppressWarnings("unchecked")
+	HashMap<Integer, Integer>[] predNodes = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for different threads
+    @SuppressWarnings("unchecked")
+	HashMap<Integer, Integer>[] upNodes   = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for the same thread
 
-    BugPool bugPool;
     
 	
 	public LockCase(String projectDir, HappensBeforeGraph hbg, AccidentalHBGraph ag, LogInfoExtractor logInfo) {
 		this.projectDir = projectDir;
 		this.hbg = hbg;
 		this.ag = ag;
+		this.logInfo = logInfo;
 		
 		this.targetCodeBlocks = logInfo.getTargetCodeBlocks(); 
 	    this.eventHandlerBlocks = logInfo.getEventHandlerBlocks(); 
@@ -65,16 +78,52 @@ public class LockCase {
         
         this.bugPool = new BugPool(this.projectDir, this.hbg);
         //this.predNodes = new int[this.gb.nList.size()];
+        for (int i = 1; i <= CASCADING_LEVEL; i++) {
+        	this.predNodes[i] = new HashMap<Integer, Integer>();
+        	this.upNodes[i]   = new HashMap<Integer, Integer>();
+        }
 	}
 	
 	
 	public void doWork() {
+		// prepare
+		prepare();
         // traverseTargetCodes
 		traverseTargetCodes();
     	// print the results
 		bugPool.printResults();
 	}
 	
+	
+	
+	
+	/******************************************************************************
+	 * Core
+	 ******************************************************************************/
+	
+	
+	public void prepare() {
+		
+		for (int lockIndex: lockBlocks.keySet()) {
+			if (lockBlocks.get(lockIndex) == null) continue;
+			int lockBegin = lockIndex;
+			int lockEnd = lockBlocks.get(lockIndex);
+			for (int x = lockBegin+1; x < lockEnd; x++) {
+				if ( hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()) 
+					 && logInfo.lockContains(lockIndex, x) 
+						) {
+					
+					if ( !outerLocks.containsKey(x) ) {
+						HashSet<String> set = new HashSet<String>();
+						outerLocks.put(x, set);
+					}
+					HashSet<String> set = outerLocks.get(x);
+					set.add( hbg.getNodePIDOPVAL0(lockIndex) );
+					
+				}
+			}
+		}
+	}
  
     
     
@@ -142,7 +191,7 @@ public class LockCase {
     		if ( ONLY_LOCK_RELATED_BUGS ) {
     			//Do Nothing
     		} else {
-    			bugPool.addLoopBug( x, 1 );
+    			addLoopBug( x, 1 );
     		}
     	}
 
@@ -200,8 +249,8 @@ public class LockCase {
     	Set<Integer> curbatchLocks = new TreeSet<Integer>( firstbatchLocks );
     	int curCascadingLevel = 2;   //this is the minimum level for lock-related cascading bugs
         for (int i = 1; i <= CASCADING_LEVEL; i++) {
-        	bugPool.predNodes[i].clear();
-        	bugPool.upNodes[i].clear();
+        	predNodes[i].clear();
+        	upNodes[i].clear();
         }
     	int tmpbatch = 0;
     	
@@ -256,7 +305,7 @@ public class LockCase {
 	    			if (lockindex == index) continue;  
 	                if ( hbg.isFlippedorder(lockindex, index) ) {
 	                	nextbatchLocks.add( index );
-	                	bugPool.predNodes[curCascadingLevel].put(index, lockindex); 
+	                	predNodes[curCascadingLevel].put(index, lockindex); 
 	                }
 	    		}
     		}                                                
@@ -265,10 +314,10 @@ public class LockCase {
     			String correspondingPidopval0 = ag.rwlockmatch.get( pidopval0 )[1];
     			ArrayList<Integer> list = ag.accurateLockmemref.get( correspondingPidopval0 );  //or using dotlockmemref.get( xx )
     			if (list != null)  //needed
-			for (int index: list) {                                                                 
+    			for (int index: list) {                                                                 
     				if ( hbg.isFlippedorder(lockindex, index) ) {      
     					nextbatchLocks.add( index );            
-    					bugPool.predNodes[curCascadingLevel].put(index, lockindex); 
+    					predNodes[curCascadingLevel].put(index, lockindex); 
     				}                                    
     			}
     		}  
@@ -307,11 +356,11 @@ public class LockCase {
     	
     	// check Lock
     	if ( hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()) ) {
-			if ( !ag.isRelevantLock(beginIndex, x) ) {  // yes, it's right
+			if ( !ag.isRelevantLock(beginIndex, x) ) {                         // prune "lock beginIndex=x -> lock x"
 				if (outerlocks == null) outerlocks = obtainOuterLocks(beginIndex, endIndex);
-				if ( !outerlocks.contains(hbg.getNodePIDOPVAL0(x)) ) {   
+				if ( !outerlocks.contains(hbg.getNodePIDOPVAL0(x)) ) {         // prune "lock x -> lock beginIndex -> lock x"
 					nextbatchLocks.add( x );
-					bugPool.upNodes[curCascadingLevel].put(x, beginIndex);
+					upNodes[curCascadingLevel].put(x, beginIndex);
 					//jx: it seems no need to check if the LockReuire has LockRelease or not
 				}
 			}
@@ -320,9 +369,9 @@ public class LockCase {
     	// check Loop
     	if ( hbg.getNodeOPTY(x).equals(LogType.LoopBegin.name()) ) {
     		// add to bug pool
-			bugPool.upNodes[curCascadingLevel].put(x, beginIndex);
+			upNodes[curCascadingLevel].put(x, beginIndex);
 			System.out.println("JX - DEBUG - addLoopBug..");
-			bugPool.addLoopBug( x, curCascadingLevel );
+			addLoopBug( x, curCascadingLevel );
     	}
 
         List<Pair> list = hbg.getEdge().get(x);
@@ -345,9 +394,8 @@ public class LockCase {
 		// Note: if this part takes much time, then change to "for (int i = index-1; i >= index-20; i--) {"
 		//get its outer locks, to avoid "(lockA - )lockB<index> - lockA<k> - uA-uB-uA"
 		Set<String> outerlocks = new HashSet<String>();
-		String pidtid = hbg.getNodePIDTID(beginIndex);
 		for (int i = beginIndex-1; i >= 0; i--) {
-			if ( !hbg.getNodePIDTID(i).equals(pidtid) ) break;
+			if ( !hbg.isSameThread(i, beginIndex) ) break;
 			if ( hbg.getNodeOPTY(i).equals("LockRequire") ) {
 				if (lockBlocks.get(i) != null && lockBlocks.get(i) > endIndex) {
 					outerlocks.add( hbg.getNodePIDOPVAL0(i) );
@@ -359,8 +407,59 @@ public class LockCase {
       
     
 
+    public boolean checkChain(LoopBug loopbug) {
+    	int cascadingLevel = loopbug.cascadingLevel;
+    	
+    	HashSet<String> own = new HashSet<String>();
+    	for (int x: loopbug.cascadingChain) {
+    		if (hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()))
+    			own.add( hbg.getNodePIDOPVAL0(x) );
+    	}
+    	System.out.println("JX - DEBUG - checkChain: own.size()=" + own.size());
+    	for (int i = 0; i<loopbug.cascadingChain.size(); i++) {
+    		int x = loopbug.cascadingChain.get(i);
+    		if (i%2==1 || i==loopbug.cascadingChain.size()-1) {
+    			if (!outerLocks.containsKey(x)) continue;
+    			
+    			for (String each: outerLocks.get(x)) {
+    				if (each.equals( hbg.getNodePIDOPVAL0(x) )) continue;
+    				if (own.contains(each))
+    					return false;
+    			}
+    		}
+    	}
+    	return true;
+    }
     
-
+    
+    
+    public void addLoopBug( int nodeIndex, int cascadingLevel ) {
+    	// add to bug pool
+    	LoopBug loopbug = new LoopBug( nodeIndex, cascadingLevel );
+  	
+    	// get cascading lock chain
+    	if ( cascadingLevel == 1 ) { // Immediate loop bug
+    		loopbug.cascadingChain.add( nodeIndex );
+    	}
+    	else if ( cascadingLevel >= 2 ) { // Lock-related loop bug
+        	loopbug.cascadingChain.add( nodeIndex );
+        	int tmp = nodeIndex;
+    		for (int i=cascadingLevel; i>=2; i--) {
+    			tmp = upNodes[i].get(tmp);
+    			loopbug.cascadingChain.add( tmp );
+    			tmp = predNodes[i].get(tmp);
+    			loopbug.cascadingChain.add( tmp );
+    		}
+    	}
+    	
+    	//added for checking chain, ie, false positive prunning
+    	if ( cascadingLevel>=2 && !checkChain(loopbug) ) return;
+    	
+    	bugPool.addLoopBug( loopbug );
+    	//jx: had better commented this when #targetcode is large or #loopbug is large
+    	//System.out.println( loopbug );
+    }
+    
 }
 
 

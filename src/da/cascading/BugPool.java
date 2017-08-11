@@ -19,11 +19,6 @@ public class BugPool {
     Set<LoopBug> bugs = new HashSet<LoopBug>();          	//dynamic loop instances, only one bug pool for whole code snippets
     Set<Integer> bugnodeset = new HashSet<Integer>();       //HappensBeforeGraph's node index set for bugs 
     
-    int CASCADING_LEVEL = 10;                               //minimum:2; default:3;
-    @SuppressWarnings("unchecked")
-	HashMap<Integer, Integer>[] predNodes = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for different threads
-    @SuppressWarnings("unchecked")
-	HashMap<Integer, Integer>[] upNodes   = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for the same thread
 
     
     
@@ -44,36 +39,22 @@ public class BugPool {
 	public BugPool(String projectDir, HappensBeforeGraph hbg) {
 		this.projectDir = projectDir;
 		this.hbg = hbg;
-		
-        for (int i = 1; i <= CASCADING_LEVEL; i++) {
-        	this.predNodes[i] = new HashMap<Integer, Integer>();
-        	this.upNodes[i]   = new HashMap<Integer, Integer>();
-        }
 	}
 	
 	
-    public void addLoopBug( int nodeIndex, int cascadingLevel ) {
+	// newly add, useless now
+	public void addLoopBug( LoopBug loopbug ) {
+		bugs.add( loopbug );
+	}
+	
+	// for level = 1 for Queue 
+    public void addLoopBug( int nodeIndex ) {
     	// add to bug pool
-    	LoopBug loopbug = new LoopBug( nodeIndex, cascadingLevel );
-    	bugs.add( loopbug );	
-    	// get cascading lock chain
-    	if ( cascadingLevel == 1 ) { // Immediate loop bug
-    		loopbug.cascadingChain.add( nodeIndex );
-    	}
-    	else if ( cascadingLevel >= 2 ) { // Lock-related loop bug
-        	loopbug.cascadingChain.add( nodeIndex );
-        	int tmp = nodeIndex;
-    		for (int i=cascadingLevel; i>=2; i--) {
-    			tmp = upNodes[i].get(tmp);
-    			loopbug.cascadingChain.add( tmp );
-    			tmp = predNodes[i].get(tmp);
-    			loopbug.cascadingChain.add( tmp );
-    		}
-    	}
-    	//jx: had better commented this when #targetcode is large or #loopbug is large
-    	//System.out.println( loopbug );
+    	LoopBug loopbug = new LoopBug( nodeIndex, 1 );
+    	loopbug.cascadingChain.add( nodeIndex );
+    	bugs.add( loopbug );
     }
-    
+	
 	
     public void mergeResults() {
     	// real bug pool

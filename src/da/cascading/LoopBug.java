@@ -1,5 +1,6 @@
 package da.cascading;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -8,18 +9,18 @@ public class LoopBug {
 	
 	int nodeIndex;
 	int cascadingLevel;
-	LinkedList<Integer> cascadingChain;
+	ArrayList<Integer> cascadingChain;
 	
 	LoopBug(int nodeIndex) {
 		this.nodeIndex = nodeIndex;
 		this.cascadingLevel = 1;
-		this.cascadingChain = new LinkedList<Integer>();
+		this.cascadingChain = new ArrayList<Integer>();
 	}
 	
 	LoopBug(int nodeIndex, int cascadingLevel) {
 		this.nodeIndex = nodeIndex;
 		this.cascadingLevel = cascadingLevel;
-		this.cascadingChain = new LinkedList<Integer>();
+		this.cascadingChain = new ArrayList<Integer>();
 	}
 	
 	

@@ -145,7 +145,7 @@ public class QueueCase {
     	traversedNodes.set( x );
     	// find the bug loop
     	if ( hbg.getNodeOPTY(x).equals(LogType.LoopBegin.name()) ) {
-    		bugPool.addLoopBug( x, 1 );
+    		bugPool.addLoopBug( x );
     	}
 
         List<Pair> list = hbg.getEdge().get(x);

@@ -68,6 +68,22 @@ public class LogInfoExtractor {
     }
     
     
+    //for locks
+    /**
+     * @param a - the begin index of lock A
+     * @param b - the begin index of lock B
+     */
+    public boolean lockContains(int a, int b) {
+    	if (lockBlocks.get(a) == null || lockBlocks.get(b) == null) return false;
+    	if ( !hbg.isSameThread(a, b) ) return false;        // is it necessary?
+    	if (a < b && lockBlocks.get(a) > lockBlocks.get(b))
+    		return true;
+		return false;
+    }
+    
+    
+    
+    
 	/******************************************************************
 	 * Core
 	 *****************************************************************/
