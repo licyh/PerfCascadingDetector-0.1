@@ -116,7 +116,7 @@ public class Transformers {
 
 	public void transformClassForCodeSnippets(CtClass cl) {
 		String className = cl.getName();
-        if ( className.contains("DataStreamer") ) System.out.println("JX - DEBUG - Targetcode: " + cl.getName() );
+        if ( className.contains("DataStreamer") ) System.out.println("JX - DEBUG - Transformers: Targetcode - " + cl.getName() );
 		if ( !classesForInst.contains(className) ) return;
 		
 		CtBehavior[] methods = cl.getDeclaredBehaviors();

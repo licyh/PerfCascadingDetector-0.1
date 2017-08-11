@@ -1,15 +1,17 @@
-//14 (#static codepoints=14)
-CL1: org.apache.hadoop.io.IOUtils-cleanup-145;
-CL1: org.apache.hadoop.io.IOUtils-copyBytes-67;
-CL1: org.apache.hadoop.io.IOUtils-readFully-112;
-CL1: org.apache.hadoop.mapred.JobLocalizer-createJobDirs-213;
-CL1: org.apache.hadoop.mapred.JobLocalizer-createLocalDirs-142;
-CL1: org.apache.hadoop.mapred.JobLocalizer-createPaths-131;
-CL1: org.apache.hadoop.mapred.JobLocalizer-createUserDirs-172;
-CL1: org.apache.hadoop.mapred.JobLocalizer-downloadPrivateCacheObjects-321;
-CL1: org.apache.hadoop.mapred.TaskTracker$LocalStorage-getGoodLocalDirsString-200;
-CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2206;
-CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2211;
-CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2223;
-CL1: org.apache.hadoop.mapred.TaskTracker-initializeJob-1187;
-CL1: org.apache.hadoop.mapred.TaskTracker-localizeJob-1109;
+//0 (#static codepoints=0)
+
+
+
+//Queue-related Bugs
+
+//10 (#static codepoints=10)
+CL1: org.apache.hadoop.io.IOUtils-cleanup-148;
+CL1: org.apache.hadoop.io.IOUtils-copyBytes-71;
+CL1: org.apache.hadoop.io.IOUtils-readFully-115;
+CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2151;
+CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2156;
+CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;
+CL1: org.apache.hadoop.mapred.TaskTracker-localizeJobFiles-1044;
+CL1: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
+CL1: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
+CL1: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;

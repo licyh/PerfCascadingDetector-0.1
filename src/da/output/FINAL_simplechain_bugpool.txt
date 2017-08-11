@@ -1,2 +1,9 @@
-CL4: org.apache.hadoop.io.IOUtils-copyBytes-69;|org.apache.hadoop.filecache.TrackerDistributedCacheManager-getLocalCache-187;|org.apache.hadoop.filecache.TrackerDistributedCacheManager$BaseDirManager-checkAndCleanup-993;|org.apache.hadoop.filecache.TrackerDistributedCacheManager$BaseDirManager-checkAndCleanup-981;|org.apache.hadoop.filecache.TrackerDistributedCacheManager$CacheStatus-decRefCount-594;|org.apache.hadoop.mapred.TaskTracker$1-run-430;|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1821;|
-//summary - 1(#static codepoints=1) from 98
+CL1: org.apache.hadoop.io.IOUtils-copyBytes-71;|
+CL1: org.apache.hadoop.io.IOUtils-readFully-115;|
+CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2151;|
+CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2156;|
+CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;|
+CL1: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;|
+CL1: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;|
+CL1: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;|
+//summary - 8(#static codepoints=8) from 10
