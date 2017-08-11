@@ -1,0 +1,2 @@
+//format: 1.implementation class name  2.interface class name  3. method name  4. count of args  5+: args' class names 
+//org.apache.hadoop.hdfs.server.namenode.NameNode org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol reportBadBlocks 0

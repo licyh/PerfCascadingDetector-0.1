@@ -341,13 +341,15 @@ class MapReduceTransformer extends Transformer {
 		    
 		    /* for process create */
 		    if (methodName.equals("runCommand") && className.endsWith("org.apache.hadoop.util.Shell")) {
-		    	//JX - this is a bug, I've commented it at its subcall
+		    	//Insert right after "process = builder.start()" in "org.apache.hadoop.util.Shell.runCommand()" in "Shell.java"
 		    	if (bugConfig.getBugId().equals("mr-4813"))
 		    		methodUtil.insertCallInstAt(logClass, processCreateLog, 10, 149);
 		    	else if (bugConfig.getBugId().equals("mr-4576"))
 		    		methodUtil.insertCallInstAt(logClass, processCreateLog, 10, 201);
 		    	else if (bugConfig.getBugId().equals("mr-4088"))
 		    		methodUtil.insertCallInstAt(logClass, processCreateLog, 10, 201);
+		    	else if (bugConfig.getBugId().equals("mr-2705"))
+		    		methodUtil.insertCallInstAt(logClass, processCreateLog, 10, 202);   //0.21.0
 		    }
 		   
 		

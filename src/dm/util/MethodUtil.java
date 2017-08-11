@@ -210,7 +210,6 @@ public class MethodUtil {
   	// added by JX
   	public void insertCallInstAt(String logClass, String logFunc, int flag, int linenumber) {
 	    try {
-	    	//Insert right after "process = builder.start()" in "org.apache.hadoop.util.Shell.runCommand()" in "Shell.java"
 	    	method.insertAt(linenumber, true, callStrInstBA(logClass, logFunc, flag));
 	    } catch (Exception e) {
 	      e.printStackTrace();
