@@ -415,7 +415,7 @@ public class LockCase {
     		if (hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()))
     			own.add( hbg.getNodePIDOPVAL0(x) );
     	}
-    	System.out.println("JX - DEBUG - checkChain: own.size()=" + own.size());
+    	//System.out.println("JX - DEBUG - checkChain: own.size()=" + own.size());
     	for (int i = 0; i<loopbug.cascadingChain.size(); i++) {
     		int x = loopbug.cascadingChain.get(i);
     		if (i%2==1 || i==loopbug.cascadingChain.size()-1) {
