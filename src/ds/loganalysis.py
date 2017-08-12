@@ -7,6 +7,7 @@ dict = {}
 
 with open(filename_input, 'r') as fin:
     for line in fin.readlines():
+        line = line.strip()
         str = line.split(' ', 3)[-1];
         print(str)
         
