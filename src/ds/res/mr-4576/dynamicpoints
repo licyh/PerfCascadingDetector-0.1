@@ -1,2 +1,145 @@
-org.apache.hadoop.mapred.TaskTracker offerService 1606				
-org.apache.hadoop.mapred.TaskTracker offerService 1610				
+//org.apache.hadoop.mapred.TaskTracker offerService 1606				
+//org.apache.hadoop.mapred.TaskTracker offerService 1610
+
+
+//loop : copyBytes-69
+Lorg/apache/hadoop/io/IOUtils copyBytes 69
+
+//loop : readFully-152
+Lorg/apache/hadoop/hdfs/BlockReaderLocal <init> 274
+Lorg/apache/hadoop/hdfs/protocol/Block readFields 136
+Lorg/apache/hadoop/hdfs/server/datanode/DataXceiver readBlock 189
+Lorg/apache/hadoop/hdfs/server/datanode/FSDataset$FSDir getBlockAndFileInfo 255
+Lorg/apache/hadoop/hdfs/server/datanode/FSDataset$ActiveFile <init> 808
+Lorg/apache/hadoop/hdfs/server/datanode/BlockReceiver receivePacket 385
+Lorg/apache/hadoop/hdfs/web/JsonUtil toBlock 212
+Lorg/apache/hadoop/hdfs/server/namenode/BlocksMap addNode 431
+Lorg/apache/hadoop/hdfs/server/namenode/FSImage readINodeUnderConstruction 1387
+Lorg/apache/hadoop/hdfs/server/datanode/FSDataset$FSVolume getBlocksBeingWrittenInfo 549
+Lorg/apache/hadoop/io/OutputBuffer write 90
+Lorg/apache/hadoop/hdfs/DFSClient$BlockReader readChunk 1589
+Lorg/apache/hadoop/hdfs/server/datanode/FSDataset getLength 1009
+Lorg/apache/hadoop/hdfs/server/namenode/NameNode commitBlockSynchronization 756
+Lorg/apache/hadoop/hdfs/server/datanode/BlockReceiver receiveBlock 522
+Lorg/apache/hadoop/mapred/SpillRecord <init> 73
+Lorg/apache/hadoop/mapred/SpillRecord <init> 79
+Lorg/apache/hadoop/hdfs/server/namenode/NameNode commitBlockSynchronization 756
+Lorg/apache/hadoop/hdfs/server/namenode/FSEditLog readBlocks 1377
+Lorg/apache/hadoop/hdfs/server/namenode/NameNode blockReport 997
+Lorg/apache/hadoop/util/DataChecksum newDataChecksum 86
+Lorg/apache/hadoop/hdfs/server/datanode/FSDataset$FSDir getBlockInfo 232
+Lorg/apache/hadoop/hdfs/server/datanode/DataXceiverServer run 133
+Lorg/apache/hadoop/hdfs/server/datanode/DataXceiver readBlock 189
+Lorg/apache/hadoop/hdfs/DFSClient$BlockReader readChunk 1586
+Lorg/apache/hadoop/hdfs/server/datanode/FSDataset$FSDir getVolumeMap 274
+Lorg/apache/hadoop/hdfs/server/datanode/BlockSender <init> 125
+Lorg/apache/hadoop/hdfs/server/namenode/NameNode blocksBeingWrittenReport 1014
+Lorg/apache/hadoop/util/DataChecksum newDataChecksum 75
+Lorg/apache/hadoop/hdfs/server/namenode/FSImage loadFSImage 964
+Lorg/apache/hadoop/hdfs/server/namenode/FSImage loadFSImage 915
+Lorg/apache/hadoop/hdfs/DFSClient$DFSInputStream updateBlockInfo 1886
+
+
+//loop : readFields-357
+Lorg/apache/hadoop/io/WritableUtils readVLong 310
+Lorg/apache/hadoop/io/WritableUtils readVLong 302
+
+
+//loop : write-348
+Lorg/apache/hadoop/mapred/JobTracker$RetireJobs run 653
+Lorg/apache/hadoop/mapred/join/OverrideRecordReader <init> 42
+Lorg/apache/hadoop/mapred/join/TupleWritable readFields 182
+Lorg/apache/hadoop/mapred/JobTracker getSetupAndCleanupTasks 3830
+Lorg/apache/hadoop/mapred/join/InnerJoinRecordReader <init> 35
+Lorg/apache/hadoop/mapred/Task done 858
+Lorg/apache/hadoop/mapred/TaskStatus createTaskStatus 435
+Lorg/apache/hadoop/mapred/JobTracker$ExpireTrackers run 475
+Lorg/apache/hadoop/mapred/join/OuterJoinRecordReader <init> 35
+Lorg/apache/hadoop/mapred/join/TupleWritable readFields 189
+Lorg/apache/hadoop/mapred/Counters fromEscapedCompactString 713
+Lorg/apache/hadoop/mapreduce/split/SplitMetaInfoReader readSplitMetaInfo 83
+Lorg/apache/hadoop/mapred/JobTracker$FaultyTrackersInfo blacklistTracker 943
+Lorg/apache/hadoop/mapred/JobTracker getSetupAndCleanupTasks 3850
+Lorg/apache/hadoop/mapred/TaskTrackerStatus readFields 678
+Lorg/apache/hadoop/mapred/JobQueueJobInProgressListener <init> 112
+Lorg/apache/hadoop/mapred/JobTracker <init> 2394
+Lorg/apache/hadoop/mapred/JobTracker getSetupAndCleanupTasks 3858
+Lorg/apache/hadoop/mapred/TaskTracker run 2453
+Lorg/apache/hadoop/mapred/TaskTrackerStatus readFields 672
+Lorg/apache/hadoop/mapred/JobTracker getSetupAndCleanupTasks 3839
+Lorg/apache/hadoop/mapred/TaskTracker run 2449
+Lorg/apache/hadoop/mapred/JobTracker heartbeat 3378
+Lorg/apache/hadoop/mapred/Counters$Group readFields 357
+Lorg/apache/hadoop/mapred/JobTracker lostTaskTracker 4804
+Lorg/apache/hadoop/mapred/HeartbeatResponse readFields 119
+Lorg/apache/hadoop/mapred/Counters fromEscapedCompactString 733
+Lorg/apache/hadoop/mapred/JobTracker$RetireJobs run 610
+Lorg/apache/hadoop/mapred/JobTracker decommissionNodes 4935
+Lorg/apache/hadoop/mapred/JobTracker startTracker 300
+Lorg/apache/hadoop/metrics/spi/AbstractMetricsContext remove 442
+Lorg/apache/hadoop/mapred/TaskTracker offerService 1659
+Lorg/apache/hadoop/mapred/JobInProgress garbageCollect 3213
+Lorg/apache/hadoop/mapred/TaskTracker run 2453
+Lorg/apache/hadoop/mapred/JobTracker getSetupAndCleanupTasks 3822
+Lorg/apache/hadoop/mapred/join/WrappedRecordReader accept 130
+Lorg/apache/hadoop/mapred/ReduceTaskStatus readFields 133
+Lorg/apache/hadoop/mapred/ReduceTask$ReduceCopier <init> 783
+Lorg/apache/hadoop/mapred/TaskLogsTruncater main 499
+Lorg/apache/hadoop/mapred/JobTracker <init> 2038
+Lorg/apache/hadoop/mapred/TaskTracker setMaxMapSlots 4028
+Lorg/apache/hadoop/mapred/JobTracker getSetupAndCleanupTasks 3867
+Lorg/apache/hadoop/mapred/LimitTasksPerJobTaskScheduler assignTasks 126
+Lorg/apache/hadoop/mapred/join/WrappedRecordReader skip 103
+Lorg/apache/hadoop/mapred/Counters readFields 572
+
+
+//loop : readFields-572
+Lorg/apache/hadoop/mapred/Counters readFields 572
+
+//loop : write-560
+Lorg/apache/hadoop/mapred/join/OuterJoinRecordReader <init> 35
+Lorg/apache/hadoop/mapred/JobTracker$ExpireTrackers run 475
+Lorg/apache/hadoop/mapred/Counters readFields 572
+Lorg/apache/hadoop/mapred/JobTracker getSetupAndCleanupTasks 3822
+Lorg/apache/hadoop/mapred/TaskTracker run 2453
+Lorg/apache/hadoop/mapred/join/TupleWritable readFields 189
+Lorg/apache/hadoop/mapred/JobTracker$RetireJobs run 653
+Lorg/apache/hadoop/mapred/join/TupleWritable readFields 182
+Lorg/apache/hadoop/mapred/join/WrappedRecordReader accept 130
+Lorg/apache/hadoop/mapred/TaskTrackerStatus readFields 672
+Lorg/apache/hadoop/mapred/JobQueueJobInProgressListener <init> 112
+Lorg/apache/hadoop/mapred/TaskLogsTruncater main 499
+Lorg/apache/hadoop/mapreduce/split/SplitMetaInfoReader readSplitMetaInfo 83
+Lorg/apache/hadoop/mapred/join/InnerJoinRecordReader <init> 35
+Lorg/apache/hadoop/mapred/JobTracker getSetupAndCleanupTasks 3858
+Lorg/apache/hadoop/metrics/spi/AbstractMetricsContext remove 442
+Lorg/apache/hadoop/mapred/TaskTracker offerService 1659
+Lorg/apache/hadoop/mapred/TaskTrackerStatus readFields 678
+Lorg/apache/hadoop/mapred/Task done 858
+Lorg/apache/hadoop/mapred/TaskTracker run 2449
+Lorg/apache/hadoop/mapred/JobInProgress garbageCollect 3213
+Lorg/apache/hadoop/mapred/ReduceTask$ReduceCopier <init> 783
+Lorg/apache/hadoop/mapred/JobTracker <init> 2038
+Lorg/apache/hadoop/mapred/JobTracker getSetupAndCleanupTasks 3867
+Lorg/apache/hadoop/mapred/JobTracker lostTaskTracker 4804
+Lorg/apache/hadoop/mapred/JobTracker$FaultyTrackersInfo blacklistTracker 943
+Lorg/apache/hadoop/mapred/JobTracker getSetupAndCleanupTasks 3830
+Lorg/apache/hadoop/mapred/JobTracker <init> 2394
+Lorg/apache/hadoop/mapred/TaskStatus createTaskStatus 435
+Lorg/apache/hadoop/mapred/TaskTracker setMaxMapSlots 4028
+Lorg/apache/hadoop/mapred/join/WrappedRecordReader skip 103
+Lorg/apache/hadoop/mapred/JobTracker decommissionNodes 4935
+Lorg/apache/hadoop/mapred/JobTracker heartbeat 3378
+Lorg/apache/hadoop/mapred/TaskTracker run 2453
+Lorg/apache/hadoop/mapred/LimitTasksPerJobTaskScheduler assignTasks 126
+Lorg/apache/hadoop/mapred/join/OverrideRecordReader <init> 42
+Lorg/apache/hadoop/mapred/ReduceTaskStatus readFields 133
+Lorg/apache/hadoop/mapred/JobTracker$RetireJobs run 610
+Lorg/apache/hadoop/mapred/JobTracker startTracker 300
+Lorg/apache/hadoop/mapred/JobTracker getSetupAndCleanupTasks 3850
+Lorg/apache/hadoop/mapred/Counters fromEscapedCompactString 713
+Lorg/apache/hadoop/mapred/JobTracker getSetupAndCleanupTasks 3839
+Lorg/apache/hadoop/mapred/HeartbeatResponse readFields 119
+
+
+

@@ -1,4 +1,4 @@
-//59 (#static codepoints=21)
+//56 (#static codepoints=21)
 CL2: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;|org.apache.hadoop.mapred.TaskTracker$1-run-430;|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1821;|
 CL2: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;|org.apache.hadoop.mapred.TaskTracker$TaskInProgress-cleanup-3168;|org.apache.hadoop.mapred.TaskTracker-cloneAndResetRunningTaskStatuses-3608;|
 CL2: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;|org.apache.hadoop.mapred.TaskTracker$TaskInProgress-cleanup-3168;|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1840;|
@@ -13,9 +13,6 @@ CL2: org.apache.hadoop.mapred.Counters-size-538;|sun.reflect.NativeMethodAccesso
 CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2286;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2285;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-addToTaskQueue-2248;|
 CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-2021;|org.apache.hadoop.mapred.TaskTracker$1-run-430;|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1821;|
 CL2: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2072;|org.apache.hadoop.mapred.TaskTracker$1-run-430;|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1821;|
-CL3: org.apache.hadoop.io.IOUtils-cleanup-207;|org.apache.hadoop.filecache.TrackerDistributedCacheManager-getLocalCache-187;|org.apache.hadoop.filecache.TrackerDistributedCacheManager$CacheStatus-decRefCount-595;|org.apache.hadoop.mapred.TaskTracker$1-run-430;|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1821;|
-CL3: org.apache.hadoop.io.IOUtils-copyBytes-69;|org.apache.hadoop.filecache.TrackerDistributedCacheManager-getLocalCache-187;|org.apache.hadoop.filecache.TrackerDistributedCacheManager$CacheStatus-decRefCount-595;|org.apache.hadoop.mapred.TaskTracker$1-run-430;|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1821;|
-CL3: org.apache.hadoop.io.IOUtils-readFully-152;|org.apache.hadoop.filecache.TrackerDistributedCacheManager-getLocalCache-187;|org.apache.hadoop.filecache.TrackerDistributedCacheManager$CacheStatus-decRefCount-595;|org.apache.hadoop.mapred.TaskTracker$1-run-430;|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1821;|
 CL3: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;|org.apache.hadoop.mapred.TaskTracker$TaskInProgress-cleanup-3168;|org.apache.hadoop.mapred.TaskTracker-done-3409;|sun.reflect.NativeMethodAccessorImpl-invoke-57;|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1821;|
 CL3: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;|org.apache.hadoop.mapred.TaskTracker$TaskInProgress-cleanup-3168;|org.apache.hadoop.mapred.TaskTracker-statusUpdate-3305;|sun.reflect.NativeMethodAccessorImpl-invoke-57;|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1821;|
 CL3: org.apache.hadoop.mapred.Counters$Group-readFields-357;|org.apache.hadoop.mapred.Counters-readFields-575;|org.apache.hadoop.mapred.Counters-size-539;|org.apache.hadoop.mapred.TaskTracker-commitPending-3382;|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1821;|

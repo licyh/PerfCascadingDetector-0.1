@@ -1,4 +1,4 @@
-//29 (#static codepoints=21)
+//26 (#static codepoints=21)
 CL2: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
 CL2: org.apache.hadoop.mapred.Counters$Group-readFields-357;
 CL2: org.apache.hadoop.mapred.Counters-readFields-572;
@@ -6,9 +6,6 @@ CL2: org.apache.hadoop.mapred.Counters-size-538;
 CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2286;
 CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-2021;
 CL2: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2072;
-CL3: org.apache.hadoop.io.IOUtils-cleanup-207;
-CL3: org.apache.hadoop.io.IOUtils-copyBytes-69;
-CL3: org.apache.hadoop.io.IOUtils-readFully-152;
 CL3: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
 CL3: org.apache.hadoop.mapred.Counters$Group-readFields-357;
 CL3: org.apache.hadoop.mapred.Counters$Group-write-348;
