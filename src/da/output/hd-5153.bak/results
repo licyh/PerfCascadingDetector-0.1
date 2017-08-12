@@ -1,4 +1,4 @@
-FINAL
+//FINAL
 
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processAndHandleReportedBlock-2712;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processAndHandleReportedBlock-2716;

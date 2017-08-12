@@ -16,6 +16,7 @@ import dm.util.MethodUtil;
 import javassist.CannotCompileException;
 import javassist.CtBehavior;
 import javassist.CtClass;
+import sa.wala.WalaUtil;
 
 public class Transformers {
 	
@@ -43,7 +44,7 @@ public class Transformers {
     	reader = new TextFileReader("resource/dynamicpoints", true);
 		while ( (tmpline = reader.readLine()) != null ) {
 			String[] strs = tmpline.split("\\s+");
-			classesForInst.add( strs[0] );
+			classesForInst.add( formatClassName(strs[0]) );
 			methodsForInst.add( strs[1] );
 			linesForInst.add( strs[2] );
 			//typesForInst.add( strs[3] );
@@ -58,6 +59,14 @@ public class Transformers {
 		System.out.println("JX - INFO - " + "linesForInst =  " + linesForInst );
 	}
 	
+	// tmp
+	public String formatClassName(String className) {
+		String formalClassName = className;
+		if (formalClassName.startsWith("L"))
+			formalClassName = formalClassName.substring(1);
+		formalClassName = formalClassName.replaceAll("/", ".");
+		return formalClassName;
+	}
 	
 		
 
