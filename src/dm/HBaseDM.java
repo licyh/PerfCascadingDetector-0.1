@@ -78,7 +78,7 @@ class HBaseTransformer extends Transformer {
   		// LIMITS
   		// instrument for happens-before graph
 		if ( className.startsWith("org.apache.hadoop.hbase.")
-				|| className.startsWith("org.jruby.")
+				//|| className.startsWith("org.jruby.")
 	           ) {
 			transformClassForHappensBefore( cl );
   		}
