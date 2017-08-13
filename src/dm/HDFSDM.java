@@ -61,9 +61,8 @@ class HDFSTransformer extends Transformer {
 	    
   		// FILTERS
 		if ( className.startsWith("org.apache.hadoop.xxx.")
-				// +
-  				//&& !className.startsWith("org.apache.hadoop.io.IOUtils")   //for the real bug in mr-4576
-  				//&& !className.startsWith("org.apache.hadoop.fs.")
+				// || className.startsWith("org.apache.hadoop.io.IOUtils")  //for the real bug in mr-4576
+  				// || className.startsWith("org.apache.hadoop.fs.")
 	           ) {
 	          return;
   		}

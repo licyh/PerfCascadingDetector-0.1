@@ -1,0 +1,4 @@
+//Sink - put
+org.apache.hadoop.hbase.regionserver.HRegionServer put 1651      TargetCodeBegin
+org.apache.hadoop.hbase.regionserver.HRegionServer put 1653      TargetCodeEnd
+//org.apache.hadoop.hbase.regionserver.HRegionServer put 1655      TargetCodeEnd

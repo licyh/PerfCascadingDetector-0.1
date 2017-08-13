@@ -1,0 +1,771 @@
+//#functions containing loops In Scope     #loops totally
+769 1039
+org.apache.hadoop.hbase.io.hfile.HFile$Writer.appendMetaBlock(Ljava/lang/String;Lorg/apache/hadoop/io/Writable;)V 1 440 
+org.apache.hadoop.hbase.io.hfile.HFile$Writer.close()V 1 616 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRowWithColumnsTs_args.write(Lorg/apache/thrift/protocol/TProtocol;)V 1 15592 
+org.apache.hadoop.hbase.util.DynamicByteBloomFilter.contains([BII)Z 1 166 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRowWithColumnsTs_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 2 15954 15940 
+org.apache.hadoop.hbase.regionserver.wal.HLog.requestLogRoll()V 1 1059 
+org.apache.hadoop.hbase.rest.model.TableListModel.getObjectFromMessage([B)Lorg/apache/hadoop/hbase/rest/ProtobufMessageHandler; 1 107 
+org.apache.hadoop.hbase.thrift.generated.Hbase$deleteAllRowTs_args$_Fields.<clinit>()V 1 23202 
+org.apache.hadoop.hbase.rest.client.Response.getHeader(Ljava/lang/String;)Ljava/lang/String; 1 77 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRowWithColumns_result$_Fields.<clinit>()V 1 13761 
+org.apache.hadoop.hbase.rest.RowSpec.<init>(Ljava/lang/String;)V 1 53 
+org.apache.hadoop.hbase.regionserver.wal.HLog.<init>(Lorg/apache/hadoop/fs/FileSystem;Lorg/apache/hadoop/fs/Path;Lorg/apache/hadoop/fs/Path;Lorg/apache/hadoop/conf/Configuration;Ljava/util/List;ZLjava/lang/String;)V 1 337 
+org.apache.hadoop.hbase.thrift.generated.Hbase$deleteAll_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 21517 
+org.apache.hadoop.hbase.util.JVMClusterUtil.shutdown(Ljava/util/List;Ljava/util/List;)V 4 211 221 232 231 
+org.apache.hadoop.hbase.thrift.generated.Hbase$atomicIncrement_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 20687 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRows_args.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$mutateRows_args;)V 1 18090 
+org.apache.hadoop.hbase.util.FSUtils.waitOnSafeMode(Lorg/apache/hadoop/conf/Configuration;J)V 2 267 280 
+org.apache.hadoop.hbase.regionserver.Store.getStorefilesIndexSize()J 1 1377 
+org.apache.hadoop.hbase.regionserver.ShutdownHook.suppressHdfsShutdownHook(Lorg/apache/hadoop/fs/FileSystem;)Ljava/lang/Thread; 1 146 
+org.apache.hadoop.hbase.LocalHBaseCluster.getLiveMasters()Ljava/util/List; 1 333 
+org.apache.hadoop.hbase.HColumnDescriptor.toString()Ljava/lang/String; 1 562 
+org.apache.hadoop.hbase.filter.FilterList.filterRowKey([BII)Z 1 130 
+org.apache.hadoop.hbase.zookeeper.ZooKeeperNodeTracker.blockUntilAvailable(J)[B 1 117 
+org.apache.hadoop.hbase.regionserver.wal.HLogSplitter$WriterThread.doRun()V 1 634 
+org.apache.hadoop.hbase.rest.client.Client.executePathOnly(Lorg/apache/hadoop/hbase/rest/client/Cluster;Lorg/apache/commons/httpclient/HttpMethod;[Lorg/apache/commons/httpclient/Header;Ljava/lang/String;)I 1 109 
+org.apache.hadoop.hbase.rest.client.Client.executeURI(Lorg/apache/commons/httpclient/HttpMethod;[Lorg/apache/commons/httpclient/Header;Ljava/lang/String;)I 1 136 
+org.apache.hadoop.hbase.util.Base64.decode(Ljava/lang/String;I)[B 1 947 
+org.apache.hadoop.hbase.util.HBaseFsckRepair.fixDupeAssignment(Lorg/apache/hadoop/conf/Configuration;Lorg/apache/hadoop/hbase/HRegionInfo;Ljava/util/List;)V 1 56 
+org.apache.hadoop.hbase.client.Result.write(Ljava/io/DataOutput;)V 2 547 551 
+org.apache.hadoop.hbase.util.Bytes.padHead([BI)[B 1 992 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getTableRegions_result.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$getTableRegions_result;)V 1 7539 
+org.apache.hadoop.hbase.io.CodeToClassAndBack$InternalStaticLoader.<init>([Ljava/lang/Class;Ljava/util/Map;Ljava/util/Map;)V 1 64 
+org.apache.hadoop.hbase.regionserver.HRegion.internalFlushcache(Lorg/apache/hadoop/hbase/regionserver/wal/HLog;J)Z 4 936 941 960 965 
+org.apache.hadoop.hbase.thrift.generated.BatchMutation$_Fields.<clinit>()V 1 60 
+org.apache.hadoop.hbase.rest.ScannerResultGenerator.<init>(Ljava/lang/String;Lorg/apache/hadoop/hbase/rest/RowSpec;Lorg/apache/hadoop/hbase/filter/Filter;)V 2 73 83 
+org.apache.hadoop.hbase.regionserver.wal.HLogSplitter$EntryBuffers.getChunkToWrite()Lorg/apache/hadoop/hbase/regionserver/wal/HLogSplitter$RegionEntryBuffer; 1 540 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getVerTs_result$_Fields.<clinit>()V 1 12012 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRowTs_result.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$getRowTs_result;)V 1 14730 
+org.apache.hadoop.hbase.regionserver.wal.HLog.getSplitEditFilesSorted(Lorg/apache/hadoop/fs/FileSystem;Lorg/apache/hadoop/fs/Path;)Ljava/util/NavigableSet; 1 1361 
+org.apache.hadoop.hbase.thrift.generated.TRowResult$_Fields.<clinit>()V 1 60 
+org.apache.hadoop.hbase.regionserver.HRegionServer.getCopyOfOnlineRegionsSortedBySize()Ljava/util/SortedMap; 1 2269 
+org.apache.hadoop.hbase.regionserver.HRegion.replayRecoveredEdits(Lorg/apache/hadoop/fs/Path;JLorg/apache/hadoop/util/Progressable;)J 2 1861 1874 
+org.apache.hadoop.hbase.ipc.HBaseClient$Connection.cleanupCalls()V 1 598 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getTableNames_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 2 6358 6344 
+org.apache.hadoop.hbase.rest.client.RemoteAdmin.createTable(Lorg/apache/hadoop/hbase/HTableDescriptor;)V 1 126 
+org.apache.hadoop.hbase.thrift.generated.Hbase$enableTable_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 3339 
+org.apache.hadoop.hbase.filter.FilterList.filterAllRemaining()Z 1 148 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerClose_result$_Fields.<clinit>()V 1 30948 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerClose_args$_Fields.<clinit>()V 1 30652 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerGetList_result$_Fields.<clinit>()V 1 30182 
+org.apache.hadoop.hbase.replication.master.ReplicationLogCleaner.refreshHLogsAndSearch(Ljava/lang/String;)Z 2 101 107 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerGetList_args$_Fields.<clinit>()V 1 29797 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerGet_result$_Fields.<clinit>()V 1 29318 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerGet_args$_Fields.<clinit>()V 1 29019 
+org.apache.hadoop.hbase.client.Put.readFields(Ljava/io/DataInput;)V 2 497 490 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenWithStopTs_result$_Fields.<clinit>()V 1 28639 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenWithStopTs_args$_Fields.<clinit>()V 1 27930 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenTs_result$_Fields.<clinit>()V 1 27506 
+org.apache.hadoop.hbase.regionserver.ExplicitColumnTracker.buildColumnList()V 1 191 
+org.apache.hadoop.hbase.thrift.ThriftServer$HBaseHandler.scannerOpenTs([B[BLjava/util/List;J)I 1 695 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenTs_args$_Fields.<clinit>()V 1 26891 
+org.apache.hadoop.hbase.client.Get.readFields(Ljava/io/DataInput;)V 2 387 380 
+org.apache.hadoop.hbase.io.hfile.HFile$Reader$Scanner.blockSeek([BIIZ)I 1 1343 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenWithPrefix_result$_Fields.<clinit>()V 1 26478 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenWithPrefix_args$_Fields.<clinit>()V 1 25958 
+org.apache.hadoop.hbase.thrift.ThriftServer$HBaseHandler.createTable([BLjava/util/List;)V 1 447 
+org.apache.hadoop.hbase.regionserver.ExplicitColumnTracker.doneWithColumn([BII)V 1 206 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenWithStop_result$_Fields.<clinit>()V 1 25560 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenWithStop_args$_Fields.<clinit>()V 1 24940 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpen_result$_Fields.<clinit>()V 1 24525 
+org.apache.hadoop.hbase.regionserver.StoreFile.getRandomFilename(Lorg/apache/hadoop/fs/FileSystem;Lorg/apache/hadoop/fs/Path;Ljava/lang/String;)Lorg/apache/hadoop/fs/Path; 1 614 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpen_args$_Fields.<clinit>()V 1 23999 
+org.apache.hadoop.hbase.thrift.generated.Hbase$deleteAllRowTs_result$_Fields.<clinit>()V 1 23679 
+org.apache.hadoop.hbase.ipc.HBaseServer.stop()V 2 1232 1239 
+org.apache.hadoop.hbase.thrift.generated.Hbase$deleteAllRow_result$_Fields.<clinit>()V 1 22888 
+org.apache.hadoop.hbase.client.MultiPutResponse.readFields(Ljava/io/DataInput;)V 1 66 
+org.apache.hadoop.hbase.filter.TimestampsFilter.write(Ljava/io/DataOutput;)V 1 87 
+org.apache.hadoop.hbase.thrift.generated.Hbase$deleteAllRow_args$_Fields.<clinit>()V 1 22500 
+org.apache.hadoop.hbase.client.HTable.deserializeRegionInfo(Ljava/io/DataInput;)Ljava/util/Map; 1 501 
+org.apache.hadoop.hbase.thrift.generated.Hbase$deleteAllTs_result$_Fields.<clinit>()V 1 22195 
+org.apache.hadoop.hbase.thrift.generated.Hbase$deleteAllTs_args$_Fields.<clinit>()V 1 21626 
+org.apache.hadoop.hbase.thrift.generated.Hbase$deleteAll_result$_Fields.<clinit>()V 1 21303 
+org.apache.hadoop.hbase.io.ImmutableBytesWritable.hashCode()I 1 162 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerGetList_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 2 30527 30513 
+org.apache.hadoop.hbase.thrift.generated.Hbase$deleteAll_args$_Fields.<clinit>()V 1 20823 
+org.apache.hadoop.hbase.thrift.generated.Hbase$atomicIncrement_result$_Fields.<clinit>()V 1 20339 
+org.apache.hadoop.hbase.thrift.generated.Hbase$atomicIncrement_args$_Fields.<clinit>()V 1 19764 
+org.apache.hadoop.hbase.thrift.generated.Hbase$createTable_args.write(Lorg/apache/thrift/protocol/TProtocol;)V 1 8257 
+org.apache.hadoop.hbase.thrift.generated.Hbase$createTable_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 8666 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRowsTs_result$_Fields.<clinit>()V 1 19355 
+org.apache.hadoop.hbase.master.handler.EnableTableHandler$BulkEnabler.populatePool(Ljava/util/concurrent/ExecutorService;)V 1 149 
+org.apache.hadoop.hbase.client.HTable$ClientScanner.next(I)[Lorg/apache/hadoop/hbase/client/Result; 1 1171 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRowsTs_args$_Fields.<clinit>()V 1 18837 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRows_result$_Fields.<clinit>()V 1 18437 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRows_args$_Fields.<clinit>()V 1 18008 
+org.apache.hadoop.hbase.client.Result.getFamilyMap([B)Ljava/util/NavigableMap; 1 389 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRowTs_result$_Fields.<clinit>()V 1 17617 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRowTs_args$_Fields.<clinit>()V 1 17007 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRow_result$_Fields.<clinit>()V 1 16598 
+org.apache.hadoop.hbase.client.Result.compareResults(Lorg/apache/hadoop/hbase/client/Result;Lorg/apache/hadoop/hbase/client/Result;)V 1 675 
+org.apache.hadoop.hbase.util.MetaUtils.addColumn([BLorg/apache/hadoop/hbase/HColumnDescriptor;)V 1 335 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRow_args$_Fields.<clinit>()V 1 16077 
+org.apache.hadoop.hbase.util.Bytes.putInt([BII)I 1 673 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRowWithColumnsTs_result$_Fields.<clinit>()V 1 15667 
+org.apache.hadoop.hbase.HServerLoad.getStorefileSizeInMB()I 1 386 
+org.apache.hadoop.hbase.regionserver.MemStore.dump()V 2 108 111 
+org.apache.hadoop.hbase.util.Bytes.putLong([BIJ)I 1 519 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRowWithColumnsTs_args$_Fields.<clinit>()V 1 15064 
+org.apache.hadoop.hbase.regionserver.Store.getRowKeyAtOrBefore(Lorg/apache/hadoop/hbase/KeyValue;)Lorg/apache/hadoop/hbase/KeyValue; 1 1118 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRowTs_result$_Fields.<clinit>()V 1 14651 
+org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil.addDependencyJars(Lorg/apache/hadoop/conf/Configuration;[Ljava/lang/Class;)V 1 347 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRowTs_args$_Fields.<clinit>()V 1 14171 
+org.apache.hadoop.hbase.client.Delete.write(Ljava/io/DataOutput;)V 2 356 352 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRowWithColumns_args$_Fields.<clinit>()V 1 13241 
+org.apache.hadoop.hbase.regionserver.HRegionServer.multiPut(Lorg/apache/hadoop/hbase/client/MultiPut;)Lorg/apache/hadoop/hbase/client/MultiPutResponse; 1 2613 
+org.apache.hadoop.hbase.client.MultiResponse.size()I 1 60 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRow_result$_Fields.<clinit>()V 1 12831 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRow_args$_Fields.<clinit>()V 1 12440 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getVerTs_args$_Fields.<clinit>()V 1 11354 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getVer_result$_Fields.<clinit>()V 1 10899 
+org.apache.hadoop.hbase.zookeeper.ZKConfig.parseZooCfg(Lorg/apache/hadoop/conf/Configuration;Ljava/io/InputStream;)Ljava/util/Properties; 2 140 134 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getVer_args$_Fields.<clinit>()V 1 10327 
+org.apache.hadoop.hbase.thrift.generated.Hbase$get_result$_Fields.<clinit>()V 1 9881 
+org.apache.hadoop.hbase.thrift.generated.Hbase$get_args$_Fields.<clinit>()V 1 9398 
+org.apache.hadoop.hbase.thrift.generated.Hbase$deleteTable_result$_Fields.<clinit>()V 1 9084 
+org.apache.hadoop.hbase.master.AssignmentManager.waitUntilNoRegionsInTransition(J)Z 1 1309 
+org.apache.hadoop.hbase.thrift.generated.Hbase$deleteTable_args$_Fields.<clinit>()V 1 8788 
+org.apache.hadoop.hbase.io.hfile.LruBlockCache.evict()V 2 342 370 
+org.apache.hadoop.hbase.thrift.generated.Hbase$createTable_result$_Fields.<clinit>()V 1 8320 
+org.apache.hadoop.hbase.regionserver.HRegion.isMajorCompaction()Z 1 2799 
+org.apache.hadoop.hbase.regionserver.HRegionServer.multi(Lorg/apache/hadoop/hbase/client/MultiAction;)Lorg/apache/hadoop/hbase/client/MultiResponse; 5 2527 2561 2579 2596 2518 
+org.apache.hadoop.hbase.HTableDescriptor.hashCode()I 1 539 
+org.apache.hadoop.hbase.thrift.generated.Hbase$createTable_args$_Fields.<clinit>()V 1 7888 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getTableRegions_result$_Fields.<clinit>()V 1 7460 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getTableRegions_args$_Fields.<clinit>()V 1 7161 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getColumnDescriptors_result$_Fields.<clinit>()V 1 6761 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getColumnDescriptors_args$_Fields.<clinit>()V 1 6462 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getTableNames_result$_Fields.<clinit>()V 1 6044 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getTableNames_args$_Fields.<clinit>()V 1 5844 
+org.apache.hadoop.hbase.thrift.generated.Hbase$majorCompact_result$_Fields.<clinit>()V 1 5556 
+org.apache.hadoop.hbase.mapreduce.ImportTsv$TsvParser.<init>(Ljava/lang/String;Ljava/lang/String;)V 1 97 
+org.apache.hadoop.hbase.thrift.generated.Hbase$majorCompact_args$_Fields.<clinit>()V 1 5266 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRows_args.write(Lorg/apache/thrift/protocol/TProtocol;)V 1 18377 
+org.apache.hadoop.hbase.regionserver.HRegionServer.put([BLjava/util/List;)I 2 1674 1681 
+org.apache.hadoop.hbase.thrift.generated.Hbase$compact_result$_Fields.<clinit>()V 1 4976 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRow_result.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$getRow_result;)V 1 12910 
+org.apache.hadoop.hbase.avro.AvroUtil.resultToAResult(Lorg/apache/hadoop/hbase/client/Result;)Lorg/apache/hadoop/hbase/avro/generated/AResult; 1 312 
+org.apache.hadoop.hbase.thrift.generated.Hbase$compact_args$_Fields.<clinit>()V 1 4686 
+org.apache.hadoop.hbase.client.HBaseAdmin.compact([BZ)V 1 948 
+org.apache.hadoop.hbase.thrift.generated.Hbase$isTableEnabled_result$_Fields.<clinit>()V 1 4312 
+org.apache.hadoop.hbase.regionserver.HRegionServer.getRegionsToCheck()Ljava/util/Set; 1 2382 
+org.apache.hadoop.hbase.thrift.generated.Hbase$isTableEnabled_args$_Fields.<clinit>()V 1 4013 
+org.apache.hadoop.hbase.thrift.generated.Hbase$disableTable_result$_Fields.<clinit>()V 1 3717 
+org.apache.hadoop.hbase.KeyValue$Type.codeToType(B)Lorg/apache/hadoop/hbase/KeyValue$Type; 1 184 
+org.apache.hadoop.hbase.thrift.generated.Hbase$disableTable_args$_Fields.<clinit>()V 1 3421 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getVerTs_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 2 12326 12312 
+org.apache.hadoop.hbase.thrift.generated.Hbase$enableTable_result$_Fields.<clinit>()V 1 3125 
+org.apache.hadoop.hbase.thrift.generated.Hbase$enableTable_args$_Fields.<clinit>()V 1 2829 
+org.apache.hadoop.hbase.regionserver.StoreScanner.<init>(Lorg/apache/hadoop/hbase/regionserver/Store;Lorg/apache/hadoop/hbase/client/Scan;Ljava/util/NavigableSet;)V 1 76 
+org.apache.hadoop.hbase.client.Get.addColumns([[B)Lorg/apache/hadoop/hbase/client/Get; 1 450 
+org.apache.hadoop.hbase.rest.client.RemoteHTable.put(Ljava/util/List;)V 5 345 338 354 352 369 
+org.apache.hadoop.hbase.regionserver.Store.compact(Z)Lorg/apache/hadoop/hbase/regionserver/Store$StoreSize; 3 650 689 718 
+org.apache.hadoop.hbase.regionserver.HRegion.doMiniBatchPut(Lorg/apache/hadoop/hbase/regionserver/HRegion$BatchOperationInProgress;)J 10 1402 1477 1481 1440 1450 1467 1477 1481 1477 1481 
+org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil.findContainingJar(Ljava/lang/Class;)Ljava/lang/String; 1 386 
+org.apache.hadoop.hbase.regionserver.HRegionServer.waitOnAllRegionsToClose()V 1 697 
+org.apache.hadoop.hbase.thrift.generated.Mutation$_Fields.<clinit>()V 1 63 
+org.apache.hadoop.hbase.regionserver.HRegionServer.startServiceThreads()V 1 1260 
+org.apache.hadoop.hbase.ipc.HBaseRPC$Invocation.toString()Ljava/lang/String; 1 147 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenWithStopTs_args.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$scannerOpenWithStopTs_args;)V 1 28035 
+org.apache.hadoop.hbase.regionserver.HRegionServer.closeAllRegions(Z)V 1 1555 
+org.apache.hadoop.hbase.HTableDescriptor.<init>(Lorg/apache/hadoop/hbase/HTableDescriptor;)V 2 188 192 
+org.apache.hadoop.hbase.client.Put.heapSize()J 2 470 457 
+org.apache.hadoop.hbase.filter.FilterList.hasFilterRow()Z 1 205 
+org.apache.hadoop.hbase.io.HbaseMapWritable.readFields(Ljava/io/DataInput;)V 1 204 
+org.apache.hadoop.hbase.master.AssignmentManager.processFailover()V 1 222 
+org.apache.hadoop.hbase.HTableDescriptor.readFields(Ljava/io/DataInput;)V 2 560 569 
+org.apache.hadoop.hbase.client.Increment.numColumns()I 1 199 
+org.apache.hadoop.hbase.HServerLoad.getMemStoreSizeInMB()I 1 396 
+org.apache.hadoop.hbase.HServerLoad.getStorefileIndexSizeInMB()I 1 406 
+org.apache.hadoop.hbase.HServerLoad.getStorefiles()I 1 376 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRowWithColumns_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 2 14048 14034 
+org.apache.hadoop.hbase.regionserver.HRegion.checkResources()V 1 1590 
+org.apache.hadoop.hbase.regionserver.HRegionServer.closeAllScanners()V 1 785 
+org.apache.hadoop.hbase.regionserver.wal.HLog$LogSyncer.run()V 1 961 
+org.apache.hadoop.hbase.replication.regionserver.ReplicationSourceManager.removePeer(Ljava/lang/String;)V 3 356 361 367 
+org.apache.hadoop.hbase.master.HMaster.createTable([Lorg/apache/hadoop/hbase/HRegionInfo;Z)V 2 783 812 
+org.apache.hadoop.hbase.rest.model.CellSetModel.createProtobufOutput()[B 2 115 112 
+org.apache.hadoop.hbase.io.HbaseMapWritable.write(Ljava/io/DataOutput;)V 1 183 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRow_args.write(Lorg/apache/thrift/protocol/TProtocol;)V 1 16530 
+org.apache.hadoop.hbase.rest.RowSpec.parseQueryParams(Ljava/lang/String;I)I 3 247 259 225 
+org.apache.hadoop.hbase.client.RetriesExhaustedWithDetailsException.getDesc(Ljava/util/List;Ljava/util/List;Ljava/util/List;)Ljava/lang/String; 1 108 
+org.apache.hadoop.hbase.thrift.generated.TRegionInfo.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 548 
+org.apache.hadoop.hbase.replication.regionserver.ReplicationSource.connectToPeers()V 1 395 
+org.apache.hadoop.hbase.client.Scan.getInputColumns()Ljava/lang/String; 2 650 643 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerGet_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 2 29663 29649 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenWithPrefix_args.write(Lorg/apache/thrift/protocol/TProtocol;)V 1 26410 
+org.apache.hadoop.hbase.master.AssignmentManager.getRegionsOfTable([B)Ljava/util/List; 1 1512 
+org.apache.hadoop.hbase.regionserver.HRegion.prepareDelete(Lorg/apache/hadoop/hbase/client/Delete;)V 2 1128 1133 
+org.apache.hadoop.hbase.util.DynamicByteBloomFilter$DataWriter.write(Ljava/io/DataOutput;)V 1 297 
+org.apache.hadoop.hbase.regionserver.HRegion.listPaths(Lorg/apache/hadoop/fs/FileSystem;Lorg/apache/hadoop/fs/Path;)V 1 2820 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRowTs_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 17897 
+org.apache.hadoop.hbase.master.AssignmentManager.updateTimers(Lorg/apache/hadoop/hbase/HServerInfo;)V 1 620 
+org.apache.hadoop.hbase.thrift.generated.Hbase$majorCompact_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 5770 
+org.apache.hadoop.hbase.client.Result.writeArray(Ljava/io/DataOutput;[Lorg/apache/hadoop/hbase/client/Result;)V 4 599 594 610 604 
+org.apache.hadoop.hbase.master.handler.TableModifyFamilyHandler.handleTableOperation(Ljava/util/List;)V 1 56 
+org.apache.hadoop.hbase.replication.regionserver.ReplicationSourceManager$PeersWatcher.nodeChildrenChanged(Ljava/lang/String;)V 1 482 
+org.apache.hadoop.hbase.master.AssignmentManager.rebuildUserRegions()Ljava/util/Map; 1 1334 
+org.apache.hadoop.hbase.util.Base64$Base64InputStream.read()I 3 1325 1359 1355 
+org.apache.hadoop.hbase.master.AssignmentManager.processDeadServers(Ljava/util/Map;)V 2 1382 1380 
+org.apache.hadoop.hbase.regionserver.HRegion.compactStores(Z)[B 1 761 
+org.apache.hadoop.hbase.master.CatalogJanitor.hasReferences(Lorg/apache/hadoop/hbase/HRegionInfo;Lorg/apache/hadoop/hbase/client/Result;Lorg/apache/hadoop/hbase/HRegionInfo;[B)Z 1 257 
+org.apache.hadoop.hbase.zookeeper.ZKTable.populateTableStates()V 1 93 
+org.apache.hadoop.hbase.zookeeper.ZKUtil.listChildrenAndGetAsAddresses(Lorg/apache/hadoop/hbase/zookeeper/ZooKeeperWatcher;Ljava/lang/String;)Ljava/util/List; 1 361 
+org.apache.hadoop.hbase.master.LogCleaner.initLogCleanersChain()V 1 86 
+org.apache.hadoop.hbase.thrift.generated.TRowResult.read(Lorg/apache/thrift/protocol/TProtocol;)V 2 359 338 
+org.apache.hadoop.hbase.ipc.HBaseServer.channelIO(Ljava/nio/channels/ReadableByteChannel;Ljava/nio/channels/WritableByteChannel;Ljava/nio/ByteBuffer;)I 1 1379 
+org.apache.hadoop.hbase.thrift.generated.BatchMutation.write(Lorg/apache/thrift/protocol/TProtocol;)V 1 417 
+org.apache.hadoop.hbase.client.Result.readArray(Ljava/io/DataInput;)[Lorg/apache/hadoop/hbase/client/Result; 2 643 635 
+org.apache.hadoop.hbase.ipc.HBaseRPC$Invocation.readFields(Ljava/io/DataInput;)V 1 126 
+org.apache.hadoop.hbase.replication.regionserver.ReplicationSource.readAllEntriesToReplicateOrNextFile()Z 1 359 
+org.apache.hadoop.hbase.util.Bytes.toInt([BII)I 1 652 
+org.apache.hadoop.hbase.regionserver.LruHashMap.removeEntry(Lorg/apache/hadoop/hbase/regionserver/LruHashMap$Entry;)V 1 537 
+org.apache.hadoop.hbase.thrift.ThriftServer$HBaseHandler.mutateRowsTs([BLjava/util/List;J)V 3 530 525 558 
+org.apache.hadoop.hbase.util.Base64$Base64OutputStream.write([BII)V 1 1576 
+org.apache.hadoop.hbase.master.handler.DisableTableHandler$BulkDisabler.waitUntilDone(J)Z 1 144 
+org.apache.hadoop.hbase.regionserver.LruHashMap.entryLruList()Ljava/util/List; 1 814 
+org.apache.hadoop.hbase.thrift.generated.Hbase$get_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 2 10195 10181 
+org.apache.hadoop.hbase.LocalHBaseCluster.waitOnMaster(Lorg/apache/hadoop/hbase/util/JVMClusterUtil$MasterThread;)Ljava/lang/String; 2 369 378 
+org.apache.hadoop.hbase.ipc.HBaseServer$Connection.readAndProcess()I 1 896 
+org.apache.hadoop.hbase.regionserver.ExplicitColumnTracker.checkColumn([BIIJ)Lorg/apache/hadoop/hbase/regionserver/ScanQueryMatcher$MatchCode; 1 98 
+org.apache.hadoop.hbase.regionserver.HRegion.getLastIncrement(Lorg/apache/hadoop/hbase/client/Get;)Ljava/util/List; 4 2891 2903 2914 2912 
+org.apache.hadoop.hbase.io.hfile.HFile$BlockIndex.writeIndex(Lorg/apache/hadoop/fs/FSDataOutputStream;Ljava/util/List;Ljava/util/List;Ljava/util/List;)J 1 1670 
+org.apache.hadoop.hbase.regionserver.HRegion.replayRecoveredEditsIfAny(Lorg/apache/hadoop/fs/Path;JLorg/apache/hadoop/util/Progressable;)J 2 1802 1826 
+org.apache.hadoop.hbase.regionserver.HRegion.addFamilyMapToWALEdit(Ljava/util/Map;Lorg/apache/hadoop/hbase/regionserver/wal/WALEdit;)V 2 1729 1728 
+org.apache.hadoop.hbase.rest.model.TableSchemaModel.createProtobufOutput()[B 3 263 274 270 
+org.apache.hadoop.hbase.util.Base64.decode([BIII)[B 1 871 
+org.apache.hadoop.hbase.avro.AvroServer.doMain([Ljava/lang/String;)V 1 545 
+org.apache.hadoop.hbase.rest.model.TableSchemaModel.<init>(Lorg/apache/hadoop/hbase/HTableDescriptor;)V 3 87 95 91 
+org.apache.hadoop.hbase.thrift.generated.Hbase$deleteTable_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 9298 
+org.apache.hadoop.hbase.util.DynamicByteBloomFilter.addRow()V 1 238 
+org.apache.hadoop.hbase.client.HBaseAdmin.enableTable([B)V 1 457 
+org.apache.hadoop.hbase.zookeeper.MiniZooKeeperCluster.startup(Ljava/io/File;)I 1 108 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenWithStop_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 25842 
+org.apache.hadoop.hbase.regionserver.StoreScanner.resetScannerStack(Lorg/apache/hadoop/hbase/KeyValue;)V 1 370 
+org.apache.hadoop.hbase.regionserver.MemStore.memberOfPreviousRow(Ljava/util/NavigableSet;Lorg/apache/hadoop/hbase/regionserver/GetClosestRowBeforeTracker;Lorg/apache/hadoop/hbase/KeyValue;)Lorg/apache/hadoop/hbase/regionserver/MemStore$Member; 1 532 
+org.apache.hadoop.hbase.rest.ScannerResultGenerator.next()Lorg/apache/hadoop/hbase/KeyValue; 1 142 
+org.apache.hadoop.hbase.master.AssignmentManager.assign(Lorg/apache/hadoop/hbase/master/AssignmentManager$RegionState;ZZ)V 1 886 
+org.apache.hadoop.hbase.regionserver.StoreScanner.getScanners(Lorg/apache/hadoop/hbase/client/Scan;Ljava/util/NavigableSet;)Ljava/util/List; 1 173 
+org.apache.hadoop.hbase.zookeeper.ZKTable.getDisabledOrDisablingTables(Lorg/apache/hadoop/hbase/zookeeper/ZooKeeperWatcher;)Ljava/util/Set; 1 344 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenTs_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 27788 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRowTs_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 2 14938 14924 
+org.apache.hadoop.hbase.ipc.HBaseClient$Connection.run()V 1 458 
+org.apache.hadoop.hbase.regionserver.KeyValueHeap.reseek(Lorg/apache/hadoop/hbase/KeyValue;)Z 1 248 
+org.apache.hadoop.hbase.client.HTable.serializeRegionInfo(Ljava/io/DataOutput;)V 1 472 
+org.apache.hadoop.hbase.rest.model.ScannerModel$FilterModel.<init>(Lorg/apache/hadoop/hbase/filter/Filter;)V 1 200 
+org.apache.hadoop.hbase.filter.TimestampsFilter.readFields(Ljava/io/DataInput;)V 1 77 
+org.apache.hadoop.hbase.client.MultiPut.write(Ljava/io/DataOutput;)V 2 93 88 
+org.apache.hadoop.hbase.LocalHBaseCluster.waitOnRegionServer(Lorg/apache/hadoop/hbase/util/JVMClusterUtil$RegionServerThread;)Ljava/lang/String; 2 275 286 
+org.apache.hadoop.hbase.client.Increment.readFields(Ljava/io/DataInput;)V 2 290 283 
+org.apache.hadoop.hbase.master.HMaster.createTable(Lorg/apache/hadoop/hbase/HTableDescriptor;[[BZ)V 1 757 
+org.apache.hadoop.hbase.master.handler.ServerShutdownHandler.process()V 3 121 137 150 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpen_args.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$scannerOpen_args;)V 1 24088 
+org.apache.hadoop.hbase.client.MultiAction.size()I 1 56 
+org.apache.hadoop.hbase.ipc.HBaseRPC.waitForProxy(Ljava/lang/Class;JLjava/net/InetSocketAddress;Lorg/apache/hadoop/conf/Configuration;IIJ)Lorg/apache/hadoop/ipc/VersionedProtocol; 1 349 
+org.apache.hadoop.hbase.client.MetaScanner.metaScan(Lorg/apache/hadoop/conf/Configuration;Lorg/apache/hadoop/hbase/client/MetaScanner$MetaScannerVisitor;[B[BI[B)V 3 186 178 164 
+org.apache.hadoop.hbase.rest.client.RemoteHTable.buildRowSpec([BLjava/util/Map;JJI)Ljava/lang/String; 2 98 93 
+org.apache.hadoop.hbase.regionserver.HRegionServer$QosFunction.<init>(Lorg/apache/hadoop/hbase/regionserver/HRegionServer;)V 1 361 
+org.apache.hadoop.hbase.client.Result.readFields()V 1 518 
+org.apache.hadoop.hbase.regionserver.wal.WALEdit.readFields(Ljava/io/DataInput;)V 2 116 126 
+org.apache.hadoop.hbase.master.AssignmentManager.getAssignment([B)Lorg/apache/hadoop/hbase/util/Pair; 1 1792 
+org.apache.hadoop.hbase.regionserver.HRegionServer$QosFunction.apply(Lorg/apache/hadoop/io/Writable;)Ljava/lang/Integer; 1 433 
+org.apache.hadoop.hbase.util.MetaUtils.shutdown()V 1 155 
+org.apache.hadoop.hbase.util.Bytes.toBytes(I)[B 1 611 
+org.apache.hadoop.hbase.regionserver.HRegion.delete(Ljava/util/Map;Z)V 2 1194 1188 
+org.apache.hadoop.hbase.rest.model.StorageClusterStatusModel.getObjectFromMessage([B)Lorg/apache/hadoop/hbase/rest/ProtobufMessageHandler; 3 605 598 615 
+org.apache.hadoop.hbase.zookeeper.ZKConfig.getZKQuorumServersString(Ljava/util/Properties;)Ljava/lang/String; 2 195 231 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenTs_args.write(Lorg/apache/thrift/protocol/TProtocol;)V 1 27431 
+org.apache.hadoop.hbase.util.FSUtils.getTableFragmentation(Lorg/apache/hadoop/fs/FileSystem;Lorg/apache/hadoop/fs/Path;)Ljava/util/Map; 3 446 439 427 
+org.apache.hadoop.hbase.regionserver.HRegionServer.buildServerLoad()Lorg/apache/hadoop/hbase/HServerLoad; 1 761 
+org.apache.hadoop.hbase.regionserver.wal.HLogSplitter$WriterThread.writeBuffer(Lorg/apache/hadoop/hbase/regionserver/wal/HLogSplitter$RegionEntryBuffer;)V 1 672 
+org.apache.hadoop.hbase.zookeeper.ZKConfig.makeZKProps(Lorg/apache/hadoop/conf/Configuration;)Ljava/util/Properties; 2 80 105 
+org.apache.hadoop.hbase.mapreduce.CopyTable.createSubmittableJob(Lorg/apache/hadoop/conf/Configuration;[Ljava/lang/String;)Lorg/apache/hadoop/mapreduce/Job; 1 70 
+org.apache.hadoop.hbase.zookeeper.HQuorumPeer.writeMyID(Ljava/util/Properties;)V 3 106 103 113 
+org.apache.hadoop.hbase.client.HTable.validatePut(Lorg/apache/hadoop/hbase/client/Put;)V 2 841 840 
+org.apache.hadoop.hbase.LocalHBaseCluster.waitOnMaster(I)Ljava/lang/String; 1 350 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getTableRegions_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 2 7774 7760 
+org.apache.hadoop.hbase.replication.regionserver.ReplicationSourceManager.transferQueues(Ljava/lang/String;)V 2 320 310 
+org.apache.hadoop.hbase.util.HMerge$Merger.merge([Lorg/apache/hadoop/hbase/HRegionInfo;)Z 1 184 
+org.apache.hadoop.hbase.thrift.generated.Hbase$deleteAllRowTs_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 23893 
+org.apache.hadoop.hbase.thrift.generated.Hbase$deleteAllRow_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 23102 
+org.apache.hadoop.hbase.mapreduce.RowCounter.createSubmittableJob(Lorg/apache/hadoop/conf/Configuration;[Ljava/lang/String;)Lorg/apache/hadoop/mapreduce/Job; 2 93 102 
+org.apache.hadoop.hbase.ipc.HBaseClient.getConnection(Ljava/net/InetSocketAddress;Lorg/apache/hadoop/security/UserGroupInformation;ILorg/apache/hadoop/hbase/ipc/HBaseClient$Call;)Lorg/apache/hadoop/hbase/ipc/HBaseClient$Connection; 1 852 
+org.apache.hadoop.hbase.rest.model.ColumnSchemaModel.toString()Ljava/lang/String; 1 114 
+org.apache.hadoop.hbase.mapreduce.replication.VerifyReplication.createSubmittableJob(Lorg/apache/hadoop/conf/Configuration;[Ljava/lang/String;)Lorg/apache/hadoop/mapreduce/Job; 1 185 
+org.apache.hadoop.hbase.regionserver.HRegion$RegionScanner.nextRow([B)V 1 2349 
+org.apache.hadoop.hbase.regionserver.wal.HLog.dump(Lorg/apache/hadoop/conf/Configuration;Lorg/apache/hadoop/fs/Path;)V 1 1420 
+org.apache.hadoop.hbase.util.HMerge$OfflineMerger.updateMeta([B[BLorg/apache/hadoop/hbase/regionserver/HRegion;)V 1 400 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRow_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 16878 
+org.apache.hadoop.hbase.regionserver.CompactSplitThread.run()V 1 72 
+org.apache.hadoop.hbase.regionserver.wal.HLogSplitter.splitLog([Lorg/apache/hadoop/fs/FileStatus;)Ljava/util/List; 1 254 
+org.apache.hadoop.hbase.client.Result.getMap()Ljava/util/NavigableMap; 1 308 
+org.apache.hadoop.hbase.regionserver.MemStore.getRowKeyBefore(Ljava/util/NavigableSet;Lorg/apache/hadoop/hbase/regionserver/GetClosestRowBeforeTracker;)V 1 338 
+org.apache.hadoop.hbase.master.AssignmentManager.clearRegionFromTransition(Lorg/apache/hadoop/hbase/HRegionInfo;)V 2 1455 1454 
+org.apache.hadoop.hbase.io.hfile.HFile$BlockIndex.heapSize()J 1 1735 
+org.apache.hadoop.hbase.regionserver.HRegionServer.next(JI)[Lorg/apache/hadoop/hbase/client/Result; 2 1813 1808 
+org.apache.hadoop.hbase.regionserver.handler.OpenRegionHandler.updateMeta(Lorg/apache/hadoop/hbase/regionserver/HRegion;)Z 1 144 
+org.apache.hadoop.hbase.regionserver.HRegion.updateKVTimestamps(Ljava/lang/Iterable;[B)V 2 1567 1569 
+org.apache.hadoop.hbase.regionserver.MemStore.upsert(Lorg/apache/hadoop/hbase/KeyValue;)J 1 477 
+org.apache.hadoop.hbase.rest.model.TableSchemaModel.getObjectFromMessage([B)Lorg/apache/hadoop/hbase/rest/ProtobufMessageHandler; 3 307 316 313 
+org.apache.hadoop.hbase.thrift.generated.Hbase$createTable_args.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$createTable_args;)V 1 7970 
+org.apache.hadoop.hbase.HTableDescriptor.isLegalTableName([B)[B 1 284 
+org.apache.hadoop.hbase.util.Bytes.split([B[BI)[[B 1 1025 
+org.apache.hadoop.hbase.util.Pair.equals(Ljava/lang/Object;Ljava/lang/Object;)Z 1 104 
+org.apache.hadoop.hbase.client.HBaseAdmin.createTable(Lorg/apache/hadoop/hbase/HTableDescriptor;[[B)V 2 294 304 
+org.apache.hadoop.hbase.rest.model.StorageClusterStatusModel.toString()Ljava/lang/String; 3 520 506 542 
+org.apache.hadoop.hbase.regionserver.GetClosestRowBeforeTracker.isDeleted(Lorg/apache/hadoop/hbase/KeyValue;Ljava/util/NavigableSet;)Z 1 141 
+org.apache.hadoop.hbase.regionserver.HRegionServer.metrics()V 2 1161 1156 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getVer_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 2 11213 11199 
+org.apache.hadoop.hbase.client.Result.toString()Ljava/lang/String; 1 480 
+org.apache.hadoop.hbase.regionserver.Store.compact(Ljava/util/List;ZJ)Lorg/apache/hadoop/hbase/regionserver/StoreFile$Writer; 3 889 931 924 
+org.apache.hadoop.hbase.regionserver.wal.HLog.getOldestRegion(Ljava/lang/Long;)[B 1 699 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenWithStop_args.write(Lorg/apache/thrift/protocol/TProtocol;)V 1 25484 
+org.apache.hadoop.hbase.regionserver.HRegion.hasReferences()Z 2 391 390 
+org.apache.hadoop.hbase.mapred.HRegionPartitioner.getPartition(Lorg/apache/hadoop/hbase/io/ImmutableBytesWritable;Ljava/lang/Object;I)I 1 78 
+org.apache.hadoop.hbase.regionserver.LruHashMap.clearAll()J 2 660 658 
+org.apache.hadoop.hbase.zookeeper.MiniZooKeeperCluster.waitForServerUp(IJ)Z 1 190 
+org.apache.hadoop.hbase.rest.RowResultGenerator.<init>(Ljava/lang/String;Lorg/apache/hadoop/hbase/rest/RowSpec;Lorg/apache/hadoop/hbase/filter/Filter;)V 2 53 64 
+org.apache.hadoop.hbase.util.Bytes.bytesToVint([B)J 1 803 
+org.apache.hadoop.hbase.regionserver.Store.notifyChangedReadersObservers()V 1 565 
+org.apache.hadoop.hbase.thrift.ThriftServer$HBaseHandler.getAllColumns(Lorg/apache/hadoop/hbase/client/HTable;)[[B 1 122 
+org.apache.hadoop.hbase.util.SoftValueSortedMap.values()Ljava/util/Collection; 1 182 
+org.apache.hadoop.hbase.LocalHBaseCluster.<init>(Lorg/apache/hadoop/conf/Configuration;IILjava/lang/Class;Ljava/lang/Class;)V 2 146 154 
+org.apache.hadoop.hbase.replication.ReplicationZookeeper.connectExistingPeers()V 1 181 
+org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation.getRegionServerWithRetries(Lorg/apache/hadoop/hbase/client/ServerCallable;)Ljava/lang/Object; 1 997 
+org.apache.hadoop.hbase.util.JenkinsHash.main([Ljava/lang/String;)V 1 258 
+org.apache.hadoop.hbase.master.AssignmentManager$BulkStartupAssigner.populatePool(Ljava/util/concurrent/ExecutorService;)V 1 1259 
+org.apache.hadoop.hbase.rest.model.TableSchemaModel.getTableDescriptor()Lorg/apache/hadoop/hbase/HTableDescriptor; 3 340 345 343 
+org.apache.hadoop.hbase.client.HTable.get(Ljava/util/List;)[Lorg/apache/hadoop/hbase/client/Result; 1 562 
+org.apache.hadoop.hbase.avro.AvroUtil.csToACS(Lorg/apache/hadoop/hbase/ClusterStatus;)Lorg/apache/hadoop/hbase/avro/generated/AClusterStatus; 2 134 150 
+org.apache.hadoop.hbase.thrift.generated.Hbase$disableTable_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 3931 
+org.apache.hadoop.hbase.thrift.generated.TCell$_Fields.<clinit>()V 1 63 
+org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation.close(Z)V 1 1043 
+org.apache.hadoop.hbase.zookeeper.ZooKeeperMainServerArg.parse(Lorg/apache/hadoop/conf/Configuration;)Ljava/lang/String; 1 44 
+org.apache.hadoop.hbase.io.hfile.Compression.getSupportedAlgorithms()[Ljava/lang/String; 1 273 
+org.apache.hadoop.hbase.master.LoadBalancer.balanceCluster(Ljava/util/Map;)Ljava/util/List; 10 146 187 176 210 202 240 260 272 282 303 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRowTs_args.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$mutateRowTs_args;)V 1 17105 
+org.apache.hadoop.hbase.regionserver.HRegionServer.blockAndCheckIfStopped(Lorg/apache/hadoop/hbase/zookeeper/ZooKeeperNodeTracker;)V 1 511 
+org.apache.hadoop.hbase.regionserver.HRegion.merge(Lorg/apache/hadoop/hbase/regionserver/HRegion;Lorg/apache/hadoop/hbase/regionserver/HRegion;)Lorg/apache/hadoop/hbase/regionserver/HRegion; 2 2748 2732 
+org.apache.hadoop.hbase.util.HMerge$OnlineMerger.getMetaRow()Lorg/apache/hadoop/hbase/client/Result; 1 279 
+org.apache.hadoop.hbase.regionserver.wal.WALEdit.write(Ljava/io/DataOutput;)V 2 146 153 
+org.apache.hadoop.hbase.io.hfile.HFile$BlockIndex.readIndex(Lorg/apache/hadoop/io/RawComparator;Ljava/io/DataInputStream;I)Lorg/apache/hadoop/hbase/io/hfile/HFile$BlockIndex; 1 1703 
+org.apache.hadoop.hbase.ipc.HBaseServer$Listener.doAccept(Ljava/nio/channels/SelectionKey;)V 1 485 
+org.apache.hadoop.hbase.client.HBaseAdmin.split([B)V 1 1075 
+org.apache.hadoop.hbase.ipc.HBaseServer$Listener.cleanupConnections(Z)V 1 380 
+org.apache.hadoop.hbase.master.handler.DisableTableHandler.handleDisableTable()V 1 89 
+org.apache.hadoop.hbase.master.ServerManager.haveServerWithSameHostAndPortAlready(Ljava/lang/String;)Lorg/apache/hadoop/hbase/HServerInfo; 1 158 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRowTs_args.write(Lorg/apache/thrift/protocol/TProtocol;)V 1 17542 
+org.apache.hadoop.hbase.HServerInfo.isServer(Ljava/util/Set;Ljava/lang/String;Z)Z 1 275 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRowsTs_args.write(Lorg/apache/thrift/protocol/TProtocol;)V 1 19288 
+org.apache.hadoop.hbase.HColumnDescriptor.<init>(Lorg/apache/hadoop/hbase/HColumnDescriptor;)V 1 192 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRowsTs_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 19635 
+org.apache.hadoop.hbase.regionserver.LruHashMap.put(Lorg/apache/hadoop/hbase/io/HeapSize;Lorg/apache/hadoop/hbase/io/HeapSize;)Lorg/apache/hadoop/hbase/io/HeapSize; 1 327 
+org.apache.hadoop.hbase.thrift.generated.IOError$_Fields.<clinit>()V 1 59 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRowsTs_args.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$mutateRowsTs_args;)V 1 18928 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerGetList_result.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$scannerGetList_result;)V 1 30265 
+org.apache.hadoop.hbase.thrift.generated.Hbase$isTableEnabled_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 4594 
+org.apache.hadoop.hbase.filter.FilterList.readFields(Ljava/io/DataInput;)V 1 236 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getColumnDescriptors_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 2 7053 7039 
+org.apache.hadoop.hbase.client.HTable.flushCommits()V 2 823 823 
+org.apache.hadoop.hbase.replication.regionserver.ReplicationSink.replicateEntries([Lorg/apache/hadoop/hbase/regionserver/wal/HLog$Entry;)V 4 109 129 103 141 
+org.apache.hadoop.hbase.rest.RowSpec.parseRowKeys(Ljava/lang/String;I)I 1 68 
+org.apache.hadoop.hbase.regionserver.Store.checkSplit(Z)Lorg/apache/hadoop/hbase/regionserver/Store$StoreSize; 1 1258 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenWithStopTs_args.write(Lorg/apache/thrift/protocol/TProtocol;)V 1 28556 
+org.apache.hadoop.hbase.thrift.generated.Hbase$deleteAllTs_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 22409 
+org.apache.hadoop.hbase.io.hfile.HFile$BlockIndex.toString()Ljava/lang/String; 1 1717 
+org.apache.hadoop.hbase.util.ByteBloomFilter.add([BII)V 1 207 
+org.apache.hadoop.hbase.zookeeper.ZKAssign.blockUntilRIT(Lorg/apache/hadoop/hbase/zookeeper/ZooKeeperWatcher;)V 1 819 
+org.apache.hadoop.hbase.rest.client.RemoteHTable.delete(Lorg/apache/hadoop/hbase/client/Delete;)V 1 391 
+org.apache.hadoop.hbase.master.LogCleaner.chore()V 2 134 131 
+org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation.processBatchOfPuts(Ljava/util/List;[BLjava/util/concurrent/ExecutorService;)V 2 1242 1242 
+org.apache.hadoop.hbase.thrift.generated.Hbase$compact_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 5190 
+org.apache.hadoop.hbase.ipc.HBaseClient$Connection$PingInputStream.read()I 1 264 
+org.apache.hadoop.hbase.HTableDescriptor.<init>([B[Lorg/apache/hadoop/hbase/HColumnDescriptor;)V 1 116 
+org.apache.hadoop.hbase.regionserver.wal.HLog.main([Ljava/lang/String;)V 1 1469 
+org.apache.hadoop.hbase.rest.model.TableInfoModel.createProtobufOutput()[B 1 133 
+org.apache.hadoop.hbase.rest.RowSpec.parseColumns(Ljava/lang/String;I)I 1 117 
+org.apache.hadoop.hbase.rest.model.ScannerModel$FilterModel.build()Lorg/apache/hadoop/hbase/filter/Filter; 1 263 
+org.apache.hadoop.hbase.regionserver.KeyValueHeap.seek(Lorg/apache/hadoop/hbase/KeyValue;)Z 1 221 
+org.apache.hadoop.hbase.thrift.generated.ColumnDescriptor$_Fields.<clinit>()V 1 83 
+org.apache.hadoop.hbase.util.HBaseFsckRepair.closeRegionSilentlyAndWait(Lorg/apache/hadoop/conf/Configuration;Lorg/apache/hadoop/hbase/HServerAddress;Lorg/apache/hadoop/hbase/HRegionInfo;)V 1 96 
+org.apache.hadoop.hbase.util.Bytes.compareTo([BII[BII)I 1 859 
+org.apache.hadoop.hbase.rest.RootResource.getTableList()Lorg/apache/hadoop/hbase/rest/model/TableListModel; 1 67 
+org.apache.hadoop.hbase.regionserver.metrics.RegionServerMetrics.addFlush(Ljava/util/List;)V 1 309 
+org.apache.hadoop.hbase.rest.TableResource.scanTransformAttrs()V 4 140 162 150 138 
+org.apache.hadoop.hbase.client.Result.getWritableSize()J 1 533 
+org.apache.hadoop.hbase.regionserver.Store.internalFlushCache(Ljava/util/SortedSet;JLorg/apache/hadoop/hbase/regionserver/TimeRangeTracker;)Lorg/apache/hadoop/hbase/regionserver/StoreFile; 1 477 
+org.apache.hadoop.hbase.master.handler.ModifyTableHandler.handleTableOperation(Ljava/util/List;)V 1 44 
+org.apache.hadoop.hbase.HColumnDescriptor.write(Ljava/io/DataOutput;)V 1 676 
+org.apache.hadoop.hbase.client.Scan.addColumns([[B)Lorg/apache/hadoop/hbase/client/Scan; 1 608 
+org.apache.hadoop.hbase.client.MultiAction.write(Ljava/io/DataOutput;)V 2 101 97 
+org.apache.hadoop.hbase.thrift.generated.AlreadyExists.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 261 
+org.apache.hadoop.hbase.thrift.ThriftUtilities.cellFromHBase([Lorg/apache/hadoop/hbase/KeyValue;)Ljava/util/List; 1 110 
+org.apache.hadoop.hbase.thrift.ThriftServer$HBaseHandler.getRowWithColumnsTs([B[BLjava/util/List;J)Ljava/util/List; 1 385 
+org.apache.hadoop.hbase.regionserver.MemStore.upsert(Ljava/util/List;)J 1 444 
+org.apache.hadoop.hbase.util.FSUtils.recoverFileLease(Lorg/apache/hadoop/fs/FileSystem;Lorg/apache/hadoop/fs/Path;Lorg/apache/hadoop/conf/Configuration;)V 1 632 
+org.apache.hadoop.hbase.regionserver.wal.HLogSplitter.parseHLog(Lorg/apache/hadoop/fs/FileStatus;Lorg/apache/hadoop/hbase/regionserver/wal/HLogSplitter$EntryBuffers;Lorg/apache/hadoop/fs/FileSystem;Lorg/apache/hadoop/conf/Configuration;)V 1 429 
+org.apache.hadoop.hbase.regionserver.wal.HLogSplitter.archiveLogs(Lorg/apache/hadoop/fs/Path;Ljava/util/List;Ljava/util/List;Lorg/apache/hadoop/fs/Path;Lorg/apache/hadoop/fs/FileSystem;Lorg/apache/hadoop/conf/Configuration;)V 2 330 339 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRow_args.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$mutateRow_args;)V 1 16166 
+org.apache.hadoop.hbase.rest.model.CellSetModel.getObjectFromMessage([B)Lorg/apache/hadoop/hbase/rest/ProtobufMessageHandler; 2 136 134 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpen_args.write(Lorg/apache/thrift/protocol/TProtocol;)V 1 24457 
+org.apache.hadoop.hbase.rest.client.RemoteHTable.getTableDescriptor()Lorg/apache/hadoop/hbase/HTableDescriptor; 1 235 
+org.apache.hadoop.hbase.regionserver.HRegion.processTable(Lorg/apache/hadoop/fs/FileSystem;Lorg/apache/hadoop/fs/Path;Lorg/apache/hadoop/hbase/regionserver/wal/HLog;Lorg/apache/hadoop/conf/Configuration;Z)V 1 3224 
+org.apache.hadoop.hbase.regionserver.wal.HLog.close()V 1 809 
+org.apache.hadoop.hbase.thrift.generated.TRegionInfo$_Fields.<clinit>()V 1 69 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getVer_result.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$getVer_result;)V 1 10978 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerGet_result.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$scannerGet_result;)V 1 29401 
+org.apache.hadoop.hbase.client.Put.has([B[BJ[BZZ)Z 2 278 286 
+org.apache.hadoop.hbase.master.HMaster.stallIfBackupMaster(Lorg/apache/hadoop/conf/Configuration;Lorg/apache/hadoop/hbase/master/ActiveMasterManager;)V 1 242 
+org.apache.hadoop.hbase.master.ActiveMasterManager.blockUntilBecomingActiveMaster()Z 1 153 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRowWithColumnsTs_args.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$getRowWithColumnsTs_args;)V 1 15162 
+org.apache.hadoop.hbase.master.HMaster.loop()V 1 305 
+org.apache.hadoop.hbase.ipc.HBaseRpcMetrics.initMethods(Ljava/lang/Class;)V 1 83 
+org.apache.hadoop.hbase.avro.AvroUtil.resultsToAResults([Lorg/apache/hadoop/hbase/client/Result;)Lorg/apache/avro/generic/GenericArray; 1 405 
+org.apache.hadoop.hbase.ipc.HBaseServer$Responder.waitPending()V 1 804 
+org.apache.hadoop.hbase.ipc.HBaseServer$Responder.doPurge(Lorg/apache/hadoop/hbase/ipc/HBaseServer$Call;J)V 1 681 
+org.apache.hadoop.hbase.regionserver.HRegion.filesByFamily(Ljava/util/Map;Ljava/util/List;)Ljava/util/Map; 1 2782 
+org.apache.hadoop.hbase.regionserver.HRegion.getCompactPriority()I 1 3261 
+org.apache.hadoop.hbase.HColumnDescriptor.readFields(Ljava/io/DataInput;)V 1 645 
+org.apache.hadoop.hbase.filter.FilterList.filterRow()Z 1 215 
+org.apache.hadoop.hbase.catalog.MetaReader.getServerUserRegions(Lorg/apache/hadoop/hbase/catalog/CatalogTracker;Lorg/apache/hadoop/hbase/HServerInfo;)Ljava/util/NavigableMap; 1 592 
+org.apache.hadoop.hbase.io.hfile.LruBlockCache$EvictionThread.run()V 1 512 
+org.apache.hadoop.hbase.rest.client.RemoteHTable.get(Lorg/apache/hadoop/hbase/client/Get;)Lorg/apache/hadoop/hbase/client/Result; 1 266 
+org.apache.hadoop.hbase.regionserver.SplitTransaction.rollback(Lorg/apache/hadoop/hbase/regionserver/OnlineRegions;)V 1 538 
+org.apache.hadoop.hbase.zookeeper.ZKUtil.dump(Lorg/apache/hadoop/hbase/zookeeper/ZooKeeperWatcher;)Ljava/lang/String; 3 1036 1046 1042 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRowWithColumns_args.write(Lorg/apache/thrift/protocol/TProtocol;)V 1 13693 
+org.apache.hadoop.hbase.client.HTable.doPut(Ljava/util/List;)V 1 669 
+org.apache.hadoop.hbase.util.Bytes.binaryIncrementNeg([BJ)[B 1 1241 
+org.apache.hadoop.hbase.util.Bytes.binaryIncrementPos([BJ)[B 1 1216 
+org.apache.hadoop.hbase.KeyValue.getDelimiterInReverse([BIII)I 1 1320 
+org.apache.hadoop.hbase.rest.client.RemoteHTable$Scanner.<init>(Lorg/apache/hadoop/hbase/rest/client/RemoteHTable;Lorg/apache/hadoop/hbase/client/Scan;)V 1 439 
+org.apache.hadoop.hbase.regionserver.StoreFile.getMaxSequenceIdInList(Ljava/util/List;)J 1 308 
+org.apache.hadoop.hbase.rest.model.TableInfoModel.toString()Ljava/lang/String; 1 122 
+org.apache.hadoop.hbase.regionserver.HRegion$RegionScanner.nextInternal(I)Z 2 2304 2289 
+org.apache.hadoop.hbase.replication.regionserver.ReplicationSourceManager.join()V 1 202 
+org.apache.hadoop.hbase.HTableDescriptor.toString()Ljava/lang/String; 1 487 
+org.apache.hadoop.hbase.regionserver.HRegion.get(Lorg/apache/hadoop/hbase/client/Get;Ljava/lang/Integer;)Lorg/apache/hadoop/hbase/client/Result; 2 2845 2849 
+org.apache.hadoop.hbase.thrift.generated.AlreadyExists$_Fields.<clinit>()V 1 47 
+org.apache.hadoop.hbase.client.HBaseAdmin.flush([B)V 1 854 
+org.apache.hadoop.hbase.rest.model.TableListModel.createProtobufOutput()[B 1 96 
+org.apache.hadoop.hbase.ipc.HBaseServer$Responder.run()V 4 587 582 614 623 
+org.apache.hadoop.hbase.mapreduce.replication.VerifyReplication.doCommandLine([Ljava/lang/String;)Z 1 202 
+org.apache.hadoop.hbase.master.handler.TableAddFamilyHandler.handleTableOperation(Ljava/util/List;)V 1 57 
+org.apache.hadoop.hbase.regionserver.MemStore.walkForwardInSingleRow(Ljava/util/SortedSet;Lorg/apache/hadoop/hbase/KeyValue;Lorg/apache/hadoop/hbase/regionserver/GetClosestRowBeforeTracker;)Z 1 311 
+org.apache.hadoop.hbase.regionserver.wal.HLog.cleanOldLogs()[[B 2 636 652 
+org.apache.hadoop.hbase.ipc.HBaseServer$Handler.run()V 1 1020 
+org.apache.hadoop.hbase.io.ImmutableBytesWritable.toArray(Ljava/util/List;)[[B 1 257 
+org.apache.hadoop.hbase.regionserver.HRegion$RegionScanner.<init>(Lorg/apache/hadoop/hbase/regionserver/HRegion;Lorg/apache/hadoop/hbase/client/Scan;Ljava/util/List;)V 1 2227 
+org.apache.hadoop.hbase.zookeeper.ZKUtil.deleteChildrenRecursively(Lorg/apache/hadoop/hbase/zookeeper/ZooKeeperWatcher;Ljava/lang/String;)V 1 1016 
+org.apache.hadoop.hbase.filter.FilterList.write(Ljava/io/DataOutput;)V 1 246 
+org.apache.hadoop.hbase.regionserver.StoreFileScanner.getScannersForStoreFiles(Ljava/util/Collection;ZZ)Ljava/util/List; 1 66 
+org.apache.hadoop.hbase.regionserver.StoreScanner.<init>(Lorg/apache/hadoop/hbase/regionserver/Store;Lorg/apache/hadoop/hbase/client/Scan;Ljava/util/List;Z)V 1 105 
+org.apache.hadoop.hbase.ipc.HBaseRpcMetrics.createMetrics([Ljava/lang/Class;Z)V 2 133 131 
+org.apache.hadoop.hbase.thrift.generated.Hbase$mutateRows_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 18717 
+org.apache.hadoop.hbase.regionserver.Store.rowAtOrBeforeFromStoreFile(Lorg/apache/hadoop/hbase/regionserver/StoreFile;Lorg/apache/hadoop/hbase/regionserver/GetClosestRowBeforeTracker;)V 1 1164 
+org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation.processBatch(Ljava/util/List;[BLjava/util/concurrent/ExecutorService;[Ljava/lang/Object;)V 8 1111 1135 1141 1157 1154 1180 1099 1211 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getColumnDescriptors_result.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$getColumnDescriptors_result;)V 1 6841 
+org.apache.hadoop.hbase.regionserver.LruHashMap.freeMemory(J)J 1 259 
+org.apache.hadoop.hbase.client.MultiAction.allActions()Ljava/util/List; 1 88 
+org.apache.hadoop.hbase.thrift.ThriftServer$HBaseHandler.scannerOpenWithStopTs([B[B[BLjava/util/List;J)I 1 718 
+org.apache.hadoop.hbase.util.HBaseFsck.checkMetaEntries()Z 2 635 666 
+org.apache.hadoop.hbase.util.HBaseFsck.getTables(Ljava/util/concurrent/atomic/AtomicInteger;)[Lorg/apache/hadoop/hbase/HTableDescriptor; 1 593 
+org.apache.hadoop.hbase.util.HBaseFsck.processRegionServers(Ljava/util/Collection;)V 3 339 349 328 
+org.apache.hadoop.hbase.util.HBaseFsck.checkHdfs()V 4 248 262 284 270 
+org.apache.hadoop.hbase.util.HBaseFsck.loadDisabledTables()V 1 220 
+org.apache.hadoop.hbase.util.HBaseFsck.checkConsistency()V 1 367 
+org.apache.hadoop.hbase.util.HBaseFsck.printTableSummary()V 2 806 798 
+org.apache.hadoop.hbase.util.SoftValueSortedMap.checkReferences()I 1 73 
+org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation.locateRegionInMeta([B[B[BZLjava/lang/Object;)Lorg/apache/hadoop/hbase/HRegionLocation; 1 676 
+org.apache.hadoop.hbase.regionserver.LogRoller.run()V 2 70 96 
+org.apache.hadoop.hbase.avro.AvroServer$HBaseImpl.listTables()Lorg/apache/avro/generic/GenericArray; 1 174 
+org.apache.hadoop.hbase.client.MultiAction.readFields(Ljava/io/DataInput;)V 2 115 111 
+org.apache.hadoop.hbase.LocalHBaseCluster.waitOnRegionServer(I)Ljava/lang/String; 1 254 
+org.apache.hadoop.hbase.ipc.HBaseRPC$Invocation.write(Ljava/io/DataOutput;)V 1 136 
+org.apache.hadoop.hbase.replication.regionserver.ReplicationSourceManager.logPositionAndCleanOldLogs(Lorg/apache/hadoop/fs/Path;Ljava/lang/String;JZ)V 1 137 
+org.apache.hadoop.hbase.util.JVMClusterUtil.startup(Ljava/util/List;Ljava/util/List;)Ljava/lang/String; 4 176 181 190 190 
+org.apache.hadoop.hbase.rest.model.ScannerModel.getObjectFromMessage([B)Lorg/apache/hadoop/hbase/rest/ProtobufMessageHandler; 1 607 
+org.apache.hadoop.hbase.replication.regionserver.ReplicationSource.chooseSinks()V 2 214 210 
+org.apache.hadoop.hbase.regionserver.MemStore.main([Ljava/lang/String;)V 4 790 795 801 808 
+org.apache.hadoop.hbase.util.JVMClusterUtil$MasterThread.waitForServerOnline()V 1 127 
+org.apache.hadoop.hbase.regionserver.HRegionServer.openRegions(Ljava/util/List;)V 1 2075 
+org.apache.hadoop.hbase.thrift.generated.BatchMutation.<init>(Lorg/apache/hadoop/hbase/thrift/generated/BatchMutation;)V 1 142 
+org.apache.hadoop.hbase.regionserver.MemStoreFlusher.run()V 1 139 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerClose_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 31228 
+org.apache.hadoop.hbase.regionserver.HRegionServer.addOutboundMsgs(Ljava/util/List;)V 2 804 805 
+org.apache.hadoop.hbase.regionserver.HRegion.put([Lorg/apache/hadoop/hbase/client/Put;)[Lorg/apache/hadoop/hbase/HConstants$OperationStatusCode; 1 1352 
+org.apache.hadoop.hbase.util.Bytes.readVLong([BI)J 1 826 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenWithPrefix_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 26760 
+org.apache.hadoop.hbase.regionserver.LruHashMap.growTable(I)V 2 705 699 
+org.apache.hadoop.hbase.zookeeper.ZooKeeperWatcher.<init>(Lorg/apache/hadoop/conf/Configuration;Ljava/lang/String;Lorg/apache/hadoop/hbase/Abortable;)V 1 133 
+org.apache.hadoop.hbase.thrift.generated.IllegalArgument$_Fields.<clinit>()V 1 58 
+org.apache.hadoop.hbase.regionserver.wal.WALEdit.toString()Ljava/lang/String; 1 177 
+org.apache.hadoop.hbase.master.LoadBalancer.immediateAssignment(Ljava/util/List;Ljava/util/List;)Ljava/util/Map; 1 555 
+org.apache.hadoop.hbase.thrift.ThriftServer$HBaseHandler.scannerOpenWithStop([B[B[BLjava/util/List;)I 1 649 
+org.apache.hadoop.hbase.regionserver.wal.HLogSplitter$OutputSink.finishWritingAndClose()Ljava/util/List; 2 736 739 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getVerTs_result.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$getVerTs_result;)V 1 12091 
+org.apache.hadoop.hbase.client.Get.write(Ljava/io/DataOutput;)V 2 421 413 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenWithPrefix_args.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$scannerOpenWithPrefix_args;)V 1 26047 
+org.apache.hadoop.hbase.util.Bytes.toBytesBinary(Ljava/lang/String;)[B 1 358 
+org.apache.hadoop.hbase.filter.DependentColumnFilter.filterRow(Ljava/util/List;)V 1 130 
+org.apache.hadoop.hbase.util.JVMClusterUtil$RegionServerThread.waitForServerOnline()V 1 63 
+org.apache.hadoop.hbase.catalog.CatalogTracker.waitForMeta(J)Lorg/apache/hadoop/hbase/HServerAddress; 1 325 
+org.apache.hadoop.hbase.ipc.HBaseClient$Connection.setupIOstreams()V 1 307 
+org.apache.hadoop.hbase.master.CatalogJanitor.scan()V 1 119 
+org.apache.hadoop.hbase.regionserver.SplitTransaction.cleanupAnySplitDetritus(Lorg/apache/hadoop/hbase/regionserver/HRegion;)V 1 607 
+org.apache.hadoop.hbase.HTableDescriptor.compareTo(Lorg/apache/hadoop/hbase/HTableDescriptor;)I 1 611 
+org.apache.hadoop.hbase.rest.model.TableListModel.toString()Ljava/lang/String; 1 86 
+org.apache.hadoop.hbase.master.handler.EnableTableHandler$BulkEnabler.waitUntilDone(J)Z 1 166 
+org.apache.hadoop.hbase.util.Bytes.toByteArrays([Ljava/lang/String;)[[B 1 1115 
+org.apache.hadoop.hbase.ipc.HBaseClient.stop()V 2 701 707 
+org.apache.hadoop.hbase.io.hfile.HFile.getStoreFiles(Lorg/apache/hadoop/fs/FileSystem;Lorg/apache/hadoop/fs/Path;)Ljava/util/List; 2 1827 1825 
+org.apache.hadoop.hbase.client.MultiPut.size()I 1 61 
+org.apache.hadoop.hbase.master.ServerManager.getAverageLoad()D 1 368 
+org.apache.hadoop.hbase.regionserver.Store.close()Lcom/google/common/collect/ImmutableList; 1 415 
+org.apache.hadoop.hbase.regionserver.wal.HLogSplitter$OutputSink.closeStreams()Ljava/util/List; 1 762 
+org.apache.hadoop.hbase.client.HConnectionManager.deleteAllConnections(Z)V 1 187 
+org.apache.hadoop.hbase.client.Put.get([B[B)Ljava/util/List; 1 306 
+org.apache.hadoop.hbase.client.Scan.readFields(Ljava/io/DataInput;)V 2 536 532 
+org.apache.hadoop.hbase.util.Base64.decodeFromFile(Ljava/lang/String;)[B 1 1114 
+org.apache.hadoop.hbase.replication.regionserver.ReplicationSource.run()V 1 248 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getTableNames_result.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$getTableNames_result;)V 1 6123 
+org.apache.hadoop.hbase.regionserver.HRegionServer.reportForDuty()Lorg/apache/hadoop/io/MapWritable; 2 1484 1491 
+org.apache.hadoop.hbase.client.MultiResponse.write(Ljava/io/DataOutput;)V 2 99 95 
+org.apache.hadoop.hbase.regionserver.HRegionServer.handleReportForDutyResponse(Lorg/apache/hadoop/io/MapWritable;)V 1 841 
+org.apache.hadoop.hbase.client.Result.getNoVersionMap()Ljava/util/NavigableMap; 2 357 353 
+org.apache.hadoop.hbase.ipc.HBaseServer$Listener$Reader.run()V 3 303 308 299 
+org.apache.hadoop.hbase.util.Threads.threadDumpingIsAlive(Ljava/lang/Thread;)V 1 110 
+org.apache.hadoop.hbase.util.Bytes.toBytes(J)[B 1 438 
+org.apache.hadoop.hbase.HColumnDescriptor.isLegalFamilyName([B)[B 1 286 
+org.apache.hadoop.hbase.master.AssignmentManager.getAssignments()Ljava/util/Map; 1 1772 
+org.apache.hadoop.hbase.util.HBaseFsck$TInfo.check()Z 1 548 
+org.apache.hadoop.hbase.rest.RowResource.update(Lorg/apache/hadoop/hbase/rest/model/CellSetModel;Z)Ljavax/ws/rs/core/Response; 2 166 163 
+org.apache.hadoop.hbase.util.HBaseFsck.doWork()I 4 150 165 175 190 
+org.apache.hadoop.hbase.client.Scan.addColumns(Ljava/lang/String;)Lorg/apache/hadoop/hbase/client/Scan; 1 626 
+org.apache.hadoop.hbase.client.MultiResponse.readFields(Ljava/io/DataInput;)V 2 135 130 
+org.apache.hadoop.hbase.regionserver.HRegionServer.getOnlineRegions()Ljava/util/List; 1 2194 
+org.apache.hadoop.hbase.master.handler.TableDeleteFamilyHandler.handleTableOperation(Ljava/util/List;)V 1 55 
+org.apache.hadoop.hbase.replication.regionserver.ReplicationSource.openReader(I)Z 1 442 
+org.apache.hadoop.hbase.rest.client.RemoteHTable.buildResultFromModel(Lorg/apache/hadoop/hbase/rest/model/CellSetModel;)[Lorg/apache/hadoop/hbase/client/Result; 2 145 143 
+org.apache.hadoop.hbase.replication.regionserver.ReplicationSource.shipEdits()V 2 575 554 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpen_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 24807 
+org.apache.hadoop.hbase.util.Keying.reverseHostname(Ljava/lang/String;)Ljava/lang/String; 1 106 
+org.apache.hadoop.hbase.client.Put.toString()Ljava/lang/String; 2 430 420 
+org.apache.hadoop.hbase.master.handler.DeleteTableHandler.handleTableOperation(Ljava/util/List;)V 2 53 51 
+org.apache.hadoop.hbase.client.HTablePool.closeTablePool(Ljava/lang/String;)V 1 145 
+org.apache.hadoop.hbase.regionserver.LruHashMap.containsKey(Ljava/lang/Object;)Z 1 400 
+org.apache.hadoop.hbase.regionserver.MemStoreFlusher.flushSomeRegions()V 2 304 328 
+org.apache.hadoop.hbase.util.Base64.encodeFromFile(Ljava/lang/String;)Ljava/lang/String; 1 1164 
+org.apache.hadoop.hbase.io.hfile.SimpleBlockCache.processQueue()V 1 55 
+org.apache.hadoop.hbase.io.HbaseObjectWritable.writeObject(Ljava/io/DataOutput;Ljava/lang/Object;Ljava/lang/Class;Lorg/apache/hadoop/conf/Configuration;)V 2 378 387 
+org.apache.hadoop.hbase.rest.client.RemoteHTable.buildModelFromPut(Lorg/apache/hadoop/hbase/client/Put;)Lorg/apache/hadoop/hbase/rest/model/CellSetModel; 2 161 160 
+org.apache.hadoop.hbase.thrift.ThriftServer$HBaseHandler.getTableRegions([B)Ljava/util/List; 1 262 
+org.apache.hadoop.hbase.util.Bytes.vintToBytes(J)[B 2 774 783 
+org.apache.hadoop.hbase.client.Scan.write(Ljava/io/DataOutput;)V 2 567 562 
+org.apache.hadoop.hbase.client.RetriesExhaustedWithDetailsException.classifyExs(Ljava/util/List;)Ljava/util/Map; 1 116 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRowWithColumnsTs_result.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$getRowWithColumnsTs_result;)V 1 15746 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenWithStop_args.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$scannerOpenWithStop_args;)V 1 25036 
+org.apache.hadoop.hbase.regionserver.LruHashMap.entryTableSet()Ljava/util/Set; 2 830 829 
+org.apache.hadoop.hbase.replication.ReplicationZookeeper.copyQueuesFromRS(Ljava/lang/String;)Ljava/util/SortedMap; 2 547 563 
+org.apache.hadoop.hbase.regionserver.Store.completeCompaction(Ljava/util/List;Lorg/apache/hadoop/hbase/regionserver/StoreFile$Writer;)Lorg/apache/hadoop/hbase/regionserver/StoreFile; 3 1018 1034 1046 
+org.apache.hadoop.hbase.regionserver.HRegion.getLargestHStoreSize()J 1 651 
+org.apache.hadoop.hbase.HTableDescriptor.write(Ljava/io/DataOutput;)V 2 586 592 
+org.apache.hadoop.hbase.regionserver.LruHashMap.get(Ljava/lang/Object;)Lorg/apache/hadoop/hbase/io/HeapSize; 1 291 
+org.apache.hadoop.hbase.rest.RowSpec.toString()Ljava/lang/String; 1 385 
+org.apache.hadoop.hbase.master.ServerManager.waitForRegionServers()I 2 631 658 
+org.apache.hadoop.hbase.util.JenkinsHash.hash([BIII)I 1 88 
+org.apache.hadoop.hbase.master.MasterFileSystem.splitLogAfterStartup(Ljava/util/Map;)V 1 175 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenWithStopTs_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 28921 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRowWithColumns_args.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$getRowWithColumns_args;)V 1 13330 
+org.apache.hadoop.hbase.client.Increment.write(Ljava/io/DataOutput;)V 2 320 312 
+org.apache.hadoop.hbase.zookeeper.ZKAssign.blockUntilNoRIT(Lorg/apache/hadoop/hbase/zookeeper/ZooKeeperWatcher;)V 2 801 797 
+org.apache.hadoop.hbase.client.MultiPutResponse.write(Ljava/io/DataOutput;)V 1 55 
+org.apache.hadoop.hbase.regionserver.LruHashMap.removeEntryForKey(Lorg/apache/hadoop/hbase/io/HeapSize;)Lorg/apache/hadoop/hbase/regionserver/LruHashMap$Entry; 1 581 
+org.apache.hadoop.hbase.regionserver.HRegionServer.getRegionsAssignment()[Lorg/apache/hadoop/hbase/HRegionInfo; 1 2498 
+org.apache.hadoop.hbase.executor.ExecutorService.shutdown()V 1 186 
+org.apache.hadoop.hbase.regionserver.HRegionServer.getMaster()Lorg/apache/hadoop/hbase/HServerAddress; 2 1431 1439 
+org.apache.hadoop.hbase.regionserver.HRegionServer.updateOutboundMsgs(Ljava/util/List;)V 2 825 824 
+org.apache.hadoop.hbase.filter.FilterList.reset()V 1 123 
+org.apache.hadoop.hbase.catalog.MetaReader.getTableRegions(Lorg/apache/hadoop/hbase/catalog/CatalogTracker;[BZ)Ljava/util/List; 1 505 
+org.apache.hadoop.hbase.client.MultiPut.allPuts()Ljava/util/Collection; 1 78 
+org.apache.hadoop.hbase.regionserver.HRegionServer.createRegionLoad(Lorg/apache/hadoop/hbase/regionserver/HRegion;)Lorg/apache/hadoop/hbase/HServerLoad$RegionLoad; 1 908 
+org.apache.hadoop.hbase.util.Bytes.toStringBinary([BII)Ljava/lang/String; 1 318 
+org.apache.hadoop.hbase.client.Increment.toString()Ljava/lang/String; 2 251 236 
+org.apache.hadoop.hbase.ipc.HBaseServer$Listener.<init>(Lorg/apache/hadoop/hbase/ipc/HBaseServer;)V 1 276 
+org.apache.hadoop.hbase.Chore.run()V 1 60 
+org.apache.hadoop.hbase.regionserver.SplitTransaction.splitStoreFiles(Lorg/apache/hadoop/fs/Path;Ljava/util/List;)V 2 411 434 
+org.apache.hadoop.hbase.client.RetriesExhaustedWithDetailsException.mayHaveClusterIssues()Z 1 84 
+org.apache.hadoop.hbase.client.HTable$ClientScanner.next()Lorg/apache/hadoop/hbase/client/Result; 3 1142 1140 1100 
+org.apache.hadoop.hbase.regionserver.Store.getStorefilesSize()J 1 1361 
+org.apache.hadoop.hbase.thrift.generated.Hbase$get_result.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$get_result;)V 1 9960 
+org.apache.hadoop.hbase.mapreduce.CopyTable.doCommandLine([Ljava/lang/String;)Z 1 125 
+org.apache.hadoop.hbase.regionserver.ReadWriteConsistencyControl.completeMemstoreInsert(Lorg/apache/hadoop/hbase/regionserver/ReadWriteConsistencyControl$WriteEntry;)V 2 93 127 
+org.apache.hadoop.hbase.rest.client.RemoteAdmin.deleteTable([B)V 1 170 
+org.apache.hadoop.hbase.regionserver.wal.HLog.findMemstoresWithEditsEqualOrOlderThan(JLjava/util/Map;)[[B 1 676 
+org.apache.hadoop.hbase.thrift.ThriftServer$HBaseHandler.getColumnDescriptors([B)Ljava/util/Map; 1 743 
+org.apache.hadoop.hbase.replication.regionserver.ReplicationSource.init(Lorg/apache/hadoop/conf/Configuration;Lorg/apache/hadoop/fs/FileSystem;Lorg/apache/hadoop/hbase/replication/regionserver/ReplicationSourceManager;Lorg/apache/hadoop/hbase/Stoppable;Ljava/util/concurrent/atomic/AtomicBoolean;Ljava/lang/String;)V 1 158 
+org.apache.hadoop.hbase.filter.FilterList.filterKeyValue(Lorg/apache/hadoop/hbase/KeyValue;)Lorg/apache/hadoop/hbase/filter/Filter$ReturnCode; 1 166 
+org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation.prewarmRegionCache([BLjava/util/Map;)V 1 1309 
+org.apache.hadoop.hbase.client.Put.<init>(Lorg/apache/hadoop/hbase/client/Put;)V 1 119 
+org.apache.hadoop.hbase.zookeeper.ZKUtil.deleteNodeRecursively(Lorg/apache/hadoop/hbase/zookeeper/ZooKeeperWatcher;Ljava/lang/String;)V 1 996 
+org.apache.hadoop.hbase.regionserver.wal.HLogSplitter$OutputSink.startWriterThreads(Lorg/apache/hadoop/hbase/regionserver/wal/HLogSplitter$EntryBuffers;)V 1 727 
+org.apache.hadoop.hbase.ipc.HBaseServer$Listener.run()V 3 413 408 459 
+org.apache.hadoop.hbase.regionserver.KeyValueHeap.<init>(Ljava/util/List;Lorg/apache/hadoop/hbase/KeyValue$KVComparator;)V 1 60 
+org.apache.hadoop.hbase.regionserver.StoreScanner.next(Ljava/util/List;I)Z 1 254 
+org.apache.hadoop.hbase.regionserver.KeyValueHeap.close()V 1 196 
+org.apache.hadoop.hbase.thrift.generated.IOError.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 273 
+org.apache.hadoop.hbase.thrift.generated.IllegalArgument.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 272 
+org.apache.hadoop.hbase.master.MasterFileSystem.setInfoFamilyCaching(Lorg/apache/hadoop/hbase/HRegionInfo;Z)V 1 279 
+org.apache.hadoop.hbase.util.HBaseFsck.checkIntegrity()V 3 482 496 503 
+org.apache.hadoop.hbase.regionserver.LruHashMap.checkAndFreeMemory(J)V 1 482 
+org.apache.hadoop.hbase.regionserver.HRegion.getScanner(Lorg/apache/hadoop/hbase/client/Scan;Ljava/util/List;)Lorg/apache/hadoop/hbase/regionserver/InternalScanner; 2 1103 1107 
+org.apache.hadoop.hbase.thrift.ThriftServer$HBaseHandler.getTableNames()Ljava/util/List; 1 246 
+org.apache.hadoop.hbase.mapreduce.ImportTsv$TsvParser.parse([BI)Lorg/apache/hadoop/hbase/mapreduce/ImportTsv$TsvParser$ParsedLine; 1 128 
+org.apache.hadoop.hbase.client.Result.getColumn([B[B)Ljava/util/List; 1 207 
+org.apache.hadoop.hbase.util.HMerge$OnlineMerger.updateMeta([B[BLorg/apache/hadoop/hbase/regionserver/HRegion;)V 1 315 
+org.apache.hadoop.hbase.regionserver.Store.hasReferences(Ljava/util/Collection;)Z 1 775 
+org.apache.hadoop.hbase.regionserver.HRegionServer.delete([BLjava/util/List;)I 1 1913 
+org.apache.hadoop.hbase.io.hfile.HFile.main([Ljava/lang/String;)V 4 1887 1894 1909 1951 
+org.apache.hadoop.hbase.HServerLoad.write(Ljava/io/DataOutput;)V 1 484 
+org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor.chore()V 1 1563 
+org.apache.hadoop.hbase.client.Scan.toString()Ljava/lang/String; 2 484 469 
+org.apache.hadoop.hbase.regionserver.MemStore.updateColumnValue([B[B[BJJ)J 1 395 
+org.apache.hadoop.hbase.thrift.generated.Hbase$scannerOpenTs_args.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$scannerOpenTs_args;)V 1 26989 
+org.apache.hadoop.hbase.master.ServerManager.getHServerInfo(Lorg/apache/hadoop/hbase/HServerAddress;)Lorg/apache/hadoop/hbase/HServerInfo; 1 420 
+org.apache.hadoop.hbase.rest.model.ScannerModel.createProtobufOutput()[B 1 578 
+org.apache.hadoop.hbase.rest.client.RemoteAdmin.isTableAvailable([B)Z 1 88 
+org.apache.hadoop.hbase.regionserver.HRegion.checkCompressionCodecs()V 1 2514 
+org.apache.hadoop.hbase.regionserver.LruHashMap.calculateCapacity(I)I 1 772 
+org.apache.hadoop.hbase.util.HMerge$Merger.process()V 1 158 
+org.apache.hadoop.hbase.rest.client.RemoteHTable.delete(Ljava/util/List;)V 1 410 
+org.apache.hadoop.hbase.regionserver.Store.loadStoreFiles()Ljava/util/List; 1 250 
+org.apache.hadoop.hbase.regionserver.StoreScanner.<init>(Lorg/apache/hadoop/hbase/client/Scan;[BJLorg/apache/hadoop/hbase/KeyValue$KVComparator;Ljava/util/NavigableSet;Ljava/util/List;)V 1 126 
+org.apache.hadoop.hbase.zookeeper.ZKServerTool.main([Ljava/lang/String;)V 1 44 
+org.apache.hadoop.hbase.regionserver.MemStore$MemStoreScanner.reseek(Lorg/apache/hadoop/hbase/KeyValue;)Z 2 657 662 
+org.apache.hadoop.hbase.regionserver.HRegionServer.getOnlineRegionsAsPrintableString()Ljava/lang/String; 1 683 
+org.apache.hadoop.hbase.util.Base64$Base64InputStream.read([BII)I 1 1429 
+org.apache.hadoop.hbase.io.hfile.LruBlockCache$BlockBucket.free(J)J 1 424 
+org.apache.hadoop.hbase.master.HMaster.balance()Z 2 681 689 
+org.apache.hadoop.hbase.thrift.ThriftServer$HBaseHandler.scannerOpenWithPrefix([B[BLjava/util/List;)I 1 673 
+org.apache.hadoop.hbase.client.RetriesExhaustedWithDetailsException.getDesc(Ljava/util/Map;)Ljava/lang/String; 1 131 
+org.apache.hadoop.hbase.regionserver.HRegion.increment(Lorg/apache/hadoop/hbase/client/Increment;Ljava/lang/Integer;Z)Lorg/apache/hadoop/hbase/client/Result; 3 2998 3007 2992 
+org.apache.hadoop.hbase.ipc.HBaseServer.startThreads()V 2 1213 1220 
+org.apache.hadoop.hbase.util.ClassSize.getSizeCoefficients(Ljava/lang/Class;Z)[I 2 192 189 
+org.apache.hadoop.hbase.LocalHBaseCluster.join()V 2 393 404 
+org.apache.hadoop.hbase.avro.AvroUtil.hslToASL(Lorg/apache/hadoop/hbase/HServerLoad;)Lorg/apache/hadoop/hbase/avro/generated/AServerLoad; 1 101 
+org.apache.hadoop.hbase.rest.model.StorageClusterStatusModel.createProtobufOutput()[B 3 565 557 578 
+org.apache.hadoop.hbase.avro.AvroUtil.htdToATD(Lorg/apache/hadoop/hbase/HTableDescriptor;)Lorg/apache/hadoop/hbase/avro/generated/ATableDescriptor; 1 173 
+org.apache.hadoop.hbase.regionserver.HRegionServer.run()V 2 562 568 
+org.apache.hadoop.hbase.regionserver.LruHashMap.containsValue(Ljava/lang/Object;)Z 2 422 421 
+org.apache.hadoop.hbase.ipc.HBaseServer.join()V 1 1260 
+org.apache.hadoop.hbase.regionserver.MemStore$MemStoreScanner.getNext(Ljava/util/Iterator;)Lorg/apache/hadoop/hbase/KeyValue; 1 614 
+org.apache.hadoop.hbase.regionserver.wal.HLog.rollWriter()[[B 2 498 526 
+org.apache.hadoop.hbase.rest.RowSpec.parseTimestamp(Ljava/lang/String;I)I 2 165 182 
+org.apache.hadoop.hbase.regionserver.HRegion.hasTooManyStoreFiles()Z 1 3273 
+org.apache.hadoop.hbase.regionserver.wal.WALEdit.heapSize()J 1 162 
+org.apache.hadoop.hbase.rest.model.TableInfoModel.getObjectFromMessage([B)Lorg/apache/hadoop/hbase/rest/ProtobufMessageHandler; 1 151 
+org.apache.hadoop.hbase.regionserver.HRegionServer.getGlobalMemStoreSize()J 1 2416 
+org.apache.hadoop.hbase.HTableDescriptor.<init>([B[Lorg/apache/hadoop/hbase/HColumnDescriptor;Ljava/util/Map;)V 2 130 134 
+org.apache.hadoop.hbase.util.MetaUtils.scanMetaRegion(Lorg/apache/hadoop/hbase/regionserver/HRegion;Lorg/apache/hadoop/hbase/util/MetaUtils$ScannerListener;)V 2 224 222 
+org.apache.hadoop.hbase.catalog.MetaReader.fullScan(Lorg/apache/hadoop/hbase/catalog/CatalogTracker;Lorg/apache/hadoop/hbase/catalog/MetaReader$Visitor;[B)V 1 264 
+org.apache.hadoop.hbase.util.Bytes.toLong([BII)J 1 483 
+org.apache.hadoop.hbase.rest.client.RemoteHTable$Scanner.next(I)[Lorg/apache/hadoop/hbase/client/Result; 1 464 
+org.apache.hadoop.hbase.catalog.MetaReader.getTableRegionsAndLocations(Lorg/apache/hadoop/hbase/catalog/CatalogTracker;Ljava/lang/String;)Ljava/util/List; 1 555 
+org.apache.hadoop.hbase.util.Bytes.padTail([BI)[B 1 1005 
+org.apache.hadoop.hbase.rest.client.RemoteHTable.put(Lorg/apache/hadoop/hbase/client/Put;)V 1 312 
+org.apache.hadoop.hbase.thrift.generated.TCell.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 345 
+org.apache.hadoop.hbase.client.MultiPut.readFields(Ljava/io/DataInput;)V 2 110 105 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRowWithColumns_result.<init>(Lorg/apache/hadoop/hbase/thrift/generated/Hbase$getRowWithColumns_result;)V 1 13840 
+org.apache.hadoop.hbase.regionserver.HRegionServer.initialize()V 1 459 
+org.apache.hadoop.hbase.regionserver.HRegionServer.closeUserRegions(Z)V 1 1580 
+org.apache.hadoop.hbase.regionserver.wal.HLogSplitter$EntryBuffers.appendEntry(Lorg/apache/hadoop/hbase/regionserver/wal/HLog$Entry;)V 1 527 
+org.apache.hadoop.hbase.client.HTable.delete(Ljava/util/List;)V 2 649 649 
+org.apache.hadoop.hbase.client.HBaseAdmin.disableTable([B)V 1 553 
+org.apache.hadoop.hbase.util.Base64.encodeBytes([BIII)Ljava/lang/String; 1 732 
+org.apache.hadoop.hbase.thrift.ThriftServer$HBaseHandler.mutateRowTs([B[BLjava/util/List;J)V 1 488 
+org.apache.hadoop.hbase.LocalHBaseCluster.getActiveMaster()Lorg/apache/hadoop/hbase/master/HMaster; 1 309 
+org.apache.hadoop.hbase.io.hfile.Compression.getCompressionAlgorithmByName(Ljava/lang/String;)Lorg/apache/hadoop/hbase/io/hfile/Compression$Algorithm; 1 258 
+org.apache.hadoop.hbase.regionserver.Store.walkForwardInSingleRow(Lorg/apache/hadoop/hbase/io/hfile/HFileScanner;Lorg/apache/hadoop/hbase/KeyValue;Lorg/apache/hadoop/hbase/regionserver/GetClosestRowBeforeTracker;)Z 1 1214 
+org.apache.hadoop.hbase.util.CompressionTest.<clinit>()V 1 65 
+org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation.getMaster()Lorg/apache/hadoop/hbase/ipc/HMasterInterface; 1 347 
+org.apache.hadoop.hbase.util.MurmurHash.hash([BIII)I 1 46 
+org.apache.hadoop.hbase.thrift.ThriftUtilities.rowResultFromHBase([Lorg/apache/hadoop/hbase/client/Result;)Ljava/util/List; 2 137 130 
+org.apache.hadoop.hbase.KeyValue.getDelimiter([BIII)I 1 1299 
+org.apache.hadoop.hbase.ipc.HBaseClient.call(Lorg/apache/hadoop/io/Writable;Ljava/net/InetSocketAddress;Lorg/apache/hadoop/security/UserGroupInformation;I)Lorg/apache/hadoop/io/Writable; 1 737 
+org.apache.hadoop.hbase.rest.model.ScannerModel.fromScan(Lorg/apache/hadoop/hbase/client/Scan;)Lorg/apache/hadoop/hbase/rest/model/ScannerModel; 1 354 
+org.apache.hadoop.hbase.client.UnmodifyableHTableDescriptor.getUnmodifyableFamilies(Lorg/apache/hadoop/hbase/HTableDescriptor;)[Lorg/apache/hadoop/hbase/HColumnDescriptor; 1 52 
+org.apache.hadoop.hbase.master.handler.DisableTableHandler$BulkDisabler.populatePool(Ljava/util/concurrent/ExecutorService;)V 1 127 
+org.apache.hadoop.hbase.filter.FilterList.filterRow(Ljava/util/List;)V 1 198 
+org.apache.hadoop.hbase.rest.RowSpec.<init>([B[B[[BJJI)V 1 281 
+org.apache.hadoop.hbase.thrift.generated.TRowResult.<init>(Lorg/apache/hadoop/hbase/thrift/generated/TRowResult;)V 1 143 
+org.apache.hadoop.hbase.regionserver.MemStore.getNextRow(Lorg/apache/hadoop/hbase/KeyValue;Ljava/util/NavigableSet;)Lorg/apache/hadoop/hbase/KeyValue; 1 257 
+org.apache.hadoop.hbase.client.Put.size()I 1 388 
+org.apache.hadoop.hbase.client.Result.getWriteArraySize([Lorg/apache/hadoop/hbase/client/Result;)J 2 572 567 
+org.apache.hadoop.hbase.zookeeper.ZKTable.getDisabledTables(Lorg/apache/hadoop/hbase/zookeeper/ZooKeeperWatcher;)Ljava/util/Set; 1 327 
+org.apache.hadoop.hbase.replication.regionserver.ReplicationSourceManager.init()V 2 150 162 
+org.apache.hadoop.hbase.zookeeper.ZKUtil.watchAndGetNewChildren(Lorg/apache/hadoop/hbase/zookeeper/ZooKeeperWatcher;Ljava/lang/String;)Ljava/util/List; 1 410 
+org.apache.hadoop.hbase.regionserver.wal.HLog.closeAndDelete()V 1 778 
+org.apache.hadoop.hbase.regionserver.Leases.run()V 1 79 
+org.apache.hadoop.hbase.io.HbaseObjectWritable.writeClassCode(Ljava/io/DataOutput;Ljava/lang/Class;)V 1 314 
+org.apache.hadoop.hbase.master.AssignmentManager.processRegionInTransitionAndBlockUntilAssigned(Lorg/apache/hadoop/hbase/HRegionInfo;)Z 1 243 
+org.apache.hadoop.hbase.regionserver.wal.HLog.setSequenceNumber(J)V 1 429 
+org.apache.hadoop.hbase.client.Get.toString()Ljava/lang/String; 2 339 324 
+org.apache.hadoop.hbase.catalog.CatalogTracker.waitForMeta()V 1 299 
+org.apache.hadoop.hbase.master.AssignmentManager.processServerShutdown(Lorg/apache/hadoop/hbase/HServerInfo;)Ljava/util/List; 3 1680 1700 1708 
+org.apache.hadoop.hbase.master.AssignmentManager.waitForAssignment(Lorg/apache/hadoop/hbase/HRegionInfo;)V 1 1151 
+org.apache.hadoop.hbase.zookeeper.ZKTable.getDisabledTables()Ljava/util/Set; 1 310 
+org.apache.hadoop.hbase.master.AssignmentManager.nodeChildrenChanged(Ljava/lang/String;)V 1 557 
+org.apache.hadoop.hbase.master.LoadBalancer.retainAssignment(Ljava/util/Map;Ljava/util/List;)Ljava/util/Map; 2 415 419 
+org.apache.hadoop.hbase.master.LoadBalancer.roundRobinAssignment(Ljava/util/List;Ljava/util/List;)Ljava/util/Map; 2 383 381 
+org.apache.hadoop.hbase.regionserver.HRegionServer.getMostLoadedRegions()[Lorg/apache/hadoop/hbase/HRegionInfo; 1 2337 
+org.apache.hadoop.hbase.util.Sleeper.sleep(J)V 1 86 
+org.apache.hadoop.hbase.master.ServerManager.letRegionServersShutdown()V 2 445 443 
+org.apache.hadoop.hbase.regionserver.HRegionServer.tryRegionServerReport(Ljava/util/List;)Ljava/util/List; 2 721 743 
+org.apache.hadoop.hbase.util.ByteBloomFilter.contains([BIILjava/nio/ByteBuffer;)Z 1 245 
+org.apache.hadoop.hbase.thrift.ThriftServer$HBaseHandler.scannerOpen([B[BLjava/util/List;)I 1 628 
+org.apache.hadoop.hbase.io.ImmutableBytesWritable.toString()Ljava/lang/String; 1 211 
+org.apache.hadoop.hbase.thrift.generated.Hbase$getRow_result.read(Lorg/apache/thrift/protocol/TProtocol;)V 2 13118 13104 
+org.apache.hadoop.hbase.util.Threads.shutdown(Ljava/lang/Thread;J)V 1 89 
+org.apache.hadoop.hbase.regionserver.HRegion.heapSize()J 1 3165 
+org.apache.hadoop.hbase.regionserver.HRegion.doClose(Z)Ljava/util/List; 2 504 538 
+org.apache.hadoop.hbase.io.HbaseObjectWritable.readObject(Ljava/io/DataInput;Lorg/apache/hadoop/hbase/io/HbaseObjectWritable;Lorg/apache/hadoop/conf/Configuration;)Ljava/lang/Object; 2 490 497 
+org.apache.hadoop.hbase.replication.regionserver.ReplicationSource.removeNonReplicableEdits(Lorg/apache/hadoop/hbase/regionserver/wal/WALEdit;)V 1 516 
+org.apache.hadoop.hbase.replication.regionserver.ReplicationSource.countDistinctRowKeys(Lorg/apache/hadoop/hbase/regionserver/wal/WALEdit;)I 1 537 
+org.apache.hadoop.hbase.regionserver.HRegionServer$MajorCompactionChecker.chore()V 1 1045 
+org.apache.hadoop.hbase.master.handler.EnableTableHandler.handleEnableTable()V 1 89 
+org.apache.hadoop.hbase.zookeeper.ZKUtil.listChildrenAndWatchThem(Lorg/apache/hadoop/hbase/zookeeper/ZooKeeperWatcher;Ljava/lang/String;)Ljava/util/List; 1 329 
+org.apache.hadoop.hbase.zookeeper.MiniZooKeeperCluster.waitForServerDown(IJ)Z 1 161 
+org.apache.hadoop.hbase.regionserver.MemStoreFlusher.isTooManyStoreFiles(Lorg/apache/hadoop/hbase/regionserver/HRegion;)Z 1 275 
+org.apache.hadoop.hbase.regionserver.HRegion.initialize(Lorg/apache/hadoop/util/Progressable;)J 1 342 
+org.apache.hadoop.hbase.client.Delete.toString()Ljava/lang/String; 2 308 298 
+org.apache.hadoop.hbase.KeyValue.hashCode()I 1 542 
+org.apache.hadoop.hbase.util.HBaseFsck.main([Ljava/lang/String;)V 1 948 
+org.apache.hadoop.hbase.io.hfile.CachedBlockQueue.get()Ljava/util/LinkedList; 1 91 
+org.apache.hadoop.hbase.util.MetaUtils.deleteColumn([B[B)V 1 368 
+org.apache.hadoop.hbase.regionserver.HRegion.put([Lorg/apache/hadoop/hbase/util/Pair;)[Lorg/apache/hadoop/hbase/HConstants$OperationStatusCode; 1 1367 
+org.apache.hadoop.hbase.replication.regionserver.ReplicationSource.checkIfQueueRecovered(Ljava/lang/String;)V 1 194 
+org.apache.hadoop.hbase.client.Put.write(Ljava/io/DataOutput;)V 3 520 524 515 
+org.apache.hadoop.hbase.rest.model.TableSchemaModel.toString()Ljava/lang/String; 2 187 196 
+org.apache.hadoop.hbase.client.Scan.<init>(Lorg/apache/hadoop/hbase/client/Scan;)V 2 149 145 
+org.apache.hadoop.hbase.zookeeper.ZKUtil.getServerStats(Ljava/lang/String;I)[Ljava/lang/String; 1 1093 
+org.apache.hadoop.hbase.LocalHBaseCluster.getLiveRegionServers()Ljava/util/List; 1 239 
+org.apache.hadoop.hbase.master.LogCleaner.run()V 2 169 169 
+org.apache.hadoop.hbase.client.Delete.readFields(Ljava/io/DataInput;)V 2 337 333 
+org.apache.hadoop.hbase.mapreduce.ImportTsv.main([Ljava/lang/String;)V 1 356 
+org.apache.hadoop.hbase.regionserver.Store.getLowestTimestamp(Lorg/apache/hadoop/fs/FileSystem;Lorg/apache/hadoop/fs/Path;)J 1 797 
+org.apache.hadoop.hbase.regionserver.ExplicitColumnTracker.<init>(Ljava/util/NavigableSet;I)V 1 68 
+org.apache.hadoop.hbase.HServerLoad.readFields(Ljava/io/DataInput;)V 1 472 
+org.apache.hadoop.hbase.client.HBaseAdmin.deleteTable([B)V 3 395 392 379 
+org.apache.hadoop.hbase.util.DynamicByteBloomFilter.contains([BIILjava/nio/ByteBuffer;)Z 1 196 
+org.apache.hadoop.hbase.regionserver.HRegion.internalObtainRowLock([BZ)Ljava/lang/Integer; 2 2051 2070 
+org.apache.hadoop.hbase.regionserver.HRegion.checkFamilies(Ljava/util/Collection;)V 1 1715 
+org.apache.hadoop.hbase.regionserver.HRegion.applyFamilyMapToMemstore(Ljava/util/Map;)J 2 1698 1693 
+org.apache.hadoop.hbase.ipc.HBaseClient$Connection$PingInputStream.read([BII)I 1 281 
+org.apache.hadoop.hbase.regionserver.wal.HLogSplitter$OutputSink.getOutputCounts()Ljava/util/Map; 1 845 
+org.apache.hadoop.hbase.master.AssignmentManager.assign(Lorg/apache/hadoop/hbase/HServerInfo;Ljava/util/List;)V 3 746 755 763 
+org.apache.hadoop.hbase.client.RetriesExhaustedException.getMessage(Ljava/lang/String;[B[BILjava/util/List;)Ljava/lang/String; 1 63 
+org.apache.hadoop.hbase.thrift.generated.ColumnDescriptor.read(Lorg/apache/thrift/protocol/TProtocol;)V 1 838 
+org.apache.hadoop.hbase.replication.regionserver.ReplicationSourceManager.logRolled(Lorg/apache/hadoop/fs/Path;)V 1 238 
+org.apache.hadoop.hbase.util.Bytes.binarySearch([[B[BIILorg/apache/hadoop/io/RawComparator;)I 1 1155 
+org.apache.hadoop.hbase.util.ByteBloomFilter.compactBloom()V 3 308 321 320 
