@@ -1,4 +1,4 @@
 JX - INFO - Timer(tic), MSG: da begin
-JX - INFO - Timer(toc->toc): 11.305s, (tic->toc): 11.305s, MSG: end Happens before analysis
-JX - INFO - Timer(toc->toc): 0.051s, (tic->toc): 11.356s, MSG: end Accidental Happens before analysis
-JX - INFO - Timer(toc->toc): 1.722s, (tic->toc): 13.078s, MSG: end cacading analysis
+JX - INFO - Timer(toc->toc): 10.99s, (tic->toc): 10.99s, MSG: end Happens before analysis
+JX - INFO - Timer(toc->toc): 0.047s, (tic->toc): 11.037s, MSG: end Accidental Happens before analysis
+JX - INFO - Timer(toc->toc): 1.73s, (tic->toc): 12.767s, MSG: end cacading analysis
