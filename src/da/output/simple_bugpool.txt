@@ -1,10 +1,7 @@
-//19 (#static codepoints=17)
+//13 (#static codepoints=12)
 CL2: org.apache.hadoop.hbase.client.Get-write-413;
 CL2: org.apache.hadoop.hbase.client.Get-write-421;
 CL2: org.apache.hadoop.hbase.client.Result-readFields-518;
-CL2: org.apache.hadoop.hbase.ipc.HBaseClient-call-737;
-CL2: org.apache.hadoop.hbase.ipc.HBaseClient-getConnection-852;
-CL2: org.apache.hadoop.hbase.ipc.HBaseRPC$Invocation-write-136;
 CL2: org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor-chore-1563;
 CL2: org.apache.hadoop.hbase.master.AssignmentManager-nodeChildrenChanged-557;
 CL2: org.apache.hadoop.hbase.master.ServerManager-haveServerWithSameHostAndPortAlready-158;
@@ -14,10 +11,7 @@ CL2: org.apache.hadoop.hbase.util.Bytes-putLong-519;
 CL2: org.apache.hadoop.hbase.util.Bytes-toInt-652;
 CL2: org.apache.hadoop.hbase.util.Bytes-toLong-483;
 CL2: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;
-CL2: org.apache.hadoop.hbase.zookeeper.ZKUtil-watchAndGetNewChildren-410;
 CL3: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;
-CL3: org.apache.hadoop.hbase.zookeeper.ZKUtil-watchAndGetNewChildren-410;
-CL3: org.apache.hadoop.hbase.zookeeper.ZooKeeperNodeTracker-blockUntilAvailable-117;
 
 
 

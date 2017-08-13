@@ -91,6 +91,9 @@ class HBaseTransformer extends Transformer {
 		if ( className.startsWith("org.apache.hadoop.hbase.")
   				) {
 				//System.out.println("JX - DEBUG - DM - 11");
+                     if ( !className.startsWith("org.apache.hadoop.hbase.ipc.")
+                          && !className.startsWith("org.apache.hadoop.hbase.zookeeper.")  
+				)
 			transformers.transformClassForLoops( cl );
 		}
 		
