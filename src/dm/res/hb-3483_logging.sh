@@ -34,7 +34,9 @@ sleep 2s
 
 #stop-dfs.sh
 stop-hbase.sh
-sleep 2s
+sleep 1s
+jps | grep HQuorumPeer | awk '{print $1}' | xargs kill -9
+sleep 1s
 jps
 
 echo "JX - INFO - DM's logging finished!!!"

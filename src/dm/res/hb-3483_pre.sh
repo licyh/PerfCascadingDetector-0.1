@@ -61,7 +61,9 @@ if [ $? -ne 0 ]; then
   echo "stop xxx error"
   exit
 fi
-sleep 2s
+sleep 1s
+jps | grep HQuorumPeer | awk '{print $1}' | xargs kill -9
+sleep 1s
 jps
 sleep 1s
 
