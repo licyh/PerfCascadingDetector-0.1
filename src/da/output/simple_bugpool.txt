@@ -1,30 +1,23 @@
-//26 (#static codepoints=14)
-CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-buildServerLoad-761;
-CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-closeAllRegions-1555;
-CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-closeUserRegions-1580;
-CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-createRegionLoad-908;
-CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-getCopyOfOnlineRegionsSortedBySize-2269;
-CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-getGlobalMemStoreSize-2416;
-CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-getMostLoadedRegions-2337;
-CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-metrics-1156;
-CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-metrics-1161;
-CL2: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-304;
-CL2: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-328;
-CL2: org.apache.hadoop.hbase.regionserver.Store-getStorefilesIndexSize-1377;
-CL2: org.apache.hadoop.hbase.regionserver.Store-getStorefilesSize-1361;
-CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-buildServerLoad-761;
-CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-closeAllRegions-1555;
-CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-closeUserRegions-1580;
-CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-createRegionLoad-908;
-CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-getCopyOfOnlineRegionsSortedBySize-2269;
-CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-getGlobalMemStoreSize-2416;
-CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-getMostLoadedRegions-2337;
-CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-metrics-1156;
-CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-metrics-1161;
-CL3: org.apache.hadoop.hbase.regionserver.Store-getStorefilesIndexSize-1377;
-CL3: org.apache.hadoop.hbase.regionserver.Store-getStorefilesSize-1361;
+//19 (#static codepoints=17)
+CL2: org.apache.hadoop.hbase.client.Get-write-413;
+CL2: org.apache.hadoop.hbase.client.Get-write-421;
+CL2: org.apache.hadoop.hbase.client.Result-readFields-518;
+CL2: org.apache.hadoop.hbase.ipc.HBaseClient-call-737;
+CL2: org.apache.hadoop.hbase.ipc.HBaseClient-getConnection-852;
+CL2: org.apache.hadoop.hbase.ipc.HBaseRPC$Invocation-write-136;
+CL2: org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor-chore-1563;
+CL2: org.apache.hadoop.hbase.master.AssignmentManager-nodeChildrenChanged-557;
+CL2: org.apache.hadoop.hbase.master.ServerManager-haveServerWithSameHostAndPortAlready-158;
+CL2: org.apache.hadoop.hbase.util.Bytes-compareTo-859;
+CL2: org.apache.hadoop.hbase.util.Bytes-putInt-673;
+CL2: org.apache.hadoop.hbase.util.Bytes-putLong-519;
+CL2: org.apache.hadoop.hbase.util.Bytes-toInt-652;
+CL2: org.apache.hadoop.hbase.util.Bytes-toLong-483;
+CL2: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;
+CL2: org.apache.hadoop.hbase.zookeeper.ZKUtil-watchAndGetNewChildren-410;
 CL3: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;
-CL4: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;
+CL3: org.apache.hadoop.hbase.zookeeper.ZKUtil-watchAndGetNewChildren-410;
+CL3: org.apache.hadoop.hbase.zookeeper.ZooKeeperNodeTracker-blockUntilAvailable-117;
 
 
 
