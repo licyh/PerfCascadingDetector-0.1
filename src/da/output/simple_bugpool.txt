@@ -1,30 +1,24 @@
-//26 (#static codepoints=21)
-CL2: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
-CL2: org.apache.hadoop.mapred.Counters$Group-readFields-357;
-CL2: org.apache.hadoop.mapred.Counters-readFields-572;
-CL2: org.apache.hadoop.mapred.Counters-size-538;
-CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2286;
-CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-2021;
-CL2: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2072;
-CL3: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
-CL3: org.apache.hadoop.mapred.Counters$Group-readFields-357;
-CL3: org.apache.hadoop.mapred.Counters$Group-write-348;
-CL3: org.apache.hadoop.mapred.Counters-readFields-572;
-CL3: org.apache.hadoop.mapred.Counters-write-560;
-CL3: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-295;
-CL3: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-211;
-CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-907;
-CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-916;
-CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-949;
-CL3: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2298;
-CL3: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-469;
-CL3: org.apache.hadoop.mapred.TaskTracker-initializeJob-1167;
-CL3: org.apache.hadoop.mapred.TaskTracker-localizeJob-1089;
-CL4: org.apache.hadoop.io.IOUtils-cleanup-207;
-CL4: org.apache.hadoop.io.IOUtils-copyBytes-69;
-CL4: org.apache.hadoop.io.IOUtils-readFully-152;
-CL4: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-211;
-CL4: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2298;
+//20 (#static codepoints=11)
+CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-buildServerLoad-761;
+CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-closeAllRegions-1555;
+CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-closeUserRegions-1580;
+CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-createRegionLoad-908;
+CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-getGlobalMemStoreSize-2416;
+CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-getMostLoadedRegions-2337;
+CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-metrics-1156;
+CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-metrics-1161;
+CL2: org.apache.hadoop.hbase.regionserver.Store-getStorefilesIndexSize-1377;
+CL2: org.apache.hadoop.hbase.regionserver.Store-getStorefilesSize-1361;
+CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-buildServerLoad-761;
+CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-createRegionLoad-908;
+CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-getGlobalMemStoreSize-2416;
+CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-getMostLoadedRegions-2337;
+CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-metrics-1156;
+CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-metrics-1161;
+CL3: org.apache.hadoop.hbase.regionserver.Store-getStorefilesIndexSize-1377;
+CL3: org.apache.hadoop.hbase.regionserver.Store-getStorefilesSize-1361;
+CL3: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;
+CL4: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;
 
 
 
