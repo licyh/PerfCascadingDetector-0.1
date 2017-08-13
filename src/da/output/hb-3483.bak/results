@@ -1,0 +1,12 @@
+
+//FINAL SIMPLE
+CL2: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-304;           #reported bug. I/O: hdfs
+//summary - 1(#static codepoints=1) from 26
+
+
+
+===========================
+Notes
+===========================
+I/O
+LOOP - org.apache.hadoop.hbase.regionserver.MemStoreFlusher.flushSomeRegions()V:304, Time-consumingOps(2):[122:org.apache.hadoop.hbase.regionserver.MemStoreFlusher.flushSomeRegions-org.apache.hadoop.hbase.regionserver.MemStoreFlusher.flushRegion-org.apache.hadoop.hbase.regionserver.HRegionServer.checkFileSystem-org.apache.hadoop.hbase.util.FSUtils.checkFileSystemAvailable@< Application, Lorg/apache/hadoop/hdfs/DistributedFileSystem, exists(Lorg/apache/hadoop/fs/Path;)Z >, 129:org.apache.hadoop.hbase.regionserver.MemStoreFlusher.flushSomeRegions-org.apache.hadoop.hbase.regionserver.MemStoreFlusher.flushRegion-org.apache.hadoop.hbase.regionserver.HRegionServer.checkFileSystem-org.apache.hadoop.hbase.util.FSUtils.checkFileSystemAvailable@< Application, Lorg/apache/hadoop/fs/FileSystem, close()V >]

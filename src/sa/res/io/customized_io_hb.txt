@@ -1,1 +1,3 @@
-// prefixes for io or other time-consuming operations, added manually 
+// prefixes for io or other time-consuming operations, added manually
+org.apache.hadoop.hdfs.
+org.apache.hadoop.fs. 

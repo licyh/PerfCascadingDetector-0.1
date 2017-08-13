@@ -1,0 +1,2 @@
+CL2: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-304;org.apache.hadoop.hbase.regionserver.MemStoreFlusher-reclaimMemStoreMemory-291;org.apache.hadoop.hbase.regionserver.HRegionServer-multi-2556;sun.reflect.NativeMethodAccessorImpl-invoke0--2;sun.reflect.NativeMethodAccessorImpl-invoke-57;sun.reflect.DelegatingMethodAccessorImpl-invoke-43;java.lang.reflect.Method-invoke-606;org.apache.hadoop.hbase.ipc.HBaseRPC$Server-call-570;org.apache.hadoop.hbase.ipc.HBaseServer$Handler-run-1036;
+//summary - 1(#static codepoints=1) from 30

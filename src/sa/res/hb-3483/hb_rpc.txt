@@ -1,0 +1,3 @@
+// ps - 
+// a RPC for Sink 2 (region assign): ie, a for-loop contains RPC
+//org.apache.hadoop.hbase.ipc.HRegionInterface openRegions
