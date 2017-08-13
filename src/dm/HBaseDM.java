@@ -53,7 +53,7 @@ class HBaseTransformer extends Transformer {
 
   		//rpc
   		//Different version is hard-written. TODO: change it to be controlled by argument.
-  		rpcInfo.setInfoFilePath("resource/hbase_rpc_4539.txt", 1);
+  		rpcInfo.setInfoFilePath("resource/hb_rpc.txt", 1);
   		//rpcInfo.setInfoFilePath("resource/hbase_rpc.txt", 1);
   		rpcInfo.readFile();
   	}
