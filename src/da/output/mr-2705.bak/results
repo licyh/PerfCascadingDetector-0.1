@@ -1,8 +1,8 @@
 //jx: without RPC logging
 
 //FINAL SIMPLE
-CL3: org.apache.hadoop.io.IOUtils-copyBytes-71;                                              	#New bug - 2 instances (MR-1895+Notes1); 1 instance FP(Notes2)
-CL4: org.apache.hadoop.io.IOUtils-copyBytes-71;												 	#New bug - 1 instance (MR-2209)
+CL3~4: org.apache.hadoop.io.IOUtils-copyBytes-71;                                              	#New bug - 2 instances (MR-1895+Notes1); 1 instance FP(Notes2)
+																							 	#New bug - 1 instance (MR-2209) CL4
 CL2: org.apache.hadoop.mapred.Counters$Group-readFields-341;									#MC & small. #counters-related.  int size = WritableUtils.readVInt(in); for(int i=0; i < size; i++) {
 CL2: org.apache.hadoop.mapred.Counters-readFields-542;											#MC & small. #counters-related. int numClasses = in.readInt(); while (numClasses-- > 0) {
 CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;										#small. MC. #tasks

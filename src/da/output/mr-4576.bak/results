@@ -1,8 +1,8 @@
 //jx: without RPC logging
 
 //FINAL SIMPLE
-CL3: org.apache.hadoop.io.IOUtils-copyBytes-69;							   			#False positive. 1 instance, see Notes. 
-CL4: org.apache.hadoop.io.IOUtils-copyBytes-69;							   			#Reported bug. 1 instance.
+CL3~4: org.apache.hadoop.io.IOUtils-copyBytes-69;							   		#False positive. 1 instance, see Notes.   
+							   														#Reported bug. 1 instance.
 CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-2021;							#MC & small loop. like below.
 CL2: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2072;						#MC & small loop. like below.
 CL2~3: org.apache.hadoop.mapred.Counters-readFields-572;							#small. like in MR-2705

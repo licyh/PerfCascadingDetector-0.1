@@ -3,7 +3,7 @@ FINAL:       have new results, please drop this
 
 3 (#static codepoints=3)
 CL1: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-464;                   #1. reported bug,  include "await()"
-//CL1: org.apache.hadoop.mapred.TaskTracker-purgeJob-1999;                             #1. fp or small loop. tasks, checked by users
+//CL1: org.apache.hadoop.mapred.TaskTracker-purgeJob-1999;                             #1. MC & small loop. tasks, checked by users
 //CL1: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2050;                       #1. small loop, from "mapred.local.dir", usually is one, also can 2 or 3 by conf
 //////CL1: org.apache.hadoop.mapred.TaskTracker$1-run-422;                             #1. deleted, NOT a loop, that while (true) { insert LOOP here! .. EventHanlderBegin xx.take() EventHandlerEnd                          
 summary - 4(#static codepoints=4) from 5 (#static codepoints=5)
