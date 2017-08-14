@@ -1,17 +1,38 @@
-//13 (#static codepoints=12)
-CL2: org.apache.hadoop.hbase.client.Get-write-413;
-CL2: org.apache.hadoop.hbase.client.Get-write-421;
-CL2: org.apache.hadoop.hbase.client.Result-readFields-518;
-CL2: org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor-chore-1563;
-CL2: org.apache.hadoop.hbase.master.AssignmentManager-nodeChildrenChanged-557;
-CL2: org.apache.hadoop.hbase.master.ServerManager-haveServerWithSameHostAndPortAlready-158;
-CL2: org.apache.hadoop.hbase.util.Bytes-compareTo-859;
-CL2: org.apache.hadoop.hbase.util.Bytes-putInt-673;
-CL2: org.apache.hadoop.hbase.util.Bytes-putLong-519;
-CL2: org.apache.hadoop.hbase.util.Bytes-toInt-652;
-CL2: org.apache.hadoop.hbase.util.Bytes-toLong-483;
-CL2: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;
-CL3: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;
+//34 (#static codepoints=25)
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyDefault-getPipeline-681;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyDefault-getPipeline-686;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor-updateHeartbeat-359;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-resetLastCachingDirectiveSentTime-1434;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager-heartbeatCheck-248;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.PendingReplicationBlocks$PendingReplicationMonitor-pendingReplicationCheck-241;
+CL2: org.apache.hadoop.hdfs.server.namenode.EditLogFileOutputStream-preallocate-228;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-565;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled-425;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSImageSerialization-writeCompactBlockArray-459;
+CL2: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-getRemoteEditLogs-182;
+CL2: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-matchEditLogs-216;
+CL2: org.apache.hadoop.hdfs.server.namenode.INode-getPathComponents-632;
+CL2: org.apache.hadoop.hdfs.server.namenode.INodesInPath-resolve-127;
+CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-getNumSync-507;
+CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-shouldForceSync-497;
+CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-getEditLogManifest-592;
+CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-getEditLogManifest-610;
+CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-getSyncTimes-651;
+CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;
+CL2: org.apache.hadoop.hdfs.server.namenode.NameNodeResourcePolicy-areResourcesAvailable-56;
+CL2: org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics-addSync-235;
+CL2: org.apache.hadoop.hdfs.server.protocol.RemoteEditLogManifest-checkState-51;
+CL2: org.apache.hadoop.hdfs.util.ReadOnlyList$Util-binarySearch-70;
+CL3: org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager-heartbeatCheck-248;
+CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-565;
+CL3: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-addStreamsToCollectionFromFiles-262;
+CL3: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-getRemoteEditLogs-182;
+CL3: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-matchEditLogs-216;
+CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet-getEditLogManifest-592;
+CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet-getEditLogManifest-610;
+CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;
+CL3: org.apache.hadoop.hdfs.server.namenode.NameNodeResourcePolicy-areResourcesAvailable-56;
+CL3: org.apache.hadoop.hdfs.server.protocol.RemoteEditLogManifest-checkState-51;
 
 
 
