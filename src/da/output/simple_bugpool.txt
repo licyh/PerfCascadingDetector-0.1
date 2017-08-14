@@ -1,38 +1,20 @@
-//34 (#static codepoints=25)
-CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyDefault-getPipeline-681;
-CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyDefault-getPipeline-686;
-CL2: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor-updateHeartbeat-359;
-CL2: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-resetLastCachingDirectiveSentTime-1434;
-CL2: org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager-heartbeatCheck-248;
-CL2: org.apache.hadoop.hdfs.server.blockmanagement.PendingReplicationBlocks$PendingReplicationMonitor-pendingReplicationCheck-241;
-CL2: org.apache.hadoop.hdfs.server.namenode.EditLogFileOutputStream-preallocate-228;
-CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-565;
-CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled-425;
-CL2: org.apache.hadoop.hdfs.server.namenode.FSImageSerialization-writeCompactBlockArray-459;
-CL2: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-getRemoteEditLogs-182;
-CL2: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-matchEditLogs-216;
-CL2: org.apache.hadoop.hdfs.server.namenode.INode-getPathComponents-632;
-CL2: org.apache.hadoop.hdfs.server.namenode.INodesInPath-resolve-127;
-CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-getNumSync-507;
-CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-shouldForceSync-497;
-CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-getEditLogManifest-592;
-CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-getEditLogManifest-610;
-CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-getSyncTimes-651;
-CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;
-CL2: org.apache.hadoop.hdfs.server.namenode.NameNodeResourcePolicy-areResourcesAvailable-56;
-CL2: org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics-addSync-235;
-CL2: org.apache.hadoop.hdfs.server.protocol.RemoteEditLogManifest-checkState-51;
-CL2: org.apache.hadoop.hdfs.util.ReadOnlyList$Util-binarySearch-70;
-CL3: org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager-heartbeatCheck-248;
-CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-565;
-CL3: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-addStreamsToCollectionFromFiles-262;
-CL3: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-getRemoteEditLogs-182;
-CL3: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-matchEditLogs-216;
-CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet-getEditLogManifest-592;
-CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet-getEditLogManifest-610;
-CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;
-CL3: org.apache.hadoop.hdfs.server.namenode.NameNodeResourcePolicy-areResourcesAvailable-56;
-CL3: org.apache.hadoop.hdfs.server.protocol.RemoteEditLogManifest-checkState-51;
+//16 (#static codepoints=10)
+CL2: org.apache.hadoop.hdfs.server.datanode.BlockReceiver$PacketResponder-close-747;
+CL2: org.apache.hadoop.hdfs.server.datanode.BlockReceiver$PacketResponder-run-787;
+CL2: org.apache.hadoop.hdfs.server.datanode.DataNode-offerService-922;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-679;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getCapacity-664;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getNextVolume-645;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getRemaining-672;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset-getGenerationStampFromFile-70;
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-679;
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getCapacity-664;
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getRemaining-672;
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset-getGenerationStampFromFile-70;
 
 
 
