@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //175 (#static codepoints=77)
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfo-findDatanode-250;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfo-findStorageInfo-266;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
@@ -49,16 +50,34 @@ CL2: org.apache.hadoop.hdfs.server.namenode.FSDirectory-unprotectedReplaceINodeF
 CL2: org.apache.hadoop.hdfs.server.namenode.FSDirectory-unprotectedUpdateCount-1871;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
 CL2: org.apache.hadoop.hdfs.server.namenode.FSDirectory-verifyQuota-2104;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
 CL2: org.apache.hadoop.hdfs.server.namenode.FSDirectory-verifyQuotaForRename-2136;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
+=======
+//63 (#static codepoints=25)
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyDefault-getPipeline-681;|org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyDefault-getPipeline-676;|org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyDefault-getPipeline-676;|
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyDefault-getPipeline-686;|org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyDefault-getPipeline-676;|org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyDefault-getPipeline-676;|
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor-updateHeartbeat-359;|org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-handleHeartbeat-1230;|org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-handleHeartbeat-1249;|
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor-updateHeartbeat-359;|org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-handleHeartbeat-1231;|org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-handleHeartbeat-1231;|
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor-updateHeartbeat-359;|org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-handleHeartbeat-1249;|org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-handleHeartbeat-1249;|
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor-updateHeartbeat-359;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-resetLastCachingDirectiveSentTime-1434;|org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-resetLastCachingDirectiveSentTime-1433;|org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-handleHeartbeat-1231;|
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager-heartbeatCheck-248;|org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager-heartbeatCheck-247;|org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-handleHeartbeat-1249;|
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.PendingReplicationBlocks$PendingReplicationMonitor-pendingReplicationCheck-241;|org.apache.hadoop.hdfs.server.blockmanagement.PendingReplicationBlocks$PendingReplicationMonitor-pendingReplicationCheck-234;|org.apache.hadoop.hdfs.server.blockmanagement.PendingReplicationBlocks-getNumReplicas-142;|
+CL2: org.apache.hadoop.hdfs.server.namenode.EditLogFileOutputStream-preallocate-228;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1062;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
+CL2: org.apache.hadoop.hdfs.server.namenode.EditLogFileOutputStream-preallocate-228;|org.apache.hadoop.hdfs.server.namenode.FSImage-rollEditLog-1086;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
+>>>>>>> 57e54c92728147ee7d811f4f27579b4cc740f107
 CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-565;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-560;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-565;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1059;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-565;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1062;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-565;|org.apache.hadoop.hdfs.server.namenode.FSImage-rollEditLog-1086;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
+<<<<<<< HEAD
 CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-565;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
+=======
+>>>>>>> 57e54c92728147ee7d811f4f27579b4cc740f107
 CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled-425;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-390;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled-425;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-395;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled-425;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1059;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled-425;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1062;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled-425;|org.apache.hadoop.hdfs.server.namenode.FSImage-rollEditLog-1086;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
+<<<<<<< HEAD
 CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled-425;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
 CL2: org.apache.hadoop.hdfs.server.namenode.FSImageSerialization-writeCompactBlockArray-459;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-390;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.FSImageSerialization-writeCompactBlockArray-459;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
@@ -76,32 +95,52 @@ CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-ge
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-getNumSync-507;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1059;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-getNumSync-507;|org.apache.hadoop.hdfs.server.namenode.FSImage-rollEditLog-1086;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-getNumSync-507;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
+=======
+CL2: org.apache.hadoop.hdfs.server.namenode.FSImageSerialization-writeCompactBlockArray-459;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-390;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
+CL2: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-getRemoteEditLogs-182;|org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer-getEditLogManifest-849;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
+CL2: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-matchEditLogs-216;|org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer-getEditLogManifest-849;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
+CL2: org.apache.hadoop.hdfs.server.namenode.INode-getPathComponents-632;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
+CL2: org.apache.hadoop.hdfs.server.namenode.INodesInPath-resolve-127;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
+CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-getNumSync-507;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-560;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
+CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-getNumSync-507;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1059;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
+CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-getNumSync-507;|org.apache.hadoop.hdfs.server.namenode.FSImage-rollEditLog-1086;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
+>>>>>>> 57e54c92728147ee7d811f4f27579b4cc740f107
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-shouldForceSync-497;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-390;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-shouldForceSync-497;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1059;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-shouldForceSync-497;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1062;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-shouldForceSync-497;|org.apache.hadoop.hdfs.server.namenode.FSImage-rollEditLog-1086;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
+<<<<<<< HEAD
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-shouldForceSync-497;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
+=======
+>>>>>>> 57e54c92728147ee7d811f4f27579b4cc740f107
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-getEditLogManifest-592;|org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer-getEditLogManifest-849;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-getEditLogManifest-610;|org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer-getEditLogManifest-849;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-getSyncTimes-651;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-560;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-getSyncTimes-651;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1059;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-getSyncTimes-651;|org.apache.hadoop.hdfs.server.namenode.FSImage-rollEditLog-1086;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
+<<<<<<< HEAD
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-getSyncTimes-651;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
+=======
+>>>>>>> 57e54c92728147ee7d811f4f27579b4cc740f107
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-390;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-560;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1059;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1062;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;|org.apache.hadoop.hdfs.server.namenode.FSImage-rollEditLog-1086;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
+<<<<<<< HEAD
 CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
 CL2: org.apache.hadoop.hdfs.server.namenode.LeaseManager$Lease-findPath-258;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
 CL2: org.apache.hadoop.hdfs.server.namenode.LeaseManager-changeLease-344;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
 CL2: org.apache.hadoop.hdfs.server.namenode.LeaseManager-findLeaseWithPrefixPath-378;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
 CL2: org.apache.hadoop.hdfs.server.namenode.NNStorage-writeTransactionIdFileToStorage-473;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
+=======
+>>>>>>> 57e54c92728147ee7d811f4f27579b4cc740f107
 CL2: org.apache.hadoop.hdfs.server.namenode.NameNodeResourcePolicy-areResourcesAvailable-56;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-390;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.NameNodeResourcePolicy-areResourcesAvailable-56;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-560;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.NameNodeResourcePolicy-areResourcesAvailable-56;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1059;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.NameNodeResourcePolicy-areResourcesAvailable-56;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1062;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL2: org.apache.hadoop.hdfs.server.namenode.NameNodeResourcePolicy-areResourcesAvailable-56;|org.apache.hadoop.hdfs.server.namenode.FSImage-rollEditLog-1086;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
+<<<<<<< HEAD
 CL2: org.apache.hadoop.hdfs.server.namenode.NameNodeResourcePolicy-areResourcesAvailable-56;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
 CL2: org.apache.hadoop.hdfs.server.namenode.SequentialBlockIdGenerator-nextValue-54;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
 CL2: org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics-addSync-235;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1059;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
@@ -130,10 +169,20 @@ CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled-42
 CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled-425;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1062;|org.apache.hadoop.hdfs.server.namenode.FSImage-getLastAppliedOrWrittenTxId-1252;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
 CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled-425;|org.apache.hadoop.hdfs.server.namenode.FSImage-rollEditLog-1086;|org.apache.hadoop.hdfs.server.namenode.FSImage-getLastAppliedOrWrittenTxId-1252;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
 CL3: org.apache.hadoop.hdfs.server.namenode.FSImageSerialization-writeCompactBlockArray-459;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-390;|org.apache.hadoop.hdfs.server.namenode.FSImage-getLastAppliedOrWrittenTxId-1252;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
+=======
+CL2: org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics-addSync-235;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1059;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
+CL2: org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics-addSync-235;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1062;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
+CL2: org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics-addSync-235;|org.apache.hadoop.hdfs.server.namenode.FSImage-rollEditLog-1086;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
+CL2: org.apache.hadoop.hdfs.server.protocol.RemoteEditLogManifest-checkState-51;|org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer-getEditLogManifest-849;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
+CL2: org.apache.hadoop.hdfs.util.ReadOnlyList$Util-binarySearch-70;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
+CL3: org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager-heartbeatCheck-248;|org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager-heartbeatCheck-247;|org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-handleHeartbeat-1249;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
+CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-565;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-560;|org.apache.hadoop.hdfs.server.namenode.FSImage-getLastAppliedOrWrittenTxId-1252;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
+>>>>>>> 57e54c92728147ee7d811f4f27579b4cc740f107
 CL3: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-addStreamsToCollectionFromFiles-262;|org.apache.hadoop.hdfs.server.namenode.JournalSet-selectInputStreams-250;|org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalAndStream-startLogSegment-91;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1062;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL3: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-getRemoteEditLogs-182;|org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer-getEditLogManifest-849;|org.apache.hadoop.hdfs.server.namenode.FSImage-getLastAppliedOrWrittenTxId-1252;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
 CL3: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-matchEditLogs-216;|org.apache.hadoop.hdfs.server.namenode.JournalSet-selectInputStreams-250;|org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalAndStream-startLogSegment-91;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1062;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-637;|
 CL3: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-matchEditLogs-216;|org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer-getEditLogManifest-849;|org.apache.hadoop.hdfs.server.namenode.FSImage-getLastAppliedOrWrittenTxId-1252;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
+<<<<<<< HEAD
 CL3: org.apache.hadoop.hdfs.server.namenode.INode-getPathComponents-632;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-commitOrCompleteLastBlock-3789;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-unprotectedChangeLease-5953;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
 CL3: org.apache.hadoop.hdfs.server.namenode.INodesInPath-resolve-127;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-commitOrCompleteLastBlock-3789;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-unprotectedChangeLease-5953;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|
 CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-getNumSync-507;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-560;|org.apache.hadoop.hdfs.server.namenode.FSImage-getLastAppliedOrWrittenTxId-1252;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
@@ -174,3 +223,16 @@ CL4: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor-updateHear
 CL4: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-resetLastCachingDirectiveSentTime-1434;|org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-resetLastCachingDirectiveSentTime-1433;|org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-handleHeartbeat-1231;|org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-handleHeartbeat-1230;|org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-handleHeartbeat-1249;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
 CL4: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-addStreamsToCollectionFromFiles-262;|org.apache.hadoop.hdfs.server.namenode.JournalSet-selectInputStreams-250;|org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalAndStream-startLogSegment-91;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1062;|org.apache.hadoop.hdfs.server.namenode.FSImage-getLastAppliedOrWrittenTxId-1252;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
 CL4: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-matchEditLogs-216;|org.apache.hadoop.hdfs.server.namenode.JournalSet-selectInputStreams-250;|org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalAndStream-startLogSegment-91;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-rollEditLog-1062;|org.apache.hadoop.hdfs.server.namenode.FSImage-getLastAppliedOrWrittenTxId-1252;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
+=======
+CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet-getEditLogManifest-592;|org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer-getEditLogManifest-849;|org.apache.hadoop.hdfs.server.namenode.FSImage-getLastAppliedOrWrittenTxId-1252;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
+CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet-getEditLogManifest-610;|org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer-getEditLogManifest-849;|org.apache.hadoop.hdfs.server.namenode.FSImage-getLastAppliedOrWrittenTxId-1252;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
+CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-560;|org.apache.hadoop.hdfs.server.namenode.FSImage-getLastAppliedOrWrittenTxId-1252;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
+CL3: org.apache.hadoop.hdfs.server.namenode.NameNodeResourcePolicy-areResourcesAvailable-56;|org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-560;|org.apache.hadoop.hdfs.server.namenode.FSImage-getLastAppliedOrWrittenTxId-1252;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
+CL3: org.apache.hadoop.hdfs.server.protocol.RemoteEditLogManifest-checkState-51;|org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer-getEditLogManifest-849;|org.apache.hadoop.hdfs.server.namenode.FSImage-getLastAppliedOrWrittenTxId-1252;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-readLock-1279;|org.apache.hadoop.hdfs.server.namenode.FSNamesystem-writeLock-1287;|
+
+
+
+//Queue-related Bugs
+
+//0 (#static codepoints=0)
+>>>>>>> 57e54c92728147ee7d811f4f27579b4cc740f107
