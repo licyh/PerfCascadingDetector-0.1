@@ -24,8 +24,8 @@ public class Transformers {
 	List<String> classesForInst = new ArrayList<String>();
 	List<String> methodsForInst = new ArrayList<String>();
 	List<String> linesForInst  = new ArrayList<String>();
-	List<String> typesForInst  = new ArrayList<String>();
-	List<Integer> flagsForInst = new ArrayList<Integer>();
+	List<String> tagsForInst  = new ArrayList<String>();
+	//List<Integer> flagsForInst = new ArrayList<Integer>();
   
 	//Checker checker = new Checker();
 	
@@ -43,12 +43,11 @@ public class Transformers {
 	  
     	reader = new TextFileReader("resource/dynamicpoints", true);
 		while ( (tmpline = reader.readLine()) != null ) {
-			String[] strs = tmpline.split("\\s+");
+			String[] strs = tmpline.split("\\s+", 4);
 			classesForInst.add( formatClassName(strs[0]) );
 			methodsForInst.add( strs[1] );
 			linesForInst.add( strs[2] );
-			//typesForInst.add( strs[3] );
-			flagsForInst.add(0);
+			tagsForInst.add( strs[3] );
 		}
 		reader.close();
 		
@@ -106,7 +105,7 @@ public class Transformers {
     	String logMethod = "LogClass._DM_Log.log_" + logType.name();
     	
     	if (logType == LogType.DynamicPoint) {
-    		String value = classesForInst.get(flag) + " " + methodsForInst.get(flag) + " " + linesForInst.get(flag);
+    		String value = classesForInst.get(flag) + " " + methodsForInst.get(flag) + " " + linesForInst.get(flag) + " " + tagsForInst.get(flag);
     		codestr = logMethod + "(\"" + value + "\");";
     	} else {
     		
