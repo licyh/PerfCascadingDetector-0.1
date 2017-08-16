@@ -1,23 +1,14 @@
-CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processAndHandleReportedBlock-2712;
-CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processAndHandleReportedBlock-2716;
-CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processAndHandleReportedBlock-2730;
-CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processFirstBlockReport-1775;
-CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processIncrementalBlockReport-2759;
-CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processReport-1730;
-CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processReport-1733;
-CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processReport-1737;
-CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processReport-1751;
-CL2: org.apache.hadoop.hdfs.server.namenode.EditLogFileOutputStream-preallocate-228;
-CL2: org.apache.hadoop.hdfs.server.namenode.FSDirectory-mkdirs-2011;
-CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-565;
-CL2: org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled-425;
-CL2: org.apache.hadoop.hdfs.server.namenode.FSImageSerialization-writeCompactBlockArray-459;
-CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;
-CL2: org.apache.hadoop.hdfs.server.namenode.NNStorage-writeTransactionIdFileToStorage-473;
-CL3: org.apache.hadoop.hdfs.server.namenode.EditLogFileOutputStream-preallocate-228;
-CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-565;
-CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled-425;
-CL3: org.apache.hadoop.hdfs.server.namenode.FSImageSerialization-writeCompactBlockArray-459;
-CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;
-CL3: org.apache.hadoop.hdfs.server.namenode.LeaseManager-checkLeases-457;
-//summary - 22(#static codepoints=17) from 104
+CL2: org.apache.hadoop.hdfs.server.datanode.BlockReceiver$PacketResponder-close-747;
+CL2: org.apache.hadoop.hdfs.server.datanode.BlockReceiver$PacketResponder-run-787;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-679;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getCapacity-664;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getNextVolume-645;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getRemaining-672;
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-679;
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getCapacity-664;
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getRemaining-672;
+//summary - 13(#static codepoints=8) from 16

@@ -20,7 +20,7 @@ CL4: org.apache.hadoop.yarn.util.AbstractLivelinessMonitor$PingChecker-run-106;
 //summary - 15(#static codepoints=11) from 52
 
 
-
+===================================================================================
 ps:
 if using 'whole package scope', the reuslts are
 CL2: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-commitJob-302;
