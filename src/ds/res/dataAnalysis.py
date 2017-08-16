@@ -1,7 +1,7 @@
+import sys
 
-
-filename_input = '/tmp/dynamicpoints.txt'
-filename_output = '/tmp/dynamicpoints.out'
+filename_input = sys.argv[1]         #'/tmp/dynamicpoints.txt'
+filename_output = sys.argv[2]        #'/tmp/dynamicpoints.out'
 
 set = set()
 

@@ -25,7 +25,9 @@ sleep 2s
 echo "JX - INFO - stop hadoop .."
 hadoop-daemon.sh stop tasktracker
 hadoop-daemon.sh stop jobtracker
-#stop-dfs.sh
+sleep 1s
+stop-dfs.sh
+sleep 1s
 if [ $? -ne 0 ]; then
   echo "stop xxx error"
   exit
@@ -34,6 +36,9 @@ sleep 2s
 jps
 sleep 1s
 rm ~/hadoop-1.0.0/logs/*
+
+
+
 
 # Clean
 echo "JX - INFO - clean $dm_dir .."
@@ -47,8 +52,8 @@ mkdir $dm_dir
 echo "JX - INFO - compile jar-dm-$bug_id .."
 cd $project_dir
 
-ant jar-dm-$bug_id
-#ant jar-ds-$bug_id
+#ant jar-dm-$bug_id
+ant jar-ds-$bug_id
 
 if [ $? -ne 0 ]; then
   echo "compile error"
