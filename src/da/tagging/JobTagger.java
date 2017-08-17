@@ -35,7 +35,11 @@ public class JobTagger {
 	
 	
     public void dfsTraversing( int x, BitSet traversedNodes ) {
-    	System.out.println("JX - DEBUG - path: " + x + hbg.getNodeOPTY(x));
+    	if ( !hbg.getNodeOPTY(x).equals(LogType.LoopBegin.name())
+    		 && !hbg.getNodeOPTY(x).equals(LogType.LockRequire.name())
+    		 && !hbg.getNodeOPTY(x).equals(LogType.LockRelease.name())
+    			)
+    		 System.out.println("JX - DEBUG - path: " + x + hbg.getNodeOPTY(x));
     	//traversedNodes.set( x );
     	
     	//termination condition
