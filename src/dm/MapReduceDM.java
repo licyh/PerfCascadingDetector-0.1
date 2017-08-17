@@ -98,6 +98,10 @@ class MapReduceTransformer extends Transformer {
 			if ( className.contains("PBClientImpl") 
 					|| className.contains("PBServiceImpl") 
 					|| className.contains("org.apache.hadoop.yarn.event.EventHandler") 
+					|| className.contains("org.apache.hadoop.yarn.api.")			//for mr-4813
+					|| className.contains("org.apache.hadoop.yarn.server.api.")		//for mr-4813
+					|| className.contains("org.apache.hadoop.yarn.server.api.")		//for mr-4813
+					|| className.contains("org.apache.hadoop.mapreduce.v2.api")		//for mr-4813
 					) {
 			    }
 			else {

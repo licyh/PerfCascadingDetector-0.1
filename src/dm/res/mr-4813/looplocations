@@ -211,7 +211,8 @@ org.apache.hadoop.mapreduce.lib.join.CompositeRecordReader$JoinCollector.reset(L
 org.apache.hadoop.yarn.server.nodemanager.containermanager.container.ContainerImpl$RequestResourcesTransition.transition(Lorg/apache/hadoop/yarn/server/nodemanager/containermanager/container/ContainerImpl;Lorg/apache/hadoop/yarn/server/nodemanager/containermanager/container/ContainerEvent;)Lorg/apache/hadoop/yarn/server/nodemanager/containermanager/container/ContainerState; 2 484 497 
 org.apache.hadoop.mapred.ClusterStatus.readFields(Ljava/io/DataInput;)V 2 431 439 
 org.apache.hadoop.mapreduce.lib.partition.KeyFieldBasedPartitioner.hashCode([BIII)I 1 122 
-org.apache.hadoop.yarn.state.StateMachineFactory.makeStateMachineTable()V 2 325 330 
+//org.apache.hadoop.yarn.state.StateMachineFactory.makeStateMachineTable()V 2 325 330 
+org.apache.hadoop.yarn.state.StateMachineFactory.makeStateMachineTable()V 1 325
 org.apache.hadoop.mapred.join.CompositeRecordReader$JoinCollector.flush(Lorg/apache/hadoop/mapred/join/TupleWritable;)Z 1 301 
 org.apache.hadoop.yarn.server.resourcemanager.scheduler.SchedulerApp.showRequests()V 2 290 284 
 org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator.scheduleAllReduces()V 1 502 
