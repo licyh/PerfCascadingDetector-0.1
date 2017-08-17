@@ -89,11 +89,12 @@ public class QueueCase {
 			}
 			*/
 			
-			
+			System.out.println("JX - INFO - QueueCase: 29th thread: " + (endPos-beginPos+1));
 			for (int i = beginPos; i <= endPos; i++) {
+				
 				//for (int j = i+1; j <= endPos; j++) {				
 					int beginIndex = list.get(i);
-					System.out.println("JX - INFO - " );
+					//test
 					new JobTagger(this.hbg).findJobIdentity(beginIndex);
 					int endIndex = handlerBlocks.get(beginIndex);
 					findBugLoops(beginIndex, endIndex);
