@@ -247,10 +247,12 @@ public class LockCase {
     	
     	
     	// Termination Conditions
+    	/*
     	if ( hbg.getNodeOPTY(x).equals(LogType.ThdEnter.name()) ) {
     		System.out.println("JX - debug - LockCase: termination at ThdEnter " + hbg.getPrintedIdentity(x) );
     		return;
     	}
+    	*/
     	
     	/*
     	// Non-cascaded loops
