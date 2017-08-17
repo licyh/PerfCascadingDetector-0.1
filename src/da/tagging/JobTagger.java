@@ -35,11 +35,8 @@ public class JobTagger {
 	
 	
     public void dfsTraversing( int x, BitSet traversedNodes ) {
-    	if ( !hbg.getNodeOPTY(x).equals(LogType.LoopBegin.name())
-    		 && !hbg.getNodeOPTY(x).equals(LogType.LockRequire.name())
-    		 && !hbg.getNodeOPTY(x).equals(LogType.LockRelease.name())
-    			)
-    		 System.out.println("JX - DEBUG - path: " + x + hbg.getNodeOPTY(x));
+    	if ( isConnection(x) )
+    		 System.out.println("JX - DEBUG - path: " + x + hbg.getNodeOPTY(x) + hbg.getNodePIDTID(x));
     	//traversedNodes.set( x );
     	
     	//termination condition
@@ -71,6 +68,21 @@ public class JobTagger {
     	}    	
     }
     
+    
+    public boolean isConnection(int index) {
+    	if ( isEnter(index) 
+    			|| hbg.getNodeOPTY(index).equals( LogType.EventHandlerEnd.name() )
+    			|| hbg.getNodeOPTY(index).equals( LogType.EventProcExit.name() )
+    			|| hbg.getNodeOPTY(index).equals( LogType.MsgProcExit.name() )
+    			|| hbg.getNodeOPTY(index).equals( LogType.ThdExit.name() )
+    			|| hbg.getNodeOPTY(index).equals( LogType.EventHandlerCreate.name() )
+    			|| hbg.getNodeOPTY(index).equals( LogType.EventCreate.name() )
+    			|| hbg.getNodeOPTY(index).equals( LogType.MsgSending.name() )
+    			|| hbg.getNodeOPTY(index).equals( LogType.ThdCreate.name() )
+    			)
+    		return true;
+    	return false;
+    }
     
     public boolean isEnter(int index) {
     	if ( hbg.getNodeOPTY(index).equals( LogType.EventHandlerBegin.name() )

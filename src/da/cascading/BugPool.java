@@ -115,7 +115,7 @@ public class BugPool {
     	System.out.println("\nJX - INFO - Results of bug pool");
     	
     	mergeResults();
-    	printJobIdentity();
+    	//printJobIdentity();
 
     	// bug pools - 
         // write to file & print

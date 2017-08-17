@@ -11,6 +11,7 @@ import LogClass.LogType;
 import da.graph.HappensBeforeGraph;
 import da.graph.LogInfoExtractor;
 import da.graph.Pair;
+import da.tagging.JobTagger;
 
 
 public class QueueCase {
@@ -90,9 +91,10 @@ public class QueueCase {
 			
 			
 			for (int i = beginPos; i <= endPos; i++) {
-				
-				//for (int j = i+1; j <= endPos; j++) {
+				//for (int j = i+1; j <= endPos; j++) {				
 					int beginIndex = list.get(i);
+					System.out.println("JX - INFO - " );
+					new JobTagger(this.hbg).findJobIdentity(beginIndex);
 					int endIndex = handlerBlocks.get(beginIndex);
 					findBugLoops(beginIndex, endIndex);
 				//}
