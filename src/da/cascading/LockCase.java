@@ -17,6 +17,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.benchmark.Benchmarks;
 import com.text.TextFileWriter;
 
 import LogClass.LogType;
@@ -156,32 +157,40 @@ public class LockCase {
     	
 		// Debugging - print all firt batch of locks' names
 		//if (tmpxx == 0) {
-			//printLocks(crs);
+			printLocks(crs);
 			//tmpxx = 1;
 		//}
     	
 		// Step 2 - 
-    	startCascadingChainAnalysis( crs );
+    	//startCascadingChainAnalysis( crs );
     }
     
     
     public ArrayList<Integer> identifyContentionResources(int beginIndex, int endIndex) {
     	ArrayList<Integer> resources = new ArrayList<Integer>();   //set of lock nodes for a single target code snippet
-    	boolean isClosedCycle = hbg.getReachSet().get(beginIndex).get(endIndex);
-   
+    	
     	// traversing for getting ImmediateBugs & Locks inside the executed code 
     	traversedNodes.clear();
-    	
-    	
-    	if ( isClosedCycle ) {
-    		dfsTraversing( beginIndex, 1, endIndex, resources);  //modified for ca-6744
+    	  	
+    	if (Benchmarks.resolveBugId(hbg.getTargetDir()).equals("ca-6744")) {
+    		//tmply add, only for ca-6744
+        	scanAndDfs(beginIndex, endIndex, resources);	
     	}
-    	
     	else {
-    		System.out.println("JX - WARN - " + "No ClosedCycle: couldn't reach from " + beginIndex + " to " + endIndex);
-        	//tmply add, only for ca-6744
-        	scanAndDfs(beginIndex, endIndex, resources);
+    		/*
+    		boolean isClosedCycle = hbg.getReachSet().get(beginIndex).get(endIndex);
+        	if ( isClosedCycle ) {
+        	*/
+        		dfsTraversing( beginIndex, 1, endIndex, resources);  //modified for ca-6744
+        	/*
+    		}
+        	else {
+        		System.out.println("JX - WARN - " + "No ClosedCycle: couldn't reach from " + beginIndex + " to " + endIndex);
+        		// TODO - for each nodeIndex, do a dfsTraversing
+        	}
+    		*/
     	}
+    		
     	
     	// analyzing Locks that are inside the executed code
     	Set<String> setofinvolvingthreads = new HashSet<String>();

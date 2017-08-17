@@ -9,4 +9,4 @@ CL3: org.apache.hadoop.mapred.SortedRanges-write-203;
 CL3: org.apache.hadoop.mapreduce.counters.AbstractCounters-write-261;
 CL3: org.apache.hadoop.mapreduce.counters.AbstractCounters-write-273;
 CL3: org.apache.hadoop.mapreduce.counters.FrameworkCounterGroup-write-220;
-//summary - 11(#static codepoints=11) from 44
+//summary - 11(#static codepoints=11) from 43

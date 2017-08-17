@@ -138,6 +138,12 @@ public class HappensBeforeGraph {
     	return true;
     }
     
+    
+    public String getTargetDir() {
+    	return this.xmldir;
+    }
+    
+    
     public HappensBeforeGraph(String xmldirctory) {
         xmldir = xmldirctory;
         

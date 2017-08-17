@@ -14,4 +14,4 @@ CL3: org.apache.hadoop.mapred.SortedRanges-write-203;|org.apache.hadoop.mapred.T
 CL3: org.apache.hadoop.mapreduce.counters.AbstractCounters-write-261;|org.apache.hadoop.mapred.TaskStatus-write-471;|org.apache.hadoop.mapred.Counters-getGroup-84;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-handle-955;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-getState-938;|
 CL3: org.apache.hadoop.mapreduce.counters.AbstractCounters-write-273;|org.apache.hadoop.mapred.TaskStatus-write-471;|org.apache.hadoop.mapred.Counters-getGroup-84;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-handle-955;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-getState-938;|
 CL3: org.apache.hadoop.mapreduce.counters.FrameworkCounterGroup-write-220;|org.apache.hadoop.mapred.TaskStatus-write-471;|org.apache.hadoop.mapred.Counters-getGroup-84;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-handle-955;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-getState-938;|
-//summary - 16(#static codepoints=11) from 83
+//summary - 16(#static codepoints=11) from 80
