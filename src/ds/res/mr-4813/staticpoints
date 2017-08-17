@@ -1,3 +1,47 @@
-org.apache.hadoop.mapreduce.v2.app.rm.RMCommunicator$1 run 231    DynamicPoint 
-org.apache.hadoop.mapreduce.v2.app.rm.RMCommunicator$1 run 238    DynamicPoint
- 
+Lorg/apache/hadoop/mapreduce/v2/app/job/impl/TaskImpl addAndScheduleAttempt 558 770 -1
+Lorg/apache/hadoop/yarn/server/nodemanager/api/protocolrecords/impl/pb/LocalizerStatusPBImpl initResources 111 770 -1
+Lorg/apache/hadoop/conf/Configuration getStrings 1321 770 -1(bounded)
+Lorg/apache/hadoop/mapreduce/v2/app/job/impl/TaskImpl <init> 262 770 -1
+Lorg/apache/hadoop/yarn/server/nodemanager/containermanager/localizer/ContainerLocalizer localizeFiles 237 770 -2
+
+Lorg/apache/hadoop/yarn/server/nodemanager/api/protocolrecords/impl/pb/LocalizerStatusPBImpl initResources 111 650 -1
+Lorg/apache/hadoop/conf/Configuration getStrings 1321 650 -1
+Lorg/apache/hadoop/yarn/server/nodemanager/containermanager/localizer/ContainerLocalizer localizeFiles 237 650 -2
+
+Lorg/apache/hadoop/yarn/api/records/impl/pb/ResourceRequestPBImpl getNumContainers 141 530 -1
+Lorg/apache/hadoop/yarn/api/records/impl/pb/ResourcePBImpl getMemory 57 530 -1
+
+Lorg/apache/hadoop/fs/FileSystem listStatus 1360 302 -1
+
+Lorg/apache/hadoop/conf/Configuration getStrings 1321 269 -1
+
+Lorg/apache/hadoop/mapred/MapTaskAttemptImpl <init> 48 1145 8
+
+Lorg/apache/hadoop/yarn/api/records/impl/pb/ContainerLaunchContextPBImpl initServiceData 321 113 -1
+Lorg/apache/hadoop/mapred/Task sendDone 1085 113 -2
+Lorg/apache/hadoop/yarn/server/nodemanager/api/protocolrecords/impl/pb/LocalizerStatusPBImpl initResources 111 113 -1
+Lorg/apache/hadoop/yarn/server/resourcemanager/scheduler/capacity/CapacityScheduler handle 635 113 2
+Lorg/apache/hadoop/mapreduce/v2/app/job/impl/JobImpl$TaskAttemptFetchFailureTransition transition 1295 113 -1
+Lorg/apache/hadoop/mapred/lib/FieldSelectionMapReduce reduce 69 113 2
+Lorg/apache/hadoop/mapreduce/v2/app/rm/RMContainerAllocator getResources 596 113 -1
+Lorg/apache/hadoop/mapreduce/v2/app/rm/RMContainerAllocator getResources 614 113 -1
+Lorg/apache/hadoop/mapred/lib/aggregate/ValueAggregatorReducer reduce 35 113 2
+Lorg/apache/hadoop/mapreduce/v2/app/job/impl/TaskImpl addAndScheduleAttempt 558 113 -1
+Lorg/apache/hadoop/mapreduce/v2/app/TaskHeartbeatHandler$PingChecker run 158 113 -1
+Lorg/apache/hadoop/conf/Configuration getStrings 1321 113 -1
+Lorg/apache/hadoop/conf/Configuration getInt 880 113 -1
+Lorg/apache/hadoop/mapreduce/lib/fieldsel/FieldSelectionReducer reduce 58 113 2
+Lorg/apache/hadoop/mapreduce/v2/app/rm/RMContainerAllocator$ScheduledRequests assignToMap 926 113 -6
+Lorg/apache/hadoop/mapreduce/lib/aggregate/ValueAggregatorReducer reduce 33 113 2
+Lorg/apache/hadoop/mapreduce/v2/app/job/impl/TaskImpl <init> 262 113 -1
+Lorg/apache/hadoop/conf/Configuration getInt 878 113 -1
+Lorg/apache/hadoop/mapred/lib/aggregate/ValueAggregatorMapper map 54 113 -1
+Lorg/apache/hadoop/mapred/lib/aggregate/ValueAggregatorCombiner reduce 36 113 2
+Lorg/apache/hadoop/mapreduce/lib/aggregate/UserDefinedValueAggregatorDescriptor generateKeyValPairs 105 113 -1
+Lorg/apache/hadoop/yarn/server/nodemanager/containermanager/localizer/ContainerLocalizer localizeFiles 237 113 -2
+Lorg/apache/hadoop/mapred/MapTask$MapOutputBuffer$Buffer write 1301 113 -2
+Lorg/apache/hadoop/mapreduce/v2/app/speculate/DefaultSpeculator maybeScheduleASpeculation 448 113 -1
+Lorg/apache/hadoop/mapreduce/lib/aggregate/ValueAggregatorCombiner reduce 34 113 2
+Lorg/apache/hadoop/mapred/Task done 977 113 -2
+Lorg/apache/hadoop/yarn/server/nodemanager/containermanager/AuxServices <init> 50 113 -1
+
