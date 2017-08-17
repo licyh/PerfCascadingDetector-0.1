@@ -156,12 +156,12 @@ public class LockCase {
     	
 		// Debugging - print all firt batch of locks' names
 		//if (tmpxx == 0) {
-			printLocks(crs);
+			//printLocks(crs);
 			//tmpxx = 1;
 		//}
     	
 		// Step 2 - 
-    	//startCascadingChainAnalysis( crs );
+    	startCascadingChainAnalysis( crs );
     }
     
     
@@ -172,13 +172,13 @@ public class LockCase {
     	// traversing for getting ImmediateBugs & Locks inside the executed code 
     	traversedNodes.clear();
     	
-    	/*
+    	
     	if ( isClosedCycle ) {
     		dfsTraversing( beginIndex, 1, endIndex, resources);  //modified for ca-6744
     	}
-    	*/
-    	//else {
-    		System.out.println("JX - WARN - " + "couldn't reach from " + beginIndex + " to " + endIndex);
+    	
+    	else {
+    		System.out.println("JX - WARN - " + "No ClosedCycle: couldn't reach from " + beginIndex + " to " + endIndex);
         	//tmply add, only for ca-6744
         	scanAndDfs(beginIndex, endIndex, resources);
     	//}
