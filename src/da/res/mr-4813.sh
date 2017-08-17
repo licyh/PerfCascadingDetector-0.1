@@ -2,7 +2,7 @@
 project_dir=/home/vagrant/JXCascading-detector          #JX - NO "/" at the end
 
 # Set the bug variables
-log_dir=/home/vagrant/JXCascading-detector/input/MR-4813                          #/tmp/mr-4576_dm  
+log_dir=/tmp/mr-4813_dm                          #/tmp/mr-4576_dm  
 
 
 # Call real da

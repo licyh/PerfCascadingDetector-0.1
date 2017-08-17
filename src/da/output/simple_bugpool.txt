@@ -1,20 +1,48 @@
-//16 (#static codepoints=10)
-CL2: org.apache.hadoop.hdfs.server.datanode.BlockReceiver$PacketResponder-close-747;
-CL2: org.apache.hadoop.hdfs.server.datanode.BlockReceiver$PacketResponder-run-787;
-CL2: org.apache.hadoop.hdfs.server.datanode.DataNode-offerService-922;
-CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;
-CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;
-CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-679;
-CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getCapacity-664;
-CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getNextVolume-645;
-CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getRemaining-672;
-CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset-getGenerationStampFromFile-70;
-CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;
-CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;
-CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-679;
-CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getCapacity-664;
-CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getRemaining-672;
-CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset-getGenerationStampFromFile-70;
+//44 (#static codepoints=44)
+CL2: org.apache.hadoop.mapred.MapReduceChildJVM-getVMCommand-201;
+CL2: org.apache.hadoop.mapred.MapReduceChildJVM-getVMCommand-246;
+CL2: org.apache.hadoop.mapred.MapReduceChildJVM-setVMEnv-99;
+CL2: org.apache.hadoop.mapred.PeriodicStatsAccumulator-extend-166;
+CL2: org.apache.hadoop.mapred.SortedRanges$SkipRangeIterator-doNext-349;
+CL2: org.apache.hadoop.mapred.Task$GcTimeUpdater-getElapsedGc-839;
+CL2: org.apache.hadoop.mapreduce.counters.AbstractCounterGroup-incrAllCounters-201;
+CL2: org.apache.hadoop.mapreduce.counters.AbstractCounters-incrAllCounters-340;
+CL2: org.apache.hadoop.mapreduce.counters.FileSystemCounterGroup-incrAllCounters-243;
+CL2: org.apache.hadoop.mapreduce.counters.FrameworkCounterGroup-incrAllCounters-206;
+CL2: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-commitJob-302;
+CL2: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-mergePaths-353;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl$CounterUpdateTransition-transition-1457;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl-constructFinalFullcounters-1208;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl-scheduleTasks-650;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.MapTaskImpl-getSplitsAsString-92;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl$RequestContainerTransition-transition-1132;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-createContainerLaunchContext-737;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-resolveHosts-1145;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl$AttemptSucceededTransition-transition-770;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl-getFinishTime-472;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl-getLaunchTime-434;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl-selectBestAttempt-493;
+CL2: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator$ScheduledRequests-addMap-675;
+CL2: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator$ScheduledRequests-addMap-686;
+CL2: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerRequestor-addContainerReq-266;
+CL2: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerRequestor-addContainerReq-274;
+CL2: org.apache.hadoop.mapreduce.v2.util.MRApps-setMRFrameworkClasspath-179;
+CL2: org.apache.hadoop.yarn.api.records.impl.pb.ContainerLaunchContextPBImpl-initApplicationACLs-449;
+CL2: org.apache.hadoop.yarn.api.records.impl.pb.ContainerLaunchContextPBImpl-initCommands-160;
+CL2: org.apache.hadoop.yarn.api.records.impl.pb.ContainerLaunchContextPBImpl-initEnv-384;
+CL2: org.apache.hadoop.yarn.api.records.impl.pb.ContainerLaunchContextPBImpl-initLocalResources-235;
+CL2: org.apache.hadoop.yarn.api.records.impl.pb.ContainerLaunchContextPBImpl-initServiceData-321;
+CL2: org.apache.hadoop.yarn.service.AbstractService-changeState-113;
+CL2: org.apache.hadoop.yarn.state.StateMachineFactory-addTransition-200;
+CL2: org.apache.hadoop.yarn.state.StateMachineFactory-makeStateMachineTable-325;
+CL2: org.apache.hadoop.yarn.state.StateMachineFactory-makeStateMachineTable-330;
+CL2: org.apache.hadoop.yarn.util.Apps-setEnvFromInputString-68;
+CL3: org.apache.hadoop.mapred.SortedRanges-write-203;
+CL3: org.apache.hadoop.mapreduce.counters.AbstractCounterGroup-write-160;
+CL3: org.apache.hadoop.mapreduce.counters.AbstractCounters-write-261;
+CL3: org.apache.hadoop.mapreduce.counters.AbstractCounters-write-273;
+CL3: org.apache.hadoop.mapreduce.counters.FrameworkCounterGroup-size-195;
+CL3: org.apache.hadoop.mapreduce.counters.FrameworkCounterGroup-write-220;
 
 
 

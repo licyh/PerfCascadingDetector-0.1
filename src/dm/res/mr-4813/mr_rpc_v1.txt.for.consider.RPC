@@ -1,0 +1,45 @@
+//V1 - format: class iface method
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol getTask 2 Ljava/lang/Object Ljava/lang/Object 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol statusUpdate 3 Ljava/lang/Object Ljava/lang/Object Ljava/lang/Object 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol reportDiagnosticInfo 3 Ljava/lang/Object Ljava/lang/Object Ljava/lang/Object 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol reportNextRecordRange 3 Ljava/lang/Object Ljava/lang/Object Ljava/lang/Object 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol ping 2 Ljava/lang/Object Ljava/lang/Object
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol done 2 Ljava/lang/Object Ljava/lang/Object
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol commitPending 3 Ljava/lang/Object Ljava/lang/Object Ljava/lang/Object 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol canCommit 2 Ljava/lang/Object Ljava/lang/Object
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol shuffleError 3 Ljava/lang/Object Ljava/lang/Object Ljava/lang/Object
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol fsError 3 Ljava/lang/Object Ljava/lang/Object Ljava/lang/Object 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol fatalError 3 Ljava/lang/Object Ljava/lang/Object Ljava/lang/Object 
+org.apache.hadoop.mapred.TaskAttemptListenerImpl org.apache.hadoop.mapred.TaskUmbilicalProtocol getMapCompletionEvents 5 Ljava/lang/Object I I Ljava/lang/Object Ljava/lang/Object 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getNewJobID 0 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol submitJob 3 Ljava/lang/Object Ljava/lang/Object Ljava/lang/Object 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getClusterMetrics 0 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getJobTrackerStatus 0 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getTaskTrackerExpiryInterval 0 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getQueueAdmins 1 Ljava/lang/Object 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol killJob 1 Ljava/lang/Object 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol setJobPriority 2 Ljava/lang/Object Ljava/lang/Object 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol killTask 2 Ljava/lang/Object Z 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getJobStatus 1 Ljava/lang/Object 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getJobCounters 1 Ljava/lang/Object 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getTaskReports 2 Ljava/lang/Object Ljava/lang/Object 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getFilesystemName 0 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getAllJobs 0 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getTaskCompletionEvents 3 Ljava/lang/Object I I 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getTaskDiagnostics 1 Ljava/lang/Object 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getActiveTrackers 0 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getBlacklistedTrackers 0 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getSystemDir 0 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getStagingAreaDir 0 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getJobHistoryDir 0 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getQueues 0 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getQueue 1 Ljava/lang/Object 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getQueueAclsForCurrentUser 0 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getRootQueues 0 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getChildQueues 1 Ljava/lang/Object 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getDelegationToken 1 Ljava/lang/Object 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol renewDelegationToken 1 Ljava/lang/Object 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol cancelDelegationToken 1 Ljava/lang/Object 
+//org.apache.hadoop.mapred.YARNRunner org.apache.hadoop.mapreduce.protocol.ClientProtocol getLogFileParams 2 Ljava/lang/Object Ljava/lang/Object 
+// (by JX)
+// LocalJobRunner & LocalJobRunner$Job
