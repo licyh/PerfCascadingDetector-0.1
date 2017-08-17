@@ -40,7 +40,7 @@ public class LockCase {
 	
     //In .traverseTargetCodes()
     //ArrayList<Integer> targetcodeLoops;  				//never used, just ps for time-consuming loops?
-    ArrayList<Integer> targetcodeLocks;   				//set of lock nodes for a single target code snippet
+    
     BitSet traversedNodes;                      		//tmp var. set of all nodes for a single target code snippet
 
     //used for pruning 
@@ -73,7 +73,6 @@ public class LockCase {
 	    this.loopBlocks = logInfo.getLoopBlocks();
         
         //targetcodeLoops = new ArrayList<Integer>();                              //never used, just ps for time-consuming loops?
-        this.targetcodeLocks = new ArrayList<Integer>();   //set of lock nodes for a single target code snippet
         this.traversedNodes = new BitSet();                //tmp var. set of all nodes for a single target code snippet
         
         this.bugPool = new BugPool(this.projectDir, this.hbg);
@@ -89,7 +88,7 @@ public class LockCase {
 		// prepare
 		prepare();
         // traverseTargetCodes
-		traverseTargetCodes();
+		handleSink();
     	// print the results
 		bugPool.printResults();
 	}
@@ -129,9 +128,12 @@ public class LockCase {
     
     /**  
      * JX - traverseTargetCodes - Traversing target code snippets
-     * Note: the core
+     * ie, 
+     * Note: may involve two types of sink code snippets
+     * 		- TargetCodeBegin & TargetCodeEnd
+     * 		- tmp: (not here) EventHandlerBegin & EventHandlerEnd,  this should also be changed to  TargetCodeBegin & TargetCodeEnd
      */
-    public void traverseTargetCodes() {
+    public void handleSink() {
     	System.out.println("\nJX - traverseTargetCodes - including all TARGET CODE snippets");
     	
     	int numofsnippets = 0;
@@ -141,49 +143,53 @@ public class LockCase {
     			continue;
     		int endindex = targetCodeBlocks.get(beginindex);
     		System.out.println( "\nTarget Code Snippet #" + (++numofsnippets) + ": (" + beginindex + " to " + endindex + ")"  );
-    		// Step 1 of 2 - firstRoundTraversing, ie, bugs that inside the executed code, also get locks for Step 2
-    		findImmediateBugs( beginindex, endindex );
-    		// Step 2 of 2
-        	findLockRelatedBugs( targetcodeLocks );
+    		handleSinkInstance( beginindex, endindex );
     	}
     }
     
     
-    // 1. findImmediateBugs
+    public void handleSinkInstance(int beginIndex, int endIndex) {
+    	// Step 1 - also can find Non-cascaded loops (ie, immediate loops) in the Sink if needed
+    	ArrayList<Integer> crs = identifyContentionResources( beginIndex, endIndex );
+		// Step 2 - 
+    	startCascadingChainAnalysis( crs );
+    }
     
-    public void findImmediateBugs(int beginIndex, int endIndex) {
+    
+    public ArrayList<Integer> identifyContentionResources(int beginIndex, int endIndex) {
+    	ArrayList<Integer> resources = new ArrayList<Integer>();   //set of lock nodes for a single target code snippet
     	boolean isClosedCycle = hbg.getReachSet().get(beginIndex).get(endIndex);
    
     	// traversing for getting ImmediateBugs & Locks inside the executed code 
-    	targetcodeLocks.clear();
     	traversedNodes.clear();
     	
     	if ( isClosedCycle ) {
-    		dfsTraversing( beginIndex, 1, endIndex );  //modified for ca-6744
+    		dfsTraversing( beginIndex, 1, endIndex, resources);  //modified for ca-6744
     	}
     	else {
     		System.out.println("JX - WARN - " + "couldn't reach from " + beginIndex + " to " + endIndex);
         	//tmply add, only for ca-6744
-        	scanAndDfs(beginIndex, endIndex);
+        	scanAndDfs(beginIndex, endIndex, resources);
     	}
     	
     	// analyzing Locks that are inside the executed code
     	Set<String> setofinvolvingthreads = new HashSet<String>();
-    	for (int index: targetcodeLocks) {
+    	for (int index: resources) {
     		setofinvolvingthreads.add( hbg.getNodePIDTID(index) );
     	}
     	System.out.println("this snippet includes " + traversedNodes.cardinality()
-    						+ " nodes, #firstbatchLocks = " + targetcodeLocks.size() + ", #involving threads = " + setofinvolvingthreads);
+    						+ " nodes, #firstbatchLocks = " + resources.size() + ", #involving threads = " + setofinvolvingthreads);
+    	
+    	return resources;
     }
-    
     
     /**
      * @param direction   1(--->) or -1 (<---)
      */
-    public void dfsTraversing( int x, int direction, int endIndex ) {
+    public void dfsTraversing( int x, int direction, int endIndex, ArrayList<Integer> resources) {
     	traversedNodes.set( x );
     	if ( hbg.getNodeOPTY(x).equals("LockRequire") ) {
-    		targetcodeLocks.add( x );
+    		resources.add( x );
     	}
     	// TODO - for Loop - suspected bugs
     	if ( hbg.getNodeOPTY(x).equals("LoopBegin") ) {
@@ -199,7 +205,43 @@ public class LockCase {
         for (Pair pair: hbg.getEdge().get(x)) {
         	int y = pair.destination;
         	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) )
-        		dfsTraversing( y, direction, endIndex );
+        		dfsTraversing( y, direction, endIndex, resources );
+        }
+        
+    }
+    
+    
+    //tmp
+    public void scanAndDfs( int beginIndex, int endIndex, ArrayList<Integer> resources ) {
+    	for (int i = beginIndex; i <= endIndex; i++) {
+    		dfsTraversing2(i, 1, i, resources);
+    	}
+    }
+    
+
+    /**
+     * @param direction   1(--->) or -1 (<---)
+     */
+    public void dfsTraversing2( int x, int direction, int endIndex, ArrayList<Integer> resources) {
+    	traversedNodes.set( x );
+    	if ( hbg.getNodeOPTY(x).equals("LockRequire") ) {
+    		resources.add( x );
+    	}
+    	// TODO - for Loop - suspected bugs
+    	if ( hbg.getNodeOPTY(x).equals("LoopBegin") ) {
+    		// add to bug pool
+    		if ( ONLY_LOCK_RELATED_BUGS ) {
+    			//Do Nothing
+    		} else {
+    			addLoopBug( x, 1 );
+    		}
+    	}
+
+    	if (direction == 1)
+        for (Pair pair: hbg.getEdge().get(x)) {
+        	int y = pair.destination;
+        	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) )
+        		dfsTraversing( y, direction, endIndex, resources );
         }
         
     	// for needed in the future
@@ -215,19 +257,9 @@ public class LockCase {
         	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) 
         			&& !hbg.getNodeOPTY(y).equals(LogType.ThdEnter.toString())
         			)
-        		dfsTraversing( y, -1, endIndex );
+        		dfsTraversing( y, -1, endIndex, resources );
         }
     }
-    
-    //tmp
-    public void scanAndDfs( int beginIndex, int endIndex ) {
-    	for (int i = beginIndex; i <= endIndex; i++) {
-    		dfsTraversing(i, 1, i);
-    	}
-    }
-    
-
-    
     
     
     
@@ -235,7 +267,7 @@ public class LockCase {
     
     int tmpflag = 0;  //just for test
     /** JX - findLockRelatedBugs - */    
-    public void findLockRelatedBugs( List<Integer> firstbatchLocks ) {
+    public void startCascadingChainAnalysis( List<Integer> firstbatchLocks ) {
     	System.out.println( "JX - INFO - findLockRelatedBugs" );
     	if ( firstbatchLocks.size() <= 0 ) {
     		System.out.println( "JX - INFO - CascadingBugDetection - there is no first batch of locks, finished normally!" );

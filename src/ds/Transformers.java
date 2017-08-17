@@ -41,7 +41,7 @@ public class Transformers {
 		TextFileReader reader;
 	    String tmpline;
 	  
-    	reader = new TextFileReader("resource/dynamicpoints", true);
+    	reader = new TextFileReader("resource/staticpoints", true);
 		while ( (tmpline = reader.readLine()) != null ) {
 			String[] strs = tmpline.split("\\s+", 4);
 			classesForInst.add( formatClassName(strs[0]) );

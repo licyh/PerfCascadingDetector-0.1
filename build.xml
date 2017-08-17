@@ -425,7 +425,7 @@
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
 	            		<zipfileset dir="${src.ds.dir}" includes="res/mr-4813/bugconfig" fullpath="resource/bugconfig"/>
-	                    <zipfileset dir="${src.ds.dir}" includes="res/mr-4813/dynamicpoints" fullpath="resource/dynamicpoints"/>
+	                    <zipfileset dir="${src.ds.dir}" includes="res/mr-4813/staticpoints" fullpath="resource/staticpoints"/>
 	            </jar>
 	    </target>
 	
@@ -443,7 +443,7 @@
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
 	            		<zipfileset dir="${src.ds.dir}" includes="res/mr-4576/bugconfig" fullpath="resource/bugconfig"/>
-	                    <zipfileset dir="${src.ds.dir}" includes="res/mr-4576/dynamicpoints" fullpath="resource/dynamicpoints"/>
+	                    <zipfileset dir="${src.ds.dir}" includes="res/mr-4576/staticpoints" fullpath="resource/staticpoints"/>
 	            </jar>
 	    </target>
 		
@@ -461,7 +461,7 @@
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
 	            		<zipfileset dir="${src.ds.dir}" includes="res/mr-4088/bugconfig" fullpath="resource/bugconfig"/>
-	                    <zipfileset dir="${src.ds.dir}" includes="res/mr-4088/dynamicpoints" fullpath="resource/dynamicpoints"/>
+	                    <zipfileset dir="${src.ds.dir}" includes="res/mr-4088/staticpoints" fullpath="resource/staticpoints"/>
 	            </jar>
 	    </target>
 		
@@ -479,7 +479,7 @@
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
 	            		<zipfileset dir="${src.ds.dir}" includes="res/mr-2705/bugconfig" fullpath="resource/bugconfig"/>
-	                    <zipfileset dir="${src.ds.dir}" includes="res/mr-2705/dynamicpoints" fullpath="resource/dynamicpoints"/>
+	                    <zipfileset dir="${src.ds.dir}" includes="res/mr-2705/staticpoints" fullpath="resource/staticpoints"/>
 	            </jar>
 	    </target>
 	    	
@@ -497,7 +497,7 @@
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
 	            		<zipfileset dir="${src.ds.dir}" includes="res/ha-4584/bugconfig" fullpath="resource/bugconfig"/>
-	                    <zipfileset dir="${src.ds.dir}" includes="res/ha-4584/dynamicpoints" fullpath="resource/dynamicpoints"/>
+	                    <zipfileset dir="${src.ds.dir}" includes="res/ha-4584/staticpoints" fullpath="resource/staticpoints"/>
 	            </jar>
 	    </target>
 		
@@ -515,7 +515,7 @@
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
 	            		<zipfileset dir="${src.ds.dir}" includes="res/hd-5153/bugconfig" fullpath="resource/bugconfig"/>
-	                    <zipfileset dir="${src.ds.dir}" includes="res/hd-5153/dynamicpoints" fullpath="resource/dynamicpoints"/>
+	                    <zipfileset dir="${src.ds.dir}" includes="res/hd-5153/staticpoints" fullpath="resource/staticpoints"/>
 	            </jar>
 	    </target>
 		
@@ -534,7 +534,7 @@
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
 	            		<zipfileset dir="${src.ds.dir}" includes="res/ca-6744/bugconfig" fullpath="resource/bugconfig"/>
-	                    <zipfileset dir="${src.ds.dir}" includes="res/ca-6744/dynamicpoints" fullpath="resource/dynamicpoints"/>
+	                    <zipfileset dir="${src.ds.dir}" includes="res/ca-6744/staticpoints" fullpath="resource/staticpoints"/>
 	            </jar>
 	    </target>
 	
