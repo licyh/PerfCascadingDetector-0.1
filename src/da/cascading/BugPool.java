@@ -101,7 +101,7 @@ public class BugPool {
     public void printJobIdentity() {
     	JobTagger jobTagger = new JobTagger( this.hbg );
     	for (int index: bugnodeset) {
-    		jobTagger.findJobIdentity(index);
+    		jobTagger.findJobID(index);
     		System.out.println("\n");
     	}
     }

@@ -1,5 +1,6 @@
 package da.tagging;
 
+import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
 import java.util.List;
@@ -23,20 +24,53 @@ public class JobTagger {
 	}
 	
 	
+	public boolean isSameJobID(int xIndex, int yIndex) {
+		return findJobID(xIndex).equals(findJobID(yIndex));
+	}
+	
+	
 	/**
 	 * findJobIdentity - look backward to find its fathers
 	 * Note: find the Job Entry/API (RPC handler Enter / Event hander Enter / Thread Create / Process Create)
 	 */
-	public void findJobIdentity(int nodeIndex) {
+	public String findJobID(int nodeIndex) {
 	    BitSet traversedNodes = new BitSet();  	//tmp var. set of traversed nodes for a single code snippet, e.g, event handler
 		System.out.println("JX - INFO - findJobIdentity for " + hbg.getPrintedIdentity(nodeIndex));
-		dfsTraversing(nodeIndex, traversedNodes);
+		
+		ArrayList<Integer> pathToRoot = new ArrayList<Integer>();
+		dfsTraversing(nodeIndex, traversedNodes, pathToRoot);
+		int jobIndex = -1;
+		String jobID = null;
+		for (int i=pathToRoot.size()-1; i>=0; i--) {
+			int index = pathToRoot.get(i);
+			if ( isEnter(index) && !hbg.getNodeTID(index).equals("1") ) {
+				jobIndex = index;
+				jobID = hbg.getNodeOPVAL(index);
+				return jobID;
+			}
+		}
+		for (int i=pathToRoot.size()-1; i>=0; i--) {
+			int index = pathToRoot.get(i);
+			if ( !hbg.getNodeTID(index).equals("1") ) {
+				jobIndex = index;
+				jobID = hbg.getNodePIDTID(index);
+				return jobID;
+			}
+		}
+		jobIndex = pathToRoot.get(pathToRoot.size()-1);
+		jobID = hbg.getNodePIDTID(jobIndex);
+		return jobID;
 	}
 	
 	
-    public void dfsTraversing( int x, BitSet traversedNodes ) {
-    	if ( isConnection(x) )
-    		 System.out.println("JX - DEBUG - path: " + hbg.getPrintedIdentity(x));
+	/**
+	 * Note: should be only one path, so we use a List for path
+	 */
+    public void dfsTraversing( int x, BitSet traversedNodes, List<Integer> pathToRoot ) {
+    	if ( isConnection(x) ) {
+    		 //System.out.println("JX - DEBUG - path: " + hbg.getPrintedIdentity(x));
+    		 pathToRoot.add(x);
+    	}
     	//traversedNodes.set( x );
     	
     	//termination condition
@@ -48,7 +82,7 @@ public class JobTagger {
     	if ( !isEnter(x) ) {
     		int y = x-1;  //so that is, upward only on its thread, without considering thread.join/future.get, but should consider xxxEnter etc.
     		if ( !traversedNodes.get(y) ) {
-    			dfsTraversing( y, traversedNodes );
+    			dfsTraversing( y, traversedNodes, pathToRoot );
     		}
     	}
     	else {
@@ -62,7 +96,7 @@ public class JobTagger {
             			System.out.println("JX - ERROR - JobTagger: Many creations for " + hbg.getPrintedIdentity(x));
             			return;
             		}
-            		dfsTraversing( y, traversedNodes );
+            		dfsTraversing( y, traversedNodes, pathToRoot );
             	}
             }        
     	}    	

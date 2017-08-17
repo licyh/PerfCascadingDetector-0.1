@@ -2181,8 +2181,11 @@ JX - DEBUG - 34802 : org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496; 9822
 	
 	
 	//Modified by JX
+    public boolean isConcurrent(int x, int y) {
+    	return isFlippedorder(x, y);
+    }
     /**
-     * isFlippedorder - ie, concurrent or not? 
+     * isFlippedorder - ie, concurrent or not
      */
     public boolean isFlippedorder(int x, int y) {
 		IdPair ip1 = idplist.get(x);

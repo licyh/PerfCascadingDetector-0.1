@@ -89,13 +89,23 @@ public class QueueCase {
 			}
 			*/
 			
-			System.out.println("JX - INFO - QueueCase: 29th thread: " + (endPos-beginPos+1));
+			System.out.println( "JX - DEBUG - QueueCase: (40836, 41123) = " + hbg.isConcurrent(40836, 41123) 
+				+ " JobIDSame?=" + new JobTagger(this.hbg).isSameJobID(40836, 41123) );
+			for (int i = beginPos; i <= endPos; i++) {
+				System.out.println( "JX - DEBUG - QueueCase: (40836, " + list.get(i) + ") = " + hbg.isConcurrent(40836, list.get(i)) 
+					+ " JobIDSame?=" + new JobTagger(this.hbg).isSameJobID(40836, list.get(i)) );
+			}
+			for (int i = beginPos; i <= endPos; i++) {
+				System.out.println( "JX - DEBUG - QueueCase: (41123, " + list.get(i) + ") = " + hbg.isConcurrent(41123, list.get(i))
+					+ " JobIDSame?=" + new JobTagger(this.hbg).isSameJobID(41123, list.get(i)) );
+			}
+			
 			for (int i = beginPos; i <= endPos; i++) {
 				
 				//for (int j = i+1; j <= endPos; j++) {				
 					int beginIndex = list.get(i);
 					//test
-					new JobTagger(this.hbg).findJobIdentity(beginIndex);
+					//new JobTagger(this.hbg).findJobIdentity(beginIndex);
 					int endIndex = handlerBlocks.get(beginIndex);
 					findBugLoops(beginIndex, endIndex);
 				//}
