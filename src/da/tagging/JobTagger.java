@@ -39,6 +39,8 @@ public class JobTagger {
     	//traversedNodes.set( x );
     	
     	//termination condition
+    	if (hbg.getNodeTID(x).equals("1"))
+    		return;
     	if (hbg.getBackEdge().get(x).size() <= 0)
     		return;
     	
