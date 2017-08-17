@@ -17,6 +17,8 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.*;
 
+import com.text.TextFileReader;
+
 
 /*
 // JX - this is form class '_DM_Log'
@@ -2117,7 +2119,9 @@ JX - DEBUG - 34802 : org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496; 9822
 		try {
 		File file = new File(xmldir + "result/suggestion");
 		file.mkdir();
-		BufferedReader br = new BufferedReader(new FileReader(path));
+		
+		TextFileReader br = new TextFileReader(path);
+		//BufferedReader br = new BufferedReader(new FileReader(path));
 		    String line = "";
 		    while ((line = br.readLine())!=null){
 			String [] eles = line.split(" ");

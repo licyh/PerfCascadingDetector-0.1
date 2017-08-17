@@ -224,10 +224,20 @@ public class LockCase {
      */
     public void dfsTraversing2( int x, int direction, int endIndex, ArrayList<Integer> resources) {
     	traversedNodes.set( x );
-    	if ( hbg.getNodeOPTY(x).equals("LockRequire") ) {
+    	
+    	if ( hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()) ) {
     		resources.add( x );
     	}
-    	// TODO - for Loop - suspected bugs
+    	
+    	if ( hbg.getNodeOPTY(x).equals(LogType.ThdEnter.name())
+    			|| hbg.getNodeOPTY(x).equals(LogType.EventProcEnter.name())
+    			|| hbg.getNodeOPTY(x).equals(LogType.MsgProcEnter.name())
+    			) {
+    		resources.add( x );
+    	}
+    	
+    	/*
+    	// Non-cascaded loops
     	if ( hbg.getNodeOPTY(x).equals("LoopBegin") ) {
     		// add to bug pool
     		if ( ONLY_LOCK_RELATED_BUGS ) {
@@ -236,12 +246,13 @@ public class LockCase {
     			addLoopBug( x, 1 );
     		}
     	}
+    	*/
 
     	if (direction == 1)
         for (Pair pair: hbg.getEdge().get(x)) {
         	int y = pair.destination;
         	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) )
-        		dfsTraversing( y, direction, endIndex, resources );
+        		dfsTraversing2( y, direction, endIndex, resources );
         }
         
     	// for needed in the future
@@ -257,7 +268,7 @@ public class LockCase {
         	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) 
         			&& !hbg.getNodeOPTY(y).equals(LogType.ThdEnter.toString())
         			)
-        		dfsTraversing( y, -1, endIndex, resources );
+        		dfsTraversing2( y, -1, endIndex, resources );
         }
     }
     
