@@ -238,7 +238,7 @@ public class LockCase {
     		resources.add( x );
     	}
     	
-    	if ( hbg.getNodeOPTY(x).equals(LogType.ThdEnter.name())
+    	if ( hbg.getNodeOPTY(x).equals(LogType.ThdEnter.name() )
     			|| hbg.getNodeOPTY(x).equals(LogType.EventProcEnter.name())
     			|| hbg.getNodeOPTY(x).equals(LogType.MsgProcEnter.name())
     			) {
@@ -266,12 +266,14 @@ public class LockCase {
     	}
     	*/
 
+    	/*
     	if (direction == 1)
         for (Pair pair: hbg.getEdge().get(x)) {
         	int y = pair.destination;
         	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) )
         		dfsTraversing2( y, direction, endIndex, resources );
         }
+        */
         
     	// for needed in the future
         for (Pair pair: hbg.getBackEdge().get(x)) {
