@@ -187,7 +187,7 @@ public class LockCase {
     		setofinvolvingthreads.add( hbg.getNodePIDTID(index) );
     	}
     	System.out.println("this snippet includes " + traversedNodes.cardinality()
-    						+ " nodes, #firstbatchLocks = " + resources.size() + ", #involving threads = " + setofinvolvingthreads);
+    						+ " nodes, #Contention Resources in Sink = " + resources.size() + ", #involving threads = " + setofinvolvingthreads);
     	
     	return resources;
     }
@@ -245,6 +245,13 @@ public class LockCase {
     		resources.add( x );
     	}
     	
+    	
+    	// Termination Conditions
+    	if ( hbg.getNodeOPTY(x).equals(LogType.ThdEnter.name()) ) {
+    		System.out.println("JX - debug - LockCase: termination at ThdEnter " + hbg.getPrintedIdentity(x) );
+    		return;
+    	}
+    	
     	/*
     	// Non-cascaded loops
     	if ( hbg.getNodeOPTY(x).equals("LoopBegin") ) {
@@ -267,17 +274,9 @@ public class LockCase {
     	// for needed in the future
         for (Pair pair: hbg.getBackEdge().get(x)) {
         	int y = pair.destination;
-        	
-        	//debug
-        	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) 
-        			&& hbg.getNodeOPTY(y).equals(LogType.ThdEnter.toString()) ) {
-        		System.out.println("JX - debug - LockCase: ThdEnter " + hbg.getPrintedIdentity(y) );
-        	}
-        	
-        	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) 
-        			&& !hbg.getNodeOPTY(y).equals(LogType.ThdEnter.toString())
-        			)
+        	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) ) {
         		dfsTraversing2( y, -1, endIndex, resources );
+        	}
         }
     }
     
