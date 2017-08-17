@@ -334,10 +334,14 @@ class MapReduceTransformer extends Transformer {
 		    /* for thread join */
 		    methodUtil.insertCallInst("java.lang.Thread", "join", 0, logClass, thdJoinLog, classUtil);
 		
+		    
 		    /* for rpc calling */
 		    methodUtil.insertRPCCallInst(logClass, msgSendingLog, rpcInfo);
+		    if ( !bugConfig.getBugId().equals("mr-4813") )   //Just tmp: for non-manually-rpc version of mr-4813
 		    methodUtil.insertRPCInvoke(logClass, msgSendingLog);
 		
+		    
+		    
 		    
 		    /* for process create */
 		    if (methodName.equals("runCommand") && className.endsWith("org.apache.hadoop.util.Shell")) {
