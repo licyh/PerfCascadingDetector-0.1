@@ -119,9 +119,7 @@ public class LLAnalysis {
   
 	public void doWork() {
 		System.out.println("\nJX - INFO - LLAnalysis.doWork");
-	    try {
-
-	     
+	    try {	     
 	        // Read external arguments
 	      
 			systemname = Benchmarks.resolveSystem(jarsDir);
@@ -129,8 +127,7 @@ public class LLAnalysis {
 			this.cg = wala.getCallGraph();
 			this.cha = wala.getClassHierarchy();
 
-		
-
+	
 			// Lock analysis
 			this.lockAnalyzer = new LockAnalyzer(this.wala, this.cgNodeList);
 			lockAnalyzer.doWork();

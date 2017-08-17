@@ -7,7 +7,7 @@
 
 
 //added for mr-4088 "queue"
-java.lang.Object.wait(
+//java.lang.Object.wait(
 
 
 //prefixes   #types < 953
