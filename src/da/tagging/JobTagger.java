@@ -38,6 +38,10 @@ public class JobTagger {
     	System.out.println("JX - DEBUG - path: " + x + hbg.getNodeOPTY(x));
     	//traversedNodes.set( x );
     	
+    	//termination condition
+    	if (hbg.getBackEdge().get(x).size() <= 0)
+    		return;
+    	
     	if ( !isEnter(x) ) {
     		int y = x-1;  //so that is, upward only on its thread, without considering thread.join/future.get, but should consider xxxEnter etc.
     		if ( !traversedNodes.get(y) ) {
