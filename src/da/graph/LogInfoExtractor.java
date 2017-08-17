@@ -34,7 +34,7 @@ public class LogInfoExtractor {
     public void doWork() {
     	System.out.println("JX - INFO - LogInfoExtractor: doWork...");
     	extractLogInfo();
-    	computeHandlerInfo();
+    	computeLogInfo();   //including computeHandlerInfo();
     }
     
     
@@ -330,6 +330,16 @@ public class LogInfoExtractor {
 
     
     
+    
+    /***********************************************************************
+     * Compute more useful information
+     **********************************************************************/
+    
+    public void computeLogInfo() {
+    	computeHandlerInfo();
+    }
+    
+    
 	/**
 	 * //note: we think if there are 2 or more thdenter&thdexit in one thread's log, then it is a handler thread
 	 */
@@ -355,5 +365,7 @@ public class LogInfoExtractor {
 			numHandlers ++;
 		}
 	}
+	
+	
     
 }

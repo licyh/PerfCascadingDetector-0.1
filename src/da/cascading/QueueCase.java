@@ -67,6 +67,8 @@ public class QueueCase {
 			int beginPos = thread.getKey();
 			int endPos = thread.getValue();
 			
+			System.out.println("JX - INFO - QueueCase: handlerThreas - " + hbg.getPrintedIdentity(list.get(beginPos)) );
+			
 			// for ca-6744, only focus on this thread.
 			if ( !hbg.getNodeTID( list.get(beginPos) ).equals("29") ) continue;
 			
