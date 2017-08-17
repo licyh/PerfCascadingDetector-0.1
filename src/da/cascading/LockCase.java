@@ -291,9 +291,9 @@ public class LockCase {
     	// for needed in the future
         for (Pair pair: hbg.getBackEdge().get(x)) {
         	int y = pair.destination;
-        	//if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) ) {
+        	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) ) {
         		dfsTraversing2( y, -1, endIndex, resources );
-        	//}
+        	}
         }
     }
     
