@@ -55,8 +55,7 @@ public class JobTagger {
     		}
     	}
     	else {
-    		//System.out.println("JX - INFO - Found Job: " + hbg.getPrintedIdentity(x) );
-    		System.out.println("JX - INFO - meet a Enter: " + hbg.getPrintedIdentity(x) );
+    		//System.out.println("JX - INFO - meet a Enter: " + hbg.getPrintedIdentity(x) );
             List<Pair> list = hbg.getBackEdge().get(x);
             int flag = 0;
             for (Pair pair: list) {
@@ -87,16 +86,16 @@ public class JobTagger {
     
     public boolean isMatched(int index, int father) {
     	if ( hbg.getNodeOPTY(index).equals( LogType.EventHandlerBegin.name() )) {
-    		return hbg.getNodeOPTY(index).equals( LogType.EventHandlerCreate.name() );
+    		return hbg.getNodeOPTY(father).equals( LogType.EventHandlerCreate.name() );
     	}
     	else if ( hbg.getNodeOPTY(index).equals( LogType.EventProcEnter.name() )) {
-    		return hbg.getNodeOPTY(index).equals( LogType.EventCreate.name() );
+    		return hbg.getNodeOPTY(father).equals( LogType.EventCreate.name() );
     	}
     	else if ( hbg.getNodeOPTY(index).equals( LogType.MsgProcEnter.name() )) {
-    		return hbg.getNodeOPTY(index).equals( LogType.MsgSending.name() );
+    		return hbg.getNodeOPTY(father).equals( LogType.MsgSending.name() );
     	}
     	else if ( hbg.getNodeOPTY(index).equals( LogType.ThdEnter.name() )) {
-    		return hbg.getNodeOPTY(index).equals( LogType.ThdCreate.name() );
+    		return hbg.getNodeOPTY(father).equals( LogType.ThdCreate.name() );
     	}
     	return false;
     }

@@ -90,6 +90,7 @@ public class QueueCase {
 			
 			
 			for (int i = beginPos; i <= endPos; i++) {
+				
 				//for (int j = i+1; j <= endPos; j++) {
 					int beginIndex = list.get(i);
 					int endIndex = handlerBlocks.get(beginIndex);
