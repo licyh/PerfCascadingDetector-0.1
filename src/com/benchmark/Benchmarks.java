@@ -2,6 +2,8 @@ package com.benchmark;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Benchmarks {
 	
@@ -16,6 +18,7 @@ public class Benchmarks {
 	 * @param pathStr
 	 */
 	public static String resolveBugId(String pathStr) {
+		// check every path component
 		Path path = Paths.get( pathStr );
 		for (int i = 0; i < path.getNameCount(); i++) {
 			String ele = path.getName(i).toString();
@@ -23,6 +26,12 @@ public class Benchmarks {
 			if ( ele.matches( "[a-z]{2}-[0-9]*" ) ) {  //ie, mr-4576
 				return ele;
 			}
+		}
+		// check by directly searching
+		Pattern pattern = Pattern.compile( "[a-z]{2}-[0-9]*" );
+		Matcher matcher = pattern.matcher( pathStr );
+		while ( matcher.find() ) {
+			return matcher.group();
 		}
 		return null;
 	}
