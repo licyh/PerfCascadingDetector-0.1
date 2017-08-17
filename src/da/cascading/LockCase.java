@@ -181,7 +181,7 @@ public class LockCase {
     		System.out.println("JX - WARN - " + "No ClosedCycle: couldn't reach from " + beginIndex + " to " + endIndex);
         	//tmply add, only for ca-6744
         	scanAndDfs(beginIndex, endIndex, resources);
-    	//}
+    	}
     	
     	// analyzing Locks that are inside the executed code
     	Set<String> setofinvolvingthreads = new HashSet<String>();
