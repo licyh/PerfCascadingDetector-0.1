@@ -1,4 +1,4 @@
-//83 (#static codepoints=44)
+//80 (#static codepoints=43)
 CL2: org.apache.hadoop.mapred.MapReduceChildJVM-getVMCommand-201;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-handle-951;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-getProgress-926;|
 CL2: org.apache.hadoop.mapred.MapReduceChildJVM-getVMCommand-201;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-handle-955;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-getState-938;|
 CL2: org.apache.hadoop.mapred.MapReduceChildJVM-getVMCommand-246;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-handle-951;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-getProgress-926;|
@@ -70,9 +70,6 @@ CL2: org.apache.hadoop.yarn.state.StateMachineFactory-addTransition-200;|org.apa
 CL2: org.apache.hadoop.yarn.state.StateMachineFactory-makeStateMachineTable-325;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl-handle-601;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl-getProgress-418;|
 CL2: org.apache.hadoop.yarn.state.StateMachineFactory-makeStateMachineTable-325;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl-handle-601;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl-isFinished-350;|
 CL2: org.apache.hadoop.yarn.state.StateMachineFactory-makeStateMachineTable-325;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl-handle-604;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl-getState-246;|
-CL2: org.apache.hadoop.yarn.state.StateMachineFactory-makeStateMachineTable-330;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl-handle-601;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl-getProgress-418;|
-CL2: org.apache.hadoop.yarn.state.StateMachineFactory-makeStateMachineTable-330;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl-handle-601;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl-isFinished-350;|
-CL2: org.apache.hadoop.yarn.state.StateMachineFactory-makeStateMachineTable-330;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl-handle-604;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl-getState-246;|
 CL2: org.apache.hadoop.yarn.util.Apps-setEnvFromInputString-68;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-handle-951;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-getProgress-926;|
 CL2: org.apache.hadoop.yarn.util.Apps-setEnvFromInputString-68;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-handle-955;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-getState-938;|
 CL3: org.apache.hadoop.mapred.SortedRanges-write-203;|org.apache.hadoop.mapred.Task-write-457;|org.apache.hadoop.mapred.Task-<init>-169;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-handle-955;|org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-getState-938;|

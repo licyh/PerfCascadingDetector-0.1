@@ -1,4 +1,4 @@
-//44 (#static codepoints=44)
+//43 (#static codepoints=43)
 CL2: org.apache.hadoop.mapred.MapReduceChildJVM-getVMCommand-201;
 CL2: org.apache.hadoop.mapred.MapReduceChildJVM-getVMCommand-246;
 CL2: org.apache.hadoop.mapred.MapReduceChildJVM-setVMEnv-99;
@@ -35,7 +35,6 @@ CL2: org.apache.hadoop.yarn.api.records.impl.pb.ContainerLaunchContextPBImpl-ini
 CL2: org.apache.hadoop.yarn.service.AbstractService-changeState-113;
 CL2: org.apache.hadoop.yarn.state.StateMachineFactory-addTransition-200;
 CL2: org.apache.hadoop.yarn.state.StateMachineFactory-makeStateMachineTable-325;
-CL2: org.apache.hadoop.yarn.state.StateMachineFactory-makeStateMachineTable-330;
 CL2: org.apache.hadoop.yarn.util.Apps-setEnvFromInputString-68;
 CL3: org.apache.hadoop.mapred.SortedRanges-write-203;
 CL3: org.apache.hadoop.mapreduce.counters.AbstractCounterGroup-write-160;
