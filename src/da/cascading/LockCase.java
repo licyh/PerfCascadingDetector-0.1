@@ -172,14 +172,16 @@ public class LockCase {
     	// traversing for getting ImmediateBugs & Locks inside the executed code 
     	traversedNodes.clear();
     	
+    	/*
     	if ( isClosedCycle ) {
     		dfsTraversing( beginIndex, 1, endIndex, resources);  //modified for ca-6744
     	}
-    	else {
+    	*/
+    	//else {
     		System.out.println("JX - WARN - " + "couldn't reach from " + beginIndex + " to " + endIndex);
         	//tmply add, only for ca-6744
         	scanAndDfs(beginIndex, endIndex, resources);
-    	}
+    	//}
     	
     	// analyzing Locks that are inside the executed code
     	Set<String> setofinvolvingthreads = new HashSet<String>();
