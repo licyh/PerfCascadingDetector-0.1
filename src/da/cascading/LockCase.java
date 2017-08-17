@@ -148,11 +148,20 @@ public class LockCase {
     }
     
     
+    
+    int tmpxx = 0;
     public void handleSinkInstance(int beginIndex, int endIndex) {
     	// Step 1 - also can find Non-cascaded loops (ie, immediate loops) in the Sink if needed
     	ArrayList<Integer> crs = identifyContentionResources( beginIndex, endIndex );
+    	
+		// Debugging - print all firt batch of locks' names
+		//if (tmpxx == 0) {
+			printLocks(crs);
+			//tmpxx = 1;
+		//}
+    	
 		// Step 2 - 
-    	startCascadingChainAnalysis( crs );
+    	//startCascadingChainAnalysis( crs );
     }
     
     
@@ -274,7 +283,9 @@ public class LockCase {
     
     
     
-    // 2. findLockRelatedBugs
+    /****
+     * Cascading chain analysis
+     */
     
     int tmpflag = 0;  //just for test
     /** JX - findLockRelatedBugs - */    
@@ -284,10 +295,7 @@ public class LockCase {
     		System.out.println( "JX - INFO - CascadingBugDetection - there is no first batch of locks, finished normally!" );
     		return;
     	}
-    	
-		// Debugging - print all firt batch of locks' names
-		if (tmpflag == 0)
-			printLocks(firstbatchLocks);
+
 		
     	Set<Integer> curbatchLocks = new TreeSet<Integer>( firstbatchLocks );
     	int curCascadingLevel = 2;   //this is the minimum level for lock-related cascading bugs
