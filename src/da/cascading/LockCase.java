@@ -174,6 +174,7 @@ public class LockCase {
     	  	
     	if (Benchmarks.resolveBugId(hbg.getTargetDir()).equals("ca-6744")) {
     		//tmply add, only for ca-6744
+    		System.out.print("JX - DEBUG - LockCass: enter ca-6744");
         	scanAndDfs(beginIndex, endIndex, resources);	
     	}
     	else {
@@ -260,10 +261,12 @@ public class LockCase {
     	
     	
     	// Termination Conditions
+    	/*
     	if ( hbg.getNodeOPTY(x).equals(LogType.ThdEnter.name()) ) {
     		System.out.println("JX - debug - LockCase: termination at ThdEnter " + hbg.getPrintedIdentity(x) );
     		return;
     	}
+    	*/
     	
     	/*
     	// Non-cascaded loops
