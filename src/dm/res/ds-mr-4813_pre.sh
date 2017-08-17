@@ -28,7 +28,7 @@ sleep 2s
 # Stop hadoop so that NOT under logging
 echo "JX - INFO - stop hadoop yarn .."
 stop-yarn.sh
-#stop-dfs.sh
+stop-dfs.sh
 if [ $? -ne 0 ]; then
   echo "stop xxx error"
   exit
@@ -37,6 +37,9 @@ sleep 2s
 jps
 sleep 1s
 rm ~/hadoop/install/hadoop-0.23.3/logs/*
+
+
+
 
 # Clean
 echo "JX - INFO - clean $dm_dir .."
@@ -49,7 +52,7 @@ mkdir $dm_dir
 # Compile
 echo "JX - INFO - compile jar-dm-$bug_id .."
 cd $project_dir
-ant jar-dm-$bug_id
+ant jar-ds-$bug_id
 if [ $? -ne 0 ]; then
   echo "compile error"
   exit
