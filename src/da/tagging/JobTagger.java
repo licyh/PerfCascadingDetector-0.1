@@ -29,37 +29,41 @@ public class JobTagger {
 	 */
 	public void findJobIdentity(int nodeIndex) {
 	    BitSet traversedNodes = new BitSet();  	//tmp var. set of traversed nodes for a single code snippet, e.g, event handler
-		traversedNodes.clear();
 		System.out.println("JX - INFO - findJobIdentity for " + hbg.getPrintedIdentity(nodeIndex));
 		dfsTraversing(nodeIndex, traversedNodes);
 	}
 	
 	
     public void dfsTraversing( int x, BitSet traversedNodes ) {
+    	System.out.println("JX - DEBUG - path: " + x + hbg.getNodeOPTY(x));
     	//traversedNodes.set( x );
     	
-    	if ( !isJob(x) ) {
-    		int y = x-1;
+    	if ( !isEnter(x) ) {
+    		int y = x-1;  //so that is, upward only on its thread, without considering thread.join/future.get, but should consider xxxEnter etc.
     		if ( !traversedNodes.get(y) ) {
     			dfsTraversing( y, traversedNodes );
     		}
     	}
-    	else {// isJob(x)
-    		System.out.println("JX - INFO - Found Job: " + hbg.getPrintedIdentity(x) );
+    	else {
+    		//System.out.println("JX - INFO - Found Job: " + hbg.getPrintedIdentity(x) );
+    		System.out.println("JX - INFO - meet a Enter: " + hbg.getPrintedIdentity(x) );
             List<Pair> list = hbg.getBackEdge().get(x);
+            int flag = 0;
             for (Pair pair: list) {
             	int y = pair.destination;
-            	if ( !traversedNodes.get(y) && isMatched(x, y) )
+            	if ( !traversedNodes.get(y) && isMatched(x, y) ) {
+            		if (++flag > 1) {
+            			System.out.println("JX - ERROR - JobTagger: Many creations for " + hbg.getPrintedIdentity(x));
+            			return;
+            		}
             		dfsTraversing( y, traversedNodes );
-            }
-            
+            	}
+            }        
     	}    	
     }
     
-   
     
-    
-    public boolean isJob(int index) {
+    public boolean isEnter(int index) {
     	if ( hbg.getNodeOPTY(index).equals( LogType.EventHandlerBegin.name() )
     			|| hbg.getNodeOPTY(index).equals( LogType.EventProcEnter.name() )
     			|| hbg.getNodeOPTY(index).equals( LogType.MsgProcEnter.name() )

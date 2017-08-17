@@ -149,7 +149,6 @@ public class LockCase {
     }
     
     
-    
     int tmpxx = 0;
     public void handleSinkInstance(int beginIndex, int endIndex) {
     	// Step 1 - also can find Non-cascaded loops (ie, immediate loops) in the Sink if needed
@@ -161,8 +160,8 @@ public class LockCase {
 			//tmpxx = 1;
 		//}
     	
-		// Step 2 - 
-    	//startCascadingChainAnalysis( crs );
+		// Step 2 - cascading chain 
+    	startCascadingChainAnalysis( crs );
     }
     
     
@@ -305,15 +304,15 @@ public class LockCase {
     
     int tmpflag = 0;  //just for test
     /** JX - findLockRelatedBugs - */    
-    public void startCascadingChainAnalysis( List<Integer> firstbatchLocks ) {
+    public void startCascadingChainAnalysis( List<Integer> firstResources ) {
     	System.out.println( "JX - INFO - findLockRelatedBugs" );
-    	if ( firstbatchLocks.size() <= 0 ) {
+    	if ( firstResources.size() <= 0 ) {
     		System.out.println( "JX - INFO - CascadingBugDetection - there is no first batch of locks, finished normally!" );
     		return;
     	}
 
 		
-    	Set<Integer> curbatchLocks = new TreeSet<Integer>( firstbatchLocks );
+    	Set<Integer> currentResources = new TreeSet<Integer>( firstResources );
     	int curCascadingLevel = 2;   //this is the minimum level for lock-related cascading bugs
         for (int i = 1; i <= CASCADING_LEVEL; i++) {
         	predNodes[i].clear();
@@ -323,24 +322,24 @@ public class LockCase {
     	
     	while ( curCascadingLevel <= CASCADING_LEVEL ) {
     		// Find affected locks in different threads
-    		Set<Integer> nextbatchLocks = findNextbatchLocksInDiffThreads( curbatchLocks, curCascadingLevel );
-            System.out.println("batch #" + (++tmpbatch) + ":#locks=" + curbatchLocks.size() + " <--- #" + tmpbatch + ".5:#locks=" + nextbatchLocks.size() );
+    		Set<Integer> nextResources = findContendingResources( currentResources, curCascadingLevel );
+            System.out.println("batch #" + (++tmpbatch) + ":#locks=" + currentResources.size() + " <--- #" + tmpbatch + ".5:#locks=" + nextResources.size() );
         
             // Debugging
             if ( tmpflag == 0 && curCascadingLevel == 2 )
-    			printLocks(nextbatchLocks);
+    			printLocks(nextResources);
                 
             // Find affected locks based on 1 in the same thread
-    		curbatchLocks = findNextbatchLocksInSameThread( nextbatchLocks, curCascadingLevel );
-    		System.out.println("batch #" + (tmpbatch+1) + ":#intermediate locks=" + curbatchLocks.size()  );
+    		currentResources = findInnerResourcesAndLoops( nextResources, curCascadingLevel );
+    		System.out.println("batch #" + (tmpbatch+1) + ":#intermediate locks=" + currentResources.size()  );
     		
     		// Debugging
             if ( tmpflag == 0 && curCascadingLevel == 2 ) {
-            	printLocks(curbatchLocks);
+            	printLocks(currentResources);
     			tmpflag = 1;
             }
     		
-        	if ( curbatchLocks.size() <= 0 ) {
+        	if ( currentResources.size() <= 0 ) {
     			System.out.println( "JX - INFO - CascadingBugDetection - finished normally" );
     			break;
     		}
@@ -360,34 +359,40 @@ public class LockCase {
     
     
     // JX - Find affected locks in different threads
-    public Set<Integer> findNextbatchLocksInDiffThreads( Set<Integer> batchLocks, int curCascadingLevel ) {
+    public Set<Integer> findContendingResources( Set<Integer> resources, int curCascadingLevel ) {
     	//ArrayList<Integer> nextbatchLocks = new ArrayList<Integer>();
     	Set<Integer> nextbatchLocks = new TreeSet<Integer>();
-    	for (int lockindex: batchLocks) {
-    		String pidopval0 = hbg.getNodePIDOPVAL0(lockindex); 
-    		// 1. if not R lock; cuz R will not affect R, but a general obj.lock can affect the obj itself
-    		if ( !ag.isReadLock(lockindex) ) {                
-    			ArrayList<Integer> list = ag.accurateLockmemref.get( pidopval0 );
-	    		for (int index: list) {
-	    			if (lockindex == index) continue;  
-	                if ( hbg.isFlippedorder(lockindex, index) ) {
-	                	nextbatchLocks.add( index );
-	                	predNodes[curCascadingLevel].put(index, lockindex); 
-	                }
-	    		}
-    		}                                                
-    		// 2. if R/W lock
-    		if ( ag.isReadOrWriteLock(lockindex) ) {          
-    			String correspondingPidopval0 = ag.rwlockmatch.get( pidopval0 )[1];
-    			ArrayList<Integer> list = ag.accurateLockmemref.get( correspondingPidopval0 );  //or using dotlockmemref.get( xx )
-    			if (list != null)  //needed
-    			for (int index: list) {                                                                 
-    				if ( hbg.isFlippedorder(lockindex, index) ) {      
-    					nextbatchLocks.add( index );            
-    					predNodes[curCascadingLevel].put(index, lockindex); 
-    				}                                    
-    			}
-    		}  
+    	for (int resIndex: resources) {  
+    		if ( hbg.getNodeOPTY(resIndex).equals(LogType.LockRequire.name()) ) {
+    			String pidopval0 = hbg.getNodePIDOPVAL0(resIndex); 
+        		// 1. if not R lock; cuz R will not affect R, but a general obj.lock can affect the obj itself
+        		if ( !ag.isReadLock(resIndex) ) {                
+        			ArrayList<Integer> list = ag.accurateLockmemref.get( pidopval0 );
+    	    		for (int index: list) {
+    	    			if (resIndex == index) continue;  
+    	                if ( hbg.isFlippedorder(resIndex, index) ) {
+    	                	nextbatchLocks.add( index );
+    	                	predNodes[curCascadingLevel].put(index, resIndex); 
+    	                }
+    	    		}
+        		}                                                
+        		// 2. if R/W lock
+        		if ( ag.isReadOrWriteLock(resIndex) ) {          
+        			String correspondingPidopval0 = ag.rwlockmatch.get( pidopval0 )[1];
+        			ArrayList<Integer> list = ag.accurateLockmemref.get( correspondingPidopval0 );  //or using dotlockmemref.get( xx )
+        			if (list != null)  //needed
+        			for (int index: list) {                                                                 
+        				if ( hbg.isFlippedorder(resIndex, index) ) {      
+        					nextbatchLocks.add( index );            
+        					predNodes[curCascadingLevel].put(index, resIndex); 
+        				}                                    
+        			}
+        		}	
+    		}
+    		// only for ca-6744 now
+    		else if ( hbg.getNodeOPTY(resIndex).equals(LogType.ThdEnter.name()) ) {
+    			//TODO
+    		}
     	} 
     	return nextbatchLocks;
     }
@@ -395,9 +400,9 @@ public class LockCase {
     
     // JX - Find affected locks based on 'findNextbatchLocksInDiffThreads' in the same thread
     // New: find inner (bug) loops and locks, may across multiple threads
-    public Set<Integer> findNextbatchLocksInSameThread( Set<Integer> batchLocks, int curCascadingLevel ) {
+    public Set<Integer> findInnerResourcesAndLoops( Set<Integer> resources, int curCascadingLevel ) {
     	Set<Integer> nextbatchLocks = new TreeSet<Integer>();
-		for (int index: batchLocks) {
+		for (int index: resources) {
 			int beginIndex = index;
 			if ( lockBlocks.get(beginIndex) == null ) continue;
 			int endIndex = lockBlocks.get( beginIndex );
