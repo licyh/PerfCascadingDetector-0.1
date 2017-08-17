@@ -36,7 +36,7 @@ public class JobTagger {
 	
     public void dfsTraversing( int x, BitSet traversedNodes ) {
     	if ( isConnection(x) )
-    		 System.out.println("JX - DEBUG - path: " + x + hbg.getNodeOPTY(x) + hbg.getNodePIDTID(x));
+    		 System.out.println("JX - DEBUG - path: " + hbg.getPrintedIdentity(x));
     	//traversedNodes.set( x );
     	
     	//termination condition
