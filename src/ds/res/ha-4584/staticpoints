@@ -19,3 +19,4 @@ Lorg/apache/hadoop/hdfs/server/datanode/FSDataset$FSDir getBlockInfo 229 70 0
 Lorg/apache/hadoop/hdfs/server/namenode/FSImage <init> 144 908 1
 
 Lorg/apache/hadoop/hdfs/server/namenode/NamenodeFsck lostFoundMove 367 947 1
+

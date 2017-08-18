@@ -1,7 +1,80 @@
-// HDFS namenode WRITE op - ie, call NameNode.addBlock
-// client-side
-//org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer run 522              TargetCodeBegin
-//org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer run 523              TargetCodeEnd
-// server-side
-org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer addBlock 563      TargetCodeBegin
-org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer addBlock 565      TargetCodeEnd
+Lorg/apache/hadoop/hdfs/server/blockmanagement/BlockManager reportDiff 1848 1730 -3
+
+Lorg/apache/hadoop/hdfs/server/blockmanagement/BlockManager reportDiff 1863 1733 -3
+
+Lorg/apache/hadoop/hdfs/server/blockmanagement/BlockManager reportDiff 1848 1737 -3
+
+Lorg/apache/hadoop/hdfs/server/blockmanagement/BlockManager reportDiff 1848 1751 -3
+
+Lorg/apache/hadoop/hdfs/server/blockmanagement/BlockManager processFirstBlockReport 1773 1775 -3
+
+Lorg/apache/hadoop/hdfs/server/namenode/INode getPathNames 647 2011 -1
+Lorg/apache/hadoop/hdfs/server/namenode/FSImageSerialization readPathComponents 427 2011 -1
+
+Lorg/apache/hadoop/hdfs/server/namenode/EditLogFileOutputStream preallocate 228 228 -5
+
+Lorg/apache/hadoop/hdfs/server/datanode/BPServiceActor reportReceivedDeletedBlocks 291 2759 2
+
+Lorg/apache/hadoop/hdfs/server/namenode/FSEditLog <init> 217 347 -1
+
+Lorg/apache/hadoop/hdfs/server/namenode/FSEditLog <init> 217 457 -1
+Lorg/apache/hadoop/hdfs/server/namenode/BackupImage tryConvergeJournalSpool 282 457 1
+Lorg/apache/hadoop/hdfs/server/namenode/FSImageFormat$Loader loadFilesUnderConstruction 839 457 -1
+Lorg/apache/hadoop/hdfs/server/namenode/JournalSet mapJournalsAndReportErrors 371 457 1
+Lorg/apache/hadoop/hdfs/server/namenode/INode getPathNames 647 457 -1
+Lorg/apache/hadoop/hdfs/server/namenode/FSEditLogOp$OpInstanceCache get 176 457 -1
+Lorg/apache/hadoop/hdfs/server/namenode/FSImagePreTransactionalStorageInspector getLatestEditsFiles 266 457 -1
+Lorg/apache/hadoop/hdfs/server/namenode/BackupImage tryConvergeJournalSpool 263 457 -5
+Lorg/apache/hadoop/hdfs/server/namenode/Checkpointer rollForwardByApplyingLogs 310 457 1
+Lorg/apache/hadoop/hdfs/server/namenode/RedundantEditLogInputStream nextValidOp 163 457 -1
+Lorg/apache/hadoop/hdfs/server/namenode/NamenodeFsck check 310 457 -6
+Lorg/apache/hadoop/hdfs/protocolPB/PBHelper convert 1325 457 0
+Lorg/apache/hadoop/hdfs/server/namenode/FSImageTransactionalStorageInspector inspectDirectory 88 457 -1
+Lorg/apache/hadoop/hdfs/server/namenode/FSImageSerialization readPathComponents 427 457 -1
+Lorg/apache/hadoop/hdfs/server/namenode/LeaseManager findLeaseWithPrefixPath 378 457 -1
+Lorg/apache/hadoop/hdfs/server/namenode/snapshot/SnapshotFSImageFormat loadDirectoryDiff 304 457 4
+
+Lorg/apache/hadoop/hdfs/server/namenode/INodeFileUnderConstruction recordModification 169 459 1
+Lorg/apache/hadoop/hdfs/server/namenode/FSEditLogOp$OpInstanceCache get 176 459 -1
+Lorg/apache/hadoop/hdfs/server/namenode/RedundantEditLogInputStream nextValidOp 163 459 -1
+Lorg/apache/hadoop/hdfs/server/namenode/FSImageFormat$Loader loadINode 705 459 6
+Lorg/apache/hadoop/hdfs/server/namenode/snapshot/INodeFileUnderConstructionWithSnapshot toINodeFile 65 459 1
+Lorg/apache/hadoop/hdfs/server/namenode/INodeFile recordModification 160 459 1
+Lorg/apache/hadoop/hdfs/server/namenode/snapshot/FileWithSnapshot$Util collectBlocksBeyondMax 199 459 -5
+Lorg/apache/hadoop/hdfs/protocolPB/ClientNamenodeProtocolServerSideTranslatorPB concat 479 459 2
+Lorg/apache/hadoop/hdfs/server/namenode/FSImageSerialization readCompactBlockArray 488 459 -1
+Lorg/apache/hadoop/hdfs/server/namenode/FSImageSerialization readINodeUnderConstruction 151 459 6
+Lorg/apache/hadoop/hdfs/server/namenode/INodeFile toUnderConstruction 147 459 1
+Lorg/apache/hadoop/hdfs/util/XMLUtils$Stanza getChildren 244 459 -1
+Lorg/apache/hadoop/hdfs/server/namenode/snapshot/INodeFileWithSnapshot toUnderConstruction 55 459 1
+
+Lorg/apache/hadoop/hdfs/server/namenode/FileJournalManager matchEditLogs 246 473 -1
+Lorg/apache/hadoop/hdfs/server/namenode/Checkpointer rollForwardByApplyingLogs 310 473 1
+Lorg/apache/hadoop/hdfs/server/namenode/JournalSet mapJournalsAndReportErrors 371 473 1
+Lorg/apache/hadoop/hdfs/server/namenode/INode getPathNames 647 473 -1
+Lorg/apache/hadoop/hdfs/server/namenode/FSImageFormat$Loader loadFilesUnderConstruction 839 473 -1
+Lorg/apache/hadoop/hdfs/server/namenode/BackupImage tryConvergeJournalSpool 282 473 1
+Lorg/apache/hadoop/hdfs/server/namenode/RedundantEditLogInputStream nextValidOp 163 473 -1
+Lorg/apache/hadoop/hdfs/server/namenode/FSEditLog <init> 217 473 -1
+Lorg/apache/hadoop/hdfs/server/namenode/FSImage renameCheckpoint 1046 473 1
+Lorg/apache/hadoop/hdfs/server/protocol/RemoteEditLogManifest getLogs 65 473 -1
+Lorg/apache/hadoop/hdfs/server/namenode/FSEditLogOp$OpInstanceCache get 176 473 -1
+Lorg/apache/hadoop/hdfs/server/namenode/SaveNamespaceContext <init> 38 473 -1
+Lorg/apache/hadoop/hdfs/server/namenode/FSImage deleteCancelledCheckpoint 1063 473 1
+Lorg/apache/hadoop/hdfs/server/namenode/FSImageSerialization readPathComponents 427 473 -1
+Lorg/apache/hadoop/hdfs/server/namenode/NNStorage <init> 161 473 2
+Lorg/apache/hadoop/hdfs/server/namenode/NamenodeFsck check 310 473 -6
+Lorg/apache/hadoop/hdfs/server/namenode/snapshot/SnapshotFSImageFormat loadDirectoryDiff 304 473 4
+Lorg/apache/hadoop/hdfs/server/namenode/LeaseManager findLeaseWithPrefixPath 378 473 -1
+Lorg/apache/hadoop/hdfs/server/namenode/NNStorage setStorageDirectories 259 473 1
+Lorg/apache/hadoop/hdfs/server/namenode/NNStorage setStorageDirectories 259 473 2
+Lorg/apache/hadoop/hdfs/server/namenode/BackupImage tryConvergeJournalSpool 263 473 -5
+Lorg/apache/hadoop/hdfs/server/namenode/FSImage saveDigestAndRenameCheckpointImage 1176 473 1
+Lorg/apache/hadoop/hdfs/qjournal/server/Journal$1 <init> 870 473 -1
+Lorg/apache/hadoop/hdfs/server/namenode/TransferFsImage downloadMostRecentImageToDirectory 89 473 2
+Lorg/apache/hadoop/hdfs/server/namenode/FSImage doUpgrade 371 473 1
+Lorg/apache/hadoop/hdfs/protocolPB/PBHelper convert 1325 473 0
+Lorg/apache/hadoop/hdfs/server/namenode/FSImagePreTransactionalStorageInspector getLatestEditsFiles 266 473 -1
+Lorg/apache/hadoop/hdfs/server/namenode/FSImage doUpgrade 394 473 1
+Lorg/apache/hadoop/hdfs/server/namenode/NameNode initializeSharedEdits 918 473 2
+Lorg/apache/hadoop/hdfs/server/namenode/FSImageTransactionalStorageInspector inspectDirectory 88 473 -1

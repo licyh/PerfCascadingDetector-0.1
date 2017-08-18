@@ -1,3 +1,17 @@
 org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir getBlockInfo 229 70 0
 org.apache.hadoop.hdfs.server.namenode.NameNode blockReport 986 3443 1
 org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir getBlockInfo 227 227 -1
+
+
+
+================
+PS - //jx: for DataNode <init> ????
+     //jx; for FSDir <init> ????
+================
+hadoop-vagrant-datanode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 986
+hadoop-vagrant-datanode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1003
+hadoop-vagrant-datanode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 536
+hadoop-vagrant-datanode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 227
+hadoop-vagrant-datanode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 229
+hadoop-vagrant-datanode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 253
+hadoop-vagrant-datanode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 271
