@@ -306,8 +306,11 @@ public class HappensBeforeGraph {
                     if ( !tp.equals("ThdEnter")                   // for reused threads!! IMPO!!!
                     	&& !tp.equals("MsgProcEnter")               //not msg/rpc handler enter 
                     	&& !tp.equals("EventProcEnter") ) {       //not event handler enter 
-                    	if ( i > 0 )
+                    	if ( i > 0 ) {
+                    		//newly added
+                    		if ( getNodePIDTID(index-1).equals(getNodePIDTID(index)) )
                     		addedge(index-1, index);			  //ie, 0->1->2->3->4->5
+                    	}
                     	if ( msgflag > 0 )
                     		msgheader = index;
                     }
