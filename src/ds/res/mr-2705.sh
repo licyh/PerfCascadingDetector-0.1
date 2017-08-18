@@ -1,6 +1,6 @@
 project_dir=/home/vagrant/JXCascading-detector          #JX - NO "/" at the end
 
-bug_id=mr-4813
+bug_id=mr-2705
 
 
 cd /tmp/${bug_id}_dm
