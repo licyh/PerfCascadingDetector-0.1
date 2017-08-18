@@ -102,6 +102,8 @@ public class QueueCase {
 			
 			for (int i = beginPos; i <= endPos; i++) {
 				
+				if ( new JobTagger(this.hbg).isSameJobID(40836, list.get(i)) ) continue;
+				
 				//for (int j = i+1; j <= endPos; j++) {				
 					int beginIndex = list.get(i);
 					//test
