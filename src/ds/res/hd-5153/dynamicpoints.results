@@ -1,0 +1,181 @@
+org.apache.hadoop.hdfs.server.namenode.JournalSet mapJournalsAndReportErrors 371 457 1
+org.apache.hadoop.hdfs.server.namenode.LeaseManager findLeaseWithPrefixPath 378 457 -1
+org.apache.hadoop.hdfs.server.namenode.FSImageTransactionalStorageInspector inspectDirectory 88 473 -1
+org.apache.hadoop.hdfs.server.namenode.Checkpointer rollForwardByApplyingLogs 310 473 1
+org.apache.hadoop.hdfs.server.protocol.RemoteEditLogManifest getLogs 65 473 -1
+org.apache.hadoop.hdfs.server.namenode.FSImageFormat$Loader loadINode 705 459 6
+org.apache.hadoop.hdfs.server.namenode.FSImageFormat$Loader loadFilesUnderConstruction 839 473 -1
+org.apache.hadoop.hdfs.server.namenode.JournalSet mapJournalsAndReportErrors 371 473 1
+org.apache.hadoop.hdfs.server.namenode.FSEditLogOp$OpInstanceCache get 176 457 -1
+org.apache.hadoop.hdfs.server.namenode.FSImage saveDigestAndRenameCheckpointImage 1176 473 1
+org.apache.hadoop.hdfs.server.namenode.EditLogFileOutputStream preallocate 228 228 -5
+org.apache.hadoop.hdfs.server.namenode.FSEditLogOp$OpInstanceCache get 176 473 -1
+org.apache.hadoop.hdfs.server.namenode.FSImageTransactionalStorageInspector inspectDirectory 88 457 -1
+org.apache.hadoop.hdfs.server.namenode.FSImage renameCheckpoint 1046 473 1
+org.apache.hadoop.hdfs.server.namenode.FSEditLogOp$OpInstanceCache get 176 459 -1
+org.apache.hadoop.hdfs.server.namenode.LeaseManager findLeaseWithPrefixPath 378 473 -1
+org.apache.hadoop.hdfs.server.blockmanagement.BlockManager reportDiff 1848 1730 -3
+org.apache.hadoop.hdfs.server.namenode.INode getPathNames 647 473 -1
+org.apache.hadoop.hdfs.server.blockmanagement.BlockManager reportDiff 1848 1737 -3
+org.apache.hadoop.hdfs.server.namenode.INode getPathNames 647 2011 -1
+org.apache.hadoop.hdfs.server.blockmanagement.BlockManager reportDiff 1863 1733 -3
+org.apache.hadoop.hdfs.server.namenode.INode getPathNames 647 457 -1
+org.apache.hadoop.hdfs.server.namenode.FSImageFormat$Loader loadFilesUnderConstruction 839 457 -1
+org.apache.hadoop.hdfs.server.blockmanagement.BlockManager processFirstBlockReport 1773 1775 -3
+org.apache.hadoop.hdfs.server.blockmanagement.BlockManager reportDiff 1848 1751 -3
+org.apache.hadoop.hdfs.server.namenode.FileJournalManager matchEditLogs 246 473 -1
+org.apache.hadoop.hdfs.server.namenode.Checkpointer rollForwardByApplyingLogs 310 457 1
+org.apache.hadoop.hdfs.server.namenode.FSImageSerialization readCompactBlockArray 488 459 -1
+org.apache.hadoop.hdfs.server.datanode.BPServiceActor reportReceivedDeletedBlocks 291 2759 2
+
+
+
+
+=========================
+PS - 
+=========================
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 1325, but only can insert at 232, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 1325, but only can insert at 237, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 1325, but only can insert at 237, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 1325, but only can insert at 244, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 1325, but only can insert at 244, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 1325, but only can insert at 250, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 1325, but only can insert at 250, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 1325, but only can insert at 259, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 1325, but only can insert at 303, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 1325, but only can insert at 312, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 1325, but only can insert at 312, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 1325, but only can insert at 323, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 1325, but only can insert at 323, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 918, but only can insert at 851, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 918, but only can insert at 857, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 918
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 259
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 259
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 259, but only can insert at 280, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 259, but only can insert at 280, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 371
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 394
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1046
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1063
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1176
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 647
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 647
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 647
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 147
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 160
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 160, but only can insert at 45, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 169
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 169, but only can insert at 40, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 169, but only can insert at 40, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 88
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 88
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 266
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 266
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 378
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 378
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1773
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1848
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1863
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1848
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1848
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 55
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 55, but only can insert at 34, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 65
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 65, but only can insert at 35, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 371
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 371
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 246, but only can insert at 211, so give up.
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 246
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 228
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 176
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 176
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 176
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 151
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 427
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 427
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 427
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 488
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 163
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 163
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 163
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 705
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 839
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 839
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 304
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 304
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 479
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 65
+hadoop-vagrant-namenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 89
+hadoop-vagrant-datanode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 918, but only can insert at 851, so give up.
+hadoop-vagrant-datanode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 918, but only can insert at 857, so give up.
+hadoop-vagrant-datanode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 918
+hadoop-vagrant-datanode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 259
+hadoop-vagrant-datanode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 259
+hadoop-vagrant-datanode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 259, but only can insert at 280, so give up.
+hadoop-vagrant-datanode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 259, but only can insert at 280, so give up.
+hadoop-vagrant-datanode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 291
+hadoop-vagrant-datanode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1325
+hadoop-vagrant-datanode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1325
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 371
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 394
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1046
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1063
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1176
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 259
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 259
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 259, but only can insert at 280, so give up.
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 259, but only can insert at 280, so give up.
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 918, but only can insert at 851, so give up.
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 918, but only can insert at 857, so give up.
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 918
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 647
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 647
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 647
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 88
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 88
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 266
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 266
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 147
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 160
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 160, but only can insert at 45, so give up.
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 169
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 169, but only can insert at 40, so give up.
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 169, but only can insert at 40, so give up.
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 378
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 378
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1773
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1848
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1863
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1848
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1848
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 55
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 55, but only can insert at 34, so give up.
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 65
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 65, but only can insert at 35, so give up.
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1325
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 1325
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 65
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 89
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 705
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 839
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 839
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 304
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 304
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 151
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 427
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 427
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 427
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 488
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 310
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 310
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 282
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 263
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 282
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 263
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 176
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 176
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 176
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: expected line nmber = 246, but only can insert at 211, so give up.
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 246
+hadoop-vagrant-secondarynamenode-hdfs1.out:JX - DEBUG - DynamicPoint: insert successfully at line number = 228
