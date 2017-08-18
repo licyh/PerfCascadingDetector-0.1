@@ -45,3 +45,4 @@ Lorg/apache/hadoop/mapreduce/lib/aggregate/ValueAggregatorCombiner reduce 34 113
 Lorg/apache/hadoop/mapred/Task done 977 113 -2
 Lorg/apache/hadoop/yarn/server/nodemanager/containermanager/AuxServices <init> 50 113 -1
 
+//Lorg/apache/hadoop/yarn/server/resourcemanager/scheduler/fifo/FifoScheduler allocate 255 353 1
