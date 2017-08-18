@@ -154,7 +154,7 @@
         </target>
 	
 	    <!--target compile ds (MR) -->
-	    <target name="compile-ds" depends="prepare, compile-dm, compile-com, compile-log" description="compile dynamic monitor">
+	    <target name="compile-ds" depends="prepare, compile-dm, compile-sa, compile-com, compile-log" description="compile dynamic monitor">
 	            <javac srcdir="${src.ds.dir}" destdir="${build.classes}" includeantruntime="false">
 	                    <classpath refid="classpath" />
 	            </javac>
