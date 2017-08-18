@@ -1,11 +1,21 @@
-// normal Datanode WRITE op
-//org.apache.hadoop.hdfs.server.datanode.DataXceiver run 107				TargetCodeBegin
-//org.apache.hadoop.hdfs.server.datanode.DataXceiver run 108				TargetCodeEnd 
-// HEARTBEAT rpc sending
-//org.apache.hadoop.hdfs.server.datanode.DataNode offerService 885				TargetCodeBegin
-//org.apache.hadoop.hdfs.server.datanode.DataNode offerService 891				TargetCodeEnd
-// normal namenode WRITE op - ie, call NameNode.addBlock
-org.apache.hadoop.hdfs.server.namenode.NameNode addBlock 685                             TargetCodeBegin
-org.apache.hadoop.hdfs.server.namenode.NameNode addBlock 687                             TargetCodeEnd
+Lorg/apache/hadoop/hdfs/server/datanode/FSDataset$FSDir <init> 133 220 -1
 
+Lorg/apache/hadoop/hdfs/server/datanode/FSDataset$FSDir getBlockInfo 227 227 -1
 
+Lorg/apache/hadoop/hdfs/server/namenode/NameNode blockReport 986 3443 1
+Lorg/apache/hadoop/hdfs/server/namenode/NameNode blocksBeingWrittenReport 1003 3443 1
+
+Lorg/apache/hadoop/hdfs/server/datanode/DataNode <init> 264 664 2
+
+Lorg/apache/hadoop/hdfs/server/datanode/DataNode <init> 264 672 2
+
+Lorg/apache/hadoop/hdfs/server/datanode/DataNode <init> 264 679 2
+
+Lorg/apache/hadoop/hdfs/server/datanode/FSDataset$FSVolume getBlocksBeingWrittenInfo 536 70 0
+Lorg/apache/hadoop/hdfs/server/datanode/FSDataset$FSDir getBlockAndFileInfo 253 70 0
+Lorg/apache/hadoop/hdfs/server/datanode/FSDataset$FSDir getVolumeMap 271 70 0
+Lorg/apache/hadoop/hdfs/server/datanode/FSDataset$FSDir getBlockInfo 229 70 0
+
+Lorg/apache/hadoop/hdfs/server/namenode/FSImage <init> 144 908 1
+
+Lorg/apache/hadoop/hdfs/server/namenode/NamenodeFsck lostFoundMove 367 947 1
