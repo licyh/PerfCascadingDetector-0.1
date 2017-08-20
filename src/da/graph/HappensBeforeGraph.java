@@ -2136,7 +2136,8 @@ JX - DEBUG - 34802 : org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496; 9822
 		IdPair ip1 = idplist.get(x);
 		IdPair ip2 = idplist.get(y);
 		if ( ip1.pid != ip2.pid ) return false;         //JX- don't consider diff processes
-		if ( ip1.tid == ip2.tid ) return false;         //should be IMPO
+		//for only ca-6744 now, should for all cases
+		//if ( ip1.tid == ip2.tid ) return false;         //JX - commented, if wrong, for those event handlers, they could be concurrent in the same tid
 	    if (reachbitset.get(x).get(y)) return false;    //JX- can reach
 	    if (reachbitset.get(y).get(x)) return false;    //JX- can reach
 	    return true;
@@ -2184,8 +2185,8 @@ JX - DEBUG - 34802 : org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496; 9822
 		
 		TextFileReader br = new TextFileReader(path);
 		//BufferedReader br = new BufferedReader(new FileReader(path));
-		    String line = "";
-		    while ((line = br.readLine())!=null){
+		String line = "";
+		while ((line = br.readLine()) != null) {
 			String [] eles = line.split("\\s+");
 			int x = Integer.parseInt(eles[0]);
 			int y = Integer.parseInt(eles[1]);

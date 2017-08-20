@@ -95,9 +95,9 @@ public class QueueCase {
 			
 			System.out.println( "JX - DEBUG - QueueCase: (40836, 41123) = " + hbg.isConcurrent(40836, 41123) 
 				+ " JobIDSame?=" + new JobTagger(this.hbg).isSameJobID(40836, 41123) );
-			System.out.println( "JX - DEBUG - QueueCase: (40836, 41123) = " + hbg.isConcurrent(40836, 41763) 
+			System.out.println( "JX - DEBUG - QueueCase: (40836, 41763) = " + hbg.isConcurrent(40836, 41763) 
 			+ " JobIDSame?=" + new JobTagger(this.hbg).isSameJobID(40836, 41763) );
-			System.out.println( "JX - DEBUG - QueueCase: (40836, 41123) = " + hbg.isConcurrent(40836, 41394) 
+			System.out.println( "JX - DEBUG - QueueCase: (40836, 41394) = " + hbg.isConcurrent(40836, 41394) 
 			+ " JobIDSame?=" + new JobTagger(this.hbg).isSameJobID(40836, 41394) );
 			for (int i = beginPos; i <= endPos; i++) {
 				System.out.println( "JX - DEBUG - QueueCase: (40836, " + list.get(i) + ") = " + hbg.isConcurrent(40836, list.get(i)) 
