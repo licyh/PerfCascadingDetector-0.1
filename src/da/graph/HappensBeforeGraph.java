@@ -2189,6 +2189,7 @@ JX - DEBUG - 34802 : org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496; 9822
 			String [] eles = line.split("\\s+");
 			int x = Integer.parseInt(eles[0]);
 			int y = Integer.parseInt(eles[1]);
+			/* commented by JX
 			if ((!reachbitset.get(x).get(y)) && (!reachbitset.get(y).get(x))) {
 			    String str = suggestion(x,y);
 			    writesuggestion(x,y,str);
@@ -2203,6 +2204,7 @@ JX - DEBUG - 34802 : org.apache.hadoop.mapred.TaskTracker-addTaskToJob-496; 9822
 			    System.out.println(x + " & " + y + " have no HB relation");
 			    continue;
 		        }
+		    */
 			if (reachbitset.get(x).get(y))
 				System.out.println(x + " -> "+ y );
 			if (reachbitset.get(y).get(x))
