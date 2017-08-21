@@ -29,11 +29,12 @@ public class BugPool {
     String medianbugpoolFilename = "output/median_bugpool.txt";
     String simplechainbugpoolFilename = "output/simplechain_bugpool.txt";
     String medianchainbugpoolFilename = "output/medianchain_bugpool.txt";
+    String staticbugpoolFilename = "output/staticbugpool.txt";
     Set<String> simplebugpool = new TreeSet<String>();
 	Set<String> medianbugpool = new TreeSet<String>();
 	Set<String> simplechainbugpool = new TreeSet<String>();
 	Set<String> medianchainbugpool = new TreeSet<String>();
-	Set<String> tmpset = new HashSet<String>();
+	Set<String> staticbugpool = new HashSet<String>();
 	
 	
 	public BugPool(String projectDir, HappensBeforeGraph hbg) {
@@ -45,6 +46,7 @@ public class BugPool {
 	// newly add, useless now
 	public void addLoopBug( LoopBug loopbug ) {
 		bugs.add( loopbug );
+		mergeToResults( loopbug );
 	}
 	
 	// for level = 1 for Queue 
@@ -53,25 +55,31 @@ public class BugPool {
     	LoopBug loopbug = new LoopBug( nodeIndex, 1 );
     	loopbug.cascadingChain.add( nodeIndex );
     	bugs.add( loopbug );
+    	mergeToResults( loopbug );
     }
 	
 	
-    public void mergeResults() {
-    	// real bug pool
-    	System.out.print("\nbugpool - " + "has " + bugs.size() + "(fake) dynamic loop instances");
-    	for (LoopBug loopbug: bugs) {
-    		int nodeIndex = loopbug.nodeIndex;
-    		int cascadingLevel = loopbug.cascadingLevel;
-    		bugnodeset.add( nodeIndex );
-    		medianchainbugpool.add( "CL" + cascadingLevel + ": " + fullCallstacksOfCascadingChain(loopbug) );
-    		simplechainbugpool.add( "CL" + cascadingLevel + ": " + lastCallstacksOfCascadingChain(loopbug) );
-    		medianbugpool.add( "CL" + cascadingLevel + ": " + hbg.fullCallstack(nodeIndex) );
-    		simplebugpool.add( "CL" + cascadingLevel + ": " + hbg.lastCallstack(nodeIndex) );
-    		tmpset.add( hbg.lastCallstack(nodeIndex) );
-    	}
-    	System.out.println(", ie, representing " + bugnodeset.size() + "(real) loop nodes out of total " + hbg.getNodeList().size() + " happens-before nodes");
+    public int getBugInstanceNumber() {
+    	return bugs.size();
     }
     
+    public int getBugStaticNumber() {
+    	return staticbugpool.size();
+    }
+    
+    
+    
+    public void mergeToResults(LoopBug loopbug) {
+		int nodeIndex = loopbug.nodeIndex;
+		int cascadingLevel = loopbug.cascadingLevel;
+		bugnodeset.add( nodeIndex );
+		medianchainbugpool.add( "CL" + cascadingLevel + ": " + fullCallstacksOfCascadingChain(loopbug) );
+		simplechainbugpool.add( "CL" + cascadingLevel + ": " + lastCallstacksOfCascadingChain(loopbug) );
+		medianbugpool.add( "CL" + cascadingLevel + ": " + hbg.fullCallstack(nodeIndex) );
+		simplebugpool.add( "CL" + cascadingLevel + ": " + hbg.lastCallstack(nodeIndex) );
+		staticbugpool.add( hbg.lastCallstack(nodeIndex) );
+    }
+        
     
     public String fullCallstacksOfCascadingChain(LoopBug loopbug) {
     	String result = "";
@@ -96,7 +104,23 @@ public class BugPool {
     }
     
     
-    
+    /*
+    public void mergeResults() {
+    	// real bug pool
+    	System.out.print("\nbugpool - " + "has " + bugs.size() + "(fake) dynamic loop instances");
+    	for (LoopBug loopbug: bugs) {
+    		int nodeIndex = loopbug.nodeIndex;
+    		int cascadingLevel = loopbug.cascadingLevel;
+    		bugnodeset.add( nodeIndex );
+    		medianchainbugpool.add( "CL" + cascadingLevel + ": " + fullCallstacksOfCascadingChain(loopbug) );
+    		simplechainbugpool.add( "CL" + cascadingLevel + ": " + lastCallstacksOfCascadingChain(loopbug) );
+    		medianbugpool.add( "CL" + cascadingLevel + ": " + hbg.fullCallstack(nodeIndex) );
+    		simplebugpool.add( "CL" + cascadingLevel + ": " + hbg.lastCallstack(nodeIndex) );
+    		staticbugpool.add( hbg.lastCallstack(nodeIndex) );
+    	}
+    	System.out.println(", ie, representing " + bugnodeset.size() + "(real) loop nodes out of total " + hbg.getNodeList().size() + " happens-before nodes");
+    }
+    */
     
     public void printJobIdentity() {
     	JobTagger jobTagger = new JobTagger( this.hbg );
@@ -114,7 +138,8 @@ public class BugPool {
     public void printResults(boolean appendToFile) {
     	System.out.println("\nJX - INFO - Results of bug pool");
     	
-    	mergeResults();
+    	System.out.println("JX - INFO - #bugnodes = " + bugnodeset.size() + " (real) loop nodes out of total " + hbg.getNodeList().size() + " happens-before nodes");
+    	//mergeResults();
     	//printJobIdentity();
 
     	// bug pools - 
@@ -123,11 +148,13 @@ public class BugPool {
     	simplechainbugpoolFilename = Paths.get(projectDir, packageDir, simplechainbugpoolFilename).toString();
     	medianbugpoolFilename = Paths.get(projectDir, packageDir, medianbugpoolFilename).toString();
     	simplebugpoolFilename = Paths.get(projectDir, packageDir, simplebugpoolFilename).toString();
+    	staticbugpoolFilename = Paths.get(projectDir, packageDir, staticbugpoolFilename).toString();
     	System.out.println( "\nwrite to files - " );
     	System.out.println( "\t" + medianchainbugpoolFilename );
     	System.out.println( "\t" + simplechainbugpoolFilename );
     	System.out.println( "\t" + medianbugpoolFilename );
     	System.out.println( "\t" + simplebugpoolFilename );
+    	System.out.println( "\t" + staticbugpoolFilename );
 		
     	TextFileWriter mcWriter = new TextFileWriter( medianchainbugpoolFilename, appendToFile );
     	if (appendToFile)
@@ -141,30 +168,34 @@ public class BugPool {
     	TextFileWriter sWriter = new TextFileWriter( simplebugpoolFilename, appendToFile );
     	if (appendToFile)
     		sWriter.writeLine("\n\n\n//Queue-related Bugs\n");
+    	TextFileWriter staticWriter = new TextFileWriter( staticbugpoolFilename, appendToFile );
+    	if (appendToFile)
+    		staticWriter.writeLine("\n\n\n//Queue-related Bugs\n");
 
-    	System.out.println("\nmedianchainbugpool(whole chain's fullcallstacks) - " + "has " + medianchainbugpool.size() + " loops (#static codepoints=" + tmpset.size() + ")" );
-    	mcWriter.writeLine( "//" + medianchainbugpool.size() + " (#static codepoints=" + tmpset.size() + ")" );
+    	
+    	System.out.println("\nmedianchainbugpool(whole chain's fullcallstacks) - " + "has " + medianchainbugpool.size() + " loops (#static codepoints=" + staticbugpool.size() + ")" );
+    	mcWriter.writeLine( "//" + medianchainbugpool.size() + " (#static codepoints=" + staticbugpool.size() + ")" );
     	for (String chainfullcallstacks: medianchainbugpool) {
     		//System.out.println( chainfullcallstacks );
     		mcWriter.writeLine( chainfullcallstacks );
     	}
     	
-    	System.out.println("\nsimplechainbugpool(whole chain's lastcallstacks) - " + "has " + simplechainbugpool.size() + " loops (#static codepoints=" + tmpset.size() + ")" );
-    	scWriter.writeLine( "//" + simplechainbugpool.size() + " (#static codepoints=" + tmpset.size() + ")" );
+    	System.out.println("\nsimplechainbugpool(whole chain's lastcallstacks) - " + "has " + simplechainbugpool.size() + " loops (#static codepoints=" + staticbugpool.size() + ")" );
+    	scWriter.writeLine( "//" + simplechainbugpool.size() + " (#static codepoints=" + staticbugpool.size() + ")" );
     	for (String chainfullcallstacks: simplechainbugpool) {
     		System.out.println( chainfullcallstacks );
     		scWriter.writeLine( chainfullcallstacks );
     	}
     	
-    	System.out.println("\nmedianbugpool(loop's fullcallstack) - " + "has " + medianbugpool.size() + " loops (#static codepoints=" + tmpset.size() + ")" );
-    	mWriter.writeLine( "//" + medianbugpool.size() + " (#static codepoints=" + tmpset.size() + ")" );
+    	System.out.println("\nmedianbugpool(loop's fullcallstack) - " + "has " + medianbugpool.size() + " loops (#static codepoints=" + staticbugpool.size() + ")" );
+    	mWriter.writeLine( "//" + medianbugpool.size() + " (#static codepoints=" + staticbugpool.size() + ")" );
     	for (String fullcallstack: medianbugpool) {
     		//System.out.println( fullcallstack );
     		mWriter.writeLine( fullcallstack );
     	}
     	
-    	System.out.println("\nsimplebugpool(loop's lastcallstack) - " + "has " + simplebugpool.size() + " loops (#static codepoints=" + tmpset.size() + ")");
-    	sWriter.writeLine( "//" + simplebugpool.size() + " (#static codepoints=" + tmpset.size() + ")" );
+    	System.out.println("\nsimplebugpool(loop's lastcallstack) - " + "has " + simplebugpool.size() + " loops (#static codepoints=" + staticbugpool.size() + ")");
+    	sWriter.writeLine( "//" + simplebugpool.size() + " (#static codepoints=" + staticbugpool.size() + ")" );
     	for (String lastcallstack: simplebugpool) {
     		System.out.println( lastcallstack );
     		sWriter.writeLine( lastcallstack );
@@ -174,6 +205,15 @@ public class BugPool {
     	scWriter.close();
     	mWriter.close();
     	sWriter.close();
+    	
+    	//System.out.println("\nstaticbugpool(loop's lastcallstack)/#static codepoints = " + staticbugpool.size() + " loops");
+    	staticWriter.writeLine( "//#static codepoints = " + staticbugpool.size() );
+    	for (String lastcallstack: staticbugpool) {
+    		//System.out.println( lastcallstack );
+    		staticWriter.writeLine( lastcallstack );
+    	}
+    	
+    	staticWriter.close();
     }
     
 
