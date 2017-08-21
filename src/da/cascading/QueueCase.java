@@ -74,20 +74,6 @@ public class QueueCase {
 			if ( !hbg.getNodeTID( list.get(beginPos) ).equals("29") ) continue;
 			
 			//debug
-			/**
-			int tmpN = 0;
-			for (int i = beginPos; i <= endPos; i++) {
-				int iIndex = list.get(i);
-				for (int j = i+1; j <= endPos; j++) {
-					int jIndex = list.get(j);
-					if (!hbg.isFlippedorder(iIndex, jIndex))
-						System.out.println("JX - DEBGU - Queue" + (++tmpN) + ": " 
-											+ "               " + hbg.getPrintedIdentity(iIndex)
-											+ "               " + hbg.getPrintedIdentity(jIndex)
-								);
-				}
-			}
-			*/
 			for (int i = beginPos; i <= endPos; i++) {
 				System.out.println( list.get(i) + " " );
 			}

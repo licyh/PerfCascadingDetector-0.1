@@ -1,12 +1,24 @@
-CL2: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-commitJob-302;
-CL2: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-mergePaths-353;
-CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl-scheduleTasks-650;
-CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl$RequestContainerTransition-transition-1132;
-CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-resolveHosts-1145;
-CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl$AttemptSucceededTransition-transition-770;
-CL2: org.apache.hadoop.yarn.service.AbstractService-changeState-113;
-CL3: org.apache.hadoop.mapred.SortedRanges-write-203;
-CL3: org.apache.hadoop.mapreduce.counters.AbstractCounters-write-261;
-CL3: org.apache.hadoop.mapreduce.counters.AbstractCounters-write-273;
-CL3: org.apache.hadoop.mapreduce.counters.FrameworkCounterGroup-write-220;
-//summary - 11(#static codepoints=11) from 43
+CL1: org.apache.cassandra.db.ColumnFamilySerializer-deserializeColumnsFromSSTable-148;
+CL1: org.apache.cassandra.db.ColumnFamilyStore-createCompactionWriter-1984;
+CL1: org.apache.cassandra.db.ColumnFamilyStore-createCompactionWriter-1987;
+CL1: org.apache.cassandra.db.ColumnFamilyStore-getExpectedCompactedFileSize-935;
+CL1: org.apache.cassandra.db.ColumnFamilyStore-removeDeletedStandard-805;
+CL1: org.apache.cassandra.db.ColumnIndex$Builder-build-126;
+CL1: org.apache.cassandra.db.ColumnIndex$Builder-build-128;
+CL1: org.apache.cassandra.db.ColumnIndex$Builder-build-136;
+CL1: org.apache.cassandra.db.DataTracker-notifySSTablesChanged-421;
+CL1: org.apache.cassandra.db.compaction.CompactionController-shouldPurge-106;
+CL1: org.apache.cassandra.db.compaction.CompactionManager-doCleanupCompaction-563;
+CL1: org.apache.cassandra.db.compaction.CompactionManager-doCleanupCompaction-598;
+CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-145;
+CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-167;
+CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-198;
+CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-232;
+CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-234;
+CL1: org.apache.cassandra.db.compaction.PrecompactedRow-merge-110;
+CL1: org.apache.cassandra.db.index.SecondaryIndexBuilder-build-57;
+CL1: org.apache.cassandra.db.index.SecondaryIndexManager-flushIndexesBlocking-328;
+CL1: org.apache.cassandra.gms.Gossiper-doNotifications-971;
+CL1: org.apache.cassandra.locator.AbstractReplicationStrategy-getAddressRanges-162;
+CL1: org.apache.cassandra.service.StorageService-getLoad-2037;
+//summary - 23(#static codepoints=23) from 67

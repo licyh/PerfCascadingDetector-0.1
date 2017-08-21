@@ -77,7 +77,7 @@ public class BugPool {
 		simplechainbugpool.add( "CL" + cascadingLevel + ": " + lastCallstacksOfCascadingChain(loopbug) );
 		medianbugpool.add( "CL" + cascadingLevel + ": " + hbg.fullCallstack(nodeIndex) );
 		simplebugpool.add( "CL" + cascadingLevel + ": " + hbg.lastCallstack(nodeIndex) );
-		staticbugpool.add( hbg.lastCallstack(nodeIndex) );
+		staticbugpool.add( "CL0" + hbg.lastCallstack(nodeIndex) );
     }
         
     

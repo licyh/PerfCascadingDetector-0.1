@@ -32,12 +32,14 @@ public class StaticPruning {
 	String medianchain = "output/medianchain_bugpool.txt";      //read
 	String simplechain = "output/simplechain_bugpool.txt";      //read
 	String median = "output/median_bugpool.txt";                //read
-	String simple = "output/simple_bugpool.txt";                //read   
+	String simple = "output/simple_bugpool.txt";                //read
+	String staticx = "output/staticbugpool.txt";                //read
 	// output
 	String FINALmedianchain = "output/FINAL_medianchain_bugpool.txt";      //output
 	String FINALsimplechain = "output/FINAL_simplechain_bugpool.txt";      //output
 	String FINALmedian = "output/FINAL_median_bugpool.txt";                //output
 	String FINALsimple = "output/FINAL_simple_bugpool.txt";                //output
+	String FINALstaticx = "output/FINAL_staticbugpool.txt";                //output
     
 	
 	
@@ -63,6 +65,7 @@ public class StaticPruning {
 		findTimeConsumingLoopsForAFile(simplechain, FINALsimplechain);
 		findTimeConsumingLoopsForAFile(median, FINALmedian);
 		findTimeConsumingLoopsForAFile(simple, FINALsimple);
+		findTimeConsumingLoopsForAFile(staticx, FINALstaticx);
 	}
 
 	

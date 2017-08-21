@@ -1,0 +1,74 @@
+//0 (#static codepoints=0)
+
+
+
+//Queue-related Bugs
+
+//67 (#static codepoints=67)
+CL1: org.apache.cassandra.db.AbstractColumnContainer-hasIrrelevantData-209;|
+CL1: org.apache.cassandra.db.ArrayBackedSortedColumns-binarySearch-191;|
+CL1: org.apache.cassandra.db.ColumnFamily-getColumnStats-392;|
+CL1: org.apache.cassandra.db.ColumnFamily-maxTimestamp-288;|
+CL1: org.apache.cassandra.db.ColumnFamilySerializer-deserializeColumnsFromSSTable-148;|
+CL1: org.apache.cassandra.db.ColumnFamilyStore-createCompactionWriter-1984;|
+CL1: org.apache.cassandra.db.ColumnFamilyStore-createCompactionWriter-1987;|
+CL1: org.apache.cassandra.db.ColumnFamilyStore-forceFlush-676;|
+CL1: org.apache.cassandra.db.ColumnFamilyStore-getAndReferenceOverlappingSSTables-885;|
+CL1: org.apache.cassandra.db.ColumnFamilyStore-getExpectedCompactedFileSize-935;|
+CL1: org.apache.cassandra.db.ColumnFamilyStore-getExpectedCompactedFileSize-938;|
+CL1: org.apache.cassandra.db.ColumnFamilyStore-getOverlappingSSTables-868;|
+CL1: org.apache.cassandra.db.ColumnFamilyStore-oldestUnflushedMemtable-2045;|
+CL1: org.apache.cassandra.db.ColumnFamilyStore-removeDeletedStandard-805;|
+CL1: org.apache.cassandra.db.ColumnIndex$Builder-build-126;|
+CL1: org.apache.cassandra.db.ColumnIndex$Builder-build-128;|
+CL1: org.apache.cassandra.db.ColumnIndex$Builder-build-136;|
+CL1: org.apache.cassandra.db.DataTracker$View-newSSTables-561;|
+CL1: org.apache.cassandra.db.DataTracker-addNewSSTablesSize-340;|
+CL1: org.apache.cassandra.db.DataTracker-buildIntervalTree-456;|
+CL1: org.apache.cassandra.db.DataTracker-notifySSTablesChanged-421;|
+CL1: org.apache.cassandra.db.DataTracker-removeOldSSTablesSize-355;|
+CL1: org.apache.cassandra.db.DataTracker-replace-324;|
+CL1: org.apache.cassandra.db.DataTracker-unmarkCompacting-210;|
+CL1: org.apache.cassandra.db.Directories-getLocationForDisk-128;|
+CL1: org.apache.cassandra.db.Directories-getWriteableLocation-179;|
+CL1: org.apache.cassandra.db.RangeTombstone$Tracker-update-223;|
+CL1: org.apache.cassandra.db.RangeTombstoneList-hasIrrelevantData-303;|
+CL1: org.apache.cassandra.db.RangeTombstoneList-maxMarkedAt-279;|
+CL1: org.apache.cassandra.db.RangeTombstoneList-purge-290;|
+CL1: org.apache.cassandra.db.compaction.AbstractCompactionIterable-getMergedRowCounts-72;|
+CL1: org.apache.cassandra.db.compaction.AbstractCompactionStrategy-filterSuspectSSTables-137;|
+CL1: org.apache.cassandra.db.compaction.AbstractCompactionStrategy-getScanners-156;|
+CL1: org.apache.cassandra.db.compaction.CompactionController-getCompactedRow-150;|
+CL1: org.apache.cassandra.db.compaction.CompactionController-shouldPurge-106;|
+CL1: org.apache.cassandra.db.compaction.CompactionIterable$Reducer-getReduced-82;|
+CL1: org.apache.cassandra.db.compaction.CompactionManager$2-call-236;|
+CL1: org.apache.cassandra.db.compaction.CompactionManager-doCleanupCompaction-563;|
+CL1: org.apache.cassandra.db.compaction.CompactionManager-doCleanupCompaction-598;|
+CL1: org.apache.cassandra.db.compaction.CompactionTask-getMaxDataAge-292;|
+CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-145;|
+CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-167;|
+CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-198;|
+CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-232;|
+CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-234;|
+CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-247;|
+CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-254;|
+CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-98;|
+CL1: org.apache.cassandra.db.compaction.PrecompactedRow-merge-110;|
+CL1: org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy-createSSTableAndLengthPairs-180;|
+CL1: org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy-getBuckets-203;|
+CL1: org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy-getBuckets-210;|
+CL1: org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy-getNextBackgroundSSTables-100;|
+CL1: org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy-getNextBackgroundSSTables-78;|
+CL1: org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy-getNextBackgroundSSTables-98;|
+CL1: org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy-getNextBackgroundTask-137;|
+CL1: org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy-updateEstimatedCompactionsByTasks-239;|
+CL1: org.apache.cassandra.db.index.SecondaryIndexBuilder-build-57;|
+CL1: org.apache.cassandra.db.index.SecondaryIndexManager-flushIndexesBlocking-328;|
+CL1: org.apache.cassandra.db.index.SecondaryIndexManager-getIndexesBackedByCfs-369;|
+CL1: org.apache.cassandra.gms.Gossiper-doNotifications-971;|
+CL1: org.apache.cassandra.locator.AbstractReplicationStrategy-getAddressRanges-162;|
+CL1: org.apache.cassandra.locator.AbstractReplicationStrategy-getAddressRanges-165;|
+CL1: org.apache.cassandra.locator.SimpleStrategy-calculateNaturalEndpoints-56;|
+CL1: org.apache.cassandra.locator.TokenMetadata-getPrimaryRangesFor-680;|
+CL1: org.apache.cassandra.service.StorageService-getLoad-2037;|
+CL1: org.apache.cassandra.service.StorageService-getLoad-2040;|
