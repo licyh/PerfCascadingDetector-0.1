@@ -59,6 +59,7 @@ import com.ibm.wala.util.intset.IBinaryNaturalRelation;
 import com.ibm.wala.util.intset.IntIterator;
 import com.ibm.wala.util.intset.IntPair;
 import com.ibm.wala.util.io.CommandLine;
+import com.system.Timer;
 
 import sa.lock.LockAnalyzer;
 import sa.lock.LockInfo;
@@ -120,7 +121,9 @@ public class LLAnalysis {
 	public void doWork() {
 		System.out.println("\nJX - INFO - LLAnalysis.doWork");
 	    try {	     
-	        // Read external arguments
+	    	//timer
+	    	Timer timer = new Timer( Paths.get(projectDir, "src/da/output/sa-timer.txt") );
+	    	timer.tic("LLAnalysis begin");
 	      
 			systemname = Benchmarks.resolveSystem(jarsDir);
 			System.out.println("JX - DEBUG - system name = " + systemname);
@@ -131,22 +134,27 @@ public class LLAnalysis {
 			// Lock analysis
 			this.lockAnalyzer = new LockAnalyzer(this.wala, this.cgNodeList);
 			lockAnalyzer.doWork();
+			timer.toc("lockAnalyzer end");
 			
 			// Loop analysis
 			this.loopAnalyzer = new LoopAnalyzer(this.wala, this.cgNodeList);
 			loopAnalyzer.doWork();
+			timer.toc("loopAnalyzer end");
 			
 			// loops-containing lock
 			LoopingLockAnalyzer loopingLockAnalyzer = new LoopingLockAnalyzer(this.wala, this.lockAnalyzer, this.loopAnalyzer, this.cgNodeList);
 			loopingLockAnalyzer.doWork();
+			timer.toc("loopingLockAnalyzer end");
 			
 			// loops-containing loop
 			NestedLoopAnalyzer nestedLoopAnalyzer = new NestedLoopAnalyzer(this.wala, this.loopAnalyzer, this.cgNodeList);
 			nestedLoopAnalyzer.doWork();
+			timer.toc("nestedLoopAnalyzer end");
 			
 			TCLoopAnalyzer tcLoopAnalyzer = new TCLoopAnalyzer(this.wala, this.loopAnalyzer, this.cgNodeList);
 			tcLoopAnalyzer.doWork();
-		
+			timer.toc("tcLoopAnalyzer end");
+			
 			// Static Pruning      
 			/**
 			 * staticPruningForCriticalLoops
@@ -155,6 +163,7 @@ public class LLAnalysis {
 			System.out.println("\nJX - INFO - staticPruningForCriticalLoops"); 
 			StaticPruning printBugLoops = new StaticPruning(this.loopAnalyzer, Paths.get(projectDir, "src/da/").toString());
 			printBugLoops.doWork();
+			timer.toc("StaticPruning/printBugLoops end");
 	     
 			// Phase 2 -
 			//analyzeAllLocks();

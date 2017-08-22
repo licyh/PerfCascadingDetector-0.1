@@ -1,5 +1,9 @@
 package sa;
 
+import java.nio.file.Paths;
+
+import com.system.Timer;
+
 import sa.lockloop.LLAnalysis;
 import sa.wala.WalaAnalyzer;
 
@@ -28,7 +32,11 @@ public class StaticAnalysis {
 	
 	public void doWork() {
 		System.out.println("JX - INFO - StaticAnalysis.doWork");
+		
+    	Timer timer = new Timer( Paths.get(projectDir, "src/da/output/wala-timer.txt") );
+    	timer.tic("WalaAnalyzer begin");
 		WalaAnalyzer walaAnalyzer = new WalaAnalyzer(jarsDir);
+		timer.toc("WalaAnalyzer end");
 		
 		LLAnalysis jxLocks = new LLAnalysis(walaAnalyzer, projectDir);
 	}

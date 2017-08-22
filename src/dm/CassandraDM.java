@@ -78,6 +78,7 @@ class CassandraTransformer extends Transformer {
 				|| className.startsWith("org.apache.cassandra.net.")
 			  	|| className.startsWith("org.apache.cassandra.locator.")
 				|| className.startsWith("org.apache.cassandra.gms.")
+				|| className.startsWith("org.apache.cassandra.utils.")   //added newly
 	           ) {
 			transformClassForHappensBefore( cl );
   		}
