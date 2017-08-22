@@ -1395,10 +1395,10 @@ public void insertRPCInvoke(String logClass, String logMethod) {
 	    }
 	    else if (flag == 52) {
 	    	//ca - streaming file read
-	    	//str = "if (header.file != null) {";
-	    	str = "String opValue = header.file.getFilename();";
+	    	str = "if (header.file != null) {";
+	    	str += "String opValue = header.file.getFilename();";
 	    	str += logClass + "." + logFunc + "(opValue);";
-	    	//str += "}";
+	    	str += "}";
 	    }
 	    
 	    
