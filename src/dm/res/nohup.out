@@ -1,0 +1,675 @@
+xss =  -ea -javaagent:/home/vagrant/apache-cassandra-1.2.11-src/lib/jamm-0.2.5.jar -XX:+UseThreadPriorities -XX:ThreadPriorityPolicy=42 -Xms5019M -Xmx5019M -Xmn1254M -XX:+HeapDumpOnOutOfMemoryError -Xss2m
+JX - DEBUG - javassist begin - -javaagent:/home/vagrant/JXCascading-detector/build/lib/DM.jar=-s%/home/vagrant/apache-cassandra-1.2.11-src/build
+JX - INFO - started by Javassit DM. Agent arguments: -s%/home/vagrant/apache-cassandra-1.2.11-src/build
+JX - INFO - 2 locations are loaded
+JX - INFO - classesForInst = [org.apache.cassandra.streaming.FileStreamTask, org.apache.cassandra.streaming.FileStreamTask]
+JX - INFO - methodsForInst = [runMayThrow, runMayThrow]
+JX - INFO - linesForInst =  [101, 102]
+JX - successfully read 1504 loop locations for instrumentation
+JX - 0 locations are loaded
+JX - largeloop_classesForInst = []
+JX - largeloop_methodsForInst = []
+JX - largeloop_linesForInst =  []
+JX - IN - method sig = org.apache.cassandra.service.CassandraDaemon.setup()V
+ INFO 23:53:42,736 Logging initialized
+ INFO 23:53:42,798 JVM vendor/version: OpenJDK 64-Bit Server VM/1.7.0_131
+ WARN 23:53:42,799 OpenJDK is not recommended. Please upgrade to the newest Oracle Java release
+ INFO 23:53:42,799 Heap size: 5131337728/5132386304
+ INFO 23:53:42,799 Classpath: /home/vagrant/apache-cassandra-1.2.11-src/conf:/home/vagrant/apache-cassandra-1.2.11-src/build/classes/main:/home/vagrant/apache-cassandra-1.2.11-src/build/classes/thrift:/home/vagrant/apache-cassandra-1.2.11-src/lib/antlr-3.2.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/avro-1.4.0-fixes.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/avro-1.4.0-sources-fixes.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/commons-cli-1.1.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/commons-codec-1.2.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/commons-lang-2.6.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/compress-lzf-0.8.4.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/concurrentlinkedhashmap-lru-1.3.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/guava-13.0.1.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/high-scale-lib-1.1.2.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/jackson-core-asl-1.9.2.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/jackson-mapper-asl-1.9.2.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/jamm-0.2.5.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/jbcrypt-0.3m.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/jline-1.0.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/json-simple-1.1.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/libthrift-0.7.0.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/log4j-1.2.16.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/lz4-1.1.0.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/metrics-core-2.2.0.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/netty-3.6.6.Final.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/servlet-api-2.5-20081211.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/slf4j-api-1.7.2.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/slf4j-log4j12-1.7.2.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/snakeyaml-1.6.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/snappy-java-1.0.5.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/snaptree-0.1.jar:/home/vagrant/JXCascading-detector/build/lib/_DM_Log.jar:/home/vagrant/JXCascading-detector/build/lib/DM.jar:/home/vagrant/apache-cassandra-1.2.11-src/lib/jamm-0.2.5.jar
+ INFO 23:53:42,805 JNA not found. Native methods will be disabled.
+JX - IN - method sig = org.apache.cassandra.service.CassandraDaemon$2.uncaughtException(Ljava/lang/Thread;Ljava/lang/Throwable;)V
+ INFO 23:53:42,866 Loading settings from file:/home/vagrant/apache-cassandra-1.2.11-src/conf/cassandra.yaml
+ INFO 23:53:43,663 Data files directories: [/var/lib/cassandra/data]
+ INFO 23:53:43,663 Commit log directory: /var/lib/cassandra/commitlog
+ INFO 23:53:43,664 DiskAccessMode 'auto' determined to be mmap, indexAccessMode is mmap
+ INFO 23:53:43,664 disk_failure_policy is stop
+ INFO 23:53:43,725 Global memtable threshold is enabled at 1631MB
+JX - IN - method sig = org.apache.cassandra.locator.AbstractEndpointSnitch.hasRemoteNode(Ljava/util/List;)Z
+JX - IN - method sig = org.apache.cassandra.locator.DynamicEndpointSnitch.sortByProximityWithBadness(Ljava/net/InetAddress;Ljava/util/List;)V
+JX - IN - method sig = org.apache.cassandra.locator.DynamicEndpointSnitch.updateScores()V
+JX - IN - method sig = org.apache.cassandra.locator.DynamicEndpointSnitch.reset()V
+JX - IN - method sig = org.apache.cassandra.locator.DynamicEndpointSnitch.dumpTimings(Ljava/lang/String;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.locator.DynamicEndpointSnitch.maxScore(Ljava/util/List;)D
+JX - IN - method sig = org.apache.cassandra.service.StorageService.initClient()V
+JX - WARN - 1&0 for org.apache.cassandra.service.StorageService.initClient()V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.initServer(I)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.joinTokenRing(I)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.rebuild(Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.getRangeToEndpointMap(Ljava/lang/String;)Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.getRangeToRpcaddressMap(Ljava/lang/String;)Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.getPendingRangeToEndpointMap(Ljava/lang/String;)Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.describeRingJMX(Ljava/lang/String;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.describeRing(Ljava/lang/String;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.getTokenToEndpointMap()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.getHostIdMap()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.constructRangeToEndpointMap(Ljava/lang/String;Ljava/util/List;)Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.handleStateNormal(Ljava/net/InetAddress;[Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.handleStateRelocating(Ljava/net/InetAddress;[Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.excise(Ljava/util/Collection;Ljava/net/InetAddress;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.calculatePendingRanges()V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.calculatePendingRanges(Lorg/apache/cassandra/locator/AbstractReplicationStrategy;Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.getNewSourceRanges(Ljava/lang/String;Ljava/util/Set;)Lcom/google/common/collect/Multimap;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.sendReplicationNotification(Ljava/net/InetAddress;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.restoreReplicaCount(Ljava/net/InetAddress;Ljava/net/InetAddress;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.getChangedRangesForLeaving(Ljava/lang/String;Ljava/net/InetAddress;)Lcom/google/common/collect/Multimap;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.onJoin(Ljava/net/InetAddress;Lorg/apache/cassandra/gms/EndpointState;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.onAlive(Ljava/net/InetAddress;Lorg/apache/cassandra/gms/EndpointState;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.onDead(Ljava/net/InetAddress;Lorg/apache/cassandra/gms/EndpointState;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.getLoad()D
+JX - IN - method sig = org.apache.cassandra.service.StorageService.getLoadMap()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.getTokens(Ljava/net/InetAddress;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.getMovingNodes()Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.getAllDataFileLocations()[Ljava/lang/String;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.stringify(Ljava/lang/Iterable;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.forceTableCleanup(Ljava/lang/String;[Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.scrub(ZLjava/lang/String;[Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.upgradeSSTables(Ljava/lang/String;Z[Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.forceTableCompaction(Ljava/lang/String;[Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.takeSnapshot(Ljava/lang/String;[Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.clearSnapshot(Ljava/lang/String;[Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.getValidColumnFamilies(ZZLjava/lang/String;[Ljava/lang/String;)Ljava/lang/Iterable;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.forceTableFlush(Ljava/lang/String;[Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.forceTableRepair(Lorg/apache/cassandra/dht/Range;Ljava/lang/String;ZZ[Ljava/lang/String;)Lorg/apache/cassandra/service/AntiEntropyService$RepairFuture;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.getPrimaryRangesForEndpoint(Ljava/lang/String;Ljava/net/InetAddress;)Ljava/util/Collection;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.getAllRanges(Ljava/util/List;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.getLiveNaturalEndpoints(Lorg/apache/cassandra/db/Table;Lorg/apache/cassandra/dht/RingPosition;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.getSplits(Ljava/util/List;I)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.keysToTokens(Lorg/apache/cassandra/dht/Range;Ljava/util/List;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.keySamples(Ljava/lang/Iterable;Lorg/apache/cassandra/dht/Range;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.decommission()V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.unbootstrap(Ljava/lang/Runnable;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.streamHints()Ljava/util/concurrent/CountDownLatch;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.move(Lorg/apache/cassandra/dht/Token;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.relocate(Ljava/util/Collection;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.relocateTokens(Ljava/util/Collection;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.forceRemoveCompletion()V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.removeNode(Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.hasUnreclaimedSpace()Z
+JX - IN - method sig = org.apache.cassandra.service.StorageService.drain()V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.getOwnership()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.effectiveOwnership(Ljava/lang/String;)Ljava/util/LinkedHashMap;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.hasSameReplication(Ljava/util/List;)Z
+JX - IN - method sig = org.apache.cassandra.service.StorageService.updateSnitch(Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Double;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.flushLargestMemtables()V
+JX - IN - method sig = org.apache.cassandra.service.StorageService.streamRanges(Ljava/util/Map;)Ljava/util/concurrent/CountDownLatch;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.requestRanges(Ljava/util/Map;)Ljava/util/concurrent/CountDownLatch;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.calculateStreamAndFetchRanges(Ljava/util/Collection;Ljava/util/Collection;)Lorg/apache/cassandra/utils/Pair;
+JX - IN - method sig = org.apache.cassandra.service.StorageService.sampleKeyRange()Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.service.StorageService$7.init(Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.locator.TokenMetadata.pendingRangeChanges(Ljava/net/InetAddress;)I
+JX - WARN - 1&0 for org.apache.cassandra.locator.TokenMetadata.pendingRangeChanges(Ljava/net/InetAddress;)I
+JX - IN - method sig = org.apache.cassandra.locator.TokenMetadata.updateNormalTokens(Ljava/util/Collection;Ljava/net/InetAddress;)V
+JX - IN - method sig = org.apache.cassandra.locator.TokenMetadata.updateNormalTokens(Lcom/google/common/collect/Multimap;)V
+JX - IN - method sig = org.apache.cassandra.locator.TokenMetadata.addBootstrapTokens(Ljava/util/Collection;Ljava/net/InetAddress;)V
+JX - IN - method sig = org.apache.cassandra.locator.TokenMetadata.removeBootstrapTokens(Ljava/util/Collection;)V
+JX - IN - method sig = org.apache.cassandra.locator.TokenMetadata.addRelocatingTokens(Ljava/util/Collection;Ljava/net/InetAddress;)V
+JX - IN - method sig = org.apache.cassandra.locator.TokenMetadata.removeFromMoving(Ljava/net/InetAddress;)V
+JX - IN - method sig = org.apache.cassandra.locator.TokenMetadata.isMoving(Ljava/net/InetAddress;)Z
+JX - IN - method sig = org.apache.cassandra.locator.TokenMetadata.cloneAfterAllLeft()Lorg/apache/cassandra/locator/TokenMetadata;
+JX - IN - method sig = org.apache.cassandra.locator.TokenMetadata.cloneAfterAllSettled()Lorg/apache/cassandra/locator/TokenMetadata;
+JX - IN - method sig = org.apache.cassandra.locator.TokenMetadata.getPrimaryRangesFor(Ljava/util/Collection;)Ljava/util/Collection;
+JX - IN - method sig = org.apache.cassandra.locator.TokenMetadata.getPendingRanges(Ljava/lang/String;Ljava/net/InetAddress;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.locator.TokenMetadata.toString()Ljava/lang/String;
+JX - IN - method sig = org.apache.cassandra.locator.TokenMetadata.printPendingRanges()Ljava/lang/String;
+JX - IN - method sig = org.apache.cassandra.locator.TokenMetadata.printRelocatingRanges()Ljava/lang/String;
+JX - IN - method sig = org.apache.cassandra.locator.TokenMetadata.invalidateCaches()V
+JX - IN - method sig = org.apache.cassandra.locator.TokenMetadata.pendingEndpointsFor(Lorg/apache/cassandra/dht/Token;Ljava/lang/String;)Ljava/util/Collection;
+JX - IN - method sig = org.apache.cassandra.locator.TokenMetadata.getEndpointToTokenMapForReading()Lcom/google/common/collect/Multimap;
+JX - IN - method sig = org.apache.cassandra.service.MigrationManager.notifyCreateKeyspace(Lorg/apache/cassandra/config/KSMetaData;)V
+JX - IN - method sig = org.apache.cassandra.service.MigrationManager.notifyCreateColumnFamily(Lorg/apache/cassandra/config/CFMetaData;)V
+JX - IN - method sig = org.apache.cassandra.service.MigrationManager.notifyUpdateKeyspace(Lorg/apache/cassandra/config/KSMetaData;)V
+JX - IN - method sig = org.apache.cassandra.service.MigrationManager.notifyUpdateColumnFamily(Lorg/apache/cassandra/config/CFMetaData;)V
+JX - IN - method sig = org.apache.cassandra.service.MigrationManager.notifyDropKeyspace(Lorg/apache/cassandra/config/KSMetaData;)V
+JX - IN - method sig = org.apache.cassandra.service.MigrationManager.notifyDropColumnFamily(Lorg/apache/cassandra/config/CFMetaData;)V
+JX - IN - method sig = org.apache.cassandra.service.MigrationManager.announce(Ljava/util/Collection;)Ljava/util/concurrent/Future;
+JX - IN - method sig = org.apache.cassandra.service.MigrationManager.resetLocalSchema()V
+JX - IN - method sig = org.apache.cassandra.locator.AbstractReplicationStrategy.getAddressRanges(Lorg/apache/cassandra/locator/TokenMetadata;)Lcom/google/common/collect/Multimap;
+JX - IN - method sig = org.apache.cassandra.locator.AbstractReplicationStrategy.getRangeAddresses(Lorg/apache/cassandra/locator/TokenMetadata;)Lcom/google/common/collect/Multimap;
+JX - IN - method sig = org.apache.cassandra.locator.AbstractReplicationStrategy.validateExpectedOptions()V
+JX - IN - method sig = org.apache.cassandra.db.Table.open(Ljava/lang/String;Lorg/apache/cassandra/config/Schema;Z)Lorg/apache/cassandra/db/Table;
+JX - IN - method sig = org.apache.cassandra.db.Table.clear(Ljava/lang/String;Lorg/apache/cassandra/config/Schema;)Lorg/apache/cassandra/db/Table;
+JX - IN - method sig = org.apache.cassandra.db.Table.removeUnreadableSSTables(Ljava/io/File;)V
+JX - IN - method sig = org.apache.cassandra.db.Table.snapshot(Ljava/lang/String;Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.db.Table.snapshotExists(Ljava/lang/String;)Z
+JX - IN - method sig = org.apache.cassandra.db.Table.clearSnapshot(Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.db.Table.getAllSSTables()Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.Table.apply(Lorg/apache/cassandra/db/RowMutation;ZZ)V
+JX - IN - method sig = org.apache.cassandra.db.Table.indexRow(Lorg/apache/cassandra/db/DecoratedKey;Lorg/apache/cassandra/db/ColumnFamilyStore;Ljava/util/Set;)V
+JX - IN - method sig = org.apache.cassandra.db.Table.flush()Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.net.MessagingService.addLatency(Ljava/net/InetAddress;J)V
+JX - IN - method sig = org.apache.cassandra.net.MessagingService.listen(Ljava/net/InetAddress;)V
+JX - IN - method sig = org.apache.cassandra.net.MessagingService.waitForStreaming()V
+JX - IN - method sig = org.apache.cassandra.net.MessagingService.shutdown()V
+JX - IN - method sig = org.apache.cassandra.net.MessagingService.logDroppedMessages()V
+JX - IN - method sig = org.apache.cassandra.net.MessagingService.getCommandPendingTasks()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.net.MessagingService.getCommandCompletedTasks()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.net.MessagingService.getCommandDroppedTasks()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.net.MessagingService.getResponsePendingTasks()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.net.MessagingService.getResponseCompletedTasks()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.net.MessagingService.getDroppedMessages()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.net.MessagingService.getRecentlyDroppedMessages()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.net.MessagingService.getTimeoutsPerHost()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.net.MessagingService.getRecentTimeoutsPerHost()Ljava/util/Map;
+JX - DEBUG - TargetCodeBegin: insert successfully at line number = 101
+JX - DEBUG - TargetCodeEnd: insert successfully at line number = 102
+JX - IN - method sig = org.apache.cassandra.streaming.FileStreamTask.stream()V
+JX - IN - method sig = org.apache.cassandra.streaming.FileStreamTask.connectAttempt()V
+JX - IN - method sig = org.apache.cassandra.streaming.compress.CompressedFileStreamTask.stream()V
+JX - IN - method sig = org.apache.cassandra.streaming.compress.CompressedFileStreamTask.getTransferSections([Lorg/apache/cassandra/io/compress/CompressionMetadata$Chunk;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.RowMutation.calculateHintTTL()I
+JX - IN - method sig = org.apache.cassandra.db.RowMutation.addAll(Lorg/apache/cassandra/db/IMutation;)V
+JX - IN - method sig = org.apache.cassandra.db.RowMutation.toString(Z)Ljava/lang/String;
+JX - IN - method sig = org.apache.cassandra.db.RowMutation.addColumnOrSuperColumn(Ljava/lang/String;Lorg/apache/cassandra/thrift/ColumnOrSuperColumn;)V
+JX - IN - method sig = org.apache.cassandra.db.RowMutation.deleteColumnOrSuperColumn(Ljava/lang/String;Lorg/apache/cassandra/thrift/Deletion;)V
+JX - IN - method sig = org.apache.cassandra.db.RowMutation.without(Ljava/util/UUID;)Lorg/apache/cassandra/db/RowMutation;
+JX - IN - method sig = org.apache.cassandra.db.RowMutation$RowMutationSerializer.serialize(Lorg/apache/cassandra/db/RowMutation;Ljava/io/DataOutput;I)V
+JX - IN - method sig = org.apache.cassandra.db.RowMutation$RowMutationSerializer.deserialize(Ljava/io/DataInput;ILorg/apache/cassandra/io/IColumnSerializer$Flag;)Lorg/apache/cassandra/db/RowMutation;
+JX - IN - method sig = org.apache.cassandra.db.RowMutation$RowMutationSerializer.serializedSize(Lorg/apache/cassandra/db/RowMutation;I)J
+JX - IN - method sig = org.apache.cassandra.streaming.StreamRequest.toString()Ljava/lang/String;
+JX - IN - method sig = org.apache.cassandra.streaming.StreamRequest$StreamRequestSerializer.serialize(Lorg/apache/cassandra/streaming/StreamRequest;Ljava/io/DataOutput;I)V
+JX - IN - method sig = org.apache.cassandra.streaming.StreamRequest$StreamRequestSerializer.deserialize(Ljava/io/DataInput;I)Lorg/apache/cassandra/streaming/StreamRequest;
+JX - IN - method sig = org.apache.cassandra.streaming.StreamRequest$StreamRequestSerializer.serializedSize(Lorg/apache/cassandra/streaming/StreamRequest;I)J
+JX - IN - method sig = org.apache.cassandra.db.RangeSliceCommandSerializer.serialize(Lorg/apache/cassandra/db/RangeSliceCommand;Ljava/io/DataOutput;I)V
+JX - IN - method sig = org.apache.cassandra.db.RangeSliceCommandSerializer.deserialize(Ljava/io/DataInput;I)Lorg/apache/cassandra/db/RangeSliceCommand;
+JX - IN - method sig = org.apache.cassandra.db.RangeSliceCommandSerializer.serializedSize(Lorg/apache/cassandra/db/RangeSliceCommand;I)J
+JX - IN - method sig = org.apache.cassandra.service.AntiEntropyService$Validator.prepare(Lorg/apache/cassandra/db/ColumnFamilyStore;)V
+JX - IN - method sig = org.apache.cassandra.service.AntiEntropyService$Validator.add(Lorg/apache/cassandra/db/compaction/AbstractCompactedRow;)V
+JX - IN - method sig = org.apache.cassandra.service.AntiEntropyService$Validator.completeTree()V
+JX - IN - method sig = org.apache.cassandra.service.AntiEntropyService.terminateSessions()V
+JX - IN - method sig = org.apache.cassandra.service.AntiEntropyService.getNeighbors(Ljava/lang/String;Lorg/apache/cassandra/dht/Range;Z)Ljava/util/Set;
+JX - IN - method sig = org.apache.cassandra.streaming.StreamingRepairTask$StreamingRepairTaskSerializer.serialize(Lorg/apache/cassandra/streaming/StreamingRepairTask;Ljava/io/DataOutput;I)V
+JX - IN - method sig = org.apache.cassandra.streaming.StreamingRepairTask$StreamingRepairTaskSerializer.deserialize(Ljava/io/DataInput;I)Lorg/apache/cassandra/streaming/StreamingRepairTask;
+JX - IN - method sig = org.apache.cassandra.streaming.StreamingRepairTask$StreamingRepairTaskSerializer.serializedSize(Lorg/apache/cassandra/streaming/StreamingRepairTask;I)J
+JX - IN - method sig = org.apache.cassandra.gms.GossipDigestAckSerializer.serialize(Lorg/apache/cassandra/gms/GossipDigestAck;Ljava/io/DataOutput;I)V
+JX - IN - method sig = org.apache.cassandra.gms.GossipDigestAckSerializer.deserialize(Ljava/io/DataInput;I)Lorg/apache/cassandra/gms/GossipDigestAck;
+JX - IN - method sig = org.apache.cassandra.gms.GossipDigestAckSerializer.serializedSize(Lorg/apache/cassandra/gms/GossipDigestAck;I)J
+JX - IN - method sig = org.apache.cassandra.gms.GossipDigestAck2Serializer.serialize(Lorg/apache/cassandra/gms/GossipDigestAck2;Ljava/io/DataOutput;I)V
+JX - IN - method sig = org.apache.cassandra.gms.GossipDigestAck2Serializer.deserialize(Ljava/io/DataInput;I)Lorg/apache/cassandra/gms/GossipDigestAck2;
+JX - IN - method sig = org.apache.cassandra.gms.GossipDigestAck2Serializer.serializedSize(Lorg/apache/cassandra/gms/GossipDigestAck2;I)J
+JX - IN - method sig = org.apache.cassandra.service.MigrationManager$MigrationsSerializer.serialize(Ljava/util/Collection;Ljava/io/DataOutput;I)V
+JX - IN - method sig = org.apache.cassandra.service.MigrationManager$MigrationsSerializer.deserialize(Ljava/io/DataInput;I)Ljava/util/Collection;
+JX - IN - method sig = org.apache.cassandra.service.MigrationManager$MigrationsSerializer.serializedSize(Ljava/util/Collection;I)J
+JX - IN - method sig = org.apache.cassandra.db.CounterMutation.makeReplicationMutation()Lorg/apache/cassandra/db/RowMutation;
+JX - IN - method sig = org.apache.cassandra.db.CounterMutation.shouldReplicateOnWrite()Z
+JX - IN - method sig = org.apache.cassandra.db.CounterMutation.apply()V
+JX - IN - method sig = org.apache.cassandra.db.AbstractColumnContainer.hasOnlyTombstones()Z
+JX - IN - method sig = org.apache.cassandra.db.AbstractColumnContainer.hasIrrelevantData(I)Z
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamily.addAllWithSCCopy(Lorg/apache/cassandra/db/ColumnFamily;Lorg/apache/cassandra/utils/Allocator;)V
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamily.diff(Lorg/apache/cassandra/db/ColumnFamily;)Lorg/apache/cassandra/db/ColumnFamily;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamily.dataSize()I
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamily.maxTimestamp()J
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamily.updateDigest(Ljava/security/MessageDigest;)V
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamily.validateColumnFields()V
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamily.getColumnStats()Lorg/apache/cassandra/io/sstable/ColumnStats;
+JX - IN - method sig = org.apache.cassandra.db.RangeSliceReply$RangeSliceReplySerializer.serialize(Lorg/apache/cassandra/db/RangeSliceReply;Ljava/io/DataOutput;I)V
+JX - IN - method sig = org.apache.cassandra.db.RangeSliceReply$RangeSliceReplySerializer.deserialize(Ljava/io/DataInput;I)Lorg/apache/cassandra/db/RangeSliceReply;
+JX - IN - method sig = org.apache.cassandra.db.RangeSliceReply$RangeSliceReplySerializer.serializedSize(Lorg/apache/cassandra/db/RangeSliceReply;I)J
+---parser--- org.apache.cassandra.db.RowMutationVerbHandler.doVerb
+JX - IN - method sig = org.apache.cassandra.db.RowMutationVerbHandler.forwardToLocalNodes(Lorg/apache/cassandra/db/RowMutation;Lorg/apache/cassandra/net/MessagingService$Verb;[BLjava/net/InetAddress;)V
+---parser--- org.apache.cassandra.db.ReadRepairVerbHandler.doVerb
+---parser--- org.apache.cassandra.db.ReadVerbHandler.doVerb
+---parser--- org.apache.cassandra.service.RangeSliceVerbHandler.doVerb
+---parser--- org.apache.cassandra.service.IndexScanVerbHandler.doVerb
+---parser--- org.apache.cassandra.db.CounterMutationVerbHandler.doVerb
+---parser--- org.apache.cassandra.db.TruncateVerbHandler.doVerb
+---parser--- org.apache.cassandra.streaming.StreamRequestVerbHandler.doVerb
+---parser--- org.apache.cassandra.streaming.StreamReplyVerbHandler.doVerb
+---parser--- org.apache.cassandra.streaming.ReplicationFinishedVerbHandler.doVerb
+---parser--- org.apache.cassandra.net.ResponseVerbHandler.doVerb
+---parser--- org.apache.cassandra.service.AntiEntropyService$TreeRequestVerbHandler.doVerb
+---parser--- org.apache.cassandra.service.AntiEntropyService$TreeResponseVerbHandler.doVerb
+---parser--- org.apache.cassandra.streaming.StreamingRepairTask$StreamingRepairRequest.doVerb
+---parser--- org.apache.cassandra.streaming.StreamingRepairTask$StreamingRepairResponse.doVerb
+---parser--- org.apache.cassandra.gms.GossipShutdownVerbHandler.doVerb
+---parser--- org.apache.cassandra.gms.GossipDigestSynVerbHandler.doVerb
+JX - IN - method sig = org.apache.cassandra.gms.GossipDigestSynVerbHandler.doVerb(Lorg/apache/cassandra/net/MessageIn;Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.gms.GossipDigestSynVerbHandler.doSort(Ljava/util/List;)V
+---parser--- org.apache.cassandra.gms.GossipDigestAckVerbHandler.doVerb
+JX - IN - method sig = org.apache.cassandra.gms.GossipDigestAckVerbHandler.doVerb(Lorg/apache/cassandra/net/MessageIn;Ljava/lang/String;)V
+---parser--- org.apache.cassandra.gms.GossipDigestAck2VerbHandler.doVerb
+---parser--- org.apache.cassandra.db.DefinitionsUpdateVerbHandler.doVerb
+---parser--- org.apache.cassandra.db.SchemaCheckVerbHandler.doVerb
+---parser--- org.apache.cassandra.db.MigrationRequestVerbHandler.doVerb
+---parser--- org.apache.cassandra.service.SnapshotVerbHandler.doVerb
+JX - IN - method sig = org.apache.cassandra.streaming.StreamingService.getStatus()Ljava/lang/String;
+JX - IN - method sig = org.apache.cassandra.streaming.StreamingService.getOutgoingFiles(Ljava/lang/String;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.streaming.StreamingService.getIncomingFiles(Ljava/lang/String;)Ljava/util/List;
+ INFO 23:53:46,518 Not using multi-threaded compaction
+JX - IN - method sig = org.apache.cassandra.db.Column.decomposeName([Ljava/lang/String;)Ljava/nio/ByteBuffer;
+JX - IN - method sig = org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy.getNextBackgroundSSTables(I)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy.getNextBackgroundTask(I)Lorg/apache/cassandra/db/compaction/AbstractCompactionTask;
+JX - IN - method sig = org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy.getMaximalTask(I)Lorg/apache/cassandra/db/compaction/AbstractCompactionTask;
+JX - IN - method sig = org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy.createSSTableAndLengthPairs(Ljava/util/Collection;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy.getBuckets(Ljava/util/Collection;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy.updateEstimatedCompactionsByTasks(Ljava/util/List;)V
+JX - IN - method sig = org.apache.cassandra.db.compaction.AbstractCompactionStrategy.filterSuspectSSTables(Ljava/util/Collection;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.compaction.AbstractCompactionStrategy.getScanners(Ljava/util/Collection;Lorg/apache/cassandra/dht/Range;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.compaction.AbstractCompactionStrategy.worthDroppingTombstones(Lorg/apache/cassandra/io/sstable/SSTableReader;I)Z
+JX - IN - method sig = org.apache.cassandra.db.compaction.LeveledCompactionStrategy.getMaximalTask(I)Lorg/apache/cassandra/db/compaction/AbstractCompactionTask;
+JX - IN - method sig = org.apache.cassandra.db.compaction.LeveledCompactionStrategy.getScanners(Ljava/util/Collection;Lorg/apache/cassandra/dht/Range;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.compaction.LeveledCompactionStrategy.findDroppableSSTable(I)Lorg/apache/cassandra/io/sstable/SSTableReader;
+JX - IN - method sig = org.apache.cassandra.db.compaction.CompactionTask.runWith(Ljava/io/File;)V
+JX - IN - method sig = org.apache.cassandra.db.compaction.CompactionTask.getMaxDataAge(Ljava/util/Collection;)J
+JX - IN - method sig = org.apache.cassandra.locator.SimpleStrategy.calculateNaturalEndpoints(Lorg/apache/cassandra/dht/Token;Lorg/apache/cassandra/locator/TokenMetadata;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.Directories.<clinit>()V
+JX - IN - method sig = org.apache.cassandra.db.Directories.getLocationForDisk(Lorg/apache/cassandra/db/Directories$DataDirectory;)Ljava/io/File;
+JX - IN - method sig = org.apache.cassandra.db.Directories.getWriteableLocation()Lorg/apache/cassandra/db/Directories$DataDirectory;
+JX - IN - method sig = org.apache.cassandra.db.Directories.tryGetLeveledManifest()Ljava/io/File;
+JX - IN - method sig = org.apache.cassandra.db.Directories.snapshotExists(Ljava/lang/String;)Z
+JX - IN - method sig = org.apache.cassandra.db.Directories.clearSnapshot(Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.db.Directories.snapshotCreationTime(Ljava/lang/String;)J
+JX - IN - method sig = org.apache.cassandra.db.Directories.sstablesNeedsMigration()Z
+JX - IN - method sig = org.apache.cassandra.db.Directories.migrateSSTables()V
+JX - IN - method sig = org.apache.cassandra.db.Directories.migrateSnapshots(Ljava/io/File;)V
+JX - IN - method sig = org.apache.cassandra.db.Directories.migrateBackups(Ljava/io/File;)V
+JX - IN - method sig = org.apache.cassandra.db.Directories.overrideDataDirectoriesForTest(Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.db.Directories.resetDataDirectoriesAfterTest()V
+ INFO 23:53:47,582 Initializing key cache with capacity of 100 MBs.
+JX - IN - method sig = org.apache.cassandra.service.CacheService$KeyCacheSerializer.findDesc(ILjava/util/Collection;)Lorg/apache/cassandra/io/sstable/SSTableReader;
+JX - IN - method sig = org.apache.cassandra.service.CacheService$KeyCacheSerializer.load(Ljava/util/Set;Lorg/apache/cassandra/db/ColumnFamilyStore;)V
+ INFO 23:53:47,619 Scheduling key cache save to each 14400 seconds (going to save all keys).
+ INFO 23:53:47,621 Initializing row cache with capacity of 0 MBs and provider org.apache.cassandra.cache.SerializingCacheProvider
+JX - IN - method sig = org.apache.cassandra.db.TypeSizes.encodedUTF8Length(Ljava/lang/String;)I
+JX - IN - method sig = org.apache.cassandra.db.TypeSizes$VIntEncodedTypeSizes.sizeofVInt(J)I
+JX - IN - method sig = org.apache.cassandra.service.CacheService$RowCacheSerializer.load(Ljava/util/Set;Lorg/apache/cassandra/db/ColumnFamilyStore;)V
+ INFO 23:53:47,664 Scheduling row cache save to each 0 seconds (going to save all keys).
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.reload()V
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.setCrcCheckChance(D)V
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.createColumnFamilyStore(Lorg/apache/cassandra/db/Table;Ljava/lang/String;Lorg/apache/cassandra/dht/IPartitioner;Lorg/apache/cassandra/config/CFMetaData;Z)Lorg/apache/cassandra/db/ColumnFamilyStore;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.scrubDataDirectories(Ljava/lang/String;Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.loadNewSSTables()V
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.switchMemtable(ZZ)Ljava/util/concurrent/Future;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.forceFlush()Ljava/util/concurrent/Future;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.apply(Lorg/apache/cassandra/db/DecoratedKey;Lorg/apache/cassandra/db/ColumnFamily;Lorg/apache/cassandra/db/index/SecondaryIndexManager$Updater;)V
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.removeDeletedStandard(Lorg/apache/cassandra/db/ColumnFamily;ILorg/apache/cassandra/db/index/SecondaryIndexManager$Updater;)V
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.removeDeletedSuper(Lorg/apache/cassandra/db/ColumnFamily;I)V
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.getOverlappingSSTables(Ljava/util/Collection;)Ljava/util/Set;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.getAndReferenceOverlappingSSTables(Ljava/util/Collection;)Ljava/util/Set;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.getExpectedCompactedFileSize(Ljava/lang/Iterable;Lorg/apache/cassandra/db/compaction/OperationType;)J
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.getMaxSizeFile(Ljava/lang/Iterable;)Lorg/apache/cassandra/io/sstable/SSTableReader;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.markCurrentViewReferenced()Lorg/apache/cassandra/db/DataTracker$View;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.markReferenced(Lorg/apache/cassandra/db/ColumnFamilyStore$AbstractViewSSTableFinder;)Lorg/apache/cassandra/db/ColumnFamilyStore$ViewFragment;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.getSSTablesForKey(Ljava/lang/String;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.filter(Lorg/apache/cassandra/db/ColumnFamilyStore$AbstractScanIterator;Lorg/apache/cassandra/db/filter/ExtendedFilter;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.snapshotWithoutFlush(Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.getSnapshotSSTableReader(Ljava/lang/String;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.all()Ljava/lang/Iterable;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.allUserDefined()Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.keySamples(Lorg/apache/cassandra/dht/Range;)Ljava/lang/Iterable;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.clearUnsafe()V
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.truncate()Ljava/util/concurrent/Future;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.createCompactionWriter(JLjava/io/File;Ljava/util/Collection;)Lorg/apache/cassandra/io/sstable/SSTableWriter;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.oldestUnflushedMemtable()J
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore.discardSSTables(J)Lorg/apache/cassandra/db/commitlog/ReplayPosition;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore$5.findSSTables(Lorg/apache/cassandra/db/DataTracker$View;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.Directories$SSTableLister.listFiles()Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.Directories$SSTableLister.filter()V
+JX - IN - method sig = org.apache.cassandra.db.SystemTable.finishStartup()V
+JX - IN - method sig = org.apache.cassandra.db.SystemTable.migrateKeyAlias()V
+JX - IN - method sig = org.apache.cassandra.db.SystemTable.getTruncationRecords()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.db.SystemTable.tokensAsSet(Ljava/util/Collection;)Ljava/lang/String;
+JX - IN - method sig = org.apache.cassandra.db.SystemTable.deserializeTokens(Ljava/util/Collection;)Ljava/util/Collection;
+JX - IN - method sig = org.apache.cassandra.db.SystemTable.loadTokens()Lcom/google/common/collect/SetMultimap;
+JX - IN - method sig = org.apache.cassandra.db.SystemTable.loadHostIds()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.db.SystemTable.loadDcRackInfo()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.db.SystemTable.getOldLocalCounterIds()Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.SystemTable.serializeSchema(Ljava/util/Map;Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.db.SystemTable.getSchema(Ljava/lang/String;)Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.service.DatacenterSyncWriteResponseHandler.response(Lorg/apache/cassandra/net/MessageIn;)V
+JX - IN - method sig = org.apache.cassandra.db.index.SecondaryIndexManager.reload()V
+JX - IN - method sig = org.apache.cassandra.db.index.SecondaryIndexManager.allIndexesNames()Ljava/util/Set;
+JX - IN - method sig = org.apache.cassandra.db.index.SecondaryIndexManager.indexFor(Ljava/nio/ByteBuffer;Ljava/util/Collection;)Lorg/apache/cassandra/db/index/SecondaryIndex;
+JX - IN - method sig = org.apache.cassandra.db.index.SecondaryIndexManager.hasIndexFor(Ljava/util/List;)Z
+JX - IN - method sig = org.apache.cassandra.db.index.SecondaryIndexManager.getIndexForFullColumnName(Ljava/nio/ByteBuffer;)Lorg/apache/cassandra/db/index/SecondaryIndex;
+JX - IN - method sig = org.apache.cassandra.db.index.SecondaryIndexManager.invalidate()V
+JX - IN - method sig = org.apache.cassandra.db.index.SecondaryIndexManager.flushIndexesBlocking()V
+JX - IN - method sig = org.apache.cassandra.db.index.SecondaryIndexManager.getBuiltIndexes()Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.index.SecondaryIndexManager.getColumnByIdxName(Ljava/lang/String;)Ljava/nio/ByteBuffer;
+JX - IN - method sig = org.apache.cassandra.db.index.SecondaryIndexManager.getIndexesBackedByCfs()Ljava/util/Collection;
+JX - IN - method sig = org.apache.cassandra.db.index.SecondaryIndexManager.getIndexesNotBackedByCfs()Ljava/util/Collection;
+JX - IN - method sig = org.apache.cassandra.db.index.SecondaryIndexManager.getTotalLiveSize()J
+JX - IN - method sig = org.apache.cassandra.db.index.SecondaryIndexManager.indexRow(Ljava/nio/ByteBuffer;Lorg/apache/cassandra/db/ColumnFamily;)V
+JX - IN - method sig = org.apache.cassandra.db.index.SecondaryIndexManager.deleteFromIndexes(Lorg/apache/cassandra/db/DecoratedKey;Ljava/util/List;)V
+JX - IN - method sig = org.apache.cassandra.db.index.SecondaryIndexManager.getIndexSearchersForQuery(Ljava/util/List;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.index.SecondaryIndexManager.getIndexesByNames(Ljava/util/Set;)Ljava/util/Collection;
+JX - IN - method sig = org.apache.cassandra.db.index.SecondaryIndexManager.setIndexBuilt(Ljava/util/Set;)V
+JX - IN - method sig = org.apache.cassandra.db.index.SecondaryIndexManager.setIndexRemoved(Ljava/util/Set;)V
+ INFO 23:53:48,208 Initializing system.batchlog
+JX - IN - method sig = org.apache.cassandra.db.DataTracker.switchMemtable()Lorg/apache/cassandra/db/Memtable;
+JX - IN - method sig = org.apache.cassandra.db.DataTracker.renewMemtable()V
+JX - IN - method sig = org.apache.cassandra.db.DataTracker.replaceFlushed(Lorg/apache/cassandra/db/Memtable;Lorg/apache/cassandra/io/sstable/SSTableReader;)V
+JX - IN - method sig = org.apache.cassandra.db.DataTracker.unmarkCompacting(Ljava/util/Collection;)V
+JX - IN - method sig = org.apache.cassandra.db.DataTracker.addSSTables(Ljava/util/Collection;)V
+JX - IN - method sig = org.apache.cassandra.db.DataTracker.unreferenceSSTables()V
+JX - IN - method sig = org.apache.cassandra.db.DataTracker.removeUnreadableSSTables(Ljava/io/File;)V
+JX - WARN - 1&0 for org.apache.cassandra.db.DataTracker.removeUnreadableSSTables(Ljava/io/File;)V
+JX - IN - method sig = org.apache.cassandra.db.DataTracker.replace(Ljava/util/Collection;Ljava/lang/Iterable;)V
+JX - IN - method sig = org.apache.cassandra.db.DataTracker.addNewSSTablesSize(Ljava/lang/Iterable;)V
+JX - IN - method sig = org.apache.cassandra.db.DataTracker.removeOldSSTablesSize(Ljava/lang/Iterable;Z)V
+JX - IN - method sig = org.apache.cassandra.db.DataTracker.estimatedKeys()J
+JX - IN - method sig = org.apache.cassandra.db.DataTracker.getMeanColumns()I
+JX - IN - method sig = org.apache.cassandra.db.DataTracker.getDroppableTombstoneRatio()D
+JX - IN - method sig = org.apache.cassandra.db.DataTracker.notifySSTablesChanged(Ljava/lang/Iterable;Ljava/lang/Iterable;Lorg/apache/cassandra/db/compaction/OperationType;)V
+JX - IN - method sig = org.apache.cassandra.db.DataTracker.notifyAdded(Lorg/apache/cassandra/io/sstable/SSTableReader;)V
+JX - IN - method sig = org.apache.cassandra.db.DataTracker.notifyDeleting(Lorg/apache/cassandra/io/sstable/SSTableReader;)V
+JX - IN - method sig = org.apache.cassandra.db.DataTracker.buildIntervalTree(Ljava/lang/Iterable;)Lorg/apache/cassandra/db/DataTracker$SSTableIntervalTree;
+JX - IN - method sig = org.apache.cassandra.db.DataTracker$View.newSSTables(Ljava/util/Collection;Ljava/lang/Iterable;)Ljava/util/Set;
+JX - IN - method sig = org.apache.cassandra.db.Memtable.contents()Ljava/lang/String;
+ INFO 23:53:48,346 Initializing system.peer_events
+ INFO 23:53:48,356 Initializing system.hints
+ INFO 23:53:48,365 Initializing system.Schema
+ INFO 23:53:48,375 Initializing system.schema_keyspaces
+ INFO 23:53:48,384 Initializing system.range_xfers
+ INFO 23:53:48,393 Initializing system.HintsColumnFamily
+ INFO 23:53:48,402 Initializing system.schema_columnfamilies
+ INFO 23:53:48,413 Initializing system.NodeIdInfo
+ INFO 23:53:48,423 Initializing system.schema_columns
+ INFO 23:53:48,432 Initializing system.IndexInfo
+ INFO 23:53:48,443 Initializing system.Migrations
+ INFO 23:53:48,452 Initializing system.peers
+ INFO 23:53:48,461 Initializing system.local
+ INFO 23:53:48,470 Initializing system.LocationInfo
+JX - IN - method sig = org.apache.cassandra.service.ClientState.<clinit>()V
+JX - IN - method sig = org.apache.cassandra.service.ClientState.ensureHasPermission(Lorg/apache/cassandra/auth/Permission;Lorg/apache/cassandra/auth/IResource;)V
+JX - IN - method sig = org.apache.cassandra.db.CollationController.collectTimeOrderedData()Lorg/apache/cassandra/db/ColumnFamily;
+JX - IN - method sig = org.apache.cassandra.db.CollationController.reduceNameFilter(Lorg/apache/cassandra/db/filter/QueryFilter;Lorg/apache/cassandra/db/ColumnFamily;J)V
+JX - IN - method sig = org.apache.cassandra.db.CollationController.collectAllData()Lorg/apache/cassandra/db/ColumnFamily;
+JX - IN - method sig = org.apache.cassandra.db.SuperColumn.dataSize()I
+JX - IN - method sig = org.apache.cassandra.db.SuperColumn.serializedSize(Lorg/apache/cassandra/db/TypeSizes;)I
+JX - IN - method sig = org.apache.cassandra.db.SuperColumn.minTimestamp()J
+JX - IN - method sig = org.apache.cassandra.db.SuperColumn.maxTimestamp()J
+JX - IN - method sig = org.apache.cassandra.db.SuperColumn.mostRecentLiveChangeAt()J
+JX - IN - method sig = org.apache.cassandra.db.SuperColumn.mostRecentNonGCableChangeAt(I)J
+JX - IN - method sig = org.apache.cassandra.db.SuperColumn.putColumn(Lorg/apache/cassandra/db/SuperColumn;Lorg/apache/cassandra/utils/Allocator;)V
+JX - IN - method sig = org.apache.cassandra.db.SuperColumn.diff(Lorg/apache/cassandra/db/IColumn;)Lorg/apache/cassandra/db/IColumn;
+JX - IN - method sig = org.apache.cassandra.db.SuperColumn.updateDigest(Ljava/security/MessageDigest;)V
+JX - IN - method sig = org.apache.cassandra.db.SuperColumn.localCopy(Lorg/apache/cassandra/db/ColumnFamilyStore;Lorg/apache/cassandra/utils/Allocator;)Lorg/apache/cassandra/db/IColumn;
+JX - IN - method sig = org.apache.cassandra.db.SuperColumn.validateFields(Lorg/apache/cassandra/config/CFMetaData;)V
+JX - IN - method sig = org.apache.cassandra.db.ArrayBackedSortedColumns.binarySearch(Ljava/util/List;Ljava/util/Comparator;Ljava/nio/ByteBuffer;I)I
+JX - IN - method sig = org.apache.cassandra.db.ArrayBackedSortedColumns.addAll(Lorg/apache/cassandra/db/ISortedColumns;Lorg/apache/cassandra/utils/Allocator;Lcom/google/common/base/Function;)V
+JX - IN - method sig = org.apache.cassandra.db.AbstractThreadUnsafeSortedColumns.retainAll(Lorg/apache/cassandra/db/ISortedColumns;)V
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilySerializer.serialize(Lorg/apache/cassandra/db/ColumnFamily;Ljava/io/DataOutput;I)V
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilySerializer.deserialize(Ljava/io/DataInput;Lorg/apache/cassandra/io/IColumnSerializer$Flag;Lorg/apache/cassandra/db/ISortedColumns$Factory;I)Lorg/apache/cassandra/db/ColumnFamily;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilySerializer.contentSerializedSize(Lorg/apache/cassandra/db/ColumnFamily;Lorg/apache/cassandra/db/TypeSizes;I)J
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilySerializer.deserializeColumnsFromSSTable(Ljava/io/DataInput;Lorg/apache/cassandra/db/ColumnFamily;ILorg/apache/cassandra/io/IColumnSerializer$Flag;ILorg/apache/cassandra/io/sstable/Descriptor$Version;)V
+JX - IN - method sig = org.apache.cassandra.db.DeletionInfo.rangesAsString()Ljava/lang/String;
+JX - IN - method sig = org.apache.cassandra.db.TreeMapBackedSortedColumns.addAllWithSizeDelta(Lorg/apache/cassandra/db/ISortedColumns;Lorg/apache/cassandra/utils/Allocator;Lcom/google/common/base/Function;Lorg/apache/cassandra/db/index/SecondaryIndexManager$Updater;)J
+JX - IN - method sig = org.apache.cassandra.db.CounterColumn.mergeAndRemoveOldShards(Lorg/apache/cassandra/db/DecoratedKey;Lorg/apache/cassandra/db/ColumnFamily;IIZ)V
+JX - IN - method sig = org.apache.cassandra.db.commitlog.CommitLog.recover()I
+JX - IN - method sig = org.apache.cassandra.db.commitlog.CommitLog.sync()V
+JX - IN - method sig = org.apache.cassandra.db.commitlog.CommitLog.getActiveSegmentNames()Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.commitlog.CommitLogArchiver.maybeRestoreArchive()V
+JX - IN - method sig = org.apache.cassandra.db.commitlog.CommitLogAllocator.manages(Ljava/lang/String;)Z
+JX - IN - method sig = org.apache.cassandra.db.commitlog.CommitLogAllocator.flushOldestTables()V
+JX - IN - method sig = org.apache.cassandra.db.commitlog.CommitLogAllocator.resetUnsafe()V
+JX - IN - method sig = org.apache.cassandra.db.commitlog.CommitLogAllocator$1.runMayThrow()V
+JX - IN - method sig = org.apache.cassandra.db.commitlog.CommitLogSegment.markDirty(Lorg/apache/cassandra/db/RowMutation;Lorg/apache/cassandra/db/commitlog/ReplayPosition;)V
+JX - IN - method sig = org.apache.cassandra.db.commitlog.CommitLogSegment.dirtyString()Ljava/lang/String;
+JX - IN - method sig = org.apache.cassandra.db.commitlog.PeriodicCommitLogExecutorService$1.runMayThrow()V
+JX - IN - method sig = org.apache.cassandra.db.commitlog.PeriodicCommitLogExecutorService$3.run()V
+JX - IN - method sig = org.apache.cassandra.db.AtomicSortedColumns.delete(Lorg/apache/cassandra/db/DeletionInfo;)V
+JX - IN - method sig = org.apache.cassandra.db.AtomicSortedColumns.maybeResetDeletionTimes(I)V
+JX - IN - method sig = org.apache.cassandra.db.AtomicSortedColumns.retainAll(Lorg/apache/cassandra/db/ISortedColumns;)V
+JX - IN - method sig = org.apache.cassandra.db.AtomicSortedColumns.addColumn(Lorg/apache/cassandra/db/IColumn;Lorg/apache/cassandra/utils/Allocator;)V
+JX - IN - method sig = org.apache.cassandra.db.AtomicSortedColumns.addAllWithSizeDelta(Lorg/apache/cassandra/db/ISortedColumns;Lorg/apache/cassandra/utils/Allocator;Lcom/google/common/base/Function;Lorg/apache/cassandra/db/index/SecondaryIndexManager$Updater;)J
+JX - IN - method sig = org.apache.cassandra.db.AtomicSortedColumns.replace(Lorg/apache/cassandra/db/IColumn;Lorg/apache/cassandra/db/IColumn;)Z
+JX - IN - method sig = org.apache.cassandra.db.AtomicSortedColumns.removeColumn(Ljava/nio/ByteBuffer;)V
+JX - IN - method sig = org.apache.cassandra.db.AtomicSortedColumns.clear()V
+JX - IN - method sig = org.apache.cassandra.db.RangeTombstoneList.addAll(Lorg/apache/cassandra/db/RangeTombstoneList;)V
+JX - IN - method sig = org.apache.cassandra.db.RangeTombstoneList.dataSize()I
+JX - IN - method sig = org.apache.cassandra.db.RangeTombstoneList.minMarkedAt()J
+JX - IN - method sig = org.apache.cassandra.db.RangeTombstoneList.maxMarkedAt()J
+JX - IN - method sig = org.apache.cassandra.db.RangeTombstoneList.purge(I)V
+JX - IN - method sig = org.apache.cassandra.db.RangeTombstoneList.hasIrrelevantData(I)Z
+JX - IN - method sig = org.apache.cassandra.db.RangeTombstoneList.equals(Ljava/lang/Object;)Z
+JX - IN - method sig = org.apache.cassandra.db.RangeTombstoneList.hashCode()I
+JX - IN - method sig = org.apache.cassandra.db.AtomicSortedColumns$Holder.addColumn(Lorg/apache/cassandra/db/IColumn;Lorg/apache/cassandra/utils/Allocator;Lorg/apache/cassandra/db/index/SecondaryIndexManager$Updater;)J
+JX - IN - method sig = org.apache.cassandra.db.AtomicSortedColumns$Holder.retainAll(Lorg/apache/cassandra/db/ISortedColumns;)V
+JX - IN - method sig = org.apache.cassandra.db.RangeTombstoneList$Serializer.serialize(Lorg/apache/cassandra/db/RangeTombstoneList;Ljava/io/DataOutput;I)V
+JX - IN - method sig = org.apache.cassandra.db.RangeTombstoneList$Serializer.deserialize(Ljava/io/DataInput;ILjava/util/Comparator;)Lorg/apache/cassandra/db/RangeTombstoneList;
+JX - IN - method sig = org.apache.cassandra.db.RangeTombstoneList$Serializer.serializedSize(Lorg/apache/cassandra/db/RangeTombstoneList;Lorg/apache/cassandra/db/TypeSizes;I)J
+ INFO 23:53:49,435 Couldn't detect any schema definitions in local storage.
+ INFO 23:53:49,460 To create keyspaces and column families, see 'help create' in cqlsh.
+JX - IN - method sig = org.apache.cassandra.db.RowIteratorFactory.getIterator(Ljava/lang/Iterable;Ljava/util/Collection;Lorg/apache/cassandra/db/RowPosition;Lorg/apache/cassandra/db/RowPosition;Lorg/apache/cassandra/db/filter/QueryFilter;Lorg/apache/cassandra/db/ColumnFamilyStore;)Lorg/apache/cassandra/utils/CloseableIterator;
+ INFO 23:53:49,711 Initializing system_traces.sessions
+ INFO 23:53:49,721 Initializing system_traces.events
+JX - IN - method sig = org.apache.cassandra.service.GCInspector.logGCResults()V
+JX - IN - method sig = org.apache.cassandra.db.MeteredFlusher.run()V
+JX - IN - method sig = org.apache.cassandra.db.MeteredFlusher.countFlushingBytes()J
+ INFO 23:53:49,774 No commitlog files found; skipping replay
+JX - IN - method sig = org.apache.cassandra.service.CassandraDaemon$3.run()V
+JX - IN - method sig = org.apache.cassandra.db.DefsTable.save(Ljava/util/Collection;)V
+JX - IN - method sig = org.apache.cassandra.db.DefsTable.loadFromTable()Ljava/util/Collection;
+JX - IN - method sig = org.apache.cassandra.db.DefsTable.fixSchemaNanoTimestamp(Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.db.DefsTable.loadFromStorage(Ljava/util/UUID;)Ljava/util/Collection;
+JX - IN - method sig = org.apache.cassandra.db.DefsTable.mergeSchema(Ljava/util/Collection;)V
+JX - IN - method sig = org.apache.cassandra.db.DefsTable.mergeKeyspaces(Ljava/util/Map;Ljava/util/Map;)Ljava/util/Set;
+JX - IN - method sig = org.apache.cassandra.db.DefsTable.mergeColumnFamilies(Ljava/util/Map;Ljava/util/Map;)V
+JX - IN - method sig = org.apache.cassandra.db.DefsTable.dropKeyspace(Ljava/lang/String;)V
+ INFO 23:53:51,282 Cassandra version: 1.2.11-SNAPSHOT
+ INFO 23:53:51,282 Thrift API version: 19.36.1
+ INFO 23:53:51,283 CQL supported versions: 2.0.0,3.0.5 (default: 3.0.5)
+JX - IN - method sig = org.apache.cassandra.service.StorageProxy.mutate(Ljava/util/Collection;Lorg/apache/cassandra/db/ConsistencyLevel;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageProxy.mutateAtomically(Ljava/util/Collection;Lorg/apache/cassandra/db/ConsistencyLevel;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageProxy.syncWriteBatchedMutations(Ljava/util/List;Ljava/lang/String;Lorg/apache/cassandra/db/ConsistencyLevel;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageProxy.getBatchlogEndpoints(Ljava/lang/String;Lorg/apache/cassandra/db/ConsistencyLevel;)Ljava/util/Collection;
+JX - IN - method sig = org.apache.cassandra.service.StorageProxy.sendToHintedEndpoints(Lorg/apache/cassandra/db/RowMutation;Ljava/lang/Iterable;Lorg/apache/cassandra/service/AbstractWriteResponseHandler;Ljava/lang/String;Lorg/apache/cassandra/db/ConsistencyLevel;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageProxy.sendMessagesToOneDCInternal(Lorg/apache/cassandra/net/MessageOut;Ljava/util/Collection;ZLorg/apache/cassandra/service/AbstractWriteResponseHandler;)V
+JX - IN - method sig = org.apache.cassandra.service.StorageProxy.findSuitableEndpoint(Ljava/lang/String;Ljava/nio/ByteBuffer;Ljava/lang/String;Lorg/apache/cassandra/db/ConsistencyLevel;)Ljava/net/InetAddress;
+JX - IN - method sig = org.apache.cassandra.service.StorageProxy.systemTableQuery(Ljava/util/List;)Z
+JX - IN - method sig = org.apache.cassandra.service.StorageProxy.fetchRows(Ljava/util/List;Lorg/apache/cassandra/db/ConsistencyLevel;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.service.StorageProxy.getRangeSlice(Lorg/apache/cassandra/db/RangeSliceCommand;Lorg/apache/cassandra/db/ConsistencyLevel;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.service.StorageProxy.describeSchemaVersions()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.service.StorageProxy.getRestrictedRanges(Lorg/apache/cassandra/dht/AbstractBounds;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.service.StorageProxy.truncateBlocking(Ljava/lang/String;Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.service.PBSPredictor.listAverage(Ljava/util/List;)F
+JX - IN - method sig = org.apache.cassandra.service.PBSPredictor.doPrediction(IIIFIF)Lorg/apache/cassandra/service/PBSPredictionResult;
+JX - IN - method sig = org.apache.cassandra.service.PBSPredictor.getOrderedWLatencies()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.service.PBSPredictor.getOrderedALatencies()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.service.PBSPredictor.getOrderedRLatencies()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.service.PBSPredictor.getOrderedSLatencies()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.service.PBSPredictor.getOrderedLatencies(Ljava/util/Collection;)Ljava/util/Map;
+ INFO 23:53:51,642 Loading persisted ring state
+JX - IN - method sig = org.apache.cassandra.service.StorageService$1.runMayThrow()V
+ WARN 23:53:51,712 No host ID found, created f72941b8-1c38-4eb9-949e-2b55064ba7bd (Note: This should happen exactly once per node).
+ INFO 23:53:51,750 Starting up server gossip
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.getLiveTokenOwners()Ljava/util/Set;
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.getMaxEndpointStateVersion(Lorg/apache/cassandra/gms/EndpointState;)I
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.removeEndpoint(Ljava/net/InetAddress;)V
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.makeRandomGossipDigest(Ljava/util/List;)V
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.doStatusCheck()V
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.getStateForVersionBiggerThan(Ljava/net/InetAddress;I)Lorg/apache/cassandra/gms/EndpointState;
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.notifyFailureDetector(Ljava/util/Map;)V
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.markAlive(Ljava/net/InetAddress;Lorg/apache/cassandra/gms/EndpointState;)V
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.markDead(Ljava/net/InetAddress;Lorg/apache/cassandra/gms/EndpointState;)V
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.handleMajorStateChange(Ljava/net/InetAddress;Lorg/apache/cassandra/gms/EndpointState;)V
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.isDeadState(Lorg/apache/cassandra/gms/EndpointState;)Ljava/lang/Boolean;
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.applyStateLocally(Ljava/util/Map;)V
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.applyNewStates(Ljava/net/InetAddress;Lorg/apache/cassandra/gms/EndpointState;Lorg/apache/cassandra/gms/EndpointState;)V
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.doNotifications(Ljava/net/InetAddress;Lorg/apache/cassandra/gms/ApplicationState;Lorg/apache/cassandra/gms/VersionedValue;)V
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.examineGossiper(Ljava/util/List;Ljava/util/List;Ljava/util/Map;)V
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.start(ILjava/util/Map;)V
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.doShadowRound()V
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.buildSeedsList()V
+JX - IN - method sig = org.apache.cassandra.gms.Gossiper.stop()V
+JX - IN - method sig = org.apache.cassandra.gms.FailureDetector.getAllEndpointStates()Ljava/lang/String;
+JX - IN - method sig = org.apache.cassandra.gms.FailureDetector.getSimpleStates()Ljava/util/Map;
+JX - IN - method sig = org.apache.cassandra.gms.FailureDetector.getDownEndpointCount()I
+JX - IN - method sig = org.apache.cassandra.gms.FailureDetector.getUpEndpointCount()I
+JX - IN - method sig = org.apache.cassandra.gms.FailureDetector.appendEndpointState(Ljava/lang/StringBuilder;Lorg/apache/cassandra/gms/EndpointState;)V
+JX - IN - method sig = org.apache.cassandra.gms.FailureDetector.interpret(Ljava/net/InetAddress;)V
+JX - IN - method sig = org.apache.cassandra.gms.FailureDetector.forceConviction(Ljava/net/InetAddress;)V
+JX - IN - method sig = org.apache.cassandra.gms.FailureDetector.toString()Ljava/lang/String;
+ INFO 23:53:51,989 Enqueuing flush of Memtable-local@271862230(371/3710 serialized/live bytes, 15 ops)
+JX - IN - method sig = org.apache.cassandra.db.Memtable$FlushRunnable.writeSortedContents(Ljava/util/concurrent/Future;Ljava/io/File;)Lorg/apache/cassandra/io/sstable/SSTableReader;
+JX - IN - method sig = org.apache.cassandra.db.ColumnFamilyStore$1.runMayThrow()V
+ INFO 23:53:52,021 Writing Memtable-local@271862230(371/3710 serialized/live bytes, 15 ops)
+JX - IN - method sig = org.apache.cassandra.db.ColumnIndex$Builder.build(Lorg/apache/cassandra/db/ColumnFamily;)Lorg/apache/cassandra/db/ColumnIndex;
+JX - IN - method sig = org.apache.cassandra.db.ColumnIndex$Builder.build(Ljava/lang/Iterable;)Lorg/apache/cassandra/db/ColumnIndex;
+JX - IN - method sig = org.apache.cassandra.db.RangeTombstone$Tracker.writeOpenedMarker(Lorg/apache/cassandra/db/OnDiskAtom;Ljava/io/DataOutput;Lorg/apache/cassandra/db/OnDiskAtom$Serializer;)J
+JX - IN - method sig = org.apache.cassandra.db.RangeTombstone$Tracker.update(Lorg/apache/cassandra/db/OnDiskAtom;)V
+JX - IN - method sig = org.apache.cassandra.db.RangeTombstone$Tracker.isDeleted(Lorg/apache/cassandra/db/IColumn;)Z
+JX - IN - method sig = org.apache.cassandra.db.RowIndexEntry$IndexedEntry.promotedSize()I
+JX - IN - method sig = org.apache.cassandra.db.RowIndexEntry$IndexedEntry.memorySize()J
+JX - IN - method sig = org.apache.cassandra.db.RowIndexEntry$Serializer.serialize(Lorg/apache/cassandra/db/RowIndexEntry;Ljava/io/DataOutput;)V
+JX - IN - method sig = org.apache.cassandra.db.RowIndexEntry$Serializer.deserialize(Ljava/io/DataInput;Lorg/apache/cassandra/io/sstable/Descriptor$Version;)Lorg/apache/cassandra/db/RowIndexEntry;
+ INFO 23:53:52,374 Completed flushing /var/lib/cassandra/data/system/local/system-local-ic-1-Data.db (365 bytes) for commitlog position ReplayPosition(segmentId=1503359629292, position=53170)
+JX - IN - method sig = org.apache.cassandra.db.compaction.CompactionManager.submitBackground(Lorg/apache/cassandra/db/ColumnFamilyStore;)Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.compaction.CompactionManager.forceUserDefinedCompaction(Ljava/lang/String;Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.db.compaction.CompactionManager.lookupSSTable(Lorg/apache/cassandra/db/ColumnFamilyStore;Lorg/apache/cassandra/io/sstable/Descriptor;)Lorg/apache/cassandra/io/sstable/SSTableReader;
+JX - IN - method sig = org.apache.cassandra.db.compaction.CompactionManager.disableAutoCompaction()V
+JX - IN - method sig = org.apache.cassandra.db.compaction.CompactionManager.doScrub(Lorg/apache/cassandra/db/ColumnFamilyStore;Ljava/util/Collection;)V
+JX - IN - method sig = org.apache.cassandra.db.compaction.CompactionManager.doCleanupCompaction(Lorg/apache/cassandra/db/ColumnFamilyStore;Ljava/util/Collection;Lorg/apache/cassandra/utils/CounterId$OneShotRenewer;)V
+JX - IN - method sig = org.apache.cassandra.db.compaction.CompactionManager.doValidationCompaction(Lorg/apache/cassandra/db/ColumnFamilyStore;Lorg/apache/cassandra/service/AntiEntropyService$Validator;)V
+JX - IN - method sig = org.apache.cassandra.db.compaction.CompactionManager.getCompactions()Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.compaction.CompactionManager.getCompactionSummary()Ljava/util/List;
+JX - IN - method sig = org.apache.cassandra.db.compaction.CompactionManager.stopCompaction(Ljava/lang/String;)V
+JX - IN - method sig = org.apache.cassandra.db.compaction.CompactionManager.stopCompactionFor(Ljava/util/Collection;)V
+JX - IN - method sig = org.apache.cassandra.db.compaction.AbstractCompactionIterable.getMergedRowCounts()[J
+ INFO 23:53:54,848 GC for ParNew: 255 ms for 1 collections, 957886488 used; max is 5132386304
+Debug: insert before in method: call in cc: org.apache.cassandra.db.commitlog.CommitLog$3 flag: 4
+Debug: methodType: ()Ljava/lang/Object;
+Debug: Insert Instruction: String opValue = Long.toString(Thread.currentThread().getId()) + "/" + Integer.toString(System.identityHashCode($0));LogClass._DM_Log.log_ThdEnter(opValue);
+java.util.ConcurrentModificationException
+	at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:859)
+	at java.util.ArrayList$Itr.next(ArrayList.java:831)
+	at javassist.compiler.MemberResolver.searchImports(MemberResolver.java:452)
+	at javassist.compiler.MemberResolver.lookupClass(MemberResolver.java:412)
+	at javassist.compiler.MemberResolver.lookupFieldByJvmName2(MemberResolver.java:274)
+	at javassist.compiler.TypeChecker.fieldAccess2(TypeChecker.java:913)
+	at javassist.compiler.TypeChecker.fieldAccess(TypeChecker.java:870)
+	at javassist.compiler.TypeChecker.atFieldRead(TypeChecker.java:803)
+	at javassist.compiler.TypeChecker.atExpr(TypeChecker.java:578)
+	at javassist.compiler.ast.Expr.accept(Expr.java:68)
+	at javassist.compiler.TypeChecker.atCallExpr(TypeChecker.java:665)
+	at javassist.compiler.JvstTypeChecker.atCallExpr(JvstTypeChecker.java:157)
+	at javassist.compiler.ast.CallExpr.accept(CallExpr.java:46)
+	at javassist.compiler.CodeGen.doTypeCheck(CodeGen.java:242)
+	at javassist.compiler.CodeGen.atStmnt(CodeGen.java:330)
+	at javassist.compiler.ast.Stmnt.accept(Stmnt.java:50)
+	at javassist.compiler.Javac.compileStmnt(Javac.java:569)
+	at javassist.CtBehavior.insertBefore(CtBehavior.java:754)
+	at javassist.CtBehavior.insertBefore(CtBehavior.java:734)
+	at dm.util.MethodUtil.insertCallInstBefore(Unknown Source)
+	at dm.CassandraTransformer.transformClassForHappensBefore(Unknown Source)
+	at dm.CassandraTransformer.transformClass(Unknown Source)
+	at dm.Transformer.transformClass(Unknown Source)
+	at dm.Transformer.transform(Unknown Source)
+	at sun.instrument.TransformerManager.transform(TransformerManager.java:188)
+	at sun.instrument.InstrumentationImpl.transform(InstrumentationImpl.java:424)
+	at java.lang.ClassLoader.defineClass1(Native Method)
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:803)
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:442)
+	at java.net.URLClassLoader.access$100(URLClassLoader.java:64)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:354)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:348)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:347)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:312)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	at org.apache.cassandra.db.commitlog.CommitLog.discardCompletedSegments(CommitLog.java:203)
+	at org.apache.cassandra.db.ColumnFamilyStore$1.runMayThrow(ColumnFamilyStore.java:660)
+	at org.apache.cassandra.utils.WrappedRunnable.run(WrappedRunnable.java:28)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:473)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+java.util.ConcurrentModificationException
+	at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:859)
+	at java.util.ArrayList$Itr.next(ArrayList.java:831)
+	at javassist.compiler.MemberResolver.searchImports(MemberResolver.java:452)
+	at javassist.compiler.MemberResolver.lookupClass(MemberResolver.java:412)
+	at javassist.compiler.MemberResolver.lookupFieldByJvmName2(MemberResolver.java:274)
+	at javassist.compiler.TypeChecker.fieldAccess2(TypeChecker.java:913)
+	at javassist.compiler.TypeChecker.fieldAccess(TypeChecker.java:870)
+	at javassist.compiler.TypeChecker.atFieldRead(TypeChecker.java:803)
+	at javassist.compiler.TypeChecker.atExpr(TypeChecker.java:578)
+	at javassist.compiler.ast.Expr.accept(Expr.java:68)
+	at javassist.compiler.TypeChecker.atCallExpr(TypeChecker.java:665)
+	at javassist.compiler.JvstTypeChecker.atCallExpr(JvstTypeChecker.java:157)
+	at javassist.compiler.ast.CallExpr.accept(CallExpr.java:46)
+	at javassist.compiler.CodeGen.doTypeCheck(CodeGen.java:242)
+	at javassist.compiler.CodeGen.atStmnt(CodeGen.java:330)
+	at javassist.compiler.ast.Stmnt.accept(Stmnt.java:50)
+	at javassist.compiler.Javac.compileStmnt(Javac.java:569)
+	at javassist.CtBehavior.insertAfterAdvice(CtBehavior.java:899)
+	at javassist.CtBehavior.insertAfter(CtBehavior.java:851)
+	at javassist.CtBehavior.insertAfter(CtBehavior.java:792)
+	at dm.util.MethodUtil.insertCallInstAfter(Unknown Source)
+	at dm.CassandraTransformer.transformClassForHappensBefore(Unknown Source)
+	at dm.CassandraTransformer.transformClass(Unknown Source)
+	at dm.Transformer.transformClass(Unknown Source)
+	at dm.Transformer.transform(Unknown Source)
+	at sun.instrument.TransformerManager.transform(TransformerManager.java:188)
+	at sun.instrument.InstrumentationImpl.transform(InstrumentationImpl.java:424)
+	at java.lang.ClassLoader.defineClass1(Native Method)
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:803)
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:442)
+	at java.net.URLClassLoader.access$100(URLClassLoader.java:64)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:354)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:348)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:347)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:312)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	at org.apache.cassandra.db.commitlog.CommitLog.discardCompletedSegments(CommitLog.java:203)
+	at org.apache.cassandra.db.ColumnFamilyStore$1.runMayThrow(ColumnFamilyStore.java:660)
+	at org.apache.cassandra.utils.WrappedRunnable.run(WrappedRunnable.java:28)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:473)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+JX - IN - method sig = org.apache.cassandra.db.commitlog.CommitLog$3.call()Ljava/lang/Object;
+java.util.ConcurrentModificationException
+	at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:859)
+	at java.util.ArrayList$Itr.next(ArrayList.java:831)
+	at javassist.compiler.MemberResolver.searchImports(MemberResolver.java:452)
+	at javassist.compiler.MemberResolver.lookupClass(MemberResolver.java:412)
+	at javassist.compiler.MemberResolver.lookupFieldByJvmName2(MemberResolver.java:274)
+	at javassist.compiler.TypeChecker.fieldAccess2(TypeChecker.java:913)
+	at javassist.compiler.TypeChecker.fieldAccess(TypeChecker.java:870)
+	at javassist.compiler.TypeChecker.atFieldRead(TypeChecker.java:803)
+	at javassist.compiler.TypeChecker.atExpr(TypeChecker.java:578)
+	at javassist.compiler.ast.Expr.accept(Expr.java:68)
+	at javassist.compiler.TypeChecker.atCallExpr(TypeChecker.java:665)
+	at javassist.compiler.JvstTypeChecker.atCallExpr(JvstTypeChecker.java:157)
+	at javassist.compiler.ast.CallExpr.accept(CallExpr.java:46)
+	at javassist.compiler.CodeGen.doTypeCheck(CodeGen.java:242)
+	at javassist.compiler.CodeGen.atStmnt(CodeGen.java:330)
+	at javassist.compiler.ast.Stmnt.accept(Stmnt.java:50)
+	at javassist.compiler.Javac.compileStmnt(Javac.java:569)
+	at javassist.CtBehavior.insertAt(CtBehavior.java:1192)
+	at javassist.CtBehavior.insertAt(CtBehavior.java:1140)
+	at dm.transformers.Transformers.transformClassForLoops(Unknown Source)
+	at dm.CassandraTransformer.transformClass(Unknown Source)
+	at dm.Transformer.transformClass(Unknown Source)
+	at dm.Transformer.transform(Unknown Source)
+	at sun.instrument.TransformerManager.transform(TransformerManager.java:188)
+	at sun.instrument.InstrumentationImpl.transform(InstrumentationImpl.java:424)
+	at java.lang.ClassLoader.defineClass1(Native Method)
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:803)
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:442)
+	at java.net.URLClassLoader.access$100(URLClassLoader.java:64)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:354)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:348)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:347)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:312)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	at org.apache.cassandra.db.commitlog.CommitLog.discardCompletedSegments(CommitLog.java:203)
+	at org.apache.cassandra.db.ColumnFamilyStore$1.runMayThrow(ColumnFamilyStore.java:660)
+	at org.apache.cassandra.utils.WrappedRunnable.run(WrappedRunnable.java:28)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:473)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+JX - IN - method sig = org.apache.cassandra.gms.EndpointStateSerializer.serialize(Lorg/apache/cassandra/gms/EndpointState;Ljava/io/DataOutput;I)V
