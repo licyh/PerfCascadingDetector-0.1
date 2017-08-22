@@ -1375,6 +1375,14 @@ public void insertRPCInvoke(String logClass, String logMethod) {
 	      str = "String opValue = Integer.toString(System.identityHashCode(this.event));";
 	      str += logClass + "." + logFunc + "(opValue);";
 	    }
+	    //added by JX, for ca-6744's streaming each file's message Enter and Exit
+	    else if (flag == 51) {
+	    	//ca - streaming file read
+	    	str = "String opValue = remoteFile.getFilename();";
+	    	str += logClass + "." + logFunc + "(opValue);";
+	    }
+	    
+	    
 	    return str;
 	}
 

@@ -204,6 +204,12 @@ class CassandraTransformer extends Transformer {
 	      	    methodUtil.insertCallInstBefore(logClass, msgProcEnterLog,41);// 41 means 4 an 1 , 4 means CA, 1 means first speciall operation
 	            methodUtil.insertCallInstAfter(logClass, msgProcExitLog, 41);
 	        }
+	        //added by JX, for ca-6744's streaming each file
+	        else if (className.equals("org.apache.cassandra.streaming.IncomingStreamReader") && methodName.equals("read")) {
+	      	    methodUtil.insertCallInstBefore(logClass, msgProcEnterLog,51);// 41 means 4 an 1 , 4 means CA, 1 means first speciall operation
+	            methodUtil.insertCallInstAfter(logClass, msgProcExitLog, 51);
+	        }
+	        
 	        // commented by JX, use the following one instead
 	        /*
 	        else if (methodName.equals("sendOneWay")) {
@@ -226,6 +232,9 @@ class CassandraTransformer extends Transformer {
 			    } catch (Exception e){
 			    	e.printStackTrace();
 			    }
+	        }
+	        else if (className.equals("org.apache.cassandra.streaming.FileStreamTask") && methodName.equals("stream")) {
+	        	methodUtil.insertCallInstBefore(logClass, msgSendingLog, 51);
 	        }
 	        
 	
