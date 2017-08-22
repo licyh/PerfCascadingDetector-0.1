@@ -1378,8 +1378,17 @@ public void insertRPCInvoke(String logClass, String logMethod) {
 	    //added by JX, for ca-6744's streaming each file's message Enter and Exit
 	    else if (flag == 51) {
 	    	//ca - streaming file read
-	    	str = "String opValue = remoteFile.getFilename();";
+	    	str = "if (remoteFile != null) {";
+	    	str += "String opValue = remoteFile.getFilename();";
 	    	str += logClass + "." + logFunc + "(opValue);";
+	    	str += "}";
+	    }
+	    else if (flag == 52) {
+	    	//ca - streaming file read
+	    	str = "if (header.file != null) {";
+	    	str += "String opValue = header.file.getFilename();";
+	    	str += logClass + "." + logFunc + "(opValue);";
+	    	str += "}";
 	    }
 	    
 	    

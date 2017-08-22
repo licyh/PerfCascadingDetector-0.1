@@ -234,7 +234,7 @@ class CassandraTransformer extends Transformer {
 			    }
 	        }
 	        else if (className.equals("org.apache.cassandra.streaming.FileStreamTask") && methodName.equals("stream")) {
-	        	methodUtil.insertCallInstBefore(logClass, msgSendingLog, 51);
+	        	methodUtil.insertCallInstBefore(logClass, msgSendingLog, 52);
 	        }
 	        
 	
