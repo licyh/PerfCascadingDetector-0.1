@@ -262,14 +262,16 @@ class CassandraTransformer extends Transformer {
 		     * lockRequire & lockRelease - for lock accesses
 		     */
 		    // added for ca-xxx
-		    //if ( !className.startsWith("org.apache.hadoop.ipc.") ) {   //jx: coz this has lots of locks useless 
+		    if ( !className.startsWith("org.apache.cassandra.net.")          //jx: acutally didn't use, because we didn't check  "lock-related"
+		    		&& !className.startsWith("org.apache.cassandra.utils.")  //jx: acutally didn't use, because we didn't check  "lock-related"
+		    		) {   //jx: coz this has lots of locks useless 
                 //System.out.println("JX - DEBUG - DM - 6");      
 		    	methodUtil.insertSyncMethod(logClass, lockRequireLog, logClass, lockReleaseLog);
 		    	//System.out.println("JX - DEBUG - DM - 7");
 		    	methodUtil.insertMonitorInst(logClass, lockRequireLog, logClass, lockReleaseLog);
 		    	//System.out.println("JX - DEBUG - DM - 8");
 		    	methodUtil.insertRWLock(logClass, rWLockCreateLog);
-            //}
+            }
 		    //end-Added
 		    
 	    }
