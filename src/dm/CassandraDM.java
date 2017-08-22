@@ -209,6 +209,9 @@ class CassandraTransformer extends Transformer {
 	      	    methodUtil.insertCallInstBefore(logClass, msgProcEnterLog,51);// 41 means 4 an 1 , 4 means CA, 1 means first speciall operation
 	            methodUtil.insertCallInstAfter(logClass, msgProcExitLog, 51);
 	        }
+	        else if (className.equals("org.apache.cassandra.streaming.FileStreamTask") && methodName.equals("runMayThrow")) { //before "stream()->itself or its son's stream()"
+	        	methodUtil.insertCallInstAt(logClass, msgSendingLog, 52, 91, "org.apache.cassandra.streaming.FileStreamTask#stream");
+	        }
 	        
 	        // commented by JX, use the following one instead
 	        /*
@@ -233,10 +236,7 @@ class CassandraTransformer extends Transformer {
 			    	e.printStackTrace();
 			    }
 	        }
-	        else if (className.equals("org.apache.cassandra.streaming.FileStreamTask") && methodName.equals("runMayThrow")) { //before "stream()->itself or its son's stream()"
-	        	methodUtil.insertCallInstAt(logClass, msgSendingLog, 52, 91, "org.apache.cassandra.streaming.FileStreamTask#stream");
-	        }
-	        
+	 
 	
 		    //if (injectFlag == false && calleeInfo.isCallee(className, methodName, method.getSignature())) {
 		    if (injectFlag == false && methodName.contains("init") == false &&
