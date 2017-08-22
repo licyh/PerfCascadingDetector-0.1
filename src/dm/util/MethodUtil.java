@@ -53,32 +53,8 @@ public class MethodUtil {
 	    }
 	}
 	
-	//added by JX
-	/**
-	 * it will not insert if it couldn't
-	 */
-	public boolean insertAt(int lineNumber, String codeSnippet) {
-		return insertAt(lineNumber, codeSnippet, "");
-	}
-	
-	public boolean insertAt(int lineNumber, String codeSnippet, String debugMsgType) {
-		//String tmpsig = method.getDeclaringClass().getName() + "." + method.getName();
-		try {
-			int actualLineNumber = method.insertAt(lineNumber, false, codeSnippet);
-			if (lineNumber != actualLineNumber) {
-				System.out.println( "JX - DEBUG - " + debugMsgType + ": expected line nmber = " + lineNumber + ", but only can insert at " + actualLineNumber + ", so give up." );
-				return false;
-			}
-			method.insertAt(lineNumber, true, codeSnippet);
-			System.out.println( "JX - DEBUG - " + debugMsgType + ": insert successfully at line number = " + lineNumber );
-		} catch (CannotCompileException e) {
-			e.printStackTrace();
-		}
-		return true;
-	}
-	
-	
 
+	
   public int paraNum() {
     return methodSig.getParameterTypes().length;
   }
@@ -209,14 +185,48 @@ public class MethodUtil {
   
   	// added by JX
   	public void insertCallInstAt(String logClass, String logFunc, int flag, int linenumber) {
+	    insertCallInstAt(logClass, logFunc, flag, linenumber, "");
+	}
+  	
+  	public void insertCallInstAt(String logClass, String logFunc, int flag, int linenumber, String debugMsgType) {
 	    try {
-	    	method.insertAt(linenumber, true, callStrInstBA(logClass, logFunc, flag));
+	    	insertAt(linenumber, callStrInstBA(logClass, logFunc, flag), debugMsgType);
 	    } catch (Exception e) {
 	      e.printStackTrace();
 	    }
 	}
   
   
+	//added by JX
+	/**
+	 * it will not insert if it couldn't
+	 */
+	public boolean insertAt(int lineNumber, String codeSnippet) {
+		return insertAt(lineNumber, codeSnippet, "");
+	}
+	
+	public boolean insertAt(int lineNumber, String codeSnippet, String debugMsgType) {
+		//String tmpsig = method.getDeclaringClass().getName() + "." + method.getName();
+		try {
+			int actualLineNumber = method.insertAt(lineNumber, false, codeSnippet);
+			if (lineNumber != actualLineNumber) {
+				System.out.println( "JX - DEBUG - " + debugMsgType + ": expected line nmber = " + lineNumber + ", but only can insert at " + actualLineNumber + ", so give up." );
+				return false;
+			}
+			method.insertAt(lineNumber, true, codeSnippet);
+			System.out.println( "JX - DEBUG - " + debugMsgType + ": insert successfully at line number = " + lineNumber );
+		} catch (CannotCompileException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+  	
+  	
+  	
+  	
+  	
+  	
+  	
 
   public void insertCallInst(String apiClass, String apiMethod, int paraNum,
                   String logClass, String logMethod, ClassUtil classUtil) {
