@@ -239,10 +239,10 @@ class CassandraTransformer extends Transformer {
 		    /* for thread creation */
 		    methodUtil.insertCallInst("java.lang.Thread", "start", 0, logClass, thdCreateLog, classUtil);
 		    //added
-		    methodUtil.insertCallInst("java.util.concurrent.Executor", "execute", 1, logClass, thdCreateLog, classUtil);
-		    //methodUtil.insertCallInst("java.util.concurrent.ThreadPoolExecutor", "execute", 1, logClass, thdCreateLog, classUtil);
+		    //methodUtil.insertCallInst("java.util.concurrent.Executor", "execute", 1, logClass, thdCreateLog, classUtil);
+		    methodUtil.insertCallInst("java.util.concurrent.ThreadPoolExecutor", "execute", 1, logClass, thdCreateLog, classUtil);
 		    methodUtil.insertCallInst("java.util.concurrent.ThreadPoolExecutor", "submit", 1, logClass, thdCreateLog, classUtil);
-		    //methodUtil.insertCallInst("java.util.concurrent.ExecutorService", "execute", 1, logClass, thdCreateLog, classUtil);
+		    methodUtil.insertCallInst("java.util.concurrent.ExecutorService", "execute", 1, logClass, thdCreateLog, classUtil);
 		    methodUtil.insertCallInst("java.util.concurrent.ExecutorService", "submit", 1, logClass, thdCreateLog, classUtil);
 		    methodUtil.insertCallInst("java.util.Timer", "schedule", 3, logClass, thdCreateLog, classUtil); 
 		    methodUtil.insertCallInst("java.util.concurrent.CompletionService", "submit", 1, logClass, thdCreateLog, classUtil); //for ExecutorCompletionService in ResourceLocalizationService.java L625.
