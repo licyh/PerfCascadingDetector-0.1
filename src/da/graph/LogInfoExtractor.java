@@ -15,12 +15,13 @@ public class LogInfoExtractor {
 	HappensBeforeGraph hbg;
 	
     LinkedHashMap<Integer, Integer> targetCodeBlocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
+    LinkedHashMap<Integer, Integer> lockBlocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
+    LinkedHashMap<Integer, Integer> loopBlocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
     //added for CA
     LinkedHashMap<Integer, Integer> handlerBlocks = new LinkedHashMap<Integer, Integer>(); 
     LinkedHashMap<Integer, Integer> eventHandlerBlocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
-    LinkedHashMap<Integer, Integer> lockBlocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
-    LinkedHashMap<Integer, Integer> loopBlocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
-   
+    LinkedHashMap<Integer, Integer> rpcHandlerBlocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
+    
     //computed
     LinkedHashMap<Integer, Integer> handlerThreads = new LinkedHashMap<Integer, Integer>();
     
@@ -46,14 +47,6 @@ public class LogInfoExtractor {
     	return this.targetCodeBlocks;
     }
     
-    public LinkedHashMap<Integer, Integer> getHandlerBlocks() {
-    	return this.handlerBlocks;
-    }
-    
-    public LinkedHashMap<Integer, Integer> getEventHandlerBlocks() {
-    	return this.eventHandlerBlocks;
-    }
-    
     public LinkedHashMap<Integer, Integer> getLockBlocks() {
     	return this.lockBlocks;
     }
@@ -63,6 +56,19 @@ public class LogInfoExtractor {
     }
     
     
+    public LinkedHashMap<Integer, Integer> getHandlerBlocks() {
+    	return this.handlerBlocks;
+    }
+    
+    public LinkedHashMap<Integer, Integer> getEventHandlerBlocks() {
+    	return this.eventHandlerBlocks;
+    }
+    
+    public LinkedHashMap<Integer, Integer> getRPCHandlerBlocks() {
+    	return this.rpcHandlerBlocks;
+    }
+    
+    //more computing
     public LinkedHashMap<Integer, Integer> getHandlerThreads() {
     	return this.handlerThreads;
     }
@@ -93,13 +99,16 @@ public class LogInfoExtractor {
     public void extractLogInfo() {
         
         extractTargetCodeInfo();
+        extractLockInfo();
+        extractLoopInfo();
+        //add
         //added for threadpool for CA
         extractHandlerInfo();
         //added for queue in MR
         extractEventHandlerInfo();
-        extractLockInfo();
-        extractLoopInfo();
-    	 	
+    	//add RPC event handlers
+        extractRPCHandlerInfo();
+        
     	// for test
     	Set<String> tmpset = new HashSet<String>();
     	
@@ -180,69 +189,7 @@ public class LogInfoExtractor {
 				targetCodeBlocks.put( iIndex, null );
     	}
     }
-    
-    
-    public void extractEventHandlerInfo() {
-    	// Get all EventHandlerBegin&EventHandlerEnd nodes
-    	ArrayList<Integer> items = getTypedNodes(LogType.EventHandlerBegin.name(), LogType.EventHandlerEnd.name());
-    	
-    	// Handle loop codes
-    	for (int i = 0; i < items.size(); i++) {
-    		int iIndex = items.get(i);
-    		if ( !hbg.getNodeOPTY( iIndex ).equals(LogType.EventHandlerBegin.name()) ) continue;
-    			
-			int flag = 1;
-			for (int j = i+1; j < items.size(); j++) {
-				int jIndex = items.get(j);
-				if ( !hbg.isSameThread(jIndex, iIndex) ) break;
-				if ( hbg.getNodeOPTY( jIndex ).equals(LogType.EventHandlerBegin.name()) ) flag ++;
-				else flag --;
-				if (flag == 0) {
-					eventHandlerBlocks.put( iIndex, jIndex );
-					break;
-				}
-			}
-			if ( !eventHandlerBlocks.containsKey( iIndex ) )
-				eventHandlerBlocks.put( iIndex, null );
-    	}
-    }
-    
-    
-    /**
-     * only for threadpool's thread now.
-     */
-    public void extractHandlerInfo() {
-        // threadpool's event - ThdEnter & ThdExit
-    	// Get all ThdEnter&ThdExit nodes
-    	ArrayList<Integer> items = getTypedNodes(LogType.ThdEnter.name(), LogType.ThdExit.name());
-    
-    	// Handle lock codes
-    	for (int i = 0; i < items.size(); i++) {
-    		int iIndex = items.get(i);
-    		if ( !hbg.getNodeOPTY( iIndex ).equals(LogType.ThdEnter.name()) ) continue;
-    		
-    		String opval = hbg.getNodeOPVAL(iIndex);
-			int reenter = 1;
-			for (int j = i+1; j < items.size(); j++) {
-				int jIndex = items.get(j);
-				if ( !hbg.isSameThread(jIndex, iIndex) ) break;
-				// modified: bug fix
-				if ( hbg.getNodeOPTY(jIndex).equals(LogType.ThdEnter.name()) && hbg.getNodeOPVAL(jIndex).equals(opval) )  
-					reenter ++;
-				if ( hbg.getNodeOPTY(jIndex).equals(LogType.ThdExit.name()) && hbg.getNodeOPVAL(jIndex).equals(opval) ) {
-					reenter --;
-					if (reenter == 0) {
-						handlerBlocks.put(iIndex, jIndex);
-						break;
-					}
-				}
-				// end - modified
-			}
-			if ( !handlerBlocks.containsKey(iIndex) ) 
-				handlerBlocks.put(iIndex, null);
-    	}
-    }
-    
+        
     
     public void extractLockInfo() {
     	// Get all EventHandlerBegin&EventHandlerEnd nodes
@@ -328,6 +275,100 @@ public class LogInfoExtractor {
     	}
     }
 
+    
+    public void extractEventHandlerInfo() {
+    	// Get all EventHandlerBegin&EventHandlerEnd nodes
+    	ArrayList<Integer> items = getTypedNodes(LogType.EventHandlerBegin.name(), LogType.EventHandlerEnd.name());
+    	
+    	// Handle loop codes
+    	for (int i = 0; i < items.size(); i++) {
+    		int iIndex = items.get(i);
+    		if ( !hbg.getNodeOPTY( iIndex ).equals(LogType.EventHandlerBegin.name()) ) continue;
+    			
+			int flag = 1;
+			for (int j = i+1; j < items.size(); j++) {
+				int jIndex = items.get(j);
+				if ( !hbg.isSameThread(jIndex, iIndex) ) break;
+				if ( hbg.getNodeOPTY( jIndex ).equals(LogType.EventHandlerBegin.name()) ) flag ++;
+				else flag --;
+				if (flag == 0) {
+					eventHandlerBlocks.put( iIndex, jIndex );
+					break;
+				}
+			}
+			if ( !eventHandlerBlocks.containsKey( iIndex ) )
+				eventHandlerBlocks.put( iIndex, null );
+    	}
+    }
+    
+    
+    /**
+     * only for threadpool's thread now.
+     */
+    public void extractHandlerInfo() {
+        // threadpool's event - ThdEnter & ThdExit
+    	// Get all ThdEnter&ThdExit nodes
+    	ArrayList<Integer> items = getTypedNodes(LogType.ThdEnter.name(), LogType.ThdExit.name());
+    
+    	// Handle lock codes
+    	for (int i = 0; i < items.size(); i++) {
+    		int iIndex = items.get(i);
+    		if ( !hbg.getNodeOPTY( iIndex ).equals(LogType.ThdEnter.name()) ) continue;
+    		
+    		String opval = hbg.getNodeOPVAL(iIndex);
+			int reenter = 1;
+			for (int j = i+1; j < items.size(); j++) {
+				int jIndex = items.get(j);
+				if ( !hbg.isSameThread(jIndex, iIndex) ) break;
+				// modified: bug fix
+				if ( hbg.getNodeOPTY(jIndex).equals(LogType.ThdEnter.name()) && hbg.getNodeOPVAL(jIndex).equals(opval) )  
+					reenter ++;
+				if ( hbg.getNodeOPTY(jIndex).equals(LogType.ThdExit.name()) && hbg.getNodeOPVAL(jIndex).equals(opval) ) {
+					reenter --;
+					if (reenter == 0) {
+						handlerBlocks.put(iIndex, jIndex);
+						break;
+					}
+				}
+				// end - modified
+			}
+			if ( !handlerBlocks.containsKey(iIndex) ) 
+				handlerBlocks.put(iIndex, null);
+    	}
+    }
+    
+    
+    public void extractRPCHandlerInfo() {
+        // threadpool's event - ThdEnter & ThdExit
+    	// Get all ThdEnter&ThdExit nodes
+    	ArrayList<Integer> items = getTypedNodes(LogType.ThdEnter.name(), LogType.ThdExit.name());
+    
+    	// Handle lock codes
+    	for (int i = 0; i < items.size(); i++) {
+    		int iIndex = items.get(i);
+    		if ( !hbg.getNodeOPTY( iIndex ).equals(LogType.ThdEnter.name()) ) continue;
+    		
+    		String opval = hbg.getNodeOPVAL(iIndex);
+			int reenter = 1;
+			for (int j = i+1; j < items.size(); j++) {
+				int jIndex = items.get(j);
+				if ( !hbg.isSameThread(jIndex, iIndex) ) break;
+				// modified: bug fix
+				if ( hbg.getNodeOPTY(jIndex).equals(LogType.ThdEnter.name()) && hbg.getNodeOPVAL(jIndex).equals(opval) )  
+					reenter ++;
+				if ( hbg.getNodeOPTY(jIndex).equals(LogType.ThdExit.name()) && hbg.getNodeOPVAL(jIndex).equals(opval) ) {
+					reenter --;
+					if (reenter == 0) {
+						handlerBlocks.put(iIndex, jIndex);
+						break;
+					}
+				}
+				// end - modified
+			}
+			if ( !handlerBlocks.containsKey(iIndex) ) 
+				handlerBlocks.put(iIndex, null);
+    	}
+    }
     
     
     
