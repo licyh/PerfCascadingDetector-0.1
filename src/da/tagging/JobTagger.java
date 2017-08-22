@@ -67,7 +67,8 @@ public class JobTagger {
 	 * Note: should be only one path, so we use a List for path
 	 */
     public void dfsTraversing( int x, BitSet traversedNodes, List<Integer> pathToRoot ) {
-    	if ( isConnection(x) ) {
+    	//if ( isConnection(x) ) {
+    	if ( !isGeneral(x) ) {
     		 System.out.println("JX - DEBUG - path: " + hbg.getPrintedIdentity(x));
     		 pathToRoot.add(x);
     	}
@@ -102,6 +103,18 @@ public class JobTagger {
     	}    	
     }
     
+    
+    public boolean isGeneral(int index) {
+    	if ( hbg.getNodeOPTY(index).equals( LogType.LockRequire.name() )
+    			|| hbg.getNodeOPTY(index).equals( LogType.LockRelease.name() )
+    			|| hbg.getNodeOPTY(index).equals( LogType.LoopBegin.name() )
+    			|| hbg.getNodeOPTY(index).equals( LogType.LoopEnd.name() )
+    			|| hbg.getNodeOPTY(index).equals( LogType.RWLockCreate.name() )
+    			) {
+    		return true;
+    	}
+    	return false;
+    }
     
     public boolean isConnection(int index) {
     	if ( isEnter(index) 
