@@ -411,46 +411,50 @@ public class LockCase {
      ******************************************************************************************/
     // New: find inner (bug) loops and locks, may across multiple threads
     public Set<Integer> findInnerResourcesAndLoops( Set<Integer> resources, int curCascadingLevel ) {
-    	Set<Integer> nextbatchLocks = new TreeSet<Integer>();
+    	Set<Integer> nextResources = new TreeSet<Integer>();
 		for (int index: resources) {
+			int beginIndex = index;
+			int endIndex = -1;
 			if ( hbg.getNodeOPTY(index).equals(LogType.LockRequire.name()) ) {
-				int beginIndex = index;
 				if ( lockBlocks.get(beginIndex) == null ) continue;
-				int endIndex = lockBlocks.get( beginIndex );
-				
-				// for obtaining outerlocks & dfs
-				Set<String> outerlocks = null;
-		    	traversedNodes.clear();
-		    	
-		    	// dfs from beginIndex
-				dfsForInnerLoopsAndLocks(beginIndex,  beginIndex, endIndex, outerlocks, curCascadingLevel, nextbatchLocks);
+				endIndex = lockBlocks.get( beginIndex );
 			}
 			// for ca-6744 now
 			else if ( hbg.getNodeOPTY(index).equals(LogType.ThdEnter.name()) ) {
-				int beginIndex = index;
 				if ( logInfo.getHandlerBlocks().get(beginIndex) == null ) continue;
-				int endIndex = logInfo.getHandlerBlocks().get(beginIndex);
-				findBugLoops(beginIndex, endIndex);
+				endIndex = logInfo.getHandlerBlocks().get(beginIndex);
 			}
+			else {
+				//ie, endIndex == -1
+				continue;
+			}
+			
+			// for obtaining outerlocks & dfs
+			Set<String> outerlocks = null;          //should not be used for queue-related???
+			BitSet traversedNodes = new BitSet(); 
+	    	traversedNodes.clear();
+			dfsForInnerResourcesAndLoops(beginIndex,  beginIndex, endIndex, outerlocks, curCascadingLevel, nextResources, traversedNodes);
 		}
-		return nextbatchLocks;
+		return nextResources;
     }
     
     
-    public void dfsForInnerLoopsAndLocks( int x,  int beginIndex, int endIndex, Set<String> outerlocks, int curCascadingLevel, Set<Integer> nextbatchLocks ) {
-    	traversedNodes.set( x );
-    	
+    public void dfsForInnerResourcesAndLoops( int x,  int beginIndex, int endIndex, Set<String> outerlocks, int curCascadingLevel, Set<Integer> nextResources, BitSet traversedNodes ) {
     	//for testing
+    	/*
 		if (hbg.getNodeOPTY(x).equals(LogType.MsgSending.name())) {
 			System.out.println("JX - DEBUG - MsgSending: " + hbg.getPrintedIdentity(x));
 		}
+		*/
+    	
+    	traversedNodes.set( x );
     	
     	// check Lock
     	if ( hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()) ) {
 			if ( !ag.isRelevantLock(beginIndex, x) ) {                         // prune "lock beginIndex=x -> lock x"
 				if (outerlocks == null) outerlocks = obtainOuterLocks(beginIndex, endIndex);
 				if ( !outerlocks.contains(hbg.getNodePIDOPVAL0(x)) ) {         // prune "lock x -> lock beginIndex -> lock x"
-					nextbatchLocks.add( x );
+					nextResources.add( x );
 					upNodes[curCascadingLevel].put(x, beginIndex);
 					//jx: it seems no need to check if the LockReuire has LockRelease or not
 				}
@@ -462,51 +466,20 @@ public class LockCase {
     		// add to bug pool
 			upNodes[curCascadingLevel].put(x, beginIndex);
 			System.out.println("JX - DEBUG - addLoopBug..");
-			addLoopBug( x, curCascadingLevel );
+			if ( Benchmarks.resolveBugId(hbg.getTargetDir()) != null && Benchmarks.resolveBugId(hbg.getTargetDir()).equals("ca-6744") )
+				bugPool.addLoopBug( x );
+			else
+				addLoopBug( x, curCascadingLevel );
     	}
 
         List<Pair> list = hbg.getEdge().get(x);
         for (Pair pair: list) {
         	int y = pair.destination;
         	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) ) {
-        		dfsForInnerLoopsAndLocks( y,  beginIndex, endIndex, outerlocks, curCascadingLevel, nextbatchLocks  );
+        		dfsForInnerResourcesAndLoops( y,  beginIndex, endIndex, outerlocks, curCascadingLevel, nextResources, traversedNodes  );
         	}
         }
-    }
-    
-    
-    
-    
-	/**
-	 * tmp only for queue-related
-	 */
-	public void findBugLoops(int beginIndex, int endIndex) {
-	    // tmp vars
-	    BitSet traversedNodes = new BitSet();  	//tmp var. set of traversed nodes for a single code snippet, e.g, event handler
-		traversedNodes.clear();
-		dfsTraversing(beginIndex, endIndex, traversedNodes);
-	}
-	/**
-	 * tmp only for queue-related
-	 */
-    public void dfsTraversing( int x, int endIndex, BitSet traversedNodes ) {
-    	traversedNodes.set( x );
-    	// find the bug loop
-    	if ( hbg.getNodeOPTY(x).equals(LogType.LoopBegin.name()) ) {
-    		bugPool.addLoopBug( x );
-    	}
-
-        List<Pair> list = hbg.getEdge().get(x);
-        for (Pair pair: list) {
-        	int y = pair.destination;
-        	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) )
-        		dfsTraversing( y, endIndex, traversedNodes );
-        }
-    }
-    
-    
-    
-    
+    }  
     
     
     /**
@@ -517,6 +490,9 @@ public class LockCase {
 		// Note: if this part takes much time, then change to "for (int i = index-1; i >= index-20; i--) {"
 		//get its outer locks, to avoid "(lockA - )lockB<index> - lockA<k> - uA-uB-uA"
 		Set<String> outerlocks = new HashSet<String>();
+    	if ( !hbg.getNodeOPTY(beginIndex).equals(LogType.LockRequire.name()) ) 
+    		return outerlocks;
+		
 		for (int i = beginIndex-1; i >= 0; i--) {
 			if ( !hbg.isSameThread(i, beginIndex) ) break;
 			if ( hbg.getNodeOPTY(i).equals("LockRequire") ) {
