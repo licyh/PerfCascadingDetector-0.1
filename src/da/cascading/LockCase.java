@@ -466,7 +466,9 @@ public class LockCase {
     		// add to bug pool
 			upNodes[curCascadingLevel].put(x, beginIndex);
 			System.out.println("JX - DEBUG - addLoopBug..");
-			if ( Benchmarks.resolveBugId(hbg.getTargetDir()) != null && Benchmarks.resolveBugId(hbg.getTargetDir()).equals("ca-6744") )
+			if ( Benchmarks.resolveBugId(hbg.getTargetDir()) != null 
+					&& Benchmarks.resolveBugId(hbg.getTargetDir()).equals("ca-6744")
+					&& curCascadingLevel == 2)
 				bugPool.addLoopBug( x );
 			else
 				addLoopBug( x, curCascadingLevel );
@@ -508,6 +510,10 @@ public class LockCase {
 
     public boolean checkChain(LoopBug loopbug) {
     	int cascadingLevel = loopbug.cascadingLevel;
+    	
+    	//newly added
+    	if (cascadingLevel <= 1)
+    		return true;
     	
     	HashSet<String> own = new HashSet<String>();
     	for (int x: loopbug.cascadingChain) {
@@ -560,41 +566,6 @@ public class LockCase {
     }
     
 }
-
-
-
-
-
-
-//String pidopval0 = hbg.getNodePIDOPVAL0( index );
-//int loopflag = 0;
-
-/*
-for (int k = beginIndex; k <= endIndex; k++) {         /////////JXXXXXXXXXXX - here seems a big bug, I didn't find into RPC or method call
-	
-	// check Lock
-	if ( hbg.getNodeOPTY(k).equals(LogType.LockRequire.name()) ) {
-		if ( !ag.isRelevantLock(index, k) ) {  // yes, it's right
-			if (outerlocks == null) outerlocks = obtainOuterLocks(beginIndex, endIndex);
-			if ( !outerlocks.contains(hbg.getNodePIDOPVAL0(k)) ) {   
-				nextbatchLocks.add( k );
-				bugPool.upNodes[curCascadingLevel].put(k, index);
-				//jx: it seems no need to check if the LockReuire has LockRelease or not
-			}
-		}
-	}
-	
-	// check Loop
-	if ( hbg.getNodeOPTY(k).equals(LogType.LoopBegin.name()) ) {
-		//loopflag = 1;
-		// add to bug pool
-		bugPool.upNodes[curCascadingLevel].put(k, index);
-		bugPool.addLoopBug( k, curCascadingLevel );
-	}
-	
-}
-*/
-
 
 
 
