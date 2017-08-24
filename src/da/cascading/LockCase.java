@@ -363,7 +363,7 @@ public class LockCase {
      *****************************************************************************/
     public Set<Integer> findContendingResources( Set<Integer> resources, int curCascadingLevel ) {
     	//ArrayList<Integer> nextbatchLocks = new ArrayList<Integer>();
-    	Set<Integer> nextbatchLocks = new TreeSet<Integer>();
+    	Set<Integer> nextResources = new TreeSet<Integer>();
     	for (int resIndex: resources) {  
     		if ( hbg.getNodeOPTY(resIndex).equals(LogType.LockRequire.name()) ) {
     			String pidopval0 = hbg.getNodePIDOPVAL0(resIndex); 
@@ -373,7 +373,7 @@ public class LockCase {
     	    		for (int index: list) {
     	    			if (resIndex == index) continue;  
     	                if ( hbg.isFlippedorder(resIndex, index) ) {
-    	                	nextbatchLocks.add( index );
+    	                	nextResources.add( index );
     	                	predNodes[curCascadingLevel].put(index, resIndex); 
     	                }
     	    		}
@@ -385,7 +385,7 @@ public class LockCase {
         			if (list != null)  //needed
         			for (int index: list) {                                                                 
         				if ( hbg.isFlippedorder(resIndex, index) ) {      
-        					nextbatchLocks.add( index );            
+        					nextResources.add( index );            
         					predNodes[curCascadingLevel].put(index, resIndex); 
         				}                                    
         			}
@@ -397,10 +397,13 @@ public class LockCase {
         			&& Benchmarks.resolveBugId(hbg.getTargetDir()).equals("ca-6744")
     				) {
     			//TODO
-    			nextbatchLocks.addAll( ag.getHandlerCRs(resIndex) );
+    			for (int index: ag.getHandlerCRs(resIndex)) {
+    				nextResources.add( index );
+    				predNodes[curCascadingLevel].put(index, resIndex);
+    			}
     		}
     	} 
-    	return nextbatchLocks;
+    	return nextResources;
     }
     
     
