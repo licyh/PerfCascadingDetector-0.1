@@ -358,7 +358,9 @@ public class LockCase {
     
     
     
-    // JX - Find affected locks in different threads
+    /*****************************************************************************
+     * JX - findContendingResources: Find affected locks in different threads
+     *****************************************************************************/
     public Set<Integer> findContendingResources( Set<Integer> resources, int curCascadingLevel ) {
     	//ArrayList<Integer> nextbatchLocks = new ArrayList<Integer>();
     	Set<Integer> nextbatchLocks = new TreeSet<Integer>();
@@ -389,30 +391,47 @@ public class LockCase {
         			}
         		}	
     		}
-    		// only for ca-6744 now
-    		else if ( hbg.getNodeOPTY(resIndex).equals(LogType.ThdEnter.name()) ) {
+    		// only for ca-6744 now, fine only one operation at tid 29  but another two MsgProcEnter node1pid-tid247 &  node2pid-tid147
+    		else if ( hbg.getNodeOPTY(resIndex).equals(LogType.ThdEnter.name())
+    		    	&& Benchmarks.resolveBugId(hbg.getTargetDir()) != null
+        			&& Benchmarks.resolveBugId(hbg.getTargetDir()).equals("ca-6744")
+    				) {
     			//TODO
+    			nextbatchLocks.addAll( ag.getHandlerCRs(resIndex) );
     		}
     	} 
     	return nextbatchLocks;
     }
     
     
-    // JX - Find affected locks based on 'findNextbatchLocksInDiffThreads' in the same thread
+    
+    /******************************************************************************************
+     * findInnerResourcesAndLoops
+     * JX - Find affected locks based on 'findNextbatchLocksInDiffThreads' in the same thread
+     ******************************************************************************************/
     // New: find inner (bug) loops and locks, may across multiple threads
     public Set<Integer> findInnerResourcesAndLoops( Set<Integer> resources, int curCascadingLevel ) {
     	Set<Integer> nextbatchLocks = new TreeSet<Integer>();
 		for (int index: resources) {
-			int beginIndex = index;
-			if ( lockBlocks.get(beginIndex) == null ) continue;
-			int endIndex = lockBlocks.get( beginIndex );
-			
-			// for obtaining outerlocks & dfs
-			Set<String> outerlocks = null;
-	    	traversedNodes.clear();
-	    	
-	    	// dfs from beginIndex
-			dfsForInnerLoopsAndLocks(beginIndex,  beginIndex, endIndex, outerlocks, curCascadingLevel, nextbatchLocks);
+			if ( hbg.getNodeOPTY(index).equals(LogType.LockRequire.name()) ) {
+				int beginIndex = index;
+				if ( lockBlocks.get(beginIndex) == null ) continue;
+				int endIndex = lockBlocks.get( beginIndex );
+				
+				// for obtaining outerlocks & dfs
+				Set<String> outerlocks = null;
+		    	traversedNodes.clear();
+		    	
+		    	// dfs from beginIndex
+				dfsForInnerLoopsAndLocks(beginIndex,  beginIndex, endIndex, outerlocks, curCascadingLevel, nextbatchLocks);
+			}
+			// for ca-6744 now
+			else if ( hbg.getNodeOPTY(index).equals(LogType.ThdEnter.name()) ) {
+				int beginIndex = index;
+				if ( logInfo.getHandlerBlocks().get(beginIndex) == null ) continue;
+				int endIndex = logInfo.getHandlerBlocks().get(beginIndex);
+				findBugLoops(beginIndex, endIndex);
+			}
 		}
 		return nextbatchLocks;
     }
@@ -454,6 +473,38 @@ public class LockCase {
         	}
         }
     }
+    
+    
+    
+    
+	/**
+	 * tmp only for queue-related
+	 */
+	public void findBugLoops(int beginIndex, int endIndex) {
+	    // tmp vars
+	    BitSet traversedNodes = new BitSet();  	//tmp var. set of traversed nodes for a single code snippet, e.g, event handler
+		traversedNodes.clear();
+		dfsTraversing(beginIndex, endIndex, traversedNodes);
+	}
+	/**
+	 * tmp only for queue-related
+	 */
+    public void dfsTraversing( int x, int endIndex, BitSet traversedNodes ) {
+    	traversedNodes.set( x );
+    	// find the bug loop
+    	if ( hbg.getNodeOPTY(x).equals(LogType.LoopBegin.name()) ) {
+    		bugPool.addLoopBug( x );
+    	}
+
+        List<Pair> list = hbg.getEdge().get(x);
+        for (Pair pair: list) {
+        	int y = pair.destination;
+        	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) )
+        		dfsTraversing( y, endIndex, traversedNodes );
+        }
+    }
+    
+    
     
     
     

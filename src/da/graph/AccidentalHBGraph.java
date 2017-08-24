@@ -4,15 +4,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
+
+import LogClass.LogType;
+import da.tagging.JobTagger;
 
 
 public class AccidentalHBGraph {
 	
 	HappensBeforeGraph hbg;
+	LogInfoExtractor logInfo;
     //Added by JX
     public HashMap<String, ArrayList<Integer> > accurateLockmemref;  	//New: pid+opval0 -> set of nodes
     
@@ -25,16 +32,27 @@ public class AccidentalHBGraph {
     //ArrayList<ArrayList<Pair>> lockrelationbackedge;  //adjcent list of backward edges for tracing back
     
 	
-	public AccidentalHBGraph(HappensBeforeGraph graphBuilder) {
-		this.hbg = graphBuilder;
-        this.accurateLockmemref = new HashMap<String, ArrayList<Integer> >();
+	public AccidentalHBGraph(HappensBeforeGraph hbg) {
+		this.hbg = hbg;
+		// extract Target, (EventHandler), Lock, Loop logs
+		this.logInfo = new LogInfoExtractor( this.hbg );
+		
+		//lock-related
+		this.accurateLockmemref = new HashMap<String, ArrayList<Integer> >();
         
         this.lockmemref = new HashMap<String , ArrayList<Integer>>();
         this.lockmemrefType = new HashMap<String , ArrayList<Integer>>();
         this.dotlockmemref = new HashMap<String, ArrayList<Integer> >();  
-        this.rwlockmatch = new HashMap<String, String[]>();               
+        this.rwlockmatch = new HashMap<String, String[]>();    
+        
+		
 	}
 
+	
+	public LogInfoExtractor getLogInfoExtractor() {
+		return this.logInfo;
+	}
+	
 	
 	public boolean isReadLock(int index) {
 		String pidhashcode = hbg.getNodePIDOPVAL0(index);
@@ -98,6 +116,15 @@ public class AccidentalHBGraph {
     	return false;
     }
 	
+    
+    
+    
+    
+    
+    /*****************************************************************************************************
+     * Core
+     *****************************************************************************************************/
+    
     //Added by JX - analyze all locks
     public void buildLockmemref() {
     	System.out.println("\nJX - lock memory address analysis");
@@ -260,6 +287,53 @@ public class AccidentalHBGraph {
     }
     
 	
+    
+    /**
+     * Queue-related 
+     */
+    public void getContentionResources() {
+    	
+    }
+    
+    // ThdEnter, EventProcEnter, MsgProcEnter(RPC, socket)
+    public Set<Integer> getHandlerCRs(int index) {
+    	if ( hbg.getNodeOPTY(index).equals(LogType.ThdEnter.name()) ) {
+    		return getXXXFrom(index, logInfo.getHandlerBlocks(), logInfo.getHandlerThreads());
+    	}
+    	else if ( hbg.getNodeOPTY(index).equals(LogType.MsgProcEnter.name()) ) {
+    		
+    	}
+    	else if ( hbg.getNodeOPTY(index).equals(LogType.EventProcEnter.name()) ) {
+    		
+    	}
+    	else if ( hbg.getNodeOPTY(index).equals(LogType.EventHandlerBegin.name()) ) {
+    		//TODO
+    	}
+    	return new HashSet<Integer>();
+    }
+    
+ 
+    public Set<Integer> getXXXFrom(int index, LinkedHashMap<Integer, Integer> blocks, LinkedHashMap<Integer, Integer> threads) {
+    	Set<Integer> results = new HashSet<Integer>();
+    	String pidtid = hbg.getNodePIDTID(index);
+		List<Integer> list = new ArrayList<>( blocks.keySet() );
+		
+		for (Entry<Integer, Integer> thread: threads.entrySet()) {
+			int beginPos = thread.getKey();
+			int endPos = thread.getValue();
+			if ( hbg.getNodePIDTID( list.get(beginPos) ).equals(pidtid) ) {
+				for (int i = beginPos; i <= endPos; i++) {
+					int beginIndex = list.get(i);
+					if (logInfo.getHandlerBlocks().get(beginIndex) == null) continue;
+					int endIndex = logInfo.getHandlerBlocks().get(beginIndex);
+					if ( new JobTagger(this.hbg).isSameJobID(index, beginIndex) ) continue;
+					results.add(beginIndex);
+				}
+				break;
+			}
+		}
+		return results;
+    }
     
 	
 }
