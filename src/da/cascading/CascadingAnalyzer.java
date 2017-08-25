@@ -1,5 +1,7 @@
 package da.cascading;
 
+import da.cascading.core.Sink;
+import da.cascading.core.QueueCase;
 import da.graph.AccidentalHBGraph;
 import da.graph.HappensBeforeGraph;
 import da.graph.LogInfoExtractor;
@@ -18,13 +20,25 @@ public class CascadingAnalyzer {
 	}
 	
 	public void doWork() {
-	    //Lock
-	    LockCase lockCase = new LockCase(this.projectDir, this.hbg, this.ag, this.ag.getLogInfoExtractor());
-	    lockCase.doWork();
+		xxx();
+	}
+	
+	
+	
+	/*********************************************************************************
+	 * Core
+	 *********************************************************************************/
+	
+	public void xxx() {
+		
+		for (Sink sink: this.ag.getLogInfoExtractor().getSinks()) {
+			sink.setEnv(this.projectDir, this.hbg, this.ag, this.ag.getLogInfoExtractor());
+			sink.doWork();
+		}
 		
 	    //Queue
 	    QueueCase queueCase = new QueueCase(this.projectDir, this.hbg, this.ag.getLogInfoExtractor());
 	    queueCase.doWork();
-		
 	}
+	
 }

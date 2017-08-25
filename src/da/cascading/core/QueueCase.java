@@ -1,4 +1,4 @@
-package da.cascading;
+package da.cascading.core;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import LogClass.LogType;
+import da.cascading.BugPool;
 import da.graph.HappensBeforeGraph;
 import da.graph.LogInfoExtractor;
 import da.graph.Pair;

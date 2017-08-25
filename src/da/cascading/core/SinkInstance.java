@@ -1,4 +1,4 @@
-package da.cascading;
+package da.cascading.core;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -21,13 +21,37 @@ import com.benchmark.Benchmarks;
 import com.text.TextFileWriter;
 
 import LogClass.LogType;
+import da.cascading.BugPool;
+import da.cascading.LoopBug;
 import da.graph.AccidentalHBGraph;
 import da.graph.HappensBeforeGraph;
 import da.graph.LogInfoExtractor;
 import da.graph.Pair;
 
-public class LockCase {
+public class SinkInstance {
 
+	List<SinkInstance> instances;
+
+	int beginIndex;
+	int endIndex;
+	
+	public SinkInstance(int beginIndex, int endIndex) {
+		this.beginIndex = beginIndex;
+		this.endIndex = endIndex;
+	}
+	
+	public int getBeginIndex() {
+		return this.beginIndex;
+	}
+	
+	public int getEndIndex() {
+		return this.endIndex;
+	}
+	
+	public String toString() {
+		return "SinkInstance(" + beginIndex + " to " + endIndex + ")";
+	}
+	
 	String projectDir;
 	HappensBeforeGraph hbg;
 	AccidentalHBGraph ag;
@@ -61,8 +85,7 @@ public class LockCase {
 	HashMap<Integer, Integer>[] upNodes   = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for the same thread
 
     
-	
-	public LockCase(String projectDir, HappensBeforeGraph hbg, AccidentalHBGraph ag, LogInfoExtractor logInfo) {
+	public void setEnv(String projectDir, HappensBeforeGraph hbg, AccidentalHBGraph ag, LogInfoExtractor logInfo) {
 		this.projectDir = projectDir;
 		this.hbg = hbg;
 		this.ag = ag;
@@ -76,7 +99,7 @@ public class LockCase {
         //targetcodeLoops = new ArrayList<Integer>();                              //never used, just ps for time-consuming loops?
         this.traversedNodes = new BitSet();                //tmp var. set of all nodes for a single target code snippet
         
-        this.bugPool = new BugPool(this.projectDir, this.hbg);
+        //this.bugPool = new BugPool(this.projectDir, this.hbg);
         //this.predNodes = new int[this.gb.nList.size()];
         for (int i = 1; i <= CASCADING_LEVEL; i++) {
         	this.predNodes[i] = new HashMap<Integer, Integer>();
@@ -84,7 +107,16 @@ public class LockCase {
         }
 	}
 	
+	public void setBugPool(BugPool bugPool) {
+		this.bugPool = bugPool;
+	}
 	
+	public void setOuterLocks( HashMap<Integer, HashSet<String>> outerLocks ) {
+		this.outerLocks = outerLocks;
+	}
+	
+	
+	/*
 	public void doWork() {
 		// prepare
 		prepare();
@@ -93,7 +125,7 @@ public class LockCase {
     	// print the results
 		bugPool.printResults();
 	}
-	
+	*/
 	
 	
 	
@@ -102,29 +134,7 @@ public class LockCase {
 	 ******************************************************************************/
 	
 	
-	public void prepare() {
-		
-		for (int lockIndex: lockBlocks.keySet()) {
-			if (lockBlocks.get(lockIndex) == null) continue;
-			int lockBegin = lockIndex;
-			int lockEnd = lockBlocks.get(lockIndex);
-			for (int x = lockBegin+1; x < lockEnd; x++) {
-				if ( hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()) 
-					 && logInfo.lockContains(lockIndex, x) 
-						) {
-					
-					if ( !outerLocks.containsKey(x) ) {
-						HashSet<String> set = new HashSet<String>();
-						outerLocks.put(x, set);
-					}
-					HashSet<String> set = outerLocks.get(x);
-					set.add( hbg.getNodePIDOPVAL0(lockIndex) );
-					
-				}
-			}
-		}
-	}
- 
+
     
     
     /**  
@@ -134,11 +144,13 @@ public class LockCase {
      * 		- TargetCodeBegin & TargetCodeEnd
      * 		- tmp: (not here) EventHandlerBegin & EventHandlerEnd,  this should also be changed to  TargetCodeBegin & TargetCodeEnd
      */
+	/*
     public void handleSink() {
     	System.out.println("\nJX - traverseTargetCodes - including all TARGET CODE snippets");
     	
     	int numofsnippets = 0;
     	// traverse every pair of TargetCodeBegin & TargetCodeEnd
+    	
     	for (int beginindex: targetCodeBlocks.keySet() ) {
     		if ( targetCodeBlocks.get(beginindex) == null )
     			continue;
@@ -147,6 +159,7 @@ public class LockCase {
     		handleSinkInstance( beginindex, endindex );
     	}
     }
+    */
     
     
     int tmpxx = 0;
@@ -262,7 +275,7 @@ public class LockCase {
     	
     	// Termination Conditions
     	if ( hbg.getNodeOPTY(x).equals(LogType.ThdEnter.name()) ) {
-    		System.out.println("JX - debug - LockCase: termination at ThdEnter " + hbg.getPrintedIdentity(x) );
+    		System.out.println("JX - debug - Sink: termination at ThdEnter " + hbg.getPrintedIdentity(x) );
     		return;
     	}
     	
@@ -512,21 +525,21 @@ public class LockCase {
     
 
     public boolean checkChain(LoopBug loopbug) {
-    	int cascadingLevel = loopbug.cascadingLevel;
+    	int cascadingLevel = loopbug.getCascadingLevel();
     	
     	//newly added
     	if (cascadingLevel <= 1)
     		return true;
     	
     	HashSet<String> own = new HashSet<String>();
-    	for (int x: loopbug.cascadingChain) {
+    	for (int x: loopbug.getCascadingChain()) {
     		if (hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()))
     			own.add( hbg.getNodePIDOPVAL0(x) );
     	}
     	//System.out.println("JX - DEBUG - checkChain: own.size()=" + own.size());
-    	for (int i = 0; i<loopbug.cascadingChain.size(); i++) {
-    		int x = loopbug.cascadingChain.get(i);
-    		if (i%2==1 || i==loopbug.cascadingChain.size()-1) {
+    	for (int i = 0; i<loopbug.getCascadingChain().size(); i++) {
+    		int x = loopbug.getCascadingChain().get(i);
+    		if (i%2==1 || i==loopbug.getCascadingChain().size()-1) {
     			if (!outerLocks.containsKey(x)) continue;
     			
     			for (String each: outerLocks.get(x)) {
@@ -547,16 +560,16 @@ public class LockCase {
   	
     	// get cascading lock chain
     	if ( cascadingLevel == 1 ) { // Immediate loop bug
-    		loopbug.cascadingChain.add( nodeIndex );
+    		loopbug.getCascadingChain().add( nodeIndex );
     	}
     	else if ( cascadingLevel >= 2 ) { // Lock-related loop bug
-        	loopbug.cascadingChain.add( nodeIndex );
+        	loopbug.getCascadingChain().add( nodeIndex );
         	int tmp = nodeIndex;
     		for (int i=cascadingLevel; i>=2; i--) {
     			tmp = upNodes[i].get(tmp);
-    			loopbug.cascadingChain.add( tmp );
+    			loopbug.getCascadingChain().add( tmp );
     			tmp = predNodes[i].get(tmp);
-    			loopbug.cascadingChain.add( tmp );
+    			loopbug.getCascadingChain().add( tmp );
     		}
     	}
     	

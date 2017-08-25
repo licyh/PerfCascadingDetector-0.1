@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 import LogClass.LogType;
+import da.cascading.core.Sink;
+import da.cascading.core.SinkInstance;
 
 
 
@@ -23,6 +25,7 @@ public class LogInfoExtractor {
     LinkedHashMap<Integer, Integer> rpcHandlerBlocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
     
     //computed
+    List<Sink> sinks = new ArrayList<Sink>();
     LinkedHashMap<Integer, Integer> handlerThreads = new LinkedHashMap<Integer, Integer>();    //No.handlerBlock->No.handlerBlock    //for threadpool#submit/execute
     LinkedHashMap<Integer, Integer> rpcHandlerThreads = new LinkedHashMap<Integer, Integer>();
    
@@ -43,6 +46,9 @@ public class LogInfoExtractor {
     /**
      * APIs
      */
+    public List<Sink> getSinks() {
+    	return this.sinks;
+    }
     
     public LinkedHashMap<Integer, Integer> getTargetCodeBlocks() {
     	return this.targetCodeBlocks;
@@ -153,6 +159,7 @@ public class LogInfoExtractor {
     
     
     public void computeLogInfo() {
+    	computeTargetCodeInfo();
     	computeHandlerInfo();
     	computeRPCHandlerInfo();
     }
@@ -392,6 +399,19 @@ public class LogInfoExtractor {
     /***********************************************************************
      * Compute more useful information
      **********************************************************************/
+    
+    public void computeTargetCodeInfo() {
+    	//for now just one sink
+    	Sink sink = new Sink();
+    	for (int beginindex: targetCodeBlocks.keySet() ) {
+    		if ( targetCodeBlocks.get(beginindex) == null ) continue;
+    		int endindex = targetCodeBlocks.get(beginindex);
+    		
+    		SinkInstance sinkInstance = new SinkInstance(beginindex, endindex);
+    		sink.addInstance(sinkInstance);
+    	}
+    	this.sinks.add(sink);
+    }
     
 	/**
 	 * //note: we think if there are 2 or more thdenter&thdexit in one thread's log, then it is a handler thread

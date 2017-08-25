@@ -11,17 +11,29 @@ public class LoopBug {
 	int cascadingLevel;
 	ArrayList<Integer> cascadingChain;
 	
-	LoopBug(int nodeIndex) {
+	public LoopBug(int nodeIndex) {
 		this.nodeIndex = nodeIndex;
 		this.cascadingLevel = 1;
 		this.cascadingChain = new ArrayList<Integer>();
 	}
 	
-	LoopBug(int nodeIndex, int cascadingLevel) {
+	public LoopBug(int nodeIndex, int cascadingLevel) {
 		this.nodeIndex = nodeIndex;
 		this.cascadingLevel = cascadingLevel;
 		this.cascadingChain = new ArrayList<Integer>();
 	}
+	
+	
+	public int getCascadingLevel() {
+		return this.cascadingLevel;
+	}
+	
+	public ArrayList<Integer> getCascadingChain() {
+		return this.cascadingChain;
+	}
+	
+	
+	
 	
 	
 	//useless now

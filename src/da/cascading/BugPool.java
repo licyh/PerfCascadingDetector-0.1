@@ -206,7 +206,7 @@ public class BugPool {
     	mWriter.close();
     	sWriter.close();
     	
-    	//System.out.println("\nstaticbugpool(loop's lastcallstack)/#static codepoints = " + staticbugpool.size() + " loops");
+    	System.out.println("\nstaticbugpool(loop's lastcallstack)/#static codepoints = " + staticbugpool.size() + " loops");
     	staticWriter.writeLine( "//#static codepoints = " + staticbugpool.size() );
     	for (String lastcallstack: staticbugpool) {
     		//System.out.println( lastcallstack );
