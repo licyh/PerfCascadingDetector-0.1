@@ -25,7 +25,7 @@ sleep 2s
 #start & deploy everything of Cassandra & stop
 echo "JX - INFO - start & deploy & stop cassandra .."
 cassandra
-sleep 60s
+sleep 70s
 echo "JX - INFO - begin to write data to cassandra.. this should be helpful for the the following first cmd to success"
 
 expect << EOF
@@ -46,10 +46,16 @@ expect ">"
 send "INSERT INTO users (user_id, first, last, age) VALUES ('jsmith', 'John', 'Smith', 42);\r"
 
 expect ">"
-send "SELECT * FROM users;\r"
+send "INSERT INTO users (user_id, first, last, age) VALUES ('adfsdf', 'xsdJohn', 'Smfith', 42);\r"
+
+expect ">"
+send "INSERT INTO users (user_id, first, last, age) VALUES ('dfsf', 'Johdsfn', 'Ssmdith', 42);\r"
 
 expect ">"
 send "create index xxx_index on schema1.users(first);\r"
+
+expect ">"
+send "SELECT * FROM users;\r"
 
 expect ">"
 send "exit;\r"
@@ -58,7 +64,9 @@ expect eof
 
 EOF
 
-sleep 1s
+sleep 7s
+nodetool flush
+sleep 3s
 jps | grep CassandraDaemon | awk '{print $1}' | xargs kill -9
 sleep 2s
 jps
