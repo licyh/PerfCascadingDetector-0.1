@@ -13,6 +13,7 @@ import da.graph.AccidentalHBGraph;
 import da.graph.HappensBeforeGraph;
 import da.graph.LogInfoExtractor;
 import da.graph.Pair;
+import da.tagging.JobTagger;
 
 public class CascadingUtil {
 
@@ -200,5 +201,18 @@ public class CascadingUtil {
     	return true;
     }
     
+    
+    /*
+    public boolean checkJobID(int index1, int index2) {
+    	//Pruning 2 - Checking job identity - ie, false positive pruning
+    	return new JobTagger(this.hbg).isSameJobID(index1, index2);
+    }
+    */
 
 }
+
+
+
+
+
+

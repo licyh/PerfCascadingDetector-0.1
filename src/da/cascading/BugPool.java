@@ -43,7 +43,7 @@ public class BugPool {
 	}
 	
 	
-	// newly add, useless now
+	// newly add
 	public void addLoopBug( LoopBug loopbug ) {
 		bugs.add( loopbug );
 		mergeToResults( loopbug );
