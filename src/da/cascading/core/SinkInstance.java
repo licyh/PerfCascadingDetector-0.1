@@ -29,28 +29,9 @@ import da.graph.LogInfoExtractor;
 import da.graph.Pair;
 
 public class SinkInstance {
-
-	List<SinkInstance> instances;
-
+	// sink's begin index & end index
 	int beginIndex;
 	int endIndex;
-	
-	public SinkInstance(int beginIndex, int endIndex) {
-		this.beginIndex = beginIndex;
-		this.endIndex = endIndex;
-	}
-	
-	public int getBeginIndex() {
-		return this.beginIndex;
-	}
-	
-	public int getEndIndex() {
-		return this.endIndex;
-	}
-	
-	public String toString() {
-		return "SinkInstance(" + beginIndex + " to " + endIndex + ")";
-	}
 	
 	String projectDir;
 	HappensBeforeGraph hbg;
@@ -63,15 +44,14 @@ public class SinkInstance {
     LinkedHashMap<Integer, Integer> lockBlocks;   // beginIndex -> endIndex
     LinkedHashMap<Integer, Integer> loopBlocks;   // beginIndex -> endIndex
 	
-    //In .traverseTargetCodes()
-    //ArrayList<Integer> targetcodeLoops;  				//never used, just ps for time-consuming loops?
     
     BitSet traversedNodes;                      		//tmp var. set of all nodes for a single target code snippet
 
     //used for pruning 
     //HashMap<Integer, Integer>[] curNodes = new HashMap[ CASCADING_LEVEL + 1 ];
-    HashMap<Integer, HashSet<String>> outerLocks = new HashMap<Integer, HashSet<String>>(); // lock -> ourter locks
-    
+   // HashMap<Integer, HashSet<String>> outerLocks = new HashMap<Integer, HashSet<String>>(); // lock -> ourter locks
+    CascadingUtil cascadingUtil;
+	
 
     //Results
     BugPool bugPool;
@@ -85,6 +65,28 @@ public class SinkInstance {
 	HashMap<Integer, Integer>[] upNodes   = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for the same thread
 
     
+    
+	public SinkInstance(int beginIndex, int endIndex) {
+		this.beginIndex = beginIndex;
+		this.endIndex = endIndex;
+	}
+	
+	
+	public int getBeginIndex() {
+		return this.beginIndex;
+	}
+	
+	
+	public int getEndIndex() {
+		return this.endIndex;
+	}
+	
+	
+	public String toString() {
+		return "SinkInstance(" + beginIndex + " to " + endIndex + ")";
+	}
+    
+	
 	public void setEnv(String projectDir, HappensBeforeGraph hbg, AccidentalHBGraph ag, LogInfoExtractor logInfo) {
 		this.projectDir = projectDir;
 		this.hbg = hbg;
@@ -107,25 +109,28 @@ public class SinkInstance {
         }
 	}
 	
+	
 	public void setBugPool(BugPool bugPool) {
 		this.bugPool = bugPool;
 	}
 	
+	/*
 	public void setOuterLocks( HashMap<Integer, HashSet<String>> outerLocks ) {
 		this.outerLocks = outerLocks;
 	}
-	
-	
-	/*
-	public void doWork() {
-		// prepare
-		prepare();
-        // traverseTargetCodes
-		handleSink();
-    	// print the results
-		bugPool.printResults();
-	}
 	*/
+	
+	public void setCascadingUtil( CascadingUtil cascadingUtil ) {
+		this.cascadingUtil = cascadingUtil;
+	}
+	
+	
+	public void doWork() {
+		// handle each SinkInstance, ie, a pair of <TargetCodeBegin, TargetCodeEnd>
+		handleSinkInstance(this.beginIndex, this.endIndex);
+	}
+	
+	
 	
 	
 	
@@ -133,39 +138,10 @@ public class SinkInstance {
 	 * Core
 	 ******************************************************************************/
 	
-	
-
-    
-    
-    /**  
-     * JX - traverseTargetCodes - Traversing target code snippets
-     * ie, 
-     * Note: may involve two types of sink code snippets
-     * 		- TargetCodeBegin & TargetCodeEnd
-     * 		- tmp: (not here) EventHandlerBegin & EventHandlerEnd,  this should also be changed to  TargetCodeBegin & TargetCodeEnd
-     */
-	/*
-    public void handleSink() {
-    	System.out.println("\nJX - traverseTargetCodes - including all TARGET CODE snippets");
-    	
-    	int numofsnippets = 0;
-    	// traverse every pair of TargetCodeBegin & TargetCodeEnd
-    	
-    	for (int beginindex: targetCodeBlocks.keySet() ) {
-    		if ( targetCodeBlocks.get(beginindex) == null )
-    			continue;
-    		int endindex = targetCodeBlocks.get(beginindex);
-    		System.out.println( "\nTarget Code Snippet #" + (++numofsnippets) + ": (" + beginindex + " to " + endindex + ")"  );
-    		handleSinkInstance( beginindex, endindex );
-    	}
-    }
-    */
-    
-    
     int tmpxx = 0;
     public void handleSinkInstance(int beginIndex, int endIndex) {
     	// Step 1 - also can find Non-cascaded loops (ie, immediate loops) in the Sink if needed
-    	ArrayList<Integer> crs = identifyContentionResources( beginIndex, endIndex );
+    	ArrayList<Integer> crs = cascadingUtil.identifyContentionResources( beginIndex, endIndex );
     	
 		// Debugging - print all firt batch of locks' names
 		//if (tmpxx == 0) {
@@ -524,34 +500,7 @@ public class SinkInstance {
       
     
 
-    public boolean checkChain(LoopBug loopbug) {
-    	int cascadingLevel = loopbug.getCascadingLevel();
-    	
-    	//newly added
-    	if (cascadingLevel <= 1)
-    		return true;
-    	
-    	HashSet<String> own = new HashSet<String>();
-    	for (int x: loopbug.getCascadingChain()) {
-    		if (hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()))
-    			own.add( hbg.getNodePIDOPVAL0(x) );
-    	}
-    	//System.out.println("JX - DEBUG - checkChain: own.size()=" + own.size());
-    	for (int i = 0; i<loopbug.getCascadingChain().size(); i++) {
-    		int x = loopbug.getCascadingChain().get(i);
-    		if (i%2==1 || i==loopbug.getCascadingChain().size()-1) {
-    			if (!outerLocks.containsKey(x)) continue;
-    			
-    			for (String each: outerLocks.get(x)) {
-    				if (each.equals( hbg.getNodePIDOPVAL0(x) )) continue;
-    				if (own.contains(each))
-    					return false;
-    			}
-    		}
-    	}
-    	return true;
-    }
-    
+
     
     
     public void addLoopBug( int nodeIndex, int cascadingLevel ) {
@@ -574,7 +523,7 @@ public class SinkInstance {
     	}
     	
     	//added for checking chain, ie, false positive prunning
-    	if ( cascadingLevel>=2 && !checkChain(loopbug) ) return;
+    	if ( cascadingLevel>=2 && !cascadingUtil.checkChain(loopbug) ) return;
     	
     	bugPool.addLoopBug( loopbug );
     	//jx: had better commented this when #targetcode is large or #loopbug is large

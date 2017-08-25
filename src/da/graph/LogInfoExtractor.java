@@ -1,6 +1,7 @@
 package da.graph;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -29,6 +30,8 @@ public class LogInfoExtractor {
     LinkedHashMap<Integer, Integer> handlerThreads = new LinkedHashMap<Integer, Integer>();    //No.handlerBlock->No.handlerBlock    //for threadpool#submit/execute
     LinkedHashMap<Integer, Integer> rpcHandlerThreads = new LinkedHashMap<Integer, Integer>();
    
+    HashMap<Integer, HashSet<String>> outerLocks = new HashMap<Integer, HashSet<String>>();    // lock -> ourter locks
+    
     
     
     public LogInfoExtractor(HappensBeforeGraph hbg) {
@@ -84,6 +87,13 @@ public class LogInfoExtractor {
     public LinkedHashMap<Integer, Integer> getRPCHandlerThreads() {
     	return this.rpcHandlerThreads;
     }
+    
+    
+    public HashMap<Integer, HashSet<String>> getOuterLocks() {
+    	return this.outerLocks;
+    }
+    
+    
     
     
     //for locks
@@ -162,12 +172,13 @@ public class LogInfoExtractor {
     	computeTargetCodeInfo();
     	computeHandlerInfo();
     	computeRPCHandlerInfo();
+    	
+    	computeOutLocks();
     }
     
     
-    /***************************************************************************
-     * 
-     ***************************************************************************/
+    
+    
     /**
      * Get nodes with the specified types, like TargetCodeBegin&TargetCodeEnd, LoopBegin&LoopEnd, .. 
      */
@@ -413,6 +424,7 @@ public class LogInfoExtractor {
     	this.sinks.add(sink);
     }
     
+        
 	/**
 	 * //note: we think if there are 2 or more thdenter&thdexit in one thread's log, then it is a handler thread
 	 */
@@ -465,5 +477,30 @@ public class LogInfoExtractor {
 			numHandlers ++;
 		}
 	}
+    
+	
+	
+    public void computeOutLocks() {
+		for (int lockIndex: lockBlocks.keySet()) {
+			if (lockBlocks.get(lockIndex) == null) continue;
+			int lockBegin = lockIndex;
+			int lockEnd = lockBlocks.get(lockIndex);
+			
+			for (int x = lockBegin+1; x < lockEnd; x++) {
+				if ( hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()) 
+					 && lockContains(lockIndex, x) 
+						) {
+					
+					if ( !outerLocks.containsKey(x) ) {
+						HashSet<String> set = new HashSet<String>();
+						outerLocks.put(x, set);
+					}
+					HashSet<String> set = outerLocks.get(x);
+					set.add( hbg.getNodePIDOPVAL0(lockIndex) );
+				}
+			}
+		}
+    }
+    
     
 }
