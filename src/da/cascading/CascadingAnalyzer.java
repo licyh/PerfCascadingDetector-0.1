@@ -37,8 +37,8 @@ public class CascadingAnalyzer {
 		}
 		
 	    //Queue
-	    QueueCase queueCase = new QueueCase(this.projectDir, this.hbg, this.ag.getLogInfoExtractor());
-	    queueCase.doWork();
+	    //QueueCase queueCase = new QueueCase(this.projectDir, this.hbg, this.ag.getLogInfoExtractor());
+	    //queueCase.doWork();
 	}
 	
 }

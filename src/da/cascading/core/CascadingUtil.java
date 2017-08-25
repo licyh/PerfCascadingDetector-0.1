@@ -45,7 +45,7 @@ public class CascadingUtil {
 		//tmply add, only for ca-6744
     	if ( Benchmarks.resolveBugId(hbg.getTargetDir()) != null && 
     			( Benchmarks.resolveBugId(hbg.getTargetDir()).equals("ca-6744")
-    					|| Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-4088")
+    					//|| Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-4088")
     					)) {
     		//System.out.print("JX - DEBUG - LockCass: enter ca-6744");
         	scanAndDfs(beginIndex, endIndex, traversedNodes, resources);	
@@ -82,21 +82,16 @@ public class CascadingUtil {
      */
     public void dfsTraversing( int x, int direction, int endIndex, BitSet traversedNodes, ArrayList<Integer> resources) {
     	traversedNodes.set( x );
-    	if ( hbg.getNodeOPTY(x).equals("LockRequire") ) {
+    	if ( hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()) ) {
     		resources.add( x );
     	}
     	
     	// TODO - for Loop - suspected bugs
-    	/*
-    	if ( hbg.getNodeOPTY(x).equals("LoopBegin") ) {
-    		// add to bug pool
-    		if ( ONLY_LOCK_RELATED_BUGS ) {
-    			//Do Nothing
-    		} else {
-    			addLoopBug( x, 1 );
-    		}
+    	if ( hbg.getNodeOPTY(x).equals(LogType.EventHandlerBegin.name()) ) {
+    		resources.add( x );
     	}
-    	*/
+    	
+    
 
     	if (direction == 1)
         for (Pair pair: hbg.getEdge().get(x)) {
