@@ -326,7 +326,7 @@ public class AccidentalHBGraph {
 					int beginIndex = list.get(i);
 					if (logInfo.getHandlerBlocks().get(beginIndex) == null) continue;
 					int endIndex = logInfo.getHandlerBlocks().get(beginIndex);
-					if ( new JobTagger(this.hbg).isSameJobID(index, beginIndex) ) continue;
+					//if ( new JobTagger(this.hbg).isSameJobID(index, beginIndex) ) continue;
 					results.add(beginIndex);
 				}
 				break;
