@@ -84,7 +84,8 @@ public class CascadingUtil {
     public void dfsTraversing( int x, int direction, int endIndex, BitSet traversedNodes, ArrayList<Integer> resources) {
     	traversedNodes.set( x );
     	
-    	if ( !Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-4088") )
+    	if ( !Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-4088") 
+    			&& !Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-2705") )
     	if ( hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()) ) {
     		resources.add( x );
     	}
