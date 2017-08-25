@@ -1,3 +1,12 @@
-//Sink - heartbeat
-org.apache.hadoop.mapred.TaskTracker offerService 1432				TargetCodeBegin
-org.apache.hadoop.mapred.TaskTracker offerService 1436				TargetCodeEnd 
+//sink for the bug
+//put into event handler
+
+//new sink for the bug
+//org.apache.hadoop.mapred.JobClient submitJob 534          			TargetCodeBegin     
+
+
+
+//added Sink1 - for heartbeat
+//org.apache.hadoop.mapred.TaskTracker offerService 1432				TargetCodeBegin
+//org.apache.hadoop.mapred.TaskTracker offerService 1436				TargetCodeEnd
+
