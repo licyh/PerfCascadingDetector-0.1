@@ -39,13 +39,17 @@ public class JobTagger {
 		
 		ArrayList<Integer> pathToRoot = new ArrayList<Integer>();
 		dfsTraversing(nodeIndex, traversedNodes, pathToRoot);
+		if (pathToRoot.size() <= 0) {
+			return "XXXX";        //jx: should not occur, but it can occur if HB graph is incomplete
+		}
+		
 		int jobIndex = -1;
 		String jobID = null;
 		for (int i=pathToRoot.size()-1; i>=0; i--) {
 			int index = pathToRoot.get(i);
 			if ( isEnter(index) && !hbg.getNodeTID(index).equals("1") ) {
 				jobIndex = index;
-				jobID = hbg.getNodeOPVAL(index);
+				jobID = hbg.getNodeOPVAL(index);    		//msg value
 				return jobID;
 			}
 		}
@@ -53,12 +57,12 @@ public class JobTagger {
 			int index = pathToRoot.get(i);
 			if ( !hbg.getNodeTID(index).equals("1") ) {
 				jobIndex = index;
-				jobID = hbg.getNodePIDTID(index);
+				jobID = hbg.getNodePIDTID(index);			//pid+tid
 				return jobID;
 			}
 		}
 		jobIndex = pathToRoot.get(pathToRoot.size()-1);
-		jobID = hbg.getNodePIDTID(jobIndex);
+		jobID = hbg.getNodePIDTID(jobIndex);				//pid+tid
 		return jobID;
 	}
 	
@@ -82,7 +86,7 @@ public class JobTagger {
     	
     	if ( !isEnter(x) ) {
     		int y = x-1;  //so that is, upward only on its thread, without considering thread.join/future.get, but should consider xxxEnter etc.
-    		if ( !traversedNodes.get(y) ) {
+    		if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(x) ) {
     			dfsTraversing( y, traversedNodes, pathToRoot );
     		}
     	}
