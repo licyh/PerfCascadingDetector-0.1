@@ -43,8 +43,6 @@ public class CascadingUtil {
     	traversedNodes.clear();
     	  	
     	
-    	System.out.println("JX - DEBUG - Close?:" + hbg.getReachSet().get(beginIndex).get(endIndex) );
-    	
 		//tmply add, only for ca-6744
     	if ( Benchmarks.resolveBugId(hbg.getTargetDir()) != null && 
     			( Benchmarks.resolveBugId(hbg.getTargetDir()).equals("ca-6744")
