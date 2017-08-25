@@ -164,6 +164,7 @@ public class LLAnalysis {
 			StaticPruning printBugLoops = new StaticPruning(this.loopAnalyzer, Paths.get(projectDir, "src/da/").toString());
 			printBugLoops.doWork();
 			timer.toc("StaticPruning/printBugLoops end");
+			timer.close();
 	     
 			// Phase 2 -
 			//analyzeAllLocks();

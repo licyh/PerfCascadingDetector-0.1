@@ -37,6 +37,7 @@ public class StaticAnalysis {
     	timer.tic("WalaAnalyzer begin");
 		WalaAnalyzer walaAnalyzer = new WalaAnalyzer(jarsDir);
 		timer.toc("WalaAnalyzer end");
+		timer.close();
 		
 		LLAnalysis jxLocks = new LLAnalysis(walaAnalyzer, projectDir);
 	}

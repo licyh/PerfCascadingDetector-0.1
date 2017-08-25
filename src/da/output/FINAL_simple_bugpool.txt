@@ -16,9 +16,26 @@ CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-198;
 CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-232;
 CL1: org.apache.cassandra.db.compaction.CompactionTask-runWith-234;
 CL1: org.apache.cassandra.db.compaction.PrecompactedRow-merge-110;
-CL1: org.apache.cassandra.db.index.SecondaryIndexBuilder-build-57;
 CL1: org.apache.cassandra.db.index.SecondaryIndexManager-flushIndexesBlocking-328;
 CL1: org.apache.cassandra.gms.Gossiper-doNotifications-971;
 CL1: org.apache.cassandra.locator.AbstractReplicationStrategy-getAddressRanges-162;
 CL1: org.apache.cassandra.service.StorageService-getLoad-2037;
-//summary - 23(#static codepoints=23) from 67
+CL3: org.apache.cassandra.db.ColumnFamilySerializer-deserializeColumnsFromSSTable-148;
+CL3: org.apache.cassandra.db.ColumnFamilyStore-createCompactionWriter-1984;
+CL3: org.apache.cassandra.db.ColumnFamilyStore-createCompactionWriter-1987;
+CL3: org.apache.cassandra.db.ColumnFamilyStore-removeDeletedStandard-805;
+CL3: org.apache.cassandra.db.ColumnIndex$Builder-build-126;
+CL3: org.apache.cassandra.db.ColumnIndex$Builder-build-128;
+CL3: org.apache.cassandra.db.ColumnIndex$Builder-build-136;
+CL3: org.apache.cassandra.db.DataTracker-notifySSTablesChanged-421;
+CL3: org.apache.cassandra.db.compaction.CompactionController-shouldPurge-106;
+CL3: org.apache.cassandra.db.compaction.CompactionTask-runWith-145;
+CL3: org.apache.cassandra.db.compaction.CompactionTask-runWith-167;
+CL3: org.apache.cassandra.db.compaction.CompactionTask-runWith-198;
+CL3: org.apache.cassandra.db.compaction.CompactionTask-runWith-232;
+CL3: org.apache.cassandra.db.compaction.CompactionTask-runWith-234;
+CL3: org.apache.cassandra.db.compaction.PrecompactedRow-merge-110;
+CL3: org.apache.cassandra.gms.Gossiper-doNotifications-971;
+CL3: org.apache.cassandra.service.StorageService-getLoad-2037;
+CL4: org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-613;
+//summary - 40(#static codepoints=23) from 130
