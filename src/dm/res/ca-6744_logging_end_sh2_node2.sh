@@ -7,13 +7,17 @@ echo "JX - INFO - waiting of cassandra node2 to start .."
 sleep 40s
 
 nodetool ring
-sleep 2s
+
+sleep 30s
+
+nodetool ring
+
 
 echo "JX - INFO - do cleanup & flush on cassandra node 2.."
 nodetool cleanup
-sleep 1s
+#sleep 3s
 
-nodetool flush
+#nodetool flush
 sleep 5s
 
 # Stop cassandra node2
