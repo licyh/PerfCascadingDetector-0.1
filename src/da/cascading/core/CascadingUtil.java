@@ -43,8 +43,10 @@ public class CascadingUtil {
     	traversedNodes.clear();
     	  	
 		//tmply add, only for ca-6744
-    	if ( Benchmarks.resolveBugId(hbg.getTargetDir()) != null
-    			&& Benchmarks.resolveBugId(hbg.getTargetDir()).equals("ca-6744")) {
+    	if ( Benchmarks.resolveBugId(hbg.getTargetDir()) != null && 
+    			( Benchmarks.resolveBugId(hbg.getTargetDir()).equals("ca-6744")
+    					|| Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-4088")
+    					)) {
     		//System.out.print("JX - DEBUG - LockCass: enter ca-6744");
         	scanAndDfs(beginIndex, endIndex, traversedNodes, resources);	
     	}

@@ -1,4 +1,3 @@
 //new sink for the bug
 org.apache.hadoop.mapreduce.Job waitForCompletion 495          TargetCodeBegin     
-org.apache.hadoop.mapreduce.Job waitForCompletion 499          TargetCodeEnd
 org.apache.hadoop.mapreduce.Job waitForCompletion 502          TargetCodeEnd
