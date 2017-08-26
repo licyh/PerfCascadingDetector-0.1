@@ -4,27 +4,13 @@ CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2151;
 CL1: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
 CL1: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
 CL1: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;
-CL3: org.apache.hadoop.io.IOUtils-copyBytes-71;
-CL3: org.apache.hadoop.io.IOUtils-readFully-115;
 CL3: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
 CL3: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
 CL3: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;
-CL3: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
-CL3: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;
-CL4: org.apache.hadoop.io.IOUtils-copyBytes-71;
-CL4: org.apache.hadoop.io.IOUtils-readFully-115;
 CL4: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
 CL4: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
 CL4: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;
-CL4: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
-CL4: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
-CL5: org.apache.hadoop.io.IOUtils-copyBytes-71;
-CL5: org.apache.hadoop.io.IOUtils-readFully-115;
 CL5: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
 CL5: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
 CL5: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
-CL5: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
-CL6: org.apache.hadoop.io.IOUtils-copyBytes-71;
-CL6: org.apache.hadoop.io.IOUtils-readFully-115;
-CL6: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
-//summary - 29(#static codepoints=9) from 63
+//summary - 15(#static codepoints=9) from 39

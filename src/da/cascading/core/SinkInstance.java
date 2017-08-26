@@ -344,7 +344,7 @@ public class SinkInstance {
 							|| Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-2705")
 							|| Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-4088") )
 					&& curCascadingLevel == 2)
-				bugPool.addLoopBug( x );
+				addLoopBug( x );
 			else
 				addLoopBug( x, curCascadingLevel );
     	}
@@ -384,7 +384,9 @@ public class SinkInstance {
     
 
 
-    
+    public void addLoopBug( int nodeIndex ) {
+    	addLoopBug( nodeIndex, 1 );
+    }
     
     public void addLoopBug( int nodeIndex, int cascadingLevel ) {
     	// add to bug pool
