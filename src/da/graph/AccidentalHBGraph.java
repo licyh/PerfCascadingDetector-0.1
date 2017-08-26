@@ -327,7 +327,7 @@ public class AccidentalHBGraph {
 					if (blocks.get(beginIndex) == null) continue;
 					int endIndex = blocks.get(beginIndex);
 					
-					if ( !hbg.isConcurrent(index, beginIndex) ) continue; 
+					//if ( !hbg.isConcurrent(index, beginIndex) ) continue; 
 					//if ( new JobTagger(this.hbg).isSameJobID(index, beginIndex) ) continue;   //no need
 					results.add(beginIndex);
 				}
