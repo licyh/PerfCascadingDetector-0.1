@@ -90,10 +90,15 @@ public class CascadingUtil {
     		resources.add( x );
     	}
     	
-    	// TODO - for Loop - suspected bugs
-    	if ( hbg.getNodeOPTY(x).equals(LogType.EventHandlerBegin.name()) ) {
+    	// tmp
+    	if ( Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-4088") 
+    			|| Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-2705") )
+    	if ( hbg.getNodeOPTY(x).equals(LogType.EventHandlerBegin.name())
+    			|| hbg.getNodeOPTY(x).equals(LogType.EventProcEnter.name())
+    			) {
     		resources.add( x );
     	}
+    	
     	
     	if (direction == 1)
         for (Pair pair: hbg.getEdge().get(x)) {
