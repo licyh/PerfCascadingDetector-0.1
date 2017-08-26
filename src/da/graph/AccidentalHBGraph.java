@@ -324,8 +324,10 @@ public class AccidentalHBGraph {
 			if ( hbg.getNodePIDTID( list.get(beginPos) ).equals(pidtid) ) {
 				for (int i = beginPos; i <= endPos; i++) {
 					int beginIndex = list.get(i);
-					if (logInfo.getHandlerBlocks().get(beginIndex) == null) continue;
-					int endIndex = logInfo.getHandlerBlocks().get(beginIndex);
+					if (blocks.get(beginIndex) == null) continue;
+					int endIndex = blocks.get(beginIndex);
+					
+					if ( !hbg.isConcurrent(index, beginIndex) ) continue; 
 					//if ( new JobTagger(this.hbg).isSameJobID(index, beginIndex) ) continue;   //no need
 					results.add(beginIndex);
 				}

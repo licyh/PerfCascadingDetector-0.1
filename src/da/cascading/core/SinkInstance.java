@@ -159,7 +159,7 @@ public class SinkInstance {
     int tmpflag = 0;  //just for test
     /** JX - findLockRelatedBugs - */    
     public void startCascadingChainAnalysis( List<Integer> firstResources ) {
-    	System.out.println( "JX - INFO - findLockRelatedBugs" );
+    	System.out.println( "JX - INFO - startCascadingChainAnalysis" );
     	if ( firstResources.size() <= 0 ) {
     		System.out.println( "JX - INFO - CascadingBugDetection - there is no first batch of locks, finished normally!" );
     		return;
@@ -261,8 +261,10 @@ public class SinkInstance {
     		    	&& Benchmarks.resolveBugId(hbg.getTargetDir()) != null
         			&& (Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-2705") || Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-4088"))
         			) {
+    			System.out.println("JX - DEBUG - enter - try to find contending.......");
       			for (int index: ag.getHandlerCRs(resIndex)) {
     				nextResources.add( index );
+    				System.out.println("JX - DEBUG - enter - have contending");
     				predNodes[curCascadingLevel].put(index, resIndex);
     			}
     		}
