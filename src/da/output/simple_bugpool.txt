@@ -1,12 +1,12 @@
 //37 (#static codepoints=19)
-CL1: org.apache.hadoop.io.IOUtils-copyBytes-71;
-CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2151;
-CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2156;
-CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;
-CL1: org.apache.hadoop.mapred.TaskTracker-localizeJobFiles-1044;
-CL1: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
-CL1: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
-CL1: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;
+CL2: org.apache.hadoop.io.IOUtils-copyBytes-71;
+CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2151;
+CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2156;
+CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;
+CL2: org.apache.hadoop.mapred.TaskTracker-localizeJobFiles-1044;
+CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
+CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
+CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;
 CL3: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
 CL3: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
 CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-795;

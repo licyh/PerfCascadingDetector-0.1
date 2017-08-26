@@ -1,12 +1,12 @@
 //64 (#static codepoints=19)
-CL1: org.apache.hadoop.io.IOUtils-copyBytes-71;|
-CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2151;|
-CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2156;|
-CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;|
-CL1: org.apache.hadoop.mapred.TaskTracker-localizeJobFiles-1044;|
-CL1: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;|
-CL1: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;|
-CL1: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;|
+CL2: org.apache.hadoop.io.IOUtils-copyBytes-71;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|
+CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2151;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|
+CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2156;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|
+CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|
+CL2: org.apache.hadoop.mapred.TaskTracker-localizeJobFiles-1044;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|
+CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|
+CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|
+CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|
 CL3: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;|org.apache.hadoop.mapred.TaskTracker-purgeJob-1898;|org.apache.hadoop.mapred.TaskTracker-localizeJob-974;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|
 CL3: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;|org.apache.hadoop.mapred.TaskTracker-purgeJob-1898;|org.apache.hadoop.mapred.TaskTracker-localizeJob-974;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|
 CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-795;|org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-833;|org.apache.hadoop.mapred.TaskTracker-addTaskToJob-433;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2160;|
