@@ -24,6 +24,10 @@ public class LoopBug {
 	}
 	
 	
+	public int getNodeIndex() {
+		return this.nodeIndex;
+	}
+	
 	public int getCascadingLevel() {
 		return this.cascadingLevel;
 	}

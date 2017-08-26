@@ -383,7 +383,9 @@ public class SinkInstance {
       
     
 
-
+    /**
+     * try to add loop bug
+     */
     public void addLoopBug( int nodeIndex ) {
     	addLoopBug( nodeIndex, 1 );
     }
@@ -407,6 +409,19 @@ public class SinkInstance {
     		}
     	}
     	
+    	if (canbePruning( loopbug )) return;
+    	
+    	bugPool.addLoopBug( loopbug );
+    	//jx: had better commented this when #targetcode is large or #loopbug is large
+    	//System.out.println( loopbug );
+    }
+    
+    
+    public boolean canbePruning(LoopBug loopbug) {
+    	int nodeIndex = loopbug.getNodeIndex();
+    	int cascadingLevel = loopbug.getCascadingLevel();
+    	ArrayList<Integer> cascadingChain = loopbug.getCascadingChain();
+    	
     	//Pre Pruning - remove lower-level things
     	String sig = hbg.lastCallstack(nodeIndex);
     	if ( 	//MR
@@ -416,18 +431,17 @@ public class SinkInstance {
     			//HB
     			//CA
     			)
-    		return;
+    		return true;
     	
     	
     	//Pruning 1 - Checking chain - ie, false positive pruning
-    	if ( cascadingLevel>=2 && !cascadingUtil.checkChain(loopbug) ) return;
+    	if ( cascadingLevel>=2 && !cascadingUtil.checkChain(loopbug) ) 
+    		return true;
         //Pruning 2 - Checking job identity - ie, false positive pruning  #ps - another place at AHB grpah for queue-related
-        if ( new JobTagger(this.hbg).isSameJobID(nodeIndex, loopbug.getCascadingChain().get(loopbug.getCascadingChain().size()-1)) ) return;
+        if ( cascadingLevel>=2 && new JobTagger(this.hbg).isSameJobID(nodeIndex, loopbug.getCascadingChain().get(loopbug.getCascadingChain().size()-1)) ) 
+        	return true;
     	
-    	
-    	bugPool.addLoopBug( loopbug );
-    	//jx: had better commented this when #targetcode is large or #loopbug is large
-    	//System.out.println( loopbug );
+        return false;
     }
     
 }
