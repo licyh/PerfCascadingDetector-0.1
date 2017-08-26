@@ -109,32 +109,32 @@ class MapReduceTransformer extends Transformer {
 			}
   		}
 	    
-	    // instrument for target codes");
-	    transformers.transformClassForCodeSnippets( cl );
-
-	    // instrument for all loops
-	    switch ( bugConfig.getBugId() ) {
-	    case "mr-4576":
-	    case "mr-2705":
-			if ( className.startsWith("org.apache.hadoop.yarn.")
-	  				|| className.startsWith("org.apache.hadoop.mapred.") 
-	  				|| className.startsWith("org.apache.hadoop.mapreduce.")
-	  				|| className.startsWith("org.apache.hadoop.io.IOUtils")   //for the real bug in mr-4576
-	  				// +
-	  				//&& !className.startsWith("org.apache.hadoop.filecache.")
-	  				//&& !className.startsWith("org.apache.hadoop.fs.")
-		           ) {
-				transformers.transformClassForLoops( cl );
-	  		}
-			break;
-		default:
-			if ( className.startsWith("org.apache.hadoop.yarn.")
-	  				|| className.startsWith("org.apache.hadoop.mapred.") 
-	  				|| className.startsWith("org.apache.hadoop.mapreduce.")
-		           ) {
-				transformers.transformClassForLoops( cl );
-	  		}
-	    }
+//	    // instrument for target codes");
+//	    transformers.transformClassForCodeSnippets( cl );
+//
+//	    // instrument for all loops
+//	    switch ( bugConfig.getBugId() ) {
+//	    case "mr-4576":
+//	    case "mr-2705":
+//			if ( className.startsWith("org.apache.hadoop.yarn.")
+//	  				|| className.startsWith("org.apache.hadoop.mapred.") 
+//	  				|| className.startsWith("org.apache.hadoop.mapreduce.")
+//	  				|| className.startsWith("org.apache.hadoop.io.IOUtils")   //for the real bug in mr-4576
+//	  				// +
+//	  				//&& !className.startsWith("org.apache.hadoop.filecache.")
+//	  				//&& !className.startsWith("org.apache.hadoop.fs.")
+//		           ) {
+//				transformers.transformClassForLoops( cl );
+//	  		}
+//			break;
+//		default:
+//			if ( className.startsWith("org.apache.hadoop.yarn.")
+//	  				|| className.startsWith("org.apache.hadoop.mapred.") 
+//	  				|| className.startsWith("org.apache.hadoop.mapreduce.")
+//		           ) {
+//				transformers.transformClassForLoops( cl );
+//	  		}
+//	    }
 	    
 	    // instrument for (large) loops
 	    //transformers.transformClassForLargeLoops( cl );
@@ -190,7 +190,7 @@ class MapReduceTransformer extends Transformer {
 		    
 		    // for mr-2705  //if (bugConfig.getBugId().equals("mr-2705"))
 		    if ( methodName.equals("addToTaskQueue") && className.contains("org.apache.hadoop.mapred.TaskTracker$TaskLauncher") )
-		    	methodUtil.insertCallInstX("java.util.List", "add", 1, logClass, eventCreateLog, classUtil);
+//		    	methodUtil.insertCallInstX("java.util.List", "add", 1, logClass, eventCreateLog, classUtil);
 		    
 	    	// for mr-2705  //if (bugConfig.getBugId().equals("mr-2705"))
             if ( methodName.equals("run") && className.equals("org.apache.hadoop.mapred.TaskTracker$TaskLauncher") ) {
