@@ -243,10 +243,10 @@ public class MethodUtil {
 			        else if ( apiClass.equals("java.util.List") && apiMethod.equals("remove") ) {
 						m.replace( "{"
 								+ "$_ = $proceed($$);"
-								+ "String opValueSDFG = System.identityHashCode($_);"
-								+ logClass + "." + "log_EventProcExit" + "( opValueSDFG );" 
-								//+ "String opValue_2 = System.identityHashCode($_);"
-								//+ logClass + "." + logMethod + "( opValue_2 );"
+								//+ "String opValueSDFG = System.identityHashCode($_);"
+								//+ logClass + "." + "log_EventProcExit" + "( opValueSDFG );" 
+								+ "String opValue_2 = System.identityHashCode($_);"
+								+ logClass + "." + logMethod + "( opValue_2 );"
 								+ "}" );
 					}
 			        else {
