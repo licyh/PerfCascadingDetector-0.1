@@ -300,10 +300,10 @@ public class AccidentalHBGraph {
     	if ( hbg.getNodeOPTY(index).equals(LogType.ThdEnter.name()) ) {
     		return getXXXFrom(index, logInfo.getHandlerBlocks(), logInfo.getHandlerThreads());
     	}
-    	else if ( hbg.getNodeOPTY(index).equals(LogType.MsgProcEnter.name()) ) {
-    		
-    	}
     	else if ( hbg.getNodeOPTY(index).equals(LogType.EventProcEnter.name()) ) {
+    		return getXXXFrom(index, logInfo.getEventHandlerBlocks(), logInfo.getEventHandlerThreads());
+    	}
+    	else if ( hbg.getNodeOPTY(index).equals(LogType.MsgProcEnter.name()) ) {
     		
     	}
     	else if ( hbg.getNodeOPTY(index).equals(LogType.EventHandlerBegin.name()) ) {
@@ -326,7 +326,7 @@ public class AccidentalHBGraph {
 					int beginIndex = list.get(i);
 					if (logInfo.getHandlerBlocks().get(beginIndex) == null) continue;
 					int endIndex = logInfo.getHandlerBlocks().get(beginIndex);
-					if ( new JobTagger(this.hbg).isSameJobID(index, beginIndex) ) continue;
+					//if ( new JobTagger(this.hbg).isSameJobID(index, beginIndex) ) continue;   //no need
 					results.add(beginIndex);
 				}
 				break;

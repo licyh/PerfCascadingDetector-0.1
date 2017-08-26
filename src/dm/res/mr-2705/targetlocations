@@ -7,6 +7,8 @@
 
 
 //new sink for the bug
-////org.apache.hadoop.mapred.JobClient submitJob 534          			TargetCodeBegin     
+////org.apache.hadoop.mapred.JobClient submitJob 534          			TargetCodeBegin    
+//put tasks into queue after heartbeat response 
 org.apache.hadoop.mapred.TaskTracker offerService 1455					TargetCodeBegin
+//check if tasks finished after heartbeat (response)
 org.apache.hadoop.mapred.TaskTracker transmitHeartBeat  1619			TargetCodeEnd

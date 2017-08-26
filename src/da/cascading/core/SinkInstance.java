@@ -213,7 +213,7 @@ public class SinkInstance {
     
     
     /*****************************************************************************
-     * JX - findContendingResources: Find affected locks in different threads
+     * Step1 - findContendingResources: Find affected locks in different threads
      *****************************************************************************/
     
     public Set<Integer> findContendingResources( Set<Integer> resources, int curCascadingLevel ) {
@@ -253,6 +253,15 @@ public class SinkInstance {
     				) {
     			//TODO
     			for (int index: ag.getHandlerCRs(resIndex)) {
+    				nextResources.add( index );
+    				predNodes[curCascadingLevel].put(index, resIndex);
+    			}
+    		}
+    		else if ( hbg.getNodeOPTY(resIndex).equals(LogType.MsgProcEnter.name())
+    		    	&& Benchmarks.resolveBugId(hbg.getTargetDir()) != null
+        			&& (Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-2705") || Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-4088"))
+        			) {
+      			for (int index: ag.getHandlerCRs(resIndex)) {
     				nextResources.add( index );
     				predNodes[curCascadingLevel].put(index, resIndex);
     			}

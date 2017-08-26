@@ -106,7 +106,7 @@ public class CascadingUtil {
     	if (direction == 1)
         for (Pair pair: hbg.getEdge().get(x)) {
         	int y = pair.destination;
-        	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) 
+        	if ( !traversedNodes.get(y) //&& hbg.getReachSet().get(y).get(endIndex) 
         			)
         		dfsTraversing( y, direction, endIndex, traversedNodes, resources );
         }
