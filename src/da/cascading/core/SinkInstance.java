@@ -338,7 +338,9 @@ public class SinkInstance {
 			upNodes[curCascadingLevel].put(x, beginIndex);
 			System.out.println("JX - DEBUG - addLoopBug..");
 			if ( Benchmarks.resolveBugId(hbg.getTargetDir()) != null 
-					&& Benchmarks.resolveBugId(hbg.getTargetDir()).equals("ca-6744")
+					&& ( Benchmarks.resolveBugId(hbg.getTargetDir()).equals("ca-6744") 
+							|| Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-2705")
+							|| Benchmarks.resolveBugId(hbg.getTargetDir()).equals("ca-4088") )
 					&& curCascadingLevel == 2)
 				bugPool.addLoopBug( x );
 			else
