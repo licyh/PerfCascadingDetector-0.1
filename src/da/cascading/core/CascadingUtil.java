@@ -42,6 +42,9 @@ public class CascadingUtil {
     	BitSet traversedNodes = new BitSet();
     	traversedNodes.clear();
     	  	
+    	//debug
+    	System.out.println("JX - INFO - close or not?: " + hbg.getReachSet().get(beginIndex).get(endIndex));
+    	
     	
 		//tmply add, only for ca-6744
     	if ( Benchmarks.resolveBugId(hbg.getTargetDir()) != null && 
@@ -103,7 +106,7 @@ public class CascadingUtil {
     	if (direction == 1)
         for (Pair pair: hbg.getEdge().get(x)) {
         	int y = pair.destination;
-        	if ( !traversedNodes.get(y) //&& hbg.getReachSet().get(y).get(endIndex) 
+        	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) 
         			)
         		dfsTraversing( y, direction, endIndex, traversedNodes, resources );
         }
