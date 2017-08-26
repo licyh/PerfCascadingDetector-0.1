@@ -237,33 +237,16 @@ class MapReduceTransformer extends Transformer {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		    	
-		    	
-		    	// for mr-2705
-                if (bugConfig.getBugId().equals("mr-2705"))
-                if (className.equals("org.apache.hadoop.mapred.TaskTracker$TaskLauncher"))		    	
-      		    	try {
-					method.instrument(
-							new ExprEditor() {
-								public void edit(MethodCall m) throws CannotCompileException {
-									if (m.getMethodName().equals("remove")) {
-										Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName + "  **" + m.getClassName() + " " + m.getMethodName() + " " +  m.getLineNumber() + "**");
-										m.replace( "{"
-												+ getInstCodeStr(LogType.EventHandlerEnd)
-												+ "$_ = $proceed($$);" 
-												+ getInstCodeStr(LogType.EventHandlerBegin, 2)
-												+ "}" );
-									}
-								}
-							}
-							);
-				} catch (CannotCompileException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		    	
-		    	
-		    } else if (methodName.equals("run") && (className.contains("EventProcessor"))) {
+		    			    	
+		    }
+		    else if (methodName.equals("call") &&
+			           classUtil.isTargetClass(className, "java.util.concurrent.Callable") &&
+			           method.getSignature().endsWith("Ljava/lang/Object;") == false) {
+			    	//insert ThdEnter & ThdExit log
+			    	methodUtil.insertCallInstBefore(logClass, thdEnterLog, 4);
+			    	methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
+			}
+		    else if (methodName.equals("run") && (className.contains("EventProcessor"))) {
 		    	//Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName);
 		    	//Commented by JX - this is a bug
 		    	//jx: this is for hadoop2-0.23.3 ("mr-4813")
@@ -272,14 +255,7 @@ class MapReduceTransformer extends Transformer {
 		    		methodUtil.insertCallInstAfter(logClass, eventProcExitLog, 43);
 		    	}
 		        //end-Commented
-		    } else if (methodName.equals("call") &&
-		           classUtil.isTargetClass(className, "java.util.concurrent.Callable") &&
-		           method.getSignature().endsWith("Ljava/lang/Object;") == false) {
-		    	//insert ThdEnter & ThdExit log
-		    	methodUtil.insertCallInstBefore(logClass, thdEnterLog, 4);
-		    	methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
 		    }
-		
 		    else if (methodName.equals("handle")) {
 		    	//Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName);
 		    	if ( !className.contains("org.apache.hadoop.mapred.JobHistory") ) {   //for mr-4088  filter
@@ -303,7 +279,8 @@ class MapReduceTransformer extends Transformer {
 		    		System.out.println("JX - DEBUG - handle: " + className + " #" + methodName);
 		    	}
 		    }
-		    
+
+			
 		    
 		    /* RPC function */
 		    else if (rpcInfo.isRPCMethod(className, methodName) && //is a rpc
@@ -359,6 +336,44 @@ class MapReduceTransformer extends Transformer {
 		    	else if (bugConfig.getBugId().equals("mr-2705"))
 		    		methodUtil.insertCallInstAt(logClass, processCreateLog, 10, 202);   //0.21.0
 		    }
+		    
+		    
+		    
+		    // for mr-2705  //if (bugConfig.getBugId().equals("mr-2705"))
+		    if ( methodName.equals("addToTaskQueue") && className.contains("org.apache.hadoop.mapred.TaskTracker$TaskLauncher") )
+		    	methodUtil.insertCallInstX("java.util.List", "add", 1, logClass, eventCreateLog, classUtil);
+		    
+	    	// for mr-2705  //if (bugConfig.getBugId().equals("mr-2705"))
+            if ( methodName.equals("run") && className.equals("org.apache.hadoop.mapred.TaskTracker$TaskLauncher") ) {
+            	methodUtil.insertCallInstX("java.util.List", "remove", 1, logClass, eventProcEnterLog, classUtil);
+            	/*
+  		    	try {
+				method.instrument(
+						new ExprEditor() {
+							public void edit(MethodCall m) throws CannotCompileException {
+								if (m.getMethodName().equals("remove")) {
+									Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName + "  **" + m.getClassName() + " " + m.getMethodName() + " " +  m.getLineNumber() + "**");
+									m.replace( "{"
+											+ getInstCodeStr(LogType.EventHandlerEnd)
+											+ "$_ = $proceed($$);" 
+											+ getInstCodeStr(LogType.EventHandlerBegin, 2)
+											+ "}" );
+								}
+							}
+						}
+						);
+  		    	} catch (CannotCompileException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				*/
+            }
+		    
+		    
+		    
+		    
+		    
+		    
 		   
 		
 		    /* lock */   //Added by JX

@@ -223,8 +223,43 @@ public class MethodUtil {
   	
   	
   	
-  	
-  	
+  	//added by JX
+  	public void insertCallInstX(final String apiClass, final String apiMethod, final int paraNum, 
+  			final String logClass, final String logMethod, final ClassUtil classUtil) {
+  		
+  		try {
+			method.instrument( new ExprEditor() {
+				public void edit(MethodCall m) throws CannotCompileException {
+					if ( !(m.getClassName().equals(apiClass) && m.getMethodName().equals(apiMethod)) ) return;
+					Logger.log("/home/vagrant/logs/", "JX - DEBUG - " + logMethod + ": " + method.getDeclaringClass().getName() + " " + method.getName() + "  **" + m.getClassName() + " " + m.getMethodName() + " " +  m.getLineNumber() + "**");
+					
+			        if ( apiClass.equals("java.util.List") && apiMethod.equals("add") ) {
+						m.replace( "{"
+								+ "String opValue = System.identityHashCode($1);" 
+								+ logClass + "." + logMethod + "( opValue );" 
+								+ "$_ = $proceed($$);" 
+								+ "}" );
+					}
+			        else if ( apiClass.equals("java.util.List") && apiMethod.equals("remove") ) {
+						m.replace( "{"
+								+ "String opValue = System.identityHashCode($1);"
+								+ logClass + "." + logMethod + "( opValue );" 
+								+ "$_ = $proceed($$);" 
+								+ "String opValue_2 = System.identityHashCode($1);"
+								+ logClass + "." + "log_EventProcExit" + "( opValue_2 );"
+								+ "}" );
+					}
+			        else {
+			        	
+			        }
+				}
+			} );	
+			
+		} catch (CannotCompileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+  	}
   	
   	
 
