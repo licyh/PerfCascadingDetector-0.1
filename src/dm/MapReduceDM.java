@@ -339,30 +339,8 @@ class MapReduceTransformer extends Transformer {
 		    	methodUtil.insertCallInstX("java.util.List", "add", 1, logClass, eventCreateLog, classUtil);
 		   
 	    	// for mr-2705  //if (bugConfig.getBugId().equals("mr-2705"))
-            if ( methodName.equals("run") && className.equals("org.apache.hadoop.mapred.TaskTracker$TaskLauncher") ) {
+            if ( methodName.equals("run") && className.equals("org.apache.hadoop.mapred.TaskTracker$TaskLauncher") )
             	methodUtil.insertCallInstX("java.util.List", "remove", 1, logClass, eventProcEnterLog, classUtil);
-            	/*
-  		    	try {
-				method.instrument(
-						new ExprEditor() {
-							public void edit(MethodCall m) throws CannotCompileException {
-								if (m.getMethodName().equals("remove")) {
-									Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName + "  **" + m.getClassName() + " " + m.getMethodName() + " " +  m.getLineNumber() + "**");
-									m.replace( "{"
-											+ getInstCodeStr(LogType.EventHandlerEnd)
-											+ "$_ = $proceed($$);" 
-											+ getInstCodeStr(LogType.EventHandlerBegin, 2)
-											+ "}" );
-								}
-							}
-						}
-						);
-  		    	} catch (CannotCompileException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				*/
-            }
 
 		    
 		

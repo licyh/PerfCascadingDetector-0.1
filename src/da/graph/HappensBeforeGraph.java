@@ -287,7 +287,8 @@ public class HappensBeforeGraph {
 					if (stack.empty()){
 					    emlink2.add(-1);
 					} else{
-					    emlink2.add(stack.peek());
+						//commented by JX
+					    //emlink2.add(stack.peek());
 					}
 					//if (index == 2994) System.out.println("2994's lock = "+lockstack.peek());
 					/* commented by JX
