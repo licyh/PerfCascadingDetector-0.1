@@ -187,6 +187,39 @@ class MapReduceTransformer extends Transformer {
 		    boolean injectFlag = false;
 		    
 		    
+		    
+		    // for mr-2705  //if (bugConfig.getBugId().equals("mr-2705"))
+		    if ( methodName.equals("addToTaskQueue") && className.contains("org.apache.hadoop.mapred.TaskTracker$TaskLauncher") )
+		    	methodUtil.insertCallInstX("java.util.List", "add", 1, logClass, eventCreateLog, classUtil);
+		    
+	    	// for mr-2705  //if (bugConfig.getBugId().equals("mr-2705"))
+            if ( methodName.equals("run") && className.equals("org.apache.hadoop.mapred.TaskTracker$TaskLauncher") ) {
+            	methodUtil.insertCallInstX("java.util.List", "remove", 1, logClass, eventProcEnterLog, classUtil);
+            	/*
+  		    	try {
+				method.instrument(
+						new ExprEditor() {
+							public void edit(MethodCall m) throws CannotCompileException {
+								if (m.getMethodName().equals("remove")) {
+									Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName + "  **" + m.getClassName() + " " + m.getMethodName() + " " +  m.getLineNumber() + "**");
+									m.replace( "{"
+											+ getInstCodeStr(LogType.EventHandlerEnd)
+											+ "$_ = $proceed($$);" 
+											+ getInstCodeStr(LogType.EventHandlerBegin, 2)
+											+ "}" );
+								}
+							}
+						}
+						);
+  		    	} catch (CannotCompileException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				*/
+            }
+		    
+		    
+		    
 		    // JX - Begin to insert LOG code
 		    
 		    /* main function:
@@ -338,43 +371,8 @@ class MapReduceTransformer extends Transformer {
 		    }
 		    
 		    
-		    
-		    // for mr-2705  //if (bugConfig.getBugId().equals("mr-2705"))
-		    if ( methodName.equals("addToTaskQueue") && className.contains("org.apache.hadoop.mapred.TaskTracker$TaskLauncher") )
-		    	methodUtil.insertCallInstX("java.util.List", "add", 1, logClass, eventCreateLog, classUtil);
-		    
-	    	// for mr-2705  //if (bugConfig.getBugId().equals("mr-2705"))
-            if ( methodName.equals("run") && className.equals("org.apache.hadoop.mapred.TaskTracker$TaskLauncher") ) {
-            	methodUtil.insertCallInstX("java.util.List", "remove", 1, logClass, eventProcEnterLog, classUtil);
-            	/*
-  		    	try {
-				method.instrument(
-						new ExprEditor() {
-							public void edit(MethodCall m) throws CannotCompileException {
-								if (m.getMethodName().equals("remove")) {
-									Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName + "  **" + m.getClassName() + " " + m.getMethodName() + " " +  m.getLineNumber() + "**");
-									m.replace( "{"
-											+ getInstCodeStr(LogType.EventHandlerEnd)
-											+ "$_ = $proceed($$);" 
-											+ getInstCodeStr(LogType.EventHandlerBegin, 2)
-											+ "}" );
-								}
-							}
-						}
-						);
-  		    	} catch (CannotCompileException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				*/
-            }
-		    
-		    
-		    
-		    
-		    
-		    
-		   
+	
+		  
 		
 		    /* lock */   //Added by JX
 		    // added for MR/HDFS   //jx: coz this has lots of locks useless
