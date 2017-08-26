@@ -3,6 +3,19 @@
 //FINAL SIMPLE
 
 //Queue-related
+//Newest version
+//ONLY queue
+CL0: org.apache.hadoop.io.IOUtils-copyBytes-71;											#reported bug, include 2+ sources(public/private localize)
+CL0: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;								#small. MC. #tasks
+CL0: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;								#small. local dirs.
+CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;	#small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
+CL0: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2151;						#MC & Remove. TaskLauncher: while (!Thread.interrupted()) {
+CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;	#small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
+CL0: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;							#small. local dirs.
+CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;#small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
+//summary - 8(#static codepoints=8) from 19
+
+//PS: old version
 CL1: org.apache.hadoop.io.IOUtils-copyBytes-71;											#reported bug, include 2+ sources(public/private localize)
 CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;                        #MC & False positive. Queue wait for slots.  while (numFreeSlots.get() < task.getNumSlotsRequired()) { .. }
 CL1: org.apache.hadoop.io.IOUtils-readFully-115;                                        #MC & small. readChunk.  .while (toRead < 0)
@@ -11,6 +24,10 @@ CL1: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptD
 CL1: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;	#small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
 CL1: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;   #small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
 ////CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2156;                    #MC & False positive(can pruning by only instrument event processing). Queue Wait. while (tasksToLaunch.isEmpty()) { tasksToLaunch.wait(); }
+
+
+
+
 
 
 //Lock-related
@@ -22,8 +39,8 @@ CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;										#small. MC. #t
 CL2~3: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;                                   #small. local dirs.
 CL2~3: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;                                 #small. local dirs.
 CL2~3: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;      #small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
-CL3~4: org.apache.hadoop.io.IOUtils-readFully-115;                                              #MC & small. readChunk.  .while (toRead < 0)
 CL3~4: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;          #small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
+//CL3~4: org.apache.hadoop.io.IOUtils-readFully-115;                                            #MC & small. readChunk.  .while (toRead < 0) Pruned by lower-level things
 
 //////CL3: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-279;               				#already prunning. wait. synchronized (lock) {     while (!done) {       lock.wait();     }
 //////CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2156;						  	#already prunning. wait. synchronized (tasksToLaunch) {           while (tasksToLaunch.isEmpty()) {             tasksToLaunch.wait();

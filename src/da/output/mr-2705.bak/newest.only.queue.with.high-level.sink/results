@@ -1,0 +1,10 @@
+//ONLY queue
+CL0: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;								#small. MC. #tasks
+CL0: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;								#small. local dirs.
+CL0: org.apache.hadoop.io.IOUtils-copyBytes-71;											#reported bug, include 2+ sources(public/private localize)
+CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;	#small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
+CL0: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2151;						#MC & Remove. TaskLauncher: while (!Thread.interrupted()) {
+CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;	#small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
+CL0: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;							#small. local dirs.
+CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;#small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
+//summary - 8(#static codepoints=8) from 19
