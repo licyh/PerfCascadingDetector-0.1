@@ -1,7 +1,5 @@
-//39 (#static codepoints=21)
-CL1: org.apache.hadoop.io.IOUtils-cleanup-148;
+//37 (#static codepoints=19)
 CL1: org.apache.hadoop.io.IOUtils-copyBytes-71;
-CL1: org.apache.hadoop.io.IOUtils-readFully-115;
 CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2151;
 CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2156;
 CL1: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;
@@ -35,6 +33,6 @@ CL5: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-834;
 CL5: org.apache.hadoop.mapred.TaskTracker-buildTaskControllerTaskPathDeletionContexts-1859;
 CL5: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
 CL5: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
-CL6: org.apache.hadoop.mapred.JvmManager$JvmManagerForType-reapJvm-335;
+CL6: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-279;
 CL6: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-801;
 CL6: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;
