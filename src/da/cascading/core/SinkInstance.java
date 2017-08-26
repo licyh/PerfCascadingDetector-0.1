@@ -291,8 +291,12 @@ public class SinkInstance {
 				if ( logInfo.getHandlerBlocks().get(beginIndex) == null ) continue;
 				endIndex = logInfo.getHandlerBlocks().get(beginIndex);
 			}
+			else if ( hbg.getNodeOPTY(index).equals(LogType.EventProcEnter.name()) ) {
+				if ( logInfo.getEventHandlerBlocks().get(beginIndex) == null ) continue;
+				endIndex = logInfo.getEventHandlerBlocks().get(beginIndex);
+			}
 			else {
-				//ie, endIndex == -1
+				//TODO
 				continue;
 			}
 			
