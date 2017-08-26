@@ -188,10 +188,7 @@ class MapReduceTransformer extends Transformer {
 		    
 		    
 		    
-		    // for mr-2705  //if (bugConfig.getBugId().equals("mr-2705"))
-		    if ( methodName.equals("addToTaskQueue") && className.contains("org.apache.hadoop.mapred.TaskTracker$TaskLauncher") )
-		    	methodUtil.insertCallInstX("java.util.List", "add", 1, logClass, eventCreateLog, classUtil);
-		    
+ 
 	    	// for mr-2705  //if (bugConfig.getBugId().equals("mr-2705"))
             if ( methodName.equals("run") && className.equals("org.apache.hadoop.mapred.TaskTracker$TaskLauncher") ) {
             	methodUtil.insertCallInstX("java.util.List", "remove", 1, logClass, eventProcEnterLog, classUtil);
@@ -218,7 +215,10 @@ class MapReduceTransformer extends Transformer {
 				*/
             }
 		    
-		    
+		    // for mr-2705  //if (bugConfig.getBugId().equals("mr-2705"))
+		    if ( methodName.equals("addToTaskQueue") && className.contains("org.apache.hadoop.mapred.TaskTracker$TaskLauncher") )
+		    	methodUtil.insertCallInstX("java.util.List", "add", 1, logClass, eventCreateLog, classUtil);
+		   
 		    
 //		    // JX - Begin to insert LOG code
 //		    
