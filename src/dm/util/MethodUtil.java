@@ -237,7 +237,7 @@ public class MethodUtil {
 						m.replace( "{"
 								+ "String opValue = System.identityHashCode($1);" 
 								+ logClass + "." + logMethod + "( opValue );" 
-								+ "$_ = $proceed($$);" 
+								+ "$proceed($$);"          //change $_ = $proceed($$); to $proceed($$);  
 								+ "}" );
 					}
 			        else if ( apiClass.equals("java.util.List") && apiMethod.equals("remove") ) {
