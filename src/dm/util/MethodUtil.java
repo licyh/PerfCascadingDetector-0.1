@@ -235,16 +235,14 @@ public class MethodUtil {
 					
 			        if ( apiClass.equals("java.util.List") && apiMethod.equals("add") ) {
 						m.replace( "{"
-								+ "String opValue = Integer.toString( System.identityHashCode($1) );" 
-								+ logClass + "." + logMethod + "( opValue );" 
+								+ callStrInstBA(logClass, logMethod, 81)
 								+ "$proceed($$);"          //change $_ = $proceed($$); to $proceed($$);  
 								+ "}" );
 					}
 			        else if ( apiClass.equals("java.util.List") && apiMethod.equals("remove") ) {
 						m.replace( "{"
 								+ "$_ = $proceed($$);"
-								+ "String opValue = Integer.toString( System.identityHashCode($_) );"
-								+ logClass + "." + "log_EventProcExit" + "( opValue );" 
+								+ callStrInstBA(logClass, "log_EventProcExit", 80)
 								+ logClass + "." + logMethod + "( opValue );"
 								+ "}" );
 					}
@@ -1339,7 +1337,7 @@ public void insertRPCInvoke(String logClass, String logMethod) {
 	 *
 	 * 10. MR launch container (start process.)
   	 */
-	public String callStrInstBA (String logClass, String logFunc, int flag) {
+	public String callStrInstBA(String logClass, String logFunc, int flag) {
 	    String str = "";
 	    if (flag == 0) {
 	      str = logClass + "." + logFunc + "(\"-\");";
@@ -1438,8 +1436,13 @@ public void insertRPCInvoke(String logClass, String logMethod) {
 	    }
 	    
 	    //for new ways that instrument "source code snippet"
+	    else if (flag == 80) {
+			str = "String opValue = Integer.toString( System.identityHashCode($_) );"; 
+			str += logClass + "." + logFunc + "( opValue );";
+	    }
 	    else if (flag == 81) {
-	    	
+			str = "String opValue = Integer.toString( System.identityHashCode($1) );"; 
+			str += logClass + "." + logFunc + "( opValue );";
 	    }
 	    
 	    
