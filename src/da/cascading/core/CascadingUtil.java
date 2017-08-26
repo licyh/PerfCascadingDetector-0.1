@@ -201,6 +201,7 @@ public class CascadingUtil {
     		if (i%2==1 || i==cascadingChain.size()-1) {    //means: loop -> 1:lock(HERE) <-> lock -> 3:LOCK(HERE) <-> lock -> 5:LOCK(HERE) <-> 6:LOCK(HERE)
     			if (!logInfo.getOuterResources().containsKey(x)) continue;
     			
+    			if (logInfo.getOuterResources().get(x) != null)
     			for (String crCode: logInfo.getOuterResources().get(x)) {
     				if (crCode.equals( ag.getCRCode(x) )) continue;
     				if (own.contains(crCode))

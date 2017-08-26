@@ -302,17 +302,15 @@ public class SinkInstance {
 				continue;
 			}
 			
-			// for obtaining outerlocks & dfs
-			Set<String> outerlocks = null;          //should not be used for queue-related???
 			BitSet traversedNodes = new BitSet(); 
 	    	traversedNodes.clear();
-			dfsForInnerResourcesAndLoops(beginIndex,  beginIndex, endIndex, outerlocks, curCascadingLevel, nextResources, traversedNodes);
+			dfsForInnerResourcesAndLoops(beginIndex,  beginIndex, endIndex, curCascadingLevel, nextResources, traversedNodes);
 		}
 		return nextResources;
     }
     
     
-    public void dfsForInnerResourcesAndLoops( int x,  int beginIndex, int endIndex, Set<String> outerlocks, int curCascadingLevel, Set<Integer> nextResources, BitSet traversedNodes ) {
+    public void dfsForInnerResourcesAndLoops( int x,  int beginIndex, int endIndex, int curCascadingLevel, Set<Integer> nextResources, BitSet traversedNodes ) {
     	//for testing
     	/*
 		if (hbg.getNodeOPTY(x).equals(LogType.MsgSending.name())) {
@@ -325,8 +323,9 @@ public class SinkInstance {
     	// check Lock
     	if ( hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()) ) {
 			if ( !ag.isRelevantLock(beginIndex, x) ) {                         // prune "lock beginIndex=x -> lock x"
-				if (outerlocks == null) outerlocks = obtainOuterLocks(beginIndex, endIndex);
-				if ( !outerlocks.contains(hbg.getNodePIDOPVAL0(x)) ) {         // prune "lock x -> lock beginIndex -> lock x"
+				if (logInfo.getOuterResources().get(beginIndex) == null        // prune "lock x -> lock beginIndex -> lock x"
+						|| logInfo.getOuterResources().get(beginIndex) != null && !logInfo.getOuterResources().get(beginIndex).contains( ag.getCRCode(x) )
+						) {
 					nextResources.add( x );
 					upNodes[curCascadingLevel].put(x, beginIndex);
 					//jx: it seems no need to check if the LockReuire has LockRelease or not
@@ -353,7 +352,7 @@ public class SinkInstance {
         for (Pair pair: list) {
         	int y = pair.destination;
         	if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) ) {
-        		dfsForInnerResourcesAndLoops( y,  beginIndex, endIndex, outerlocks, curCascadingLevel, nextResources, traversedNodes  );
+        		dfsForInnerResourcesAndLoops( y,  beginIndex, endIndex, curCascadingLevel, nextResources, traversedNodes  );
         	}
         }
     }  
@@ -363,6 +362,7 @@ public class SinkInstance {
      * obtain all of outer-layer locks for the current lock block of (beginIndex,endIndex)
      * Return - Set<"PIDOPVAL0">
      */
+    /*
     public Set<String> obtainOuterLocks(int beginIndex, int endIndex) {
 		// Note: if this part takes much time, then change to "for (int i = index-1; i >= index-20; i--) {"
 		//get its outer locks, to avoid "(lockA - )lockB<index> - lockA<k> - uA-uB-uA"
@@ -380,6 +380,7 @@ public class SinkInstance {
 		}
 		return outerlocks;
     }
+    */
       
     
 
