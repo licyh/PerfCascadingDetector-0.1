@@ -183,25 +183,27 @@ public class CascadingUtil {
 	
     public boolean checkChain(LoopBug loopbug) {
     	int cascadingLevel = loopbug.getCascadingLevel();
+    	ArrayList<Integer> cascadingChain = loopbug.getCascadingChain();
     	
     	//newly added
     	if (cascadingLevel <= 1)
     		return true;
     	
     	HashSet<String> own = new HashSet<String>();
-    	for (int x: loopbug.getCascadingChain()) {
-    		if (hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()))
-    			own.add( hbg.getNodePIDOPVAL0(x) );
+    	for (int x: cascadingChain) {
+    		if ( ag.isContentionResource(x) )
+    			own.add( ag.getCRCode(x) );
     	}
+    	
     	//System.out.println("JX - DEBUG - checkChain: own.size()=" + own.size());
-    	for (int i = 0; i<loopbug.getCascadingChain().size(); i++) {
-    		int x = loopbug.getCascadingChain().get(i);
-    		if (i%2==1 || i==loopbug.getCascadingChain().size()-1) {
-    			if (!logInfo.getOuterLocks().containsKey(x)) continue;
+    	for (int i = 0; i < cascadingChain.size(); i++) {
+    		int x = cascadingChain.get(i);
+    		if (i%2==1 || i==cascadingChain.size()-1) {    //means: loop -> 1:lock(HERE) <-> lock -> 3:LOCK(HERE) <-> lock -> 5:LOCK(HERE) <-> 6:LOCK(HERE)
+    			if (!logInfo.getOuterResources().containsKey(x)) continue;
     			
-    			for (String each: logInfo.getOuterLocks().get(x)) {
-    				if (each.equals( hbg.getNodePIDOPVAL0(x) )) continue;
-    				if (own.contains(each))
+    			for (String crCode: logInfo.getOuterResources().get(x)) {
+    				if (crCode.equals( ag.getCRCode(x) )) continue;
+    				if (own.contains(crCode))
     					return false;
     			}
     		}
@@ -209,6 +211,8 @@ public class CascadingUtil {
     	return true;
     }
     
+   
+        
     
     /*
     public boolean checkJobID(int index1, int index2) {

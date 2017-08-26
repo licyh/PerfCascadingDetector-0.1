@@ -9,7 +9,7 @@ public class LoopBug {
 	
 	int nodeIndex;
 	int cascadingLevel;
-	ArrayList<Integer> cascadingChain;
+	ArrayList<Integer> cascadingChain;  //from source to sink, ie, loop -> lock <-> lock -> lock <-> lock (-> sink)
 	
 	public LoopBug(int nodeIndex) {
 		this.nodeIndex = nodeIndex;

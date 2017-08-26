@@ -16,6 +16,7 @@ import da.cascading.core.SinkInstance;
 public class LogInfoExtractor {
 	
 	HappensBeforeGraph hbg;
+	AccidentalHBGraph ag;
 	
     LinkedHashMap<Integer, Integer> targetCodeBlocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
     LinkedHashMap<Integer, Integer> lockBlocks = new LinkedHashMap<Integer, Integer>();   // beginIndex -> endIndex
@@ -31,12 +32,13 @@ public class LogInfoExtractor {
     LinkedHashMap<Integer, Integer> eventHandlerThreads = new LinkedHashMap<Integer, Integer>();
     LinkedHashMap<Integer, Integer> rpcHandlerThreads = new LinkedHashMap<Integer, Integer>();
    
-    HashMap<Integer, HashSet<String>> outerLocks = new HashMap<Integer, HashSet<String>>();    // lock -> ourter locks
+    HashMap<Integer, HashSet<String>> outerResources = new HashMap<Integer, HashSet<String>>();    // lock -> ourter locks
     
     
     
-    public LogInfoExtractor(HappensBeforeGraph hbg) {
+    public LogInfoExtractor(HappensBeforeGraph hbg, AccidentalHBGraph ag) {
     	this.hbg = hbg;
+    	this.ag = ag;
     	doWork();
     }
     
@@ -93,26 +95,35 @@ public class LogInfoExtractor {
     }
     
     
-    public HashMap<Integer, HashSet<String>> getOuterLocks() {
-    	return this.outerLocks;
+    public HashMap<Integer, HashSet<String>> getOuterResources() {
+    	return this.outerResources;
     }
     
     
     
     
-    //for locks
     /**
-     * @param a - the begin index of lock A
+     * check if a contains b
+     * @param a - the begin index of lock A or eventhandlerA
      * @param b - the begin index of lock B
-     */
-    public boolean lockContains(int a, int b) {
-    	if (lockBlocks.get(a) == null || lockBlocks.get(b) == null) return false;
-    	if ( !hbg.isSameThread(a, b) ) return false;        // is it necessary?
-    	if (a < b && lockBlocks.get(a) > lockBlocks.get(b))
-    		return true;
+     */    
+    public boolean crContainsLock(int a, int b) {
+    	if ( !hbg.isSameThread(a, b) ) return false; // is it necessary?
+    	if (lockBlocks.get(b) == null) return false;
+    	
+    	if ( hbg.getNodeOPTY(a).equals(LogType.LockRequire.name()) ) {
+    		if (lockBlocks.get(a) == null) return false;
+    		if (a < b && lockBlocks.get(a) > lockBlocks.get(b)) return true;
+    	}
+    	else if ( hbg.getNodeOPTY(a).equals(LogType.EventProcEnter.name()) ) {
+    		if (eventHandlerBlocks.get(a) == null) return false;
+    		if (a < b && eventHandlerBlocks.get(a) > lockBlocks.get(b)) return true;
+    	}
+    	else {
+    		//TODO
+    	}
 		return false;
     }
-    
     
     
     
@@ -178,7 +189,8 @@ public class LogInfoExtractor {
     	computeEventHandlerInfo();
     	computeRPCHandlerInfo();
     	
-    	computeOutLocks();
+    	//more
+    	computeOuterResources();
     }
     
     
@@ -411,27 +423,32 @@ public class LogInfoExtractor {
 	
 	
 	
-    public void computeOutLocks() {
-		for (int lockIndex: lockBlocks.keySet()) {
-			if (lockBlocks.get(lockIndex) == null) continue;
-			int lockBegin = lockIndex;
-			int lockEnd = lockBlocks.get(lockIndex);
+    public void computeOuterResources() {
+    	// for locks - check their inner locks
+    	resolveInnerLocks( lockBlocks );
+		// for event handlers - check their inner locks
+    	resolveInnerLocks( eventHandlerBlocks );
+    }
+    
+    public void resolveInnerLocks(LinkedHashMap<Integer, Integer> crBlocks) {
+		for (int crIndex: crBlocks.keySet()) {
+			if (crBlocks.get(crIndex) == null) continue;
+			int crBegin = crIndex;
+			int crEnd = crBlocks.get(crIndex);
 			
-			for (int x = lockBegin+1; x < lockEnd; x++) {
-				if ( hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()) 
-					 && lockContains(lockIndex, x) 
-						) {
+			for (int x = crBegin+1; x < crEnd; x++) {
+				if ( hbg.getNodeOPTY(x).equals(LogType.LockRequire.name())  //ie, inner locks  //it seems we do not need to check inner EventHandler etc. 
+					 && crContainsLock(crIndex, x) ) {
 					
-					if ( !outerLocks.containsKey(x) ) {
+					if ( !outerResources.containsKey(x) ) {
 						HashSet<String> set = new HashSet<String>();
-						outerLocks.put(x, set);
+						outerResources.put(x, set);
 					}
-					HashSet<String> set = outerLocks.get(x);
-					set.add( hbg.getNodePIDOPVAL0(lockIndex) );
+					HashSet<String> set = outerResources.get(x);
+					set.add( ag.getCRCode(crIndex) );
 				}
 			}
 		}
     }
-    
     
 }

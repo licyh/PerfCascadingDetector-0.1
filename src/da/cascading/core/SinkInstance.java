@@ -50,7 +50,7 @@ public class SinkInstance {
 
     //used for pruning 
     //HashMap<Integer, Integer>[] curNodes = new HashMap[ CASCADING_LEVEL + 1 ];
-   // HashMap<Integer, HashSet<String>> outerLocks = new HashMap<Integer, HashSet<String>>(); // lock -> ourter locks
+   // HashMap<Integer, HashSet<String>> outerResources = new HashMap<Integer, HashSet<String>>(); // lock -> ourter locks
     CascadingUtil cascadingUtil;
 	
 
@@ -116,8 +116,8 @@ public class SinkInstance {
 	}
 	
 	/*
-	public void setOuterLocks( HashMap<Integer, HashSet<String>> outerLocks ) {
-		this.outerLocks = outerLocks;
+	public void setOuterLocks( HashMap<Integer, HashSet<String>> outerResources ) {
+		this.outerLocks = outerResources;
 	}
 	*/
 	
@@ -404,6 +404,18 @@ public class SinkInstance {
     			loopbug.getCascadingChain().add( tmp );
     		}
     	}
+    	
+    	//Pre Pruning - remove lower-level things
+    	String sig = hbg.lastCallstack(nodeIndex);
+    	if ( 	//MR
+    			sig.startsWith("org.apache.hadoop.io.") && !sig.startsWith("org.apache.hadoop.io.IOUtils-copyBytes")
+    			|| sig.startsWith("xx")
+    			//HD
+    			//HB
+    			//CA
+    			)
+    		return;
+    	
     	
     	//Pruning 1 - Checking chain - ie, false positive pruning
     	if ( cascadingLevel>=2 && !cascadingUtil.checkChain(loopbug) ) return;

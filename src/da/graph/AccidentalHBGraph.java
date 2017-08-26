@@ -35,7 +35,7 @@ public class AccidentalHBGraph {
 	public AccidentalHBGraph(HappensBeforeGraph hbg) {
 		this.hbg = hbg;
 		// extract Target, (EventHandler), Lock, Loop logs
-		this.logInfo = new LogInfoExtractor( this.hbg );
+		this.logInfo = new LogInfoExtractor( this.hbg, this);
 		
 		//lock-related
 		this.accurateLockmemref = new HashMap<String, ArrayList<Integer> >();
@@ -287,6 +287,37 @@ public class AccidentalHBGraph {
     }
     
 	
+    
+    public boolean isContentionResource(int index) {
+    	String type = hbg.getNodeOPTY(index);
+    	if ( type.equals( LogType.LockRequire.name() )
+    			|| type.equals( LogType.EventProcEnter.name() )
+    			// part of the followings
+    			//|| type.equals( LogType.MsgProcEnter.name() )
+    			//|| type.equals( LogType.ThdEnter.name() )    				
+    			) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    
+    //newly added
+    /**
+     * CRCode - Lock(ie,PIDOPVAL0) or Queue(ie,PIDTID) which contention resources belong to  
+     */
+    public String getCRCode(int index) {
+    	if ( hbg.getNodeOPTY(index).equals(LogType.LockRequire.name()) ) {
+    		return hbg.getNodePIDOPVAL0(index);
+    	}
+    	else if ( hbg.getNodeOPTY(index).equals(LogType.EventProcEnter.name()) ) {
+    		return hbg.getNodePIDTID(index);
+    	}
+    	return "XXX";
+    }
+    
+    
+    
     
     /**
      * Queue-related 
