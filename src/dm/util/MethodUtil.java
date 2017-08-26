@@ -235,7 +235,7 @@ public class MethodUtil {
 					
 			        if ( apiClass.equals("java.util.List") && apiMethod.equals("add") ) {
 						m.replace( "{"
-								+ "String opValue = System.identityHashCode($1);" 
+								+ "String opValue = Integer.toString( System.identityHashCode($1) );" 
 								+ logClass + "." + logMethod + "( opValue );" 
 								+ "$proceed($$);"          //change $_ = $proceed($$); to $proceed($$);  
 								+ "}" );
@@ -243,10 +243,9 @@ public class MethodUtil {
 			        else if ( apiClass.equals("java.util.List") && apiMethod.equals("remove") ) {
 						m.replace( "{"
 								+ "$_ = $proceed($$);"
-								//+ "String opValueSDFG = System.identityHashCode($_);"
-								//+ logClass + "." + "log_EventProcExit" + "( opValueSDFG );" 
-								+ "String opValue_2 = System.identityHashCode($_);"
-								+ logClass + "." + logMethod + "( opValue_2 );"
+								+ "String opValue = Integer.toString( System.identityHashCode($_) );"
+								+ logClass + "." + "log_EventProcExit" + "( opValue );" 
+								+ logClass + "." + logMethod + "( opValue );"
 								+ "}" );
 					}
 			        else {
@@ -1436,6 +1435,11 @@ public void insertRPCInvoke(String logClass, String logMethod) {
 	    	str += "String opValue = header.file.getFilename();";
 	    	str += logClass + "." + logFunc + "(opValue);";
 	    	str += "}";
+	    }
+	    
+	    //for new ways that instrument "source code snippet"
+	    else if (flag == 81) {
+	    	
 	    }
 	    
 	    
