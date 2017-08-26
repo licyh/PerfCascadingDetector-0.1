@@ -257,7 +257,7 @@ public class SinkInstance {
     				predNodes[curCascadingLevel].put(index, resIndex);
     			}
     		}
-    		else if ( hbg.getNodeOPTY(resIndex).equals(LogType.MsgProcEnter.name())
+    		else if ( hbg.getNodeOPTY(resIndex).equals(LogType.EventProcEnter.name())
     		    	&& Benchmarks.resolveBugId(hbg.getTargetDir()) != null
         			&& (Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-2705") || Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-4088"))
         			) {
@@ -340,7 +340,7 @@ public class SinkInstance {
 			if ( Benchmarks.resolveBugId(hbg.getTargetDir()) != null 
 					&& ( Benchmarks.resolveBugId(hbg.getTargetDir()).equals("ca-6744") 
 							|| Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-2705")
-							|| Benchmarks.resolveBugId(hbg.getTargetDir()).equals("ca-4088") )
+							|| Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-4088") )
 					&& curCascadingLevel == 2)
 				bugPool.addLoopBug( x );
 			else
