@@ -190,7 +190,7 @@ class MapReduceTransformer extends Transformer {
 		    
 		    // for mr-2705  //if (bugConfig.getBugId().equals("mr-2705"))
 		    if ( methodName.equals("addToTaskQueue") && className.contains("org.apache.hadoop.mapred.TaskTracker$TaskLauncher") )
-//		    	methodUtil.insertCallInstX("java.util.List", "add", 1, logClass, eventCreateLog, classUtil);
+		    	methodUtil.insertCallInstX("java.util.List", "add", 1, logClass, eventCreateLog, classUtil);
 		    
 	    	// for mr-2705  //if (bugConfig.getBugId().equals("mr-2705"))
             if ( methodName.equals("run") && className.equals("org.apache.hadoop.mapred.TaskTracker$TaskLauncher") ) {
