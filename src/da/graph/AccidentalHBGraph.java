@@ -321,10 +321,12 @@ public class AccidentalHBGraph {
 		for (Entry<Integer, Integer> thread: threads.entrySet()) {
 			int beginPos = thread.getKey();
 			int endPos = thread.getValue();
+			System.out.println("JX - DEBUG - getXXXFrom: node: " + hbg.getPrintedIdentity( list.get(beginPos)  ));
 			if ( hbg.getNodePIDTID( list.get(beginPos) ).equals(pidtid) ) {
 				for (int i = beginPos; i <= endPos; i++) {
 					int beginIndex = list.get(i);
 					if (blocks.get(beginIndex) == null) continue;
+					System.out.println("JX - DEBUG - getXXXFrom: enter: " + hbg.getPrintedIdentity( beginIndex  ));
 					int endIndex = blocks.get(beginIndex);
 					
 					//if ( !hbg.isConcurrent(index, beginIndex) ) continue; 
