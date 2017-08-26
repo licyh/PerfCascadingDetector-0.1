@@ -245,8 +245,8 @@ public class MethodUtil {
 								+ "$_ = $proceed($$);"
 								//+ "String opValue = System.identityHashCode($_);"
 								//+ logClass + "." + "log_EventProcExit" + "( opValue );" 
-								+ "String opValue_2 = System.identityHashCode($_);"
-								+ logClass + "." + logMethod + "( opValue_2 );"
+								//+ "String opValue_2 = System.identityHashCode($_);"
+								//+ logClass + "." + logMethod + "( opValue_2 );"
 								+ "}" );
 					}
 			        else {
