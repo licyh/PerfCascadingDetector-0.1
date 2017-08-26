@@ -359,7 +359,9 @@ public class HappensBeforeGraph {
 					if (tp.equals("EventProcExit")){
 					    String val = eElement.getElementsByTagName("OPVAL").item(0).getTextContent();
 					    if (!val.contains("GenericEventHandler"))
-					    stack.pop();
+					    
+					    if (!stack.isEmpty())  //this is for my added "while(true) { .. logExit; queue.take(); logEnter; .. }", so will meet Exit first
+					    	stack.pop();
 					}
 					//////////////////////////////////////////////
 		
@@ -453,7 +455,7 @@ public class HappensBeforeGraph {
 	    //System.out.print("zkcreate = ");
 	    //System.out.println(zkcreatelist);
         createbasexml(); //JX - generate the 'base' file including all nodes/operations
-        //createemlink();  //?
+        createemlink();  //?
     } //end-for-Construction
     
     
