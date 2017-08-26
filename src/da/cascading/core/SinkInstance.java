@@ -398,7 +398,7 @@ public class SinkInstance {
     	int cascadingLevel = loopbug.getCascadingLevel();
     	ArrayList<Integer> cascadingChain = loopbug.getCascadingChain();
     	
-    	//Pre Pruning - remove lower-level things
+    	//Pre Pruning - remove lower-level things 
     	String sig = hbg.lastCallstack(nodeIndex);
     	if ( 	//MR
     			sig.startsWith("org.apache.hadoop.io.") && !sig.startsWith("org.apache.hadoop.io.IOUtils-copyBytes")
