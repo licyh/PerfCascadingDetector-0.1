@@ -345,21 +345,22 @@ class MapReduceTransformer extends Transformer {
 		    methodUtil.insertCallInst("java.util.concurrent.CompletionService", "submit", 1, logClass, thdCreateLog, classUtil); //for ExecutorCompletionService in ResourceLocalizationService.java L625.
 		    methodUtil.insertCallInst("java.util.concurrent.ScheduledThreadPoolExecutor", "schedule", 3, logClass, thdCreateLog, classUtil);
 		    methodUtil.insertCallInst("java.lang.Runtime", "addShutdownHook", 1, logClass, thdCreateLog, classUtil);
-			*/
 		
-		    /* for thread join */
+		    // for thread join 
 		    methodUtil.insertCallInst("java.lang.Thread", "join", 0, logClass, thdJoinLog, classUtil);
-		
+		     */
 		    
 		    /* for rpc calling */
+		    /*
 		    methodUtil.insertRPCCallInst(logClass, msgSendingLog, rpcInfo);
 		    if ( !bugConfig.getBugId().equals("mr-4813") )   //Just tmp: for non-manually-rpc version of mr-4813
 		    methodUtil.insertRPCInvoke(logClass, msgSendingLog);
-		
+		     */
 		    
 		    
 		    
 		    /* for process create */
+		    /*
 		    if (methodName.equals("runCommand") && className.endsWith("org.apache.hadoop.util.Shell")) {
 		    	//Insert right after "process = builder.start()" in "org.apache.hadoop.util.Shell.runCommand()" in "Shell.java"
 		    	if (bugConfig.getBugId().equals("mr-4813"))
@@ -371,6 +372,7 @@ class MapReduceTransformer extends Transformer {
 		    	else if (bugConfig.getBugId().equals("mr-2705"))
 		    		methodUtil.insertCallInstAt(logClass, processCreateLog, 10, 202);   //0.21.0
 		    }
+		    */
 		    
 		    
 	
