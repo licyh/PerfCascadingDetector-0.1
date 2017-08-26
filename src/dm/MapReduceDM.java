@@ -375,7 +375,7 @@ class MapReduceTransformer extends Transformer {
 //		    	methodUtil.insertMonitorInst(logClass, lockRequireLog, logClass, lockReleaseLog);
 //		    	methodUtil.insertRWLock(logClass, rWLockCreateLog);
 //		    }
-//	    }
+	    }
 	}
 	
 	
