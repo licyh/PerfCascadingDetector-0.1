@@ -343,6 +343,9 @@ public class LogInfoExtractor {
     	ArrayList<Integer> items = getTypedNodes(LogType.EventProcEnter.name(), LogType.EventProcExit.name());
     	// Handle event handler codes
     	extractBlockInfo(LogType.EventProcEnter.name(), LogType.EventProcExit.name(), items, eventHandlerBlocks);
+    	
+    	//debug
+    	System.out.println("JX - DEBUG - eventHandlerBlocks is " + eventHandlerBlocks);
     }
     
     
