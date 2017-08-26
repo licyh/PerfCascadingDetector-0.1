@@ -190,111 +190,24 @@ public class LogInfoExtractor {
     public void extractTargetCodeInfo() {
     	// Get all TargetCodeBegin&TargetCodeEnd nodes
     	ArrayList<Integer> items = getTypedNodes(LogType.TargetCodeBegin.name(), LogType.TargetCodeEnd.name());
-    	
     	// Handle target codes
-    	for (int i = 0; i < items.size(); i++) {
-    		int iIndex = items.get(i);
-    		if ( !hbg.getNodeOPTY( iIndex ).equals(LogType.TargetCodeBegin.name()) ) continue;
-    		
-			int flag = 1;
-			for (int j = i+1; j < items.size(); j++) {
-				int jIndex = items.get(j);
-				if ( !hbg.isSameThread(jIndex, iIndex) ) break;
-				if ( hbg.getNodeOPTY( jIndex ).equals(LogType.TargetCodeBegin.name()) ) flag ++;
-				else flag --;
-				if (flag == 0) {
-					targetCodeBlocks.put( iIndex, jIndex );
-					break;
-				}
-			}
-			if ( !targetCodeBlocks.containsKey( iIndex ) )
-				targetCodeBlocks.put( iIndex, null );
-    	}
+    	extractBlockInfo_weak(LogType.TargetCodeBegin.name(), LogType.TargetCodeEnd.name(), items, targetCodeBlocks);
     }
         
     
     public void extractLockInfo() {
     	// Get all EventHandlerBegin&EventHandlerEnd nodes
     	ArrayList<Integer> items = getTypedNodes(LogType.LockRequire.name(), LogType.LockRelease.name());
-    
     	// Handle lock codes
-    	for (int i = 0; i < items.size(); i++) {
-    		int iIndex = items.get(i);
-    		if ( !hbg.getNodeOPTY( iIndex ).equals(LogType.LockRequire.name()) ) continue;
-    		
-    		String opval = hbg.getNodeOPVAL(iIndex);
-			int reenter = 1;
-			for (int j = i+1; j < items.size(); j++) {
-				int jIndex = items.get(j);
-				if ( !hbg.isSameThread(jIndex, iIndex) ) break;
-				// modified: bug fix
-				if ( hbg.getNodeOPTY(jIndex).equals(LogType.LockRequire.name()) && hbg.getNodeOPVAL(jIndex).equals(opval) )  
-					reenter ++;
-				if ( hbg.getNodeOPTY(jIndex).equals(LogType.LockRelease.name()) && hbg.getNodeOPVAL(jIndex).equals(opval) ) {
-					reenter --;
-					if (reenter == 0) {
-						lockBlocks.put(iIndex, jIndex);
-						break;
-					}
-				}
-				// end - modified
-			}
-			if ( !lockBlocks.containsKey(iIndex) ) 
-				lockBlocks.put(iIndex, null);
-    	}
-    
-    	/** old method, it is definitely right
-    	for (int i = 0; i < hbg.getNodeList().size(); i++) {
-    		// find out all Lock code blocks
-    		if ( hbg.getNodeOPTY(i).equals("LockRequire") ) {
-    			String opval = hbg.getNodeOPVAL(i);
-    			int reenter = 1;
-    			for (int j = i+1; j < hbg.getNodeList().size(); j++) {
-    				if ( !hbg.isSameThread(j, i) ) break;
-    				// modified: bug fix
-    				if ( hbg.getNodeOPTY(j).equals("LockRequire") && hbg.getNodeOPVAL(j).equals(opval) )  
-    					reenter ++;
-    				if ( hbg.getNodeOPTY(j).equals("LockRelease") && hbg.getNodeOPVAL(j).equals(opval) ) {
-    					reenter --;
-    					if (reenter == 0) {
-    						lockBlocks.put(i, j);
-    						break;
-    					}
-    				}
-    				// end - modified
-    			}
-    			if ( !lockBlocks.containsKey(i) ) 
-    				lockBlocks.put(i, null);
-    		}
-    	}
-    	*/
+    	extractBlockInfo(LogType.LockRequire.name(), LogType.LockRelease.name(), items, lockBlocks);
     }
 
 
     public void extractLoopInfo() {
     	// Get all LoopBegin&LoopEnd nodes
     	ArrayList<Integer> items = getTypedNodes(LogType.LoopBegin.name(), LogType.LoopEnd.name());
-    	
     	// Handle loop codes
-    	for (int i = 0; i < items.size(); i++) {
-    		int iIndex = items.get(i);
-    		if ( !hbg.getNodeOPTY( iIndex ).equals(LogType.LoopBegin.name()) ) continue;
-    		
-			int flag = 1;
-			for (int j = i+1; j < items.size(); j++) {
-				int jIndex = items.get(j);
-				if ( !hbg.isSameThread(jIndex, iIndex) ) break;
-				if ( hbg.getNodeOPTY( jIndex ).equals(LogType.LoopBegin.name()) ) flag ++;
-				else flag --;
-				if (flag == 0) {
-					loopBlocks.put( iIndex, jIndex );
-					break;
-				}
-			}
-			if ( !loopBlocks.containsKey( iIndex ) )
-				loopBlocks.put( iIndex, null );
-		
-    	}
+    	extractBlockInfo_weak(LogType.LoopBegin.name(), LogType.LoopEnd.name(), items, loopBlocks);
     }
     
     
@@ -342,10 +255,7 @@ public class LogInfoExtractor {
     	// Get all EventHandlerBegin&EventHandlerEnd nodes
     	ArrayList<Integer> items = getTypedNodes(LogType.EventProcEnter.name(), LogType.EventProcExit.name());
     	// Handle event handler codes
-    	extractBlockInfo(LogType.EventProcEnter.name(), LogType.EventProcExit.name(), items, eventHandlerBlocks);
-    	
-    	//debug
-    	System.out.println("JX - DEBUG - eventHandlerBlocks is " + eventHandlerBlocks);
+    	extractBlockInfo_weak(LogType.EventProcEnter.name(), LogType.EventProcExit.name(), items, eventHandlerBlocks);
     }
     
     
@@ -379,6 +289,31 @@ public class LogInfoExtractor {
     }
     
     
+    
+    
+    public void extractBlockInfo_weak(String typeEnter, String typeExit, ArrayList<Integer> items, LinkedHashMap<Integer, Integer> blocks) {
+    	
+    	for (int i = 0; i < items.size(); i++) {
+    		int iIndex = items.get(i);
+    		if ( !hbg.getNodeOPTY( iIndex ).equals(typeEnter) ) continue;
+    		
+			int flag = 1;
+			for (int j = i+1; j < items.size(); j++) {
+				int jIndex = items.get(j);
+				if ( !hbg.isSameThread(jIndex, iIndex) ) break;
+				if ( hbg.getNodeOPTY( jIndex ).equals(typeEnter) ) flag ++;
+				else flag --;
+				if (flag == 0) {
+					blocks.put( iIndex, jIndex );
+					break;
+				}
+			}
+			if ( !blocks.containsKey( iIndex ) )
+				blocks.put( iIndex, null );
+    	}
+    }
+
+    
     /**
      * Handle block code based on own typed items
      */
@@ -410,6 +345,7 @@ public class LogInfoExtractor {
     	}
     }
 
+    
     
     /***********************************************************************
      * Compute more useful information
