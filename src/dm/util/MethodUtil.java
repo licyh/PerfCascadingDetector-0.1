@@ -245,13 +245,15 @@ public class MethodUtil {
 								+ "String opValue = System.identityHashCode($1);"
 								+ logClass + "." + logMethod + "( opValue );" 
 								+ "$_ = $proceed($$);" 
-								+ "String opValue_2 = System.identityHashCode($1);"
+								+ "String opValue_2 = System.identityHashCode($_);"
 								+ logClass + "." + "log_EventProcExit" + "( opValue_2 );"
 								+ "}" );
 					}
 			        else {
 			        	
 			        }
+			        
+			        
 				}
 			} );	
 			
