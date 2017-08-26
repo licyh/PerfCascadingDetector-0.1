@@ -236,7 +236,7 @@ public class MethodUtil {
 			        if ( apiClass.equals("java.util.List") && apiMethod.equals("add") ) {
 						m.replace( "{"
 								+ callStrInstBA(logClass, logMethod, 81)
-								+ "$proceed($$);"          //change $_ = $proceed($$); to $proceed($$);  
+								+ "$_ = $proceed($$);"          //change $_ = $proceed($$); to $proceed($$);  
 								+ "}" );
 					}
 			        else if ( apiClass.equals("java.util.List") && apiMethod.equals("remove") ) {
