@@ -12,7 +12,7 @@ mkdir -p $dm_dir
 
 # Start hadoop
 echo "JX - INFO - start HDFS+MR to see if everything is OK"
-start-all.sh
+start-dfs.sh
 sleep 5s
 hadoop dfsadmin -safemode leave
 sleep 2s
@@ -30,7 +30,7 @@ if [ $? -ne 0 ]; then
   echo "stop xxx error"
   exit
 fi
-sleep 2s
+sleep 3s
 jps
 sleep 1s
 

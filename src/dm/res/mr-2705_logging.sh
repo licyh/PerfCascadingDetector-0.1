@@ -8,6 +8,7 @@ sleep 3s
 jps
 sleep 2s
 
+
 #nohup hadoop jar ~/hadoop/install/hadoop-0.20.204.0/hadoop-examples-0.20.204.0.jar wordcount -files hdfs://11.11.2.51:9000/sidefiles/1K.sidefile,input/10K.file input/1K.file output/1K.file &
 #hadoop jar ~/hadoop/install/hadoop-0.20.204.0/hadoop-examples-0.20.204.0.jar wordcount -files hdfs://11.11.2.51:9000/sidefiles/10K.sidefile,input/1K.file input/10K.file output/10K.file
 
