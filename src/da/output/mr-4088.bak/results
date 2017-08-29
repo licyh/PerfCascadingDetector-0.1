@@ -1,6 +1,21 @@
 Queue-related
-FINAL:       have new results, please drop this
+FINAL:      
 
+//new version
+																						#1. reported bug,  include "await()"
+CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-1999;								#1. MC & small loop. tasks, checked by users
+CL2: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2050;							#1. small loop, from "mapred.local.dir", usually is one, also can 2 or 3 by conf
+CL3: org.apache.hadoop.mapred.TaskTracker-markUnresponsiveTasks-1951;
+CL4: org.apache.hadoop.mapred.Counters$Group-readFields-357;
+CL4: org.apache.hadoop.mapred.Counters$Group-write-348;
+CL4: org.apache.hadoop.mapred.Counters-readFields-572;
+CL4: org.apache.hadoop.mapred.Counters-write-560;
+CL4~5: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-210;
+////CL2: org.apache.hadoop.mapred.TaskTracker$1-run-422;							   #1. deleted, NOT a loop, that while (true) { insert LOOP here! .. EventHanlderBegin xx.take() EventHandlerEnd
+//summary - 10(#static codepoints=9) from 35
+
+
+//old version
 3 (#static codepoints=3)
 CL1: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-464;                   #1. reported bug,  include "await()"
 //CL1: org.apache.hadoop.mapred.TaskTracker-purgeJob-1999;                             #1. MC & small loop. tasks, checked by users

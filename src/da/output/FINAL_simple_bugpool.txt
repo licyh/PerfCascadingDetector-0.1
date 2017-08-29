@@ -1,15 +1,11 @@
-CL2: org.apache.hadoop.io.IOUtils-copyBytes-71;
-CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2151;
-CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
-CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
-CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;
-CL3: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
-CL3: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
-CL3: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;
-CL4: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
-CL4: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
-CL4: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;
-CL5: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
-CL5: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
-CL5: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
-//summary - 14(#static codepoints=8) from 39
+CL2: org.apache.hadoop.mapred.TaskTracker$1-run-422;
+CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-1999;
+CL2: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2050;
+CL3: org.apache.hadoop.mapred.TaskTracker-markUnresponsiveTasks-1951;
+CL4: org.apache.hadoop.mapred.Counters$Group-readFields-357;
+CL4: org.apache.hadoop.mapred.Counters$Group-write-348;
+CL4: org.apache.hadoop.mapred.Counters-readFields-572;
+CL4: org.apache.hadoop.mapred.Counters-write-560;
+CL4: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-210;
+CL5: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-210;
+//summary - 10(#static codepoints=9) from 35
