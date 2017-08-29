@@ -1,3 +1,9 @@
 //new sink for the bug
-org.apache.hadoop.mapreduce.Job waitForCompletion 495          TargetCodeBegin     
-org.apache.hadoop.mapreduce.Job waitForCompletion 502          TargetCodeEnd
+////org.apache.hadoop.mapred.JobClient submitJob 534??         TargetCodeBegin
+////org.apache.hadoop.mapreduce.Job waitForCompletion 495          TargetCodeBegin     
+////org.apache.hadoop.mapreduce.Job waitForCompletion 502          TargetCodeEnd
+
+//put cleanup tasks into queue after heartbeat response 
+org.apache.hadoop.mapred.TaskTracker offerService 1648		TargetCodeBegin
+//check if (cleanup) tasks finished, cleanup phase is part of map tasks  
+org.apache.hadoop.mapred.TaskTracker offerService  1806		TargetCodeEnd
