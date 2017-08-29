@@ -1,11 +1,9 @@
-//#static codepoints = 23
+//#static codepoints = 18
 CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-899;
 CL0: org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1800;
-CL0: org.apache.hadoop.mapred.Counters$Group-readFields-357;
 CL0: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-295;
 CL0: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2276;
 CL0: org.apache.hadoop.mapred.TaskTracker$1-run-422;
-CL0: org.apache.hadoop.mapred.Counters$Group-write-348;
 CL0: org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1817;
 CL0: org.apache.hadoop.mapred.TaskTracker-localizeJob-1081;
 CL0: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-210;
@@ -17,8 +15,5 @@ CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffl
 CL0: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2050;
 CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-941;
 CL0: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
-CL0: org.apache.hadoop.mapred.Counters-readFields-572;
 CL0: org.apache.hadoop.mapred.TaskTracker-purgeJob-1999;
 CL0: org.apache.hadoop.mapred.TaskTracker-initializeJob-1159;
-CL0: org.apache.hadoop.mapred.Counters-write-560;
-CL0: org.apache.hadoop.mapred.Counters-size-538;
