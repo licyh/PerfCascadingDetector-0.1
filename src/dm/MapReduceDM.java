@@ -211,34 +211,7 @@ class MapReduceTransformer extends Transformer {
 		            ) {
 		    	//insert ThdEnter & ThdExit log
 		    	methodUtil.insertCallInstBefore(logClass, thdEnterLog, 4);
-		    	methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);
-		    	
-		    	
-		    	// for mr-4088
-                if (bugConfig.getBugId().equals("mr-4088"))
-		    	if (className.equals("org.apache.hadoop.mapred.TaskTracker$1"))
-		    	try {
-					method.instrument(
-							new ExprEditor() {
-								public void edit(MethodCall m) throws CannotCompileException {
-									if (m.getMethodName().equals("take")) {
-										Logger.log("/home/vagrant/logs/", "JX - DEBUG - eventhandler: " + className + " " + methodName + "  **" + m.getClassName() + " " + m.getMethodName() + " " +  m.getLineNumber() + "**");
-										
-										m.replace( "{"
-												+ getInstCodeStr(LogType.EventHandlerEnd)
-												+ "$_ = $proceed($$);" 
-												+ getInstCodeStr(LogType.EventHandlerBegin, 1)
-												+ "}" );
-												
-									}
-								}
-							}
-							);
-				} catch (CannotCompileException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		    			    	
+		    	methodUtil.insertCallInstAfter(logClass, thdExitLog, 4);  			    	
 		    }
 		    else if (methodName.equals("call") &&
 			           classUtil.isTargetClass(className, "java.util.concurrent.Callable") &&
@@ -334,14 +307,23 @@ class MapReduceTransformer extends Transformer {
 	
 		
 		    
-		    // for mr-2705  //if (bugConfig.getBugId().equals("mr-2705"))
+		    // for mr-2705 
+		    if (bugConfig.getBugId().equals("mr-2705")) {
 		    if ( methodName.equals("addToTaskQueue") && className.contains("org.apache.hadoop.mapred.TaskTracker$TaskLauncher") )
 		    	methodUtil.insertCallInstX("java.util.List", "add", 1, logClass, eventCreateLog, classUtil);
-		   
-	    	// for mr-2705  //if (bugConfig.getBugId().equals("mr-2705"))
             if ( methodName.equals("run") && className.equals("org.apache.hadoop.mapred.TaskTracker$TaskLauncher") )
-            	methodUtil.insertCallInstX("java.util.List", "remove", 1, logClass, eventProcEnterLog, classUtil);
+            	methodUtil.insertCallInstX("java.util.List", "remove", 0, logClass, eventProcEnterLog, classUtil);
+		    }
+		    
+            // for mr-4088
+		    if (bugConfig.getBugId().equals("mr-4088")) {
+		    if ( methodName.equals("offerService") && className.contains("org.apache.hadoop.mapred.TaskTracker") )
+			    methodUtil.insertCallInstX("java.util.concurrent.BlockingQueue", "put", 1, logClass, eventCreateLog, classUtil);
+            if ( methodName.equals("run") && className.equals("org.apache.hadoop.mapred.TaskTracker$1") )   //cleanupThread
+            	methodUtil.insertCallInstX("java.util.concurrent.BlockingQueue", "take", 0, logClass, eventProcEnterLog, classUtil);
+		    }
 
+            
 		    
 		
 		    /* lock */   //Added by JX
@@ -353,46 +335,6 @@ class MapReduceTransformer extends Transformer {
 		    }
 	    }
 	}
-	
-	
-	
-    public String getInstCodeStr(LogType logType) {
-    	return getInstCodeStr(logType, 0);
-    }
-    
-    public String getInstCodeStr(LogType logType, int flag) {
-    	String codestr = "";
-    	String logMethod = "LogClass._DM_Log.log_" + logType.name();
-    	
-    	if (logType == LogType.EventHandlerBegin) {
-    		switch (flag) {
-			case 1:
-	            codestr = "String opValue_tmp1 = \"xx\";"
-	            		+ "if ($_ instanceof org.apache.hadoop.mapred.KillJobAction) {"
-	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillJobAction) $_).getJobID().toString();"
-	            		+ "}"
-	            		+ "else if ($_ instanceof org.apache.hadoop.mapred.KillTaskAction) {"
-	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillTaskAction) $_).taskId.getJobID().toString();"
-	            		+ "}"
-	            		+ logMethod + "(opValue_tmp1);";
-                break;
-			case 2:
-				codestr = "String opValue_tmp1 = \"xx\";"
-	            		+ "opValue_tmp1 = ((org.apache.hadoop.mapred.TaskTracker$TaskInProgress) $_).getTask().getJobID().toString();"
-	            		+ logMethod + "(opValue_tmp1);";
-				break;
-			default:
-	    		codestr = logMethod + "(\"xx\");";
-    		}
-    	}
-    	else if (logType == LogType.EventHandlerEnd) {
-    		codestr = logMethod + "(\"xx\");";
-    	} else {
-    		
-    	}
-    
-    	return codestr;
-    }
     
 
 }

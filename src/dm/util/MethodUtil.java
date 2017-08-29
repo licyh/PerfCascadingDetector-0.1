@@ -233,10 +233,11 @@ public class MethodUtil {
 					if ( !(m.getClassName().equals(apiClass) && m.getMethodName().equals(apiMethod)) ) return;
 					Logger.log("/home/vagrant/logs/", "JX - DEBUG - " + logMethod + ": " + method.getDeclaringClass().getName() + " " + method.getName() + "  **" + m.getClassName() + " " + m.getMethodName() + " " +  m.getLineNumber() + "**");
 					
+					// for mr-2705
 			        if ( apiClass.equals("java.util.List") && apiMethod.equals("add") ) {
 						m.replace( "{"
 								+ callStrInstBA(logClass, logMethod, 82)
-								+ "$_ = $proceed($$);"          //change $_ = $proceed($$); to $proceed($$);  
+								+ "$_ = $proceed($$);"            
 								+ "}" );
 					}
 			        else if ( apiClass.equals("java.util.List") && apiMethod.equals("remove") ) {
@@ -246,8 +247,19 @@ public class MethodUtil {
 								+ callStrInstBA(logClass, logMethod, 81)
 								+ "}" );
 					}
-			        else {
-			        	
+			        // for mr-4088
+			        else if ( apiClass.equals("java.util.concurrent.BlockingQueue") && apiMethod.equals("put") ) { 
+						m.replace( "{"
+								+ callStrInstBA(logClass, logMethod, 82)
+								+ "$_ = $proceed($$);"         
+								+ "}" );
+					}
+			        else if ( apiClass.equals("java.util.concurrent.BlockingQueue") && apiMethod.equals("take") ) { 
+						m.replace( "{"
+								+ callStrInstBA(logClass, "log_EventProcExit", 80)
+								+ "$_ = $proceed($$);" 
+								+ callStrInstBA(logClass, logMethod, 81)
+								+ "}" );
 			        }
 			        
 				}
@@ -1452,4 +1464,48 @@ public void insertRPCInvoke(String logClass, String logMethod) {
 	}
 
 }
+
+
+
+
+/*
+    public String getInstCodeStr(LogType logType) {
+    	return getInstCodeStr(logType, 0);
+    }
+    
+    public String getInstCodeStr(LogType logType, int flag) {
+    	String codestr = "";
+    	String logMethod = "LogClass._DM_Log.log_" + logType.name();
+    	
+    	if (logType == LogType.EventHandlerBegin) {
+    		switch (flag) {
+			case 1:
+	            codestr = "String opValue_tmp1 = \"xx\";"
+	            		+ "if ($_ instanceof org.apache.hadoop.mapred.KillJobAction) {"
+	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillJobAction) $_).getJobID().toString();"
+	            		+ "}"
+	            		+ "else if ($_ instanceof org.apache.hadoop.mapred.KillTaskAction) {"
+	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillTaskAction) $_).taskId.getJobID().toString();"
+	            		+ "}"
+	            		+ logMethod + "(opValue_tmp1);";
+                break;
+			case 2:
+				codestr = "String opValue_tmp1 = \"xx\";"
+	            		+ "opValue_tmp1 = ((org.apache.hadoop.mapred.TaskTracker$TaskInProgress) $_).getTask().getJobID().toString();"
+	            		+ logMethod + "(opValue_tmp1);";
+				break;
+			default:
+	    		codestr = logMethod + "(\"xx\");";
+    		}
+    	}
+    	else if (logType == LogType.EventHandlerEnd) {
+    		codestr = logMethod + "(\"xx\");";
+    	} else {
+    		
+    	}
+    
+    	return codestr;
+    }
+*/
+
 
