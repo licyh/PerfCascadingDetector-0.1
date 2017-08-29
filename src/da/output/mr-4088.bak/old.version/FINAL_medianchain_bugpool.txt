@@ -1,0 +1,5 @@
+CL1: org.apache.hadoop.mapred.TaskTracker$1-run-422;java.lang.Thread-run-745;|
+CL1: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-464;org.apache.hadoop.mapred.TaskTracker-access$100-115;org.apache.hadoop.mapred.TaskTracker$1-run-423;java.lang.Thread-run-745;|
+CL1: org.apache.hadoop.mapred.TaskTracker-purgeJob-1999;org.apache.hadoop.mapred.TaskTracker$1-run-425;java.lang.Thread-run-745;|
+CL1: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2050;org.apache.hadoop.mapred.TaskTracker-purgeJob-2009;org.apache.hadoop.mapred.TaskTracker$1-run-425;java.lang.Thread-run-745;|
+summary - 4(#static codepoints=4) from 8 (#static codepoints=5)

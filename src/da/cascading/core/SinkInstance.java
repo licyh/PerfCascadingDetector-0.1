@@ -402,7 +402,7 @@ public class SinkInstance {
     	String sig = hbg.lastCallstack(nodeIndex);
     	if ( 	//MR
     			sig.startsWith("org.apache.hadoop.io.") && !sig.startsWith("org.apache.hadoop.io.IOUtils-copyBytes")
-    			|| sig.startsWith("xx")
+    			|| sig.startsWith("org.apache.hadoop.mapred.Counters")
     			//HD
     			//HB
     			//CA
