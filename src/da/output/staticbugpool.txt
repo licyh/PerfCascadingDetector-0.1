@@ -1,14 +1,18 @@
-//#static codepoints = 13
-CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-949;
-CL0: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-469;
-CL0: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2298;
-CL0: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-295;
-CL0: org.apache.hadoop.mapred.TaskTracker-purgeJob-2021;
+//#static codepoints = 17
+CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-834;
+CL0: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-279;
+CL0: org.apache.hadoop.mapred.TaskTracker-buildTaskControllerJobPathDeletionContexts-1835;
+CL0: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;
+CL0: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
+CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-801;
+CL0: org.apache.hadoop.io.IOUtils-copyBytes-71;
+CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-795;
+CL0: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;
+CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
+CL0: org.apache.hadoop.mapred.TaskTracker-buildTaskControllerTaskPathDeletionContexts-1859;
+CL0: org.apache.hadoop.mapred.JvmManager$JvmManagerForType-reapJvm-335;
+CL0: org.apache.hadoop.mapred.TaskTracker-localizeJobFiles-1044;
+CL0: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2156;
+CL0: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
 CL0: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
-CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-907;
-CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-916;
-CL0: org.apache.hadoop.mapred.TaskTracker-initializeJob-1167;
-CL0: org.apache.hadoop.mapred.TaskTracker-localizeJob-1089;
-CL0: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2072;
-CL0: org.apache.hadoop.io.IOUtils-copyBytes-69;
-CL0: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2286;
+CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
