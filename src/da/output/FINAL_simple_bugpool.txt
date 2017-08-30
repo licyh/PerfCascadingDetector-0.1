@@ -1,11 +1,15 @@
-CL2: org.apache.hadoop.mapred.TaskTracker$1-run-422;
-CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-1999;
-CL2: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2050;
-CL3: org.apache.hadoop.mapred.TaskTracker-markUnresponsiveTasks-1951;
-CL4: org.apache.hadoop.mapred.Counters$Group-readFields-357;
-CL4: org.apache.hadoop.mapred.Counters$Group-write-348;
-CL4: org.apache.hadoop.mapred.Counters-readFields-572;
-CL4: org.apache.hadoop.mapred.Counters-write-560;
-CL4: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-210;
-CL5: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-210;
-//summary - 10(#static codepoints=9) from 35
+CL2: org.apache.hadoop.mapred.Counters$Group-readFields-357;
+CL2: org.apache.hadoop.mapred.Counters-readFields-572;
+CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-2021;
+CL2: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2072;
+CL3: org.apache.hadoop.io.IOUtils-copyBytes-69;
+CL3: org.apache.hadoop.io.IOUtils-readFully-152;
+CL3: org.apache.hadoop.mapred.Counters$Group-readFields-357;
+CL3: org.apache.hadoop.mapred.Counters$Group-write-348;
+CL3: org.apache.hadoop.mapred.Counters-readFields-572;
+CL3: org.apache.hadoop.mapred.Counters-write-560;
+CL3: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-211;
+CL4: org.apache.hadoop.io.IOUtils-copyBytes-69;
+CL4: org.apache.hadoop.io.IOUtils-readFully-152;
+CL4: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-211;
+//summary - 14(#static codepoints=9) from 29

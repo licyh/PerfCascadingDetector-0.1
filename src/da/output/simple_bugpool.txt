@@ -1,31 +1,36 @@
-//30 (#static codepoints=18)
+//29 (#static codepoints=21)
 CL2: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
-CL2: org.apache.hadoop.mapred.TaskTracker$1-run-422;
-CL2: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-464;
-CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-1999;
-CL2: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2050;
+CL2: org.apache.hadoop.mapred.Counters$Group-readFields-357;
+CL2: org.apache.hadoop.mapred.Counters-readFields-572;
+CL2: org.apache.hadoop.mapred.Counters-size-538;
+CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2286;
+CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-2021;
+CL2: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2072;
+CL3: org.apache.hadoop.io.IOUtils-cleanup-207;
+CL3: org.apache.hadoop.io.IOUtils-copyBytes-69;
+CL3: org.apache.hadoop.io.IOUtils-readFully-152;
 CL3: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
-CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-899;
-CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-908;
-CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-941;
-CL3: org.apache.hadoop.mapred.TaskTracker-cloneAndResetRunningTaskStatuses-3586;
-CL3: org.apache.hadoop.mapred.TaskTracker-initializeJob-1159;
-CL3: org.apache.hadoop.mapred.TaskTracker-localizeJob-1081;
-CL3: org.apache.hadoop.mapred.TaskTracker-markUnresponsiveTasks-1951;
-CL3: org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1800;
-CL3: org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1817;
-CL3: org.apache.hadoop.mapred.TaskTrackerStatus-countOccupiedMapSlots-443;
-CL4: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
-CL4: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-295;
-CL4: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-210;
-CL4: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-899;
-CL4: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-908;
-CL4: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-941;
-CL4: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2276;
-CL4: org.apache.hadoop.mapred.TaskTracker-initializeJob-1159;
-CL4: org.apache.hadoop.mapred.TaskTracker-localizeJob-1081;
-CL5: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-210;
-CL5: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-908;
-CL5: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2276;
-CL5: org.apache.hadoop.mapred.TaskTracker-initializeJob-1159;
-CL5: org.apache.hadoop.mapred.TaskTracker-localizeJob-1081;
+CL3: org.apache.hadoop.mapred.Counters$Group-readFields-357;
+CL3: org.apache.hadoop.mapred.Counters$Group-write-348;
+CL3: org.apache.hadoop.mapred.Counters-readFields-572;
+CL3: org.apache.hadoop.mapred.Counters-write-560;
+CL3: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-295;
+CL3: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-211;
+CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-907;
+CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-916;
+CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-949;
+CL3: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2298;
+CL3: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-469;
+CL3: org.apache.hadoop.mapred.TaskTracker-initializeJob-1167;
+CL3: org.apache.hadoop.mapred.TaskTracker-localizeJob-1089;
+CL4: org.apache.hadoop.io.IOUtils-cleanup-207;
+CL4: org.apache.hadoop.io.IOUtils-copyBytes-69;
+CL4: org.apache.hadoop.io.IOUtils-readFully-152;
+CL4: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-211;
+CL4: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2298;
+
+
+
+//Queue-related Bugs
+
+//0 (#static codepoints=0)
