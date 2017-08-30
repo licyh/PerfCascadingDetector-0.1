@@ -1,0 +1,45 @@
+//jx: without RPC logging
+
+//FINAL SIMPLE
+CL3~4: org.apache.hadoop.io.IOUtils-copyBytes-69;							   		#False positive. 1 instance, see Notes.   
+							   														#Reported bug. 1 instance.
+CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-2021;							#MC & small loop. like below.
+CL2: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2072;						#MC & small loop. like below.
+CL2~3: org.apache.hadoop.mapred.Counters-readFields-572;							#small. like in MR-2705
+CL2~3: org.apache.hadoop.mapred.Counters$Group-readFields-357;						#small. like in MR-2705
+CL3: org.apache.hadoop.mapred.Counters$Group-write-348;								#small. #subcounter. counters-related
+CL3: org.apache.hadoop.mapred.Counters-write-560;									#small. #counters
+CL3~4: org.apache.hadoop.io.IOUtils-readFully-152;									#small. like in MR-2705
+CL3~4: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-211;				#small loop. just default 1-iteration loop, ie, "mapred.local.dir", that is configed manually, so we consider limited       # before hearbeat
+
+//////CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2286;				#already pruned. synchronized (tasksToLaunch) { while (tasksToLaunch.isEmpty()) { tasksToLaunch.wait(); }
+//////CL3: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-295;				#already pruned. synchronized (lock) {     while (!done) {       lock.wait();     }
+//////CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-949;		#already pruned. synchronized (runningJobs) { while (((fList = reducesInShuffle()).size()) == 0) { runningJobs.wait(); }
+//////CL3: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-469;			#already pruned. synchronized (rjob) {  while (rjob.localizing) { rjob.wait(); } }
+//////CL3: org.apache.hadoop.mapred.TaskTracker-localizeJob-1089;					#already pruned. synchronized (rjob) {  while (rjob.localizing) { rjob.wait(); } }
+//////CL3~4: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2298;			#already pruned. Good example. synchronized (numFreeSlots) { while (numFreeSlots.get() < task.getNumSlotsRequired()) { numFreeSlots.wait(); }}
+//summary - 21(#static codepoints=15) from 29
+
++
+//MR-4088-based Queue Result   #jx: 1 instance for each of them
+CL1: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-469;                 	#1. new bug.  include "await()"
+CL1: org.apache.hadoop.mapred.TaskTracker-purgeJob-2021;                             	#MC & small loop. #tasks, checked by users
+CL1: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2072;                       	#small loop. from "mapred.local.dir", usually is one, also can 2 or 3 by conf
+
+
+
+======================================
+Notes
+======================================
+//False positive: 
+//Chain: loop -> lcacheStauts(187, localize) <-> lcacheStauts(595,decRefCount<-purgeJob) -> this <-> this -> heartbeat
+CL3: org.apache.hadoop.io.IOUtils-copyBytes-69;org.apache.hadoop.io.IOUtils-copyBytes-47;org.apache.hadoop.io.IOUtils-copyBytes-100;org.apache.hadoop.fs.FileUtil-copy-230;org.apache.hadoop.fs.FileUtil-copy-163;org.apache.hadoop.fs.FileSystem-copyToLocalFile-1222;org.apache.hadoop.fs.FileSystem-copyToLocalFile-1203;org.apache.hadoop.filecache.TrackerDistributedCacheManager-downloadCacheObject-415;org.apache.hadoop.filecache.TrackerDistributedCacheManager-localizePublicCacheObject-463;org.apache.hadoop.filecache.TrackerDistributedCacheManager-getLocalCache-190;org.apache.hadoop.filecache.TaskDistributedCacheManager-setupCache-182;org.apache.hadoop.mapred.TaskTracker$4-run-1193;java.security.AccessController-doPrivileged--2;javax.security.auth.Subject-doAs-415;org.apache.hadoop.security.UserGroupInformation-doAs-1083;org.apache.hadoop.mapred.TaskTracker-initializeJob-1184;org.apache.hadoop.mapred.TaskTracker-localizeJob-1099;org.apache.hadoop.mapred.TaskTracker$5-run-2382;java.lang.Thread-run-745;
+|org.apache.hadoop.filecache.TrackerDistributedCacheManager-getLocalCache-187;org.apache.hadoop.filecache.TaskDistributedCacheManager-setupCache-182;org.apache.hadoop.mapred.TaskTracker$4-run-1193;java.security.AccessController-doPrivileged--2;javax.security.auth.Subject-doAs-415;org.apache.hadoop.security.UserGroupInformation-doAs-1083;org.apache.hadoop.mapred.TaskTracker-initializeJob-1184;org.apache.hadoop.mapred.TaskTracker-localizeJob-1099;org.apache.hadoop.mapred.TaskTracker$5-run-2382;java.lang.Thread-run-745;
+|org.apache.hadoop.filecache.TrackerDistributedCacheManager$CacheStatus-decRefCount-595;org.apache.hadoop.filecache.TrackerDistributedCacheManager-releaseCache-232;org.apache.hadoop.filecache.TaskDistributedCacheManager-release-254;org.apache.hadoop.mapred.TaskTracker-purgeJob-2019;org.apache.hadoop.mapred.TaskTracker$1-run-430;java.lang.Thread-run-745;
+|org.apache.hadoop.mapred.TaskTracker-purgeJob--1;org.apache.hadoop.mapred.TaskTracker$1-run-430;java.lang.Thread-run-745;
+|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1821;org.apache.hadoop.mapred.TaskTracker-offerService-1606;org.apache.hadoop.mapred.TaskTracker-run-2455;org.apache.hadoop.mapred.TaskTracker-main-3696;|
+
+
+
+
+

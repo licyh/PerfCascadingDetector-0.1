@@ -88,7 +88,8 @@ public class CascadingUtil {
     	traversedNodes.set( x );
     	
     	if ( !Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-4088") 
-    			&& !Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-2705") )
+    			//&& !Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-2705") 
+    			)
     	if ( hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()) ) {
     		resources.add( x );
     	}
@@ -96,8 +97,7 @@ public class CascadingUtil {
     	// tmp
     	if ( Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-4088") 
     			|| Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-2705") )
-    	if ( hbg.getNodeOPTY(x).equals(LogType.EventHandlerBegin.name())
-    			|| hbg.getNodeOPTY(x).equals(LogType.EventProcEnter.name())
+    	if ( hbg.getNodeOPTY(x).equals(LogType.EventProcEnter.name())
     			) {
     		resources.add( x );
     	}

@@ -1,0 +1,31 @@
+//ONLY queue
+CL0: org.apache.hadoop.io.IOUtils-copyBytes-71;											#reported bug, include 2+ sources(public/private localize)
+CL0: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;								#small. MC. #tasks
+CL0: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;								#small. local dirs.
+CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;	#small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
+CL0: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2151;						#MC & Remove. TaskLauncher: while (!Thread.interrupted()) {
+CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;	#small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
+CL0: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;							#small. local dirs.
+CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;#small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
+//summary - 8(#static codepoints=8) from 19
+
+
+
++ no in this results
+//Lock-related
+CL3~4: org.apache.hadoop.io.IOUtils-copyBytes-71;                                              	#New bug - 2 instances (MR-1895+Notes1); 1 instance FP(Notes2)
+																							 	#New bug - 1 instance (MR-2209) CL4
+CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;										#small. MC. #tasks
+CL2~3: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;                                   #small. local dirs.
+CL2~3: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;                                 #small. local dirs.
+CL2~3: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;      #small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
+CL3~4: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;          #small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
+//CL2: org.apache.hadoop.mapred.Counters$Group-readFields-341;									#MC & small. #counters-related.  int size = WritableUtils.readVInt(in); for(int i=0; i < size; i++) {
+//CL2: org.apache.hadoop.mapred.Counters-readFields-542;											#MC & small. #counters-related. int numClasses = in.readInt(); while (numClasses-- > 0) {
+//CL3~4: org.apache.hadoop.io.IOUtils-readFully-115;                                            #MC & small. readChunk.  .while (toRead < 0) Pruned by lower-level things
+
+//////CL3: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-279;               				#already prunning. wait. synchronized (lock) {     while (!done) {       lock.wait();     }
+//////CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2156;						  	#already prunning. wait. synchronized (tasksToLaunch) {           while (tasksToLaunch.isEmpty()) {             tasksToLaunch.wait();
+//////CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-834;                 #already prunning. wait. synchronized (runningJobs) {           while (((fList = reducesInShuffle()).size()) == 0) {             try {               runningJobs.wait();
+//////CL3~4: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;					  	#already prunning. wait. while (numFreeSlots.get() < task.getNumSlotsRequired()) { .. }
+
