@@ -60,6 +60,11 @@ public class Sink {
 	public void addInstance(SinkInstance instance) {
 		this.instances.add(instance);
 	}
+	
+	public String toString() {
+		return "ID" + this.ID + "-" + "#instances" + this.instances.size();
+	}
+	
     
 	public void setEnv(String projectDir, HappensBeforeGraph hbg, AccidentalHBGraph ag, LogInfoExtractor logInfo) {
 		this.projectDir = projectDir;

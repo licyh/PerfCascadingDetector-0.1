@@ -384,6 +384,8 @@ public class LogInfoExtractor {
     		}
     		targetSink.addInstance(sinkInstance);
     	}
+    	
+    	System.out.println("JX - INFO - LogInfoExtractor: sinks - " + this.sinks);
     }
     
         
