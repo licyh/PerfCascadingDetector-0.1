@@ -23,12 +23,10 @@ public class TextFileReader {
 	Path filepath;
 	BufferedReader bufreader;
 	
-	// all valid line number
-	int validNumberOfLines = 0;
-	// line by line
-	public List<String> strs = new ArrayList<String>();
-	// split line by split line 
-	public List<String[]> splitstrs = new ArrayList<String[]>();
+	public List<String> strs = new ArrayList<String>();				// database: line by line
+	public List<String[]> splitstrs = new ArrayList<String[]>();    // database: split line by split line 
+	int validNumberOfLines = 0;  									// equals "this.strs/splitstrs.size()" when reading by "readFile()"
+	
 	
 	
 	/**
@@ -119,17 +117,10 @@ public class TextFileReader {
 	
 	
 	
-	
-	
-	
-	
-	
-	// all valid line number
-	public int getValidNumberOfLines() {
-		return this.validNumberOfLines;
-	}
-	
-	
+	/**************************************************************************
+	 * Core
+	 **************************************************************************/
+		
 	/**
 	 * For reading all and saving
 	 */
@@ -150,7 +141,8 @@ public class TextFileReader {
 
 	
 	/**
-	 * For people who want to read directly from outside (ie, read file line by line manually) 
+	 * For people who want to read directly from outside (ie, read file line by line manually)
+	 * Usage: while ( (tmpline = reader.readLine()) != null ) { String[] strs = tmpline.split("\\s+"); ... } reader.close(); 
 	 * @return - maybe null
 	 */
 	public String readLine() {
@@ -169,10 +161,10 @@ public class TextFileReader {
 	    validNumberOfLines ++;  // all valid line number
 	    return tmpline.trim();
 	}
-	
+
 	
 	/**
-	 * close() for manually reading line by line
+	 * close() for manually reading line by line, see Usage of "readLine()"
 	 */
 	public void close() {
 		try {
@@ -181,6 +173,18 @@ public class TextFileReader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	
+	// more useful for manually reading by calling "readLine()"
+	public void printReadStatus() {
+		System.out.println("JX - INFO - TextFileReader: successfully read " + getValidNumberOfLines() + " lines in " + filepath.toString());
+	}
+	
+	
+	// more useful for manually reading by calling "readLine()"
+	public int getValidNumberOfLines() {
+		return this.validNumberOfLines;     // equals "this.strs.size()" when reading by "readFile()"
 	}
 	
 }
