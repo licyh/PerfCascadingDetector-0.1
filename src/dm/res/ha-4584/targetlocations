@@ -1,11 +1,11 @@
 // normal Datanode WRITE op
-//org.apache.hadoop.hdfs.server.datanode.DataXceiver run 107				TargetCodeBegin
-//org.apache.hadoop.hdfs.server.datanode.DataXceiver run 108				TargetCodeEnd 
+org.apache.hadoop.hdfs.server.datanode.DataXceiver run 107				TargetCodeBegin 1
+org.apache.hadoop.hdfs.server.datanode.DataXceiver run 108				TargetCodeEnd 1
 // HEARTBEAT rpc sending
-//org.apache.hadoop.hdfs.server.datanode.DataNode offerService 885				TargetCodeBegin
-//org.apache.hadoop.hdfs.server.datanode.DataNode offerService 891				TargetCodeEnd
+org.apache.hadoop.hdfs.server.datanode.DataNode offerService 885			TargetCodeBegin 2
+org.apache.hadoop.hdfs.server.datanode.DataNode offerService 891			TargetCodeEnd 2
 // normal namenode WRITE op - ie, call NameNode.addBlock
-org.apache.hadoop.hdfs.server.namenode.NameNode addBlock 685                             TargetCodeBegin
-org.apache.hadoop.hdfs.server.namenode.NameNode addBlock 687                             TargetCodeEnd
+org.apache.hadoop.hdfs.server.namenode.NameNode addBlock 685                TargetCodeBegin 3
+org.apache.hadoop.hdfs.server.namenode.NameNode addBlock 687                TargetCodeEnd 3
 
 

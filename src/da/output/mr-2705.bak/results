@@ -1,10 +1,56 @@
-//ONLY queue
-CL0: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;								#small. MC. #tasks
-CL0: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;								#small. local dirs.
-CL0: org.apache.hadoop.io.IOUtils-copyBytes-71;											#reported bug, include 2+ sources(public/private localize)
-CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;	#small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
-CL0: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2151;						#MC & Remove. TaskLauncher: while (!Thread.interrupted()) {
-CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;	#small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
-CL0: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;							#small. local dirs.
-CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;#small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
-//summary - 8(#static codepoints=8) from 19
+//ONLY queue    SIMPLE
+CL2: org.apache.hadoop.io.IOUtils-copyBytes-71;												#reported bug, include 2+ sources(public/private localize)
+CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2151;							#MC & Remove. TaskLauncher: while (!Thread.interrupted()) {
+CL2/5: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;	#small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
+CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;		#small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
+CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;		#small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
+CL3~5: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;								#small. local dirs.
+CL3~5: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;								#small. local dirs.
+CL3~4: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;									#small. MC. #tasks
+//summary - 14(#static codepoints=8) from 37
+
+
++
+CL3~4: org.apache.hadoop.io.IOUtils-copyBytes-71;											#New bug - 2 instances (MR-1895+Notes1); 1 instance FP(Notes2)
+																							#New bug - 1 instance (MR-2209) CL4
+CL2~3: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;								#small. local dirs.
+CL2~3: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;								#small. local dirs.
+CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;									#small. MC. #tasks
+CL2~3: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;	#small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
+CL3~4: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;		#small. local dirs. #small loop from "ttConf.getStrings(JobConf.MAPRED_LOCAL_DIR_PROPERTY)"  conf "MAPRED_LOCAL_DIR_PROPERTY = "mapred.local.dir""
+//summary - 11(#static codepoints=6) from 27
+
+=======================================
+Notes for CL3: org.apache.hadoop.io.IOUtils-copyBytes-71; 
+=======================================
+//New bug instance(new new, not MR-1895)  #ps - MR-1895 is also in this chain, but I don't output
+//Chain: loop -> rjob(974) <-> rjob(3255) -> this(getMapCompletionEvents--1) <-> this (-> heartbeat)
+CL3: org.apache.hadoop.io.IOUtils-copyBytes-71;
+|org.apache.hadoop.mapred.TaskTracker-localizeJob-974;
+|org.apache.hadoop.mapred.TaskTracker-getMapCompletionEvents-3255;
+|sun.reflect.NativeMethodAccessorImpl-invoke-57;
+|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1612;|
+
+//False positive -  for a same rjob, only can be localized first and then purge
+//Chain: loop -> rjob(974) <-> rjob(1898,purge a job, is IMPOSSIBLE) -> this <-> this (-> heartbeat)
+CL3: org.apache.hadoop.io.IOUtils-copyBytes-71;
+|org.apache.hadoop.mapred.TaskTracker-localizeJob-974;
+|org.apache.hadoop.mapred.TaskTracker-purgeJob-1898;
+|org.apache.hadoop.mapred.TaskTracker$1-run-398;
+|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1612;|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

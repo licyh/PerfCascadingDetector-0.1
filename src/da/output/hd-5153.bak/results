@@ -9,14 +9,12 @@ CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processReport-17
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processReport-1733;						#reported bug
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processReport-1737;						#reported bug
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processReport-1751;						#reported bug
-
-CL3: org.apache.hadoop.hdfs.server.namenode.LeaseManager-checkLeases-457;								#False positive. #asyncd write?   #has 2 instance actually, can be as 1 intance
-
 CL2~3: org.apache.hadoop.hdfs.server.namenode.EditLogFileOutputStream-preallocate-228;                  #MC & small!. bufsize
 CL2: org.apache.hadoop.hdfs.server.namenode.FSDirectory-mkdirs-2011;									#should small.
 CL2~3: org.apache.hadoop.hdfs.server.namenode.FSImageSerialization-writeCompactBlockArray-459;			#small. size = 2 or 1
 CL2~3: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;				#should be small. #journals
 CL2: org.apache.hadoop.hdfs.server.namenode.NNStorage-writeTransactionIdFileToStorage-473;				#should be small. #storageDirs
+CL3: org.apache.hadoop.hdfs.server.namenode.LeaseManager-checkLeases-457;								#False positive. #asyncd write?   #has 2 instance actually, can be as 1 intance
 
 summary - 18(#static codepoints=15) from 104 (#static codepoints=77)
 

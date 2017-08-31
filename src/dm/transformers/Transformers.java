@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.text.Checker;
 import com.text.TextFileReader;
 
 import LogClass.LogType;
@@ -18,12 +19,17 @@ import javassist.CtClass;
 
 public class Transformers {
 	
+	//sinks
+	List<SourceLine> sourceLines = new ArrayList<SourceLine>();
+	
 	// For target code instrumentation
+	/*
 	List<String> classesForInst = new ArrayList<String>();
 	List<String> methodsForInst = new ArrayList<String>();
 	List<String> linesForInst  = new ArrayList<String>();
 	List<String> typesForInst  = new ArrayList<String>();
 	List<Integer> flagsForInst = new ArrayList<Integer>();
+	*/
   
 	// For all loop instrumentation
 	HashMap<String, Integer[]> looplocations = new HashMap<String, Integer[]>();
@@ -53,19 +59,28 @@ public class Transformers {
     	reader = new TextFileReader("resource/targetlocations", true);
 		while ( (tmpline = reader.readLine()) != null ) {
 			String[] strs = tmpline.split("\\s+");
+			/*
 			classesForInst.add( strs[0] );
 			methodsForInst.add( strs[1] );
 			linesForInst.add( strs[2] );
 			typesForInst.add( strs[3] );
 			flagsForInst.add(0);
+			*/
+			SourceLine sourceline = new SourceLine(strs[0], strs[1], strs[2]);
+			sourceline.setType( strs[3] );
+			if (strs.length >= 5)
+				sourceline.setID( strs[4] );
+			else 
+				sourceline.setID( "xx" );
+			sourceLines.add( sourceline );
 		}
 		reader.close();
 		
 		// for DEBUG
-		System.out.println("JX - INFO - " + classesForInst.size() + " locations are loaded");
-		System.out.println("JX - INFO - " + "classesForInst = " + classesForInst);
-		System.out.println("JX - INFO - " + "methodsForInst = " + methodsForInst);
-		System.out.println("JX - INFO - " + "linesForInst =  " + linesForInst );
+//		System.out.println("JX - INFO - " + classesForInst.size() + " locations are loaded");
+//		System.out.println("JX - INFO - " + "classesForInst = " + classesForInst);
+//		System.out.println("JX - INFO - " + "methodsForInst = " + methodsForInst);
+//		System.out.println("JX - INFO - " + "linesForInst =  " + linesForInst );
 	}
 	
 	
@@ -113,33 +128,64 @@ public class Transformers {
 		System.out.println("JX - " + "largeloop_linesForInst =  " + largeloop_linesForInst );
 	}
 		
-
+	
 	public void transformClassForCodeSnippets(CtClass cl) {
 		String className = cl.getName();
-        if ( className.contains("DataStreamer") ) System.out.println("JX - DEBUG - Transformers: Targetcode - " + cl.getName() );
-		if ( !classesForInst.contains(className) ) return;
-		
+		//if ( className.contains("DataStreamer") ) System.out.println("JX - DEBUG - Transformers: Targetcode - " + cl.getName() );
 		CtBehavior[] methods = cl.getDeclaredBehaviors();
 		
 	    for (CtBehavior method : methods) {
 	        if ( method.isEmpty() ) continue;
-	        // traverse all locations for instrumentation
 	        String methodName = method.getName();
 	        MethodUtil methodUtil = new MethodUtil(method);
-	        for (int i = 0; i < classesForInst.size(); i++) {
-	    	    if ( classesForInst.get(i).equals(className) && methodsForInst.get(i).equals(methodName) ) {
-	    	    	//System.out.println("JX - DEBUG - targetcode: " + cl.getName() + "." + method.getName() + method.getSignature());
-	    			int lineNumber = Integer.parseInt( linesForInst.get(i) );
-	    			if ( typesForInst.get(i).equals(LogType.TargetCodeBegin.name()) ) {
-	    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.TargetCodeBegin), LogType.TargetCodeBegin.name());
+	        
+	        for (SourceLine sourceline: sourceLines)
+	        	if ( sourceline.getFlag()==false 
+	        			&& sourceline.getClassName().equals(className) && sourceline.getMethodName().equals(methodName)
+	        			) {
+	        		//System.out.println("JX - DEBUG - targetcode: " + cl.getName() + "." + method.getName() + method.getSignature());
+	    			if ( sourceline.getType().equals(LogType.TargetCodeBegin.name()) ) {
+	    				methodUtil.insertAt( sourceline.getLineNumber(), 
+	    									 getInstCodeStr(LogType.TargetCodeBegin, 1, sourceline.getID()), 
+	    									 LogType.TargetCodeBegin.name() );
 	    			}
-	    			else if ( typesForInst.get(i).equals(LogType.TargetCodeEnd.name()) ) {
-	    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.TargetCodeEnd), LogType.TargetCodeEnd.name());
+	    			else if ( sourceline.getType().equals(LogType.TargetCodeEnd.name()) ) {
+	    				methodUtil.insertAt( sourceline.getLineNumber(), 
+	    									 getInstCodeStr(LogType.TargetCodeEnd, 1, sourceline.getID()), 
+	    									 LogType.TargetCodeEnd.name() );
 	    			}
-	    		}
-	    	}
-	    }//end-outer for
+	        	}
+	    }
 	}
+	
+	
+//	public void transformClassForCodeSnippets(CtClass cl) {
+//		String className = cl.getName();
+//        //if ( className.contains("DataStreamer") ) System.out.println("JX - DEBUG - Transformers: Targetcode - " + cl.getName() );
+//		if ( !classesForInst.contains(className) ) return;
+//		
+//		CtBehavior[] methods = cl.getDeclaredBehaviors();
+//		
+//	    for (CtBehavior method : methods) {
+//	        if ( method.isEmpty() ) continue;
+//	        // traverse all locations for instrumentation
+//	        String methodName = method.getName();
+//	        MethodUtil methodUtil = new MethodUtil(method);
+//	        for (int i = 0; i < classesForInst.size(); i++) {
+//	    	    if ( classesForInst.get(i).equals(className) && methodsForInst.get(i).equals(methodName) ) {
+//	    	    	//System.out.println("JX - DEBUG - targetcode: " + cl.getName() + "." + method.getName() + method.getSignature());
+//	    			int lineNumber = Integer.parseInt( linesForInst.get(i) );
+//	    			if ( typesForInst.get(i).equals(LogType.TargetCodeBegin.name()) ) {
+//	    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.TargetCodeBegin), LogType.TargetCodeBegin.name());
+//	    			}
+//	    			else if ( typesForInst.get(i).equals(LogType.TargetCodeEnd.name()) ) {
+//	    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.TargetCodeEnd), LogType.TargetCodeEnd.name());
+//	    			}
+//	    		}
+//	    	}
+//	    }//end-outer for
+//	}
+	
 		  
 		  	  
 	public void transformClassForLoops(CtClass cl) {
@@ -263,36 +309,29 @@ public class Transformers {
     
     
     
-    
     public String getInstCodeStr(LogType logType) {
-    	return getInstCodeStr(logType, 0);
+    	return getInstCodeStr(logType, 1);
     }
     
     public String getInstCodeStr(LogType logType, int flag) {
-    	String codestr = "";
+    	return getInstCodeStr(logType, flag, "xx");
+    }
+    
+    public String getInstCodeStr(LogType logType, int flag, String value) {
+    	String str = "";
     	String logMethod = "LogClass._DM_Log.log_" + logType.name();
     	
-    	if (logType == LogType.TargetCodeBegin) {
-    		codestr = logMethod + "(\"xx\");";
+    	if ( flag == 1 ) {
+    		str = logMethod + "( \"" + value + "\" );";
     	}
-    	else if (logType == LogType.TargetCodeEnd) {
-    		codestr = logMethod + "(\"xx\");";
+    	else if (flag == 2) {
+    		
     	}
-    	else if (logType == LogType.LoopBegin) {
-    		codestr = logMethod + "(\"xx\");";
-    	}
-    	else if (logType == LogType.LargeLoopBegin) {
-    		codestr = logMethod + "(\"xx\");";
-        	/*
-        	//for large loops 
-        	_DM_Log.log_LargeLoopBegin( "xx" ); jxloop = 0;
-    		jxloop++; System.out.println("JX - jxloop++ - jxloop = " + jxloop);
-        	*/
-    	} else {
+    	else {
     		
     	}
     
-    	return codestr;
+    	return str;
     }    
     
   
@@ -305,6 +344,38 @@ public class Transformers {
 /**
  *  WAITING FOR DELETION
  */
+
+//public String getInstCodeStr(LogType logType) {
+//	return getInstCodeStr(logType, 0);
+//}
+//
+//public String getInstCodeStr(LogType logType, int flag) {
+//	String codestr = "";
+//	String logMethod = "LogClass._DM_Log.log_" + logType.name();
+//	
+//	if (logType == LogType.TargetCodeBegin) {
+//		codestr = logMethod + "(\"xx\");";
+//	}
+//	else if (logType == LogType.TargetCodeEnd) {
+//		codestr = logMethod + "(\"xx\");";
+//	}
+//	else if (logType == LogType.LoopBegin) {
+//		codestr = logMethod + "(\"xx\");";
+//	}
+//	else if (logType == LogType.LargeLoopBegin) {
+//		codestr = logMethod + "(\"xx\");";
+//    	/*
+//    	//for large loops 
+//    	_DM_Log.log_LargeLoopBegin( "xx" ); jxloop = 0;
+//		jxloop++; System.out.println("JX - jxloop++ - jxloop = " + jxloop);
+//    	*/
+//	} else {
+//		
+//	}
+//
+//	return codestr;
+//}    
+
 
 
 /*
