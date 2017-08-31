@@ -1,6 +1,8 @@
 package da.graph;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -384,6 +386,13 @@ public class LogInfoExtractor {
     		}
     		targetSink.addInstance(sinkInstance);
     	}
+    	
+    	//sort by ID
+    	Collections.sort(this.sinks, new Comparator<Sink>() {
+    		public int compare(Sink o1, Sink o2) {
+    			return o1.getID().compareTo( o2.getID() );
+    		}
+    	});
     	
     	System.out.println("JX - INFO - LogInfoExtractor: sinks - " + this.sinks);
     }
