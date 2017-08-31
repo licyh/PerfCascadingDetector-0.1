@@ -76,6 +76,8 @@ public class Transformers {
 		}
 		reader.close();
 		reader.printReadStatus();
+		System.out.println("JX - INFO - Transformers: " + "List<SourceLine> sourceLines = " + sourceLines);
+		
 		
 		// for DEBUG
 //		System.out.println("JX - INFO - " + classesForInst.size() + " locations are loaded");

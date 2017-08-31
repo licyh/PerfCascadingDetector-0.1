@@ -22,6 +22,11 @@ public class SourceLine {
 		this(className, methodName, Integer.parseInt(lineNumber));
 	}
 	
+	public String toString() {
+		return this.className + "-" + this.methodName + "-" + this.lineNumber + "-" + this.type + "-" + this.ID;
+	}
+	
+	
 	public void setFlag(boolean flag) {
 		this.flag = flag;
 	}
