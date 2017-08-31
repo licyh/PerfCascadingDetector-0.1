@@ -106,9 +106,19 @@ public class CascadingUtil {
     	if (direction == 1)
         for (Pair pair: hbg.getEdge().get(x)) {
         	int y = pair.destination;
-        	if ( !traversedNodes.get(y) //&& hbg.getReachSet().get(y).get(endIndex) 
-        			)
-        		dfsTraversing( y, direction, endIndex, traversedNodes, resources );
+        	
+        	if ( Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-4088") 
+        			|| Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-2705") ) {
+        		if ( !traversedNodes.get(y) //&& hbg.getReachSet().get(y).get(endIndex) 
+            			)
+            		dfsTraversing( y, direction, endIndex, traversedNodes, resources );
+        	}
+        	else {
+        		if ( !traversedNodes.get(y) && hbg.getReachSet().get(y).get(endIndex) 
+            			)
+            		dfsTraversing( y, direction, endIndex, traversedNodes, resources );
+        	}
+        	
         }
         
     }
