@@ -337,7 +337,6 @@ public class SinkInstance {
     	if ( hbg.getNodeOPTY(x).equals(LogType.LoopBegin.name()) ) {
     		// add to bug pool
 			upNodes[curCascadingLevel].put(x, beginIndex);
-			System.out.println("JX - DEBUG - addLoopBug..");
 			if ( Benchmarks.resolveBugId(hbg.getTargetDir()) != null 
 					&& ( Benchmarks.resolveBugId(hbg.getTargetDir()).equals("ca-6744") 
 							|| Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-2705")
@@ -387,6 +386,7 @@ public class SinkInstance {
     	
     	if (canbePruning( loopbug )) return;
     	
+    	System.out.println("JX - DEBUG - addLoopBug..");
     	bugPool.addLoopBug( loopbug );
     	//jx: had better commented this when #targetcode is large or #loopbug is large
     	//System.out.println( loopbug );
