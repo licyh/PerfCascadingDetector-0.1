@@ -80,7 +80,7 @@ public class Sink {
 		this.cascadingUtil = new CascadingUtil(this.projectDir, this.hbg, this.ag, this.ag.getLogInfoExtractor());
 		this.bugPool = new BugPool(this.projectDir, this.hbg);
 		handleSink();               // traverseTargetCodes
-		bugPool.printResults();     // print the results
+		bugPool.printResults(true);     // print the results
 	}
 	
 	

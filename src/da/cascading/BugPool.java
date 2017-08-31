@@ -157,21 +157,18 @@ public class BugPool {
     	System.out.println( "\t" + staticbugpoolFilename );
 		
     	TextFileWriter mcWriter = new TextFileWriter( medianchainbugpoolFilename, appendToFile );
-    	if (appendToFile)
-    		mcWriter.writeLine("\n\n\n//Queue-related Bugs\n");
     	TextFileWriter scWriter = new TextFileWriter( simplechainbugpoolFilename, appendToFile );
-    	if (appendToFile)
-    		scWriter.writeLine("\n\n\n//Queue-related Bugs\n");
     	TextFileWriter mWriter = new TextFileWriter( medianbugpoolFilename, appendToFile );
-    	if (appendToFile)
-    		mWriter.writeLine("\n\n\n//Queue-related Bugs\n");
     	TextFileWriter sWriter = new TextFileWriter( simplebugpoolFilename, appendToFile );
-    	if (appendToFile)
-    		sWriter.writeLine("\n\n\n//Queue-related Bugs\n");
     	TextFileWriter staticWriter = new TextFileWriter( staticbugpoolFilename, appendToFile );
-    	if (appendToFile)
-    		staticWriter.writeLine("\n\n\n//Queue-related Bugs\n");
-
+    	
+    	if (appendToFile) {
+    		mcWriter.writeLine("\n\n\n//New Sink's Bugs\n");
+    		scWriter.writeLine("\n\n\n//New Sink's Bugs\n");
+    		mWriter.writeLine("\n\n\n//New Sink's Bugs\n");
+    		sWriter.writeLine("\n\n\n//New Sink's Bugs\n");
+    		staticWriter.writeLine("\n\n\n//New Sink's Bugs\n");
+    	}
     	
     	System.out.println("\nmedianchainbugpool(whole chain's fullcallstacks) - " + "has " + medianchainbugpool.size() + " loops (#static codepoints=" + staticbugpool.size() + ")" );
     	mcWriter.writeLine( "//" + medianchainbugpool.size() + " (#static codepoints=" + staticbugpool.size() + ")" );
