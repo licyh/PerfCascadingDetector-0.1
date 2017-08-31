@@ -35,7 +35,8 @@ public class JobTagger {
 	 */
 	public String findJobID(int nodeIndex) {
 	    BitSet traversedNodes = new BitSet();  	//tmp var. set of traversed nodes for a single code snippet, e.g, event handler
-		System.out.println("JX - INFO - findJobIdentity for " + hbg.getPrintedIdentity(nodeIndex));
+		//for DEBUG
+	    //System.out.println("JX - INFO - findJobIdentity for " + hbg.getPrintedIdentity(nodeIndex));
 		
 		ArrayList<Integer> pathToRoot = new ArrayList<Integer>();
 		dfsTraversing(nodeIndex, traversedNodes, pathToRoot);
@@ -73,8 +74,9 @@ public class JobTagger {
     public void dfsTraversing( int x, BitSet traversedNodes, List<Integer> pathToRoot ) {
     	//if ( isConnection(x) ) {
     	if ( !isGeneral(x) ) {
-    		 //System.out.println("JX - DEBUG - path: " + hbg.getPrintedIdentity(x));
-    		 pathToRoot.add(x);
+    		// for DEBUG
+    		//System.out.println("JX - DEBUG - path: " + hbg.getPrintedIdentity(x));
+    		pathToRoot.add(x);
     	}
     	//traversedNodes.set( x );
     	
