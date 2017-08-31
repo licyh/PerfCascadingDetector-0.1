@@ -73,7 +73,7 @@ public class JobTagger {
     public void dfsTraversing( int x, BitSet traversedNodes, List<Integer> pathToRoot ) {
     	//if ( isConnection(x) ) {
     	if ( !isGeneral(x) ) {
-    		 System.out.println("JX - DEBUG - path: " + hbg.getPrintedIdentity(x));
+    		 //System.out.println("JX - DEBUG - path: " + hbg.getPrintedIdentity(x));
     		 pathToRoot.add(x);
     	}
     	//traversedNodes.set( x );
