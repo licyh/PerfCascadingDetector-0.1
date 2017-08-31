@@ -369,25 +369,20 @@ public class LogInfoExtractor {
     		if ( targetCodeBlocks.get(beginindex) == null ) continue;
     		int endindex = targetCodeBlocks.get(beginindex);
     		
-    		System.out.println("JX - DEBUG - loc 1");
     		SinkInstance sinkInstance = new SinkInstance(beginindex, endindex);
+    		
     		Sink targetSink = null;
-    		System.out.println("JX - DEBUG - loc 2");
     		for (Sink sink: this.sinks) 
     			if ( sink.getID().equals( hbg.getNodeOPVAL(beginindex) ) ) {
-    				System.out.println("JX - DEBUG - loc 2.1");
     				targetSink = sink;
     				break;
     			}
-    		System.out.println("JX - DEBUG - loc 3");
     		if ( targetSink == null ) {
-    			System.out.println("JX - DEBUG - loc 3.1");
     			targetSink = new Sink();
+    			targetSink.setID( hbg.getNodeOPVAL(beginindex) );
     			this.sinks.add(targetSink);
     		}
-    		System.out.println("JX - DEBUG - loc 4");
     		targetSink.addInstance(sinkInstance);
-    		System.out.println("JX - DEBUG - loc 5");
     	}
     }
     
