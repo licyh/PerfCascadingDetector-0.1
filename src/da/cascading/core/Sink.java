@@ -30,6 +30,7 @@ import da.graph.Pair;
 
 public class Sink {
 
+	String ID;
 	List<SinkInstance> instances;
 
 	
@@ -48,6 +49,14 @@ public class Sink {
 		this.instances = new ArrayList<SinkInstance>();
 	}
 	
+    public void setID(String ID) {
+    	this.ID = ID;
+    }
+    
+    public String getID() {
+    	return this.ID;
+    }
+    
 	public void addInstance(SinkInstance instance) {
 		this.instances.add(instance);
 	}
@@ -60,6 +69,7 @@ public class Sink {
 
         
 	}
+	
 	
 	public void doWork() {
 		this.cascadingUtil = new CascadingUtil(this.projectDir, this.hbg, this.ag, this.ag.getLogInfoExtractor());

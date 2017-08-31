@@ -184,7 +184,7 @@ public class LogInfoExtractor {
     
     
     public void computeLogInfo() {
-    	computeTargetCodeInfo();
+    	computeSinkInfo();
     	computeHandlerInfo();
     	computeEventHandlerInfo();
     	computeRPCHandlerInfo();
@@ -203,7 +203,8 @@ public class LogInfoExtractor {
     	// Get all TargetCodeBegin&TargetCodeEnd nodes
     	ArrayList<Integer> items = getTypedNodes(LogType.TargetCodeBegin.name(), LogType.TargetCodeEnd.name());
     	// Handle target codes
-    	extractBlockInfo_weak(LogType.TargetCodeBegin.name(), LogType.TargetCodeEnd.name(), items, targetCodeBlocks);
+    	//extractBlockInfo_weak(LogType.TargetCodeBegin.name(), LogType.TargetCodeEnd.name(), items, targetCodeBlocks);
+    	extractBlockInfo(LogType.TargetCodeBegin.name(), LogType.TargetCodeEnd.name(), items, targetCodeBlocks);
     }
         
     
@@ -363,17 +364,24 @@ public class LogInfoExtractor {
      * Compute more useful information
      **********************************************************************/
     
-    public void computeTargetCodeInfo() {
-    	//for now just one sink
-    	Sink sink = new Sink();
+    public void computeSinkInfo() {
     	for (int beginindex: targetCodeBlocks.keySet() ) {
     		if ( targetCodeBlocks.get(beginindex) == null ) continue;
     		int endindex = targetCodeBlocks.get(beginindex);
     		
     		SinkInstance sinkInstance = new SinkInstance(beginindex, endindex);
-    		sink.addInstance(sinkInstance);
+    		Sink targetSink = null;
+    		for (Sink sink: this.sinks) 
+    			if ( sink.getID().equals( hbg.getNodeOPVAL(beginindex) ) ) {
+    				targetSink = sink;
+    				break;
+    			}
+    		if ( targetSink == null ) {
+    			targetSink = new Sink();
+    			this.sinks.add(targetSink);
+    		}
+    		targetSink.addInstance(sinkInstance);
     	}
-    	this.sinks.add(sink);
     }
     
         
