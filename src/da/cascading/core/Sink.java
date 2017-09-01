@@ -81,7 +81,7 @@ public class Sink {
 		this.bugPool = new BugPool(this.projectDir, this.hbg);
 		handleSink();               // traverseTargetCodes
 		bugPool.printResults(true);     // print the results
-		bugPool.printJobIdentity();
+		//bugPool.printJobIdentity();
 	}
 	
 	
@@ -109,6 +109,8 @@ public class Sink {
     		instance.setCascadingUtil(this.cascadingUtil);
     		instance.setBugPool(this.bugPool);
     		instance.doWork();
+    		//for DEBUG
+    		break;
     	}
     	
     }
