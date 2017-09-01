@@ -38,10 +38,6 @@ public class CascadingAnalyzer {
 			//for DEBUG
 			break;
 		}
-		
-	    //Queue
-	    //QueueCase queueCase = new QueueCase(this.projectDir, this.hbg, this.ag.getLogInfoExtractor());
-	    //queueCase.doWork();
 	}
 	
 }
