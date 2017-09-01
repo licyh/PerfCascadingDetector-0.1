@@ -81,6 +81,7 @@ public class Sink {
 		this.bugPool = new BugPool(this.projectDir, this.hbg);
 		handleSink();               // traverseTargetCodes
 		bugPool.printResults(true);     // print the results
+		bugPool.printJobIdentity();
 	}
 	
 	
@@ -98,7 +99,7 @@ public class Sink {
      * 		- tmp: (not here) EventHandlerBegin & EventHandlerEnd,  this should also be changed to  TargetCodeBegin & TargetCodeEnd
      */
     public void handleSink() {
-    	System.out.println("\nJX - traverseTargetCodes - including all TARGET CODE snippets");
+    	System.out.println("\nJX - INFO - Sink: handleSink, ie, all TARGET CODE snippets for a sink");
     	
     	int numofsnippets = 0;
     	

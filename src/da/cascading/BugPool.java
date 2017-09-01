@@ -106,24 +106,6 @@ public class BugPool {
     }
     
     
-    /*
-    public void mergeResults() {
-    	// real bug pool
-    	System.out.print("\nbugpool - " + "has " + bugs.size() + "(fake) dynamic loop instances");
-    	for (LoopBug loopbug: bugs) {
-    		int nodeIndex = loopbug.nodeIndex;
-    		int cascadingLevel = loopbug.cascadingLevel;
-    		bugnodeset.add( nodeIndex );
-    		medianchainbugpool.add( "CL" + cascadingLevel + ": " + fullCallstacksOfCascadingChain(loopbug) );
-    		simplechainbugpool.add( "CL" + cascadingLevel + ": " + lastCallstacksOfCascadingChain(loopbug) );
-    		medianbugpool.add( "CL" + cascadingLevel + ": " + hbg.fullCallstack(nodeIndex) );
-    		simplebugpool.add( "CL" + cascadingLevel + ": " + hbg.lastCallstack(nodeIndex) );
-    		staticbugpool.add( hbg.lastCallstack(nodeIndex) );
-    	}
-    	System.out.println(", ie, representing " + bugnodeset.size() + "(real) loop nodes out of total " + hbg.getNodeList().size() + " happens-before nodes");
-    }
-    */
-    
     public void printJobIdentity() {
     	JobTagger jobTagger = new JobTagger( this.hbg );
     	for (int index: bugnodeset) {
