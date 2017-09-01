@@ -410,10 +410,10 @@ public class SinkInstance {
     		return true;
     	
     	//Pre Pruning - Checking chain - ie, false positive pruning
-    	/*
+    	
     	if ( cascadingLevel>=2 && !cascadingUtil.checkChain(loopbug) ) 
     		return true;
-    	*/
+    	
         //Pruning 1 - Checking job identity - ie, false positive pruning  #ps - another place at AHB grpah for queue-related
     	/*
         if ( cascadingLevel>=2 && new JobTagger(this.hbg).isSameJobID(nodeIndex, loopbug.getCascadingChain().get(loopbug.getCascadingChain().size()-1)) ) 
