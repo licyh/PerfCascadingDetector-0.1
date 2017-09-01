@@ -51,6 +51,8 @@ public class JobTagger {
 			if ( isEnter(index) && !hbg.getNodeTID(index).equals("1") ) {
 				jobIndex = index;
 				jobID = hbg.getNodeOPVAL(index);    		//msg value
+				//for DEBUG
+				System.out.println( "JX - INFO - jobID: " + jobID );
 				return jobID;
 			}
 		}
@@ -59,6 +61,8 @@ public class JobTagger {
 			if ( !hbg.getNodeTID(index).equals("1") ) {
 				jobIndex = index;
 				jobID = hbg.getNodePIDTID(index);			//pid+tid
+				//for DEBUG
+				System.out.println( "JX - INFO - jobID: " + jobID );
 				return jobID;
 			}
 		}
