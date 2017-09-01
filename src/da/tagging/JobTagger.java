@@ -64,6 +64,9 @@ public class JobTagger {
 		}
 		jobIndex = pathToRoot.get(pathToRoot.size()-1);
 		jobID = hbg.getNodePIDTID(jobIndex);				//pid+tid
+		
+		//for DEBUG
+		System.out.println( "JX - INFO - jobID: " + jobID );
 		return jobID;
 	}
 	
