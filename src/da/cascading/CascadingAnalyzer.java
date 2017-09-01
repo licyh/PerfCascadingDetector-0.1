@@ -35,6 +35,8 @@ public class CascadingAnalyzer {
 		for (Sink sink: this.ag.getLogInfoExtractor().getSinks()) {
 			sink.setEnv(this.projectDir, this.hbg, this.ag, this.ag.getLogInfoExtractor());
 			sink.doWork();
+			//for DEBUG
+			break;
 		}
 		
 	    //Queue

@@ -103,7 +103,7 @@ public class Sink {
     	int numofsnippets = 0;
     	
     	for (SinkInstance instance: this.instances) {
-    		System.out.println( "\nTarget Code Snippet #" + (++numofsnippets) + instance  );
+    		System.out.println( "\n#" + (++numofsnippets) + "-" + instance );
     		instance.setEnv(this.projectDir, this.hbg, this.ag, this.ag.getLogInfoExtractor());
     		instance.setCascadingUtil(this.cascadingUtil);
     		instance.setBugPool(this.bugPool);
