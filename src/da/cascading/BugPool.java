@@ -1,6 +1,8 @@
 package da.cascading;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -131,6 +133,26 @@ public class BugPool {
     }
     
     
+    
+    public void clearOutput() {
+    	Path medianchainbugpoolFile = Paths.get(projectDir, packageDir, medianchainbugpoolFilename);
+    	Path simplechainbugpoolFile = Paths.get(projectDir, packageDir, simplechainbugpoolFilename);
+    	Path medianbugpoolFile = Paths.get(projectDir, packageDir, medianbugpoolFilename);
+    	Path simplebugpoolFile = Paths.get(projectDir, packageDir, simplebugpoolFilename);
+    	Path staticbugpoolFile = Paths.get(projectDir, packageDir, staticbugpoolFilename);
+    	try {
+			Files.deleteIfExists( medianchainbugpoolFile );
+	    	Files.deleteIfExists( simplechainbugpoolFile );
+	    	Files.deleteIfExists( medianbugpoolFile );
+	    	Files.deleteIfExists( simplebugpoolFile );
+	    	Files.deleteIfExists( staticbugpoolFile );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    
     public void printResults() {
     	printResults(false);
     }
@@ -144,23 +166,23 @@ public class BugPool {
 
     	// bug pools - 
         // write to file & print
-    	medianchainbugpoolFilename = Paths.get(projectDir, packageDir, medianchainbugpoolFilename).toString();
-    	simplechainbugpoolFilename = Paths.get(projectDir, packageDir, simplechainbugpoolFilename).toString();
-    	medianbugpoolFilename = Paths.get(projectDir, packageDir, medianbugpoolFilename).toString();
-    	simplebugpoolFilename = Paths.get(projectDir, packageDir, simplebugpoolFilename).toString();
-    	staticbugpoolFilename = Paths.get(projectDir, packageDir, staticbugpoolFilename).toString();
+    	Path medianchainbugpoolFile = Paths.get(projectDir, packageDir, medianchainbugpoolFilename);
+    	Path simplechainbugpoolFile = Paths.get(projectDir, packageDir, simplechainbugpoolFilename);
+    	Path medianbugpoolFile = Paths.get(projectDir, packageDir, medianbugpoolFilename);
+    	Path simplebugpoolFile = Paths.get(projectDir, packageDir, simplebugpoolFilename);
+    	Path staticbugpoolFile = Paths.get(projectDir, packageDir, staticbugpoolFilename);
     	System.out.println( "\nwrite to files - " );
-    	System.out.println( "\t" + medianchainbugpoolFilename );
-    	System.out.println( "\t" + simplechainbugpoolFilename );
-    	System.out.println( "\t" + medianbugpoolFilename );
-    	System.out.println( "\t" + simplebugpoolFilename );
-    	System.out.println( "\t" + staticbugpoolFilename );
+    	System.out.println( "\t" + medianchainbugpoolFile );
+    	System.out.println( "\t" + simplechainbugpoolFile );
+    	System.out.println( "\t" + medianbugpoolFile );
+    	System.out.println( "\t" + simplebugpoolFile );
+    	System.out.println( "\t" + staticbugpoolFile );
 		
-    	TextFileWriter mcWriter = new TextFileWriter( medianchainbugpoolFilename, appendToFile );
-    	TextFileWriter scWriter = new TextFileWriter( simplechainbugpoolFilename, appendToFile );
-    	TextFileWriter mWriter = new TextFileWriter( medianbugpoolFilename, appendToFile );
-    	TextFileWriter sWriter = new TextFileWriter( simplebugpoolFilename, appendToFile );
-    	TextFileWriter staticWriter = new TextFileWriter( staticbugpoolFilename, appendToFile );
+    	TextFileWriter mcWriter = new TextFileWriter( medianchainbugpoolFile, appendToFile );
+    	TextFileWriter scWriter = new TextFileWriter( simplechainbugpoolFile, appendToFile );
+    	TextFileWriter mWriter = new TextFileWriter( medianbugpoolFile, appendToFile );
+    	TextFileWriter sWriter = new TextFileWriter( simplebugpoolFile, appendToFile );
+    	TextFileWriter staticWriter = new TextFileWriter( staticbugpoolFile, appendToFile );
     	
     	if (appendToFile) {
     		mcWriter.writeLine("\n\n\n//New Sink's Bugs\n");

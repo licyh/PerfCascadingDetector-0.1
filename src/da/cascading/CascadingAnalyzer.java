@@ -30,6 +30,7 @@ public class CascadingAnalyzer {
 	 *********************************************************************************/
 	
 	public void xxx() {
+		new BugPool(this.projectDir, this.hbg).clearOutput();
 		
 		for (Sink sink: this.ag.getLogInfoExtractor().getSinks()) {
 			sink.setEnv(this.projectDir, this.hbg, this.ag, this.ag.getLogInfoExtractor());
