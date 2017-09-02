@@ -54,7 +54,7 @@ public class JobTagger {
 	    	jobIDs.put(nodeIndex, ID);
 	    }
 	    
-	    System.out.println( "JX - INFO - jobID: " + jobIDs.get(nodeIndex) );
+	    //System.out.println( "JX - INFO - jobID: " + jobIDs.get(nodeIndex) );
     	return jobIDs.get(nodeIndex);
 	}
 	
