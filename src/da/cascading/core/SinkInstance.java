@@ -67,6 +67,13 @@ public class SinkInstance {
 	HashMap<Integer, Integer>[] upNodes   = new HashMap[ CASCADING_LEVEL + 1 ];  //record cascading paths, for the same thread
 
     
+    //for validity test
+    //boolean DO_HBCONCURRENT = true;      //default should be true;
+    boolean DO_HBCONCURRENT = false;      //default should be true;
+    //boolean DO_JOBTAGGING = true;		 //default should be true;
+    boolean DO_JOBTAGGING = true;		 //default should be true;
+    
+    
     
 	public SinkInstance(int beginIndex, int endIndex) {
 		this.beginIndex = beginIndex;
@@ -230,7 +237,7 @@ public class SinkInstance {
         			ArrayList<Integer> list = ag.accurateLockmemref.get( pidopval0 );
     	    		for (int index: list) {
     	    			if (resIndex == index) continue;  
-    	                if ( hbg.isFlippedorder(resIndex, index) ) {
+    	                if ( DO_HBCONCURRENT && hbg.isFlippedorder(resIndex, index) ) {
     	                	nextResources.add( index );
     	                	predNodes[curCascadingLevel].put(index, resIndex); 
     	                }
@@ -242,7 +249,7 @@ public class SinkInstance {
         			ArrayList<Integer> list = ag.accurateLockmemref.get( correspondingPidopval0 );  //or using dotlockmemref.get( xx )
         			if (list != null)  //needed
         			for (int index: list) {                                                                 
-        				if ( hbg.isFlippedorder(resIndex, index) ) {      
+        				if ( DO_HBCONCURRENT && hbg.isFlippedorder(resIndex, index) ) {      
         					nextResources.add( index );            
         					predNodes[curCascadingLevel].put(index, resIndex); 
         				}                                    
@@ -418,10 +425,10 @@ public class SinkInstance {
     		return true;
     	
         //Pruning 1 - Checking job identity - ie, false positive pruning  #ps - another place at AHB grpah for queue-related
-    	/*
-        if ( cascadingLevel>=2 && jt.isSameJobID(nodeIndex, loopbug.getCascadingChain().get(loopbug.getCascadingChain().size()-1)) ) 
+    	
+        if ( DO_JOBTAGGING && cascadingLevel>=2 && jt.isSameJobID(nodeIndex, loopbug.getCascadingChain().get(loopbug.getCascadingChain().size()-1)) ) 
         	return true;
-		*/
+		
         return false;
     }
     

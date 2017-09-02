@@ -32,6 +32,11 @@ public class AccidentalHBGraph {
     //ArrayList<ArrayList<Pair>> lockrelationbackedge;  //adjcent list of backward edges for tracing back
     
 	
+    //for validity test
+    boolean DO_HBCONCURRENT = true;      //default should be true;
+    //boolean DO_HBCONCURRENT = false;      //default should be true;
+    
+    
 	public AccidentalHBGraph(HappensBeforeGraph hbg) {
 		this.hbg = hbg;
 		// extract Target, (EventHandler), Lock, Loop logs
@@ -360,8 +365,7 @@ public class AccidentalHBGraph {
 					System.out.println("JX - DEBUG - getXXXFrom: enter: " + hbg.getPrintedIdentity( beginIndex  ));
 					int endIndex = blocks.get(beginIndex);
 					
-					//if ( !hbg.isConcurrent(index, beginIndex) ) continue; 
-					//if ( new JobTagger(this.hbg).isSameJobID(index, beginIndex) ) continue;   //no need
+					if ( DO_HBCONCURRENT && !hbg.isConcurrent(index, beginIndex) ) continue; 
 					results.add(beginIndex);
 				}
 				break;
