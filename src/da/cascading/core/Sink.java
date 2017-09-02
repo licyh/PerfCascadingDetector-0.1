@@ -112,7 +112,7 @@ public class Sink {
     		instance.setBugPool(this.bugPool);
     		instance.doWork();
     		//for DEBUG
-    		break;
+    		//break;
     	}
     	
     }
