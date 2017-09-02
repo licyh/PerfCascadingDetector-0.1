@@ -3,14 +3,29 @@
 
 //New Sink's Bugs
 
-//0 (#static codepoints=0)
+//14 (#static codepoints=8)
+CL2: org.apache.hadoop.hdfs.server.datanode.DataNode-offerService-922;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-679;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getCapacity-664;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getNextVolume-645;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getRemaining-672;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset-getGenerationStampFromFile-70;
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-679;
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getCapacity-664;
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getRemaining-672;
+CL3: org.apache.hadoop.hdfs.server.datanode.FSDataset-getGenerationStampFromFile-70;
 
 
 
 //New Sink's Bugs
 
-//2 (#static codepoints=2)
+//3 (#static codepoints=3)
 CL2: org.apache.hadoop.hdfs.server.common.UpgradeObjectCollection-getDistributedUpgrades-117;
+CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getNextVolume-645;
 CL2: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-heartbeatCheck-3281;
 
 
