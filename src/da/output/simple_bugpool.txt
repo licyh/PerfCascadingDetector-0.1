@@ -3,7 +3,9 @@
 
 //New Sink's Bugs
 
-//14 (#static codepoints=8)
+//16 (#static codepoints=10)
+CL2: org.apache.hadoop.hdfs.server.datanode.BlockReceiver$PacketResponder-close-747;
+CL2: org.apache.hadoop.hdfs.server.datanode.BlockReceiver$PacketResponder-run-787;
 CL2: org.apache.hadoop.hdfs.server.datanode.DataNode-offerService-922;
 CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;
 CL2: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;

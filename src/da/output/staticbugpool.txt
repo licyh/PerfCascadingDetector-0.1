@@ -3,14 +3,16 @@
 
 //New Sink's Bugs
 
-//#static codepoints = 8
+//#static codepoints = 10
 CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset-getGenerationStampFromFile-70;
 CL0: org.apache.hadoop.hdfs.server.datanode.DataNode-offerService-922;
 CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-679;
 CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getRemaining-672;
 CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;
 CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getNextVolume-645;
+CL0: org.apache.hadoop.hdfs.server.datanode.BlockReceiver$PacketResponder-run-787;
 CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getCapacity-664;
+CL0: org.apache.hadoop.hdfs.server.datanode.BlockReceiver$PacketResponder-close-747;
 CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;
 
 
