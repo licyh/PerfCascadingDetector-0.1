@@ -48,12 +48,11 @@ public class JobTagger {
 	
 	public String getJobID(int nodeIndex) {
 		//for DEBUG
-	    System.out.println("JX - INFO - findJobIdentity for " + hbg.getPrintedIdentity(nodeIndex));
-	    if ( !jobIDs.containsKey(nodeIndex) ) {
+		//System.out.println("JX - INFO - findJobIdentity for " + hbg.getPrintedIdentity(nodeIndex));
+		if ( !jobIDs.containsKey(nodeIndex) ) {
 	    	String ID = findJobID(nodeIndex);
 	    	jobIDs.put(nodeIndex, ID);
 	    }
-	    
 	    //System.out.println( "JX - INFO - jobID: " + jobIDs.get(nodeIndex) );
     	return jobIDs.get(nodeIndex);
 	}
@@ -125,7 +124,7 @@ public class JobTagger {
     	//if ( isConnection(x) ) {
     	if ( !isGeneral(x) ) {
     		// for DEBUG
-    		System.out.println("JX - DEBUG - path: " + hbg.getPrintedIdentity(x));
+    		//System.out.println("JX - DEBUG - path: " + hbg.getPrintedIdentity(x));
     		pathToRoot.add(x);
     	}
     	//traversedNodes.set( x );
