@@ -1,0 +1,88 @@
+
+
+
+//New Sink's Bugs
+
+//#static codepoints = 11
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset-getGenerationStampFromFile-70;
+CL0: org.apache.hadoop.hdfs.server.datanode.DataNode-offerService-922;
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-679;
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getRemaining-672;
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getNextVolume-645;
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getVolumeMap-685;
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getVolumeMap-269;
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getVolumeMap-262;
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getCapacity-664;
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;
+
+
+
+//New Sink's Bugs
+
+//#static codepoints = 9
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-679;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-heartbeatCheck-3281;
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getNextVolume-645;
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getVolumeMap-685;
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getVolumeMap-269;
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getVolumeMap-262;
+CL0: org.apache.hadoop.hdfs.server.common.UpgradeObjectCollection-getDistributedUpgrades-117;
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;
+
+
+
+//New Sink's Bugs
+
+//#static codepoints = 50
+CL0: org.apache.hadoop.hdfs.server.namenode.FSDirectory-mkdirs-938;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-heartbeatCheck-3281;
+CL0: org.apache.hadoop.hdfs.server.namenode.INodeFile-computeContentSummary-149;
+CL0: org.apache.hadoop.hdfs.server.namenode.INode-getPathComponents-326;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSEditLog-close-357;
+CL0: org.apache.hadoop.hdfs.server.namenode.INodeFile-diskspaceConsumed-173;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-chooseUnderReplicatedBlocks-2863;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-processReport-3443;
+CL0: org.apache.hadoop.hdfs.server.namenode.ReplicationTargetChooser-getPipeline-464;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-checkFileProgress-1723;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSDirectory-updateCount-862;
+CL0: org.apache.hadoop.hdfs.util.LightWeightGSet$SetIterator-nextNonemptyEntry-253;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-processMisReplicatedBlocks-3732;
+CL0: org.apache.hadoop.hdfs.server.namenode.BlocksMap$BlockInfo-numNodes-141;
+CL0: org.apache.hadoop.hdfs.server.namenode.UnderReplicatedBlocks-size-51;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-processReport-3446;
+CL0: org.apache.hadoop.hdfs.server.namenode.LeaseManager-countPath-96;
+CL0: org.apache.hadoop.hdfs.server.namenode.DatanodeDescriptor-reportDiff-441;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-allocateBlock-1703;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-975;
+CL0: org.apache.hadoop.hdfs.server.namenode.DatanodeDescriptor-reportDiff-399;
+CL0: org.apache.hadoop.hdfs.server.namenode.ReplicationTargetChooser-getPipeline-460;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSDirectory-mkdirs-947;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSEditLog-open-333;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSEditLog$EditLogFileOutputStream-write-154;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logEdit-908;
+CL0: org.apache.hadoop.hdfs.server.namenode.UnderReplicatedBlocks-clear-43;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-getAdditionalBlock-1555;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-953;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSDirectory-replaceNode-686;
+CL0: org.apache.hadoop.hdfs.server.namenode.LeaseManager-checkLeases-380;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-removePathAndBlocks-1977;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-countNodes-4313;
+CL0: org.apache.hadoop.hdfs.server.namenode.INodeDirectory-getExistingPathINodes-171;
+CL0: org.apache.hadoop.hdfs.server.namenode.LeaseManager-findLeaseWithPrefixPath-336;
+CL0: org.apache.hadoop.hdfs.server.namenode.LeaseManager$Lease-findPath-229;
+CL0: org.apache.hadoop.hdfs.server.namenode.INode-compareBytes-388;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-saveFilesUnderConstruction-5395;
+CL0: org.apache.hadoop.hdfs.server.namenode.LeaseManager-removeLeaseWithPrefixPath-318;
+CL0: org.apache.hadoop.hdfs.server.namenode.BlocksMap$BlockInfo-findDatanode-191;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-checkReplicationFactor-1680;
+CL0: org.apache.hadoop.hdfs.server.common.Storage$DirIterator-hasNext-130;
+CL0: org.apache.hadoop.hdfs.server.namenode.INodeFileUnderConstruction-addTarget-110;
+CL0: org.apache.hadoop.hdfs.util.LightWeightGSet-get-121;
+CL0: org.apache.hadoop.hdfs.server.common.Storage$DirIterator-next-146;
+CL0: org.apache.hadoop.hdfs.server.namenode.PendingReplicationBlocks$PendingReplicationMonitor-pendingReplicationCheck-202;
+CL0: org.apache.hadoop.hdfs.DFSUtil-isValidName-48;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSDirectory-verifyQuota-1036;
+CL0: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-processReport-3440;
+CL0: org.apache.hadoop.hdfs.server.namenode.DecommissionManager$Monitor-check-75;

@@ -1,2 +1,2 @@
 JX - INFO - Timer(tic), MSG: WalaAnalyzer begin
-JX - INFO - Timer(toc->toc): 51.639s, (tic->toc): 51.639s, MSG: WalaAnalyzer end
+JX - INFO - Timer(toc->toc): 47.364s, (tic->toc): 47.364s, MSG: WalaAnalyzer end
