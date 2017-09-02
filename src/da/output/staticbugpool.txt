@@ -17,9 +17,12 @@ CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;
 
 //New Sink's Bugs
 
-//#static codepoints = 3
+//#static codepoints = 6
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getBlockInfo-679;
 CL0: org.apache.hadoop.hdfs.server.namenode.FSNamesystem-heartbeatCheck-3281;
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-227;
 CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet-getNextVolume-645;
+CL0: org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir-getBlockInfo-220;
 CL0: org.apache.hadoop.hdfs.server.common.UpgradeObjectCollection-getDistributedUpgrades-117;
 
 
