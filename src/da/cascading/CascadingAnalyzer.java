@@ -38,6 +38,9 @@ public class CascadingAnalyzer {
 		new BugPool(this.projectDir, this.hbg).clearOutput();
 		
 		for (Sink sink: this.ag.getLogInfoExtractor().getSinks()) {
+			//for DEBUG
+			if (!sink.getID().equals(2)) continue;
+			
 			sink.setEnv(this.projectDir, this.hbg, this.ag, this.ag.getLogInfoExtractor(), this.jt);
 			sink.doWork();
 			//for DEBUG
