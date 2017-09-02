@@ -569,6 +569,22 @@ public class HappensBeforeGraph {
     }
 
 
+    public String lastCallstack_1(int index) {
+        Node ni = nList.get(index);
+        Element ei = (Element) ni;
+        String sti = "";
+        int ind = 0;
+        Element esi = (Element) ei.getElementsByTagName("Stacks").item(0);
+        int stackLength = esi.getElementsByTagName("Stack").getLength();
+        for (int i = 0; i < Math.min(1, stackLength); i++) {
+            Element si  = (Element) esi.getElementsByTagName("Stack").item(i);
+            sti += si.getElementsByTagName("Class").item(0).getTextContent() + "-"       //jx-modified: " "->"-"
+                            + si.getElementsByTagName("Method").item(0).getTextContent() + "-"     //jx-modified: " "->"-"
+                            + si.getElementsByTagName("Line").item(0).getTextContent() + ";";
+        }
+        return sti;
+    }
+    
 
     public String lastCallstack_2(int index) {
             Node ni = nList.get(index);

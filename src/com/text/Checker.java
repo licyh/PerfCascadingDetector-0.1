@@ -116,7 +116,47 @@ public class Checker {
 		return false;
 	}
 	
-
+	//useless for now
+	public boolean isTarget_equals(String sig) {
+		String str;
+		for (int i = 0; i < targetLines.size(); i++) {
+			str = targetLines.get(i);
+			if (sig.equals(str) && !checkIfBeDisabled(i)) {
+				checkIfNeedDisable( i );
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isTarget_contains(String sig) {
+		String str;
+		for (int i = 0; i < targetLines.size(); i++) {
+			str = targetLines.get(i);
+			if (sig.contains(str) && !checkIfBeDisabled(i)) {
+				checkIfNeedDisable( i );
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	//useless for now
+	public boolean isTarget_contained(String sig) {
+		String str;
+		for (int i = 0; i < targetLines.size(); i++) {
+			str = targetLines.get(i);
+			if (str.contains(sig) && !checkIfBeDisabled(i)) {
+				checkIfNeedDisable( i );
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	
+	
 	/**
 	 * Way of checking - equals
 	 */

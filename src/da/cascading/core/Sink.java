@@ -27,6 +27,7 @@ import da.graph.AccidentalHBGraph;
 import da.graph.HappensBeforeGraph;
 import da.graph.LogInfoExtractor;
 import da.graph.Pair;
+import da.tagging.JobTagger;
 
 public class Sink {
 
@@ -38,6 +39,7 @@ public class Sink {
 	HappensBeforeGraph hbg;
 	AccidentalHBGraph ag;
 	LogInfoExtractor logInfo;
+	JobTagger jt;
 	
     //
     CascadingUtil cascadingUtil;
@@ -66,13 +68,13 @@ public class Sink {
 	}
 	
     
-	public void setEnv(String projectDir, HappensBeforeGraph hbg, AccidentalHBGraph ag, LogInfoExtractor logInfo) {
+	public void setEnv(String projectDir, HappensBeforeGraph hbg, AccidentalHBGraph ag, LogInfoExtractor logInfo,
+						JobTagger jt) {
 		this.projectDir = projectDir;
 		this.hbg = hbg;
 		this.ag = ag;
 		this.logInfo = logInfo;
-
-        
+        this.jt = jt;
 	}
 	
 	
@@ -105,7 +107,7 @@ public class Sink {
     	
     	for (SinkInstance instance: this.instances) {
     		System.out.println( "\n#" + (++numofsnippets) + "-" + instance );
-    		instance.setEnv(this.projectDir, this.hbg, this.ag, this.ag.getLogInfoExtractor());
+    		instance.setEnv(this.projectDir, this.hbg, this.ag, this.ag.getLogInfoExtractor(), this.jt);
     		instance.setCascadingUtil(this.cascadingUtil);
     		instance.setBugPool(this.bugPool);
     		instance.doWork();

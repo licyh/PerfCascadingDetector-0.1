@@ -38,6 +38,7 @@ public class SinkInstance {
 	HappensBeforeGraph hbg;
 	AccidentalHBGraph ag;
 	LogInfoExtractor logInfo;
+	JobTagger jt;
 	
 	// from LogInfoExtractor
     LinkedHashMap<Integer, Integer> targetCodeBlocks;   // beginIndex -> endIndex
@@ -88,11 +89,13 @@ public class SinkInstance {
 	}
     
 	
-	public void setEnv(String projectDir, HappensBeforeGraph hbg, AccidentalHBGraph ag, LogInfoExtractor logInfo) {
+	public void setEnv(String projectDir, HappensBeforeGraph hbg, AccidentalHBGraph ag, LogInfoExtractor logInfo,
+						JobTagger jt) {
 		this.projectDir = projectDir;
 		this.hbg = hbg;
 		this.ag = ag;
 		this.logInfo = logInfo;
+		this.jt = jt;
 		
 		this.targetCodeBlocks = logInfo.getTargetCodeBlocks(); 
 	    this.eventHandlerBlocks = logInfo.getEventHandlerBlocks(); 
@@ -416,7 +419,7 @@ public class SinkInstance {
     	
         //Pruning 1 - Checking job identity - ie, false positive pruning  #ps - another place at AHB grpah for queue-related
     	
-        if ( cascadingLevel>=2 && new JobTagger(this.hbg).isSameJobID(nodeIndex, loopbug.getCascadingChain().get(loopbug.getCascadingChain().size()-1)) ) 
+        if ( cascadingLevel>=2 && jt.isSameJobID(nodeIndex, loopbug.getCascadingChain().get(loopbug.getCascadingChain().size()-1)) ) 
         	return true;
 		
         return false;

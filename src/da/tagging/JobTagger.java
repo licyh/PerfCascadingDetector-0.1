@@ -6,9 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.text.Checker;
+import com.text.TextFileReader;
+
 import LogClass.LogType;
 import da.graph.HappensBeforeGraph;
 import da.graph.Pair;
+import dm.transformers.SourceLine;
 
 
 
@@ -16,16 +20,42 @@ import da.graph.Pair;
 public class JobTagger {
 
 	HappensBeforeGraph hbg;
+	Map<Integer, String> jobIDs = new HashMap<Integer, String>();  //node index -> its job ID
 	
+	Checker customizedJobChecker = new Checker();
 	
 	
 	public JobTagger(HappensBeforeGraph hbg) {
 		this.hbg = hbg;
+		readCustomizedJobs();  //this is completely no need if with strong a hb graph
 	}
 	
 	
+	public void readCustomizedJobs() {
+		customizedJobChecker.addCheckFile("src/da/tagging/backgroundthreads.txt");	
+	}
+	
+
+	
+	/***************************************************************************
+	 * Core
+	 ***************************************************************************/
+	
 	public boolean isSameJobID(int xIndex, int yIndex) {
-		return findJobID(xIndex).equals(findJobID(yIndex));
+		return getJobID(xIndex).equals(getJobID(yIndex));
+	}
+	
+	
+	public String getJobID(int nodeIndex) {
+		//for DEBUG
+	    System.out.println("JX - INFO - findJobIdentity for " + hbg.getPrintedIdentity(nodeIndex));
+	    if ( !jobIDs.containsKey(nodeIndex) ) {
+	    	String ID = findJobID(nodeIndex);
+	    	jobIDs.put(nodeIndex, ID);
+	    }
+	    
+	    System.out.println( "JX - INFO - jobID: " + jobIDs.get(nodeIndex) );
+    	return jobIDs.get(nodeIndex);
 	}
 	
 	
@@ -35,8 +65,6 @@ public class JobTagger {
 	 */
 	public String findJobID(int nodeIndex) {
 	    BitSet traversedNodes = new BitSet();  	//tmp var. set of traversed nodes for a single code snippet, e.g, event handler
-		//for DEBUG
-	    System.out.println("JX - INFO - findJobIdentity for " + hbg.getPrintedIdentity(nodeIndex));
 		
 		ArrayList<Integer> pathToRoot = new ArrayList<Integer>();
 		dfsTraversing(nodeIndex, traversedNodes, pathToRoot);
@@ -46,31 +74,46 @@ public class JobTagger {
 		
 		int jobIndex = -1;
 		String jobID = null;
+		// Message - RPC/Socket/Event
 		for (int i=pathToRoot.size()-1; i>=0; i--) {
 			int index = pathToRoot.get(i);
-			if ( isEnter(index) && !hbg.getNodeTID(index).equals("1") ) {
+			if ( isMsgEnter(index) ) {
 				jobIndex = index;
 				jobID = hbg.getNodeOPVAL(index);    		//msg value
-				//for DEBUG
-				System.out.println( "JX - INFO - jobID: " + jobID );
 				return jobID;
 			}
 		}
+		
+		// customized - for missing messages
+		for (int i=pathToRoot.size()-1; i>=0; i--) {
+			int index = pathToRoot.get(i);
+			if ( isCustomized(index) ) {
+				jobIndex = index;
+				jobID = hbg.getNodeOPVAL(index);    		//msg value?
+				return jobID;
+			}
+		}
+		
+		for (int i=pathToRoot.size()-1; i>=0; i--) {
+			int index = pathToRoot.get(i);
+			if ( isThdEnter(index) && !hbg.getNodeTID(index).equals("1") ) {
+				jobIndex = index;
+				jobID = hbg.getNodeOPVAL(index);    		//msg value?
+				return jobID;
+			}
+		}
+		
 		for (int i=pathToRoot.size()-1; i>=0; i--) {
 			int index = pathToRoot.get(i);
 			if ( !hbg.getNodeTID(index).equals("1") ) {
 				jobIndex = index;
 				jobID = hbg.getNodePIDTID(index);			//pid+tid
-				//for DEBUG
-				System.out.println( "JX - INFO - jobID: " + jobID );
 				return jobID;
 			}
 		}
+		
 		jobIndex = pathToRoot.get(pathToRoot.size()-1);
 		jobID = hbg.getNodePIDTID(jobIndex);				//pid+tid
-		
-		//for DEBUG
-		System.out.println( "JX - INFO - jobID: " + jobID );
 		return jobID;
 	}
 	
@@ -145,16 +188,38 @@ public class JobTagger {
     }
     
     public boolean isEnter(int index) {
-    	if ( hbg.getNodeOPTY(index).equals( LogType.EventHandlerBegin.name() )
+    	if ( hbg.getNodeOPTY(index).equals( LogType.MsgProcEnter.name() )
     			|| hbg.getNodeOPTY(index).equals( LogType.EventProcEnter.name() )
-    			|| hbg.getNodeOPTY(index).equals( LogType.MsgProcEnter.name() )
     			|| hbg.getNodeOPTY(index).equals( LogType.ThdEnter.name() )
     			) {
     		return true;
     	}
     	return false;
     }
-	
+
+    public boolean isMsgEnter(int index) {
+    	if ( hbg.getNodeOPTY(index).equals( LogType.MsgProcEnter.name() )			//RPC handler or Socket accept
+    			|| hbg.getNodeOPTY(index).equals( LogType.EventProcEnter.name() )
+    			) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    public boolean isCustomized(int index) {
+    	if ( customizedJobChecker.isTarget_contains( hbg.lastCallstack_2(index) ) )
+    		return true;
+    	return false;
+    }
+    
+    public boolean isThdEnter(int index) {
+    	if ( hbg.getNodeOPTY(index).equals( LogType.ThdEnter.name() )
+    			) {
+    		return true;
+    	}
+    	return false;
+    }
+    
     
     public boolean isMatched(int index, int father) {
     	if ( hbg.getNodeOPTY(index).equals( LogType.EventHandlerBegin.name() )) {
