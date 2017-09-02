@@ -389,7 +389,7 @@ public class SinkInstance {
     	
     	if (canbePruning( loopbug )) return;
     	
-    	System.out.println("JX - DEBUG - addLoopBug..");
+    	//System.out.println("JX - DEBUG - addLoopBug..");
     	bugPool.addLoopBug( loopbug );
     	//jx: had better commented this when #targetcode is large or #loopbug is large
     	//System.out.println( loopbug );
@@ -418,10 +418,10 @@ public class SinkInstance {
     		return true;
     	
         //Pruning 1 - Checking job identity - ie, false positive pruning  #ps - another place at AHB grpah for queue-related
-    	/*
+    	
         if ( cascadingLevel>=2 && jt.isSameJobID(nodeIndex, loopbug.getCascadingChain().get(loopbug.getCascadingChain().size()-1)) ) 
         	return true;
-		*/
+		
         return false;
     }
     
