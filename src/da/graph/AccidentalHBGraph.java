@@ -106,7 +106,8 @@ public class AccidentalHBGraph {
     	if ( !isLock(index1) || !isLock(index2) ) return false;
     	
     	// Same general lock, including single lock, W/W, NOT R/R
-    	if ( isSameLock(index1, index2) && !isReadLock(index1) )  //"!isReadLock(index1)" is newly added
+    	if ( isSameLock(index1, index2) //&& !isReadLock(index1) 
+    			)  //"!isReadLock(index1)" is newly added
     		return true;
     	// R/W
     	if ( isRWLockPair(index1, index2) )
