@@ -1,39 +1,6 @@
 //jx: without RPC logging
 
 //FINAL SIMPLE
-CL3: org.apache.hadoop.io.IOUtils-copyBytes-69;										#False positive. 1 instance, see Notes. 
-CL4: org.apache.hadoop.io.IOUtils-copyBytes-69;										#Reported bug. 1 instance.
-CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-2021;							#MC & small loop. like below.
-CL2: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2072;						#MC & small loop. like below.
-//summary - 4(#static codepoints=3) from 16
-	======================================
-	Notes
-	======================================
-	//False positive: 
-	//Chain: loop -> lcacheStauts(187, localize) <-> lcacheStauts(595,decRefCount<-purgeJob) -> this <-> this -> heartbeat
-	CL3: org.apache.hadoop.io.IOUtils-copyBytes-69;org.apache.hadoop.io.IOUtils-copyBytes-47;org.apache.hadoop.io.IOUtils-copyBytes-100;org.apache.hadoop.fs.FileUtil-copy-230;org.apache.hadoop.fs.FileUtil-copy-163;org.apache.hadoop.fs.FileSystem-copyToLocalFile-1222;org.apache.hadoop.fs.FileSystem-copyToLocalFile-1203;org.apache.hadoop.filecache.TrackerDistributedCacheManager-downloadCacheObject-415;org.apache.hadoop.filecache.TrackerDistributedCacheManager-localizePublicCacheObject-463;org.apache.hadoop.filecache.TrackerDistributedCacheManager-getLocalCache-190;org.apache.hadoop.filecache.TaskDistributedCacheManager-setupCache-182;org.apache.hadoop.mapred.TaskTracker$4-run-1193;java.security.AccessController-doPrivileged--2;javax.security.auth.Subject-doAs-415;org.apache.hadoop.security.UserGroupInformation-doAs-1083;org.apache.hadoop.mapred.TaskTracker-initializeJob-1184;org.apache.hadoop.mapred.TaskTracker-localizeJob-1099;org.apache.hadoop.mapred.TaskTracker$5-run-2382;java.lang.Thread-run-745;
-	|org.apache.hadoop.filecache.TrackerDistributedCacheManager-getLocalCache-187;org.apache.hadoop.filecache.TaskDistributedCacheManager-setupCache-182;org.apache.hadoop.mapred.TaskTracker$4-run-1193;java.security.AccessController-doPrivileged--2;javax.security.auth.Subject-doAs-415;org.apache.hadoop.security.UserGroupInformation-doAs-1083;org.apache.hadoop.mapred.TaskTracker-initializeJob-1184;org.apache.hadoop.mapred.TaskTracker-localizeJob-1099;org.apache.hadoop.mapred.TaskTracker$5-run-2382;java.lang.Thread-run-745;
-	|org.apache.hadoop.filecache.TrackerDistributedCacheManager$CacheStatus-decRefCount-595;org.apache.hadoop.filecache.TrackerDistributedCacheManager-releaseCache-232;org.apache.hadoop.filecache.TaskDistributedCacheManager-release-254;org.apache.hadoop.mapred.TaskTracker-purgeJob-2019;org.apache.hadoop.mapred.TaskTracker$1-run-430;java.lang.Thread-run-745;
-	|org.apache.hadoop.mapred.TaskTracker-purgeJob--1;org.apache.hadoop.mapred.TaskTracker$1-run-430;java.lang.Thread-run-745;
-	|org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1821;org.apache.hadoop.mapred.TaskTracker-offerService-1606;org.apache.hadoop.mapred.TaskTracker-run-2455;org.apache.hadoop.mapred.TaskTracker-main-3696;|
-
-+
-//MR-4088-based Queue Result  
-+CL2: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-464;                   #1. new bug,  include "await()"
-CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-1999;								#1. MC & small loop. tasks, checked by users
-CL2: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2050;							#1. small loop, from "mapred.local.dir", usually is one, also can 2 or 3 by conf
-CL3: org.apache.hadoop.mapred.TaskTracker-markUnresponsiveTasks-1951;					#runningTasks #small
-CL4~5: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-210;					#small. see mr-4576
-
-
-
-
-
-
-
-////////////////////////////////
-// Old version
-///////////////////////////////
 CL3~4: org.apache.hadoop.io.IOUtils-copyBytes-69;							   		#False positive. 1 instance, see Notes.   
 							   														#Reported bug. 1 instance.
 CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-2021;							#MC & small loop. like below.
@@ -58,6 +25,9 @@ CL3~4: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-211;				#smal
 CL1: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-469;                 	#1. new bug.  include "await()"
 CL1: org.apache.hadoop.mapred.TaskTracker-purgeJob-2021;                             	#MC & small loop. #tasks, checked by users
 CL1: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2072;                       	#small loop. from "mapred.local.dir", usually is one, also can 2 or 3 by conf
+
+
+
 ======================================
 Notes
 ======================================
@@ -68,12 +38,6 @@ CL3: org.apache.hadoop.io.IOUtils-copyBytes-69;org.apache.hadoop.io.IOUtils-copy
 |org.apache.hadoop.filecache.TrackerDistributedCacheManager$CacheStatus-decRefCount-595;org.apache.hadoop.filecache.TrackerDistributedCacheManager-releaseCache-232;org.apache.hadoop.filecache.TaskDistributedCacheManager-release-254;org.apache.hadoop.mapred.TaskTracker-purgeJob-2019;org.apache.hadoop.mapred.TaskTracker$1-run-430;java.lang.Thread-run-745;
 |org.apache.hadoop.mapred.TaskTracker-purgeJob--1;org.apache.hadoop.mapred.TaskTracker$1-run-430;java.lang.Thread-run-745;
 |org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1821;org.apache.hadoop.mapred.TaskTracker-offerService-1606;org.apache.hadoop.mapred.TaskTracker-run-2455;org.apache.hadoop.mapred.TaskTracker-main-3696;|
-
-
-
-
-
-
 
 
 
