@@ -70,8 +70,11 @@ public class SinkInstance {
     //for validity test
     boolean DO_HBCONCURRENT = true;      //default should be true;
     //boolean DO_HBCONCURRENT = false;      //default should be true;
-    boolean DO_JOBTAGGING = true;		 //default should be true;
-    //boolean DO_JOBTAGGING = false;		 //default should be true;
+    //boolean DO_JOBTAGGING = true;		 //default should be true;
+    boolean DO_JOBTAGGING = false;		 //default should be true;
+    
+    //add
+    boolean DO_VALIDATECHAIN = true;
     
     
     
@@ -430,16 +433,16 @@ public class SinkInstance {
     		return true;
     	
     	//Pre Pruning - Checking chain - ie, false positive pruning
-    	/*
-    	if ( cascadingLevel>=2 && !cascadingUtil.validateChain(loopbug) ) 
+    	
+    	if ( DO_VALIDATECHAIN && cascadingLevel>=2 && !cascadingUtil.validateChain(loopbug) ) 
     		return true;
-    	*/
+    	
     	
         //Pruning 1 - Checking job identity - ie, false positive pruning  #ps - another place at AHB grpah for queue-related
-    	/*
+    	
         if ( DO_JOBTAGGING && cascadingLevel>=2 && jt.isSameJobID(nodeIndex, loopbug.getCascadingChain().get(loopbug.getCascadingChain().size()-1)) ) 
         	return true;
-		*/
+		
         return false;
     }
     
