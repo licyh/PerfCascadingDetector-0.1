@@ -335,8 +335,8 @@ public class SinkInstance {
     	// check Lock
     	if ( hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()) ) {
 			if ( !ag.isRelevantLock(beginIndex, x) ) {                         // prune "lock beginIndex=x -> lock x"
-				if (logInfo.getOuterResources().get(beginIndex) == null        // prune "lock x -> lock beginIndex -> lock x"
-						|| logInfo.getOuterResources().get(beginIndex) != null && !logInfo.getOuterResources().get(beginIndex).contains( ag.getCRCode(x) )
+				if ( logInfo.getOuterResources().get(beginIndex) == null        // prune "lock x -> lock beginIndex -> lock x"
+						|| logInfo.getOuterResources().get(beginIndex) != null && !logInfo.getOuterResources().get(beginIndex).contains( ag.getCRvalue(x) )
 						) {
 					nextResources.add( x );
 					upNodes[curCascadingLevel].put(x, beginIndex);

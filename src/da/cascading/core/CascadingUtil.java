@@ -202,7 +202,7 @@ public class CascadingUtil {
     	HashSet<String> own = new HashSet<String>();
     	for (int x: cascadingChain) {
     		if ( ag.isContentionResource(x) )
-    			own.add( ag.getCRCode(x) );
+    			own.add( ag.getCRvalue(x) );
     	}
     	
     	//System.out.println("JX - DEBUG - checkChain: own.size()=" + own.size());
@@ -213,7 +213,8 @@ public class CascadingUtil {
     			
     			if (logInfo.getOuterResources().get(x) != null)
     			for (String crCode: logInfo.getOuterResources().get(x)) {
-    				if (crCode.equals( ag.getCRCode(x) )) continue;
+    				if (crCode.equals( ag.getCRvalue(x) )) continue;  //yes
+    				
     				if (own.contains(crCode))
     					return false;
     			}

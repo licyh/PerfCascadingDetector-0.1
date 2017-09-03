@@ -59,35 +59,65 @@ public class AccidentalHBGraph {
 	}
 	
 	
-	public boolean isReadLock(int index) {
-		String pidhashcode = hbg.getNodePIDOPVAL0(index);
-		if ( !rwlockmatch.containsKey(pidhashcode) )
-			return false;
-		String rwType = rwlockmatch.get(pidhashcode)[0];   // [0] means "R" or "W"
-		if (rwType.equals("R"))
-			return true;
-		return false;
-	}
+	//public boolean 
+	
+	
+    //newly added
+    /**
+     * CRCode - Lock(ie,PIDOPVAL0) or Queue(ie,PIDTID) which contention resources belong to  
+     */
+    public String getCRvalue(int index) {
+    	if ( isLock(index) ) {
+    		return hbg.getNodePIDOPVAL0(index);
+    	}
+    	else if ( isEventHandler(index) ) {
+    		return hbg.getNodePIDTID(index);
+    	}
+    	return "XXX";
+    }
+    
+	
+	/**
+	 * Check if it is a contention resource
+	 */
+    public boolean isContentionResource(int index) {
+    	String type = hbg.getNodeOPTY(index);
+    	if ( type.equals( LogType.LockRequire.name() )
+    			|| type.equals( LogType.EventProcEnter.name() )
+    			// part of the followings
+    			//|| type.equals( LogType.MsgProcEnter.name() )
+    			//|| type.equals( LogType.ThdEnter.name() )    				
+    			) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    
+    public boolean isRelevantCR() {
+    	return false;
+    }
+    
+    
+    
+    
+	
+    public boolean isRelevantLock(int index1, int index2) {
+    	if ( !isLock(index1) || !isLock(index2) ) return false;
+    	
+    	// Same general lock, including single lock, W/W, NOT R/R
+    	if ( isSameLock(index1, index2) && !isReadLock(index1) )  //"!isReadLock(index1)" is newly added
+    		return true;
+    	// R/W
+    	if ( isRWLockPair(index1, index2) )
+    		return true;
+    	return false;
+    }
+		
 
-	
-	public boolean isWriteLock(int index) {
-		String pidhashcode = hbg.getNodePIDOPVAL0(index);
-		if ( !rwlockmatch.containsKey(pidhashcode) )
-			return false;
-		String rwType = rwlockmatch.get(pidhashcode)[0];   // [0] means "R" or "W"
-		if (rwType.equals("W"))
-			return true;
-		return false;
-	}
-	
-	
-	public boolean isReadOrWriteLock(int index) {
-		if (isReadLock(index) || isWriteLock(index))
-			return true;
-		return false;
-	}
-
-	
+	/**
+	 * check if Lock 1 & Lock 2 are a pair of Read/Write locks
+	 */
 	public boolean isRWLockPair(int index1, int index2) {
 		if (isReadLock(index1) && isWriteLock(index2)
 				|| isWriteLock(index1) && isReadLock(index2) ) {
@@ -100,29 +130,73 @@ public class AccidentalHBGraph {
 	}
 	
 	
+	public boolean isReadOrWriteLock(int index) {
+		if (isReadLock(index) || isWriteLock(index))
+			return true;
+		return false;
+	}	
+	
+	
+	public boolean isReadLock(int index) {
+		if ( !isLock(index) ) return false;
+		
+		String pidhashcode = hbg.getNodePIDOPVAL0(index);
+		if ( !rwlockmatch.containsKey(pidhashcode) )
+			return false;
+		String rwType = rwlockmatch.get(pidhashcode)[0];   // [0] means "R" or "W"
+		if (rwType.equals("R"))
+			return true;
+		return false;
+	}
+
+	
+	public boolean isWriteLock(int index) {
+		if ( !isLock(index) ) return false;
+		
+		String pidhashcode = hbg.getNodePIDOPVAL0(index);
+		if ( !rwlockmatch.containsKey(pidhashcode) )
+			return false;
+		String rwType = rwlockmatch.get(pidhashcode)[0];   // [0] means "R" or "W"
+		if (rwType.equals("W"))
+			return true;
+		return false;
+	}
+	
+	
 	public boolean isSameLock(int index1, int index2) {
-		String pidhashcode1 = hbg.getNodePIDOPVAL0(index1);
-		String pidhashcode2 = hbg.getNodePIDOPVAL0(index2);
-    	if ( pidhashcode1.equals(pidhashcode2) )
+		if ( !isLock(index1) || !isLock(index2) ) return false;
+    	if ( hbg.getNodePIDOPVAL0(index1).equals(hbg.getNodePIDOPVAL0(index2)) )
     		return true;
     	return false;
     }
 	
 	
-    public boolean isRelevantLock(int index1, int index2) {
-		String pidhashcode1 = hbg.getNodePIDOPVAL0(index1);
-		String pidhashcode2 = hbg.getNodePIDOPVAL0(index2);
-		// same hashcode: include single lock, R/R, W/W
-    	if ( pidhashcode1.equals(pidhashcode2) )
-    		return true;
-    	// R/W
-    	if ( isRWLockPair(index1, index2) )
-    		return true;
+	public boolean isLock(int index) {
+		if ( hbg.getNodeOPTY(index).equals(LogType.LockRequire.name()) )
+			return true;
+    	return false;
+    }
+
+	
+	//useless now
+	public boolean isEventHandler(int index) {
+		if ( hbg.getNodeOPTY(index).equals( LogType.EventProcEnter.name() ) 
+    			// part of the following
+    			//|| type.equals( LogType.ThdEnter.name() )   
+				)
+			return true;
     	return false;
     }
 	
-    
-    
+	
+	//useless now
+	public boolean isRPCorSocketHandler(int index) {
+		if ( hbg.getNodeOPTY(index).equals( LogType.MsgProcEnter.name() ) )
+			return true;
+    	return false;
+    }
+	
+ 
     
     
     
@@ -293,34 +367,7 @@ public class AccidentalHBGraph {
     
 	
     
-    public boolean isContentionResource(int index) {
-    	String type = hbg.getNodeOPTY(index);
-    	if ( type.equals( LogType.LockRequire.name() )
-    			|| type.equals( LogType.EventProcEnter.name() )
-    			// part of the followings
-    			//|| type.equals( LogType.MsgProcEnter.name() )
-    			//|| type.equals( LogType.ThdEnter.name() )    				
-    			) {
-    		return true;
-    	}
-    	return false;
-    }
-    
-    
-    //newly added
-    /**
-     * CRCode - Lock(ie,PIDOPVAL0) or Queue(ie,PIDTID) which contention resources belong to  
-     */
-    public String getCRCode(int index) {
-    	if ( hbg.getNodeOPTY(index).equals(LogType.LockRequire.name()) ) {
-    		return hbg.getNodePIDOPVAL0(index);
-    	}
-    	else if ( hbg.getNodeOPTY(index).equals(LogType.EventProcEnter.name()) ) {
-    		return hbg.getNodePIDTID(index);
-    	}
-    	return "XXX";
-    }
-    
+
     
     
     

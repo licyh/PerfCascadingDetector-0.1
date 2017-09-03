@@ -443,13 +443,16 @@ public class LogInfoExtractor {
 	}
 	
 	
-	
+	/**
+	 * Note: for a node index "x", its outer resources may contain itself. So for usage, users may need to check this.
+	 */
     public void computeOuterResources() {
     	// for locks - check their inner locks
     	resolveInnerLocks( lockBlocks );
 		// for event handlers - check their inner locks
     	resolveInnerLocks( eventHandlerBlocks );
     }
+    
     
     public void resolveInnerLocks(LinkedHashMap<Integer, Integer> crBlocks) {
 		for (int crIndex: crBlocks.keySet()) {
@@ -459,14 +462,16 @@ public class LogInfoExtractor {
 			
 			for (int x = crBegin+1; x < crEnd; x++) {
 				if ( hbg.getNodeOPTY(x).equals(LogType.LockRequire.name())  //ie, inner locks  //it seems we do not need to check inner EventHandler etc. 
-					 && crContainsLock(crIndex, x) ) {
+					 //&& !ag.getCRCode(crIndex).equals( ag.getCRCode(x) )  //no need
+					 && crContainsLock(crIndex, x) 
+					 ) {
 					
 					if ( !outerResources.containsKey(x) ) {
 						HashSet<String> set = new HashSet<String>();
 						outerResources.put(x, set);
 					}
 					HashSet<String> set = outerResources.get(x);
-					set.add( ag.getCRCode(crIndex) );
+					set.add( ag.getCRvalue(crIndex) );
 				}
 			}
 		}
