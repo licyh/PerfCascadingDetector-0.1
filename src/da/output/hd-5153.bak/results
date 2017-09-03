@@ -1,5 +1,25 @@
-//FINAL
+//FINAL SIMPLE
 
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processAndHandleReportedBlock-2712;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processAndHandleReportedBlock-2716;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processAndHandleReportedBlock-2730;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processFirstBlockReport-1775;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processIncrementalBlockReport-2759;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processReport-1730;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processReport-1733;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processReport-1737;
+CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processReport-1751;
+CL2: org.apache.hadoop.hdfs.server.namenode.EditLogFileOutputStream-preallocate-228;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSDirectory-mkdirs-2011;
+CL2: org.apache.hadoop.hdfs.server.namenode.FSImageSerialization-writeCompactBlockArray-459;
+CL2: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;
+CL2: org.apache.hadoop.hdfs.server.namenode.NNStorage-writeTransactionIdFileToStorage-473;
+CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;
+CL3: org.apache.hadoop.hdfs.server.namenode.LeaseManager-checkLeases-457;
+//summary - 16(#static codepoints=15) from 85
+
+
+//old version
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processAndHandleReportedBlock-2712;		#may small. seems for added blocks
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processAndHandleReportedBlock-2716;		#may small. seems for added blocks
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processAndHandleReportedBlock-2730;		#may small. seems for added blocks

@@ -191,7 +191,7 @@ public class CascadingUtil {
 	
 	
 	
-    public boolean checkChain(LoopBug loopbug) {
+    public boolean validateChain(LoopBug loopbug) {
     	int cascadingLevel = loopbug.getCascadingLevel();
     	ArrayList<Integer> cascadingChain = loopbug.getCascadingChain();
     	//newly added
@@ -241,16 +241,6 @@ public class CascadingUtil {
     	Set<String> outerCRs = logInfo.getOuterResources().get(crX);
     	
     	return outerCRs.contains( ag.getCRvalue(cr) );
-    	
-    	/*
-    	for (String crCode: logInfo.getOuterResources().get(cr)) {
-			if (crCode.equals( ag.getCRvalue(cr) )) continue;  //yes
-			if (DEBUG)
-				System.out.println("JX - DEBUG - checkChain: outerCRs-" + crCode);
-			if (alreadyOwn.contains(crCode))
-				return false;
-		}
-    	*/
     }
 
 }
