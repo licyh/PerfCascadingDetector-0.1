@@ -194,32 +194,40 @@ public class CascadingUtil {
     public boolean checkChain(LoopBug loopbug) {
     	int cascadingLevel = loopbug.getCascadingLevel();
     	ArrayList<Integer> cascadingChain = loopbug.getCascadingChain();
-    	
     	//newly added
-    	if (cascadingLevel <= 1)
-    		return true;
+    	if (cascadingLevel <= 1) return true;
     	
-    	HashSet<String> own = new HashSet<String>();
+    	HashSet<String> alreadyOwn = new HashSet<String>();
     	for (int x: cascadingChain) {
     		if ( ag.isContentionResource(x) )
-    			own.add( ag.getCRvalue(x) );
+    			alreadyOwn.add( ag.getCRvalue(x) );
     	}
     	
+    	
+    	//DEBUG
+    	int node = loopbug.getNodeIndex();
+    	boolean DEBUG = hbg.lastCallstack(node).contains("org.apache.hadoop.hdfs.server.blockmanagement.BlockManager-processReport-1730");
+		if (DEBUG)
+			System.out.println("JX - DEBUG - checkChain: own-" + alreadyOwn);
+    	
+    	
     	//System.out.println("JX - DEBUG - checkChain: own.size()=" + own.size());
-    	for (int i = 0; i < cascadingChain.size(); i++) {
-    		int x = cascadingChain.get(i);
+    	for (int i = 0; i < cascadingChain.size(); i++)
     		if (i%2==1 || i==cascadingChain.size()-1) {    //means: loop -> 1:lock(HERE) <-> lock -> 3:LOCK(HERE) <-> lock -> 5:LOCK(HERE) <-> 6:LOCK(HERE)
-    			if (!logInfo.getOuterResources().containsKey(x)) continue;
+    			int cr = cascadingChain.get(i);
+    			if (!logInfo.getOuterResources().containsKey(cr)) continue;
+    			if (logInfo.getOuterResources().get(cr) == null) continue;
     			
-    			if (logInfo.getOuterResources().get(x) != null)
-    			for (String crCode: logInfo.getOuterResources().get(x)) {
-    				if (crCode.equals( ag.getCRvalue(x) )) continue;  //yes
-    				
-    				if (own.contains(crCode))
+    			if (DEBUG)
+    				System.out.println("JX - DEBUG - checkChain: Node-" + hbg.getPrintedIdentity(cr));
+    			for (String crCode: logInfo.getOuterResources().get(cr)) {
+    				if (crCode.equals( ag.getCRvalue(cr) )) continue;  //yes
+    				if (DEBUG)
+        				System.out.println("JX - DEBUG - checkChain: outerCRs-" + crCode);
+    				if (alreadyOwn.contains(crCode))
     					return false;
     			}
     		}
-    	}
     	return true;
     }
     
