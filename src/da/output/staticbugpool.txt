@@ -3,8 +3,9 @@
 
 //New Sink's Bugs
 
-//#static codepoints = 12
+//#static codepoints = 13
 CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-949;
+CL0: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-211;
 CL0: org.apache.hadoop.mapred.TaskTracker-checkJobStatusAndWait-469;
 CL0: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2298;
 CL0: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-295;
