@@ -3,7 +3,7 @@
 
 //New Sink's Bugs
 
-//104 (#static codepoints=77)
+//85 (#static codepoints=77)
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfo-findDatanode-250;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfo-findStorageInfo-266;
 CL2: org.apache.hadoop.hdfs.server.blockmanagement.BlockInfo-findStorageInfo-283;
@@ -77,34 +77,15 @@ CL2: org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics-addSync-235;
 CL2: org.apache.hadoop.hdfs.server.protocol.RemoteEditLogManifest-checkState-51;
 CL2: org.apache.hadoop.hdfs.util.LightWeightHashSet-computeCapacity-448;
 CL2: org.apache.hadoop.hdfs.util.ReadOnlyList$Util-binarySearch-70;
-CL3: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor-updateHeartbeat-359;
-CL3: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-resetLastCachingDirectiveSentTime-1434;
 CL3: org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager-heartbeatCheck-248;
 CL3: org.apache.hadoop.hdfs.server.blockmanagement.PendingReplicationBlocks$PendingReplicationMonitor-pendingReplicationCheck-241;
-CL3: org.apache.hadoop.hdfs.server.namenode.EditLogFileOutputStream-preallocate-228;
 CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog-logSync-565;
-CL3: org.apache.hadoop.hdfs.server.namenode.FSEditLog-waitIfAutoSyncScheduled-425;
-CL3: org.apache.hadoop.hdfs.server.namenode.FSImageSerialization-writeCompactBlockArray-459;
 CL3: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-addStreamsToCollectionFromFiles-262;
 CL3: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-getRemoteEditLogs-182;
 CL3: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-matchEditLogs-216;
-CL3: org.apache.hadoop.hdfs.server.namenode.INode-getPathComponents-632;
-CL3: org.apache.hadoop.hdfs.server.namenode.INodesInPath-resolve-127;
-CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-getNumSync-507;
-CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet$JournalSetOutputStream-shouldForceSync-497;
 CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet-getEditLogManifest-592;
 CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet-getEditLogManifest-610;
-CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet-getSyncTimes-651;
 CL3: org.apache.hadoop.hdfs.server.namenode.JournalSet-mapJournalsAndReportErrors-347;
-CL3: org.apache.hadoop.hdfs.server.namenode.LeaseManager$Lease-findPath-258;
-CL3: org.apache.hadoop.hdfs.server.namenode.LeaseManager-changeLease-344;
 CL3: org.apache.hadoop.hdfs.server.namenode.LeaseManager-checkLeases-457;
-CL3: org.apache.hadoop.hdfs.server.namenode.LeaseManager-findLeaseWithPrefixPath-378;
 CL3: org.apache.hadoop.hdfs.server.namenode.NameNodeResourcePolicy-areResourcesAvailable-56;
-CL3: org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics-addSync-235;
 CL3: org.apache.hadoop.hdfs.server.protocol.RemoteEditLogManifest-checkState-51;
-CL3: org.apache.hadoop.hdfs.util.ReadOnlyList$Util-binarySearch-70;
-CL4: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor-updateHeartbeat-359;
-CL4: org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager-resetLastCachingDirectiveSentTime-1434;
-CL4: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-addStreamsToCollectionFromFiles-262;
-CL4: org.apache.hadoop.hdfs.server.namenode.FileJournalManager-matchEditLogs-216;
