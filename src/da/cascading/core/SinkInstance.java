@@ -434,10 +434,10 @@ public class SinkInstance {
     		return true;
     	
         //Pruning 1 - Checking job identity - ie, false positive pruning  #ps - another place at AHB grpah for queue-related
-    	
+    	/*
         if ( DO_JOBTAGGING && cascadingLevel>=2 && jt.isSameJobID(nodeIndex, loopbug.getCascadingChain().get(loopbug.getCascadingChain().size()-1)) ) 
         	return true;
-		
+		*/
         return false;
     }
     
@@ -447,39 +447,6 @@ public class SinkInstance {
 
 
 
-
-
-
-
-
-
-
-
-
-
-/**
- * obtain all of outer-layer locks for the current lock block of (beginIndex,endIndex)
- * Return - Set<"PIDOPVAL0">
- */
-/*
-public Set<String> obtainOuterLocks(int beginIndex, int endIndex) {
-	// Note: if this part takes much time, then change to "for (int i = index-1; i >= index-20; i--) {"
-	//get its outer locks, to avoid "(lockA - )lockB<index> - lockA<k> - uA-uB-uA"
-	Set<String> outerlocks = new HashSet<String>();
-	if ( !hbg.getNodeOPTY(beginIndex).equals(LogType.LockRequire.name()) ) 
-		return outerlocks;
-	
-	for (int i = beginIndex-1; i >= 0; i--) {
-		if ( !hbg.isSameThread(i, beginIndex) ) break;
-		if ( hbg.getNodeOPTY(i).equals("LockRequire") ) {
-			if (lockBlocks.get(i) != null && lockBlocks.get(i) > endIndex) {
-				outerlocks.add( hbg.getNodePIDOPVAL0(i) );
-			}
-		}
-	}
-	return outerlocks;
-}
-*/
 
 
 
