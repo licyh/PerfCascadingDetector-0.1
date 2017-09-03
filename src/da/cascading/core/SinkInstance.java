@@ -334,7 +334,7 @@ public class SinkInstance {
     	
     	// check Lock
     	if ( hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()) ) {
-			if ( !ag.isRelevantLock(beginIndex, x) ) {                         // prune "lock beginIndex=x -> lock x"
+			if ( !ag.isRelevantLock(beginIndex, x) ) {                         // prune "lock beginIndex=x -> lock x", including R/R
 				if ( logInfo.getOuterResources().get(beginIndex) == null        // prune "lock x -> lock beginIndex -> lock x"
 						|| logInfo.getOuterResources().get(beginIndex) != null && !logInfo.getOuterResources().get(beginIndex).contains( ag.getCRvalue(x) )
 						) {
@@ -423,10 +423,10 @@ public class SinkInstance {
     	
     	//Pre Pruning - Checking chain - ie, false positive pruning
     	
-    	
+    	/*
     	if ( cascadingLevel>=2 && !cascadingUtil.checkChain(loopbug) ) 
     		return true;
-    	
+    	*/
     	
         //Pruning 1 - Checking job identity - ie, false positive pruning  #ps - another place at AHB grpah for queue-related
     	
