@@ -237,6 +237,10 @@ public class SinkInstance {
         			ArrayList<Integer> list = ag.accurateLockmemref.get( pidopval0 );
     	    		for (int index: list) {
     	    			if (resIndex == index) continue;  
+    	    			
+    	    			//added newly
+    	    			if ( cascadingUtil.outerCRsContains(resIndex, index) ) continue;
+    	    			
     	                if ( !DO_HBCONCURRENT 
     	                		|| DO_HBCONCURRENT && hbg.isFlippedorder(resIndex, index) ) {
     	                	nextResources.add( index );
@@ -249,7 +253,11 @@ public class SinkInstance {
         			String correspondingPidopval0 = ag.rwlockmatch.get( pidopval0 )[1];
         			ArrayList<Integer> list = ag.accurateLockmemref.get( correspondingPidopval0 );  //or using dotlockmemref.get( xx )
         			if (list != null)  //needed
-        			for (int index: list) {                                                                 
+        			for (int index: list) {                
+        				
+        				//added newly
+    	    			if ( cascadingUtil.outerCRsContains(resIndex, index) ) continue;
+        				
         				if ( !DO_HBCONCURRENT
         						|| DO_HBCONCURRENT && hbg.isFlippedorder(resIndex, index) ) {      
         					nextResources.add( index );            

@@ -232,14 +232,26 @@ public class CascadingUtil {
     }
     
    
-        
-    
-    /*
-    public boolean checkJobID(int index1, int index2) {
-    	//Pruning 2 - Checking job identity - ie, false positive pruning
-    	return new JobTagger(this.hbg).isSameJobID(index1, index2);
+    /**
+     * 
+     */
+    public boolean outerCRsContains(int crX, int cr) {
+    	if ( !logInfo.getOuterResources().containsKey(crX) //|| logInfo.getOuterResources().get(crX) == null	
+    			) return false;
+    	Set<String> outerCRs = logInfo.getOuterResources().get(crX);
+    	
+    	return outerCRs.contains( ag.getCRvalue(cr) );
+    	
+    	/*
+    	for (String crCode: logInfo.getOuterResources().get(cr)) {
+			if (crCode.equals( ag.getCRvalue(cr) )) continue;  //yes
+			if (DEBUG)
+				System.out.println("JX - DEBUG - checkChain: outerCRs-" + crCode);
+			if (alreadyOwn.contains(crCode))
+				return false;
+		}
+    	*/
     }
-    */
 
 }
 
