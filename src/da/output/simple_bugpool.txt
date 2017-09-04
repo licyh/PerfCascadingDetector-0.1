@@ -3,7 +3,7 @@
 
 //New Sink's Bugs
 
-//72 (#static codepoints=43)
+//107 (#static codepoints=58)
 CL2: org.apache.hadoop.mapred.MapReduceChildJVM-getVMCommand-201;
 CL2: org.apache.hadoop.mapred.MapReduceChildJVM-getVMCommand-246;
 CL2: org.apache.hadoop.mapred.MapReduceChildJVM-setVMEnv-99;
@@ -16,7 +16,13 @@ CL2: org.apache.hadoop.mapreduce.counters.FileSystemCounterGroup-incrAllCounters
 CL2: org.apache.hadoop.mapreduce.counters.FrameworkCounterGroup-incrAllCounters-206;
 CL2: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-commitJob-302;
 CL2: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-mergePaths-353;
+CL2: org.apache.hadoop.mapreduce.split.JobSplit$SplitMetaInfo-readFields-115;
+CL2: org.apache.hadoop.mapreduce.split.SplitMetaInfoReader-readSplitMetaInfo-70;
 CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl$CounterUpdateTransition-transition-1457;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl$InitTransition-createMapTasks-1069;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl$InitTransition-createReduceTasks-1087;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl$InitTransition-transition-991;
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl-computeProgress-591;
 CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl-constructFinalFullcounters-1208;
 CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl-scheduleTasks-650;
 CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.MapTaskImpl-getSplitsAsString-92;
@@ -29,9 +35,18 @@ CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl-getLaunchTime-434;
 CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl-selectBestAttempt-493;
 CL2: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator$ScheduledRequests-addMap-675;
 CL2: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator$ScheduledRequests-addMap-686;
+CL2: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator$ScheduledRequests-assign-714;
+CL2: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator$ScheduledRequests-assignToMap-926;
+CL2: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator$ScheduledRequests-assignToMap-929;
+CL2: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator-getResources-596;
+CL2: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator-scheduleAllReduces-502;
 CL2: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerRequestor-addContainerReq-266;
 CL2: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerRequestor-addContainerReq-274;
+CL2: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerRequestor-decContainerReq-284;
+CL2: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerRequestor-decContainerReq-288;
 CL2: org.apache.hadoop.mapreduce.v2.util.MRApps-setMRFrameworkClasspath-179;
+CL2: org.apache.hadoop.yarn.api.records.impl.pb.AMResponsePBImpl-initLocalFinishedContainerList-252;
+CL2: org.apache.hadoop.yarn.api.records.impl.pb.AMResponsePBImpl-initLocalNewContainerList-160;
 CL2: org.apache.hadoop.yarn.api.records.impl.pb.ContainerLaunchContextPBImpl-initApplicationACLs-449;
 CL2: org.apache.hadoop.yarn.api.records.impl.pb.ContainerLaunchContextPBImpl-initCommands-160;
 CL2: org.apache.hadoop.yarn.api.records.impl.pb.ContainerLaunchContextPBImpl-initEnv-384;
@@ -48,11 +63,25 @@ CL3: org.apache.hadoop.mapred.PeriodicStatsAccumulator-extend-166;
 CL3: org.apache.hadoop.mapred.SortedRanges$SkipRangeIterator-doNext-349;
 CL3: org.apache.hadoop.mapred.SortedRanges-write-203;
 CL3: org.apache.hadoop.mapred.Task$GcTimeUpdater-getElapsedGc-839;
+CL3: org.apache.hadoop.mapreduce.counters.AbstractCounterGroup-incrAllCounters-201;
 CL3: org.apache.hadoop.mapreduce.counters.AbstractCounterGroup-write-160;
+CL3: org.apache.hadoop.mapreduce.counters.AbstractCounters-incrAllCounters-340;
 CL3: org.apache.hadoop.mapreduce.counters.AbstractCounters-write-261;
 CL3: org.apache.hadoop.mapreduce.counters.AbstractCounters-write-273;
+CL3: org.apache.hadoop.mapreduce.counters.FileSystemCounterGroup-incrAllCounters-243;
+CL3: org.apache.hadoop.mapreduce.counters.FrameworkCounterGroup-incrAllCounters-206;
 CL3: org.apache.hadoop.mapreduce.counters.FrameworkCounterGroup-size-195;
 CL3: org.apache.hadoop.mapreduce.counters.FrameworkCounterGroup-write-220;
+CL3: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-commitJob-302;
+CL3: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-mergePaths-353;
+CL3: org.apache.hadoop.mapreduce.split.JobSplit$SplitMetaInfo-readFields-115;
+CL3: org.apache.hadoop.mapreduce.split.SplitMetaInfoReader-readSplitMetaInfo-70;
+CL3: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl$CounterUpdateTransition-transition-1457;
+CL3: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl$InitTransition-createMapTasks-1069;
+CL3: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl$InitTransition-createReduceTasks-1087;
+CL3: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl$InitTransition-transition-991;
+CL3: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl-constructFinalFullcounters-1208;
+CL3: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl-scheduleTasks-650;
 CL3: org.apache.hadoop.mapreduce.v2.app.job.impl.MapTaskImpl-getSplitsAsString-92;
 CL3: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl$RequestContainerTransition-transition-1132;
 CL3: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-createContainerLaunchContext-737;
@@ -76,3 +105,9 @@ CL4: org.apache.hadoop.mapreduce.counters.AbstractCounters-write-261;
 CL4: org.apache.hadoop.mapreduce.counters.AbstractCounters-write-273;
 CL4: org.apache.hadoop.mapreduce.counters.FrameworkCounterGroup-size-195;
 CL4: org.apache.hadoop.mapreduce.counters.FrameworkCounterGroup-write-220;
+CL4: org.apache.hadoop.mapreduce.v2.util.MRApps-setMRFrameworkClasspath-179;
+CL4: org.apache.hadoop.yarn.api.records.impl.pb.ContainerLaunchContextPBImpl-initApplicationACLs-449;
+CL4: org.apache.hadoop.yarn.api.records.impl.pb.ContainerLaunchContextPBImpl-initEnv-384;
+CL4: org.apache.hadoop.yarn.api.records.impl.pb.ContainerLaunchContextPBImpl-initLocalResources-235;
+CL4: org.apache.hadoop.yarn.api.records.impl.pb.ContainerLaunchContextPBImpl-initServiceData-321;
+CL4: org.apache.hadoop.yarn.util.Apps-setEnvFromInputString-68;
