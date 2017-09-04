@@ -2,6 +2,26 @@
 FINALL
 
 
+//newest   - used only for without tagging/hb/...
+CL2: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-commitJob-302;									#real bug
+CL2: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-mergePaths-353;									#real bug
+CL2: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl-scheduleTasks-650;										#NO runtime contain real I/Os
+CL2~3: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl$RequestContainerTransition-transition-1132;
+CL2~3: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-resolveHosts-1145;								#small loop
+CL2~3: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl$AttemptSucceededTransition-transition-770;			#small loop
+CL2: org.apache.hadoop.yarn.service.AbstractService-changeState-113;
+CL3~4: org.apache.hadoop.mapred.SortedRanges-write-203;
+CL3~4: org.apache.hadoop.mapreduce.counters.AbstractCounters-write-261;
+CL3~4: org.apache.hadoop.mapreduce.counters.AbstractCounters-write-273;
+CL3~4: org.apache.hadoop.mapreduce.counters.FrameworkCounterGroup-write-220;
+//summary - 18(#static codepoints=11) from 72
+
+
+
+
+
+
+//current version - used currently
 CL2: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-commitJob-302;                                #real bug
 ////CL2: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-commitJob-304;								  (jx: delete - this is added by myself)
 CL2: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-mergePaths-353;                               #real bug
