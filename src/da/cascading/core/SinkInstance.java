@@ -68,13 +68,18 @@ public class SinkInstance {
 
     
     //for validity test
-    //boolean DO_HBCONCURRENT = true;      //default should be true;
-    boolean DO_HBCONCURRENT = false;      //default should be true;
+    boolean DO_HBCONCURRENT = true;      //default should be true;
+    //boolean DO_HBCONCURRENT = false;      //default should be true;
     boolean DO_JOBTAGGING = true;		 //default should be true;
     //boolean DO_JOBTAGGING = false;		 //default should be true;
     
     //add
     boolean DO_VALIDATECHAIN = true;
+    
+    
+    
+    
+    
     
     
     

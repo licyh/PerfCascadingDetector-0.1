@@ -17,4 +17,3 @@ CL0: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator$ScheduledRequest
 CL0: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator-getResources-596;
 CL0: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-resolveHosts-1145;
 //summary - 18(#static codepoints=18) from 58
-
