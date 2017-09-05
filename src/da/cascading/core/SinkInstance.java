@@ -33,6 +33,7 @@ public class SinkInstance {
 	// sink's begin index & end index
 	int beginIndex;
 	int endIndex;
+	Sink sink;
 	
 	String projectDir;
 	HappensBeforeGraph hbg;
@@ -87,7 +88,7 @@ public class SinkInstance {
 		this.beginIndex = beginIndex;
 		this.endIndex = endIndex;
 	}
-	
+		
 	
 	public int getBeginIndex() {
 		return this.beginIndex;
@@ -96,6 +97,15 @@ public class SinkInstance {
 	
 	public int getEndIndex() {
 		return this.endIndex;
+	}
+	
+	
+	public Sink getSink() {
+		return this.sink;
+	}
+	
+	public void setSink(Sink sink) {
+		this.sink = sink;
 	}
 	
 	
@@ -111,6 +121,10 @@ public class SinkInstance {
 		this.ag = ag;
 		this.logInfo = logInfo;
 		this.jt = jt;
+        //more
+        this.cascadingUtil = this.sink.getCascadingUtil();
+        this.bugPool = this.sink.getBugPool();
+        
 		
 		this.targetCodeBlocks = logInfo.getTargetCodeBlocks(); 
 	    this.eventHandlerBlocks = logInfo.getEventHandlerBlocks(); 
@@ -128,20 +142,6 @@ public class SinkInstance {
         }
 	}
 	
-	
-	public void setBugPool(BugPool bugPool) {
-		this.bugPool = bugPool;
-	}
-	
-	/*
-	public void setOuterLocks( HashMap<Integer, HashSet<String>> outerResources ) {
-		this.outerLocks = outerResources;
-	}
-	*/
-	
-	public void setCascadingUtil( CascadingUtil cascadingUtil ) {
-		this.cascadingUtil = cascadingUtil;
-	}
 	
 	
 	public void doWork() {

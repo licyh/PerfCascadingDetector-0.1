@@ -385,6 +385,7 @@ public class LogInfoExtractor {
     			this.sinks.add(targetSink);
     		}
     		targetSink.addInstance(sinkInstance);
+    		sinkInstance.setSink(targetSink);
     	}
     	
     	//sort by ID

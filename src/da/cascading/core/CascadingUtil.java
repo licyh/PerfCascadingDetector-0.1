@@ -17,10 +17,13 @@ import da.tagging.JobTagger;
 
 public class CascadingUtil {
 
+	Sink sink;
+	
 	String projectDir;
 	HappensBeforeGraph hbg;
 	AccidentalHBGraph ag;
 	LogInfoExtractor logInfo;
+	
 	
 	public CascadingUtil(String projectDir, HappensBeforeGraph hbg, AccidentalHBGraph ag, LogInfoExtractor logInfo) {
 		this.projectDir = projectDir;
@@ -29,7 +32,9 @@ public class CascadingUtil {
 		this.logInfo = logInfo;
 	}
 	
-	
+	public void setSink(Sink sink) {
+		this.sink = sink;
+	}
 	
 	/************************************************************
 	 * Core
@@ -88,7 +93,7 @@ public class CascadingUtil {
     	traversedNodes.set( x );
     	
     	if ( !Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-4088") 
-    			&& !Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-2705") 
+    			&& !(Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-2705")&&(sink.getID().equals("1"))) 
     			)
     	if ( hbg.getNodeOPTY(x).equals(LogType.LockRequire.name()) ) {
     		resources.add( x );

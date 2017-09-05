@@ -78,9 +78,20 @@ public class Sink {
 	}
 	
 	
+	public CascadingUtil getCascadingUtil() {
+		return this.cascadingUtil;
+	}
+	
+	public BugPool getBugPool() {
+		return this.bugPool;
+	}
+	
+	
 	public void doWork() {
 		this.cascadingUtil = new CascadingUtil(this.projectDir, this.hbg, this.ag, this.ag.getLogInfoExtractor());
+		this.cascadingUtil.setSink(this);
 		this.bugPool = new BugPool(this.projectDir, this.hbg);
+		
 		handleSink();               // traverseTargetCodes
 		bugPool.printResults(true);     // print the results
 		//bugPool.printJobIdentity();
@@ -108,8 +119,6 @@ public class Sink {
     	for (SinkInstance instance: this.instances) {
     		System.out.println( "\n#" + (++numofsnippets) + "-" + instance );
     		instance.setEnv(this.projectDir, this.hbg, this.ag, this.ag.getLogInfoExtractor(), this.jt);
-    		instance.setCascadingUtil(this.cascadingUtil);
-    		instance.setBugPool(this.bugPool);
     		instance.doWork();
     		//for DEBUG
     		//break;
