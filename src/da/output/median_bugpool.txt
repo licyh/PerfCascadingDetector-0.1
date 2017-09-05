@@ -3,7 +3,8 @@
 
 //New Sink's Bugs
 
-//28 (#static codepoints=14)
+//30 (#static codepoints=14)
+CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-buildServerLoad-761;org.apache.hadoop.hbase.regionserver.HRegionServer-reportForDuty-1498;org.apache.hadoop.hbase.regionserver.HRegionServer-tryReportForDuty-1468;org.apache.hadoop.hbase.regionserver.HRegionServer-run-563;java.lang.Thread-run-745;
 CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-buildServerLoad-761;org.apache.hadoop.hbase.regionserver.HRegionServer-tryRegionServerReport-717;org.apache.hadoop.hbase.regionserver.HRegionServer-run-586;java.lang.Thread-run-745;
 CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-closeAllRegions-1555;org.apache.hadoop.hbase.regionserver.HRegionServer-run-656;java.lang.Thread-run-745;
 CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-closeUserRegions-1580;org.apache.hadoop.hbase.regionserver.HRegionServer-closeAllRegions-1548;org.apache.hadoop.hbase.regionserver.HRegionServer-run-656;java.lang.Thread-run-745;
@@ -19,6 +20,7 @@ CL2: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-328;o
 CL2: org.apache.hadoop.hbase.regionserver.Store-getStorefilesIndexSize-1377;org.apache.hadoop.hbase.regionserver.HRegionServer-createRegionLoad-911;org.apache.hadoop.hbase.regionserver.HRegionServer-buildServerLoad-762;org.apache.hadoop.hbase.regionserver.HRegionServer-tryRegionServerReport-717;org.apache.hadoop.hbase.regionserver.HRegionServer-run-586;java.lang.Thread-run-745;
 CL2: org.apache.hadoop.hbase.regionserver.Store-getStorefilesIndexSize-1377;org.apache.hadoop.hbase.regionserver.HRegionServer-metrics-1164;org.apache.hadoop.hbase.regionserver.HRegionServer-doMetrics-1139;org.apache.hadoop.hbase.regionserver.HRegionServer-run-585;java.lang.Thread-run-745;
 CL2: org.apache.hadoop.hbase.regionserver.Store-getStorefilesSize-1361;org.apache.hadoop.hbase.regionserver.HRegionServer-createRegionLoad-910;org.apache.hadoop.hbase.regionserver.HRegionServer-buildServerLoad-762;org.apache.hadoop.hbase.regionserver.HRegionServer-tryRegionServerReport-717;org.apache.hadoop.hbase.regionserver.HRegionServer-run-586;java.lang.Thread-run-745;
+CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-buildServerLoad-761;org.apache.hadoop.hbase.regionserver.HRegionServer-reportForDuty-1498;org.apache.hadoop.hbase.regionserver.HRegionServer-tryReportForDuty-1468;org.apache.hadoop.hbase.regionserver.HRegionServer-run-563;java.lang.Thread-run-745;
 CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-buildServerLoad-761;org.apache.hadoop.hbase.regionserver.HRegionServer-tryRegionServerReport-717;org.apache.hadoop.hbase.regionserver.HRegionServer-run-586;java.lang.Thread-run-745;
 CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-closeAllRegions-1555;org.apache.hadoop.hbase.regionserver.HRegionServer-run-656;java.lang.Thread-run-745;
 CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-closeUserRegions-1580;org.apache.hadoop.hbase.regionserver.HRegionServer-closeAllRegions-1548;org.apache.hadoop.hbase.regionserver.HRegionServer-run-656;java.lang.Thread-run-745;
@@ -37,9 +39,8 @@ CL4: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;org.apache.hadoop.hbase.ut
 
 //New Sink's Bugs
 
-//5 (#static codepoints=3)
+//4 (#static codepoints=3)
 CL2: org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor-chore-1563;org.apache.hadoop.hbase.Chore-run-66;
 CL2: org.apache.hadoop.hbase.master.AssignmentManager-nodeChildrenChanged-557;org.apache.hadoop.hbase.zookeeper.ZooKeeperWatcher-process-275;org.apache.zookeeper.ClientCnxn$EventThread-processEvent-530;org.apache.zookeeper.ClientCnxn$EventThread-run-506;
+CL2: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;org.apache.hadoop.hbase.util.Hash-hash-121;org.apache.hadoop.hbase.HRegionInfo-encodeRegionName-105;org.apache.hadoop.hbase.master.AssignmentManager-handleRegion-358;org.apache.hadoop.hbase.master.AssignmentManager-nodeCreated-500;org.apache.hadoop.hbase.zookeeper.ZooKeeperWatcher-process-254;org.apache.zookeeper.ClientCnxn$EventThread-processEvent-530;org.apache.zookeeper.ClientCnxn$EventThread-run-506;
 CL2: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;org.apache.hadoop.hbase.util.Hash-hash-121;org.apache.hadoop.hbase.HRegionInfo-encodeRegionName-105;org.apache.hadoop.hbase.master.AssignmentManager-handleRegion-358;org.apache.hadoop.hbase.master.AssignmentManager-nodeDataChanged-529;org.apache.hadoop.hbase.zookeeper.ZooKeeperWatcher-process-268;org.apache.zookeeper.ClientCnxn$EventThread-processEvent-530;org.apache.zookeeper.ClientCnxn$EventThread-run-506;
-CL3: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;org.apache.hadoop.hbase.util.Hash-hash-121;org.apache.hadoop.hbase.HRegionInfo-encodeRegionName-105;org.apache.hadoop.hbase.HRegionInfo-getEncodedName-438;org.apache.hadoop.hbase.regionserver.HRegion-getRegionDir-2579;org.apache.hadoop.hbase.util.FSUtils-rootRegionExists-324;org.apache.hadoop.hbase.master.MasterFileSystem-checkRootDir-239;org.apache.hadoop.hbase.master.MasterFileSystem-createInitialFileSystemLayout-105;org.apache.hadoop.hbase.master.MasterFileSystem-<init>-90;org.apache.hadoop.hbase.master.HMaster-finishInitialization-341;org.apache.hadoop.hbase.master.HMaster-run-277;
-CL3: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;org.apache.hadoop.hbase.util.Hash-hash-121;org.apache.hadoop.hbase.HRegionInfo-encodeRegionName-105;org.apache.hadoop.hbase.HRegionInfo-getEncodedName-438;org.apache.hadoop.hbase.zookeeper.MetaNodeTracker-<init>-53;org.apache.hadoop.hbase.catalog.CatalogTracker-<init>-121;org.apache.hadoop.hbase.master.HMaster-finishInitialization-347;org.apache.hadoop.hbase.master.HMaster-run-277;
