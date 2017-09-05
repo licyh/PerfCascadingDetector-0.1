@@ -1,0 +1,79 @@
+
+
+
+//New Sink's Bugs
+
+//41 (#static codepoints=19)
+CL2: org.apache.hadoop.io.IOUtils-copyBytes-71;
+CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2151;
+CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2156;
+CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;
+CL2: org.apache.hadoop.mapred.TaskTracker-localizeJobFiles-1044;
+CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
+CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
+CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;
+CL3: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
+CL3: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
+CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-795;
+CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-801;
+CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-834;
+CL3: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;
+CL3: org.apache.hadoop.mapred.TaskTracker-buildTaskControllerJobPathDeletionContexts-1835;
+CL3: org.apache.hadoop.mapred.TaskTracker-buildTaskControllerTaskPathDeletionContexts-1859;
+CL3: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
+CL3: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;
+CL4: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
+CL4: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
+CL4: org.apache.hadoop.mapred.JvmManager$JvmManagerForType-reapJvm-335;
+CL4: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-279;
+CL4: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-801;
+CL4: org.apache.hadoop.mapred.TaskTracker-buildTaskControllerJobPathDeletionContexts-1835;
+CL4: org.apache.hadoop.mapred.TaskTracker-buildTaskControllerTaskPathDeletionContexts-1859;
+CL4: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
+CL4: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;
+CL4: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
+CL5: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
+CL5: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
+CL5: org.apache.hadoop.mapred.JvmManager$JvmManagerForType-reapJvm-335;
+CL5: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-279;
+CL5: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-795;
+CL5: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-801;
+CL5: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-834;
+CL5: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;
+CL5: org.apache.hadoop.mapred.TaskTracker-buildTaskControllerTaskPathDeletionContexts-1859;
+CL5: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
+CL5: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
+CL6: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-801;
+CL6: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;
+
+
+
+//New Sink's Bugs
+
+//26 (#static codepoints=16)
+CL2: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
+CL2: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
+CL2: org.apache.hadoop.mapred.TaskTracker-buildTaskControllerJobPathDeletionContexts-1835;
+CL2: org.apache.hadoop.mapred.TaskTracker-buildTaskControllerTaskPathDeletionContexts-1859;
+CL2: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
+CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;
+CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
+CL3: org.apache.hadoop.io.IOUtils-copyBytes-71;
+CL3: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
+CL3: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
+CL3: org.apache.hadoop.mapred.JvmManager$JvmManagerForType-reapJvm-335;
+CL3: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-279;
+CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-795;
+CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-801;
+CL3: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-834;
+CL3: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;
+CL3: org.apache.hadoop.mapred.TaskTracker-buildTaskControllerTaskPathDeletionContexts-1859;
+CL3: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
+CL3: org.apache.hadoop.mapred.TaskTracker-localizeJobFiles-1044;
+CL3: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
+CL3: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
+CL4: org.apache.hadoop.io.IOUtils-copyBytes-71;
+CL4: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-801;
+CL4: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;
+CL4: org.apache.hadoop.mapred.TaskTracker-localizeJobFiles-1044;
+CL4: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
