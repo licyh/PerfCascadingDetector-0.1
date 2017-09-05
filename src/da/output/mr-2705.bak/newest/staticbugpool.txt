@@ -1,3 +1,8 @@
+
+
+
+//New Sink's Bugs
+
 //#static codepoints = 19
 CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-834;
 CL0: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-279;
@@ -15,6 +20,28 @@ CL0: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2151;
 CL0: org.apache.hadoop.mapred.TaskTracker-localizeJobFiles-1044;
 CL0: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2156;
 CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;
-CL0: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
 CL0: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
+CL0: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
+CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
+
+
+
+//New Sink's Bugs
+
+//#static codepoints = 16
+CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-834;
+CL0: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-279;
+CL0: org.apache.hadoop.mapred.TaskTracker-buildTaskControllerJobPathDeletionContexts-1835;
+CL0: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;
+CL0: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
+CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-801;
+CL0: org.apache.hadoop.io.IOUtils-copyBytes-71;
+CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-795;
+CL0: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;
+CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
+CL0: org.apache.hadoop.mapred.TaskTracker-buildTaskControllerTaskPathDeletionContexts-1859;
+CL0: org.apache.hadoop.mapred.JvmManager$JvmManagerForType-reapJvm-335;
+CL0: org.apache.hadoop.mapred.TaskTracker-localizeJobFiles-1044;
+CL0: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
+CL0: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
 CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
