@@ -7,3 +7,4 @@ org.apache.hadoop.hdfs.server.datanode.DataBlockScanner-run--1;
 
 //hb-3483
 org.apache.hadoop.hbase.ipc.HBaseServer$Handler-run--1
+org.apache.hadoop.hbase.Chore-run--1
