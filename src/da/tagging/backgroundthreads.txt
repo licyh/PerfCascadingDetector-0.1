@@ -1,5 +1,9 @@
-//ha-4584
 //only for ThdEnter
 //ps: for this, if we log "msgEnter" for socket.accept, than we do not need this specified LIST
+
+//ha-4584
 org.apache.hadoop.hdfs.server.datanode.DataXceiver-run--1;
 org.apache.hadoop.hdfs.server.datanode.DataBlockScanner-run--1;
+
+//hb-3483
+org.apache.hadoop.hbase.ipc.HBaseServer$Handler-run--1
