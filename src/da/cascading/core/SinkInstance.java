@@ -444,10 +444,10 @@ public class SinkInstance {
     	
     	
         //Pruning 1 - Checking job identity - ie, false positive pruning  #ps - another place at AHB grpah for queue-related
-    	
+    	/*
         if ( DO_JOBTAGGING && cascadingLevel>=2 && jt.isSameJobID(nodeIndex, loopbug.getCascadingChain().get(loopbug.getCascadingChain().size()-1)) ) 
         	return true;
-		
+		*/
         return false;
     }
     
