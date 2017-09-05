@@ -1,3 +1,254 @@
-//this is a two-node tracing in Cassandran, so the 2nd node do not need this, should be commented out
-org.apache.cassandra.streaming.FileStreamTask runMayThrow 101      TargetCodeBegin
-org.apache.cassandra.streaming.FileStreamTask runMayThrow 102      TargetCodeEnd
+Lorg/apache/cassandra/utils/IntervalTree build 81 106 1
+Lorg/apache/cassandra/db/DataTracker$View newSSTables 568 106 -1
+Lorg/apache/cassandra/utils/IntervalTree$Serializer deserialize 421 106 -1
+Lorg/apache/cassandra/utils/IntervalTree$IntervalNode <init> 278 106 -1
+Lorg/apache/cassandra/db/ColumnFamilyStore getOverlappingSSTables 863 106 -1
+Lorg/apache/cassandra/db/ColumnFamilyStore getOverlappingSSTables 875 106 -1
+Lorg/apache/cassandra/utils/IntervalTree build 89 106 1
+Lorg/apache/cassandra/utils/IntervalTree$IntervalNode <init> 279 106 -1
+
+Lorg/apache/cassandra/io/sstable/SSTableSimpleUnsortedWriter$DiskWriter run 195 126 2
+Lorg/apache/cassandra/db/HintedHandOffManager doDeliverHintsToEndpoint 318 126 0
+Lorg/apache/cassandra/cache/ConcurrentLinkedHashCache get 96 126 -1
+Lorg/apache/cassandra/io/sstable/SSTableSimpleWriter close 74 126 2
+Lorg/apache/cassandra/db/SystemTable isIndexBuilt 616 126 0
+
+Lorg/apache/cassandra/db/ColumnIndex$Builder build 128 128 -6
+
+Lorg/apache/cassandra/db/ColumnIndex$Builder build 136 136 -6
+
+Lorg/apache/cassandra/utils/BytesReadTracker readInt 102 148 -1
+Lorg/apache/cassandra/db/ColumnFamilySerializer deserializeFromSSTable 157 148 3
+
+Lorg/apache/cassandra/locator/AbstractReplicationStrategy getAddressRanges 162 162 -3
+
+Lorg/apache/cassandra/db/compaction/LeveledManifest getCandidatesFor 509 167 -1
+Lorg/apache/cassandra/db/compaction/SizeTieredCompactionStrategy getNextBackgroundSSTables 111 167 -1
+Lorg/apache/cassandra/db/compaction/SizeTieredCompactionStrategy getUserDefinedTask 169 167 2
+Lorg/apache/cassandra/db/DataTracker$View nonCompactingSStables 505 167 -1
+
+Lorg/apache/cassandra/db/compaction/SizeTieredCompactionStrategy getNextBackgroundSSTables 111 1984 -1
+Lorg/apache/cassandra/db/compaction/LeveledManifest getCandidatesFor 564 1984 -1
+Lorg/apache/cassandra/db/compaction/SizeTieredCompactionStrategy getUserDefinedTask 169 1984 2
+Lorg/apache/cassandra/db/DataTracker$View nonCompactingSStables 505 1984 -1
+Lorg/apache/cassandra/db/compaction/LeveledManifest getCandidatesFor 509 1984 -1
+
+Lorg/apache/cassandra/db/DefsTable mergeKeyspaces 393 2037 -1
+Lorg/apache/cassandra/db/DefsTable loadFromStorage 305 2037 -1
+Lorg/apache/cassandra/db/commitlog/BatchCommitLogExecutorService processWithSyncBatch 88 2037 -5
+Lorg/apache/cassandra/db/DataTracker$View nonCompactingSStables 505 2037 -1
+Lorg/apache/cassandra/db/SystemTable serializedSchema 762 2037 -1
+Lorg/apache/cassandra/db/DefsTable mergeColumnFamilies 438 2037 -1
+Lorg/apache/cassandra/db/DefsTable mergeColumnFamilies 454 2037 -1
+Lorg/apache/cassandra/db/DefsTable mergeColumnFamilies 488 2037 -1
+Lorg/apache/cassandra/db/DefsTable mergeColumnFamilies 485 2037 -1
+Lorg/apache/cassandra/db/DefsTable mergeKeyspaces 373 2037 -1
+
+
+Lorg/apache/cassandra/db/compaction/CompactionTask runWith 234 234 -1
+
+
+Lorg/apache/cassandra/db/index/SecondaryIndexManager flushIndexesBlocking 328 328 -3
+
+
+Lorg/apache/cassandra/db/compaction/CompactionManager doCleanupCompaction 563 563 -3
+
+
+Lorg/apache/cassandra/db/compaction/CompactionManager doCleanupCompaction 598 598 -1
+
+
+Lorg/apache/cassandra/db/SystemTable isIndexBuilt 616 805 0
+Lorg/apache/cassandra/cache/ConcurrentLinkedHashCache get 96 805 -1
+Lorg/apache/cassandra/db/HintedHandOffManager doDeliverHintsToEndpoint 318 805 0
+
+
+Lorg/apache/cassandra/db/compaction/LeveledManifest getCandidatesFor 564 935 -1
+Lorg/apache/cassandra/db/compaction/SizeTieredCompactionStrategy getUserDefinedTask 169 935 2
+Lorg/apache/cassandra/db/compaction/LeveledManifest getCandidatesFor 509 935 -1
+Lorg/apache/cassandra/db/DataTracker$View nonCompactingSStables 505 935 -1
+Lorg/apache/cassandra/db/compaction/SizeTieredCompactionStrategy getNextBackgroundSSTables 111 935 -1
+
+
+Lorg/apache/cassandra/service/StorageService restoreReplicaCount 1909 971 -1
+Lorg/apache/cassandra/db/Table getColumnFamilyStore 174 971 -1
+Lorg/apache/cassandra/db/ColumnFamilyStore getSequentialIterator 1425 971 5
+Lorg/apache/cassandra/db/compaction/SizeTieredCompactionStrategy getNextBackgroundSSTables 111 971 -1
+Lorg/apache/cassandra/gms/Gossiper getStateForVersionBiggerThan 722 971 -1
+Lorg/apache/cassandra/tools/SSTableImport importUnsorted 359 971 1
+Lorg/apache/cassandra/db/HintedHandOffManager doDeliverHintsToEndpoint 318 971 0
+Lorg/apache/cassandra/streaming/StreamRequest$StreamRequestSerializer deserialize 167 971 -1
+Lorg/apache/cassandra/service/StorageService requestRanges 3760 971 -1
+Lorg/apache/cassandra/db/index/SecondaryIndexManager reload 95 971 -3
+Lorg/apache/cassandra/db/compaction/PrecompactedRow$1 reduce 136 971 1
+Lorg/apache/cassandra/db/Memtable getColumnFamily 341 971 -1
+Lorg/apache/cassandra/cql3/statements/UpdateStatement <init> 92 971 -1
+Lorg/apache/cassandra/db/ArrayBackedSortedColumns$1 fromSorted 54 971 1
+Lorg/apache/cassandra/db/ColumnFamilyStore search 1482 971 3
+Lorg/apache/cassandra/cql/QueryProcessor getStatement 862 971 -1
+Lorg/apache/cassandra/db/index/SecondaryIndexManager getIndexesByNames 572 971 -3
+Lorg/apache/cassandra/gms/EndpointStateSerializer deserialize 143 971 -1
+Lorg/apache/cassandra/io/sstable/SSTableBoundedScanner next 68 971 1
+Lorg/apache/cassandra/db/compaction/ParallelCompactionIterable$Reducer getCompactedRow 164 971 1
+Lorg/apache/cassandra/db/index/SecondaryIndexManager getBuiltIndexes 339 971 -3
+Lorg/apache/cassandra/db/compaction/CompactionManager doScrub 514 971 -3
+Lorg/apache/cassandra/cql3/statements/UpdateStatement prepare 268 971 -1
+Lorg/apache/cassandra/service/MigrationManager announceColumnFamilyDrop 277 971 0
+Lorg/apache/cassandra/utils/IntervalTree build 81 971 1
+Lorg/apache/cassandra/service/MigrationManager announceColumnFamilyUpdate 257 971 0
+Lorg/apache/cassandra/db/compaction/CompactionManager doCleanupCompaction 598 971 -1
+Lorg/apache/cassandra/cql/QueryProcessor processStatement 524 971 0
+Lorg/apache/cassandra/thrift/CassandraServer multiget_slice 352 971 2
+Lorg/apache/cassandra/service/RangeTransfer run 97 971 1
+Lorg/apache/cassandra/db/ColumnFamilySerializer deserialize 99 971 -1
+Lorg/apache/cassandra/db/TreeMapBackedSortedColumns$1 fromSorted 47 971 1
+Lorg/apache/cassandra/tools/BulkLoader$ExternalClient init 212 971 -1
+Lorg/apache/cassandra/db/compaction/CompactionManager doCleanupCompaction 563 971 -3
+Lorg/apache/cassandra/db/ArrayBackedSortedColumns addAll 253 971 -6
+Lorg/apache/cassandra/db/DataTracker$View newSSTables 568 971 -1
+Lorg/apache/cassandra/db/DefsTable mergeKeyspaces 373 971 -1
+Lorg/apache/cassandra/thrift/CassandraServer get_count 513 971 1
+Lorg/apache/cassandra/io/sstable/SSTableSimpleWriter getColumnFamily 91 971 0
+Lorg/apache/cassandra/service/StorageService restoreReplicaCount 1911 971 -1
+Lorg/apache/cassandra/service/MigrationManager announceKeyspaceDrop 267 971 0
+Lorg/apache/cassandra/service/StorageService getRangesForEndpoint 2612 971 -1
+Lorg/apache/cassandra/tools/NodeProbe getKeyspaces 692 971 -1
+Lorg/apache/cassandra/service/StorageService calculatePendingRanges 1763 971 -1
+Lorg/apache/cassandra/service/MigrationManager$MigrationsSerializer deserialize 420 971 -1
+Lorg/apache/cassandra/cql3/statements/BatchStatement getMutations 99 971 -1
+Lorg/apache/cassandra/tools/SSTableImport importSorted 430 971 1
+Lorg/apache/cassandra/service/StorageService forceTableRepairRange 2448 971 2
+Lorg/apache/cassandra/db/ColumnFamilyStore getTopLevelColumns 1387 971 1
+Lorg/apache/cassandra/db/DataTracker$View nonCompactingSStables 505 971 -1
+Lorg/apache/cassandra/thrift/CassandraServer get_count 480 971 1
+Lorg/apache/cassandra/db/Table getColumnFamilyStores 158 971 -1
+Lorg/apache/cassandra/config/CFMetaData toSchemaUpdate 1289 971 -1
+Lorg/apache/cassandra/io/sstable/SSTableBoundedScanner hasNext 60 971 1
+Lorg/apache/cassandra/db/columniterator/SSTableSliceIterator next 95 971 -1
+Lorg/apache/cassandra/service/StorageService clearSnapshot 2289 971 -1
+Lorg/apache/cassandra/cql/QueryProcessor processStatement 599 971 0
+Lorg/apache/cassandra/service/MigrationManager announceKeyspaceUpdate 243 971 0
+Lorg/apache/cassandra/net/IncomingTcpConnection handleLegacyVersion 172 971 -2
+Lorg/apache/cassandra/db/ConsistencyLevel filterForQuery 180 971 -1
+Lorg/apache/cassandra/db/DefsTable mergeColumnFamilies 488 971 -1
+Lorg/apache/cassandra/db/index/SecondaryIndexManager indexRow 433 971 -3
+Lorg/apache/cassandra/db/index/SecondaryIndexManager reload 108 971 -3
+Lorg/apache/cassandra/db/DefsTable mergeColumnFamilies 438 971 -1
+Lorg/apache/cassandra/cache/AutoSavingCache loadSaved 115 971 -1
+Lorg/apache/cassandra/db/commitlog/CommitLogAllocator flushOldestTables 298 971 -1
+Lorg/apache/cassandra/db/RowIteratorFactory getIterator 67 971 2
+Lorg/apache/cassandra/utils/IntervalTree$Serializer deserialize 421 971 -1
+Lorg/apache/cassandra/cql/UpdateStatement <init> 97 971 -1
+Lorg/apache/cassandra/streaming/IncomingStreamReader streamIn 163 971 -5
+Lorg/apache/cassandra/config/KSMetaData <init> 55 971 -1
+Lorg/apache/cassandra/cql3/statements/BatchStatement <init> 54 971 -1
+Lorg/apache/cassandra/gms/Gossiper doStatusCheck 607 971 -1
+Lorg/apache/cassandra/db/index/SecondaryIndexManager invalidate 319 971 -3
+Lorg/apache/cassandra/db/index/SecondaryIndex <init> 67 971 -1
+Lorg/apache/cassandra/gms/GossipDigestSerializationHelper deserialize 66 971 -1
+Lorg/apache/cassandra/cql3/statements/DeleteStatement <init> 49 971 -1
+Lorg/apache/cassandra/net/IncomingTcpConnection handleModernVersion 140 971 -2
+Lorg/apache/cassandra/hadoop/BulkRecordWriter$ExternalClient <init> 262 971 -1
+Lorg/apache/cassandra/cql/UpdateStatement <init> 70 971 -1
+Lorg/apache/cassandra/thrift/CassandraServer multiget_count 582 971 2
+Lorg/apache/cassandra/db/HintedHandOffManager doDeliverHintsToEndpoint 372 971 -1
+Lorg/apache/cassandra/cql3/statements/UpdateStatement <init> 70 971 -1
+Lorg/apache/cassandra/db/DefsTable mergeColumnFamilies 491 971 -1
+Lorg/apache/cassandra/db/compaction/SizeTieredCompactionStrategy getUserDefinedTask 169 971 2
+Lorg/apache/cassandra/cache/ConcurrentLinkedHashCache get 96 971 -1
+Lorg/apache/cassandra/db/ColumnFamilyStore getOverlappingSSTables 863 971 -1
+Lorg/apache/cassandra/db/BatchlogManager replaySerializedMutation 224 971 -1
+Lorg/apache/cassandra/utils/IntervalTree$IntervalNode <init> 279 971 -1
+Lorg/apache/cassandra/io/sstable/SSTableWriter appendFromStream 246 971 -1
+Lorg/apache/cassandra/utils/IntervalTree$IntervalNode <init> 278 971 -1
+Lorg/apache/cassandra/thrift/CassandraServer get_count 513 971 -2
+Lorg/apache/cassandra/db/compaction/PrecompactedRow merge 159 971 2
+Lorg/apache/cassandra/db/CounterColumn reconcile 176 971 -1
+Lorg/apache/cassandra/tools/SSTableImport importSorted 419 971 -1
+Lorg/apache/cassandra/service/MigrationTask$1 response 66 971 0
+Lorg/apache/cassandra/io/sstable/SSTableReader getKeySamples 688 971 1
+Lorg/apache/cassandra/locator/TokenMetadata getMovingEndpoints 803 971 -1
+Lorg/apache/cassandra/tools/StandaloneScrubber main 95 971 -1
+Lorg/apache/cassandra/config/Schema getNonSystemTables 283 971 -1
+Lorg/apache/cassandra/db/filter/QueryFilter collateColumns 136 971 2
+Lorg/apache/cassandra/db/ThreadSafeSortedColumns getSortedColumns 172 971 -1
+Lorg/apache/cassandra/tools/SSTableImport importUnsorted 361 971 1
+Lorg/apache/cassandra/config/CFMetaData getColumn_metadata 565 971 -1
+Lorg/apache/cassandra/db/DefsTable dropKeyspace 567 971 -1
+Lorg/apache/cassandra/db/compaction/LazilyCompactedRow$Reducer reduce 232 971 1
+Lorg/apache/cassandra/cql3/statements/DeleteStatement prepare 145 971 -1
+Lorg/apache/cassandra/thrift/CassandraServer atomic_batch_mutate 782 971 2
+Lorg/apache/cassandra/dht/RangeStreamer fetch 226 971 -1
+Lorg/apache/cassandra/cql3/Sets$Discarder execute 287 971 -1
+Lorg/apache/cassandra/locator/TokenMetadata cloneAfterAllSettled 653 971 -1
+Lorg/apache/cassandra/cache/ConcurrentLinkedHashCache hotKeySet 126 971 -1
+Lorg/apache/cassandra/locator/TokenMetadata updateNormalTokens 163 971 1
+Lorg/apache/cassandra/db/BatchlogManager replaySerializedMutations 207 971 -1
+Lorg/apache/cassandra/cache/SerializingCache hotKeySet 245 971 -1
+Lorg/apache/cassandra/db/ArrayBackedSortedColumns addAll 244 971 2
+Lorg/apache/cassandra/locator/TokenMetadata addBootstrapToken 303 971 1
+Lorg/apache/cassandra/locator/TokenMetadata ringIterator 843 971 -1
+Lorg/apache/cassandra/db/SystemTable serializedSchema 762 971 -1
+Lorg/apache/cassandra/db/ArrayBackedSortedColumns addAll 228 971 -6
+Lorg/apache/cassandra/db/ColumnFamilyStore getRangeSlice 1472 971 3
+Lorg/apache/cassandra/streaming/StreamOut transferRanges 148 971 1
+Lorg/apache/cassandra/utils/IntervalTree build 89 971 1
+Lorg/apache/cassandra/db/compaction/LeveledManifest getCandidatesFor 509 971 -1
+Lorg/apache/cassandra/tools/SSTableImport importSorted 432 971 1
+Lorg/apache/cassandra/db/ColumnFamilyStore <init> 217 971 1
+Lorg/apache/cassandra/thrift/CassandraServer batch_mutate 749 971 2
+Lorg/apache/cassandra/utils/BytesReadTracker readInt 102 971 -1
+Lorg/apache/cassandra/cql/DeleteStatement <init> 52 971 -1
+Lorg/apache/cassandra/io/sstable/SSTableSimpleUnsortedWriter getColumnFamily 115 971 0
+Lorg/apache/cassandra/thrift/CassandraServer execute_prepared_cql_query 1790 971 0
+Lorg/apache/cassandra/db/AtomicSortedColumns getSortedColumns 267 971 -1
+Lorg/apache/cassandra/db/compaction/CompactionController getCompactedRow 160 971 1
+Lorg/apache/cassandra/db/SystemTable isIndexBuilt 616 971 0
+Lorg/apache/cassandra/locator/TokenMetadata getLeavingEndpoints 786 971 -1
+Lorg/apache/cassandra/cql/DeleteStatement <init> 51 971 -1
+Lorg/apache/cassandra/hadoop/BulkRecordWriter$ExternalClient init 308 971 -1
+Lorg/apache/cassandra/gms/GossipDigestAck2Serializer deserialize 68 971 -1
+Lorg/apache/cassandra/db/DefsTable mergeColumnFamilies 454 971 -1
+Lorg/apache/cassandra/db/RowMutation$RowMutationSerializer deserialize 402 971 -1
+Lorg/apache/cassandra/db/commitlog/CommitLog recover 126 971 1
+Lorg/apache/cassandra/service/StorageService getLiveNaturalEndpoints 2692 971 -1
+Lorg/apache/cassandra/service/StorageService takeSnapshot 2221 971 -1
+Lorg/apache/cassandra/config/Schema getCFMetaData 184 971 -1
+Lorg/apache/cassandra/streaming/StreamingRepairTask$StreamingRepairTaskSerializer deserialize 261 971 -1
+Lorg/apache/cassandra/db/filter/QueryFilter$1 reduce 96 971 1
+Lorg/apache/cassandra/tools/Shuffle calculateRelocations 177 971 -2
+Lorg/apache/cassandra/service/StorageService move 2994 971 2
+Lorg/apache/cassandra/db/DefsTable mergeColumnFamilies 485 971 -1
+Lorg/apache/cassandra/db/filter/QueryFilter$1 reduce 108 971 1
+Lorg/apache/cassandra/tools/SSTableImport addToSuperCF 294 971 1
+Lorg/apache/cassandra/tools/StandaloneUpgrader main 94 971 -1
+Lorg/apache/cassandra/db/HintedHandOffManager doDeliverHintsToEndpoint 318 971 -2
+Lorg/apache/cassandra/cql/UpdateStatement <init> 71 971 -1
+Lorg/apache/cassandra/io/sstable/SSTableScanner createIterator 152 971 1
+Lorg/apache/cassandra/service/StorageService forceRepairRangeAsync 2421 971 4
+Lorg/apache/cassandra/db/CounterColumn reconcile 186 971 -1
+Lorg/apache/cassandra/db/RangeSliceReply$RangeSliceReplySerializer deserialize 76 971 -1
+Lorg/apache/cassandra/db/RowMutation <init> 61 971 3
+Lorg/apache/cassandra/dht/AbstractByteOrderedPartitioner describeOwnership 201 971 -1
+Lorg/apache/cassandra/service/StorageService initServer 516 971 -1
+Lorg/apache/cassandra/gms/GossipDigestAckSerializer deserialize 85 971 -1
+Lorg/apache/cassandra/config/CFMetaData apply 825 971 -1
+Lorg/apache/cassandra/dht/OrderPreservingPartitioner describeOwnership 194 971 -1
+Lorg/apache/cassandra/db/compaction/LeveledManifest getCandidatesFor 564 971 -1
+Lorg/apache/cassandra/cache/ConcurrentLinkedHashCache keySet 121 971 -1
+Lorg/apache/cassandra/db/commitlog/BatchCommitLogExecutorService processWithSyncBatch 88 971 -5
+Lorg/apache/cassandra/db/AtomicSortedColumns addColumn 166 971 -2
+Lorg/apache/cassandra/db/Table nonSystem 461 971 -1
+Lorg/apache/cassandra/db/ColumnFamilySerializer deserializeFromSSTable 157 971 3
+Lorg/apache/cassandra/db/DefsTable mergeKeyspaces 393 971 -1
+Lorg/apache/cassandra/cql3/statements/UpdateStatement buildKeyNames 181 971 -1
+Lorg/apache/cassandra/db/ColumnFamilyStore getOverlappingSSTables 875 971 -1
+Lorg/apache/cassandra/db/HintedHandOffManager scheduleAllDeliveries 466 971 -1
+Lorg/apache/cassandra/cache/SerializingCache keySet 240 971 -1
+Lorg/apache/cassandra/db/DefsTable loadFromStorage 305 971 -1
+Lorg/apache/cassandra/cql/QueryProcessor processStatement 553 971 0
+Lorg/apache/cassandra/cql/UpdateStatement <init> 99 971 -1
+
+
+
+
+
