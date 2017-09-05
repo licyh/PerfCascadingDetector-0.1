@@ -1,0 +1,29 @@
+
+
+
+//New Sink's Bugs
+
+//#static codepoints = 14
+CL0: org.apache.hadoop.hbase.regionserver.HRegionServer-getCopyOfOnlineRegionsSortedBySize-2269;
+CL0: org.apache.hadoop.hbase.regionserver.Store-getStorefilesIndexSize-1377;
+CL0: org.apache.hadoop.hbase.regionserver.HRegionServer-closeUserRegions-1580;
+CL0: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-328;
+CL0: org.apache.hadoop.hbase.regionserver.HRegionServer-metrics-1156;
+CL0: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;
+CL0: org.apache.hadoop.hbase.regionserver.HRegionServer-buildServerLoad-761;
+CL0: org.apache.hadoop.hbase.regionserver.HRegionServer-getGlobalMemStoreSize-2416;
+CL0: org.apache.hadoop.hbase.regionserver.HRegionServer-closeAllRegions-1555;
+CL0: org.apache.hadoop.hbase.regionserver.Store-getStorefilesSize-1361;
+CL0: org.apache.hadoop.hbase.regionserver.HRegionServer-createRegionLoad-908;
+CL0: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-304;
+CL0: org.apache.hadoop.hbase.regionserver.HRegionServer-getMostLoadedRegions-2337;
+CL0: org.apache.hadoop.hbase.regionserver.HRegionServer-metrics-1161;
+
+
+
+//New Sink's Bugs
+
+//#static codepoints = 3
+CL0: org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor-chore-1563;
+CL0: org.apache.hadoop.hbase.master.AssignmentManager-nodeChildrenChanged-557;
+CL0: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;

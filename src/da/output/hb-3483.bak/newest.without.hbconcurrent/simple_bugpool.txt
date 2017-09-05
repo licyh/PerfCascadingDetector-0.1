@@ -1,0 +1,39 @@
+
+
+
+//New Sink's Bugs
+
+//24 (#static codepoints=14)
+CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-buildServerLoad-761;
+CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-closeAllRegions-1555;
+CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-closeUserRegions-1580;
+CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-createRegionLoad-908;
+CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-getCopyOfOnlineRegionsSortedBySize-2269;
+CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-getGlobalMemStoreSize-2416;
+CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-getMostLoadedRegions-2337;
+CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-metrics-1156;
+CL2: org.apache.hadoop.hbase.regionserver.HRegionServer-metrics-1161;
+CL2: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-304;
+CL2: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-328;
+CL2: org.apache.hadoop.hbase.regionserver.Store-getStorefilesIndexSize-1377;
+CL2: org.apache.hadoop.hbase.regionserver.Store-getStorefilesSize-1361;
+CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-buildServerLoad-761;
+CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-closeAllRegions-1555;
+CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-closeUserRegions-1580;
+CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-createRegionLoad-908;
+CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-getMostLoadedRegions-2337;
+CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-metrics-1156;
+CL3: org.apache.hadoop.hbase.regionserver.HRegionServer-metrics-1161;
+CL3: org.apache.hadoop.hbase.regionserver.Store-getStorefilesIndexSize-1377;
+CL3: org.apache.hadoop.hbase.regionserver.Store-getStorefilesSize-1361;
+CL3: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;
+CL4: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;
+
+
+
+//New Sink's Bugs
+
+//3 (#static codepoints=3)
+CL2: org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor-chore-1563;
+CL2: org.apache.hadoop.hbase.master.AssignmentManager-nodeChildrenChanged-557;
+CL2: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;

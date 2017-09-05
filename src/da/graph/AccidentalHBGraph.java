@@ -33,8 +33,8 @@ public class AccidentalHBGraph {
     
 	
     //for validity test
-    //boolean DO_HBCONCURRENT = true;      //default should be true;
-    boolean DO_HBCONCURRENT = false;      //default should be true;
+    boolean DO_HBCONCURRENT = true;      //default should be true;
+    //boolean DO_HBCONCURRENT = false;      //default should be true;
     
     
 	public AccidentalHBGraph(HappensBeforeGraph hbg) {

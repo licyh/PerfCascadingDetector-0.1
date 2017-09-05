@@ -1,0 +1,4 @@
+CL0: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-304;
+CL0: org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor-chore-1563;
+CL0: org.apache.hadoop.hbase.master.AssignmentManager-nodeChildrenChanged-557;
+//summary - 3(#static codepoints=3) from 17
