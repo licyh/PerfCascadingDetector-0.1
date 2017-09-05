@@ -1,5 +1,5 @@
-CL2: org.apache.hadoop.hbase.client.Get-write-413;
-CL2: org.apache.hadoop.hbase.client.Get-write-421;
+CL2: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-304;
+
 CL2: org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor-chore-1563;
 CL2: org.apache.hadoop.hbase.master.AssignmentManager-nodeChildrenChanged-557;
-//summary - 4(#static codepoints=4) from 13
+//summary - 3(#static codepoints=3) from 27

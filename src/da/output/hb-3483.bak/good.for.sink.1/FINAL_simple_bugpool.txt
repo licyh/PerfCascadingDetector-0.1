@@ -1,2 +1,0 @@
-CL2: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-304;
-//summary - 1(#static codepoints=1) from 26

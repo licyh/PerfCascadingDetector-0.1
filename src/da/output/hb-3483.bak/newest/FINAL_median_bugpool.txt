@@ -1,2 +1,5 @@
 CL2: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-304;org.apache.hadoop.hbase.regionserver.MemStoreFlusher-reclaimMemStoreMemory-291;org.apache.hadoop.hbase.regionserver.HRegionServer-multi-2556;sun.reflect.NativeMethodAccessorImpl-invoke0--2;sun.reflect.NativeMethodAccessorImpl-invoke-57;sun.reflect.DelegatingMethodAccessorImpl-invoke-43;java.lang.reflect.Method-invoke-606;org.apache.hadoop.hbase.ipc.HBaseRPC$Server-call-570;org.apache.hadoop.hbase.ipc.HBaseServer$Handler-run-1036;
-//summary - 1(#static codepoints=1) from 30
+
+CL2: org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor-chore-1563;org.apache.hadoop.hbase.Chore-run-66;
+CL2: org.apache.hadoop.hbase.master.AssignmentManager-nodeChildrenChanged-557;org.apache.hadoop.hbase.zookeeper.ZooKeeperWatcher-process-275;org.apache.zookeeper.ClientCnxn$EventThread-processEvent-530;org.apache.zookeeper.ClientCnxn$EventThread-run-506;
+//summary - 3(#static codepoints=3) from 31

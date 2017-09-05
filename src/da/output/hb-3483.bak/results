@@ -2,9 +2,9 @@
 
 
 // Sink 1's
- 
+
 CL2: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-304;           #reported bug. I/O: hdfs
-//summary - 1(#static codepoints=1) from 26
+//summary - 1(#static codepoints=1) from 24
 
 ===========================
 Notes
@@ -13,10 +13,9 @@ I/O
 LOOP - org.apache.hadoop.hbase.regionserver.MemStoreFlusher.flushSomeRegions()V:304, Time-consumingOps(2):[122:org.apache.hadoop.hbase.regionserver.MemStoreFlusher.flushSomeRegions-org.apache.hadoop.hbase.regionserver.MemStoreFlusher.flushRegion-org.apache.hadoop.hbase.regionserver.HRegionServer.checkFileSystem-org.apache.hadoop.hbase.util.FSUtils.checkFileSystemAvailable@< Application, Lorg/apache/hadoop/hdfs/DistributedFileSystem, exists(Lorg/apache/hadoop/fs/Path;)Z >, 129:org.apache.hadoop.hbase.regionserver.MemStoreFlusher.flushSomeRegions-org.apache.hadoop.hbase.regionserver.MemStoreFlusher.flushRegion-org.apache.hadoop.hbase.regionserver.HRegionServer.checkFileSystem-org.apache.hadoop.hbase.util.FSUtils.checkFileSystemAvailable@< Application, Lorg/apache/hadoop/fs/FileSystem, close()V >]
 
 
-
 // Sink 2's
-CL2: org.apache.hadoop.hbase.client.Get-write-413;                                      #small. #columnFamily of a row/table
-CL2: org.apache.hadoop.hbase.client.Get-write-421;										#small. #columns of a column family
 CL2: org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor-chore-1563;     	#new bug. Iterate all regions in transition checking for time outs.  #contains RPC  #HRS.openRegion
 CL2: org.apache.hadoop.hbase.master.AssignmentManager-nodeChildrenChanged-557;          #MC & should be small. #children of a zk node
-//summary - 4(#static codepoints=4) from 13
+//summary - 2(#static codepoints=2) from 3
+////////CL2: org.apache.hadoop.hbase.client.Get-write-413;                              #already disappeared in newest version. #small. #columnFamily of a row/table, but low-level, couldn't be prunned by dynamic slicing 
+////////CL2: org.apache.hadoop.hbase.client.Get-write-421;								#already disappeared in newest version. #small. #columns of a column family, but low-level, couldn't be prunned by dynamic slicing

@@ -1,33 +1,4 @@
-CL2: org.apache.hadoop.io.IOUtils-copyBytes-71;
-CL2: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2151;
-CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
-CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
-CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;
-CL3: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
-CL3: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
-CL3: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;
-CL4: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
-CL4: org.apache.hadoop.mapred.TaskController-setup-80;
-CL4: org.apache.hadoop.mapred.TaskTracker-checkLocalDirs-3424;
-CL4: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
-CL4: org.apache.hadoop.mapred.TaskTracker-markUnresponsiveTasks-1773;
-CL4: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;
-CL4: org.apache.hadoop.mapred.UserLogCleaner-clearOldUserLogs-127;
-CL4: org.apache.hadoop.mapreduce.util.LinuxResourceCalculatorPlugin-readProcMemInfoFile-163;
-CL4: org.apache.hadoop.mapreduce.util.MRAsyncDiskService-cleanupAllVolumes-292;
-CL4: org.apache.hadoop.mapreduce.util.MRAsyncDiskService-cleanupAllVolumes-295;
-CL5: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
-CL5: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
-CL5: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
-CL2: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
-CL2: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
-CL2: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;
-CL2: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
-CL3: org.apache.hadoop.io.IOUtils-copyBytes-71;
-CL3: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
-CL3: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
-CL3: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
-CL3: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
-CL4: org.apache.hadoop.io.IOUtils-copyBytes-71;
-CL4: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
-//summary - 32(#static codepoints=15) from 76
+CL2: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-304;
+CL2: org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor-chore-1563;
+CL2: org.apache.hadoop.hbase.master.AssignmentManager-nodeChildrenChanged-557;
+//summary - 3(#static codepoints=3) from 27

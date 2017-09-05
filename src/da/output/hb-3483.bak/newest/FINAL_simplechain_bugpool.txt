@@ -1,5 +1,6 @@
 CL2: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-304;|org.apache.hadoop.hbase.regionserver.HRegionServer-multi-2556;|org.apache.hadoop.hbase.regionserver.HRegionServer-put-1651;|
 CL2: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-304;|org.apache.hadoop.hbase.regionserver.MemStoreFlusher-reclaimMemStoreMemory-291;|org.apache.hadoop.hbase.regionserver.HRegionServer-put-1651;|
+
 CL2: org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor-chore-1563;|org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor-chore-1560;|org.apache.hadoop.hbase.master.AssignmentManager-addToRegionsInTransition-854;|
 CL2: org.apache.hadoop.hbase.master.AssignmentManager-nodeChildrenChanged-557;|org.apache.hadoop.hbase.master.AssignmentManager-nodeChildrenChanged-553;|org.apache.hadoop.hbase.master.AssignmentManager-addToRegionsInTransition-854;|
 //summary - 4(#static codepoints=3) from 36
