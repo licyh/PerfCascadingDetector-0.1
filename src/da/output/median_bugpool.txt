@@ -37,7 +37,9 @@ CL4: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;org.apache.hadoop.hbase.ut
 
 //New Sink's Bugs
 
-//3 (#static codepoints=3)
+//5 (#static codepoints=3)
 CL2: org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor-chore-1563;org.apache.hadoop.hbase.Chore-run-66;
 CL2: org.apache.hadoop.hbase.master.AssignmentManager-nodeChildrenChanged-557;org.apache.hadoop.hbase.zookeeper.ZooKeeperWatcher-process-275;org.apache.zookeeper.ClientCnxn$EventThread-processEvent-530;org.apache.zookeeper.ClientCnxn$EventThread-run-506;
 CL2: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;org.apache.hadoop.hbase.util.Hash-hash-121;org.apache.hadoop.hbase.HRegionInfo-encodeRegionName-105;org.apache.hadoop.hbase.master.AssignmentManager-handleRegion-358;org.apache.hadoop.hbase.master.AssignmentManager-nodeDataChanged-529;org.apache.hadoop.hbase.zookeeper.ZooKeeperWatcher-process-268;org.apache.zookeeper.ClientCnxn$EventThread-processEvent-530;org.apache.zookeeper.ClientCnxn$EventThread-run-506;
+CL3: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;org.apache.hadoop.hbase.util.Hash-hash-121;org.apache.hadoop.hbase.HRegionInfo-encodeRegionName-105;org.apache.hadoop.hbase.HRegionInfo-getEncodedName-438;org.apache.hadoop.hbase.regionserver.HRegion-getRegionDir-2579;org.apache.hadoop.hbase.util.FSUtils-rootRegionExists-324;org.apache.hadoop.hbase.master.MasterFileSystem-checkRootDir-239;org.apache.hadoop.hbase.master.MasterFileSystem-createInitialFileSystemLayout-105;org.apache.hadoop.hbase.master.MasterFileSystem-<init>-90;org.apache.hadoop.hbase.master.HMaster-finishInitialization-341;org.apache.hadoop.hbase.master.HMaster-run-277;
+CL3: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;org.apache.hadoop.hbase.util.Hash-hash-121;org.apache.hadoop.hbase.HRegionInfo-encodeRegionName-105;org.apache.hadoop.hbase.HRegionInfo-getEncodedName-438;org.apache.hadoop.hbase.zookeeper.MetaNodeTracker-<init>-53;org.apache.hadoop.hbase.catalog.CatalogTracker-<init>-121;org.apache.hadoop.hbase.master.HMaster-finishInitialization-347;org.apache.hadoop.hbase.master.HMaster-run-277;

@@ -33,7 +33,8 @@ CL4: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;
 
 //New Sink's Bugs
 
-//3 (#static codepoints=3)
+//4 (#static codepoints=3)
 CL2: org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor-chore-1563;
 CL2: org.apache.hadoop.hbase.master.AssignmentManager-nodeChildrenChanged-557;
 CL2: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;
+CL3: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;
