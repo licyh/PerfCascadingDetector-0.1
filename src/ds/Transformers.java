@@ -32,12 +32,12 @@ public class Transformers {
 	
 	public Transformers() {
 	    //read dynamic points
-	    readTargets();
+	    readPoints();
 		//checker.addCheckFile("resource/dynamicpoints", true);
 	}
 	
 	
-	public void readTargets() {
+	public void readPoints() {
 		TextFileReader reader;
 	    String tmpline;
 	  
@@ -112,51 +112,7 @@ public class Transformers {
     	}
     
     	return codestr;
-    }    
-    
-    /*
-    	public String getInstCodeStr(LogType logType) {
-    	return getInstCodeStr(logType, 0);
-    }
-    
-    public String getInstCodeStr(LogType logType, int flag) {
-    	String codestr = "";
-    	String logMethod = "LogClass._DM_Log.log_" + logType.name();
-    	
-    	if (logType == LogType.EventHandlerBegin) {
-    		switch (flag) {
-			case 1:
-	            codestr = "String opValue_tmp1 = \"xx\";"
-	            		+ "if ($_ instanceof org.apache.hadoop.mapred.KillJobAction) {"
-	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillJobAction) $_).getJobID().toString();"
-	            		+ "}"
-	            		+ "else if ($_ instanceof org.apache.hadoop.mapred.KillTaskAction) {"
-	            		+ "    opValue_tmp1 = ((org.apache.hadoop.mapred.KillTaskAction) $_).taskId.getJobID().toString();"
-	            		+ "}"
-	            		+ logMethod + "(opValue_tmp1);";
-                break;
-			case 2:
-				codestr = "String opValue_tmp1 = \"xx\";"
-	            		+ "opValue_tmp1 = ((org.apache.hadoop.mapred.TaskTracker$TaskInProgress) $_).getTask().getJobID().toString();"
-	            		+ logMethod + "(opValue_tmp1);";
-				break;
-			default:
-	    		codestr = logMethod + "(\"xx\");";
-    		}
-    	}
-    	else if (logType == LogType.EventHandlerEnd) {
-    		codestr = logMethod + "(\"xx\");";
-    	} else {
-    		
-    	}
-    
-    	return codestr;
-    }
-     */
-    
-    
-    
-    
+    }       
   
 }
 
