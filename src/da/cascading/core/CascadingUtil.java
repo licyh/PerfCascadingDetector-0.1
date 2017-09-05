@@ -113,7 +113,7 @@ public class CascadingUtil {
         	int y = pair.destination;
         	
         	if ( Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-4088") 
-        			|| Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-2705")&&(sink.getID().equals("1") ) {
+        			|| Benchmarks.resolveBugId(hbg.getTargetDir()).equals("mr-2705")&&sink.getID().equals("1") ) {
         		if ( !traversedNodes.get(y) //&& hbg.getReachSet().get(y).get(endIndex) 
             			)
             		dfsTraversing( y, direction, endIndex, traversedNodes, resources );
