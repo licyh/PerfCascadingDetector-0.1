@@ -39,7 +39,7 @@ public class CascadingAnalyzer {
 		
 		for (Sink sink: this.ag.getLogInfoExtractor().getSinks()) {
 			//for DEBUG
-			//if (!sink.getID().equals("2")) continue;
+			if (!sink.getID().equals("2")) continue;
 			
 			sink.setEnv(this.projectDir, this.hbg, this.ag, this.ag.getLogInfoExtractor(), this.jt);
 			sink.doWork();
