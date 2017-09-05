@@ -7,7 +7,7 @@ org.apache.hadoop.mapred.TaskTracker offerService 1455					TargetCodeBegin 1
 org.apache.hadoop.mapred.TaskTracker transmitHeartBeat  1619			TargetCodeEnd 1
 
 //added Sink1 - for heartbeat
-//org.apache.hadoop.mapred.TaskTracker offerService 1432				TargetCodeBegin 2
-//org.apache.hadoop.mapred.TaskTracker offerService 1436				TargetCodeEnd 2
+org.apache.hadoop.mapred.TaskTracker offerService 1432				TargetCodeBegin 2
+org.apache.hadoop.mapred.TaskTracker offerService 1436				TargetCodeEnd 2
 
 
