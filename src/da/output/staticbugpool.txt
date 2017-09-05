@@ -3,57 +3,27 @@
 
 //New Sink's Bugs
 
-//#static codepoints = 31
-CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-834;
-CL0: org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1613;
-CL0: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-279;
-CL0: org.apache.hadoop.mapred.TaskTracker-buildTaskControllerJobPathDeletionContexts-1835;
-CL0: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;
-CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-801;
-CL0: org.apache.hadoop.mapreduce.util.MRAsyncDiskService-cleanupAllVolumes-295;
-CL0: org.apache.hadoop.mapreduce.util.LinuxResourceCalculatorPlugin-readProcMemInfoFile-163;
-CL0: org.apache.hadoop.io.IOUtils-copyBytes-71;
-CL0: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;
-CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
-CL0: org.apache.hadoop.mapreduce.util.MRAsyncDiskService-cleanupAllVolumes-292;
-CL0: org.apache.hadoop.mapred.JvmManager$JvmManagerForType-reapJvm-335;
-CL0: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2151;
-CL0: org.apache.hadoop.mapred.TaskTrackerStatus-countOccupiedReduceSlots-483;
-CL0: org.apache.hadoop.mapred.TaskTracker-cloneAndResetRunningTaskStatuses-3349;
-CL0: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2156;
-CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeUserDirs-209;
-CL0: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
-CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
-CL0: org.apache.hadoop.mapred.TaskTracker-checkLocalDirs-3424;
-CL0: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
-CL0: org.apache.hadoop.mapred.TaskTracker-transmitHeartBeat-1634;
-CL0: org.apache.hadoop.mapred.TaskTrackerStatus-countOccupiedMapSlots-445;
-CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-795;
-CL0: org.apache.hadoop.mapred.UserLogCleaner-clearOldUserLogs-127;
-CL0: org.apache.hadoop.mapred.TaskTracker-buildTaskControllerTaskPathDeletionContexts-1859;
-CL0: org.apache.hadoop.mapred.TaskTracker-localizeJobFiles-1044;
-CL0: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
-CL0: org.apache.hadoop.mapred.TaskTracker-markUnresponsiveTasks-1773;
-CL0: org.apache.hadoop.mapred.TaskController-setup-80;
+//#static codepoints = 14
+CL0: org.apache.hadoop.hbase.regionserver.HRegionServer-getCopyOfOnlineRegionsSortedBySize-2269;
+CL0: org.apache.hadoop.hbase.regionserver.Store-getStorefilesIndexSize-1377;
+CL0: org.apache.hadoop.hbase.regionserver.HRegionServer-closeUserRegions-1580;
+CL0: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-328;
+CL0: org.apache.hadoop.hbase.regionserver.HRegionServer-metrics-1156;
+CL0: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;
+CL0: org.apache.hadoop.hbase.regionserver.HRegionServer-buildServerLoad-761;
+CL0: org.apache.hadoop.hbase.regionserver.HRegionServer-getGlobalMemStoreSize-2416;
+CL0: org.apache.hadoop.hbase.regionserver.HRegionServer-closeAllRegions-1555;
+CL0: org.apache.hadoop.hbase.regionserver.Store-getStorefilesSize-1361;
+CL0: org.apache.hadoop.hbase.regionserver.HRegionServer-createRegionLoad-908;
+CL0: org.apache.hadoop.hbase.regionserver.MemStoreFlusher-flushSomeRegions-304;
+CL0: org.apache.hadoop.hbase.regionserver.HRegionServer-getMostLoadedRegions-2337;
+CL0: org.apache.hadoop.hbase.regionserver.HRegionServer-metrics-1161;
 
 
 
 //New Sink's Bugs
 
-//#static codepoints = 16
-CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-run-834;
-CL0: org.apache.hadoop.mapred.TaskRunner-launchJvmAndWait-279;
-CL0: org.apache.hadoop.mapred.TaskTracker-buildTaskControllerJobPathDeletionContexts-1835;
-CL0: org.apache.hadoop.mapred.TaskTracker-purgeJob-1900;
-CL0: org.apache.hadoop.mapred.JobConf-deleteLocalFiles-467;
-CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-801;
-CL0: org.apache.hadoop.io.IOUtils-copyBytes-71;
-CL0: org.apache.hadoop.mapred.TaskTracker$MapEventsFetcherThread-reducesInShuffle-795;
-CL0: org.apache.hadoop.mapred.TaskTracker$TaskLauncher-run-2168;
-CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeJobDirs-297;
-CL0: org.apache.hadoop.mapred.TaskTracker-buildTaskControllerTaskPathDeletionContexts-1859;
-CL0: org.apache.hadoop.mapred.JvmManager$JvmManagerForType-reapJvm-335;
-CL0: org.apache.hadoop.mapred.TaskTracker-localizeJobFiles-1044;
-CL0: org.apache.hadoop.mapred.TaskTracker-getLocalFiles-3728;
-CL0: org.apache.hadoop.mapred.CleanupQueue$PathCleanupThread-addToQueue-116;
-CL0: org.apache.hadoop.mapreduce.server.tasktracker.Localizer-initializeAttemptDirs-345;
+//#static codepoints = 3
+CL0: org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor-chore-1563;
+CL0: org.apache.hadoop.hbase.master.AssignmentManager-nodeChildrenChanged-557;
+CL0: org.apache.hadoop.hbase.util.JenkinsHash-hash-88;
