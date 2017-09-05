@@ -1,7 +1,7 @@
 JX - INFO - Timer(tic), MSG: LLAnalysis begin
-JX - INFO - Timer(toc->toc): 1.724s, (tic->toc): 1.724s, MSG: lockAnalyzer end
-JX - INFO - Timer(toc->toc): 0.32s, (tic->toc): 2.044s, MSG: loopAnalyzer end
-JX - INFO - Timer(toc->toc): 0.19s, (tic->toc): 2.234s, MSG: loopingLockAnalyzer end
-JX - INFO - Timer(toc->toc): 0.177s, (tic->toc): 2.411s, MSG: nestedLoopAnalyzer end
-JX - INFO - Timer(toc->toc): 1.837s, (tic->toc): 4.248s, MSG: tcLoopAnalyzer end
-JX - INFO - Timer(toc->toc): 0.617s, (tic->toc): 4.865s, MSG: StaticPruning/printBugLoops end
+JX - INFO - Timer(toc->toc): 1.495s, (tic->toc): 1.495s, MSG: lockAnalyzer end
+JX - INFO - Timer(toc->toc): 0.347s, (tic->toc): 1.842s, MSG: loopAnalyzer end
+JX - INFO - Timer(toc->toc): 0.261s, (tic->toc): 2.103s, MSG: loopingLockAnalyzer end
+JX - INFO - Timer(toc->toc): 0.271s, (tic->toc): 2.374s, MSG: nestedLoopAnalyzer end
+JX - INFO - Timer(toc->toc): 1.896s, (tic->toc): 4.27s, MSG: tcLoopAnalyzer end
+JX - INFO - Timer(toc->toc): 0.622s, (tic->toc): 4.892s, MSG: StaticPruning/printBugLoops end

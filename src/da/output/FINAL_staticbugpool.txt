@@ -1,20 +1,6 @@
-CL0: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskImpl$AttemptSucceededTransition-transition-770;
-CL0: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl$InitTransition-createMapTasks-1069;
-CL0: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl-scheduleTasks-650;
-CL0: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl$RequestContainerTransition-transition-1132;
-CL0: org.apache.hadoop.mapreduce.counters.FrameworkCounterGroup-write-220;
-CL0: org.apache.hadoop.mapreduce.counters.AbstractCounters-write-261;
-CL0: org.apache.hadoop.mapred.SortedRanges-write-203;
-CL0: org.apache.hadoop.mapreduce.split.SplitMetaInfoReader-readSplitMetaInfo-70;
-CL0: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator$ScheduledRequests-assignToMap-926;
-CL0: org.apache.hadoop.yarn.service.AbstractService-changeState-113;
-CL0: org.apache.hadoop.mapreduce.split.JobSplit$SplitMetaInfo-readFields-115;
-CL0: org.apache.hadoop.mapreduce.counters.AbstractCounters-write-273;
-CL0: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-mergePaths-353;
-CL0: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter-commitJob-302;
-CL0: org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl$InitTransition-createReduceTasks-1087;
-CL0: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator$ScheduledRequests-assign-714;
-CL0: org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator-getResources-596;
-CL0: org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl-resolveHosts-1145;
-//summary - 18(#static codepoints=18) from 58
-
+CL0: org.apache.hadoop.mapred.TaskTracker$1-run-422;
+CL0: org.apache.hadoop.mapred.TaskTracker$LocalStorage-checkDirs-210;
+CL0: org.apache.hadoop.mapred.TaskTracker-markUnresponsiveTasks-1951;
+CL0: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2050;
+CL0: org.apache.hadoop.mapred.TaskTracker-purgeJob-1999;
+//summary - 5(#static codepoints=5) from 18
