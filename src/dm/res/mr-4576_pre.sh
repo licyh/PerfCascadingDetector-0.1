@@ -10,6 +10,8 @@ dm_dir=/tmp/${bug_id}_dm    #like "/tmp/mr-4576_dm"
 mkdir -p $dm_dir
 
 
+stop-all.sh
+sleep 3s
 # Start hadoop
 echo "JX - INFO - start HDFS+MR to see if everything is OK"
 start-all.sh
