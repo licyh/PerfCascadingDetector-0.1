@@ -4,3 +4,12 @@ sys 9.82
 real 47.93
 user 26.61
 sys 9.86
+real 51.99
+user 27.50
+sys 10.21
+real 30.25
+user 6.03
+sys 3.73
+real 30.28
+user 6.03
+sys 4.44
