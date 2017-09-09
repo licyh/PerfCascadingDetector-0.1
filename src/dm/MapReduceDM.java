@@ -288,6 +288,7 @@ class MapReduceTransformer extends Transformer {
 		    /* for rpc calling */
 		    methodUtil.insertRPCCallInst(logClass, msgSendingLog, rpcInfo);
 		    if ( !bugConfig.getBugId().equals("mr-4813") )   //Just tmp: for non-manually-rpc version of mr-4813
+		    if ( !bugConfig.getBugId().equals("mr-4576") )   //Just tmp: for non-manually-rpc version of mr-4576
 		    methodUtil.insertRPCInvoke(logClass, msgSendingLog);
 		    
 		    
