@@ -82,7 +82,7 @@ class TriggerTransformer extends Transformer {
 		//if ( className.startsWith("org.apache.hadoop.yarn.")
   				//|| className.startsWith("org.apache.hadoop.mapred.") 
 	      //     ) {	      
-			transformers.transformClassForDynamicPoints(cl);
+			transformers.transformClassForTriggerPoints(cl);
   		//}
 	   
   	}  
