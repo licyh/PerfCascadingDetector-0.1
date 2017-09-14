@@ -437,7 +437,7 @@ public class Transformers {
     		return str;
     	} 
     	else if (logType == LogType.SourceBegin || logType == LogType.SourceEnd) {
-    		String val = new java.util.Date().toString();
+    		String val = new java.text.SimpleDateFormat("mm:ss.SSS").format( new java.util.Date() ).toString();
     		str = logMethod + "(\"" + val + "\");";
     		return str;
     	}

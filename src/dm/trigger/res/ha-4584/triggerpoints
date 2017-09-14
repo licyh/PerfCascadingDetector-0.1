@@ -1,6 +1,6 @@
 //Source - get block report loop
-org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet getBlockInfo 679 		SourceBegin		1
-org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet getBlockReport 1638	SourceEnd		1
+org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet getBlockInfo 	679 	SourceBegin		1
+org.apache.hadoop.hdfs.server.datanode.FSDataset			 getBlockReport 1638	SourceEnd		1
 
 
 //Sink
