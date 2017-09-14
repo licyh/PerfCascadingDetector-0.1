@@ -43,7 +43,7 @@ class MapReduceTransformer extends Transformer {
 	RPCInfo rpcInfo = new RPCInfo();
   
 	//added by JX
-	Transformers transformers = new Transformers();
+	Transformers transformers;
   
   
 	public MapReduceTransformer(String str) {
@@ -62,9 +62,17 @@ class MapReduceTransformer extends Transformer {
 	    rpcInfo.setInfoFilePath("resource/mr_rpc_v1.txt", 1);
 	    rpcInfo.readFile();
 	    
+	    doWork();
+	}
+	
+	public void doWork() {
+		this.transformers = new Transformers();
+		this.transformers.prepareDM();
 	}
 
 
+	
+	
   	//added by JX
   	public void transformClass(CtClass cl) {
   		String className = cl.getName().toString();

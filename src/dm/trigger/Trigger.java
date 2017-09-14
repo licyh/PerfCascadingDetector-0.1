@@ -1,4 +1,4 @@
-package ds;
+package dm.trigger;
 
 import java.io.*;
 import java.util.*;
@@ -13,6 +13,7 @@ import dm.util.Bytecode.*;
 import dm.util.Bytecode.Instruction;
 import dm.util.Bytecode.InvokeInst;
 import dm.Transformer;
+import dm.transformers.Transformers;
 import dm.util.ClassUtil;
 import dm.util.MethodUtil;
 import com.APIInfo;
@@ -28,26 +29,26 @@ import com.CalleeInfo;
 
 
 
-public class MapReduceDS {
+public class Trigger {
   public static void premain(String agentArgs, Instrumentation inst) {
     System.out.println("JX - INFO - started by Javassit DM. Agent arguments: " + agentArgs);
-    inst.addTransformer(new MapReduceTransformer(agentArgs));
+    inst.addTransformer(new TriggerTransformer(agentArgs));
   }
 }
 
 
 
-class MapReduceTransformer extends Transformer {
+class TriggerTransformer extends Transformer {
 	
 	BugConfig bugConfig = new BugConfig("resource/bugconfig", true);
 	
 	ClassUtil classUtil;
 	
 	//added by JX
-	Transformers transformers = new Transformers();
+	Transformers transformers;
   
   
-	public MapReduceTransformer(String str) {
+	public TriggerTransformer(String str) {
 	    super(str);
 	    //CtClass.debugDump = "/home/hadoop/hadoop/dump";
 	    option.setDelimiter("%");
@@ -57,6 +58,13 @@ class MapReduceTransformer extends Transformer {
 	    //-s parameter
 	    classUtil = new ClassUtil();
 	    classUtil.setSearchScope(option.getValue("s"));	    
+	    
+	    doWork();
+	}
+	
+	public void doWork() {
+		this.transformers = new Transformers();
+		this.transformers.prepareTrigger();
 	}
 
 

@@ -575,11 +575,6 @@ Command exited with non-zero status 137
 real 129.64
 user 9.77
 sys 6.03
-Command terminated by signal 2
-real 424.21
-user 15.15
-sys 12.24
-Killed
 Command exited with non-zero status 137
 real 120.08
 user 9.46

@@ -1,4 +1,4 @@
-package ds;
+package dm.ds;
 
 import java.io.*;
 import java.util.*;
@@ -13,6 +13,7 @@ import dm.util.Bytecode.*;
 import dm.util.Bytecode.Instruction;
 import dm.util.Bytecode.InvokeInst;
 import dm.Transformer;
+import dm.transformers.Transformers;
 import dm.util.ClassUtil;
 import dm.util.MethodUtil;
 import com.APIInfo;
@@ -28,26 +29,26 @@ import com.CalleeInfo;
 
 
 
-public class HDFSDS {
+public class DS {
   public static void premain(String agentArgs, Instrumentation inst) {
     System.out.println("JX - INFO - started by Javassit DM. Agent arguments: " + agentArgs);
-    inst.addTransformer(new HDFSTransformer(agentArgs));
+    inst.addTransformer(new DSTransformer(agentArgs));
   }
 }
 
 
 
-class HDFSTransformer extends Transformer {
+class DSTransformer extends Transformer {
 	
 	BugConfig bugConfig = new BugConfig("resource/bugconfig", true);
 	
 	ClassUtil classUtil;
 	
 	//added by JX
-	Transformers transformers = new Transformers();
+	Transformers transformers;
   
   
-	public HDFSTransformer(String str) {
+	public DSTransformer(String str) {
 	    super(str);
 	    //CtClass.debugDump = "/home/hadoop/hadoop/dump";
 	    option.setDelimiter("%");
@@ -56,7 +57,14 @@ class HDFSTransformer extends Transformer {
 	
 	    //-s parameter
 	    classUtil = new ClassUtil();
-	    classUtil.setSearchScope(option.getValue("s"));	    
+	    classUtil.setSearchScope(option.getValue("s"));	 
+	    
+	    doWork();
+	}
+	
+	public void doWork() {
+		this.transformers = new Transformers();
+		this.transformers.prepareDS();
 	}
 
 

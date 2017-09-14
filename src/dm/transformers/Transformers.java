@@ -21,15 +21,6 @@ public class Transformers {
 	
 	//sinks
 	List<SourceLine> sourceLines = new ArrayList<SourceLine>();
-	
-	// For target code instrumentation
-	/*
-	List<String> classesForInst = new ArrayList<String>();
-	List<String> methodsForInst = new ArrayList<String>();
-	List<String> linesForInst  = new ArrayList<String>();
-	List<String> typesForInst  = new ArrayList<String>();
-	List<Integer> flagsForInst = new ArrayList<Integer>();
-	*/
   
 	// For all loop instrumentation
 	HashMap<String, Integer[]> looplocations = new HashMap<String, Integer[]>();
@@ -42,48 +33,49 @@ public class Transformers {
 	List<Integer> largeloop_flagsForInst = new ArrayList<Integer>();
  
 	
+	// for ds
+	// For Dynamicpoints
+	List<String> classesForInst = new ArrayList<String>();
+	List<String> methodsForInst = new ArrayList<String>();
+	List<String> linesForInst  = new ArrayList<String>();
+	List<String> tagsForInst  = new ArrayList<String>();
+	
+	
+	// for dm.trigger
+	List<SourceLine> triggerSLs = new ArrayList<SourceLine>();
+	
+	//default constructor
 	public Transformers() {
+	}
+	
+	public void prepareDM() {
 	    //read targetlocations 
-	    readTargets();
+	    readSinks();
 	    //read loop locations' file for instrumentation
 	    readLoops();
 	    //read largelooplocations
 	    readLargeLoops();
 	}
 	
+	public void prepareDS() {
+	    //read dynamic points
+	    readPoints();
+		//checker.addCheckFile("resource/dynamicpoints", true);
+	}
 	
-	public void readTargets() {
-		TextFileReader reader;
-	    String tmpline;
-	  
-    	reader = new TextFileReader("resource/targetlocations", true);
-		while ( (tmpline = reader.readLine()) != null ) {
-			String[] strs = tmpline.split("\\s+");
-			/*
-			classesForInst.add( strs[0] );
-			methodsForInst.add( strs[1] );
-			linesForInst.add( strs[2] );
-			typesForInst.add( strs[3] );
-			flagsForInst.add(0);
-			*/
-			SourceLine sourceline = new SourceLine(strs[0], strs[1], strs[2]);
-			sourceline.setType( strs[3] );
-			if (strs.length >= 5)
-				sourceline.setID( strs[4] );
-			else 
-				sourceline.setID( "xx" );
-			sourceLines.add( sourceline );
-		}
-		reader.close();
-		reader.printReadStatus();
-		System.out.println("JX - INFO - Transformers: " + "List<SourceLine> sourceLines = " + sourceLines);
-		
-		
-		// for DEBUG
-//		System.out.println("JX - INFO - " + classesForInst.size() + " locations are loaded");
-//		System.out.println("JX - INFO - " + "classesForInst = " + classesForInst);
-//		System.out.println("JX - INFO - " + "methodsForInst = " + methodsForInst);
-//		System.out.println("JX - INFO - " + "linesForInst =  " + linesForInst );
+	public void prepareTrigger() {
+	    //read dynamic points
+	    readTriggerPoints();
+	}
+	
+	
+	
+	/***************************************************
+	 * read instrument points
+	 **************************************************/
+	
+	public void readSinks() {
+		readBySourceLine("resource/targetlocations", sourceLines);
 	}
 	
 	
@@ -132,62 +124,105 @@ public class Transformers {
 	}
 		
 	
-	public void transformClassForCodeSnippets(CtClass cl) {
-		String className = cl.getName();
-		//if ( className.contains("DataStreamer") ) System.out.println("JX - DEBUG - Transformers: Targetcode - " + cl.getName() );
-		CtBehavior[] methods = cl.getDeclaredBehaviors();
+	
+	// for ds
+	public void readPoints() {
+		TextFileReader reader;
+	    String tmpline;
+	  
+    	reader = new TextFileReader("resource/staticpoints", true);
+		while ( (tmpline = reader.readLine()) != null ) {
+			String[] strs = tmpline.split("\\s+", 4);
+			classesForInst.add( formatClassName(strs[0]) );
+			methodsForInst.add( strs[1] );
+			linesForInst.add( strs[2] );
+			tagsForInst.add( strs[3] );
+		}
+		reader.close();
 		
-	    for (CtBehavior method : methods) {
-	        if ( method.isEmpty() ) continue;
-	        String methodName = method.getName();
-	        MethodUtil methodUtil = new MethodUtil(method);
-	        
-	        for (SourceLine sourceline: sourceLines)
-	        	if ( sourceline.getFlag()==false 
-	        			&& sourceline.getClassName().equals(className) && sourceline.getMethodName().equals(methodName)
-	        			) {
-	        		//System.out.println("JX - DEBUG - targetcode: " + cl.getName() + "." + method.getName() + method.getSignature());
-	    			if ( sourceline.getType().equals(LogType.TargetCodeBegin.name()) ) {
-	    				methodUtil.insertAt( sourceline.getLineNumber(), 
-	    									 getInstCodeStr(LogType.TargetCodeBegin, 1, sourceline.getID()), 
-	    									 LogType.TargetCodeBegin.name() );
-	    			}
-	    			else if ( sourceline.getType().equals(LogType.TargetCodeEnd.name()) ) {
-	    				methodUtil.insertAt( sourceline.getLineNumber(), 
-	    									 getInstCodeStr(LogType.TargetCodeEnd, 1, sourceline.getID()), 
-	    									 LogType.TargetCodeEnd.name() );
-	    			}
-	        	}
-	    }
+		// for DEBUG
+		System.out.println("JX - INFO - " + classesForInst.size() + " locations are loaded");
+		System.out.println("JX - INFO - " + "classesForInst = " + classesForInst);
+		System.out.println("JX - INFO - " + "methodsForInst = " + methodsForInst);
+		System.out.println("JX - INFO - " + "linesForInst =  " + linesForInst );
+	}
+	// tmp
+	public String formatClassName(String className) {
+		String formalClassName = className;
+		if (formalClassName.startsWith("L"))
+			formalClassName = formalClassName.substring(1);
+		formalClassName = formalClassName.replaceAll("/", ".");
+		return formalClassName;
 	}
 	
 	
-//	public void transformClassForCodeSnippets(CtClass cl) {
+	// for dm.trigger
+	public void readTriggerPoints() {
+		readBySourceLine("resource/triggerpoints", triggerSLs);
+	}
+	
+	
+	
+	/**
+	 * readBySourceLine
+	 * each line: className, methodName, lineNumber, logType, (No.)
+	 */
+	public void readBySourceLine(String filenameInJar, List<SourceLine> sourceLines) {
+		TextFileReader reader = new TextFileReader(filenameInJar, true);
+	    String tmpline;
+	  
+		while ( (tmpline = reader.readLine()) != null ) {
+			String[] strs = tmpline.split("\\s+");
+			SourceLine sourceline = new SourceLine(strs[0], strs[1], strs[2]);
+			sourceline.setType( strs[3] );
+			if (strs.length >= 5)
+				sourceline.setID( strs[4] );
+			else 
+				sourceline.setID( "xx" );
+			sourceLines.add( sourceline );
+		}
+		reader.close();
+		reader.printReadStatus();
+		System.out.println("JX - INFO - Transformers: " + "List<SourceLine> = " + sourceLines);
+
+	}
+	
+	
+	
+	/******************************************************************
+	 * transforms
+	 ******************************************************************/
+	
+	public void transformClassForCodeSnippets(CtClass cl) {
+		transformBySourceLine(cl, sourceLines, LogType.TargetCodeBegin, LogType.TargetCodeEnd);
 //		String className = cl.getName();
-//        //if ( className.contains("DataStreamer") ) System.out.println("JX - DEBUG - Transformers: Targetcode - " + cl.getName() );
-//		if ( !classesForInst.contains(className) ) return;
-//		
+//		//if ( className.contains("DataStreamer") ) System.out.println("JX - DEBUG - Transformers: Targetcode - " + cl.getName() );
 //		CtBehavior[] methods = cl.getDeclaredBehaviors();
 //		
 //	    for (CtBehavior method : methods) {
 //	        if ( method.isEmpty() ) continue;
-//	        // traverse all locations for instrumentation
 //	        String methodName = method.getName();
 //	        MethodUtil methodUtil = new MethodUtil(method);
-//	        for (int i = 0; i < classesForInst.size(); i++) {
-//	    	    if ( classesForInst.get(i).equals(className) && methodsForInst.get(i).equals(methodName) ) {
-//	    	    	//System.out.println("JX - DEBUG - targetcode: " + cl.getName() + "." + method.getName() + method.getSignature());
-//	    			int lineNumber = Integer.parseInt( linesForInst.get(i) );
-//	    			if ( typesForInst.get(i).equals(LogType.TargetCodeBegin.name()) ) {
-//	    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.TargetCodeBegin), LogType.TargetCodeBegin.name());
+//	        
+//	        for (SourceLine sourceline: sourceLines)
+//	        	if ( sourceline.getFlag()==false 
+//	        			&& sourceline.getClassName().equals(className) && sourceline.getMethodName().equals(methodName)
+//	        			) {
+//	        		//System.out.println("JX - DEBUG - targetcode: " + cl.getName() + "." + method.getName() + method.getSignature());
+//	    			if ( sourceline.getType().equals(LogType.TargetCodeBegin.name()) ) {
+//	    				methodUtil.insertAt( sourceline.getLineNumber(), 
+//	    									 getInstCodeStr(LogType.TargetCodeBegin, 1, sourceline.getID()), 
+//	    									 LogType.TargetCodeBegin.name() );
 //	    			}
-//	    			else if ( typesForInst.get(i).equals(LogType.TargetCodeEnd.name()) ) {
-//	    				methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.TargetCodeEnd), LogType.TargetCodeEnd.name());
+//	    			else if ( sourceline.getType().equals(LogType.TargetCodeEnd.name()) ) {
+//	    				methodUtil.insertAt( sourceline.getLineNumber(), 
+//	    									 getInstCodeStr(LogType.TargetCodeEnd, 1, sourceline.getID()), 
+//	    									 LogType.TargetCodeEnd.name() );
 //	    			}
-//	    		}
-//	    	}
-//	    }//end-outer for
-//	}
+//	        	}
+//	    }
+	}
+	
 	
 		  
 		  	  
@@ -312,6 +347,78 @@ public class Transformers {
     
     
     
+    // for ds
+	public void transformClassForDynamicPoints(CtClass cl) {
+		String className = cl.getName();
+        //if ( className.contains("DataStreamer") ) System.out.println("JX - DEBUG - Targetcode: " + cl.getName() );
+		if ( !classesForInst.contains(className) ) return;
+		CtBehavior[] methods = cl.getDeclaredBehaviors();
+		
+	    for (CtBehavior method : methods) {
+	        if ( method.isEmpty() ) continue;
+	        // traverse all locations for instrumentation
+	        String methodName = method.getName();
+	        MethodUtil methodUtil = new MethodUtil(method);
+	        
+	        for (int i = 0; i < classesForInst.size(); i++) {
+	    	    if ( classesForInst.get(i).equals(className)
+	    	    		&& methodsForInst.get(i).equals(methodName) 
+	    	    		) {
+	    	    	//System.out.println("JX - DEBUG - targetcode: " + cl.getName() + "." + method.getName() + method.getSignature());
+	    			int lineNumber = Integer.parseInt( linesForInst.get(i) );
+	    			methodUtil.insertAt(lineNumber, getInstCodeStr(LogType.DynamicPoint, i), LogType.DynamicPoint.name());
+	    		}
+	    	}
+	    }//end-outer for
+	}
+		
+    
+	public void transformClassForTriggerPoints(CtClass cl) {
+		transformBySourceLine(cl, triggerSLs, LogType.SourceBegin, LogType.SourceEnd);
+	}
+    
+    
+    /*
+	public void transformBySourceLine(CtClass cl) {
+		
+	}
+	*/
+	
+	public void transformBySourceLine(CtClass cl, List<SourceLine> sourceLines, LogType... logTypes) {
+		String className = cl.getName();
+		//if ( className.contains("DataStreamer") ) System.out.println("JX - DEBUG - Transformers: Targetcode - " + cl.getName() );
+		CtBehavior[] methods = cl.getDeclaredBehaviors();
+		
+	    for (CtBehavior method : methods) {
+	        if ( method.isEmpty() ) continue;
+	        String methodName = method.getName();
+	        MethodUtil methodUtil = new MethodUtil(method);
+	        
+	        for (SourceLine sourceline: sourceLines)
+	        	if ( sourceline.getFlag()==false 
+	        			&& sourceline.getClassName().equals(className) && sourceline.getMethodName().equals(methodName)
+	        			) {
+	        		//System.out.println("JX - DEBUG - targetcode: " + cl.getName() + "." + method.getName() + method.getSignature());
+	    			for (LogType type: logTypes) {
+	    				if ( sourceline.getType().equals(type.name()) ) {
+	    					methodUtil.insertAt( sourceline.getLineNumber(), 
+									 			 getInstCodeStr(type, 1, sourceline.getID()), 
+									 			 type.name() );	
+	    					break;
+	    				}
+	    			}
+	        	}
+	    }
+	    
+	}
+	
+	
+	
+	
+
+	
+	
+    
     public String getInstCodeStr(LogType logType) {
     	return getInstCodeStr(logType, 1);
     }
@@ -324,6 +431,19 @@ public class Transformers {
     	String str = "";
     	String logMethod = "LogClass._DM_Log.log_" + logType.name();
     	
+    	if (logType == LogType.DynamicPoint) {
+    		String val = classesForInst.get(flag) + " " + methodsForInst.get(flag) + " " + linesForInst.get(flag) + " " + tagsForInst.get(flag);
+    		str = logMethod + "(\"" + val + "\");";
+    		return str;
+    	} 
+    	else if (logType == LogType.SourceBegin || logType == LogType.SourceEnd) {
+    		String val = new java.util.Date().toString();
+    		str = logMethod + "(\"" + val + "\");";
+    		return str;
+    	}
+    	
+    	
+    	//for others, like targetcodeXX
     	if ( flag == 1 ) {
     		str = logMethod + "( \"" + value + "\" );";
     	}

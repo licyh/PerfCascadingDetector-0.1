@@ -38,7 +38,7 @@ class CassandraTransformer extends Transformer {
 	BugConfig bugConfig = new BugConfig("resource/bugconfig", true);
     ClassUtil classUtil;
 	//added by JX
-	Transformers transformers = new Transformers();
+	Transformers transformers;
     
     
     public CassandraTransformer(String str) {
@@ -51,9 +51,17 @@ class CassandraTransformer extends Transformer {
 	    //-s parameter
 	    classUtil = new ClassUtil();
 	    classUtil.setSearchScope(option.getValue("s"));
-    }
-
+	    
+	    doWork();
+	}
+	
+	public void doWork() {
+		this.transformers = new Transformers();
+		this.transformers.prepareDM();
+	}
     
+	
+	
     
   	public void transformClass(CtClass cl) {
   		String className = cl.getName().toString();

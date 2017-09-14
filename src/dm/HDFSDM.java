@@ -35,7 +35,7 @@ class HDFSTransformer extends Transformer {
 	RPCInfo rpcInfo = new RPCInfo();	
   
 	//added by JX
-	Transformers transformers = new Transformers();
+	Transformers transformers;
 
 	
   
@@ -53,7 +53,15 @@ class HDFSTransformer extends Transformer {
 	    //rpc
 	    rpcInfo.setInfoFilePath("resource/hd_rpc.txt", 1);
 	    rpcInfo.readFile();
+
+	    doWork();
 	}
+	
+	public void doWork() {
+		this.transformers = new Transformers();
+		this.transformers.prepareDM();
+	}
+
 
 
   	public void transformClass(CtClass cl) {

@@ -24,21 +24,24 @@ public enum LogType {
     // heap R/W - no use in my project
     HeapRead,   	//read a heap var
     HeapWrite,  	//write a heap var
+    
+    //Added by JX
+    
     //log Locks
     LockRequire, 	//require lock
     LockRelease, 	//release lock
-    
-    //Added by JX
+    RWLockCreate,   	//jx - for creating ReentrantReadWriteLock
+    //tmp event - no use now
     EventHandlerCreate,   //no use now
     EventHandlerBegin,
     EventHandlerEnd,
-    //Added by JX
-    RWLockCreate,   	//jx - for creating ReentrantReadWriteLock
+    //Sink
     TargetCodeBegin,
     TargetCodeEnd,
+    //useless now
     LargeLoopBegin,
     //LargeLoopCenter,         //tmp
-    //end-Added
+    //loop
     LoopBegin,               //also for spoon
     
     //only for dt
@@ -49,7 +52,15 @@ public enum LogType {
     RPC,
    
     //for dynamic slicing
-    DynamicPoint;
+    DynamicPoint,
+	
+    //for trigger
+	//source - similar to loops but a little different
+    SourceBegin,
+	SourceEnd;
+	
+	
+	
 
     
 	static Map<LogType,LogType> logTypeMapping = new HashMap<LogType,LogType>() {{
@@ -58,4 +69,21 @@ public enum LogType {
 		put(MsgProcEnter, MsgSending);
 		put(ThdEnter, ThdCreate);  // or ProcessCreate
 	}};
+	
+	
+	
+	static LogType getEndByBegin(LogType type) {
+		if ( type.equals(SourceBegin) ) {
+			return SourceEnd;
+		}
+		else if ( type.equals(TargetCodeBegin) ) {
+			return TargetCodeEnd;
+		}
+		else {
+		}
+		return null;
+	}
+	
+	
+	
 }

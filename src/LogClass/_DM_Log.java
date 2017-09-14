@@ -139,6 +139,18 @@ public class _DM_Log {
 	
 	
 	
+	// only for trigger
+	public static void log_SourceBegin(String opValue) {  
+  		log_Base(LogType.SourceBegin.name(), opValue);
+  	}  
+	
+	public static void log_SourceEnd(String opValue) {  
+  		log_Base(LogType.SourceEnd.name(), opValue);
+  	}  
+	
+	
+	
+	
 	/**
 	 * jx - Basic log function
 	 */

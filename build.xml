@@ -5,10 +5,12 @@
         <property name="src.dir" value="src/"/>
 		<property name="src.com.dir" value="${src.dir}/com/"/>
 		<property name="src.sa.dir" value = "${src.dir}/sa/"/>
-        <property name="src.dm.dir" value="${src.dir}/dm/"/>
-		<property name="src.da.dir" value="${src.dir}/da/"/>
+        <property name="src.dm.dir" value = "${src.dir}/dm/"/>
+			<property name="src.ds.dir" value = "${src.dir}/dm/ds/"/>
+			<property name="src.trigger.dir" value = "${src.dir}/dm/trigger/"/>
+		<property name="src.da.dir" value = "${src.dir}/da/"/>
 		<property name="src.dt.dir" value = "${src.dir}/dt/"/>
-		<property name="src.ds.dir" value = "${src.dir}/ds/"/>
+	
 		
         <!--build dir-->
         <property name="build.dir" value="build/"/>
@@ -147,18 +149,11 @@
 		</target>
 	
         <!--target compile dm (MR) -->
-        <target name="compile-dm" depends="prepare, compile-com, compile-log" description="compile dynamic monitor">
+        <target name="compile-dm" depends="prepare, compile-sa, compile-com, compile-log" description="compile dynamic monitor">
                 <javac srcdir="${src.dm.dir}" destdir="${build.classes}" includeantruntime="false">
                         <classpath refid="classpath" />
                 </javac>
         </target>
-	
-	    <!--target compile ds (MR) -->
-	    <target name="compile-ds" depends="prepare, compile-dm, compile-sa, compile-com, compile-log" description="compile dynamic monitor">
-	            <javac srcdir="${src.ds.dir}" destdir="${build.classes}" includeantruntime="false">
-	                    <classpath refid="classpath" />
-	            </javac>
-	    </target>
         	
         <!--target compile da-->
         <target name="compile-da" depends="prepare, compile-com, compile-log" description="compile dynamic analysiser">
@@ -412,15 +407,14 @@
 		<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 	
 		<!-- jar-ds for dynamic slicing instrumentation -->
-	    <target name="jar-ds-mr-4813" depends="compile-ds, jar-log" description="generate jar for MR dynamic monitor">
+	    <target name="jar-ds-mr-4813" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
 	            <jar jarfile="${build.lib}/DM.jar">
 	            		<fileset dir="${build.classes}" includes="dm/**/*.class" />
-	                    <fileset dir="${build.classes}" includes="ds/**/*.class" />
 	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
 	                    <manifest>
 	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
-	                            <attribute name="Premain-Class" value="ds.MapReduceDS" />
+	                            <attribute name="Premain-Class" value="dm.ds.DS" />
 	                    </manifest>
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
@@ -430,15 +424,14 @@
 	    </target>
 	
 		<!-- jar-ds for dynamic slicing instrumentation -->
-	    <target name="jar-ds-mr-4576" depends="compile-ds, jar-log" description="generate jar for MR dynamic monitor">
+	    <target name="jar-ds-mr-4576" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
 	            <jar jarfile="${build.lib}/DM.jar">
 	            		<fileset dir="${build.classes}" includes="dm/**/*.class" />
-	                    <fileset dir="${build.classes}" includes="ds/**/*.class" />
 	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
 	                    <manifest>
 	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
-	                            <attribute name="Premain-Class" value="ds.MapReduceDS" />
+	                            <attribute name="Premain-Class" value="dm.ds.DS" />
 	                    </manifest>
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
@@ -448,15 +441,14 @@
 	    </target>
 		
 		<!-- jar-ds for dynamic slicing instrumentation -->
-	    <target name="jar-ds-mr-4088" depends="compile-ds, jar-log" description="generate jar for MR dynamic monitor">
+	    <target name="jar-ds-mr-4088" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
 	            <jar jarfile="${build.lib}/DM.jar">
 	            		<fileset dir="${build.classes}" includes="dm/**/*.class" />
-	                    <fileset dir="${build.classes}" includes="ds/**/*.class" />
 	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
 	                    <manifest>
 	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
-	                            <attribute name="Premain-Class" value="ds.MapReduceDS" />
+	                            <attribute name="Premain-Class" value="dm.ds.DS" />
 	                    </manifest>
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
@@ -466,15 +458,14 @@
 	    </target>
 		
 		<!-- jar-ds for dynamic slicing instrumentation -->
-	    <target name="jar-ds-mr-2705" depends="compile-ds, jar-log" description="generate jar for MR dynamic monitor">
+	    <target name="jar-ds-mr-2705" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
 	            <jar jarfile="${build.lib}/DM.jar">
 	            		<fileset dir="${build.classes}" includes="dm/**/*.class" />
-	                    <fileset dir="${build.classes}" includes="ds/**/*.class" />
 	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
 	                    <manifest>
 	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
-	                            <attribute name="Premain-Class" value="ds.MapReduceDS" />
+	                            <attribute name="Premain-Class" value="dm.ds.DS" />
 	                    </manifest>
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
@@ -484,15 +475,14 @@
 	    </target>
 	    	
 		<!-- jar-ds for dynamic slicing instrumentation -->
-	    <target name="jar-ds-ha-4584" depends="compile-ds, jar-log" description="generate jar for HDFS dynamic monitor">
+	    <target name="jar-ds-ha-4584" depends="compile-dm, jar-log" description="generate jar for HDFS dynamic monitor">
 	            <jar jarfile="${build.lib}/DM.jar">
 	            		<fileset dir="${build.classes}" includes="dm/**/*.class" />
-	                    <fileset dir="${build.classes}" includes="ds/**/*.class" />
 	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
 	                    <manifest>
 	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
-	                            <attribute name="Premain-Class" value="ds.HDFSDS" />
+	                            <attribute name="Premain-Class" value="dm.ds.DS" />
 	                    </manifest>
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
@@ -502,15 +492,14 @@
 	    </target>
 		
 		<!-- jar-ds for dynamic slicing instrumentation -->
-	    <target name="jar-ds-hd-5153" depends="compile-ds, jar-log" description="generate jar for HDFS dynamic monitor">
+	    <target name="jar-ds-hd-5153" depends="compile-dm, jar-log" description="generate jar for HDFS dynamic monitor">
 	            <jar jarfile="${build.lib}/DM.jar">
 	            		<fileset dir="${build.classes}" includes="dm/**/*.class" />	            	
-	                    <fileset dir="${build.classes}" includes="ds/**/*.class" />
 	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
 	                    <manifest>
 	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
-	                            <attribute name="Premain-Class" value="ds.HDFSDS" />
+	                            <attribute name="Premain-Class" value="dm.ds.DS" />
 	                    </manifest>
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
@@ -521,20 +510,143 @@
 		
 	
 		<!-- jar-ds for dynamic slicing instrumentation -->
-	    <target name="jar-ds-ca-6744" depends="compile-ds, jar-log" description="generate jar for HDFS dynamic monitor">
+	    <target name="jar-ds-ca-6744" depends="compile-dm, jar-log" description="generate jar for HDFS dynamic monitor">
 	            <jar jarfile="${build.lib}/DM.jar">
 	            		<fileset dir="${build.classes}" includes="dm/**/*.class" />
-	                    <fileset dir="${build.classes}" includes="ds/**/*.class" />
 	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
 	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
 	                    <manifest>
 	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
-	                            <attribute name="Premain-Class" value="ds.CassandraDS" />
+	                            <attribute name="Premain-Class" value="dm.ds.DS" />
 	                    </manifest>
 	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
 	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
 	            		<zipfileset dir="${src.ds.dir}" includes="res/ca-6744/bugconfig" fullpath="resource/bugconfig"/>
 	                    <zipfileset dir="${src.ds.dir}" includes="res/ca-6744/staticpoints" fullpath="resource/staticpoints"/>
+	            </jar>
+	    </target>
+	
+	
+	
+		<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+		<!--++++++++ JAR-Trigger for dynamic slicing instrumentation ++++++++++-->
+		<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+	
+	    <target name="jar-trigger-mr-4813" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
+	            <jar jarfile="${build.lib}/DM.jar">
+	            		<fileset dir="${build.classes}" includes="dm/**/*.class" />
+	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
+	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
+	                    <manifest>
+	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
+	                            <attribute name="Premain-Class" value="dm.trigger.Trigger" />
+	                    </manifest>
+	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
+	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
+	            		<zipfileset dir="${src.trigger.dir}" includes="res/mr-4813/bugconfig" fullpath="resource/bugconfig"/>
+	                    <zipfileset dir="${src.trigger.dir}" includes="res/mr-4813/triggerpoints" fullpath="resource/triggerpoints"/>
+	            </jar>
+	    </target>
+	
+	
+	    <target name="jar-trigger-mr-4576" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
+	            <jar jarfile="${build.lib}/DM.jar">
+	            		<fileset dir="${build.classes}" includes="dm/**/*.class" />
+	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
+	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
+	                    <manifest>
+	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
+	                            <attribute name="Premain-Class" value="dm.trigger.Trigger" />
+	                    </manifest>
+	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
+	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
+	            		<zipfileset dir="${src.trigger.dir}" includes="res/mr-4576/bugconfig" fullpath="resource/bugconfig"/>
+	                    <zipfileset dir="${src.trigger.dir}" includes="res/mr-4576/triggerpoints" fullpath="resource/triggerpoints"/>
+	            </jar>
+	    </target>
+		
+	
+	    <target name="jar-trigger-mr-4088" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
+	            <jar jarfile="${build.lib}/DM.jar">
+	            		<fileset dir="${build.classes}" includes="dm/**/*.class" />
+	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
+	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
+	                    <manifest>
+	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
+	                            <attribute name="Premain-Class" value="dm.trigger.Trigger" />
+	                    </manifest>
+	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
+	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
+	            		<zipfileset dir="${src.trigger.dir}" includes="res/mr-4088/bugconfig" fullpath="resource/bugconfig"/>
+	                    <zipfileset dir="${src.trigger.dir}" includes="res/mr-4088/triggerpoints" fullpath="resource/triggerpoints"/>
+	            </jar>
+	    </target>
+		
+	
+	    <target name="jar-trigger-mr-2705" depends="compile-dm, jar-log" description="generate jar for MR dynamic monitor">
+	            <jar jarfile="${build.lib}/DM.jar">
+	            		<fileset dir="${build.classes}" includes="dm/**/*.class" />
+	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
+	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
+	                    <manifest>
+	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
+	                            <attribute name="Premain-Class" value="dm.trigger.Trigger" />
+	                    </manifest>
+	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
+	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
+	            		<zipfileset dir="${src.trigger.dir}" includes="res/mr-2705/bugconfig" fullpath="resource/bugconfig"/>
+	                    <zipfileset dir="${src.trigger.dir}" includes="res/mr-2705/triggerpoints" fullpath="resource/triggerpoints"/>
+	            </jar>
+	    </target>
+	    	
+	
+	    <target name="jar-trigger-ha-4584" depends="compile-dm, jar-log" description="generate jar for HDFS dynamic monitor">
+	            <jar jarfile="${build.lib}/DM.jar">
+	            		<fileset dir="${build.classes}" includes="dm/**/*.class" />
+	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
+	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
+	                    <manifest>
+	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
+	                            <attribute name="Premain-Class" value="dm.trigger.Trigger" />
+	                    </manifest>
+	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
+	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
+	            		<zipfileset dir="${src.trigger.dir}" includes="res/ha-4584/bugconfig" fullpath="resource/bugconfig"/>
+	                    <zipfileset dir="${src.trigger.dir}" includes="res/ha-4584/triggerpoints" fullpath="resource/triggerpoints"/>
+	            </jar>
+	    </target>
+		
+	
+	    <target name="jar-trigger-hd-5153" depends="compile-dm, jar-log" description="generate jar for HDFS dynamic monitor">
+	            <jar jarfile="${build.lib}/DM.jar">
+	            		<fileset dir="${build.classes}" includes="dm/**/*.class" />	            	
+	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
+	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
+	                    <manifest>
+	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
+	                            <attribute name="Premain-Class" value="dm.trigger.Trigger" />
+	                    </manifest>
+	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
+	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
+	            		<zipfileset dir="${src.trigger.dir}" includes="res/hd-5153/bugconfig" fullpath="resource/bugconfig"/>
+	                    <zipfileset dir="${src.trigger.dir}" includes="res/hd-5153/triggerpoints" fullpath="resource/triggerpoints"/>
+	            </jar>
+	    </target>
+		
+	
+	    <target name="jar-trigger-ca-6744" depends="compile-dm, jar-log" description="generate jar for HDFS dynamic monitor">
+	            <jar jarfile="${build.lib}/DM.jar">
+	            		<fileset dir="${build.classes}" includes="dm/**/*.class" />
+	                    <fileset dir="${build.classes}" includes="com/**/*.class" />
+	            		<fileset dir="${build.classes}" includes="LogClass/**/*.class" />
+	                    <manifest>
+	                            <attribute name="Boot-Class-Path" value="javassist.jar"/>
+	                            <attribute name="Premain-Class" value="dm.trigger.Trigger" />
+	                    </manifest>
+	                    <zipgroupfileset dir="${lib.dir}" includes="javassist-3.20.jar"/>
+	                    <zipgroupfileset dir="${lib.dir}" includes="commons-cli-1.3.1.jar"/>
+	            		<zipfileset dir="${src.trigger.dir}" includes="res/ca-6744/bugconfig" fullpath="resource/bugconfig"/>
+	                    <zipfileset dir="${src.trigger.dir}" includes="res/ca-6744/triggerpoints" fullpath="resource/triggerpoints"/>
 	            </jar>
 	    </target>
 	

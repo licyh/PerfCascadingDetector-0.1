@@ -38,7 +38,7 @@ class HBaseTransformer extends Transformer {
 	RPCInfo rpcInfo = new RPCInfo();
   
 	//added by JX
-	Transformers transformers = new Transformers();
+	Transformers transformers;
 	
   
   	public HBaseTransformer(String str) {
@@ -56,10 +56,16 @@ class HBaseTransformer extends Transformer {
   		rpcInfo.setInfoFilePath("resource/hb_rpc.txt", 1);
   		//rpcInfo.setInfoFilePath("resource/hbase_rpc.txt", 1);
   		rpcInfo.readFile();
-  	}
-  
-  
+  		
+	    doWork();
+	}
+	
+	public void doWork() {
+		this.transformers = new Transformers();
+		this.transformers.prepareDM();
+	}
 
+	
   
 	public void transformClass(CtClass cl) {
   		String className = cl.getName().toString();
