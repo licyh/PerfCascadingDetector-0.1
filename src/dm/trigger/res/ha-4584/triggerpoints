@@ -1,8 +1,18 @@
 //Source - get block report loop
-org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet getBlockInfo 	679 	SourceBegin		1
-org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet getBlockInfo 	682 	SourceEnd		1
-//org.apache.hadoop.hdfs.server.datanode.FSDataset			 getBlockReport 1637	SourceBegin		1
-//org.apache.hadoop.hdfs.server.datanode.FSDataset			 getBlockReport 1638	SourceEnd		1
+org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet getBlockInfo 	679 	SourceTimingBegin	1
+org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet getBlockInfo 	682 	SourceTimingEnd		1
 
 
-//Sink
+
+//Sinks
+// normal Datanode WRITE op
+org.apache.hadoop.hdfs.server.datanode.DataXceiver run 107					SinkTimingBegin 1
+org.apache.hadoop.hdfs.server.datanode.DataXceiver run 108					SinkTimingEnd 1
+// HEARTBEAT rpc sending
+org.apache.hadoop.hdfs.server.datanode.DataNode offerService 885			SinkTimingBegin 2
+org.apache.hadoop.hdfs.server.datanode.DataNode offerService 891			SinkTimingEnd 2
+// normal namenode WRITE op - ie, call NameNode.addBlock
+org.apache.hadoop.hdfs.server.namenode.NameNode addBlock 685                SinkTimingBegin 3
+org.apache.hadoop.hdfs.server.namenode.NameNode addBlock 687                SinkTimingEnd 3
+
+

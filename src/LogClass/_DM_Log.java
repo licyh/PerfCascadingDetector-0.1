@@ -140,12 +140,20 @@ public class _DM_Log {
 	
 	
 	// only for trigger
-	public static void log_SourceBegin(String opValue) {  
-  		log_Base(LogType.SourceBegin.name(), opValue);
+	public static void log_SourceTimingBegin(String opValue) {  
+  		log_Base(LogType.SourceTimingBegin.name(), opValue);
   	}  
 	
-	public static void log_SourceEnd(String opValue) {  
-  		log_Base(LogType.SourceEnd.name(), opValue);
+	public static void log_SourceTimingEnd(String opValue) {  
+  		log_Base(LogType.SourceTimingEnd.name(), opValue);
+  	}
+	
+	public static void log_SinkTimingBegin(String opValue) {  
+  		log_Base(LogType.SinkTimingBegin.name(), opValue);
+  	}  
+	
+	public static void log_SinkTimingEnd(String opValue) {  
+  		log_Base(LogType.SinkTimingEnd.name(), opValue);
   	}  
 	
 	

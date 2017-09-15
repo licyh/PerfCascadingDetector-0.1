@@ -56,9 +56,10 @@ public enum LogType {
 	
     //for trigger
 	//source - similar to loops but a little different
-    SourceBegin,
-	SourceEnd;
-	
+    SourceTimingBegin,
+	SourceTimingEnd,
+	SinkTimingBegin,
+	SinkTimingEnd;
 	
 	
 
@@ -73,8 +74,11 @@ public enum LogType {
 	
 	
 	static LogType getEndByBegin(LogType type) {
-		if ( type.equals(SourceBegin) ) {
-			return SourceEnd;
+		if ( type.equals(SourceTimingBegin) ) {
+			return SourceTimingEnd;
+		}
+		else if ( type.equals(SinkTimingBegin) ) {
+			return SinkTimingEnd;
 		}
 		else if ( type.equals(TargetCodeBegin) ) {
 			return TargetCodeEnd;

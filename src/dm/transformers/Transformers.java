@@ -374,7 +374,7 @@ public class Transformers {
 		
     
 	public void transformClassForTriggerPoints(CtClass cl) {
-		transformBySourceLine(cl, triggerSLs, LogType.SourceBegin, LogType.SourceEnd);
+		transformBySourceLine(cl, triggerSLs, LogType.SourceTimingBegin, LogType.SourceTimingEnd, LogType.SinkTimingBegin, LogType.SinkTimingEnd);
 	}
     
     
@@ -436,7 +436,9 @@ public class Transformers {
     		str = logMethod + "(\"" + val + "\");";
     		return str;
     	} 
-    	else if (logType == LogType.SourceBegin || logType == LogType.SourceEnd) {
+    	else if ( logType == LogType.SourceTimingBegin || logType == LogType.SourceTimingEnd
+    			 || logType == LogType.SinkTimingBegin || logType == LogType.SinkTimingEnd
+    			) {
     		String val = new java.text.SimpleDateFormat("mm:ss.SSS").format( new java.util.Date() ).toString();
     		str = logMethod + "(\"" + val + "\");";
     		return str;
