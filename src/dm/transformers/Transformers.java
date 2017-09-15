@@ -439,12 +439,13 @@ public class Transformers {
     	else if ( logType == LogType.SourceTimingBegin || logType == LogType.SourceTimingEnd
     			 || logType == LogType.SinkTimingBegin || logType == LogType.SinkTimingEnd
     			) {
-    		String val = new java.text.SimpleDateFormat("mm:ss.SSS").format( new java.util.Date() ).toString();
-    		str = logMethod + "(\"" + value + ": " + val + "\");";
+    		str = "String opVal = new java.text.SimpleDateFormat(\"mm:ss.SSS\").format( new java.util.Date() ).toString();";
+    		str += logMethod + "("
+    				+ "\"" + value + "\"" + "+" + "\"" + ": " + "\"" + "+" + "opVal"    //ie, ( "2" + ": " + opVal )
+    				+ ");";
     		return str;
     	}
-    	
-    	
+    	  	
     	//for others, like targetcodeXX
     	if ( flag == 1 ) {
     		str = logMethod + "( \"" + value + "\" );";
@@ -461,9 +462,6 @@ public class Transformers {
     
   
 }
-
-
-
 
 
 /**
