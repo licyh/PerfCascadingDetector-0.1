@@ -1,3 +1,7 @@
 //Source (loop)
-
+org.apache.hadoop.filecache.TrackerDistributedCacheManager downloadCacheObject 463	SourceTimingBegin
+org.apache.hadoop.filecache.TrackerDistributedCacheManager downloadCacheObject 466	SourceTimingEnd
 //Sink
+//Sink - heartbeat
+org.apache.hadoop.mapred.TaskTracker offerService 1606				SinkTimingBegin
+org.apache.hadoop.mapred.TaskTracker offerService 1610				SinkTimingEnd 
