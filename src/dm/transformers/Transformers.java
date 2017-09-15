@@ -440,7 +440,7 @@ public class Transformers {
     			 || logType == LogType.SinkTimingBegin || logType == LogType.SinkTimingEnd
     			) {
     		String val = new java.text.SimpleDateFormat("mm:ss.SSS").format( new java.util.Date() ).toString();
-    		str = logMethod + "(\"" + val + "\");";
+    		str = logMethod + "(\"" + value + ": " + val + "\");";
     		return str;
     	}
     	
