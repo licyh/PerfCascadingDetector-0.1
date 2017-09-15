@@ -1,4 +1,6 @@
 //Source (loop)
+org.apache.hadoop.mapred.TaskTracker localizeJob 1099	SourceTimingBegin 0
+org.apache.hadoop.mapred.TaskTracker localizeJob 1100	SourceTimingEnd 0
 org.apache.hadoop.filecache.TrackerDistributedCacheManager localizePublicCacheObject 190  SourceTimingBegin 1
 org.apache.hadoop.filecache.TrackerDistributedCacheManager localizePublicCacheObject 195  SourceTimingEnd 1
 org.apache.hadoop.filecache.TrackerDistributedCacheManager localizePublicCacheObject 463	SourceTimingBegin 2
