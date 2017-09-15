@@ -1,8 +1,8 @@
 //Source (loop)
 org.apache.hadoop.filecache.TrackerDistributedCacheManager localizePublicCacheObject 190  SourceTimingBegin 1
-org.apache.hadoop.filecache.TrackerDistributedCacheManager localizePublicCacheObject 195  SourceTimingBegin 1
-org.apache.hadoop.filecache.TrackerDistributedCacheManager downloadCacheObject 463	SourceTimingBegin 2
-org.apache.hadoop.filecache.TrackerDistributedCacheManager downloadCacheObject 466	SourceTimingEnd 2
+org.apache.hadoop.filecache.TrackerDistributedCacheManager localizePublicCacheObject 195  SourceTimingEnd 1
+org.apache.hadoop.filecache.TrackerDistributedCacheManager localizePublicCacheObject 463	SourceTimingBegin 2
+org.apache.hadoop.filecache.TrackerDistributedCacheManager localizePublicCacheObject 466	SourceTimingEnd 2
 org.apache.hadoop.filecache.TrackerDistributedCacheManager downloadCacheObject 415	SourceTimingBegin 3
 org.apache.hadoop.filecache.TrackerDistributedCacheManager downloadCacheObject 416	SourceTimingEnd 3
 org.apache.hadoop.fs.FileUtil copy 230 SourceTimingBegin 4
