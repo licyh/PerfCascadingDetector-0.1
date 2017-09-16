@@ -1,3 +1,14 @@
 //Source (loop)
+org.apache.hadoop.hbase.regionserver.MemStoreFlusher flushSomeRegions 302	SourceTimingBegin 1
+org.apache.hadoop.hbase.regionserver.MemStoreFlusher flushSomeRegions 328	SourceTimingEnd 1
+
+org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor chore 1563  SourceTimingBegin 2
+org.apache.hadoop.hbase.master.AssignmentManager$TimeoutMonitor chore 1667  SourceTimingEnd 2
 
 //Sink
+//Sink 1 - put
+org.apache.hadoop.hbase.regionserver.HRegionServer put 1651      SinkTimingBegin 1
+org.apache.hadoop.hbase.regionserver.HRegionServer put 1653      SinkTimingEnd 1
+//sink 2 - region assign
+org.apache.hadoop.hbase.master.AssignmentManager assign  727     SinkTimingBegin 2
+org.apache.hadoop.hbase.master.AssignmentManager assign  728     SinkTimingEnd 2

@@ -5,6 +5,6 @@ org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter commitJob 307   Sourc
 
 
 
-//Sink
+//Sink   //if no output, should be I didn't trace new container 
 org.apache.hadoop.mapreduce.v2.app.rm.RMCommunicator$1 run 231 		SinkTimingBegin  1
 org.apache.hadoop.mapreduce.v2.app.rm.RMCommunicator$1 run 238		SinkTimingEnd    1

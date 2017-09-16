@@ -1,0 +1,12 @@
+//without workload (1 reduce)
+4838-12:12 4838 SourceTimingBegin 1: 53:09.475 
+4838-12:12 4838 SourceTimingEnd 1: 53:09.540        #0.07s
+
+//10 reduces
+7428-12:12 7428 SourceTimingBegin 1: 01:06.251 
+7428-12:12 7428 SourceTimingEnd 1: 01:06.450 		#0.20s
+
+//1000 reduces
+
+
+
