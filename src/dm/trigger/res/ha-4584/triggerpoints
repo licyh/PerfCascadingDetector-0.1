@@ -1,8 +1,10 @@
 //Source - get block report loop
+//blockreport in DN
 org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet getBlockInfo 	679 	SourceTimingBegin	1
 org.apache.hadoop.hdfs.server.datanode.FSDataset$FSVolumeSet getBlockInfo 	682 	SourceTimingEnd		1
-
-
+//blockreport in NN
+org.apache.hadoop.hdfs.server.namenode.NameNode blockReport 990	SourceTimingBegin	2
+org.apache.hadoop.hdfs.server.namenode.NameNode blockReport 991 SourceTimingEnd		2
 
 //Sinks
 // normal Datanode WRITE op
