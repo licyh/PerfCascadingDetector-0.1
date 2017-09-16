@@ -1,3 +1,10 @@
 //Source (loop)
+org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter commitJob 302   SourceTimingBegin  1
+org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter commitJob 307   SourceTimingEnd  1
+
+
+
 
 //Sink
+org.apache.hadoop.mapreduce.v2.app.rm.RMCommunicator$1 run 231 		SinkTimingBegin  1
+org.apache.hadoop.mapreduce.v2.app.rm.RMCommunicator$1 run 238		SinkTimingEnd    1

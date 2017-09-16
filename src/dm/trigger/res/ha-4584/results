@@ -72,3 +72,44 @@
 
 
 
+
+
+
+
+9002-26  9139-32  9139-37
+vagrant@hdfs1:/tmp/ha-4584_dm$ grep -ri source
+9002-26:26 9002 SourceTimingBegin 2: 20:00.384 
+9002-26:26 9002 SourceTimingEnd 2: 20:09.967 
+9139-32:32 9139 SourceTimingBegin 1: 19:36.740 
+9139-32:32 9139 SourceTimingEnd 1: 19:57.815 
+9139-32:32 9139 SourceTimingBegin 1: 20:30.002 
+9139-37:37 9139 SourceTimingBegin 1: 20:09.979 
+9139-37:37 9139 SourceTimingEnd 1: 20:29.991 
+vagrant@hdfs1:/tmp/ha-4584_dm$ 
+vagrant@hdfs1:/tmp/ha-4584_dm$ 
+vagrant@hdfs1:/tmp/ha-4584_dm$ 
+vagrant@hdfs1:/tmp/ha-4584_dm$ grep -ri sink
+9139-32:32 9139 SinkTimingBegin 2: 19:36.727 
+9139-32:32 9139 SinkTimingEnd 2: 19:36.739 
+9139-32:32 9139 SinkTimingBegin 2: 20:09.979 
+9139-32:32 9139 SinkTimingEnd 2: 20:30.001 
+9139-32:32 9139 SinkTimingBegin 2: 20:56.201 
+9139-32:32 9139 SinkTimingEnd 2: 20:56.205 
+9139-32:32 9139 SinkTimingBegin 2: 20:59.202 
+9139-32:32 9139 SinkTimingEnd 2: 20:59.206 
+9139-32:32 9139 SinkTimingBegin 2: 21:02.203 
+9139-32:32 9139 SinkTimingEnd 2: 21:02.206 
+9139-32:32 9139 SinkTimingBegin 2: 21:05.204 
+9139-32:32 9139 SinkTimingEnd 2: 21:05.208 
+9139-32:32 9139 SinkTimingBegin 2: 21:08.205 
+9139-32:32 9139 SinkTimingEnd 2: 21:08.207 
+9139-32:32 9139 SinkTimingBegin 2: 21:11.206 
+9139-32:32 9139 SinkTimingEnd 2: 21:11.209 
+9139-32:32 9139 SinkTimingBegin 2: 21:14.207 
+9139-32:32 9139 SinkTimingEnd 2: 21:14.210 
+9139-32:32 9139 SinkTimingBegin 2: 21:17.208 
+9139-32:32 9139 SinkTimingEnd 2: 21:17.211 
+9139-32:32 9139 SinkTimingBegin 2: 21:39.402 
+9139-32:32 9139 SinkTimingEnd 2: 21:39.406 
+
+
