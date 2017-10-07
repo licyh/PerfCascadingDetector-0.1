@@ -1,0 +1,3 @@
+org.apache.hadoop.hbase.catalog.CatalogTracker setMetaLocation 523
+org.apache.hadoop.hbase.catalog.CatalogTracker waitForMeta 424
+org.apache.hadoop.hbase.catalog.CatalogTracker waitForMeta 436

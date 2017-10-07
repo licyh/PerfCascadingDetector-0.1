@@ -1,0 +1,11 @@
+systemlauncher=/home/vagrant/Trigger/config/server/startNode.sh
+sysworktime=10000
+workloadlauncher=/home/vagrant/Trigger/config/server/workLoad.sh
+cleanwork=
+listenport=localhost:20000
+messageID1=/home/vagrant/Trigger/config/server/hb-4729/37.1-content1
+messageID2=/home/vagrant/Trigger/config/server/hb-4729/37.1-content2
+messageID3=/home/vagrant/Trigger/config/server/hb-4729/37.1-content3
+messageID4=/home/vagrant/Trigger/config/server/content4
+location1=
+location2=

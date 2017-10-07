@@ -95,15 +95,20 @@ public class WalaAnalyzer {
 
     // Configuration For tests
     // for all
-    String functionname_for_test = "org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir.getBlockInfo("; //"RetryCache.waitForCompletion(Lorg/apache/hadoop/ipc/RetryCache$CacheEntry;)"; //"org.apache.hadoop.hdfs.server.balancer.Balancer"; //"Balancer$Source.getBlockList";//"DirectoryScanner.scan"; //"ReadaheadPool.getInstance("; //"BPServiceActor.run("; //"DataNode.runDatanodeDaemon"; //"BPServiceActor.run("; //"BlockPoolManager.startAll"; //"NameNodeRpcServer"; //"BackupNode$BackupNodeRpcServer"; // //".DatanodeProtocolServerSideTranslatorPB"; //"DatanodeProtocolService$BlockingInterface"; //"sendHeartbeat("; //"org.apache.hadoop.hdfs.protocolPB.DatanodeProtocolServerSideTranslatorPB";  //java.util.regex.Matcher.match(";
+    String functionname_for_test = "doWork0("; //"org.apache.hadoop.hdfs.server.datanode.FSDataset$FSDir.getBlockInfo("; //"RetryCache.waitForCompletion(Lorg/apache/hadoop/ipc/RetryCache$CacheEntry;)"; //"org.apache.hadoop.hdfs.server.balancer.Balancer"; //"Balancer$Source.getBlockList";//"DirectoryScanner.scan"; //"ReadaheadPool.getInstance("; //"BPServiceActor.run("; //"DataNode.runDatanodeDaemon"; //"BPServiceActor.run("; //"BlockPoolManager.startAll"; //"NameNodeRpcServer"; //"BackupNode$BackupNodeRpcServer"; // //".DatanodeProtocolServerSideTranslatorPB"; //"DatanodeProtocolService$BlockingInterface"; //"sendHeartbeat("; //"org.apache.hadoop.hdfs.protocolPB.DatanodeProtocolServerSideTranslatorPB";  //java.util.regex.Matcher.match(";
     int which_functionname_for_test = 1;   //1st? 2nd? 3rd?    //TODO - 0 means ALL, 1 to n means which one respectively
     // for testIR()
     String dotExe = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";  //like "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe"
     String pdfExe = "C:\\Program Files (x86)\\Foxit Software\\Foxit Reader\\FoxitReader.exe";  //like "C:\\Program Files (x86)\\Foxit Software\\Foxit Reader\\FoxitReader.exe"
-    String dotFile = "Z:\\walaspace\\temp.dt";  //like "Z:\\walaspace\\temp.dt". ps: all parent dirs should exist. 
-    String pdfFile = "Z:\\walaspace\\ir.pdf";  //like "Z:\\walaspace\\ir.pdf". ps: all parent dirs should exist.
+    String dotFile = "E:\\walaspace\\temp.dt";  //like "Z:\\walaspace\\temp.dt". ps: all parent dirs should exist. 
+    String pdfFile = "E:\\walaspace\\ir.pdf";  //like "Z:\\walaspace\\ir.pdf". ps: all parent dirs should exist.
     
     
+    /**
+     * Input - 1. a dir path including *.jar or *.class, 
+     * 		   2. 
+     * 		   3. 
+     */
     public WalaAnalyzer(String dirstr) {
     	this( Paths.get(dirstr) );
     }
@@ -153,9 +158,9 @@ public class WalaAnalyzer {
     
     private void doWork() {
     	System.out.println("JX - INFO - WalaAnalyzer: doWork...");
-    	String alljars = getAllJars();
+    
     	try {
-    		walaAnalysis(alljars);
+    		walaAnalysis(getJarsOrOthers());
     		infoWalaAnalysisEnv();
     		readPackageScope();
     		//testIClass();
@@ -177,25 +182,49 @@ public class WalaAnalyzer {
      * JX - Functions Region
      *******************************************************************************/
     
-    private String getAllJars() {
-	    // Get all *.jar Files, format like "jarpath1:jarpath2:jarpath3:xxx"
+    private String getJarsOrOthers() {
     	String alljars = "";   
-	    if (PDFCallGraph.isDirectory( dirpath.toString() )) {
+    	// Check a dir including *.jar or *.class     #check *.jar first
+    	if (new File(dirpath.toString()).isDirectory()) {
+    		//try to get all *.jar files under the dir if could, format like "jarpath1:jarpath2:jarpath3:xxx"
 	    	try {
 				alljars = PDFCallGraph.findJarFiles( new String[]{dirpath.toString()} );
 			} catch (WalaException e) {
 				e.printStackTrace();
 			} 
-	    	System.out.println("JX - INFO - Testing Jars - " + alljars);  
+	    	if ( !alljars.equals("") ) {
+	    		System.out.println("JX - INFO - Test Goal - multi *.jar: " + alljars);
+	    	}
+	    	// ie, without *.jar under "dirpath" recursively. So
+	    	else {
+	    		alljars = dirpath.toString();
+	    		System.out.println("JX - INFO - Test Goal - multi *.class in dir: " + alljars);
+	    	}
 	    } 
-	    else {
+    	// Check a file like xx.jar or xx.class
+	    else if (dirpath.toString().endsWith(".jar")) {
 	    	alljars = dirpath.toString();
-	    	System.err.println("JX - ERROR - Testing jars is NOT in a dir, just a .jar file: " + alljars );
+	    	System.out.println("JX - INFO - Test Goal - a x.jar file: " + alljars);
 	    }	
+	    else if (dirpath.toString().endsWith(".class")) {
+	    	alljars = dirpath.toString();
+	    	System.out.println("JX - INFO - Test Goal - a x.class file: " + alljars);
+	    }
+	    else {
+	    	System.out.println("JX - ERROR - Test Goal - others: " + alljars);
+	    	System.exit(1);
+	    }
 	    return alljars;
     }
     
  
+    /**
+     * @param alljars - absolute path or relative path, can be one of the following
+     * 					1. multiple .jar files separated by ":"(linux) or ";"(win), "src/sa/res/ca-6744/xx.jar;xxx/xx.jar"
+     * 					2. a class-file dir, can be any-level dir, like "bin/sa", "bin/sa/test", "bin/sa/test/testsrc", will identify all *.class recursively and overlook *.jar
+     * 					3. single .jar file, "src/sa/res/ca-6744/xx.jar"
+     * 					4. single .class file
+     */
     private void walaAnalysis(String alljars) throws IOException, IllegalArgumentException, CallGraphBuilderCancelException, UnsoundGraphException, WalaException {
 		System.out.println("JX - INFO - WalaAnalyzer: walaAnalysis...");
 
@@ -552,8 +581,44 @@ public class WalaAnalyzer {
     }
   
   
+    
+    
+//    public CGNode getTestNode() {
+//	    CGNode n = null;
+//	    IMethod m = null;
+//	    IR ir = null;
+//	    int currentone = 0;
+//	    
+//	    // Get IR
+//	    int num_of_ircgnode = 0;
+//	    for (Iterator<? extends CGNode> it = cg.iterator(); it.hasNext();) {
+//	    	CGNode tmp_n = it.next();
+//	    	IMethod tmp_m = tmp_n.getMethod();
+//	    	if (tmp_m.getSignature().indexOf(functionname_for_test)>=0) {  //TODO - can't find "loopbackAddress(" at "InetAddress.getAllByName("&whichone=2, this ia s example for advanced pointer analysis
+//	    		num_of_ircgnode ++;
+//	    		if (++currentone==which_functionname_for_test) {
+//	    			n = tmp_n;
+//	    			m = tmp_m;
+//	    			ir = n.getIR();
+//	    			viewIR(ir);  
+//	    			System.out.println(m.getSignature());
+//	    			//findLocks(n);
+//	    			//findLoops(n);  //add find var_name??????????????????????????????????????????????
+//	    		} 
+//	    	}
+//	    }//for
+//	    if (ir != null) {
+//	      System.err.println( "Totally find " + num_of_ircgnode + " IR(s) for " + functionname_for_test );
+//	    } else {
+//	      System.err.println( "Can't find IR !!!!!!!!!!\n" );
+//	      return;
+//	    }
+//	    
+//    }
+    
+    
     public void testIR() throws WalaException {
-	    System.err.println("JX-breakpoint-testIR");
+	    System.err.println("JX - INFO - WalaAnalyzer: testIR");
 	    
 	    // Memo - "InetAddress.getAllByName("  "FSDirectory.mkdirs("  //"hdfs.qjournal.client.IPCLoggerChannel$7.call()Ljava/lang/Void"
 	    CGNode n = null;

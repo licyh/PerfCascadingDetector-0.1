@@ -1,0 +1,3 @@
+org.apache.hadoop.hbase.regionserver.HRegionServer addScanner 2161
+org.apache.hadoop.hbase.regionserver.HRegionServer next 2177
+org.apache.hadoop.hbase.regionserver.HRegionServer close 2277

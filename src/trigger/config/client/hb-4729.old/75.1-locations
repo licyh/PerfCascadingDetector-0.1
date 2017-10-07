@@ -1,0 +1,3 @@
+org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation setupZookeeperTrackers 536
+org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation getHRegionConnection 1188
+org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation getHRegionConnection 1191

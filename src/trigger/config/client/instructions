@@ -1,0 +1,4 @@
+StackTraceElement[] cause = Thread.currentThread().getStackTrace();
+String _str=BlockingClient.processstack(cause);
+BlockingClient blockingClient = new BlockingClient(_str+"@"+$1);
+blockingClient.send("11.11.1.102:20000");

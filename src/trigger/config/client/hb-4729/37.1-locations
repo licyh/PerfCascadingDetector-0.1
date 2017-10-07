@@ -1,0 +1,3 @@
+org.apache.hadoop.hbase.master.HMasterCommandLine run 103
+org.apache.hadoop.hbase.master.HMaster stop 1428
+org.apache.hadoop.hbase.master.HMaster stop 1430

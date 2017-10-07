@@ -6,7 +6,11 @@
 7428-12:12 7428 SourceTimingBegin 1: 01:06.251 
 7428-12:12 7428 SourceTimingEnd 1: 01:06.450 		#0.20s
 
-//1000 reduces
+//100 reduces  (force)
+2.06s
 
+//1000 reduces
+10753-12:12 10753 SourceTimingBegin 1: 35:05.881 
+10753-12:12 10753 SourceTimingEnd 1: 35:27.395		#21.5s
 
 

@@ -1,0 +1,487 @@
+16:53:55.945 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+16:53:55.954 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; 
+<2> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<3> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-821;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<4> 444
+16:53:55.955 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+16:53:55.957 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+16:53:55.957 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+16:53:57.958 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+16:53:57.958 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+16:54:07.964 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+20:35:19.498 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+20:35:19.507 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;foo-run-16; 
+<2> java.lang.Thread-getStackTrace-1589;foo-run-27; 
+<3> java.lang.Thread-getStackTrace-1589;foo-main-12; 
+<4> 444
+20:35:19.508 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+20:35:19.510 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+20:35:19.511 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+20:35:21.511 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+20:35:21.511 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+20:35:31.518 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+20:37:55.629 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+20:37:55.638 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;foo-run-16; 
+<2> java.lang.Thread-getStackTrace-1589;foo-run-27; 
+<3> java.lang.Thread-getStackTrace-1589;foo-main-12; 
+<4> 444
+20:37:55.639 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+20:37:55.641 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+20:37:55.642 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+20:37:57.642 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+20:37:57.643 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+20:38:07.649 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+20:45:19.330 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+20:45:19.339 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;foo-run-16; 
+<2> java.lang.Thread-getStackTrace-1589;foo-run-27; 
+<3> java.lang.Thread-getStackTrace-1589;foo-main-12; 
+<4> 444
+20:45:19.340 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+20:45:19.342 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+20:45:19.343 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+20:45:21.343 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+20:45:21.343 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+20:45:31.350 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+20:50:31.372 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener comes to end
+21:24:39.556 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+21:24:39.565 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;foo-run-16; 
+<2> java.lang.Thread-getStackTrace-1589;foo-run-27; 
+<3> java.lang.Thread-getStackTrace-1589;foo-main-12; 
+<4> 444
+21:24:39.566 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+21:24:39.568 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+21:24:39.569 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+21:24:41.569 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+21:24:41.570 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+21:24:51.576 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+21:24:55.623 [Thread-3] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;foo-run-16; ~~
+21:24:55.721 [Thread-4] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;foo-main-12; ~~
+21:24:56.125 [Thread-5] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;foo-run-21; ~~
+21:29:51.599 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener comes to end
+21:32:43.611 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+21:32:43.620 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;foo-run-16; 
+<2> java.lang.Thread-getStackTrace-1589;foo-run-27; 
+<3> java.lang.Thread-getStackTrace-1589;foo-main-12; 
+<4> 444
+21:32:43.620 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+21:32:43.622 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+21:32:43.624 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+21:32:45.624 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+21:32:45.625 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+21:32:55.631 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+21:33:04.946 [Thread-3] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;foo-main-12; ~~
+21:33:05.046 [Thread-4] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;foo-run-16; ~~
+21:33:05.146 [Thread-5] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;foo-run-21; ~~
+21:35:06.263 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+21:35:06.272 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;foo-run-16; 
+<2> java.lang.Thread-getStackTrace-1589;foo-run-27; 
+<3> java.lang.Thread-getStackTrace-1589;foo-run-27; 
+<4> 444
+21:35:06.272 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+21:35:06.274 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+21:35:06.276 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+21:35:08.276 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+21:35:08.276 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+21:35:18.282 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+21:35:20.644 [Thread-3] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;foo-run-16; ~~
+21:35:38.541 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+21:35:38.550 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;foo-run-16; 
+<2> java.lang.Thread-getStackTrace-1589;foo-run-27; 
+<3> java.lang.Thread-getStackTrace-1589;foo-run-27; 
+<4> 444
+21:35:38.551 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+21:35:38.553 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+21:35:38.554 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+21:35:40.043 [Thread-2] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;foo-run-16; ~~
+21:35:40.554 [Thread-3] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+21:35:40.554 [Thread-3] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+21:35:50.560 [Thread-3] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+21:39:52.880 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+21:39:52.889 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;foo-run-16; 
+<2> java.lang.Thread-getStackTrace-1589;foo-run-29; 
+<3> java.lang.Thread-getStackTrace-1589;foo-run-30; 
+<4> 444
+21:39:52.890 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+21:39:52.892 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+21:39:52.894 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+21:39:54.893 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+21:39:54.893 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+21:40:04.900 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+21:40:13.355 [Thread-3] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;foo-run-16; ~~
+21:45:52.659 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+21:45:52.668 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;foo-main-9; 
+<2> java.lang.Thread-getStackTrace-1589;foo-run-14; 
+<3> java.lang.Thread-getStackTrace-1589;foo-run-15; 
+<4> 444
+21:45:52.668 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+21:45:52.670 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+21:45:52.671 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+21:45:54.671 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+21:45:54.672 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+21:46:04.678 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+21:46:08.230 [Thread-3] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;foo-run-14; ~~
+21:46:08.330 [Thread-4] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;foo-main-9; ~~
+21:46:08.733 [Thread-5] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;foo-run-15; ~~
+21:51:04.702 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener comes to end
+22:52:47.376 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+22:52:47.385 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-331;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; 
+<2> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-processAck-477;org.apache.zookeeper.server.quorum.LearnerHandler-run-443; 
+<3> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-processAck-478;org.apache.zookeeper.server.quorum.LearnerHandler-run-443; 
+<4> 444
+22:52:47.386 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+22:52:47.388 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+22:52:47.389 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+22:52:49.389 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+22:52:49.390 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+22:52:59.398 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+22:53:10.706 [Thread-3] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-331;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+22:53:10.806 [Thread-4] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-processAck-477;org.apache.zookeeper.server.quorum.LearnerHandler-run-443; ~~
+22:53:10.906 [Thread-5] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-processAck-478;org.apache.zookeeper.server.quorum.LearnerHandler-run-443; ~~
+22:53:11.006 [Thread-6] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-processAck-477;org.apache.zookeeper.server.quorum.LearnerHandler-run-443; ~~
+11:23:49.855 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+11:23:49.864 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-304;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; 
+<2> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-804;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<3> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-807;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<4> 444
+11:23:49.865 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+11:23:49.867 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+11:23:49.868 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+11:23:51.868 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+11:23:51.868 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+11:24:01.874 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+11:24:20.071 [Thread-3] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-304;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+11:24:31.322 [Thread-4] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-304;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+11:27:02.637 [Thread-5] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-804;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+11:27:02.737 [Thread-6] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-807;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+11:27:12.955 [Thread-7] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-304;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+11:27:13.882 [Thread-8] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-804;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+11:27:13.982 [Thread-9] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-807;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+21:39:10.128 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+21:39:10.159 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-807;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; 
+<2> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<3> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; 
+<4> 444
+21:39:10.160 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+21:39:10.170 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+21:39:10.171 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+21:39:12.171 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+21:39:12.171 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+21:39:22.179 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+21:39:26.039 [Thread-3] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-807;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+21:39:26.139 [Thread-4] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+21:40:26.143 [Thread-5] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-807;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+21:48:19.714 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+21:48:19.723 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; 
+<2> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<3> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; 
+<4> 444
+21:48:19.724 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+21:48:19.726 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+21:48:19.727 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+21:48:21.727 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+21:48:21.727 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+21:48:31.734 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+21:48:35.165 [Thread-3] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+21:48:35.264 [Thread-4] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+21:48:35.667 [Thread-5] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+21:51:30.148 [Thread-6] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+21:51:30.248 [Thread-7] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+21:51:38.914 [Thread-8] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+21:53:55.860 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+21:53:55.869 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; 
+<2> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<3> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-814;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; 
+<4> 444
+21:53:55.870 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+21:53:55.872 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+21:53:55.873 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+21:53:57.873 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+21:53:57.874 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+21:54:07.880 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+21:54:16.388 [Thread-3] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+21:54:16.488 [Thread-4] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+21:54:16.890 [Thread-5] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-814;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+21:54:16.991 [Thread-6] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+21:54:27.861 [Thread-7] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+21:54:27.962 [Thread-8] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+21:54:28.363 [Thread-9] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-814;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+21:57:10.466 [Thread-10] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+21:57:11.257 [Thread-11] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+21:57:11.357 [Thread-12] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+21:57:11.758 [Thread-13] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-814;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+21:57:23.447 [Thread-14] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+21:57:23.547 [Thread-15] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+21:57:23.948 [Thread-16] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-814;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+21:59:00.753 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+21:59:00.762 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; 
+<2> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<3> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-814;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<4> 444
+21:59:00.763 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+21:59:00.765 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+21:59:00.766 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+21:59:02.766 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+21:59:02.767 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+21:59:12.773 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+22:00:26.449 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+22:00:26.459 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; 
+<2> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<3> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-814;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<4> 444
+22:00:26.459 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+22:00:26.462 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+22:00:26.463 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+22:00:28.462 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+22:00:28.463 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+22:00:38.470 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+22:01:31.497 [Thread-3] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:01:31.604 [Thread-4] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+22:01:32.000 [Thread-5] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-814;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:01:32.100 [Thread-6] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:02:32.104 [Thread-7] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-814;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:02:32.204 [Thread-8] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:03:47.189 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+22:03:47.199 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; 
+<2> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<3> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-811;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<4> 444
+22:03:47.199 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+22:03:47.201 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+22:03:47.202 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+22:03:49.202 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+22:03:49.203 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+22:03:58.532 [Thread-3] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-814;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:03:58.632 [Thread-4] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:03:59.209 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+22:04:21.338 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+22:04:21.347 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; 
+<2> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<3> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-811;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<4> 444
+22:04:21.348 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+22:04:21.350 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+22:04:21.351 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+22:04:23.351 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+22:04:23.351 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+22:04:33.358 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+22:05:37.678 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+22:05:37.687 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; 
+<2> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<3> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-811;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<4> 444
+22:05:37.688 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+22:05:37.690 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+22:05:37.690 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+22:05:39.691 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+22:05:39.691 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+22:05:49.697 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+22:06:12.565 [Thread-3] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+22:06:12.664 [Thread-4] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:06:12.765 [Thread-5] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:07:12.768 [Thread-6] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-811;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:11:56.588 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+22:11:56.597 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; 
+<2> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<3> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; 
+<4> 444
+22:11:56.598 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+22:11:56.600 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+22:11:56.601 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+22:11:58.601 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+22:11:58.601 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+22:12:08.607 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+22:12:09.511 [Thread-3] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:12:09.611 [Thread-4] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+22:12:10.359 [Thread-5] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:13:10.364 [Thread-6] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:10.464 [Thread-7] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:10.564 [Thread-8] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:10.664 [Thread-9] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:10.765 [Thread-10] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:10.865 [Thread-11] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:10.965 [Thread-12] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:11.065 [Thread-13] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:11.166 [Thread-14] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:11.266 [Thread-15] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:11.366 [Thread-16] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:11.467 [Thread-17] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:11.567 [Thread-18] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:11.667 [Thread-19] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:19.614 [Thread-20] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:20.564 [Thread-21] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:29.628 [Thread-22] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:29.933 [Thread-23] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:13:30.033 [Thread-24] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+22:13:30.435 [Thread-25] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+22:13:30.535 [Thread-26] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:30.635 [Thread-27] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:39.949 [Thread-28] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:40.050 [Thread-29] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:42.814 [Thread-30] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+22:13:42.914 [Thread-31] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+22:13:43.014 [Thread-32] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:13:43.115 [Thread-33] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:43.215 [Thread-34] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:52.842 [Thread-35] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:52.942 [Thread-36] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:55.292 [Thread-37] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:13:55.393 [Thread-38] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+22:13:55.794 [Thread-39] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+22:13:55.894 [Thread-40] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:13:55.995 [Thread-41] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:14:08.105 [Thread-42] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+22:14:08.205 [Thread-43] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+22:14:08.306 [Thread-44] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:14:08.406 [Thread-45] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:14:15.649 [Thread-46] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:14:25.663 [Thread-47] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:14:35.668 [Thread-48] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:18:03.187 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+22:18:03.197 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; 
+<2> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<3> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; 
+<4> 444
+22:18:03.197 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+22:18:03.200 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+22:18:03.200 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+22:18:05.200 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+22:18:05.201 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+22:18:05.954 [Thread-3] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:18:08.645 [Thread-4] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:18:16.543 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+22:18:16.552 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; 
+<2> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<3> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; 
+<4> 444
+22:18:16.552 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+22:18:16.555 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+22:18:16.555 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+22:18:18.555 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+22:18:18.556 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+22:18:28.562 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+22:18:32.216 [Thread-3] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:18:32.316 [Thread-4] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+22:18:32.718 [Thread-5] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:18:32.819 [Thread-6] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:18:32.919 [Thread-7] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:23:19.618 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+22:23:19.627 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; 
+<2> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; 
+<3> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; 
+<4> 444
+22:23:19.628 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+22:23:19.630 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+22:23:19.631 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+22:23:21.631 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+22:23:21.631 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+22:23:31.638 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+22:23:35.878 [Thread-3] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:23:35.978 [Thread-4] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-334;org.apache.zookeeper.server.quorum.QuorumPeer-run-746; ~~
+22:23:36.381 [Thread-5] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-810;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+22:23:36.481 [Thread-6] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+22:23:36.582 [Thread-7] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-301; ~~
+15:54:33.946 [main] INFO  e.u.sg.dcbt.TargetsystemService - Target system service is created
+15:54:33.955 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener targets: 
+<1> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-337;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; 
+<2> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-processAck-504;org.apache.zookeeper.server.quorum.LearnerHandler-run-411; 
+<3> java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-416; 
+<4> 444
+15:54:33.956 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Listener is on localhost:20000
+15:54:33.958 [main] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener is created
+15:54:33.959 [Thread-1] INFO  edu.uchicago.sg.dcbt.MessageListener - Message listener begins to run
+15:54:35.959 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Target system service begins to run
+15:54:35.960 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/startNode.sh
+15:54:45.967 [Thread-2] INFO  e.u.sg.dcbt.TargetsystemService - Launch /mnt/storage/haopeng/workstation/java-ws/DC-Detector/src/Trigger/config/server/workLoad.sh
+15:54:46.544 [Thread-3] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:54:46.803 [Thread-4] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:54:46.903 [Thread-5] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:54:47.004 [Thread-6] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:54:47.104 [Thread-7] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:54:47.204 [Thread-8] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:54:47.435 [Thread-9] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-getEpochToPropose-780;org.apache.zookeeper.server.quorum.Leader-lead-312;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:54:48.334 [Thread-10] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-getEpochToPropose-780;org.apache.zookeeper.server.quorum.LearnerHandler-run-276; ~~
+15:54:48.434 [Thread-11] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-807;org.apache.zookeeper.server.quorum.Leader-lead-331;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:54:48.535 [Thread-12] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-807;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+15:54:48.635 [Thread-13] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-337;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:54:48.735 [Thread-14] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-processAck-504;org.apache.zookeeper.server.quorum.LearnerHandler-run-411; ~~
+15:54:48.836 [Thread-15] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-416; ~~
+15:54:49.137 [Thread-16] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-lead-338;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:54:51.140 [Thread-17] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-lead-396;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:54:53.142 [Thread-18] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-lead-396;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:54:55.144 [Thread-19] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-lead-396;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:54:55.244 [Thread-20] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:54:55.345 [Thread-21] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:54:55.445 [Thread-22] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-863;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:54:55.545 [Thread-23] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:54:55.646 [Thread-24] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:54:55.746 [Thread-25] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:54:55.948 [Thread-26] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:54:56.049 [Thread-27] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:54:56.149 [Thread-28] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:54:56.249 [Thread-29] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:54:56.355 [Thread-30] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-getEpochToPropose-780;org.apache.zookeeper.server.quorum.Leader-lead-312;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:54:56.455 [Thread-31] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-getEpochToPropose-780;org.apache.zookeeper.server.quorum.LearnerHandler-run-276; ~~
+15:54:56.555 [Thread-32] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-807;org.apache.zookeeper.server.quorum.Leader-lead-331;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:54:56.656 [Thread-33] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-807;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+15:54:56.756 [Thread-34] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-337;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:54:56.856 [Thread-35] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-processAck-504;org.apache.zookeeper.server.quorum.LearnerHandler-run-411; ~~
+15:54:56.956 [Thread-36] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-416; ~~
+15:54:57.258 [Thread-37] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-lead-338;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:54:59.260 [Thread-38] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-lead-396;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:55:01.262 [Thread-39] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-lead-396;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:55:03.264 [Thread-40] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-lead-396;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:55:03.364 [Thread-41] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:03.465 [Thread-42] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:03.644 [Thread-43] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-863;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:03.666 [Thread-44] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:03.767 [Thread-45] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:03.867 [Thread-46] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:04.075 [Thread-47] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:04.170 [Thread-48] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:04.270 [Thread-49] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:04.371 [Thread-50] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:04.483 [Thread-51] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-getEpochToPropose-780;org.apache.zookeeper.server.quorum.Leader-lead-312;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:55:04.604 [Thread-52] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-getEpochToPropose-780;org.apache.zookeeper.server.quorum.LearnerHandler-run-276; ~~
+15:55:04.704 [Thread-53] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-807;org.apache.zookeeper.server.quorum.Leader-lead-331;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:55:04.804 [Thread-54] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-waitForEpochAck-807;org.apache.zookeeper.server.quorum.LearnerHandler-run-299; ~~
+15:55:04.905 [Thread-55] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.Leader-lead-337;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:55:05.005 [Thread-56] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-processAck-504;org.apache.zookeeper.server.quorum.LearnerHandler-run-411; ~~
+15:55:05.155 [Thread-57] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.LearnerHandler-run-416; ~~
+15:55:05.406 [Thread-58] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-lead-338;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:55:07.408 [Thread-59] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-lead-396;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:55:09.410 [Thread-60] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-lead-396;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:55:11.413 [Thread-61] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.Leader-lead-396;org.apache.zookeeper.server.quorum.QuorumPeer-run-729; ~~
+15:55:11.513 [Thread-62] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:11.613 [Thread-63] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:11.714 [Thread-64] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-863;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:11.830 [Thread-65] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:11.914 [Thread-66] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:12.023 [Thread-67] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:12.225 [Thread-68] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:12.326 [Thread-69] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:12.441 [Thread-70] INFO  edu.uchicago.sg.dcbt.MessageListener - Server receives java.lang.Thread-getStackTrace-1589;org.apache.zookeeper.server.quorum.flexible.QuorumMaj-containsQuorum-54;org.apache.zookeeper.server.quorum.FastLeaderElection-termPredicate-591;org.apache.zookeeper.server.quorum.FastLeaderElection-lookForLeader-805;org.apache.zookeeper.server.quorum.QuorumPeer-run-691; ~~
+15:55:12.526 [Thread-71] INFO  edu.uchicago.sg.dcbt.MessageListener -

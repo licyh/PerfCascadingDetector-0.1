@@ -1,0 +1,3 @@
+org.apache.hadoop.hbase.master.HMaster initializeZKBasedSystemTrackers 368
+org.apache.hadoop.hbase.master.HMaster shutdown 1340
+org.apache.hadoop.hbase.master.HMaster shutdown 1341

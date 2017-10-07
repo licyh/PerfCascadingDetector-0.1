@@ -1,0 +1,3 @@
+org.apache.zookeeper.server.ZKDatabase getmaxCommittedLog 135
+org.apache.zookeeper.server.ZKDatabase clear 106
+org.apache.zookeeper.server.ZKDatabase clear 110

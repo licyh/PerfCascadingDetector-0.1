@@ -1,0 +1,3 @@
+org.apache.hadoop.hbase.master.AssignmentManager handleRegion 738
+org.apache.hadoop.hbase.master.AssignmentManager handleRegion 754
+org.apache.hadoop.hbase.master.AssignmentManager handleRegion 764

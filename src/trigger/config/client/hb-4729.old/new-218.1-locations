@@ -1,0 +1,3 @@
+org.apache.hadoop.hbase.master.HMaster stop 1364
+org.apache.hadoop.hbase.master.handler.ClosedRegionHandler process 102
+org.apache.hadoop.hbase.master.handler.ClosedRegionHandler process 103
