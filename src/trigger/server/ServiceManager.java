@@ -1,4 +1,4 @@
-package edu.uchicago.sg.dcbt;
+package trigger.server;
 
 /**
  * Created by hadoop on 6/3/16.

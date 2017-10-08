@@ -1,25 +1,4 @@
-CL0: org.apache.cassandra.service.StorageService-getLoad-2037;
-CL0: org.apache.cassandra.gms.Gossiper-doNotifications-971;
-CL0: org.apache.cassandra.db.compaction.CompactionTask-runWith-145;
-CL0: org.apache.cassandra.db.ColumnFamilyStore-getExpectedCompactedFileSize-935;
-CL0: org.apache.cassandra.db.index.SecondaryIndexManager-flushIndexesBlocking-328;
-CL0: org.apache.cassandra.db.compaction.PrecompactedRow-merge-110;
-CL0: org.apache.cassandra.db.ColumnFamilyStore-createCompactionWriter-1987;
-CL0: org.apache.cassandra.db.ColumnFamilySerializer-deserializeColumnsFromSSTable-148;
-CL0: org.apache.cassandra.db.ColumnFamilyStore-removeDeletedStandard-805;
-CL0: org.apache.cassandra.db.ColumnIndex$Builder-build-136;
-CL0: org.apache.cassandra.db.compaction.CompactionTask-runWith-232;
-CL0: org.apache.cassandra.db.ColumnIndex$Builder-build-126;
-CL0: org.apache.cassandra.db.compaction.CompactionTask-runWith-234;
-CL0: org.apache.cassandra.db.index.SecondaryIndexBuilder-build-57;
-CL0: org.apache.cassandra.db.ColumnIndex$Builder-build-128;
-CL0: org.apache.cassandra.db.compaction.CompactionTask-runWith-198;
-CL0: org.apache.cassandra.db.compaction.CompactionManager-doCleanupCompaction-563;
-CL0: org.apache.cassandra.db.compaction.CompactionController-shouldPurge-106;
-CL0: org.apache.cassandra.locator.AbstractReplicationStrategy-getAddressRanges-162;
-CL0: org.apache.cassandra.db.compaction.CompactionManager-doCleanupCompaction-598;
-CL0: org.apache.cassandra.db.ColumnFamilyStore-switchMemtable-613;
-CL0: org.apache.cassandra.db.DataTracker-notifySSTablesChanged-421;
-CL0: org.apache.cassandra.db.ColumnFamilyStore-createCompactionWriter-1984;
-CL0: org.apache.cassandra.db.compaction.CompactionTask-runWith-167;
-//summary - 24(#static codepoints=24) from 77
+CL0: org.apache.hadoop.mapred.TaskTracker-purgeJob-2021;
+CL0: org.apache.hadoop.mapred.TaskTracker-removeJobFiles-2072;
+CL0: org.apache.hadoop.io.IOUtils-copyBytes-69;
+//summary - 3(#static codepoints=3) from 12

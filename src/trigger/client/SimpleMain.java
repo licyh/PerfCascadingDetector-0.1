@@ -1,3 +1,5 @@
+package trigger.client;
+
 import java.lang.instrument.Instrumentation;
 
 public class SimpleMain {

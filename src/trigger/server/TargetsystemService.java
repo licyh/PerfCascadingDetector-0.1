@@ -1,4 +1,4 @@
-package edu.uchicago.sg.dcbt;
+package trigger.server;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

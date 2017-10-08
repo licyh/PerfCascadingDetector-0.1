@@ -1,4 +1,4 @@
-package edu.uchicago.sg.dcbt;
+package trigger.server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import edu.uchicago.sg.dcbt.MessageProto;
+//import edu.uchicago.sg.dcbt.MessageProto;
 
 /**
  * Created by hadoop on 6/4/16.

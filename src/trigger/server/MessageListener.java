@@ -1,9 +1,9 @@
-package edu.uchicago.sg.dcbt;
+package trigger.server;
 
 /**
  * Created by hadoop on 6/4/16.
  */
-import edu.uchicago.sg.dcbt.MessageProto;
+//import edu.uchicago.sg.dcbt.MessageProto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;

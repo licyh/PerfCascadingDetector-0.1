@@ -1,3 +1,5 @@
+package trigger.client;
+
 import java.security.*;
 import java.lang.instrument.*;
 import java.util.*;
